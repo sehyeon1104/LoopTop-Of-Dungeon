@@ -24,8 +24,5 @@ public class FloatingJoystick2D: Joystick
         base.OnPointerUp(eventData);
     }
 
-    public void InputjoystickVector()
-    {
-
-    }
+    
 }
