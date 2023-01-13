@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField] private Joystick _joystick;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -43,5 +43,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EntranceDoor"))
+        {
+            MapMoveManager.Instance.MoveMap(collision.name);
+        }
+    }
 }
