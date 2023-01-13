@@ -34,7 +34,7 @@ public class BossPattern : MonoBehaviour
                         attackCoroutine = StartCoroutine(Pattern_01(Random.Range(3,5)));
                         break;
                     case 1:
-                        attackCoroutine = StartCoroutine(Pattern_02(Random.Range(20, 30)));
+                        attackCoroutine = StartCoroutine(Pattern_02(Random.Range(25, 30)));
                         break;
                     case 2:
 
@@ -72,7 +72,7 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_02(int attackCount)
     {
-        float angle = 360 / attackCount;
+        float angle = 360 / (attackCount * 0.89f);
         
         for(int i = 0; i < attackCount; i++)
         {
