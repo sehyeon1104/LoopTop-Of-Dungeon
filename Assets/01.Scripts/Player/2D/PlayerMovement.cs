@@ -47,7 +47,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     {
         if (collision.CompareTag("EntranceDoor"))
         {
-            MapMoveManager.Instance.MoveMap(collision.name);
+            MapManager.Instance.MoveMap(collision.name);
         }
     }
 }
