@@ -12,6 +12,9 @@ public class ShowSkillRange : MonoBehaviour
     [SerializeField]
     private float trailSpeed = 5f;
 
+    [SerializeField]
+    private float safeDistance = 1f; // 공격 범위 판정
+
 
     private void Start()
     {
@@ -23,13 +26,15 @@ public class ShowSkillRange : MonoBehaviour
         for(int i = 0; i < 4; ++i)
         {
             GameObject trailObj = Instantiate(trailPrefab, transform.position, Quaternion.identity);
-            MoveTrail(trailObj, i);
+            trailObj.transform.SetParent(transform);
+            StartCoroutine(IEMoveTrail(trailObj, i));
         }
     }
 
-    public void MoveTrail(GameObject trailObj, int count)
+    public IEnumerator IEMoveTrail(GameObject trailObj, int count)
     {
         Vector3 dir;
+        Vector3 initPos = trailObj.transform.position;
 
         dir = count switch
         {
@@ -41,7 +46,26 @@ public class ShowSkillRange : MonoBehaviour
             _ => Vector3.zero,
         };
 
+        trailObj.transform.DOMove(initPos + dir * trailDistance, trailSpeed);
+        yield return new WaitForSeconds(trailSpeed);
+        trailObj.transform.DOMove(initPos, 1f);
+        while (trailObj.transform.position != initPos)
+        {
+            if(Vector3.Distance(trailObj.transform.position, PlayerMovement.Instance.transform.position) < safeDistance)
+            {
+                Debug.Log("Safe");
+                // break;
+            }
 
-        trailObj.transform.DOMove(dir * trailDistance, trailSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1f);
+
+        if(trailObj.transform.position == initPos)
+        {
+            Debug.Log("Clear");
+        }
+
+        trailObj.SetActive(false);
     }
 }
