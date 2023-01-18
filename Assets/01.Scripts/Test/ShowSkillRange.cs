@@ -11,30 +11,51 @@ public class ShowSkillRange : MonoBehaviour
     private float trailDistance = 20f;
     [SerializeField]
     private float trailSpeed = 5f;
+    [SerializeField]
+    private GameObject[] trailsArr;
 
     [SerializeField]
     private float safeDistance = 1f; // 공격 범위 판정
 
+    private bool isSafe = false;
 
     private void Start()
     {
-        Invoke("InstantiateTrailPre", 3f);
-    }
+        trailsArr = new GameObject[4];
 
-    public void InstantiateTrailPre()
-    {
-        for(int i = 0; i < 4; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             GameObject trailObj = Instantiate(trailPrefab, transform.position, Quaternion.identity);
             trailObj.transform.SetParent(transform);
-            StartCoroutine(IEMoveTrail(trailObj, i));
+            trailsArr[i] = trailObj;
+            trailsArr[i].SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ActiveTrailPre();
+        }
+    }
+
+    public void ActiveTrailPre()
+    {
+        isSafe = false;
+
+        for(int i = 0; i < 4; ++i)
+        {
+            trailsArr[i].transform.position = PlayerMovement.Instance.transform.position;
+            trailsArr[i].SetActive(true);
+            StartCoroutine(IEMoveTrail(trailsArr[i], i));
         }
     }
 
     public IEnumerator IEMoveTrail(GameObject trailObj, int count)
     {
         Vector3 dir;
-        Vector3 initPos = trailObj.transform.position;
+        Vector3 initPos = PlayerMovement.Instance.transform.position;
 
         dir = count switch
         {
@@ -53,18 +74,16 @@ public class ShowSkillRange : MonoBehaviour
         {
             if(Vector3.Distance(trailObj.transform.position, PlayerMovement.Instance.transform.position) < safeDistance)
             {
-                Debug.Log("Safe");
-                // break;
+                if (!isSafe)
+                {
+                    Debug.Log("Safe");
+                    isSafe = true;
+                }
             }
 
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(1f);
-
-        if(trailObj.transform.position == initPos)
-        {
-            Debug.Log("Clear");
-        }
 
         trailObj.SetActive(false);
     }
