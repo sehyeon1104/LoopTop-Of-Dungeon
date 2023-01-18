@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapMoveManager : MonoSingleton<MapMoveManager>
+public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField]
     private GameObject[] zones;
@@ -28,32 +28,33 @@ public class MapMoveManager : MonoSingleton<MapMoveManager>
 
     private void Start()
     {
-        SetMap();
+        // SetZone();
     }
 
-    public void SetMap()
+    public void SetZone(/*string dir*/)
     {
-        // for(int i = 0; i < )
+        // Zone curZone = FindObjectOfType<Zone>();
+
+
+        int rand = Random.Range(0, zones.Length);
+
+        GameObject newZone = Instantiate(zones[rand], Vector3.zero, Quaternion.identity);
+
     }
 
     public void MoveMap(string dir)
     {
         Debug.Log("MoveMap");
 
-        if(moveCount >= maximumMoves)
-        {
-            Debug.Log("움직일 수 없음");
-            return;
-        }
+        //int rand = Random.Range(0, zones.Length);
 
         moveCount++;
-        int rand = Random.Range(0, zones.Length);
-
+        moveCount %= 2;
         DisActiveAllZones();
-        zones[rand].SetActive(true);
-        passedZones.Add(zones[rand]);
+        zones[moveCount].SetActive(true);
+        //passedZones.Add(zones[rand]);
 
-        SetMapDirPos(rand);
+        SetMapDirPos(moveCount);
         MovePlayerMapDir(dir);
     }
 
@@ -82,10 +83,10 @@ public class MapMoveManager : MonoSingleton<MapMoveManager>
     {
         Vector3 pos = dir switch
         {
-            "up" => mapDirPos[(int)DIR.DOWN].position + Vector3.up * 3,
-            "down" => mapDirPos[(int)DIR.UP].position + Vector3.down,
-            "left" => mapDirPos[(int)DIR.RIGHT].position + Vector3.left,
-            "right" => mapDirPos[(int)DIR.LEFT].position + Vector3.right,
+            "up" => mapDirPos[(int)DIR.DOWN].position + Vector3.up * 2,
+            "down" => mapDirPos[(int)DIR.UP].position + Vector3.down * 2,
+            "left" => mapDirPos[(int)DIR.RIGHT].position + Vector3.left * 2,
+            "right" => mapDirPos[(int)DIR.LEFT].position + Vector3.right * 2,
 
             _ => Vector3.zero
         };
