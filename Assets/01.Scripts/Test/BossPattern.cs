@@ -83,4 +83,27 @@ public class BossPattern : MonoBehaviour
         yield return null;
         attackCoroutine = null;
     }
+
+    private IEnumerator Pattern_03(int mobCount)
+    {
+        List<GameObject> mobList = new List<GameObject>();
+
+        for(int i = 0; i < mobCount; i++)
+        {
+            GameObject clone = Instantiate(gasi, new Vector2(Random.Range(0, 10), Random.Range(0, 10)), Quaternion.Euler(Vector3.zero));
+            mobList.Add(clone);
+        }
+
+        yield return new WaitForSeconds(30f);
+
+        foreach(var mob in mobList)
+        {
+            if(mob != null)
+
+        }
+        mobList.Clear();
+
+        yield return null;
+        attackCoroutine = null;
+    }
 }
