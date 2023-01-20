@@ -46,7 +46,7 @@ public class ShowSkillRange : MonoBehaviour
 
         for(int i = 0; i < 4; ++i)
         {
-            trailsArr[i].GetComponent<TrailRenderer>().time = 0f;
+            trailsArr[i].GetComponent<TrailRenderer>().enabled = false;
             trailsArr[i].transform.position = PlayerMovement.Instance.transform.position;
             trailsArr[i].SetActive(true);
             StartCoroutine(IEMoveTrail(trailsArr[i], i));
@@ -57,7 +57,7 @@ public class ShowSkillRange : MonoBehaviour
     {
         Vector3 dir;
         Vector3 initPos = PlayerMovement.Instance.transform.position;
-
+        trailObj.GetComponent<TrailRenderer>().enabled = true;
 
         dir = count switch
         {
@@ -89,7 +89,6 @@ public class ShowSkillRange : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1f);
 
         trailObj.SetActive(false);
     }
