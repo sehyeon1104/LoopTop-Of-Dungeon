@@ -46,9 +46,7 @@ public class ShowSkillRange : MonoBehaviour
 
         for(int i = 0; i < 4; ++i)
         {
-            trailsArr[i].GetComponent<TrailRenderer>().enabled = false;
             trailsArr[i].transform.position = PlayerMovement.Instance.transform.position;
-            trailsArr[i].SetActive(true);
             StartCoroutine(IEMoveTrail(trailsArr[i], i));
         }
     }
@@ -57,7 +55,8 @@ public class ShowSkillRange : MonoBehaviour
     {
         Vector3 dir;
         Vector3 initPos = PlayerMovement.Instance.transform.position;
-        trailObj.GetComponent<TrailRenderer>().enabled = true;
+
+        TrailRenderer trailRenderer = trailObj.GetComponent<TrailRenderer>();
 
         dir = count switch
         {
@@ -69,8 +68,12 @@ public class ShowSkillRange : MonoBehaviour
             _ => Vector3.zero,
         };
 
+
         // 범위가 상하좌우로 이동
-        trailObj.GetComponent<TrailRenderer>().time = trailSpeed + 1f;
+        trailRenderer.time = trailSpeed + 1f;
+        yield return new WaitUntil(() => trailRenderer.time == trailSpeed + 1f);
+
+        trailObj.SetActive(true);
         trailObj.transform.DOMove(initPos + dir * trailDistance, trailSpeed);
         yield return new WaitForSeconds(trailSpeed);
 
@@ -89,6 +92,14 @@ public class ShowSkillRange : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+        if (!isSafe)
+        {
+            Debug.Log("Hit");
+        }
+
+        trailRenderer.time = 0f;
+        yield return new WaitUntil(() => trailRenderer.time == 0f);
 
         trailObj.SetActive(false);
     }
