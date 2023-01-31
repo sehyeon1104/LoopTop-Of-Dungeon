@@ -9,6 +9,7 @@ public class CameraShaking : MonoBehaviour
 
     private Camera cam;
     private Vector2 initPos;
+    private Vector3 postPos;
 
     private float shakeTime = 0f;
 
@@ -21,22 +22,32 @@ public class CameraShaking : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            StartCoroutine(CameraShake(0.01f));
+            StartCoroutine(IECameraShake(0.01f));
         }
     }
 
-    public IEnumerator CameraShake(float time)
+    // µð¹ö±ë¿ë
+    public void CameraShakeAtk()
     {
-        shakeTime = time;
+        StartCoroutine(IECameraShake(0.01f));
+    }
+
+    public IEnumerator IECameraShake(float time)
+    {
+        //shakeTime = time;
 
         initPos = cam.transform.position;
 
         //while(shakeTime > 0f)
         //{
-        cam.transform.position = Random.insideUnitCircle * shakingAmount + initPos;
+        postPos = Random.insideUnitCircle * shakingAmount + initPos;
+        postPos.z = -10f;
+        Debug.Log(postPos);
+
+        cam.transform.position = postPos;
         //}
 
-        shakeTime = 0f;
+        //shakeTime = 0f;
 
         yield return new WaitForSeconds(0.01f);
         cam.transform.position = new Vector3(initPos.x, initPos.y, -10f);
