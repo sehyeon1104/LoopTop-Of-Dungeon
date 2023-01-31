@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoSingleton<GameManager>
 {
 
-    public void OnApplicationQuit()
+    public void GameQuit()
     {
         Application.Quit();
     }

@@ -52,6 +52,7 @@ public class CameraShaking : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         cam.transform.position = new Vector3(initPos.x, initPos.y, -10f);
 
+        yield break;
     }
 
 }
