@@ -97,6 +97,8 @@ public class MapManager : MonoSingleton<MapManager>
             _ => Vector3.zero
         };
 
+        pos.z = 0f;
+
         PlayerMovement.Instance.transform.position = pos;
     }
 }
