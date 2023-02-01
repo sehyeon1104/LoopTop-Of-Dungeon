@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBase
+public class BossBase
 {
+    public BossBase()
+    {
+        SetBossStat();
+    }
+
     private int _hp;
     private int _maxHp;
-    
-    public PlayerBase()
-    {
-        SetPlayerStat();
-    }
 
     public int Hp
     {
@@ -21,23 +21,20 @@ public class PlayerBase
         set
         {
             _hp = value;
-            if(_hp < 0)
-            {
-                _hp = 0;
-            }
-            else if(_hp > _maxHp)
-            {
+            if(_hp > _maxHp)
                 _hp = _maxHp;
-            }
+            else if(_hp < 0)
+                _hp = 0;
+
+
         }
     }
 
     public int MaxHp { get { return _maxHp; } }
 
-
-    public void SetPlayerStat()
+    private void SetBossStat()
     {
-        _maxHp = 3;
+        _maxHp = 100;
         _hp = _maxHp;
     }
 }

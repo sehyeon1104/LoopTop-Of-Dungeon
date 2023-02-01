@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraShaking : MonoBehaviour
 {
     [SerializeField]
-    private float shakingAmount = 2f;
+    private float shakingAmount = 0.5f;
+
+    [SerializeField]
+    private CinemachineVirtualCamera cinemachineCam;
 
     private Camera cam;
     private Vector2 initPos;
@@ -34,8 +38,10 @@ public class CameraShaking : MonoBehaviour
 
     public IEnumerator IECameraShakeOnce()
     {
+
         initPos = cam.transform.position;
         // 초기 위치
+        cinemachineCam.enabled = false;
 
         postPos = Random.insideUnitCircle * shakingAmount + initPos;
         postPos.z = -10f;
@@ -48,6 +54,8 @@ public class CameraShaking : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         cam.transform.position = new Vector3(initPos.x, initPos.y, -10f);
         // 카메라 쉐이킹 후 카메라의 위치 복구
+
+        cinemachineCam.enabled = true;
 
         yield break;
     }
