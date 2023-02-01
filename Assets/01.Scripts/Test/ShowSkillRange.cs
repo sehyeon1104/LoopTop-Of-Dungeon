@@ -81,6 +81,12 @@ public class ShowSkillRange : MonoBehaviour
         trailObj.transform.DOMove(initPos, 1f);
         while (trailObj.transform.position != initPos)
         {
+            if (isSafe)
+            {
+                yield return new WaitForEndOfFrame();
+                continue;
+            }
+
             if(Vector3.Distance(trailObj.transform.position, PlayerMovement.Instance.transform.position) < safeDistance)
             {
                 if (!isSafe)
