@@ -46,9 +46,7 @@ public class ShowSkillRange : MonoBehaviour
 
         for(int i = 0; i < 4; ++i)
         {
-            trailsArr[i].GetComponent<TrailRenderer>().time = 0f;
             trailsArr[i].transform.position = PlayerMovement.Instance.transform.position;
-            trailsArr[i].SetActive(true);
             StartCoroutine(IEMoveTrail(trailsArr[i], i));
         }
     }
@@ -58,6 +56,7 @@ public class ShowSkillRange : MonoBehaviour
         Vector3 dir;
         Vector3 initPos = PlayerMovement.Instance.transform.position;
 
+        TrailRenderer trailRenderer = trailObj.GetComponent<TrailRenderer>();
 
         dir = count switch
         {
@@ -69,8 +68,12 @@ public class ShowSkillRange : MonoBehaviour
             _ => Vector3.zero,
         };
 
+
         // 범위가 상하좌우로 이동
-        trailObj.GetComponent<TrailRenderer>().time = trailSpeed + 1f;
+        trailRenderer.time = trailSpeed + 1f;
+        yield return new WaitUntil(() => trailRenderer.time == trailSpeed + 1f);
+
+        trailObj.SetActive(true);
         trailObj.transform.DOMove(initPos + dir * trailDistance, trailSpeed);
         yield return new WaitForSeconds(trailSpeed);
 
@@ -78,6 +81,12 @@ public class ShowSkillRange : MonoBehaviour
         trailObj.transform.DOMove(initPos, 1f);
         while (trailObj.transform.position != initPos)
         {
+            if (isSafe)
+            {
+                yield return new WaitForEndOfFrame();
+                continue;
+            }
+
             if(Vector3.Distance(trailObj.transform.position, PlayerMovement.Instance.transform.position) < safeDistance)
             {
                 if (!isSafe)
@@ -89,7 +98,14 @@ public class ShowSkillRange : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1f);
+
+        if (!isSafe)
+        {
+            Debug.Log("Hit");
+        }
+
+        trailRenderer.time = 0f;
+        yield return new WaitUntil(() => trailRenderer.time == 0f);
 
         trailObj.SetActive(false);
     }

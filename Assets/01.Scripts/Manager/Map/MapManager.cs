@@ -10,9 +10,11 @@ public class MapManager : MonoSingleton<MapManager>
     private List<GameObject> passedZones = new List<GameObject>();
     [SerializeField]
     private GameObject currentZone;
-
     [SerializeField]
-    private int maximumMoves = 0;
+    private bool isClear = false;
+
+    //[SerializeField]
+    //private int maximumM`oves = 0;
     int moveCount = 0;
 
     [SerializeField]
@@ -44,6 +46,10 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void MoveMap(string dir)
     {
+        if (!isClear)
+        {
+            Debug.Log($"isClear : {isClear}");
+        }
         Debug.Log("MoveMap");
 
         //int rand = Random.Range(0, zones.Length);
@@ -90,6 +96,8 @@ public class MapManager : MonoSingleton<MapManager>
 
             _ => Vector3.zero
         };
+
+        pos.z = 0f;
 
         PlayerMovement.Instance.transform.position = pos;
     }
