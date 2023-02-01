@@ -14,11 +14,8 @@ public class BossPattern : MonoBehaviour
     private Transform player;
     private Coroutine attackCoroutine = null;
 
-    public BossBase bossBase;
-
     private void Awake()
     {
-        bossBase = new BossBase();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         StartCoroutine(RandomPattern());
@@ -88,7 +85,7 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_03(int mobCount)
     {
-        Debug.Log(bossBase.Hp);
+        Debug.Log(Boss.Instance.Base.Hp);
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
 
@@ -109,11 +106,11 @@ public class BossPattern : MonoBehaviour
             }
 
         }
-        bossBase.Hp += finalCount * 10;
+        Boss.Instance.Base.Hp += finalCount * 10;
         mobList.Clear();
 
         yield return null;
-        Debug.Log(bossBase.Hp);
+        Debug.Log(Boss.Instance.Base.Hp);
         attackCoroutine = null;
     }
 }

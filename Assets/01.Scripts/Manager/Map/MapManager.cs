@@ -13,8 +13,8 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private bool isClear = false;
 
-    [SerializeField]
-    private int maximumMoves = 0;
+    //[SerializeField]
+    //private int maximumM`oves = 0;
     int moveCount = 0;
 
     [SerializeField]

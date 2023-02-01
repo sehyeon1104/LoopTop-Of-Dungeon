@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CameraShaking : MonoBehaviour
+public class CameraShaking : MonoSingleton<CameraShaking>
 {
     [SerializeField]
     private float shakingAmount = 0.5f;
