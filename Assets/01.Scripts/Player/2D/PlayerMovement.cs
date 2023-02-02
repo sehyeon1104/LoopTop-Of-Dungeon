@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField] private Joystick _joystick;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float speed;
     Rigidbody2D rb;
@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -35,13 +37,19 @@ public class PlayerMovement : MonoBehaviour
 
         if(x < 0)
         {
-            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = false;
         }
         else
         {
-            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipX = true;
         }
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EntranceDoor"))
+        {
+            MapManager.Instance.MoveMap(collision.name);
+        }
+    }
 }
