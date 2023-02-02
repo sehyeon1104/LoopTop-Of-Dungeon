@@ -11,7 +11,5 @@ public class PlayerTransformData : ScriptableObject
     public float ultiSkillDelay = 15f;
 
     public Sprite playerImg = null;
-    public Animator playerIdleAnimator = null;
-    public Animator playerAttackAnimator = null;
-    public Animator playerSkillAnimator = null;
+    public Animator playerAnim;
 }
