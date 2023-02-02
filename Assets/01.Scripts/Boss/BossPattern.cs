@@ -11,12 +11,12 @@ public class BossPattern : MonoBehaviour
 
     [SerializeField] private GameObject bullet;
 
-    //private Transform player;
+    private Transform player;
     private Coroutine attackCoroutine = null;
 
     private void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
         StartCoroutine(RandomPattern());
     }
@@ -61,7 +61,7 @@ public class BossPattern : MonoBehaviour
         GameObject clone2 = null;
         for(int i = 0; i< attackCount; i++)
         {
-            clone = Instantiate(warning, Player.Instance.transform.position, Quaternion.Euler(Vector3.zero));
+            clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
             clone2 = Instantiate(gasi, clone.transform);
