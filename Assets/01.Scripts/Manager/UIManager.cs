@@ -23,8 +23,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject blurPanel;
 
-    [SerializeField]
-    private TextMeshProUGUI pressF = null;
+    public TextMeshProUGUI pressF = null;
 
     private void Start()
     {

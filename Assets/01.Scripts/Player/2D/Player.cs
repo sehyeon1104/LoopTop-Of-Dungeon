@@ -19,6 +19,7 @@ public class Player : MonoSingleton<Player>
             {
                 PlayerTransformation.Instance.TransformGhost();
                 Boss.Instance.gameObject.SetActive(false);
+                UIManager.Instance.pressF.gameObject.SetActive(false);
             }
         }
     }
