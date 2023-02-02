@@ -56,14 +56,12 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
-        StartCoroutine(IESkillCooltime(cooltimeImg));
+        StartCoroutine(IESkillCooltime(cooltimeImg, PlayerSkill.Instance.skillCooltime));
     }
 
-    public IEnumerator IESkillCooltime(Image cooltimeImg)
+    public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
         cooltimeImg.fillAmount = 1f;
-
-        float skillCooltime = 2f;   // µð¹ö±ë¿ë ÄðÅ¸ÀÓ
 
         while(cooltimeImg.fillAmount > 0f)
         {
