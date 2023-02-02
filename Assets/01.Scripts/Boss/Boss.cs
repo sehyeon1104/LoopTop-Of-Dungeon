@@ -43,6 +43,10 @@ public class Boss : MonoSingleton<Boss>
         // TODO : 피격 애니메이션
         // TODO : 피격시 받은 데미지 표시
 
+        spriteRenderer.color = Color.black;
+        yield return new WaitForSeconds(0.01f);
+        spriteRenderer.color = Color.white;
+
         yield return new WaitForSeconds(0.05f);
         isDamaged = false;
 

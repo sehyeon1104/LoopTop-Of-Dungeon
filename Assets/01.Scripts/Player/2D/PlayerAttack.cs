@@ -6,6 +6,9 @@ public class PlayerAttack : MonoBehaviour
 {
     AgentInput agentInput = null;
 
+    [SerializeField]
+    private float attackRange = 1f;
+
     private void Awake()
     {
         agentInput = GetComponent<AgentInput>();
@@ -30,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
         Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
 
-        if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < 2f)
+        if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
             Boss.Instance.Hit((int)Player.Instance.pBase.Damage);
         }

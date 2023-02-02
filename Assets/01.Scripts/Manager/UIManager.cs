@@ -8,7 +8,9 @@ using DG.Tweening;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    // [Header("LeftUp")]
+    [Header("LeftUp")]
+    [SerializeField]
+    private Image playerIcon = null;
     // [Header("LeftDown")]
 
     [Header("Middle")]
@@ -28,6 +30,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
+        playerIcon.sprite = PlayerTransformation.Instance.playerTransformDataSO.playerImg;
 
         DisActiveAllPanels();
     }
