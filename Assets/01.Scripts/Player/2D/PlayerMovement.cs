@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField] private Joystick _joystick;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float speed;
     Rigidbody2D rb;
@@ -14,7 +14,9 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -35,11 +37,11 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
 
         if(x < 0)
         {
-            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = false;
         }
         else
         {
-            _spriteRenderer.flipX = false;
+            _spriteRenderer.flipX = true;
         }
     }
 
