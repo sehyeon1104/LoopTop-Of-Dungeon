@@ -13,6 +13,8 @@ public class PlayerTransformation : MonoSingleton<PlayerTransformation>
     public void TransformGhost()
     {
         playerTransformDataSO = playerTransformDataSOArr[1];
+        Animator animator = GetComponent<Animator>();
+        animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;
         UIManager.Instance.UpdateUI();
     }
 
