@@ -31,11 +31,15 @@ public class PlayerAttack : MonoBehaviour
 
         Debug.Log("Attack");
 
+        if (Boss.Instance.isDead)
+            return;
+
         Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
 
         if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
             Boss.Instance.Hit((int)Player.Instance.pBase.Damage);
+            StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
         }
     }
 }

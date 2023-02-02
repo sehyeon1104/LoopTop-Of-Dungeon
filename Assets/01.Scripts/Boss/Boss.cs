@@ -29,7 +29,6 @@ public class Boss : MonoSingleton<Boss>
         Base.Hp -= damage;
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
-        StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
         if(Base.Hp <= 0)
         {
@@ -42,6 +41,8 @@ public class Boss : MonoSingleton<Boss>
     {
         // TODO : 피격 애니메이션
         // TODO : 피격시 받은 데미지 표시
+
+        //StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
         spriteRenderer.color = Color.black;
         yield return new WaitForSeconds(0.01f);
@@ -56,6 +57,8 @@ public class Boss : MonoSingleton<Boss>
     public void Die()
     {
         if (isDead) return;
+
+        StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
 
         isDead = true;
         Debug.Log("Died!");
