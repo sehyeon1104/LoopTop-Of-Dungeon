@@ -27,5 +27,12 @@ public class PlayerAttack : MonoBehaviour
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
 
         Debug.Log("Attack");
+
+        Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
+
+        if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < 2f)
+        {
+            Boss.Instance.Hit((int)Player.Instance.pBase.Damage);
+        }
     }
 }

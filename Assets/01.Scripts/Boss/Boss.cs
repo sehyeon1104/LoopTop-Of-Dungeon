@@ -21,13 +21,21 @@ public class Boss : MonoSingleton<Boss>
 
     public void Hit(int damage)
     {
+        if (isDead) return;
         if (isDamaged) return;
+
 
         isDamaged = true;
         Base.Hp -= damage;
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
         StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+
+        if(Base.Hp <= 0)
+        {
+            Die();
+            return;
+        }
     }
     
     public IEnumerator IEHitAction()
@@ -46,7 +54,7 @@ public class Boss : MonoSingleton<Boss>
         if (isDead) return;
 
         isDead = true;
-
+        Debug.Log("Died!");
         gameObject.SetActive(false);
     }
 }
