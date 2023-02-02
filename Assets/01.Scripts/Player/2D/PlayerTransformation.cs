@@ -10,6 +10,10 @@ public class PlayerTransformation : MonoSingleton<PlayerTransformation>
     [SerializeField]
     private PlayerTransformData[] playerTransformDataSOArr; // 모든 변신 데이터
 
-
+    public void TransformGhost()
+    {
+        playerTransformDataSO = playerTransformDataSOArr[1];
+        UIManager.Instance.UpdateUI();
+    }
 
 }

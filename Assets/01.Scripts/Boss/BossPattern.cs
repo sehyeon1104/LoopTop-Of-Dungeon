@@ -20,7 +20,15 @@ public class BossPattern : MonoBehaviour
 
         StartCoroutine(RandomPattern());
     }
-    
+
+    private void LateUpdate()
+    {
+        if (Boss.Instance.isDead)
+        {
+            StopAllCoroutines();
+        }
+    }
+
     private IEnumerator RandomPattern()
     {
         while(true)

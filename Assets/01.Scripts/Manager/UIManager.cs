@@ -23,6 +23,9 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject blurPanel;
 
+    [SerializeField]
+    private TextMeshProUGUI pressF = null;
+
     private void Start()
     {
         UpdateUI();
@@ -73,5 +76,10 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         yield break;
+    }
+
+    public void TransformUITest()
+    {
+        pressF.gameObject.SetActive(true);
     }
 }

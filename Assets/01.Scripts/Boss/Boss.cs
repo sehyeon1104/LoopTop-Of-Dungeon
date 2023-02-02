@@ -24,7 +24,6 @@ public class Boss : MonoSingleton<Boss>
         if (isDead) return;
         if (isDamaged) return;
 
-
         isDamaged = true;
         Base.Hp -= damage;
         Debug.Log(Base.Hp);
@@ -58,10 +57,11 @@ public class Boss : MonoSingleton<Boss>
     {
         if (isDead) return;
 
-        StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
+        // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
+        UIManager.Instance.TransformUITest();
 
         isDead = true;
         Debug.Log("Died!");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 }

@@ -10,4 +10,16 @@ public class Player : MonoSingleton<Player>
     {
         pBase = new PlayerBase();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (Boss.Instance.isDead)
+            {
+                PlayerTransformation.Instance.TransformGhost();
+                Boss.Instance.gameObject.SetActive(false);
+            }
+        }
+    }
 }
