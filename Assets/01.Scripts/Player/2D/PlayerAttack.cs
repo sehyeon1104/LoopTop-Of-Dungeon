@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     AgentInput agentInput = null;
+    Animator playerAnim = null;
 
     [SerializeField]
     private float attackRange = 1f;
@@ -12,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private void Awake()
     {
         agentInput = GetComponent<AgentInput>();
+        playerAnim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -23,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
     public void InvokeAttackEvents()
     {
         agentInput.Attack.Invoke();
+        playerAnim.SetTrigger("Attack");
     }
 
     public void Attack()
