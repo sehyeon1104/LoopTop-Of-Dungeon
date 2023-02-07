@@ -26,7 +26,6 @@ public class BossBase
             else if(_hp < 0)
                 _hp = 0;
 
-
         }
     }
 
