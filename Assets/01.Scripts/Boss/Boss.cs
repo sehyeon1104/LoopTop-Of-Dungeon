@@ -6,26 +6,30 @@ using UnityEngine.UI;
 public class Boss : MonoSingleton<Boss>
 {
     public BossBase Base;
+    public MultiGage.TargetGageValue TargetGage;
 
-    public bool isDamaged { private set; get; } = false;
-    public bool isDead { private set; get; } = false;
+    public bool isBDamaged { private set; get; } = false;
+    public bool isBDead { private set; get; } = false;
 
     private SpriteRenderer spriteRenderer = null;
 
     private void Awake()
     {
         Base = new BossBase();
+        TargetGage = new MultiGage.TargetGageValue(Base.Hp);
+        MultiGage.Instance.ObserveStart(TargetGage);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Hit(int damage)
     {
-        if (isDead) return;
-        if (isDamaged) return;
+        if (isBDead) return;
+        if (isBDamaged) return;
 
-        isDamaged = true;
+        isBDamaged = true;
         Base.Hp -= damage;
+        TargetGage.value = Base.Hp;
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
 
@@ -48,19 +52,20 @@ public class Boss : MonoSingleton<Boss>
         spriteRenderer.color = Color.white;
 
         yield return new WaitForSeconds(0.05f);
-        isDamaged = false;
+        isBDamaged = false;
 
         yield break;
     }
 
     public void Die()
     {
-        if (isDead) return;
+        if (isBDead) return;
 
         // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
+        MultiGage.Instance.ObserveEnd();
         UIManager.Instance.TransformUITest();
 
-        isDead = true;
+        isBDead = true;
         Debug.Log("Died!");
         //gameObject.SetActive(false);
     }

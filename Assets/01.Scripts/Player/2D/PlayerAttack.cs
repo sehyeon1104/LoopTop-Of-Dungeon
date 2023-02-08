@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
 
         Debug.Log("Attack");
 
-        if (Boss.Instance.isDead)
+        if (Boss.Instance.isBDead)
             return;
 
         Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));

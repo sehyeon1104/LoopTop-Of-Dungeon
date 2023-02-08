@@ -26,7 +26,7 @@ public class BossPattern : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Boss.Instance.isDead)
+        if (Boss.Instance.isBDead)
         {
             StopAllCoroutines();
         }

@@ -39,9 +39,9 @@ public class CameraShaking : MonoSingleton<CameraShaking>
     public IEnumerator IECameraShakeOnce()
     {
 
+        cinemachineCam.enabled = false; // 시네머신 off
         initPos = cam.transform.position;
         // 초기 위치
-        cinemachineCam.enabled = false;
 
         postPos = Random.insideUnitCircle * shakingAmount + initPos;
         postPos.z = -10f;
