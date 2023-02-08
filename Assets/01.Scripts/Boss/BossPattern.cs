@@ -6,6 +6,9 @@ public class BossPattern : MonoBehaviour
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject gasi;
+    [SerializeField] private GameObject bossMonster;
+    [SerializeField] private ParticleSystem pattern1;
+    [SerializeField] private ParticleSystem pattern3;
 
     [Space]
 
@@ -65,8 +68,10 @@ public class BossPattern : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             clone2 = Instantiate(gasi, clone.transform);
-            
+            pattern1.transform.position = clone.transform.position;
+            pattern1.Play();
             clone2.transform.SetParent(null);
+
             Destroy(clone);
 
             yield return new WaitForSeconds(0.4f);
@@ -96,12 +101,22 @@ public class BossPattern : MonoBehaviour
         Debug.Log(Boss.Instance.Base.Hp);
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
+        List<GameObject> Patlist = new List<GameObject>();
 
-        for(int i = 0; i < mobCount; i++)
+        for (int i = 0; i < mobCount; i++)
         {
-            GameObject clone = Instantiate(gasi, new Vector2(Random.Range(0, 10), Random.Range(0, 10)), Quaternion.Euler(Vector3.zero));
+            GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(0, 10), Random.Range(0, 10)), Quaternion.Euler(Vector3.zero));
+            GameObject pattern33 = Instantiate(pattern3.gameObject, new Vector2(0,1), Quaternion.Euler(Vector3.zero));
+            pattern33.transform.position = clone.transform.position;
+            ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
+            particle.Play();
+            
+            
+            Patlist.Add(pattern33);
             mobList.Add(clone);
         }
+
+
 
         yield return new WaitForSeconds(10f);
 
