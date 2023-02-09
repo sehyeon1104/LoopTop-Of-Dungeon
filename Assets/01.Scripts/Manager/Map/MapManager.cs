@@ -5,6 +5,10 @@ using UnityEngine;
 public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField]
+    Transform[] monsterSponPoint;
+    [SerializeField]
+    GameObject enemySpawnObj;
+    [SerializeField]
     private GameObject[] zones;
     [SerializeField]
     private List<GameObject> passedZones = new List<GameObject>();
@@ -30,6 +34,10 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void Start()
     {
+        foreach (Transform trans in monsterSponPoint)
+        {
+            Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
+        }
         // SetZone();
     }
 
@@ -50,6 +58,11 @@ public class MapManager : MonoSingleton<MapManager>
         {
             Debug.Log($"isClear : {isClear}");
         }
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemys) 
+        {
+            Destroy(enemy); 
+        }
         Debug.Log("MoveMap");
 
         //int rand = Random.Range(0, zones.Length);
@@ -62,6 +75,10 @@ public class MapManager : MonoSingleton<MapManager>
 
         SetMapDirPos(moveCount);
         MovePlayerMapDir(dir);
+        foreach(Transform trans in monsterSponPoint)
+        {
+            Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
+        }
     }
 
     public void SetMapDirPos(int zoneNum)

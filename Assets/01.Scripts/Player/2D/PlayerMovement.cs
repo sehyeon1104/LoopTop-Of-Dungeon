@@ -47,7 +47,8 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("EntranceDoor"))
+        // юс╫ц
+        if (collision.CompareTag("EntranceDoor") && Boss.Instance.isBDead)
         {
             MapManager.Instance.MoveMap(collision.name);
         }
