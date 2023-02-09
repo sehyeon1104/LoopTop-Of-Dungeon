@@ -594,26 +594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &639362802 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5702903749989225633, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-  m_PrefabInstance: {fileID: 5702903748692933631}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &639362807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639362802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2609b48d341e642b164ece0f1f54d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixedAspectRatioWidth: 16
-  fixedAspectRatioHeight: 9
-  thisCanvas: {fileID: 0}
 --- !u!114 &653777966 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 89306075760770812, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
@@ -2061,34 +2041,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5702903749442671198, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749442671198, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749562410886, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749852917087, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749852917087, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749948437860, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749948437860, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5702903749989225629, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2173,65 +2125,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5702903749989225631, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749989225631, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 2560
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903749989225631, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 1440
-      objectReference: {fileID: 0}
     - target: {fileID: 5702903749989225633, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Name
       value: BossUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750547428001, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750547428001, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[2].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[2].b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[2].g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[2].r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[3].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[3].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[3].g
-      value: 0.7603102
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702903750592287710, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
-      propertyPath: multiGageColor.Array.data[3].r
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}

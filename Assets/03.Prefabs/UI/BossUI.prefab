@@ -478,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5702903749562410885
 RectTransform:
   m_ObjectHideFlags: 0
@@ -773,6 +773,7 @@ GameObject:
   - component: {fileID: 5702903749989225630}
   - component: {fileID: 5702903749989225631}
   - component: {fileID: 5702903749989225632}
+  - component: {fileID: 639362807}
   m_Layer: 5
   m_Name: BossUI
   m_TagString: Untagged
@@ -837,9 +838,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -862,6 +863,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &639362807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702903749989225633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2609b48d341e642b164ece0f1f54d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fixedAspectRatioWidth: 16
+  fixedAspectRatioHeight: 9
+  thisCanvas: {fileID: 0}
 --- !u!1 &5702903750013302294
 GameObject:
   m_ObjectHideFlags: 0
