@@ -15,18 +15,24 @@ public partial class Player : MonoSingleton<Player>, IHitAble
     AgentInput agentInput = null;
     Animator playerAnim = null;
 
+    public Sprite playerVisual { private set; get; }
+
     private void Awake()
     {
         pBase = new PlayerBase();
+        if (playerTransformDataSO == null)
+        {
+            playerTransformDataSO = playerTransformDataSOArr[0];
+        }
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Start()
     {
         agentInput.Attack.AddListener(Attack);
-        rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
