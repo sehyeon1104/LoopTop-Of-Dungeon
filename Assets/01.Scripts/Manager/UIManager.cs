@@ -32,7 +32,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
-        playerIcon.sprite = PlayerTransformation.Instance.playerTransformDataSO.playerImg;
+        playerIcon.sprite = Player.Instance.playerTransformDataSO.playerImg;
 
         DisActiveAllPanels();
     }
@@ -61,7 +61,7 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
-        StartCoroutine(IESkillCooltime(cooltimeImg, PlayerSkill.Instance.skillCooltime));
+        StartCoroutine(IESkillCooltime(cooltimeImg, Player.Instance.skillCooltime));
     }
 
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)

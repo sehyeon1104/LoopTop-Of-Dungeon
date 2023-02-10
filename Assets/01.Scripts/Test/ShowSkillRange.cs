@@ -46,7 +46,7 @@ public class ShowSkillRange : MonoBehaviour
 
         for(int i = 0; i < 4; ++i)
         {
-            trailsArr[i].transform.position = PlayerMovement.Instance.transform.position;
+            trailsArr[i].transform.position = Player.Instance.transform.position;
             StartCoroutine(IEMoveTrail(trailsArr[i], i));
         }
     }
@@ -54,7 +54,7 @@ public class ShowSkillRange : MonoBehaviour
     public IEnumerator IEMoveTrail(GameObject trailObj, int count)
     {
         Vector3 dir;
-        Vector3 initPos = PlayerMovement.Instance.transform.position;
+        Vector3 initPos = Player.Instance.transform.position;
 
         TrailRenderer trailRenderer = trailObj.GetComponent<TrailRenderer>();
 
@@ -87,7 +87,7 @@ public class ShowSkillRange : MonoBehaviour
                 continue;
             }
 
-            if(Vector3.Distance(trailObj.transform.position, PlayerMovement.Instance.transform.position) < safeDistance)
+            if(Vector3.Distance(trailObj.transform.position, Player.Instance.transform.position) < safeDistance)
             {
                 if (!isSafe)
                 {

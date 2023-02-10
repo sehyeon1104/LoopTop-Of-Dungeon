@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoSingleton<PlayerMovement>
+// Player MoveMent Class
+public partial class Player
 {
     [SerializeField] private Joystick _joystick;
     private SpriteRenderer _spriteRenderer;
@@ -10,12 +11,6 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     [SerializeField] private float speed;
     Rigidbody2D rb;
     Vector2 moveVec2;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
 
     private void FixedUpdate()
     {
@@ -35,7 +30,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
             return;
         }
 
-        if(x < 0)
+        if (x < 0)
         {
             _spriteRenderer.flipX = false;
         }

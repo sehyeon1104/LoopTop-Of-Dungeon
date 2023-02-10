@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTransformation : MonoSingleton<PlayerTransformation>
+// Player Transformation Class
+public partial class Player
 {
     [field:SerializeField]
     public PlayerTransformData playerTransformDataSO { private set; get; }      // 현재 변신 데이터
