@@ -14,7 +14,7 @@ public partial class Player : MonoSingleton<Player>, IHitAble
 
     AgentInput agentInput = null;
     Animator playerAnim = null;
-
+    
     public Sprite playerVisual { private set; get; }
 
     private void Awake()
@@ -45,6 +45,11 @@ public partial class Player : MonoSingleton<Player>, IHitAble
                 Boss.Instance.gameObject.SetActive(false);
                 UIManager.Instance.pressF.gameObject.SetActive(false);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            pBase.Exp += 100;
         }
     }
 
