@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoSingleton<Player>
+public partial class Player : MonoSingleton<Player>, IHitAble
 {
     public PlayerBase pBase;
 
@@ -12,9 +12,21 @@ public class Player : MonoSingleton<Player>
     [SerializeField]
     private float InvincibleTime = 0.2f;    // 무적시간
 
+    AgentInput agentInput = null;
+    Animator playerAnim = null;
+
     private void Awake()
     {
         pBase = new PlayerBase();
+        agentInput = GetComponent<AgentInput>();
+        playerAnim = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        agentInput.Attack.AddListener(Attack);
+        rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Update()
@@ -23,7 +35,7 @@ public class Player : MonoSingleton<Player>
         {
             if (Boss.Instance.isBDead)
             {
-                PlayerTransformation.Instance.TransformGhost();
+                TransformGhost();
                 Boss.Instance.gameObject.SetActive(false);
                 UIManager.Instance.pressF.gameObject.SetActive(false);
             }
@@ -32,16 +44,16 @@ public class Player : MonoSingleton<Player>
 
     // TODO : 적과 플레이어의 거리에 따라 피격판정
 
-    public void Damaged(int damage)
+    public void GetHit(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged) 
+        if (isPDamaged)
             return;
 
         isPDamaged = true;
 
         // TODO : 피격 애니메이션 재생
 
-        pBase.Hp -= damage;
+        pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
     }
 

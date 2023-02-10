@@ -2,24 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+// Player Attack Class
+public partial class Player
 {
-    AgentInput agentInput = null;
-    Animator playerAnim = null;
-
     [SerializeField]
     private float attackRange = 1f;
-
-    private void Awake()
-    {
-        agentInput = GetComponent<AgentInput>();
-        playerAnim = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
-        agentInput.Attack.AddListener(Attack);
-    }
 
     // 공격 버튼을 눌렀을 때 발동될 함수
     public void InvokeAttackEvents()
@@ -41,7 +28,8 @@ public class PlayerAttack : MonoBehaviour
 
         if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
-            Boss.Instance.Hit((int)Player.Instance.pBase.Damage);
+            Boss.Instance.GetHit(pBase.Damage, gameObject, Player.Instance.pBase.CritChance);
+            //Boss.Instance.Hit((int)Player.Instance.pBase.Damage);
             StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
         }
     }

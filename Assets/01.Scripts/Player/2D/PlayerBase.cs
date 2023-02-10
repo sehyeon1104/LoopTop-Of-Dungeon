@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class PlayerBase
 {
-    private int _hp;
-    private int _maxHp;
-    private float _damage;
     public PlayerBase()
     {
         SetPlayerStat();
     }
 
+    private int _hp;
     public int Hp
     {
         get
@@ -32,8 +30,10 @@ public class PlayerBase
         }
     }
 
+    private int _maxHp;
     public int MaxHp { get { return _maxHp; } }
 
+    private float _damage;
     public float Damage
     {
         get
@@ -45,10 +45,35 @@ public class PlayerBase
             _damage = value;
         }
     }
+
+    private float _critChance;
+    public float CritChance
+    {
+        get
+        {
+            return _critChance;
+        }
+        set
+        {
+            _critChance = value;
+
+            if(_critChance > 100)
+            {
+                _critChance = 100;
+            }
+            else if(_critChance < 0)
+            {
+                _critChance = 0;
+            }
+
+        }
+    }
+
     public void SetPlayerStat()
     {
         _maxHp = 3;
         _hp = _maxHp;
         _damage = 5f;
+        _critChance = 5f;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Boss : MonoSingleton<Boss>
+public class Boss : MonoSingleton<Boss>, IHitAble
 {
     public BossBase Base;
     public MultiGage.TargetGageValue TargetGage;
@@ -20,24 +20,6 @@ public class Boss : MonoSingleton<Boss>
         MultiGage.Instance.ObserveStart(TargetGage);
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    public void Hit(int damage)
-    {
-        if (isBDead) return;
-        if (isBDamaged) return;
-
-        isBDamaged = true;
-        Base.Hp -= damage;
-        TargetGage.value = Base.Hp;
-        Debug.Log(Base.Hp);
-        StartCoroutine(IEHitAction());
-
-        if(Base.Hp <= 0)
-        {
-            Die();
-            return;
-        }
     }
     
     public IEnumerator IEHitAction()
@@ -68,5 +50,23 @@ public class Boss : MonoSingleton<Boss>
         isBDead = true;
         Debug.Log("Died!");
         //gameObject.SetActive(false);
+    }
+
+    public void GetHit(float damage, GameObject damageDealer, float critChance)
+    {
+        if (isBDead) return;
+        if (isBDamaged) return;
+
+        isBDamaged = true;
+        Base.Hp -= (int)damage;
+        TargetGage.value = Base.Hp;
+        Debug.Log(Base.Hp);
+        StartCoroutine(IEHitAction());
+
+        if (Base.Hp <= 0)
+        {
+            Die();
+            return;
+        }
     }
 }
