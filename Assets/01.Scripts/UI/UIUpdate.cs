@@ -8,11 +8,16 @@ public class UIUpdate : MonoBehaviour
     GameObject hpPrefab;    
     private void Start()
     { 
-        HpUpdate(3);
+        HpUpdate();
     }
-    public void HpUpdate(int hp)
+    public void HpUpdate()
     {
-        for (int i = 0; i < hp; i++)
+        Transform[] hpbars = GetComponentsInChildren<RectTransform>();
+       for(int i=1; i<hpbars.Length; i++)
+        {
+            Destroy(hpbars[i].gameObject);
+        }
+        for (int i = 0; i < Player.Instance.Hp; i++)
         {
             Instantiate(hpPrefab, new Vector3(255+105 * i, 1030 ,0), Quaternion.identity,transform/*, transform.Find("HPbar").transform*/);
         }
