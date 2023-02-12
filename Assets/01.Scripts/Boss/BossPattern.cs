@@ -6,6 +6,7 @@ public class BossPattern : MonoBehaviour
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject gasi;
+    [SerializeField] private GameObject monster;
 
     [Space]
 
@@ -20,7 +21,10 @@ public class BossPattern : MonoBehaviour
 
         StartCoroutine(RandomPattern());
     }
-
+    private void Update()
+    {
+        MoveToPlayer();
+    }
     private void LateUpdate()
     {
         if (Boss.Instance.isBDead)
@@ -29,6 +33,14 @@ public class BossPattern : MonoBehaviour
         }
     }
 
+    private void MoveToPlayer()
+    {
+        if (attackCoroutine == null)
+        {
+            Vector2 dir = player.position - transform.position;
+            transform.Translate(dir.normalized * Time.deltaTime);
+        }
+    }
     private IEnumerator RandomPattern()
     {
         while(true)
@@ -44,13 +56,13 @@ public class BossPattern : MonoBehaviour
                         attackCoroutine = StartCoroutine(Pattern_02(Random.Range(25, 30)));
                         break;
                     case 2:
-                        attackCoroutine = StartCoroutine(Pattern_03(Random.Range(10, 15)));
+                        attackCoroutine = StartCoroutine(Pattern_03(10));
                         break;
                 }
-
-                yield return new WaitForSeconds(2f);
             }
-            yield return null;
+            yield return new WaitUntil(() => attackCoroutine == null);
+
+            yield return new WaitForSeconds(5f);
 
         }
     }
@@ -93,13 +105,12 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_03(int mobCount)
     {
-        Debug.Log(Boss.Instance.Base.Hp);
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
 
         for(int i = 0; i < mobCount; i++)
         {
-            GameObject clone = Instantiate(gasi, new Vector2(Random.Range(0, 10), Random.Range(0, 10)), Quaternion.Euler(Vector3.zero));
+            GameObject clone = Instantiate(monster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.Euler(Vector3.zero));
             mobList.Add(clone);
         }
 
