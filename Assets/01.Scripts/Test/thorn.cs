@@ -9,7 +9,7 @@ public class thorn : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<IHittable>().OnDamage(1);
+            collision.gameObject.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
             //IHittable hittable= collision.GetComponent<IHittable>();
             //hittable.OnDamage(1);
         }

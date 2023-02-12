@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoSingleton<Player> , IHittable , IAgent
+public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
     int hp=3;
@@ -12,6 +12,11 @@ public class Player : MonoSingleton<Player> , IHittable , IAgent
 
     [SerializeField]
     private float InvincibleTime = 0.2f;    // 무적시간
+
+    AgentInput agentInput = null;
+    Animator playerAnim = null;
+
+    public Sprite playerVisual { private set; get; }
 
     public Vector3 hitPoint { get; private set; }
 
@@ -23,9 +28,18 @@ public class Player : MonoSingleton<Player> , IHittable , IAgent
     private void Awake()
     {
         pBase = new PlayerBase();
+        if (playerTransformDataSO == null)
+        {
+            playerTransformDataSO = playerTransformDataSOArr[0];
+        }
+        agentInput = GetComponent<AgentInput>();
+        playerAnim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     private void Start()
     {
+        agentInput.Attack.AddListener(Attack);
         hp = 3;
     }
     private void Update()
@@ -34,10 +48,16 @@ public class Player : MonoSingleton<Player> , IHittable , IAgent
         {
             if (Boss.Instance.isBDead)
             {
-                PlayerTransformation.Instance.TransformGhost();
+                TransformGhost();
                 Boss.Instance.gameObject.SetActive(false);
                 UIManager.Instance.pressF.gameObject.SetActive(false);
             }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            pBase.Exp += 100;
         }
     }
 
@@ -65,9 +85,9 @@ public class Player : MonoSingleton<Player> , IHittable , IAgent
         yield break;
     }
 
-    public void OnDamage(int damage)
+    public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-       Hp-= damage;
+        Hp -= (int)damage;
         GetHit.Invoke();
     }
 }

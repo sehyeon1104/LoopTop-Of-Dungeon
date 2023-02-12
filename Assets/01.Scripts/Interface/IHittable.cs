@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IHittable
 {
     Vector3 hitPoint { get; }
-    void OnDamage(int damage);
+    void OnDamage(float damage, GameObject damageDealer, float critChance);
 }
