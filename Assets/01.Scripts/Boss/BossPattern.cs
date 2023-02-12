@@ -20,7 +20,7 @@ public class BossPattern : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = Player.Instance.transform;
         hp = Boss.Instance.Base.Hp;
 
         StartCoroutine(RandomPattern());
