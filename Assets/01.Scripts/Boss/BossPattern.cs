@@ -7,6 +7,7 @@ public class BossPattern : MonoBehaviour
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject gasi;
     [SerializeField] private GameObject bossMonster;
+
     [SerializeField] private ParticleSystem pattern1;
     [SerializeField] private ParticleSystem pattern3;
 
@@ -16,12 +17,18 @@ public class BossPattern : MonoBehaviour
 
     private Transform player;
     private Coroutine attackCoroutine = null;
+    private bool isHealUsed = false;
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = Player.Instance.transform;
 
         StartCoroutine(RandomPattern());
+    }
+
+    private void Update()
+    {
+        MoveToPlayer();
     }
 
     private void LateUpdate()
@@ -32,42 +39,48 @@ public class BossPattern : MonoBehaviour
         }
     }
 
+    public void MoveToPlayer()
+    {
+        if (attackCoroutine != null) return;
+        Vector2 dir = player.position - transform.position;
+        transform.Translate(dir.normalized * Time.deltaTime);
+    }
     private IEnumerator RandomPattern()
     {
         while(true)
         {
             if (attackCoroutine == null)
             {
-                switch (Random.Range(0, 3))
+                if (!isHealUsed && Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
                 {
-                    case 0:
-                        attackCoroutine = StartCoroutine(Pattern_01(Random.Range(3,5)));
-                        break;
-                    case 1:
-                        attackCoroutine = StartCoroutine(Pattern_02(Random.Range(25, 30)));
-                        break;
-                    case 2:
-                        attackCoroutine = StartCoroutine(Pattern_03(Random.Range(10, 15)));
-                        break;
+                    attackCoroutine = StartCoroutine(Pattern_03(10));
                 }
-
-                yield return new WaitForSeconds(2f);
+                else
+                {
+                    switch (Random.Range(0, 2))
+                    {
+                        case 0:
+                            attackCoroutine = StartCoroutine(Pattern_01(Random.Range(3, 5)));
+                            break;
+                        case 1:
+                            attackCoroutine = StartCoroutine(Pattern_02(Random.Range(25, 30)));
+                            break;
+                    }
+                }
             }
-            yield return null;
-
+            yield return new WaitUntil(() => attackCoroutine == null);
+            yield return new WaitForSeconds(5f);
         }
     }
 
     private IEnumerator Pattern_01(int attackCount)
     {
-        GameObject clone = null;
-        GameObject clone2 = null;
         for(int i = 0; i< attackCount; i++)
         {
-            clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
+            GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
-            clone2 = Instantiate(gasi, clone.transform);
+            GameObject clone2 = Instantiate(gasi, clone.transform);
             pattern1.transform.position = clone.transform.position;
             pattern1.Play();
             clone2.transform.SetParent(null);
@@ -98,14 +111,13 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_03(int mobCount)
     {
-        Debug.Log(Boss.Instance.Base.Hp);
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
         List<GameObject> Patlist = new List<GameObject>();
 
         for (int i = 0; i < mobCount; i++)
         {
-            GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(0, 10), Random.Range(0, 10)), Quaternion.Euler(Vector3.zero));
+            GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.Euler(Vector3.zero));
             GameObject pattern33 = Instantiate(pattern3.gameObject, new Vector2(0,1), Quaternion.Euler(Vector3.zero));
             pattern33.transform.position = clone.transform.position;
             ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
@@ -115,8 +127,6 @@ public class BossPattern : MonoBehaviour
             Patlist.Add(pattern33);
             mobList.Add(clone);
         }
-
-
 
         yield return new WaitForSeconds(10f);
 
