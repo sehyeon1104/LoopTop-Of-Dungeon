@@ -15,9 +15,13 @@ public class BossPattern : MonoBehaviour
     private Transform player;
     private Coroutine attackCoroutine = null;
 
+    private float hp = 0.0f;
+    private float speed = 1.5f; 
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        hp = Boss.Instance.Base.Hp;
 
         StartCoroutine(RandomPattern());
     }
@@ -41,6 +45,7 @@ public class BossPattern : MonoBehaviour
             transform.Translate(dir.normalized * Time.deltaTime);
         }
     }
+
     private IEnumerator RandomPattern()
     {
         while(true)
@@ -69,14 +74,12 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_01(int attackCount)
     {
-        GameObject clone = null;
-        GameObject clone2 = null;
         for(int i = 0; i< attackCount; i++)
         {
-            clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
+            GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
-            clone2 = Instantiate(gasi, clone.transform);
+            GameObject clone2 = Instantiate(gasi, clone.transform);
             
             clone2.transform.SetParent(null);
             Destroy(clone);
@@ -105,6 +108,8 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_03(int mobCount)
     {
+        if (hp >= Boss.Instance.Base.MaxHp * 0.4f) yield break;
+
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
 
@@ -123,13 +128,11 @@ public class BossPattern : MonoBehaviour
                 finalCount++;
                 Destroy(mob);
             }
-
         }
-        Boss.Instance.Base.Hp += finalCount * 10;
+        hp += finalCount * 10;
         mobList.Clear();
 
         yield return null;
-        Debug.Log(Boss.Instance.Base.Hp);
         attackCoroutine = null;
     }
 }
