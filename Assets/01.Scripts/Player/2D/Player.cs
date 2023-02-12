@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public partial class Player : MonoSingleton<Player>, IHitAble
+public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
-
+    int hp=3;
     private bool isPDamaged = false;
     private bool isPDead = false;
 
@@ -14,8 +15,15 @@ public partial class Player : MonoSingleton<Player>, IHitAble
 
     AgentInput agentInput = null;
     Animator playerAnim = null;
-    
+
     public Sprite playerVisual { private set; get; }
+
+    public Vector3 hitPoint { get; private set; }
+
+    public int Hp { get=>hp; 
+         set=> hp=value; }
+   [field:SerializeField] public UnityEvent GetHit { get; set; }
+   [field:SerializeField] public UnityEvent OnDie { get; set; }
 
     private void Awake()
     {
@@ -29,12 +37,11 @@ public partial class Player : MonoSingleton<Player>, IHitAble
         rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
-
     private void Start()
     {
         agentInput.Attack.AddListener(Attack);
+        hp = 3;
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -47,6 +54,7 @@ public partial class Player : MonoSingleton<Player>, IHitAble
             }
         }
 
+
         if (Input.GetKeyDown(KeyCode.L))
         {
             pBase.Exp += 100;
@@ -55,16 +63,16 @@ public partial class Player : MonoSingleton<Player>, IHitAble
 
     // TODO : 적과 플레이어의 거리에 따라 피격판정
 
-    public void GetHit(float damage, GameObject damageDealer, float critChance)
+    public void Damaged(int damage)
     {
-        if (isPDamaged)
+        if (isPDamaged) 
             return;
 
         isPDamaged = true;
 
         // TODO : 피격 애니메이션 재생
 
-        pBase.Hp -= (int)damage;
+        pBase.Hp -= damage;
         StartCoroutine(IEDamaged());
     }
 
@@ -75,5 +83,11 @@ public partial class Player : MonoSingleton<Player>, IHitAble
         isPDamaged = false;
 
         yield break;
+    }
+
+    public void OnDamage(float damage, GameObject damageDealer, float critChance)
+    {
+        Hp -= (int)damage;
+        GetHit.Invoke();
     }
 }

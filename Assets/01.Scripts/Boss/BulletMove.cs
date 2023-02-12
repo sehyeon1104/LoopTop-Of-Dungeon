@@ -15,4 +15,13 @@ public class BulletMove : MonoBehaviour
     {
         transform.Translate(transform.right * Time.deltaTime * speed);
     }
-}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            //IHittable hittable= collision.GetComponent<IHittable>();
+            //hittable.OnDamage(1);
+        }
+    }
+}   
