@@ -7,6 +7,7 @@ public abstract class EnemyDefault : MonoBehaviour
     protected Transform player;
     private float distanceToPlayer;
 
+    [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
 
     void Start()
@@ -19,10 +20,17 @@ public abstract class EnemyDefault : MonoBehaviour
     {
         distanceToPlayer = Vector2.Distance(player.position, transform.position);
 
-        if (distanceToPlayer >= minDistance)
-            MoveToPlayer();
-        else
-            AttackToPlayer();
+        switch (distanceToPlayer)
+        {
+            case var a when a <= detectDistance && a >= minDistance:
+                MoveToPlayer();
+                break;
+            case var a when a < minDistance:
+                AttackToPlayer();
+                break;
+            default:
+                break;
+        }
     }
 
     public abstract void MoveToPlayer();
