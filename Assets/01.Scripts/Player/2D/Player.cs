@@ -37,6 +37,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     private void Start()
     {
         agentInput.Attack.AddListener(Attack);
+        InitCooltimeBools();
     }
     private void Update()
     {
