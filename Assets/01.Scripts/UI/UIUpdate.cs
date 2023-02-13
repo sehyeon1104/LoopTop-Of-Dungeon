@@ -17,7 +17,7 @@ public class UIUpdate : MonoBehaviour
         {
             Destroy(hpbars[i].gameObject);
         }
-        for (int i = 0; i < Player.Instance.Hp; i++)
+        for (int i = 0; i < Player.Instance.pBase.Hp; i++)
         {
             Instantiate(hpPrefab, new Vector3(255+105 * i, 1030 ,0), Quaternion.identity,transform/*, transform.Find("HPbar").transform*/);
         }

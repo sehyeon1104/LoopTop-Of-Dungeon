@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
-    int hp=3;
     private bool isPDamaged = false;
     private bool isPDead = false;
 
@@ -20,8 +19,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     public Vector3 hitPoint { get; private set; }
 
-    public int Hp { get=>hp; 
-         set=> hp=value; }
    [field:SerializeField] public UnityEvent GetHit { get; set; }
    [field:SerializeField] public UnityEvent OnDie { get; set; }
 
@@ -40,7 +37,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     private void Start()
     {
         agentInput.Attack.AddListener(Attack);
-        hp = 3;
     }
     private void Update()
     {
@@ -61,33 +57,26 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         }
     }
 
-    // TODO : 적과 플레이어의 거리에 따라 피격판정
-
-    public void Damaged(int damage)
+    public IEnumerator IEDamaged()
     {
-        if (isPDamaged) 
+        GetHit.Invoke();
+        yield return new WaitForSeconds(InvincibleTime);
+
+        isPDamaged = false;
+
+        yield return null;
+    }
+
+    public void OnDamage(float damage, GameObject damageDealer, float critChance)
+    {
+        if (isPDamaged)
             return;
 
         isPDamaged = true;
 
         // TODO : 피격 애니메이션 재생
 
-        pBase.Hp -= damage;
+        pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
-    }
-
-    public IEnumerator IEDamaged()
-    {
-        yield return new WaitForSeconds(InvincibleTime);
-
-        isPDamaged = false;
-
-        yield break;
-    }
-
-    public void OnDamage(float damage, GameObject damageDealer, float critChance)
-    {
-        Hp -= (int)damage;
-        GetHit.Invoke();
     }
 }

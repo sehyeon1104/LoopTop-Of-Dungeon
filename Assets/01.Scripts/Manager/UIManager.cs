@@ -11,13 +11,17 @@ public class UIManager : MonoSingleton<UIManager>
     [Header("LeftUp")]
     [SerializeField]
     private Image playerIcon = null;
+    [SerializeField]
+    private GameObject hpPrefab;
+    [SerializeField]
+    private GameObject hpSpace;
     // [Header("LeftDown")]
 
     [Header("Middle")]
     [SerializeField]
     private GameObject pausePanel;
 
-    // [Header("RightUp")]
+    //[Header("RightUp")]
     // [Header("RightDown")]
 
     [SerializeField]
@@ -35,6 +39,7 @@ public class UIManager : MonoSingleton<UIManager>
         playerIcon.sprite = Player.Instance.playerTransformDataSO.playerImg;
 
         DisActiveAllPanels();
+        HpUpdate();
     }
 
     public void DisActiveAllPanels()
@@ -80,5 +85,20 @@ public class UIManager : MonoSingleton<UIManager>
     public void TransformUITest()
     {
         pressF.gameObject.SetActive(true);
+    }
+
+    public void HpUpdate()
+    {
+        Transform[] hpbars = GetComponentsInChildren<RectTransform>();
+        for (int i = 1; i < hpbars.Length; i++)
+        {
+            Destroy(hpbars[i].gameObject);
+        }
+        for (int i = 0; i < Player.Instance.pBase.Hp; i++)
+        {
+            Instantiate(hpPrefab, hpSpace.transform);
+            //Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, transform/*, transform.Find("HPbar").transform*/);
+        }
+
     }
 }
