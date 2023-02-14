@@ -41,6 +41,8 @@ public class PlayerBase
             {
                 _hp = _maxHp;
             }
+
+            UIManager.Instance.HpUpdate();
         }
     }
 
