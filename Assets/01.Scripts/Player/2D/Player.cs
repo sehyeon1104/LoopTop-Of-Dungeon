@@ -80,4 +80,10 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
     }
+
+    public void Dead()
+    {
+        Debug.Log("»ç¸Á");
+        gameObject.SetActive(false);
+    }
 }

@@ -35,6 +35,7 @@ public class PlayerBase
             _hp = value;
             if(_hp < 0)
             {
+                Player.Instance.Dead();
                 _hp = 0;
             }
             else if(_hp > _maxHp)
