@@ -9,6 +9,20 @@ public class PlayerBase
         SetPlayerStat();
     }
 
+    private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
+
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    {
+        get
+        {
+            return _playerTransformTypeFlag;
+        }
+        set
+        {
+            _playerTransformTypeFlag = value;
+        }
+    }
+
     private int _hp;
     public int Hp
     {

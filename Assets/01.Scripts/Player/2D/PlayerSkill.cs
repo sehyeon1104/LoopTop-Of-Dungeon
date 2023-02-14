@@ -27,7 +27,7 @@ public partial class Player
 
     public void Skill1()
     {
-        if (coolTimes[1])
+        if (coolTimes[1] || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("½ºÅ³ 1");
 
@@ -39,7 +39,7 @@ public partial class Player
 
     public void HillaPattern()    // Èú¶ó ÆÐÅÏ
     {
-        if (coolTimes[2])
+        if (coolTimes[2] || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("½ºÅ³ 2");
 
@@ -58,7 +58,7 @@ public partial class Player
 
     public void UltimateSkill()
     {
-        if (coolTimes[3])
+        if (coolTimes[3] || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("±Ã±Ø±â");
 

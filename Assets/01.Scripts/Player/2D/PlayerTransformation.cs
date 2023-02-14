@@ -15,6 +15,7 @@ public partial class Player
 
     public void TransformGhost()
     {
+        pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         playerTransformDataSO = playerTransformDataSOArr[1];
         Animator animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;
