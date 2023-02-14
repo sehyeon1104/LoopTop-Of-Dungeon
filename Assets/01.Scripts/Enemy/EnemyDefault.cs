@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class EnemyDefault : MonoBehaviour
 {
-    protected Transform player;
+    protected Transform playerTransform;
     private float distanceToPlayer;
 
     [SerializeField] private float detectDistance = 5f;
@@ -12,13 +12,13 @@ public abstract class EnemyDefault : MonoBehaviour
 
     void Start()
     {
-        player = Player.Instance.transform;
+        playerTransform = Player.Instance.transform;
     }
 
 
     void Update()
     {
-        distanceToPlayer = Vector2.Distance(player.position, transform.position);
+        distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
 
         switch (distanceToPlayer)
         {
