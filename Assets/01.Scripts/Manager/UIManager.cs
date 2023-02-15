@@ -89,6 +89,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void HpUpdate()
     {
+       
         Transform[] hpbars = hpSpace.GetComponentsInChildren<RectTransform>();
         for (int i = 1; i < hpbars.Length; i++)
         {
@@ -97,8 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
         for (int i = 0; i < Player.Instance.pBase.Hp; i++)
         {
             Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
-            Instantiate(hpPrefab, hpSpace.transform);
-            //Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, transform/*, transform.Find("HPbar").transform*/);
+            //Instantiate(hpPrefab, hpSpace.transform);
+            Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
         }
 
     }

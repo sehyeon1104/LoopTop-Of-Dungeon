@@ -36,6 +36,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
+        pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
         InitCooltimeBools();
     }
@@ -51,7 +52,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             }
         }
 
-
+        print(pBase.PlayerTransformTypeFlag);   
         if (Input.GetKeyDown(KeyCode.L))
         {
             pBase.Exp += 100;
