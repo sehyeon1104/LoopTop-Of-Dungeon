@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Boss : MonoSingleton<Boss>, IHitAble
+public class Boss : MonoSingleton<Boss>, IHittable
 {
     public BossBase Base;
     public MultiGage.TargetGageValue TargetGage;
 
     public bool isBDamaged { private set; get; } = false;
     public bool isBDead { private set; get; } = false;
+
+    public Vector3 hitPoint { get; }
 
     private SpriteRenderer spriteRenderer = null;
 
@@ -52,7 +54,7 @@ public class Boss : MonoSingleton<Boss>, IHitAble
         //gameObject.SetActive(false);
     }
 
-    public void GetHit(float damage, GameObject damageDealer, float critChance)
+    public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
         if (isBDead) return;
         if (isBDamaged) return;
