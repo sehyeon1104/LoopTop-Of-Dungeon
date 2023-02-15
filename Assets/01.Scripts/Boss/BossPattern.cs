@@ -68,12 +68,11 @@ public class BossPattern : MonoBehaviour
                     switch (Random.Range(0, 3))
                     {
                         case 0:
-                            //attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
+                            attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
                         case 1:
-                            //attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
-                            attackCoroutine = StartCoroutine(Pattern_Teleport());
+                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
                             break;
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
@@ -138,19 +137,17 @@ public class BossPattern : MonoBehaviour
             transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
         }
 
-        transform.position = /*player.right +*/ player.position;
+        transform.position = player.forward + player.position;
         moveSpeed *= 2f;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         dir = player.position - transform.position;
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float angle = 14.4f;
+        float angle = 7.2f;
 
-        for (int i = -2; i < 3; i++)
+        for (int i = -4; i < 4; i++)
         {
-            //rot = Quaternion.Euler(Vector3.forward * (angle * i));
-            //rot.x = rot.y = 0;
             GameObject clone = Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
         }
 
