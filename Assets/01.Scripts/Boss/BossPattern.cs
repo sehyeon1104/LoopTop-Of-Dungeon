@@ -68,10 +68,12 @@ public class BossPattern : MonoBehaviour
                     switch (Random.Range(0, 3))
                     {
                         case 0:
-                            attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
+                            //attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
+                            attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
+                            //attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
+                            attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
@@ -80,7 +82,7 @@ public class BossPattern : MonoBehaviour
                 }
             }
             yield return new WaitUntil(() => attackCoroutine == null);
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -124,18 +126,35 @@ public class BossPattern : MonoBehaviour
     {
         moveSpeed *= 0.5f;
         float timer = 0f;
-        
-        while(timer <= 3f)
+        Vector3 dir;
+
+
+        while (timer <= 3f)
         {
             timer += Time.deltaTime;
             yield return null;
 
-            Vector2 dir = player.position - transform.position;
+            dir = player.position - transform.position;
             transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
         }
 
-        transform.position = player.right + player.position;
+        transform.position = /*player.right +*/ player.position;
         moveSpeed *= 2f;
+
+        yield return new WaitForSeconds(3f);
+
+        dir = player.position - transform.position;
+        float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float angle = 14.4f;
+
+        for (int i = -2; i < 3; i++)
+        {
+            //rot = Quaternion.Euler(Vector3.forward * (angle * i));
+            //rot.x = rot.y = 0;
+            GameObject clone = Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
+        }
+
+
 
         yield return null;
         attackCoroutine = null;
