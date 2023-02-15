@@ -14,10 +14,13 @@ public class BossPattern : MonoBehaviour
     [Space]
 
     [SerializeField] private GameObject bullet;
+    [SerializeField] private float moveSpeed = 2f;
 
     private Transform player;
     private Coroutine attackCoroutine = null;
+
     private bool isHealUsed = false;
+
 
     private void Awake()
     {
@@ -41,10 +44,15 @@ public class BossPattern : MonoBehaviour
 
     public void MoveToPlayer()
     {
-        if (attackCoroutine != null) return;
+        if (attackCoroutine != null || Boss.Instance.isBDead) return;
+
+        float playerDistance = Vector2.Distance(player.position, transform.position);
+        if (playerDistance <= 1f) return;
+
         Vector2 dir = player.position - transform.position;
-        transform.Translate(dir.normalized * Time.deltaTime);
+        transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
     }
+
     private IEnumerator RandomPattern()
     {
         while(true)
@@ -53,17 +61,20 @@ public class BossPattern : MonoBehaviour
             {
                 if (!isHealUsed && Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
                 {
-                    attackCoroutine = StartCoroutine(Pattern_03(10));
+                    attackCoroutine = StartCoroutine(Pattern_SummonMonster(10));
                 }
                 else
                 {
-                    switch (Random.Range(0, 2))
+                    switch (Random.Range(0, 3))
                     {
                         case 0:
-                            attackCoroutine = StartCoroutine(Pattern_01(Random.Range(3, 5)));
+                            attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern_02(Random.Range(25, 30)));
+                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
+                            break;
+                        case 2:
+                            attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
                     }
                 }
@@ -73,7 +84,7 @@ public class BossPattern : MonoBehaviour
         }
     }
 
-    private IEnumerator Pattern_01(int attackCount)
+    private IEnumerator Pattern_MakeThorn(int attackCount)
     {
         for(int i = 0; i< attackCount; i++)
         {
@@ -95,7 +106,7 @@ public class BossPattern : MonoBehaviour
         attackCoroutine = null;
     }
 
-    private IEnumerator Pattern_02(int attackCount)
+    private IEnumerator Pattern_ShootBullet(int attackCount)
     {
         float angle = 360 / (attackCount * 0.89f);
         
@@ -109,7 +120,28 @@ public class BossPattern : MonoBehaviour
         attackCoroutine = null;
     }
 
-    private IEnumerator Pattern_03(int mobCount)
+    private IEnumerator Pattern_Teleport()
+    {
+        moveSpeed *= 0.5f;
+        float timer = 0f;
+        
+        while(timer <= 3f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+
+            Vector2 dir = player.position - transform.position;
+            transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
+        }
+
+        transform.position = player.right + player.position;
+        moveSpeed *= 2f;
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    private IEnumerator Pattern_SummonMonster(int mobCount)
     {
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();

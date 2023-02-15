@@ -9,6 +9,20 @@ public class PlayerBase
         SetPlayerStat();
     }
 
+    private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
+
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    {
+        get
+        {
+            return _playerTransformTypeFlag;
+        }
+        set
+        {
+            _playerTransformTypeFlag = value;
+        }
+    }
+
     private int _hp;
     public int Hp
     {
@@ -21,12 +35,15 @@ public class PlayerBase
             _hp = value;
             if(_hp < 0)
             {
+                Player.Instance.Dead();
                 _hp = 0;
             }
             else if(_hp > _maxHp)
             {
                 _hp = _maxHp;
             }
+
+            UIManager.Instance.HpUpdate();
         }
     }
 

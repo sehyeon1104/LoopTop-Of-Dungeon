@@ -22,6 +22,7 @@ public class GhostSummoner : MonoBehaviour
     [SerializeField]
     private GameObject nearestEnemy;
 
+    private float dis = 0f;
     private float shortestDis = 10000f;
     private Vector3 dir;
 
@@ -29,6 +30,7 @@ public class GhostSummoner : MonoBehaviour
 
     private void OnEnable()
     {
+        nearestEnemy = null;
         FindNearestEnemy();
     }
 
@@ -44,6 +46,8 @@ public class GhostSummoner : MonoBehaviour
 
     private void FindNearestEnemy()
     {
+        nearestEnemy = null;
+
         if (isTargerting)
         {
             return;
@@ -58,9 +62,11 @@ public class GhostSummoner : MonoBehaviour
 
         foreach(var enemy in enemies)
         {
-            if(Vector2.Distance(enemy.transform.position, transform.position) < shortestDis)
+            dis = Vector2.Distance(enemy.transform.position, Player.Instance.transform.position);
+            if (dis < shortestDis)
             {
                 nearestEnemy = enemy;
+                shortestDis = dis;
             }
         }
 
