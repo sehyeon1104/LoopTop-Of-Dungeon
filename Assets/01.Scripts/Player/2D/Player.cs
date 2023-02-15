@@ -52,7 +52,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             }
         }
 
-        print(pBase.PlayerTransformTypeFlag);   
+        //print(pBase.PlayerTransformTypeFlag);   
         if (Input.GetKeyDown(KeyCode.L))
         {
             pBase.Exp += 100;
