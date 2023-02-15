@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyDefault : MonoBehaviour
+public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
+    protected int hp;
+    protected float damage;
+
     protected Transform playerTransform;
     private float distanceToPlayer;
 
     [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
+
+    public Vector3 hitPoint => Vector3.zero;
 
     void Start()
     {
@@ -35,4 +40,7 @@ public abstract class EnemyDefault : MonoBehaviour
 
     public abstract void MoveToPlayer();
     public virtual void AttackToPlayer(){}
+
+    public virtual void OnDamage(float damage, GameObject damageDealer, float critChance) { }
+    public virtual void EnemyDead() { }
 }
