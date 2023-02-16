@@ -18,7 +18,10 @@ public class EnemyTest : EnemyDefault
 
     public override void AttackToPlayer()
     {
-        Player.Instance.OnDamage(1, gameObject, 0);
+        if (Player.Instance.isPDead)
+            return;
+
+        Player.Instance.OnDamage(1, gameObject, 0);     
     }
 
     public override void OnDamage(float damage, GameObject damageDealer, float critChance)

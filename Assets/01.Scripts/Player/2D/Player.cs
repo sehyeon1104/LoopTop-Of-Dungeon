@@ -7,7 +7,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
     private bool isPDamaged = false;
-    private bool isPDead = false;
+    public bool isPDead { private set; get; } = false;
 
     [SerializeField]
     private float InvincibleTime = 0.2f;    // 무적시간

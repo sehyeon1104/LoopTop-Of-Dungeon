@@ -17,6 +17,9 @@ public partial class Player
 
     public void Attack()
     {
+        if (isPDead)
+            return;
+
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
 
         Debug.Log("Attack");
