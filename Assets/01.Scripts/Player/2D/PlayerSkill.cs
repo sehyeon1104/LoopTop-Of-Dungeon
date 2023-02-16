@@ -107,7 +107,7 @@ public partial class Player
            
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
-            if(timerA>1f)
+            if(timerA>0.1f)
             {
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, 2.5f);
                 foreach(Collider2D c in attachObjs)
@@ -122,7 +122,6 @@ public partial class Player
             }
             if (timer>skillTime)
             {
-                print("ss");
                 Destroy(Skill1Trans.GetChild(0).gameObject);
             }
             yield return null;
