@@ -77,6 +77,8 @@ public class BossPattern : MonoBehaviour
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
+                        //case 3:
+
                     }
                 }
             }

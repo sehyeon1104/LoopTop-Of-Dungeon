@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class ChangeTilemapColor : MonoBehaviour
 {
     private Tilemap tileMap;
+    public Vector3Int position;
     private GridLayout gridLayout;
     private Vector3Int cellPos;
 
@@ -16,7 +17,7 @@ public class ChangeTilemapColor : MonoBehaviour
         tileMap = GetComponent<Tilemap>();
     }
 
-    private void ChangeTileColor(Transform tileTransform, Color color)
+    public void ChangeTileColor(Transform tileTransform, Color color)
     {
         pos = tileTransform.position;
         cellPos = gridLayout.WorldToCell(pos);
