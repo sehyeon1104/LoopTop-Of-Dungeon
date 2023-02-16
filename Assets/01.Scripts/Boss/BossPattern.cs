@@ -18,16 +18,38 @@ public class BossPattern : MonoBehaviour
 
     private Transform player;
     private Coroutine attackCoroutine = null;
+    private Animation GhostAttackAnim;
 
     private bool isHealUsed = false;
+
+    List<string> animArray;
 
 
     private void Awake()
     {
         player = Player.Instance.transform;
-
+        GhostAttackAnim = GetComponent<Animation>();
+        GhostSkill();
         StartCoroutine(RandomPattern());
     }
+
+    
+
+    //보스 애니메이션
+    public void AnimationArray()
+    {
+        foreach (AnimationState states in GhostAttackAnim)
+        {
+            animArray.Add(states.name);
+        }
+    }
+
+    public void GhostSkill()
+    {
+        animArray = new List<string>();
+        AnimationArray();
+    }
+    
 
     private void Update()
     {
@@ -88,12 +110,16 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_MakeThorn(int attackCount)
     {
-        for(int i = 0; i< attackCount; i++)
+            
+        for (int i = 0; i< attackCount; i++)
         {
+
+            //보스 애니메이션 
+            GhostAttackAnim.Play(animArray[1]);
+
             GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
-            //애니메이션 적용
             GameObject clone2 = Instantiate(gasi, clone.transform);
             pattern1.transform.position = clone.transform.position;
             pattern1.Play();
@@ -112,9 +138,11 @@ public class BossPattern : MonoBehaviour
     private IEnumerator Pattern_ShootBullet(int attackCount)
     {
         float angle = 360 / (attackCount * 0.89f);
-        
+
         //애니메이션 적용
-        for(int i = 0; i < attackCount; i++)
+        GhostAttackAnim.Play(animArray[0]);
+
+        for (int i = 0; i < attackCount; i++)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * angle * i));
             yield return new WaitForSeconds(0.1f);
@@ -150,6 +178,8 @@ public class BossPattern : MonoBehaviour
         float angle = 7.2f;
 
         //애니메이션 추가
+        GhostAttackAnim.Play(animArray[2]);
+
         for (int i = -4; i < 4; i++)
         {
             GameObject clone = Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
