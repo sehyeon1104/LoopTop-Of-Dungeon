@@ -7,9 +7,11 @@ using UnityEngine.Events;
 public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
 {
 
-    public float ShakeDuration = 0.3f;          // Time the Camera Shake effect will last
-    public float ShakeAmplitude = 1.2f;         // Cinemachine Noise Profile Parameter
-    public float ShakeFrequency = 2.0f;         // Cinemachine Noise Profile Parameter
+    //public float ShakeDuration = 0.3f;          // Time the Camera Shake effect will last
+    [SerializeField]
+    private float ShakeAmplitude = 1.2f;         // Cinemachine Noise Profile Parameter
+    [SerializeField]
+    private float ShakeFrequency = 2.0f;         // Cinemachine Noise Profile Parameter
 
     private float ShakeElapsedTime = 0f;
 
@@ -43,10 +45,10 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
     /// 세기 조절 가능
     /// </summary>
     /// <param name="power"></param>
-    public void CameraShakeOnce(float power)
+    public void CameraShakeOnce(float amplitude)
     {
-        StopCoroutine(IECameraShakeOnce(power));
-        StartCoroutine(IECameraShakeOnce(power));
+        StopCoroutine(IECameraShakeOnce(amplitude));
+        StartCoroutine(IECameraShakeOnce(amplitude));
     }
 
     private IEnumerator IECameraShakeOnce()
@@ -66,11 +68,11 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
         }
     }
 
-    private IEnumerator IECameraShakeOnce(float power)
+    private IEnumerator IECameraShakeOnce(float amplitude)
     {
         if (VirtualCamera != null && virtualCameraNoise != null)
         {
-            virtualCameraNoise.m_AmplitudeGain = power;
+            virtualCameraNoise.m_AmplitudeGain = amplitude;
             virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
 
             yield return new WaitForSeconds(0.1f);
@@ -83,9 +85,15 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
         }
     }
 
-    private IEnumerator IECameraShakeMultiple()
+    public void CameraShakeMultiple(float duration)
     {
-        ShakeElapsedTime = ShakeDuration;
+        StopCoroutine(IECameraShakeMultiple(duration));
+        StartCoroutine(IECameraShakeMultiple(duration));
+    }
+
+    private IEnumerator IECameraShakeMultiple(float duration)
+    {
+        ShakeElapsedTime = duration;
 
         if (VirtualCamera != null && virtualCameraNoise != null)
         {

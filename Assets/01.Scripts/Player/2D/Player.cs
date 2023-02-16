@@ -85,12 +85,14 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
         StartCoroutine(IEDamaged());
         CinemachineCameraShaking.Instance.CameraShakeOnce();
-        // StartCoroutine(CameraShaking.Instance.IECameraShakeOnce(0.05f));
     }
 
     public void Dead()
     {
-        Debug.Log("»ç¸Á");
+        if (isPDead)
+            return;
+
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
         isPDead = true;
         gameObject.SetActive(false);
     }
