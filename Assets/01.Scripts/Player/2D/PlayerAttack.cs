@@ -35,7 +35,7 @@ public partial class Player
         if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
             Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
-            StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+            CinemachineCameraShaking.Instance.CameraShakeOnce();
         }
     }
 }

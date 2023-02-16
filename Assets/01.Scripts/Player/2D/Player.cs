@@ -79,13 +79,19 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         // TODO : 피격 애니메이션 재생
 
         pBase.Hp -= (int)damage;
+
+        if (isPDead)
+            return;
+
         StartCoroutine(IEDamaged());
-        StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
+        // StartCoroutine(CameraShaking.Instance.IECameraShakeOnce(0.05f));
     }
 
     public void Dead()
     {
         Debug.Log("사망");
+        isPDead = true;
         gameObject.SetActive(false);
     }
 }

@@ -33,7 +33,7 @@ public class CameraShaking : MonoSingleton<CameraShaking>
     // µð¹ö±ë¿ë
     public void CameraShakeAtk()
     {
-        StartCoroutine(IECameraShakeOnce());
+        //StartCoroutine(IECameraShakeOnce());
     }
 
     /// <summary>

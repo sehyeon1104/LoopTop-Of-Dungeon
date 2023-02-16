@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.Events;
 
-public class CinemachineCameraShaking : MonoBehaviour
+public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
 {
 
     public float ShakeDuration = 0.3f;          // Time the Camera Shake effect will last
@@ -30,6 +30,25 @@ public class CinemachineCameraShaking : MonoBehaviour
         StartCoroutine(IECameraShakeOnce());
     }
 
+    /// <summary>
+    /// 고정된 세기
+    /// </summary>
+    public void CameraShakeOnce()
+    {
+        StopCoroutine(IECameraShakeOnce());
+        StartCoroutine(IECameraShakeOnce());
+    }
+
+    /// <summary>
+    /// 세기 조절 가능
+    /// </summary>
+    /// <param name="power"></param>
+    public void CameraShakeOnce(float power)
+    {
+        StopCoroutine(IECameraShakeOnce(power));
+        StartCoroutine(IECameraShakeOnce(power));
+    }
+
     private IEnumerator IECameraShakeOnce()
     {
         if (VirtualCamera != null && virtualCameraNoise != null)
@@ -37,7 +56,24 @@ public class CinemachineCameraShaking : MonoBehaviour
             virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
             virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
+
+            virtualCameraNoise.m_AmplitudeGain = 0f;
+        }
+        else
+        {
+            Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
+        }
+    }
+
+    private IEnumerator IECameraShakeOnce(float power)
+    {
+        if (VirtualCamera != null && virtualCameraNoise != null)
+        {
+            virtualCameraNoise.m_AmplitudeGain = power;
+            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+
+            yield return new WaitForSeconds(0.1f);
 
             virtualCameraNoise.m_AmplitudeGain = 0f;
         }
@@ -53,18 +89,12 @@ public class CinemachineCameraShaking : MonoBehaviour
 
         if (VirtualCamera != null && virtualCameraNoise != null)
         {
-            while(ShakeElapsedTime > 0)
-            {
-                virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
-                virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
 
-                ShakeElapsedTime -= Time.deltaTime;
-
-                yield return new WaitForEndOfFrame();
-            }
+            yield return new WaitForSeconds(ShakeElapsedTime);
 
             virtualCameraNoise.m_AmplitudeGain = 0f;
-            ShakeElapsedTime = 0f;
         }
         else
         {

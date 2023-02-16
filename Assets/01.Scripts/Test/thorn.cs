@@ -6,7 +6,7 @@ public class thorn : MonoBehaviour
 {
     private void OnEnable()
     {
-        StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
