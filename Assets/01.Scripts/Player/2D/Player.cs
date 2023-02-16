@@ -52,10 +52,14 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             }
         }
 
-        //print(pBase.PlayerTransformTypeFlag);   
         if (Input.GetKeyDown(KeyCode.L))
         {
             pBase.Exp += 100;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            pBase.Hp += 1;
         }
     }
 
