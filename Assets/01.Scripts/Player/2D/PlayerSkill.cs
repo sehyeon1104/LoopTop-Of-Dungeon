@@ -33,11 +33,11 @@ public partial class Player
 
     public void Skill1()
     {
-        if (coolTimes[1] == true)
+        if (coolTimes[1] == true || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
             return;
 
-        if (!coolTimes[1] && pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost)
-            JangPanPattern();
+        //if (!coolTimes[1] && pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost)
+        JangPanPattern();
 
         Debug.Log("스킬 1");
 
@@ -49,7 +49,7 @@ public partial class Player
 
     public void HillaPattern()    // 힐라 패턴
     {
-        if (coolTimes[2] || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
+        if (coolTimes[2] || pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
             return;
         Debug.Log("스킬 2");
 
@@ -112,7 +112,7 @@ public partial class Player
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, 2.5f);
                 foreach(Collider2D c in attachObjs)
                 {
-                    if(c.CompareTag("Enemy"))
+                    if(c.CompareTag("Enemy") || c.CompareTag("Boss"))
                     {
                         c.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
                     }

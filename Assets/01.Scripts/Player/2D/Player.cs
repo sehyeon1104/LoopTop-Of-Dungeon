@@ -7,7 +7,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
     private bool isPDamaged = false;
-    private bool isPDead = false;
+    public bool isPDead { private set; get; } = false;
 
     [SerializeField]
     private float InvincibleTime = 0.2f;    // 무적시간
@@ -52,10 +52,14 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             }
         }
 
-        //print(pBase.PlayerTransformTypeFlag);   
         if (Input.GetKeyDown(KeyCode.L))
         {
             pBase.Exp += 100;
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            pBase.Hp += 1;
         }
     }
 
@@ -79,12 +83,21 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         // TODO : 피격 애니메이션 재생
 
         pBase.Hp -= (int)damage;
+
+        if (isPDead)
+            return;
+
         StartCoroutine(IEDamaged());
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
     }
 
     public void Dead()
     {
-        Debug.Log("사망");
+        if (isPDead)
+            return;
+
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
+        isPDead = true;
         gameObject.SetActive(false);
     }
 }
