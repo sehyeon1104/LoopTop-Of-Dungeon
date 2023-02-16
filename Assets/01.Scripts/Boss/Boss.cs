@@ -23,7 +23,12 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    
+
+    private void Start()
+    {
+        UpdateBossHP();
+    }
+
     public IEnumerator IEHitAction()
     {
         // TODO : 피격 애니메이션
@@ -61,7 +66,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         isBDamaged = true;
         Base.Hp -= (int)damage;
-        TargetGage.value = Base.Hp;
+        UpdateBossHP();
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
 
@@ -70,5 +75,10 @@ public class Boss : MonoSingleton<Boss>, IHittable
             Die();
             return;
         }
+    }
+
+    public void UpdateBossHP()
+    {
+        TargetGage.value = Base.Hp;
     }
 }
