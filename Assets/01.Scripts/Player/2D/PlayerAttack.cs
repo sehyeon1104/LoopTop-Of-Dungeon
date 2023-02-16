@@ -18,18 +18,27 @@ public partial class Player
     public void Attack()
     {
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
-
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        for(int i=0; i<enemys.Length; i++)
+        {
+            if (enemys[i].gameObject.CompareTag("Enemy")) {
+                Debug.Log("닿음");
+                StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+                enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
+            }
+        }
         Debug.Log("Attack");
 
         if (Boss.Instance.isBDead)
             return;
 
         Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
-
+        
         if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
             Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
             StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
         }
+
     }
 }
