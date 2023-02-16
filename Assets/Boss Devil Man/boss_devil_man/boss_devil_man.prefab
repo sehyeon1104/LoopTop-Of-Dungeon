@@ -865,6 +865,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4800551623701714}
   - component: {fileID: 1337506864}
+  - component: {fileID: 1986594152}
   - component: {fileID: 95256882328102332}
   - component: {fileID: 210988187105924672}
   - component: {fileID: 1700262639749715647}
@@ -945,6 +946,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &1986594152
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314121983122994}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!95 &95256882328102332
 Animator:
   serializedVersion: 4
@@ -975,7 +991,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 1866299259
   m_SortingLayer: 9
-  m_SortingOrder: 100
+  m_SortingOrder: 1
 --- !u!114 &1700262639749715647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,7 +1056,7 @@ Transform:
   - {fileID: 4182298990632636}
   m_Father: {fileID: 4401378570948394}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 164.99998}
 --- !u!1 &1368659787980930
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,7 +2201,7 @@ Transform:
   - {fileID: 4410050532206894}
   m_Father: {fileID: 4800551623701714}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 79.99999}
 --- !u!1 &1921341195367186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,7 +2413,7 @@ Transform:
   - {fileID: 4355829629320704}
   m_Father: {fileID: 4973257799613756}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -179.99998}
 --- !u!1 &1955324577872096
 GameObject:
   m_ObjectHideFlags: 0
