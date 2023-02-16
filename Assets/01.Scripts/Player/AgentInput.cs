@@ -12,6 +12,10 @@ public class AgentInput : MonoBehaviour,IAgentInput
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+           SkillFirst.Invoke();
+        }
         GetMovementInputMove();
     }
 

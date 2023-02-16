@@ -51,18 +51,29 @@ public class MapManager : MonoSingleton<MapManager>
         GameObject newZone = Instantiate(zones[rand], Vector3.zero, Quaternion.identity);
 
     }
-
+    public void SPawnMop()
+    {
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemys)
+        {
+            Destroy(enemy);
+        }
+        foreach (Transform trans in monsterSponPoint)
+        {
+            Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
+        }
+    }
     public void MoveMap(string dir)
     {
         if (!isClear)
         {
             Debug.Log($"isClear : {isClear}");
         }
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach(GameObject enemy in enemys) 
-        {
-            Destroy(enemy); 
-        }
+        //GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        //foreach(GameObject enemy in enemys) 
+        //{
+        //    Destroy(enemy); 
+        //}
         Debug.Log("MoveMap");
 
         //int rand = Random.Range(0, zones.Length);
@@ -75,10 +86,10 @@ public class MapManager : MonoSingleton<MapManager>
 
         SetMapDirPos(moveCount);
         MovePlayerMapDir(dir);
-        foreach(Transform trans in monsterSponPoint)
-        {
-            Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
-        }
+        //foreach(Transform trans in monsterSponPoint)
+        //{
+        //    Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
+        //}
     }
 
     public void SetMapDirPos(int zoneNum)

@@ -18226,8 +18226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIcon: {fileID: 504028255}
-  hpPrefab: {fileID: 0}
-  hpSpace: {fileID: 0}
+  hpPrefab: {fileID: 4797910234970480715, guid: d02be6efaa307a24ea6306cc8ba1bb1d, type: 3}
+  hpSpace: {fileID: 627252835}
   pausePanel: {fileID: 556370602}
   blurPanel: {fileID: 1047652435}
   pressF: {fileID: 1560664755}
@@ -18251,6 +18251,11 @@ Transform:
 --- !u!1 &556370602 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2849750324057045487, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 1510057216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &627252835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8097314837449107299, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
   m_PrefabInstance: {fileID: 1510057216}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &631940031 stripped
@@ -19067,7 +19072,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1031838750}
-  - component: {fileID: 1031838751}
   - component: {fileID: 1031838752}
   m_Layer: 0
   m_Name: Camera
@@ -19091,7 +19095,7 @@ Transform:
   m_Father: {fileID: 520647066}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1031838751
+--- !u!114 &1031838752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19100,24 +19104,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031838749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 257ba0c576b6a594185ced4f5d9e74b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakingAmount: 0.1
-  cinemachineCam: {fileID: 1200786702}
---- !u!114 &1031838752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031838749}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0189326aa3c230e4ea077251e56c4381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShakeAmplitude: 1.2
+  ShakeAmplitude: 2
   ShakeFrequency: 2
   VirtualCamera: {fileID: 1200786702}
 --- !u!1 &1047652435 stripped
@@ -19136,6 +19126,7 @@ GameObject:
   - component: {fileID: 1125019044}
   - component: {fileID: 1125019046}
   - component: {fileID: 1125019045}
+  - component: {fileID: 1125019047}
   m_Layer: 0
   m_Name: Objects(Layer1)
   m_TagString: Untagged
@@ -19975,6 +19966,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1125019047
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125019043}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &1200786701
 GameObject:
   m_ObjectHideFlags: 0
@@ -21864,6 +21871,7 @@ GameObject:
   - component: {fileID: 1568008060}
   - component: {fileID: 1568008062}
   - component: {fileID: 1568008061}
+  - component: {fileID: 1568008063}
   m_Layer: 0
   m_Name: Objects(Layer3)
   m_TagString: Untagged
@@ -24175,6 +24183,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1568008063
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568008059}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1 &1671993724
 GameObject:
   m_ObjectHideFlags: 0
@@ -24186,6 +24210,7 @@ GameObject:
   - component: {fileID: 1671993725}
   - component: {fileID: 1671993727}
   - component: {fileID: 1671993726}
+  - component: {fileID: 1671993728}
   m_Layer: 0
   m_Name: Objects(Layer2)
   m_TagString: Untagged
@@ -26799,6 +26824,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1671993728
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671993724}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1001 &1734244249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27229,7 +27270,7 @@ MonoBehaviour:
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
-  m_FrequencyGain: 1
+  m_FrequencyGain: 2
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &1836442289 stripped
 MonoBehaviour:
@@ -27253,6 +27294,7 @@ GameObject:
   - component: {fileID: 1842128636}
   - component: {fileID: 1842128638}
   - component: {fileID: 1842128637}
+  - component: {fileID: 1842128639}
   m_Layer: 0
   m_Name: Details
   m_TagString: Untagged
@@ -28688,6 +28730,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!19719996 &1842128639
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842128635}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0.00001
 --- !u!1001 &1844019702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29137,7 +29195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvincibleTime: 0.2
+  InvincibleTime: 1
   <GetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -29148,9 +29206,9 @@ MonoBehaviour:
   _joystick: {fileID: 653777966}
   speed: 5
   ghostSummonerPrefab: {fileID: 2247558619300843271, guid: 07ca72984c1a4724b80ea3b9f6f5f745, type: 3}
-  jangPanPrefab: {fileID: 0}
+  jangPanPrefab: {fileID: 8923827731549757608, guid: 31e100391db9d7244a15ba012e2531a8, type: 3}
   jangPanTime: 3
-  Skill1Trans: {fileID: 0}
+  Skill1Trans: {fileID: 878560105}
   JangPanPersDamage: 10
   playerTransformDataSOArr:
   - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
