@@ -29,7 +29,7 @@ public partial class Player
         {
             if (enemys[i].gameObject.CompareTag("Enemy")) {
                 Debug.Log("¥Í¿Ω");
-                StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
+                CinemachineCameraShaking.Instance.CameraShakeOnce();
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
             }
         }
