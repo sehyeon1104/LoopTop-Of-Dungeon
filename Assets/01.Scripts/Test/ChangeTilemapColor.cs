@@ -5,24 +5,38 @@ using UnityEngine.Tilemaps;
 
 public class ChangeTilemapColor : MonoBehaviour
 {
-    private Tilemap tileMap;
-    public Vector3Int position;
-    private GridLayout gridLayout;
+    public Transform Boss;
+    public Tilemap tileMap;
+    private Grid grid;
     private Vector3Int cellPos;
 
-    private Vector2 pos;
+    private Vector3 pos;
 
     private void Start()
     {
-        tileMap = GetComponent<Tilemap>();
+        grid = GetComponent<Grid>();
+        ChangeTileColor(Boss);
     }
 
-    public void ChangeTileColor(Transform tileTransform, Color color)
+    public void CellChange()
+    {
+        tileMap.SetTileFlags(cellPos, TileFlags.None);
+        tileMap.SetColor(cellPos, Color.red);
+    }
+        
+    public void ChangeTileColor(Transform tileTransform)
     {
         pos = tileTransform.position;
-        cellPos = gridLayout.WorldToCell(pos);
+        cellPos = grid.WorldToCell(pos);
 
-        tileMap.SetTileFlags(cellPos, TileFlags.None);
-        tileMap.SetColor(cellPos, color);
+        cellPos.x -= 1;
+        cellPos.y -= 1;
+
+        cellPos.x -= 5; cellPos.y -= 2; CellChange();
+        cellPos.y += 1;CellChange();
+        cellPos.y += 1; CellChange();
+        cellPos.y += 1; CellChange();
+
+
     }
 }

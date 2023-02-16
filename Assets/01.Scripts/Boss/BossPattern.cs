@@ -69,7 +69,6 @@ public class BossPattern : MonoBehaviour
                     {
                         case 0:
                             attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
-                            attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
                         case 1:
                             attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
@@ -77,7 +76,7 @@ public class BossPattern : MonoBehaviour
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
                             break;
-                        //case 3:
+
 
                     }
                 }
@@ -94,6 +93,7 @@ public class BossPattern : MonoBehaviour
             GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
+            //애니메이션 적용
             GameObject clone2 = Instantiate(gasi, clone.transform);
             pattern1.transform.position = clone.transform.position;
             pattern1.Play();
@@ -113,6 +113,7 @@ public class BossPattern : MonoBehaviour
     {
         float angle = 360 / (attackCount * 0.89f);
         
+        //애니메이션 적용
         for(int i = 0; i < attackCount; i++)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * angle * i));
@@ -148,6 +149,7 @@ public class BossPattern : MonoBehaviour
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float angle = 7.2f;
 
+        //애니메이션 추가
         for (int i = -4; i < 4; i++)
         {
             GameObject clone = Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
@@ -165,6 +167,8 @@ public class BossPattern : MonoBehaviour
         List<GameObject> mobList = new List<GameObject>();
         List<GameObject> Patlist = new List<GameObject>();
 
+        
+        //애니메이션 추가
         for (int i = 0; i < mobCount; i++)
         {
             GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.Euler(Vector3.zero));
