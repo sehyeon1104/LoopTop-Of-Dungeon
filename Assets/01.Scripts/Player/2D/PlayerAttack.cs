@@ -11,6 +11,9 @@ public partial class Player
     // 공격 버튼을 눌렀을 때 발동될 함수
     public void InvokeAttackEvents()
     {
+        if (isPDead)
+            return;
+
         agentInput.Attack.Invoke();
         playerAnim.SetTrigger("Attack");
     }

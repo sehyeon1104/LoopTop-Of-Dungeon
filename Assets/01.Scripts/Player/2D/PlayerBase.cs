@@ -33,7 +33,7 @@ public class PlayerBase
         set
         {
             _hp = value;
-            if(_hp < 0)
+            if(_hp <= 0)
             {
                 Player.Instance.Dead();
                 _hp = 0;
