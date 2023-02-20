@@ -66,6 +66,19 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
+        if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill1"))
+        {
+            Player.Instance.Skill1();
+        }
+        else if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill2"))
+        {
+            Player.Instance.Skill2();
+        }
+        else if (EventSystem.current.currentSelectedGameObject.CompareTag("UltimateSkill"))
+        {
+            Player.Instance.UltimateSkill();
+        }
+
         StartCoroutine(IESkillCooltime(cooltimeImg, Player.Instance.skillCooltime));
     }
 

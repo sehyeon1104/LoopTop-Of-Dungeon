@@ -38,7 +38,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     {
         pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
-        InitCooltimeBools();
     }
     private void Update()
     {
