@@ -20,6 +20,8 @@ public class UIManager : MonoSingleton<UIManager>
     [Header("Middle")]
     [SerializeField]
     private GameObject pausePanel;
+    [SerializeField]
+    private GameObject gameOverPanel;
 
     //[Header("RightUp")]
     // [Header("RightDown")]
@@ -41,11 +43,12 @@ public class UIManager : MonoSingleton<UIManager>
         DisActiveAllPanels();
         HpUpdate();
     }
-
+    #region Panels
     public void DisActiveAllPanels()
     {
         blurPanel.SetActive(false);
         pausePanel.SetActive(false);
+        gameOverPanel.SetActive(false);
     }
 
     public void TogglePausePanel()
@@ -58,6 +61,13 @@ public class UIManager : MonoSingleton<UIManager>
         else
             Time.timeScale = 1f;
     }
+
+    public void ToggleGameOverPanel()
+    {
+        blurPanel.SetActive(!pausePanel.activeSelf);
+        gameOverPanel.SetActive(!gameOverPanel.activeSelf);
+    }
+    #endregion
 
     public void SkillCooltime(Image cooltimeImg)
     {
