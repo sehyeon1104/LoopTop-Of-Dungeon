@@ -14,6 +14,7 @@ public class BossPattern : MonoBehaviour
     [Space]
 
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject bullet_guided;
     [SerializeField] private float moveSpeed = 2f;
 
     private Transform player;
@@ -93,7 +94,7 @@ public class BossPattern : MonoBehaviour
                             attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(10, 15)));
+                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(20, 30)));
                             break;
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
@@ -145,6 +146,7 @@ public class BossPattern : MonoBehaviour
         for (int i = 0; i < attackCount; i++)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * angle * i));
+            yield return new WaitForSeconds(0.1f);
         }
 
         yield return null;
@@ -181,10 +183,8 @@ public class BossPattern : MonoBehaviour
 
         for (int i = -4; i < 4; i++)
         {
-            GameObject clone = Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
+            Instantiate(bullet_guided, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot / 2)));
         }
-
-
 
         yield return null;
         attackCoroutine = null;
