@@ -93,7 +93,7 @@ public class BossPattern : MonoBehaviour
                             attackCoroutine = StartCoroutine(Pattern_MakeThorn(Random.Range(3, 5)));
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(25, 30)));
+                            attackCoroutine = StartCoroutine(Pattern_ShootBullet(Random.Range(10, 15)));
                             break;
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern_Teleport());
@@ -137,7 +137,7 @@ public class BossPattern : MonoBehaviour
 
     private IEnumerator Pattern_ShootBullet(int attackCount)
     {
-        float angle = 360 / (attackCount * 0.89f);
+        float angle = 360 / attackCount;
 
         //애니메이션 적용
         GhostAttackAnim.Play(animArray[0]);
@@ -145,7 +145,6 @@ public class BossPattern : MonoBehaviour
         for (int i = 0; i < attackCount; i++)
         {
             Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * angle * i));
-            yield return new WaitForSeconds(0.1f);
         }
 
         yield return null;
