@@ -9,19 +9,31 @@ public class BulletMove : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject, 5f);
+        StartCoroutine(Move());
     }
-    void Update()
+
+    private IEnumerator Move()
     {
-        transform.Translate(transform.right * Time.deltaTime * speed);
+        float timer = 0f;
+        while (timer <= 3f)
+        {
+            timer += Time.deltaTime;
+            Vector3 dir = Player.Instance.transform.position - transform.position;
+
+            yield return null;
+
+            if (timer <= 1.5f)
+                transform.Translate(transform.right * Time.deltaTime * speed);
+            else
+                transform.Translate(dir.normalized * Time.deltaTime * speed);
+        }
+        Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-            //IHittable hittable= collision.GetComponent<IHittable>();
-            //hittable.OnDamage(1);
         }
     }
 }   
