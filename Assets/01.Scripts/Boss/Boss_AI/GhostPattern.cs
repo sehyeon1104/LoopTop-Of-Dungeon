@@ -10,7 +10,7 @@ public class GhostPattern : BossDefault
     [SerializeField] private GameObject bullet_guided;
 
     [SerializeField] private ParticleSystem thornFx;
-    [SerializeField] private ParticleSystem pattern3;
+    [SerializeField] private ParticleSystem SummonFx;
 
 
     private void Update()
@@ -75,7 +75,7 @@ public class GhostPattern : BossDefault
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern3(int count = 0)
+    public override IEnumerator Pattern3(int count = 0) //텔레포트 패턴
     {
         moveSpeed *= 0.5f;
         float timer = 0f;
@@ -108,29 +108,23 @@ public class GhostPattern : BossDefault
             Instantiate(bullet_guided, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
 
-        yield return null;
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0)
+    public override IEnumerator Pattern4(int count = 0) //힐라 패턴
     {
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
-        List<GameObject> Patlist = new List<GameObject>();
 
-
-        //애니메이션 추가
         for (int i = 0; i < count; i++)
         {
             GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.Euler(Vector3.zero));
-            GameObject pattern33 = Instantiate(pattern3.gameObject, new Vector2(0, 1), Quaternion.Euler(Vector3.zero));
+            GameObject pattern33 = Instantiate(SummonFx.gameObject, clone.transform.position, Quaternion.Euler(Vector3.zero));
 
-            pattern33.transform.position = clone.transform.position;
             ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
 
             particle.Play();
 
-            Patlist.Add(pattern33);
             mobList.Add(clone);
         }
 
@@ -148,8 +142,6 @@ public class GhostPattern : BossDefault
         Boss.Instance.Base.Hp += finalCount * 10;
         mobList.Clear();
 
-        yield return null;
-        Debug.Log(Boss.Instance.Base.Hp);
         attackCoroutine = null;
     }
 }

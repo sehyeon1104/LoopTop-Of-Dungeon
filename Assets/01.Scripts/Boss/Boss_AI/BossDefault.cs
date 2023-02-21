@@ -16,8 +16,8 @@ public abstract class BossDefault : MonoBehaviour
     [SerializeField] protected bool isHaveSpecialPattern = false;
     [Header("보스 패턴 후딜레이")]
     [SerializeField] private float patternDelay;
-    [Header("각 보스 패턴 매개변수값")]
-    [SerializeField] protected int[] patternCount = new int[5];
+    
+    protected int[] patternCount = new int[5];
 
 
     protected Transform player;
@@ -30,9 +30,11 @@ public abstract class BossDefault : MonoBehaviour
     protected bool isUsedSpecialPattern = false;
     protected bool isCanUseSpecialPattern = false;
 
-    private void Awake()
+    private void Start()
     {
         player = Player.Instance.transform;
+        attackAnim = GetComponent<Animation>();
+
         AnimationArray();
         StartCoroutine(RandomPattern());
     }
@@ -65,10 +67,11 @@ public abstract class BossDefault : MonoBehaviour
 
     private IEnumerator RandomPattern()
     {
-        int patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
-        patternCount[patternChoice] = GetRandomCount(patternChoice);
         while (true)
         {
+            int patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
+            patternCount[patternChoice] = GetRandomCount(patternChoice);
+
             if (attackCoroutine == null)
             {
                 if (!isUsedSpecialPattern && isHaveSpecialPattern && isCanUseSpecialPattern)
