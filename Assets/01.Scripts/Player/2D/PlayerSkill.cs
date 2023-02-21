@@ -13,7 +13,10 @@ public partial class Player
     [SerializeField]
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
+    [Tooltip("장판 지속시간")]
     public float jangPanTime =3;
+    [Tooltip("할퀴기 지속시간")]
+    public float scratchTime = 3;
     [SerializeField] Transform Skill1Trans;
     [SerializeField]
     float JangPanPersDamage = 10;
@@ -42,7 +45,10 @@ public partial class Player
 
         HillaPattern();
     }
-
+    public void TellportParrern() //텔레포트 패턴
+    {
+        StartCoroutine(TeleportSkill(scratchTime));
+    }
     public void HillaPattern()    // 힐라 패턴
     {
         if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
@@ -107,7 +113,29 @@ public partial class Player
             yield return null;
         } while (timer < skillTime);
 
-
+    }
+    IEnumerator TeleportSkill(float skillTime)
+    {
+        float timer = 0;
+        float timerA = 0;
+        do
+        {
+            timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            if (timerA > 0.05f)
+            {
+                RaycastHit2D[] enemys = Physics2D.BoxCastAll(transform.position, new Vector2(2, 2), 0, Vector2.up, 2);
+                foreach (RaycastHit2D c in enemys)
+                {
+                    if (c.collider.CompareTag("Enemy") || c.collider.CompareTag("Boss"))
+                    {
+                        c.collider.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+                    }
+                }
+                timerA = 0;
+            }
+            yield return null;
+        } while (timer < skillTime);
     }
     private void OnDrawGizmos()
     {
