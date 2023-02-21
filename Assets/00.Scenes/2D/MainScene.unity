@@ -2283,10 +2283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e48e57381182949b223b947895c855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterSponPoint:
-  - {fileID: 2012266695}
-  - {fileID: 1574706584}
-  - {fileID: 349870385}
+  monsterSponPoint: []
   enemySpawnObj: {fileID: 0}
   zones:
   - {fileID: 1738312859}
@@ -19126,6 +19123,11 @@ Transform:
   m_Father: {fileID: 754869161}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &500957405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4144925370559980761, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 1510057216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &502474579
 GameObject:
   m_ObjectHideFlags: 0
@@ -19370,6 +19372,8 @@ MonoBehaviour:
   hpPrefab: {fileID: 4797910234970480715, guid: d02be6efaa307a24ea6306cc8ba1bb1d, type: 3}
   hpSpace: {fileID: 627252835}
   pausePanel: {fileID: 556370602}
+  gameOverPanel: {fileID: 500957405}
+  checkOneMorePanel: {fileID: 1332439546}
   blurPanel: {fileID: 1047652435}
   pressF: {fileID: 1560664755}
 --- !u!4 &520647066
@@ -23711,6 +23715,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1332439546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4429719286600071188, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 1510057216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1348046687 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5569918925221827888, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
