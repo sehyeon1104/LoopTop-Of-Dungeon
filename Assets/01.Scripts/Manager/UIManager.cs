@@ -20,6 +20,10 @@ public class UIManager : MonoSingleton<UIManager>
     [Header("Middle")]
     [SerializeField]
     private GameObject pausePanel;
+    [SerializeField]
+    private GameObject gameOverPanel;
+    [SerializeField]
+    private GameObject checkOneMorePanel;
 
     //[Header("RightUp")]
     // [Header("RightDown")]
@@ -41,11 +45,13 @@ public class UIManager : MonoSingleton<UIManager>
         DisActiveAllPanels();
         HpUpdate();
     }
-
+    #region Panels
     public void DisActiveAllPanels()
     {
         blurPanel.SetActive(false);
         pausePanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        checkOneMorePanel.SetActive(false);
     }
 
     public void TogglePausePanel()
@@ -59,11 +65,59 @@ public class UIManager : MonoSingleton<UIManager>
             Time.timeScale = 1f;
     }
 
+    public void ToggleGameOverPanel()
+    {
+        blurPanel.SetActive(!pausePanel.activeSelf);
+        gameOverPanel.SetActive(!gameOverPanel.activeSelf);
+    }
+
+    public void ToggleCheckOneMorePanel()
+    {
+        checkOneMorePanel.SetActive(!checkOneMorePanel.activeSelf);
+    }
+    #endregion
+
+    #region GameOver
+    public void Revive()
+    {
+        Debug.Log("Revive");
+        ToggleGameOverPanel();
+    }
+
+    public void Leave()
+    {
+        ToggleCheckOneMorePanel();
+    }
+
+    public void CheckOneMorePanelYes()
+    {
+        Debug.Log("Leave");
+    }
+
+    public void CheckOneMorePanelNo()
+    {
+        ToggleCheckOneMorePanel();
+    }
+    #endregion
+
     public void SkillCooltime(Image cooltimeImg)
     {
         if (cooltimeImg.fillAmount != 0f)
         {
             return;
+        }
+
+        if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill1"))
+        {
+            Player.Instance.Skill1();
+        }
+        else if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill2"))
+        {
+            Player.Instance.Skill2();
+        }
+        else if (EventSystem.current.currentSelectedGameObject.CompareTag("UltimateSkill"))
+        {
+            Player.Instance.UltimateSkill();
         }
 
         StartCoroutine(IESkillCooltime(cooltimeImg, Player.Instance.skillCooltime));
