@@ -9,26 +9,13 @@ public class BulletMove : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Move());
+        Destroy(gameObject, 3f);
     }
-
-    private IEnumerator Move()
+    private void Update()
     {
-        float timer = 0f;
-        while (timer <= 3f)
-        {
-            timer += Time.deltaTime;
-            Vector3 dir = Player.Instance.transform.position - transform.position;
-
-            yield return null;
-
-            if (timer <= 1.5f)
-                transform.Translate(transform.right * Time.deltaTime * speed);
-            else
-                transform.Translate(dir.normalized * Time.deltaTime * speed);
-        }
-        Destroy(gameObject);
+        transform.Translate(transform.right * Time.deltaTime * speed);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
