@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BossDefault : MonoBehaviour
+public abstract class BossPattern : MonoBehaviour
 {
     [Header("보스 이동 관련 스탯")]
     [SerializeField] protected float moveSpeed;

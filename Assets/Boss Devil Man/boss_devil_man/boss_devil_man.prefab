@@ -868,8 +868,8 @@ GameObject:
   - component: {fileID: 1986594152}
   - component: {fileID: 95256882328102332}
   - component: {fileID: 210988187105924672}
-  - component: {fileID: 1700262639749715647}
   - component: {fileID: 8854828713988620324}
+  - component: {fileID: 7068667757860926375}
   m_Layer: 0
   m_Name: boss_devil_man
   m_TagString: Untagged
@@ -995,25 +995,6 @@ SortingGroup:
   m_SortingLayerID: 1866299259
   m_SortingLayer: 9
   m_SortingOrder: 1
---- !u!114 &1700262639749715647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1314121983122994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7849c38ba758e8e4e8100bdd7888f07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  warning: {fileID: 2355128624608227669, guid: d6770e4c6d817b245808dfa363dbd17d, type: 3}
-  gasi: {fileID: 2575817323530387302, guid: bbc409cec0d8dd94caaba38c80879a6a, type: 3}
-  bossMonster: {fileID: 5801919827941628555, guid: 09ef4da0e4165b348880ce4a8b5a623c, type: 3}
-  pattern1: {fileID: 0}
-  pattern3: {fileID: 0}
-  bullet: {fileID: 7116843577703480338, guid: 78f59ed7ca65c054da05b90e81d9f2c1, type: 3}
-  moveSpeed: 2
 --- !u!114 &8854828713988620324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,6 +1009,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetGage:
     value: 0
+--- !u!114 &7068667757860926375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314121983122994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68af6515ee181084ab565c6d8d212f0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  minDistance: 1.5
+  isHaveSpecialPattern: 1
+  patternDelay: 2
+  warning: {fileID: 2355128624608227669, guid: d6770e4c6d817b245808dfa363dbd17d, type: 3}
+  bossMonster: {fileID: 5801919827941628555, guid: 09ef4da0e4165b348880ce4a8b5a623c, type: 3}
+  bullet: {fileID: 2243714707895463231, guid: eb1e1a79344b7b64ba427e17097653ce, type: 3}
+  bullet_guided: {fileID: 2243714707895463231, guid: e25fa2bb6cfadb640937a1273890a235, type: 3}
+  thornFx: {fileID: 0}
+  SummonFx: {fileID: 0}
 --- !u!1 &1317677395105510
 GameObject:
   m_ObjectHideFlags: 0

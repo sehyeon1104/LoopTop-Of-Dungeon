@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostPattern : BossDefault
+public class GhostPattern : BossPattern
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject bossMonster;
