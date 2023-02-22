@@ -27,7 +27,7 @@ public partial class Player
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for(int i=0; i<enemys.Length; i++)
         {
-            if (enemys[i].gameObject.CompareTag("Enemy")) {
+            if (enemys[i].gameObject.CompareTag("Enemy")) { 
                 Debug.Log("´êÀ½");
                 CinemachineCameraShaking.Instance.CameraShakeOnce();
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);

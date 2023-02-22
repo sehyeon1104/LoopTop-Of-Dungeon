@@ -32530,6 +32530,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss_devil_man
       objectReference: {fileID: 0}
+    - target: {fileID: 1314121983122994, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4135658103155430, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -79.10859
@@ -32622,7 +32626,20 @@ PrefabInstance:
       propertyPath: pattern3
       value: 
       objectReference: {fileID: 337577022}
-    m_RemovedComponents: []
+    - target: {fileID: 1700262639749715647, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: bullet_guided
+      value: 
+      objectReference: {fileID: 2243714707895463231, guid: e25fa2bb6cfadb640937a1273890a235, type: 3}
+    - target: {fileID: 7068667757860926375, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: thornFx
+      value: 
+      objectReference: {fileID: 404357434}
+    - target: {fileID: 7068667757860926375, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: SummonFx
+      value: 
+      objectReference: {fileID: 337577022}
+    m_RemovedComponents:
+    - {fileID: 1700262639749715647, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
 --- !u!1001 &5702903748692933631
 PrefabInstance:

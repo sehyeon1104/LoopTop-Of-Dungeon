@@ -10,7 +10,7 @@ public class AgentInput : MonoBehaviour,IAgentInput
     [field:SerializeField] public UnityEvent SkillFirst { get; set; }
     [field:SerializeField] public UnityEvent<Vector2> MovementInput { get; set; }
 
-    void Update()
+    void Update()   
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
