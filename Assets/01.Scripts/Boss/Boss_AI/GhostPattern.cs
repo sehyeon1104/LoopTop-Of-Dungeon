@@ -12,6 +12,12 @@ public class GhostPattern : BossPattern
     [SerializeField] private ParticleSystem thornFx;
     [SerializeField] private ParticleSystem SummonFx;
 
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -52,6 +58,7 @@ public class GhostPattern : BossPattern
 
             thornFx.transform.position = clone.transform.position;
             thornFx.Play();
+            audioSource.Play();
 
             Destroy(clone);
         }
