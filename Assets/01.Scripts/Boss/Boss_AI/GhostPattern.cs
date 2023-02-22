@@ -12,7 +12,6 @@ public class GhostPattern : BossPattern
     [SerializeField] private ParticleSystem thornFx;
     [SerializeField] private ParticleSystem SummonFx;
 
-
     private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
@@ -52,6 +51,7 @@ public class GhostPattern : BossPattern
 
             thornFx.transform.position = clone.transform.position;
             thornFx.Play();
+            Managers.Sound.Play("SoundEffects/Test.wav");
 
             Destroy(clone);
         }
@@ -92,7 +92,7 @@ public class GhostPattern : BossPattern
         }
 
         transform.position = player.forward + player.position;
-        moveSpeed *= 2f;
+        moveSpeed *= 2f; 
 
         yield return new WaitForSeconds(1f);
 
