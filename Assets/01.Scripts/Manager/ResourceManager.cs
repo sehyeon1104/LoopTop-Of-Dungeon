@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ResourceManager
@@ -21,12 +22,13 @@ public class ResourceManager
             if (obj != null)
                 return obj as T;
         }
-        return Resources.Load<T>(path);
+        //return Resources.Load<T>(path);
+        return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
     }
 
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        GameObject prefab = Load<GameObject>($"02_Prefabs/{path}");
+        GameObject prefab = Load<GameObject>($"Assets/03.Prefabs/{path}");
         if (prefab == null)
         {
             Debug.Log($"Failed to load prefab : {path}");

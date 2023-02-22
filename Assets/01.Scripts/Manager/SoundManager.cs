@@ -38,6 +38,9 @@ public class SoundManager
         }
         _audioClips.Clear();
     }
+    /// <summary>
+    /// 사용할 때 뒤에 확장자명도 같이 적어줘야함
+    /// </summary>
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1f)
     {
         AudioClip audioClip = GetorAddAudioClip(path, type);
@@ -64,12 +67,11 @@ public class SoundManager
             audioSource.PlayOneShot(audioClip);
         }
     }
-
     AudioClip GetorAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
     {
-        if (path.Contains("08_Sounds/") == false)
+        if (path.Contains("Assets/05.Sounds/") == false)
         {
-            path = $"08_Sounds/{path}";
+            path = $"Assets/05.Sounds/{path}";
         }
         AudioClip audioClip = null;
         if (type == Define.Sound.Bgm)
