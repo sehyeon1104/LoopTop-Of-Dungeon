@@ -51,6 +51,7 @@ public class GhostPattern : BossPattern
 
             thornFx.transform.position = clone.transform.position;
             thornFx.Play();
+            CinemachineCameraShaking.Instance.CameraShakeOnce();
             Managers.Sound.Play("SoundEffects/Test.wav");
 
             Destroy(clone);

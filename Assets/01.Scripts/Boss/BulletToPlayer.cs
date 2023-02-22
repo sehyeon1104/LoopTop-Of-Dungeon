@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BulletToPlayer : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5f;
+    private float speed = 0f;
 
     void Start()
     {
@@ -15,17 +14,23 @@ public class BulletToPlayer : MonoBehaviour
     private IEnumerator Move()
     {
         float timer = 0f;
+        float dist = Vector2.Distance(transform.position, Player.Instance.transform.position);
         while (timer <= 3f)
         {
             timer += Time.deltaTime;
-            Vector3 dir = Player.Instance.transform.position - transform.position;
 
             yield return null;
+            speed = Time.deltaTime * 2.5f;
 
             if (timer <= 1.5f)
-                transform.Translate(transform.right * Time.deltaTime * speed);
+                transform.Translate(transform.right * speed);
             else
-                transform.Translate(dir.normalized * Time.deltaTime * speed);
+            {
+                speed += Time.deltaTime;
+                float t = speed / dist;
+
+                transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, t);
+            }
         }
         Destroy(gameObject);
     }
