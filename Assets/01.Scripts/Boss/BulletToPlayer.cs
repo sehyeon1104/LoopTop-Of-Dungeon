@@ -37,6 +37,18 @@ public class BulletToPlayer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            GameObject clone;
+
+            if (Managers.Pool.GetObject("Destruction_air_purple") == null)
+            {
+                clone = Managers.Resource.Instantiate("10.Effects/118 sprite effects bundle/15 effects/Destruction_air_purple");
+                clone.transform.position = transform.position;
+            }
+            else
+            {
+                clone = Managers.Pool.Pop(Managers.Pool.GetObject("Destruction_air_purple")).gameObject;
+                clone.transform.position = transform.position;
+            }
         }
     }
 }

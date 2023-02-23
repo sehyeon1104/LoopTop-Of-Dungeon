@@ -12,6 +12,10 @@ public class GhostPattern : BossPattern
     [SerializeField] private ParticleSystem thornFx;
     [SerializeField] private ParticleSystem SummonFx;
 
+    private void OnEnable()
+    {
+        Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
+    }
     private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
@@ -71,7 +75,7 @@ public class GhostPattern : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            Instantiate(bullet, transform.position, Quaternion.Euler(Vector3.forward * angle * i));
+            Instantiate(bullet, transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * angle * i));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -98,7 +102,7 @@ public class GhostPattern : BossPattern
         transform.position = player.forward + player.position;
         moveSpeed *= 2f; 
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         dir = player.position - transform.position;
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResourceManager
 {
     /// <summary>
-    /// Resources.Load 방식이라 불러올 오브젝트는 Resources 폴더 내부에 존재해야 함
+    /// Assets/폴더명/파일명.확장자
     /// </summary>
     public T Load<T>(string path) where T : Object 
     {
@@ -25,10 +25,12 @@ public class ResourceManager
         //return Resources.Load<T>(path);
         return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
     }
-
+    /// <summary>
+    /// Assets/랑 확장자는 생략해도 됨
+    /// </summary>
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        GameObject prefab = Load<GameObject>($"Assets/03.Prefabs/{path}.prefab");
+        GameObject prefab = Load<GameObject>($"Assets/{path}.prefab");
         if (prefab == null)
         {
             Debug.Log($"Failed to load prefab : {path}");
