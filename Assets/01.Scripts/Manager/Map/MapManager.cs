@@ -17,8 +17,6 @@ public class MapManager : MonoSingleton<MapManager>
     [SerializeField]
     private bool isClear = false;
 
-    //[SerializeField]
-    //private int maximumM`oves = 0;
     int moveCount = 0;
 
     [SerializeField]
@@ -38,58 +36,24 @@ public class MapManager : MonoSingleton<MapManager>
         {
             Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
         }
-        // SetZone();
     }
 
-    public void SetZone(/*string dir*/)
-    {
-        // Zone curZone = FindObjectOfType<Zone>();
-
-
-        int rand = Random.Range(0, zones.Length);
-
-        GameObject newZone = Instantiate(zones[rand], Vector3.zero, Quaternion.identity);
-
-    }
-    public void SPawnMop()
-    {
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemys)
-        {
-            Destroy(enemy);
-        }
-        foreach (Transform trans in monsterSponPoint)
-        {
-            Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
-        }
-    }
     public void MoveMap(string dir)
     {
         if (!isClear)
         {
             Debug.Log($"isClear : {isClear}");
         }
-        //GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-        //foreach(GameObject enemy in enemys) 
-        //{
-        //    Destroy(enemy); 
-        //}
-        Debug.Log("MoveMap");
 
-        //int rand = Random.Range(0, zones.Length);
+        Debug.Log("MoveMap");
 
         moveCount++;
         moveCount %= 2;
         DisActiveAllZones();
         zones[moveCount].SetActive(true);
-        //passedZones.Add(zones[rand]);
 
         SetMapDirPos(moveCount);
         MovePlayerMapDir(dir);
-        //foreach(Transform trans in monsterSponPoint)
-        //{
-        //    Instantiate(enemySpawnObj, trans.position, Quaternion.identity);
-        //}
     }
 
     public void SetMapDirPos(int zoneNum)
