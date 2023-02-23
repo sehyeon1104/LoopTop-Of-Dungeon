@@ -15,7 +15,8 @@ public class GhostPattern : BossPattern
     private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
-            isCanUseSpecialPattern = true; 
+            isCanUseSpecialPattern = true;
+        MoveToPlayer();
     }
 
     public override int GetRandomCount(int choisedPattern)
@@ -57,6 +58,7 @@ public class GhostPattern : BossPattern
             Destroy(clone);
         }
 
+        yield return null;
         attackCoroutine = null;
     }
 
@@ -73,6 +75,7 @@ public class GhostPattern : BossPattern
             yield return new WaitForSeconds(0.1f);
         }
 
+        yield return null;
         attackCoroutine = null;
     }
 
@@ -109,6 +112,7 @@ public class GhostPattern : BossPattern
             Instantiate(bullet_guided, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
 
+        yield return null;
         attackCoroutine = null;
     }
 
@@ -143,6 +147,7 @@ public class GhostPattern : BossPattern
         Boss.Instance.Base.Hp += finalCount * 10;
         mobList.Clear();
 
+        yield return null;
         attackCoroutine = null;
     }
 }

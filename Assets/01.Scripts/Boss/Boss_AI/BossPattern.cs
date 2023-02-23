@@ -39,10 +39,10 @@ public abstract class BossPattern : MonoBehaviour
         StartCoroutine(RandomPattern());
     }
 
-    private void Update()
-    {
-        MoveToPlayer();
-    }
+    //private void Update()
+    //{
+    //    MoveToPlayer();
+    //}
 
     public void AnimationArray()
     {
@@ -61,7 +61,7 @@ public abstract class BossPattern : MonoBehaviour
         float playerDistance = Vector2.Distance(player.position, transform.position);
         if (playerDistance <= minDistance) return;
 
-        Vector2 dir = player.position - transform.position.normalized;
+        Vector2 dir = (player.position - transform.position).normalized;
         transform.Translate(dir * Time.deltaTime * moveSpeed);
     }
 

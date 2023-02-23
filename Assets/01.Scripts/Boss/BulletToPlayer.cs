@@ -27,9 +27,7 @@ public class BulletToPlayer : MonoBehaviour
             else
             {
                 speed += Time.deltaTime;
-                float t = speed / dist;
-
-                transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, t);
+                transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, speed);
             }
         }
         Destroy(gameObject);
