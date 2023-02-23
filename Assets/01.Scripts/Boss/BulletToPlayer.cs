@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class BulletToPlayer : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5f;
+    private float speed = 0f;
 
-    void Start()
+    void OnEnable()
     {
         StartCoroutine(Move());
     }
@@ -15,25 +14,31 @@ public class BulletToPlayer : MonoBehaviour
     private IEnumerator Move()
     {
         float timer = 0f;
+        float dist = Vector2.Distance(transform.position, Player.Instance.transform.position);
         while (timer <= 3f)
         {
             timer += Time.deltaTime;
-            Vector3 dir = Player.Instance.transform.position - transform.position;
 
             yield return null;
+            speed = Time.deltaTime * 2.5f;
 
             if (timer <= 1.5f)
-                transform.Translate(transform.right * Time.deltaTime * speed);
+                transform.Translate(transform.right * speed);
             else
-                transform.Translate(dir.normalized * Time.deltaTime * speed);
+            {
+                speed += Time.deltaTime;
+                transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, speed);
+            }
         }
-        Destroy(gameObject);
+        Managers.Pool.Push(GetComponent<Poolable>());
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Destruction_air_purple", transform.position, Quaternion.Euler(Vector2.zero));
+            Managers.Pool.Push(GetComponent<Poolable>());
         }
     }
 }
