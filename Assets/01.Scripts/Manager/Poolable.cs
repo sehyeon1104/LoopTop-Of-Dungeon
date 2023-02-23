@@ -7,10 +7,11 @@ public class Poolable : MonoBehaviour
     [Header("풀 사용 여부")]
     public bool IsUsing = false;
     [Header("풀링 유예 시간")]
-    public float PushTime = 3f;
-    private void Awake()
+    public float PushTime = 0f;
+    private void OnEnable()
     {
-        StartCoroutine(Push());
+        if(PushTime != 0)
+            StartCoroutine(Push());
     }
     private IEnumerator Push()
     {

@@ -54,8 +54,7 @@ public class GhostPattern : BossPattern
             GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
             yield return new WaitForSeconds(1f);
 
-            thornFx.transform.position = clone.transform.position;
-            thornFx.Play();
+            Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.Euler(Vector2.zero));
             CinemachineCameraShaking.Instance.CameraShakeOnce();
             Managers.Sound.Play("SoundEffects/Test.wav");
 
@@ -75,7 +74,7 @@ public class GhostPattern : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            Instantiate(bullet, transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * angle * i));
+            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * angle * i));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -113,7 +112,8 @@ public class GhostPattern : BossPattern
 
         for (int i = -4; i < 4; i++)
         {
-            Instantiate(bullet_guided, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            //Instantiate(bullet_guided, transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
 
         yield return null;

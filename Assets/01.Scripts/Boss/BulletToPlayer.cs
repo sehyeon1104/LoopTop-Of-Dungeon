@@ -6,7 +6,7 @@ public class BulletToPlayer : MonoBehaviour
 {
     private float speed = 0f;
 
-    void Start()
+    void OnEnable()
     {
         StartCoroutine(Move());
     }
@@ -30,25 +30,15 @@ public class BulletToPlayer : MonoBehaviour
                 transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, speed);
             }
         }
-        Destroy(gameObject);
+        Managers.Pool.Push(GetComponent<Poolable>());
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-            GameObject clone;
-
-            if (Managers.Pool.GetObject("Destruction_air_purple") == null)
-            {
-                clone = Managers.Resource.Instantiate("10.Effects/118 sprite effects bundle/15 effects/Destruction_air_purple");
-                clone.transform.position = transform.position;
-            }
-            else
-            {
-                clone = Managers.Pool.Pop(Managers.Pool.GetObject("Destruction_air_purple")).gameObject;
-                clone.transform.position = transform.position;
-            }
+            Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Destruction_air_purple", transform.position, Quaternion.Euler(Vector2.zero));
+            Managers.Pool.Push(GetComponent<Poolable>());
         }
     }
 }

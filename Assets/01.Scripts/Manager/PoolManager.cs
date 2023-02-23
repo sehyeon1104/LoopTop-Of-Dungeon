@@ -12,7 +12,7 @@ public class PoolManager
 
         Stack<Poolable> _poolStack = new Stack<Poolable>();
 
-        public void Init(GameObject obj, int count = 20)
+        public void Init(GameObject obj, int count = 50)
         {
             Obj = obj;
             Root = new GameObject().transform;
@@ -83,7 +83,7 @@ public class PoolManager
         }
     }
 
-    public void CreatePool(GameObject obj, int count = 5)
+    public void CreatePool(GameObject obj, int count = 50)
     {
         Pool pool = new Pool();
         pool.Init(obj, count);
@@ -119,6 +119,44 @@ public class PoolManager
         if (_pool.ContainsKey(name) == false)
             return null;
         return _pool[name].Obj;
+    }
+
+    public void PoolManaging(string path, Vector2 position, Quaternion rotation)
+    {
+        GameObject clone;
+        string name = path;
+        int index = name.LastIndexOf('/');
+
+        if (index >= 0)
+        {
+            name = name.Substring(index + 1);
+        }
+
+        if (GetObject(name) == null)
+            clone = Managers.Resource.Instantiate(path);
+        else
+            clone = Pop(GetObject(name)).gameObject;
+
+        clone.transform.position = position;
+        clone.transform.rotation = rotation;
+    }
+
+    public void PoolManaging(string path, Transform parent)
+    {
+        GameObject clone;
+        string name = path;
+        int index = name.LastIndexOf('/');
+
+        if (index >= 0)
+        {
+            name = name.Substring(index + 1);
+        }
+
+        if (GetObject(name) == null)
+            clone = Managers.Resource.Instantiate(path,parent);
+        else
+            clone = Pop(GetObject(name),parent).gameObject;
+
     }
 
     public void Clear()

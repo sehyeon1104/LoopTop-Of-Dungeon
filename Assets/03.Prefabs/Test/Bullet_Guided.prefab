@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 604226789958530478}
   - component: {fileID: 6000438348149927167}
   - component: {fileID: -5740833569217601634}
+  - component: {fileID: 1681218255791485678}
   m_Layer: 0
   m_Name: Bullet_Guided
   m_TagString: Untagged
@@ -194,3 +195,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1681218255791485678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2243714707895463231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 0
