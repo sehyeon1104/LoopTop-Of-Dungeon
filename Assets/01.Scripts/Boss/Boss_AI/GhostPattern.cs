@@ -53,7 +53,7 @@ public class GhostPattern : BossPattern
 
             Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.Euler(Vector2.zero));
             CinemachineCameraShaking.Instance.CameraShakeOnce();
-            Managers.Sound.Play("SoundEffects/Test.wav");
+            Managers.Sound.Play("SoundEffects/Ghost/G_Thorn.wav");
 
             Destroy(clone);
         }
