@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 
@@ -80,8 +81,11 @@ public class UIManager : MonoSingleton<UIManager>
     #region GameOver
     public void Revive()
     {
+        // TODO : 이후 광고시청 후 부활 or 재화 소모 후 부활 구현
+
         Debug.Log("Revive");
         ToggleGameOverPanel();
+        Player.Instance.RevivePlayer();
     }
 
     public void Leave()
@@ -91,7 +95,9 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void CheckOneMorePanelYes()
     {
-        Debug.Log("Leave");
+        // TODO : 이후 중앙 맵 씬 생성 시 중앙맵으로 이동
+
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void CheckOneMorePanelNo()

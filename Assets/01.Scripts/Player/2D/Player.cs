@@ -100,4 +100,10 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         isPDead = true;
         gameObject.SetActive(false);
     }
+
+    public void RevivePlayer()
+    {
+        pBase.Hp = pBase.MaxHp;
+        isPDead = false;
+    }
 }
