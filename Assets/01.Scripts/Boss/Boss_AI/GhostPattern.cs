@@ -49,6 +49,7 @@ public class GhostPattern : BossPattern
             attackAnim.Play(animArray[1]);
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
+            Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav",Define.Sound.Effect,0.5f);
             yield return new WaitForSeconds(1f);
 
             Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.Euler(Vector2.zero));
