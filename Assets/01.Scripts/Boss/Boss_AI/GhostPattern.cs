@@ -6,10 +6,7 @@ public class GhostPattern : BossPattern
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject bossMonster;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private GameObject bullet_guided;
 
-    [SerializeField] private ParticleSystem thornFx;
     [SerializeField] private ParticleSystem SummonFx;
 
     private void OnEnable()
