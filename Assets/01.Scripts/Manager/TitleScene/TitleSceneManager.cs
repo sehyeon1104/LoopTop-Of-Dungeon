@@ -23,6 +23,6 @@ public class TitleSceneManager : MonoBehaviour
 
     public void LoadToMainScene()
     {
-        SceneManager.LoadScene("MainScene");
+        Managers.Scene.LoadScene(Define.Scene.MainScene);
     }
 }

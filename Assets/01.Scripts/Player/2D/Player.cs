@@ -81,7 +81,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         {
             timer += Time.unscaledDeltaTime;
 
-            Time.timeScale -= 0.01f;
+            Time.timeScale -= 0.015f;
             hitVolume.weight += 0.05f;
 
             yield return null;
