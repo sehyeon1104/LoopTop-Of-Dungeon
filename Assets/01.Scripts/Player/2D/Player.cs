@@ -95,9 +95,11 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         if (isPDead)
             return;
 
-        UIManager.Instance.ToggleGameOverPanel();
-        CinemachineCameraShaking.Instance.CameraShakeOnce();
         isPDead = true;
+        // TODO : 플레이어 죽는 모션실행, 모션이 끝났을 때 게임오버패널 활성화
+
+        CinemachineCameraShaking.Instance.CameraShakeOnce();
+        UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
 
