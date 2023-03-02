@@ -8,7 +8,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public BossBase Base;
     public MultiGage.TargetGageValue TargetGage;
 
-    public bool isBDamaged { private set; get; } = false;
+    public bool isBDamaged { set; get; } = false;
     public bool isBDead { private set; get; } = false;
 
     public Vector3 hitPoint { get; }

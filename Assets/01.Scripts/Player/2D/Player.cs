@@ -80,6 +80,8 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         float timer = 0f;
 
         playerSprite.color = Color.red;
+        Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/19 effects/splash", transform.position, Quaternion.identity);
+        Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/25 sprite effects/ef_6_normal", transform.position, Quaternion.identity);
         while (timer <= 0.25f)
         {
             timer += Time.unscaledDeltaTime;
