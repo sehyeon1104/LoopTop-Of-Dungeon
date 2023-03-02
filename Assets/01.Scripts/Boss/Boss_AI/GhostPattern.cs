@@ -20,7 +20,7 @@ public class GhostPattern : BossPattern
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
             isCanUseSpecialPattern = true;
-        MoveToPlayer();
+        base.Update();
     }
 
     public override int GetRandomCount(int choisedPattern)
@@ -143,7 +143,6 @@ public class GhostPattern : BossPattern
         for(int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
-            Debug.Log(SummonClock.fillAmount);
             SummonClock.fillAmount = (float)i / 12;
         }
 
