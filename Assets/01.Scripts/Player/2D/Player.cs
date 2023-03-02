@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
     public PlayerBase pBase;
+    public Volume hitVolume;
     private bool isPDamaged = false;
     public bool isPDead { private set; get; } = false;
 
@@ -71,6 +73,22 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
         yield return null;
     }
+    public IEnumerator IEHitMotion()
+    {
+        float timer = 0f;
+
+        while (timer <= 0.5f)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            Time.timeScale -= 0.01f;
+            hitVolume.weight += 0.05f;
+
+            yield return null;
+        }
+        Time.timeScale = 1f;
+        hitVolume.weight = 0;
+    }
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
@@ -87,6 +105,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             return;
 
         StartCoroutine(IEDamaged());
+        StartCoroutine(IEHitMotion());
         CinemachineCameraShaking.Instance.CameraShakeOnce();
     }
 
