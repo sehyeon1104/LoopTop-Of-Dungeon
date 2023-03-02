@@ -22,15 +22,27 @@ public partial class Player
     [SerializeField]
     float JangPanPersDamage = 10;
     private int ghostSummonCount = 1;
-    int[] skillNum = new int[5];
+    List<int> randomSkillNum = new List<int>();
     public float skillCooltime { private set; get; } = 0f;
-
+    public void ListInit()
+    {
+       randomSkillNum.Clear();
+        for(int i =1; i<5; i++)
+        {
+            randomSkillNum.Add(i);
+        }
+        
+    }
     public void Skill1()
     {
         if (isPDead)
             return;
+        
+        switch (pBase.PlayerTransformTypeFlag)
+        {
 
-        HillaSill();
+        }
+        HillaSkill();
 
         Debug.Log("1번 스킬");
 
@@ -48,10 +60,11 @@ public partial class Player
     }
     public void SkillShuffle()
     {
-        
+        ListInit();
+
     }
     #region 고스트 스킬
-    public void HillaSill()  //1번 스킬 힐라 스킬
+    public void HillaSkill()  //1번 스킬 힐라 스킬
     {
         if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
             return;
