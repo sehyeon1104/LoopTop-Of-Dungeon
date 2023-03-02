@@ -37,6 +37,7 @@ public class BulletToPlayer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            Managers.Sound.Play("SoundEffects/Ghost/G_Bullet.wav");
             Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Destruction_air_purple", transform.position, Quaternion.Euler(Vector2.zero));
             Managers.Pool.Push(GetComponent<Poolable>());
         }

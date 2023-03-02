@@ -6,10 +6,7 @@ public class GhostPattern : BossPattern
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject bossMonster;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private GameObject bullet_guided;
 
-    [SerializeField] private ParticleSystem thornFx;
     [SerializeField] private ParticleSystem SummonFx;
 
     private void OnEnable()
@@ -52,11 +49,12 @@ public class GhostPattern : BossPattern
             attackAnim.Play(animArray[1]);
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.Euler(Vector3.zero));
+            Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav",Define.Sound.Effect,0.5f);
             yield return new WaitForSeconds(1f);
 
             Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.Euler(Vector2.zero));
             CinemachineCameraShaking.Instance.CameraShakeOnce();
-            Managers.Sound.Play("SoundEffects/Test.wav");
+            Managers.Sound.Play("SoundEffects/Ghost/G_Thorn.wav");
 
             Destroy(clone);
         }
