@@ -66,6 +66,11 @@ public class UIManager : MonoSingleton<UIManager>
             Time.timeScale = 1f;
     }
 
+    public void Resume()
+    {
+        TogglePausePanel();
+    }
+
     public void ToggleGameOverPanel()
     {
         blurPanel.SetActive(!pausePanel.activeSelf);
@@ -97,7 +102,8 @@ public class UIManager : MonoSingleton<UIManager>
     {
         // TODO : ¿Ã»ƒ ¡ﬂæ” ∏  æ¿ ª˝º∫ Ω√ ¡ﬂæ”∏ ¿∏∑Œ ¿Ãµø
 
-        SceneManager.LoadScene("TitleScene");
+        // MoveToCenterMap();
+        MoveToTitleScene(); // ¿”Ω√
     }
 
     public void CheckOneMorePanelNo()
@@ -162,5 +168,16 @@ public class UIManager : MonoSingleton<UIManager>
             Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
         }
 
+    }
+
+
+    public void MoveToCenterMap()
+    {
+        // TODO : ¡ﬂæ” ∏  æ¿ ª˝º∫Ω√ ¿Ãµø
+    }
+
+    public void MoveToTitleScene()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }
