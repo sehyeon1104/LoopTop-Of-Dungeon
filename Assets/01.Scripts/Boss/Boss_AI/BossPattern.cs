@@ -84,10 +84,10 @@ public abstract class BossPattern : MonoBehaviour
                     switch (patternChoice)
                     {
                         case 0:
-                            attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
+                            attackCoroutine = StartCoroutine(Pattern4(patternCount[0]));
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
+                            attackCoroutine = StartCoroutine(Pattern4(patternCount[1]));
                             break;
                         case 2:
                             attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
