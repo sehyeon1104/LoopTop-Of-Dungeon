@@ -147,6 +147,7 @@ public class GhostPattern : BossPattern
             SummonClock.fillAmount = (float)i / 12;
         }
 
+        SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
 
         foreach (var mob in mobList)
