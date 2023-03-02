@@ -26,78 +26,104 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
     }
 
-    // 디버깅
-    public void CameraShakeAtk()
+    //// 디버깅
+    //public void CameraShakeAtk()
+    //{
+    //    StartCoroutine(IECameraShakeOnce());
+    //}
+
+    ///// <summary>
+    ///// 고정된 세기
+    ///// </summary>
+    //public void CameraShakeOnce()
+    //{
+    //    StopCoroutine(IECameraShakeOnce());
+    //    StartCoroutine(IECameraShakeOnce());
+    //}
+
+    ///// <summary>
+    ///// 세기 조절 가능
+    ///// </summary>
+    ///// <param name="power"></param>
+    //public void CameraShakeOnce(float amplitude)
+    //{
+    //    StopCoroutine(IECameraShakeOnce(amplitude));
+    //    StartCoroutine(IECameraShakeOnce(amplitude));
+    //}
+
+    //private IEnumerator IECameraShakeOnce()
+    //{
+    //    if (VirtualCamera != null && virtualCameraNoise != null)
+    //    {
+    //        virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+    //        virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+
+    //        yield return new WaitForSeconds(0.1f);
+
+    //        virtualCameraNoise.m_AmplitudeGain = 0f;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
+    //    }
+    //}
+
+    //private IEnumerator IECameraShakeOnce(float amplitude)
+    //{
+    //    if (VirtualCamera != null && virtualCameraNoise != null)
+    //    {
+    //        virtualCameraNoise.m_AmplitudeGain = amplitude;
+    //        virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+
+    //        yield return new WaitForSeconds(0.1f);
+
+    //        virtualCameraNoise.m_AmplitudeGain = 0f;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
+    //    }
+    //}
+
+    //public void CameraShakeMultiple(float duration)
+    //{
+    //    StopCoroutine(IECameraShakeMultiple(duration));
+    //    StartCoroutine(IECameraShakeMultiple(duration));
+    //}
+
+    //private IEnumerator IECameraShakeMultiple(float duration)
+    //{
+    //    ShakeElapsedTime = duration;
+
+    //    if (VirtualCamera != null && virtualCameraNoise != null)
+    //    {
+    //        virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+    //        virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
+
+    //        yield return new WaitForSeconds(ShakeElapsedTime);
+
+    //        virtualCameraNoise.m_AmplitudeGain = 0f;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
+    //    }
+
+    //    yield break;
+    //}
+
+    public void CameraShake(float amplitude = 2f, float duration = 0.1f)
     {
-        StartCoroutine(IECameraShakeOnce());
+        StopCoroutine(IECameraShake(amplitude, duration));
+        StartCoroutine(IECameraShake(amplitude,duration));
     }
-
-    /// <summary>
-    /// 고정된 세기
-    /// </summary>
-    public void CameraShakeOnce()
-    {
-        StopCoroutine(IECameraShakeOnce());
-        StartCoroutine(IECameraShakeOnce());
-    }
-
-    /// <summary>
-    /// 세기 조절 가능
-    /// </summary>
-    /// <param name="power"></param>
-    public void CameraShakeOnce(float amplitude)
-    {
-        StopCoroutine(IECameraShakeOnce(amplitude));
-        StartCoroutine(IECameraShakeOnce(amplitude));
-    }
-
-    private IEnumerator IECameraShakeOnce()
-    {
-        if (VirtualCamera != null && virtualCameraNoise != null)
-        {
-            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
-            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
-
-            yield return new WaitForSeconds(0.1f);
-
-            virtualCameraNoise.m_AmplitudeGain = 0f;
-        }
-        else
-        {
-            Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
-        }
-    }
-
-    private IEnumerator IECameraShakeOnce(float amplitude)
-    {
-        if (VirtualCamera != null && virtualCameraNoise != null)
-        {
-            virtualCameraNoise.m_AmplitudeGain = amplitude;
-            virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
-
-            yield return new WaitForSeconds(0.1f);
-
-            virtualCameraNoise.m_AmplitudeGain = 0f;
-        }
-        else
-        {
-            Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
-        }
-    }
-
-    public void CameraShakeMultiple(float duration)
-    {
-        StopCoroutine(IECameraShakeMultiple(duration));
-        StartCoroutine(IECameraShakeMultiple(duration));
-    }
-
-    private IEnumerator IECameraShakeMultiple(float duration)
+    private IEnumerator IECameraShake(float amplitude,float duration)
     {
         ShakeElapsedTime = duration;
 
         if (VirtualCamera != null && virtualCameraNoise != null)
         {
-            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude;
+            virtualCameraNoise.m_AmplitudeGain = amplitude;
             virtualCameraNoise.m_FrequencyGain = ShakeFrequency;
 
             yield return new WaitForSeconds(ShakeElapsedTime);

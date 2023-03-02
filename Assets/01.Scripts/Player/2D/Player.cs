@@ -16,6 +16,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     AgentInput agentInput = null;
     Animator playerAnim = null;
+    SpriteRenderer playerSprite = null;
 
     public Sprite playerVisual { private set; get; }
 
@@ -33,6 +34,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         }
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
+        playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -77,6 +79,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     {
         float timer = 0f;
 
+        playerSprite.color = Color.red;
         while (timer <= 0.25f)
         {
             timer += Time.unscaledDeltaTime;
@@ -88,6 +91,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         }
         Time.timeScale = 1f;
         hitVolume.weight = 0;
+        playerSprite.color = Color.white;
     }
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
@@ -106,7 +110,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
-        CinemachineCameraShaking.Instance.CameraShakeOnce(20);
+        CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
     }
 
     public void Dead()
@@ -117,7 +121,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         isPDead = true;
         // TODO : 플레이어 죽는 모션실행, 모션이 끝났을 때 게임오버패널 활성화
 
-        CinemachineCameraShaking.Instance.CameraShakeOnce();
+        CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
