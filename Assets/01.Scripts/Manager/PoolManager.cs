@@ -62,7 +62,7 @@ public class PoolManager
 
             if (parent == null)
             {
-                poolable.transform.parent = null;
+                poolable.transform.parent = Managers.Scene.CurrentScene.transform;
             }
             poolable.transform.parent = parent;
             poolable.IsUsing = true;

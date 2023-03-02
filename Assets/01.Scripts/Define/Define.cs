@@ -11,6 +11,12 @@ public static class Define
         Ghost,
 
     }
+    public enum Scene
+    {
+        Unknown,
+        TitleScene,
+        MainScene,
+    }
     public enum Sound
     {
         Bgm,
