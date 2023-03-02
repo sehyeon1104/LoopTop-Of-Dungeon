@@ -7,6 +7,7 @@ using UnityEngine;
 // Player Skill Class
 public partial class Player
 {
+   
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
@@ -21,7 +22,7 @@ public partial class Player
     [SerializeField]
     float JangPanPersDamage = 10;
     private int ghostSummonCount = 1;
-
+    int[] skillNum = new int[5];
     public float skillCooltime { private set; get; } = 0f;
 
     public void Skill1()
@@ -29,11 +30,11 @@ public partial class Player
         if (isPDead)
             return;
 
-        JangPanPattern();
+        HillaSill();
 
         Debug.Log("1번 스킬");
 
-        skillCooltime = playerTransformDataSO.skill1Delay;
+       
     }
 
     public void Skill2()
@@ -43,18 +44,19 @@ public partial class Player
 
         Debug.Log("2번 스킬");
 
-        HillaPattern();
+       JangPanSkill();
     }
-    public void TellportParrern() //텔레포트 패턴
+    public void SkillShuffle()
     {
-        StartCoroutine(TeleportSkill(scratchTime));
+        
     }
-    public void HillaPattern()    // 힐라 패턴
+    #region 고스트 스킬
+    public void HillaSill()  //1번 스킬 힐라 스킬
     {
         if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
             return;
 
-        skillCooltime = playerTransformDataSO.skill2Delay;
+        skillCooltime = playerTransformDataSO.skill[1].skillDelay;
 
         playerAnim.SetTrigger("Attack");
 
@@ -64,14 +66,26 @@ public partial class Player
         }
     }
 
-    public void JangPanPattern()
+    public void JangPanSkill() //2번 스킬 장판 스킬 애니메이션 필요
     {
         if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
             return;
 
         StartCoroutine(JangPanSkill(jangPanTime));
+        skillCooltime = playerTransformDataSO.skill[0].skillDelay;
     }
+    public void TellportParrern() //3번 스킬 텔레포트 패턴
+    {
+        StartCoroutine(TeleportSkill(scratchTime));
+    }
+    public void ArmStretchSkill() // 팔 뻩기 스킬 
+    {
 
+    }
+    public void RiseUpSkill() //솟아 오르기 스킬
+    {
+
+    }
     public void UltimateSkill()
     {
         if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
@@ -137,6 +151,7 @@ public partial class Player
             yield return null;
         } while (timer < skillTime);
     }
+    #endregion
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
