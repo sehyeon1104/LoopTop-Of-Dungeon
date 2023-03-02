@@ -38,6 +38,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
+        SkillShuffle();
         pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
     }
