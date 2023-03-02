@@ -7,6 +7,11 @@ using TMPro;
 
 public class TitleSceneManager : MonoBehaviour
 {
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
