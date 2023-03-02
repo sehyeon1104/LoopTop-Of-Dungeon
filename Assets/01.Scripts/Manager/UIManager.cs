@@ -102,8 +102,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         // TODO : ¿Ã»ƒ ¡ﬂæ” ∏  æ¿ ª˝º∫ Ω√ ¡ﬂæ”∏ ¿∏∑Œ ¿Ãµø
 
-        // MoveToCenterMap();
-        MoveToTitleScene(); // ¿”Ω√
+        MoveToCenterMap();
     }
 
     public void CheckOneMorePanelNo()
@@ -174,6 +173,8 @@ public class UIManager : MonoSingleton<UIManager>
     public void MoveToCenterMap()
     {
         // TODO : ¡ﬂæ” ∏  æ¿ ª˝º∫Ω√ ¿Ãµø
+
+        MoveToTitleScene(); // ¿”Ω√
     }
 
     public void MoveToTitleScene()
