@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GhostPattern : BossPattern
 {
@@ -8,6 +9,8 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject bossMonster;
 
     [SerializeField] private ParticleSystem SummonFx;
+    [SerializeField] private GameObject SummonTimer;
+    [SerializeField] private Image SummonClock;
 
     private void OnEnable()
     {
@@ -17,7 +20,7 @@ public class GhostPattern : BossPattern
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
             isCanUseSpecialPattern = true;
-        MoveToPlayer();
+        base.Update();
     }
 
     public override int GetRandomCount(int choisedPattern)
@@ -135,7 +138,16 @@ public class GhostPattern : BossPattern
             mobList.Add(clone);
         }
 
-        yield return new WaitForSeconds(10f);
+        SummonTimer.SetActive(true);
+
+        for(int i = 1; i < 13; i++)
+        {
+            yield return new WaitForSeconds(2f);
+            SummonClock.fillAmount = (float)i / 12;
+        }
+
+        SummonClock.fillAmount = 0;
+        SummonTimer.SetActive(false);
 
         foreach (var mob in mobList)
         {
