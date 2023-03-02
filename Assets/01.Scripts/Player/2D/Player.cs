@@ -77,7 +77,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     {
         float timer = 0f;
 
-        while (timer <= 0.5f)
+        while (timer <= 0.25f)
         {
             timer += Time.unscaledDeltaTime;
 
@@ -106,7 +106,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
-        CinemachineCameraShaking.Instance.CameraShakeOnce();
+        CinemachineCameraShaking.Instance.CameraShakeOnce(20);
     }
 
     public void Dead()
