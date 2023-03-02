@@ -29,7 +29,7 @@ public partial class Player
         {
             if (enemys[i].gameObject.CompareTag("Enemy")) { 
                 Debug.Log("¥Í¿Ω");
-                CinemachineCameraShaking.Instance.CameraShakeOnce();
+                CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
             }
         }
@@ -43,7 +43,7 @@ public partial class Player
         if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
         {
             Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
-            CinemachineCameraShaking.Instance.CameraShakeOnce();
+            CinemachineCameraShaking.Instance.CameraShake();
         }
 
     }

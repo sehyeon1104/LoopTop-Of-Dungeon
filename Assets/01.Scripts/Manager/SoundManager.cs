@@ -41,12 +41,12 @@ public class SoundManager
     /// <summary>
     /// 사용할 때 뒤에 확장자명도 같이 적어줘야함
     /// </summary>
-    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1f)
+    public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1f, float volume = 1f)
     {
         AudioClip audioClip = GetorAddAudioClip(path, type);
         Play(audioClip, type, pitch);
     }
-    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1f)
+    public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1f, float volume = 1f)
     {
         if (audioClip == null)
             return;
@@ -57,6 +57,7 @@ public class SoundManager
                 audioSource.Stop();
 
             audioSource.pitch = pitch;
+            audioSource.volume = volume;
             audioSource.clip = audioClip;
             audioSource.Play();
         }
@@ -64,6 +65,7 @@ public class SoundManager
         {
             AudioSource audioSource = audioSources[(int)Define.Sound.Effect];
             audioSource.pitch = pitch;
+            audioSource.volume = volume;
             audioSource.PlayOneShot(audioClip);
         }
     }
