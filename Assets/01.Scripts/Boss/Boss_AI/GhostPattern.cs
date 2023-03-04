@@ -12,10 +12,10 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject SummonTimer;
     [SerializeField] private Image SummonClock;
 
-    private void OnEnable()
-    {
-        Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
-    }
+    //private void OnEnable()
+    //{
+    //    Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
+    //}
     private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
@@ -52,7 +52,7 @@ public class GhostPattern : BossPattern
             attackAnim.Play(animArray[1]);
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.identity);
-            Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav",Define.Sound.Effect,0.5f);
+            Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav");
             yield return new WaitForSeconds(1f);
 
             Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.identity);
