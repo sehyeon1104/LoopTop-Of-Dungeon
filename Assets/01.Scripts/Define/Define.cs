@@ -4,6 +4,13 @@ using UnityEngine;
 
 public static class Define
 {
+    public enum MapTypeFlag
+    {
+        Default = 0,
+        CenterMap,
+        Ghost,
+    }
+
     public enum PlayerTransformTypeFlag
     {
         Normal = 0,

@@ -12,7 +12,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     public bool isPDead { private set; get; } = false;
 
     [SerializeField]
-    private float InvincibleTime = 0.2f;    // 무적시간
+    private float reviveInvincibleTime = 2f;
+    [SerializeField]
+    private float invincibleTime = 0.2f;    // 무적시간
 
     AgentInput agentInput = null;
     Animator playerAnim = null;
@@ -70,7 +72,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     public IEnumerator IEDamaged()
     {
         GetHit.Invoke();
-        yield return new WaitForSeconds(InvincibleTime);
+        yield return new WaitForSeconds(invincibleTime);
 
         isPDamaged = false;
 
@@ -131,7 +133,16 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     public void RevivePlayer()
     {
+        gameObject.SetActive(true); // 임시
         pBase.Hp = pBase.MaxHp;
         isPDead = false;
+        StartCoroutine(Invincibility(reviveInvincibleTime));
+    }
+
+    public IEnumerator Invincibility(float time)
+    {
+        isPDamaged = true;
+        yield return new WaitForSeconds(time);
+        isPDamaged = false; 
     }
 }

@@ -158,13 +158,15 @@ public class UIManager : MonoSingleton<UIManager>
         Transform[] hpbars = hpSpace.GetComponentsInChildren<RectTransform>();
         for (int i = 1; i < hpbars.Length; i++)
         {
-            Destroy(hpbars[i].gameObject);
+            hpbars[i].gameObject.SetActive(false);
+            // Destroy(hpbars[i].gameObject);
         }
-        for (int i = 0; i < Player.Instance.pBase.Hp; i++)
+        for (int i = 1; i <= Player.Instance.pBase.Hp; i++)
         {
-            Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
-            //Instantiate(hpPrefab, hpSpace.transform);
-            Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
+            hpbars[i].gameObject.SetActive(true);
+            //Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
+            ////Instantiate(hpPrefab, hpSpace.transform);
+            //Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
         }
 
     }
