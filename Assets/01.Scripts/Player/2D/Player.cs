@@ -46,6 +46,11 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Update()
     {
+       foreach(int i in randomSkillNum)
+        {
+            Debug.Log($"번호 널기: {i}");
+        }
+      
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)
