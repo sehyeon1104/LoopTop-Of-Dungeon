@@ -28,7 +28,7 @@ public partial class Player
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for(int i=0; i<enemys.Length; i++)
         {
-            if (enemys[i].gameObject.CompareTag("Enemy")) { 
+            if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss")) { 
                 Debug.Log("´êÀ½");
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
@@ -36,16 +36,16 @@ public partial class Player
         }
         Debug.Log("Attack");
 
-        if (Boss.Instance.isBDead)
-            return;
+        //if (Boss.Instance.isBDead)
+        //    return;
 
-        Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
+        //Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
         
-        if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
-        {
-            Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
-            CinemachineCameraShaking.Instance.CameraShake();
-        }
+        //if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
+        //{
+        //    Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
+        //    CinemachineCameraShaking.Instance.CameraShake();
+        //}
 
     }
 }

@@ -91,7 +91,7 @@ public partial class Player
     {
         StartCoroutine(TeleportSkill(scratchTime));
     }
-    public void ArmStretchSkill() // ÆÈ –o±â ½ºÅ³ 
+    public void ArmStretchSkill() // ÆÈ »¸±â ½ºÅ³ 
     {
 
     }
