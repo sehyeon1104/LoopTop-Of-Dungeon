@@ -41,9 +41,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         foreach(SpriteRenderer sprite in sprites)
         {
-            sprite.color = Color.red;
+            sprite.color = Color.black;
         }
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.05f);
         foreach (SpriteRenderer sprite in sprites)
         {
             sprite.color = Color.white;

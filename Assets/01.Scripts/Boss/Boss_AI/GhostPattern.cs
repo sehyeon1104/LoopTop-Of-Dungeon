@@ -55,7 +55,7 @@ public class GhostPattern : BossPattern
             Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav");
             yield return new WaitForSeconds(1f);
 
-            Managers.Pool.PoolManaging("10.Effects/118 sprite effects bundle/15 effects/Mine_purple", clone.transform.position, Quaternion.identity);
+            Managers.Pool.PoolManaging("10.Effects/ghost/Thorn", clone.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake();
             Managers.Sound.Play("SoundEffects/Ghost/G_Thorn.wav");
 
