@@ -45,11 +45,8 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         agentInput.Attack.AddListener(Attack);
     }
     private void Update()
-    {
-       foreach(int i in randomSkillNum)
-        {
-            Debug.Log($"번호 널기: {i}");
-        }
+    { 
+   
       
         if (Input.GetKeyDown(KeyCode.F))
         {

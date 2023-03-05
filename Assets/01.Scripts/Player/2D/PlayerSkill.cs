@@ -32,22 +32,26 @@ public partial class Player
         {
             randomSkillNum.Add(i);
         }
-
+        ListShuffle();
+        foreach (int j in randomSkillNum)
+        {
+            Debug.Log($"번호 널기: {j}");
+        }
     }
     public void ListShuffle()
     {
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < randomSkillNum.Count; i++)
         {
-           int randomAt = Random.Range(0,randomSkillNum.Count-1);
-            int newNum = Random.Range(1, randomSkillNum.Count);
-            int currentNum = randomSkillNum[randomAt];
+           int randomAt = Random.Range(1,randomSkillNum.Count);
+           randomSkillNum.Remove(randomAt);
+           randomSkillNum.Add(randomAt);
         }
     }
     public void Skill1()
     {
         if (isPDead)
             return;
-
+            
         switch (pBase.PlayerTransformTypeFlag)
         {
 
@@ -71,11 +75,7 @@ public partial class Player
     public void SkillShuffle()
     {
         ListInit();
-
-        for (int i = 0; i < 2; i++)
-        {
-
-        }
+      
     }
     #region 고스트 스킬
     public void HillaSkill()  //1번 스킬 힐라 스킬
