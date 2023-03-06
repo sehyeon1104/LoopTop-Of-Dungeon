@@ -47,7 +47,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         agentInput.Attack.AddListener(Attack);
     }
     private void Update()
-    {
+    { 
+   
+      
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,7 @@ using UnityEngine;
 // Player Skill Class
 public partial class Player
 {
-   
+
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
@@ -15,7 +16,7 @@ public partial class Player
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
     [Tooltip("장판 지속시간")]
-    public float jangPanTime =3;
+    public float jangPanTime = 3;
     [Tooltip("할퀴기 지속시간")]
     public float scratchTime = 3;
     [SerializeField] Transform Skill1Trans;
@@ -26,18 +27,31 @@ public partial class Player
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
     {
-       randomSkillNum.Clear();
-        for(int i =1; i<5; i++)
+        randomSkillNum.Clear();
+        for (int i = 1; i < 6; i++)
         {
             randomSkillNum.Add(i);
         }
-        
+        ListShuffle();
+        foreach (int j in randomSkillNum)
+        {
+            Debug.Log($"번호 널기: {j}");
+        }
+    }
+    public void ListShuffle()
+    {
+        for (int i = 0; i < randomSkillNum.Count; i++)
+        {
+           int randomAt = Random.Range(1,randomSkillNum.Count);
+           randomSkillNum.Remove(randomAt);
+           randomSkillNum.Add(randomAt);
+        }
     }
     public void Skill1()
     {
         if (isPDead)
             return;
-        
+            
         switch (pBase.PlayerTransformTypeFlag)
         {
 
@@ -46,7 +60,7 @@ public partial class Player
 
         Debug.Log("1번 스킬");
 
-       
+
     }
 
     public void Skill2()
@@ -56,12 +70,12 @@ public partial class Player
 
         Debug.Log("2번 스킬");
 
-       JangPanSkill();
+        JangPanSkill();
     }
     public void SkillShuffle()
     {
         ListInit();
-
+      
     }
     #region 고스트 스킬
     public void HillaSkill()  //1번 스킬 힐라 스킬
@@ -113,27 +127,27 @@ public partial class Player
     {
         float timer = 0;
         float timerA = 0;
-        Instantiate(jangPanPrefab, transform.position, Quaternion.identity,Skill1Trans);
+        Instantiate(jangPanPrefab, transform.position, Quaternion.identity, Skill1Trans);
         do
         {
-           Collider2D[] attachObjs;
-           
+            Collider2D[] attachObjs;
+
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
-            if(timerA>0.1f)
+            if (timerA > 0.1f)
             {
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, 2.5f);
-                foreach(Collider2D c in attachObjs)
+                foreach (Collider2D c in attachObjs)
                 {
-                    if(c.CompareTag("Enemy") || c.CompareTag("Boss"))
+                    if (c.CompareTag("Enemy") || c.CompareTag("Boss"))
                     {
                         c.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
                     }
                 }
                 timerA = 0;
-                
+
             }
-            if (timer>skillTime)
+            if (timer > skillTime)
             {
                 Destroy(Skill1Trans.GetChild(0).gameObject);
             }
