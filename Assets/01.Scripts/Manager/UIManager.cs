@@ -147,7 +147,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         cooltimeImg.fillAmount = 1f;
 
-        while (cooltimeImg.fillAmount > 0f)
+            while (cooltimeImg.fillAmount > 0f)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
             yield return new WaitForEndOfFrame();
