@@ -39,10 +39,10 @@ public abstract class BossPattern : MonoBehaviour
         StartCoroutine(RandomPattern());
     }
 
-    //private void Update()
-    //{
-    //    MoveToPlayer();
-    //}
+    protected void Update()
+    {
+        MoveToPlayer();
+    }
 
     public void AnimationArray()
     {
@@ -67,7 +67,7 @@ public abstract class BossPattern : MonoBehaviour
 
     private IEnumerator RandomPattern()
     {
-        while (true)
+        while (!Boss.Instance.isBDead)
         {
             int patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
@@ -77,6 +77,7 @@ public abstract class BossPattern : MonoBehaviour
                 if (!isUsedSpecialPattern && isHaveSpecialPattern && isCanUseSpecialPattern)
                 {
                     isUsedSpecialPattern = true;
+                    patternCount[3] = GetRandomCount(3);
                     attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
                 }
                 else
@@ -101,6 +102,8 @@ public abstract class BossPattern : MonoBehaviour
             yield return new WaitUntil(() => attackCoroutine == null);
             yield return new WaitForSeconds(patternDelay);
         }
+        attackCoroutine = null;
+        StopAllCoroutines();
     }
 
     public virtual int GetRandomCount(int choisedPattern)

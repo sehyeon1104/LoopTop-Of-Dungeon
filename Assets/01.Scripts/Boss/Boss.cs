@@ -8,12 +8,12 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public BossBase Base;
     public MultiGage.TargetGageValue TargetGage;
 
-    public bool isBDamaged { private set; get; } = false;
+    public bool isBDamaged { set; get; } = false;
     public bool isBDead { private set; get; } = false;
 
     public Vector3 hitPoint { get; }
 
-    private SpriteRenderer spriteRenderer = null;
+    private List<SpriteRenderer> sprites = new List<SpriteRenderer>();
 
     private void Awake()
     {
@@ -21,7 +21,10 @@ public class Boss : MonoSingleton<Boss>, IHittable
         TargetGage = new MultiGage.TargetGageValue(Base.Hp);
         MultiGage.Instance.ObserveStart(TargetGage);
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        foreach(var child in GetComponentsInChildren<SpriteRenderer>())
+        {
+            sprites.Add(child);
+        }
     }
 
     private void Start()
@@ -36,9 +39,15 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         //StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
-        spriteRenderer.color = Color.black;
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.black;
+        }
         yield return new WaitForSeconds(0.01f);
-        spriteRenderer.color = Color.white;
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.white;
+        }
 
         yield return new WaitForSeconds(0.05f);
         isBDamaged = false;

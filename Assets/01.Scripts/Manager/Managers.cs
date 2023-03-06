@@ -16,10 +16,12 @@ public class Managers : MonoBehaviour
     }
 
     SoundManager _sound = new SoundManager();
+    ScenesManager _scene = new ScenesManager();
     ResourceManager _resource = new ResourceManager();
     PoolManager _pool = new PoolManager();
 
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static ScenesManager Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static PoolManager Pool { get { return Instance._pool; } }
 
@@ -44,5 +46,10 @@ public class Managers : MonoBehaviour
             instance._pool.Init();
             instance._sound.Init();
         }
+    }
+    public static void Clear()
+    {
+        Scene.Clear();
+        Pool.Clear();
     }
 }
