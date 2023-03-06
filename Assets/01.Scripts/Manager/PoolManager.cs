@@ -121,7 +121,7 @@ public class PoolManager
         return _pool[name].Obj;
     }
 
-    public void PoolManaging(string path, Vector2 position, Quaternion rotation)
+    public GameObject PoolManaging(string path, Vector2 position, Quaternion rotation)
     {
         GameObject clone;
         string name = path;
@@ -139,9 +139,11 @@ public class PoolManager
 
         clone.transform.position = position;
         clone.transform.rotation = rotation;
+
+        return clone;
     }
 
-    public void PoolManaging(string path, Transform parent)
+    public GameObject PoolManaging(string path, Transform parent)
     {
         GameObject clone;
         string name = path;
@@ -156,6 +158,8 @@ public class PoolManager
             clone = Managers.Resource.Instantiate(path,parent);
         else
             clone = Pop(GetObject(name),parent).gameObject;
+
+        return clone;
 
     }
 

@@ -42,6 +42,11 @@ public abstract class BossPattern : MonoBehaviour
     protected void Update()
     {
         MoveToPlayer();
+        if(Boss.Instance.isBDead)
+        {
+            attackCoroutine = null;
+            StopAllCoroutines();
+        }
     }
 
     public void AnimationArray()
