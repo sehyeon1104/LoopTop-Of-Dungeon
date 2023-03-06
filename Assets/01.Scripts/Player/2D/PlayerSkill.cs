@@ -39,12 +39,6 @@ public partial class Player
         {
             randomSkillNum.Add(i);
         }
-        ListShuffle();
-        foreach (int j in randomSkillNum)
-        {
-            Debug.Log($"번호 넣기: {j}");
-        }
-
         // 배열 ver
         //for(int i = 0; i < randomSkillNumArr.Length; ++i)
         //{
@@ -55,9 +49,9 @@ public partial class Player
     {
         for (int i = 0; i < randomSkillNum.Count; i++)
         {
-           int randomAt = Random.Range(1,randomSkillNum.Count);
-           randomSkillNum.Remove(randomAt);
-           randomSkillNum.Add(randomAt);
+            int randomAt = Random.Range(1, randomSkillNum.Count);
+            randomSkillNum.Remove(randomAt);
+            randomSkillNum.Insert(Random.Range(0, randomSkillNum.Count + 1), randomAt);
         }
 
         // 배열 ver
@@ -69,11 +63,22 @@ public partial class Player
         //    randomSkillNumArr[randomSkilltemp] = randomSkilltemp2;
         //}
     }
+    public void ListRemove()
+    {
+        int num1 = Random.Range(1, randomSkillNum.Count);
+        int num2 = Random.Range(1, randomSkillNum.Count);
+        while (num2 == num1)
+        {
+            num2 = Random.Range(1, randomSkillNum.Count);
+        }
+        randomSkillNum.Remove(num1);
+        randomSkillNum.Remove(num2);
+    }
     public void Skill1()
     {
         if (isPDead)
             return;
-            
+
         switch (pBase.PlayerTransformTypeFlag)
         {
 
@@ -97,7 +102,10 @@ public partial class Player
     public void SkillShuffle()
     {
         ListInit();
-      
+        ListShuffle();
+        ListRemove();
+       
+        print("셔플");
     }
     #region 고스트 스킬
     public void HillaSkill()  //1번 스킬 힐라 스킬

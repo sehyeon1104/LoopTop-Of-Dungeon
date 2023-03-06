@@ -16,6 +16,8 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject hpPrefab;
     [SerializeField]
     private GameObject hpSpace;
+    [SerializeField]
+    GameObject skillSelect;
     // [Header("LeftDown")]
 
     [Header("Middle")]
@@ -133,12 +135,19 @@ public class UIManager : MonoSingleton<UIManager>
 
         StartCoroutine(IESkillCooltime(cooltimeImg, Player.Instance.skillCooltime));
     }
-
+    public void SkillNum(List<int> skillList)
+    {
+        TextMeshProUGUI[] selectTexts = skillSelect.GetComponentsInChildren<TextMeshProUGUI>();
+        for (int i = 0; i < selectTexts.Length; i++)
+        {
+            selectTexts[i].text = skillList[i].ToString();
+        }
+    }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
         cooltimeImg.fillAmount = 1f;
 
-        while(cooltimeImg.fillAmount > 0f)
+        while (cooltimeImg.fillAmount > 0f)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
             yield return new WaitForEndOfFrame();
@@ -154,7 +163,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void HpUpdate()
     {
-       
+
         Transform[] hpbars = hpSpace.GetComponentsInChildren<RectTransform>();
         for (int i = 1; i < hpbars.Length; i++)
         {
