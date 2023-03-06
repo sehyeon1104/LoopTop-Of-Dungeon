@@ -11,6 +11,7 @@ TagManager:
   - UltimateSkill
   - Boss
   - Enemy
+  - TileMapPlayerCol
   layers:
   - Default
   - TransparentFX
@@ -51,14 +52,23 @@ TagManager:
   - name: Ground(TileMap)
     uniqueID: 3755021539
     locked: 0
-  - name: Clifffs(TileMap)
+  - name: Cliffs(BossTileMap)
     uniqueID: 2599516075
     locked: 0
-  - name: Details(TileMap)
+  - name: Cliffs(NormalFieldTileMap)
+    uniqueID: 2763249801
+    locked: 0
+  - name: Details(BossTileMap)
     uniqueID: 3012093591
     locked: 0
-  - name: Objects(TileMap)
+  - name: Details(NormalFieldTileMap)
+    uniqueID: 1672594845
+    locked: 0
+  - name: Objects(BossTileMap)
     uniqueID: 2339504611
+    locked: 0
+  - name: Objects(NormalFieldTileMap) + Player
+    uniqueID: 4294241145
     locked: 0
   - name: Floor
     uniqueID: 3231141429
@@ -72,15 +82,9 @@ TagManager:
   - name: Skill
     uniqueID: 3888642929
     locked: 0
-  - name: Agent
-    uniqueID: 1866299259
-    locked: 0
   - name: BossSkill
     uniqueID: 2349279755
     locked: 0
   - name: CanVas
     uniqueID: 1571193885
-    locked: 0
-  - name: BossSkillUlt
-    uniqueID: 1261521011
     locked: 0

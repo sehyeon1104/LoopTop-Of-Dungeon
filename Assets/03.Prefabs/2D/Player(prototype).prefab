@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2437888175715823303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 572851218448384101}
+  - component: {fileID: 7417575732371363349}
+  m_Layer: 0
+  m_Name: tilemapCollider
+  m_TagString: TileMapPlayerCol
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &572851218448384101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437888175715823303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7442715256025506024}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7417575732371363349
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2437888175715823303}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.12546873}
+  serializedVersion: 2
+  m_Radius: 0.70911455
 --- !u!1 &7442715255664052372
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,11 +105,8 @@ GameObject:
   - component: {fileID: 7442715256025506027}
   - component: {fileID: 7442715256025506026}
   - component: {fileID: -5544824845993973852}
-  - component: {fileID: 7442715256025506029}
   - component: {fileID: 7442715256025506028}
-  - component: {fileID: 7442715256025506031}
-  - component: {fileID: 7442715256025506033}
-  - component: {fileID: 7442715256025506030}
+  - component: {fileID: 7442715256223835011}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -76,13 +121,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7442715256025506025}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7442715257172540170}
   - {fileID: 7442715255664052375}
+  - {fileID: 572851218448384101}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,9 +170,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1866299259
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: -726151
+  m_SortingLayer: 7
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 35f2e540a1fa88040995a55d8110168f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -137,7 +183,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &7442715256025506027
 Rigidbody2D:
   serializedVersion: 4
@@ -172,8 +218,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.63, y: 1.47}
+  m_Offset: {x: -0.008119613, y: -0.36722246}
+  m_Size: {x: 0.41888958, y: 0.41888958}
   m_Direction: 0
 --- !u!95 &-5544824845993973852
 Animator:
@@ -195,20 +241,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &7442715256025506029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f73006d45b00af146ae1c70e4a656a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _joystick: {fileID: 0}
-  speed: 5
 --- !u!114 &7442715256025506028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +262,7 @@ MonoBehaviour:
   <MovementInput>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7442715256025506031
+--- !u!114 &7442715256223835011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,38 +271,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7442715256025506025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cfbe9df8480bcc49a1915be111a14fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1.5
---- !u!114 &7442715256025506033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7442715256025506030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da3cb9ab96fe2cb4ab39bafa9ac2d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <playerTransformDataSO>k__BackingField: {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
+  InvincibleTime: 0.2
+  <GetHit>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnDie>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  attackRange: 1
+  _joystick: {fileID: 0}
+  speed: 5
+  ghostSummonerPrefab: {fileID: 2247558619300843271, guid: 07ca72984c1a4724b80ea3b9f6f5f745, type: 3}
+  jangPanPrefab: {fileID: 0}
+  jangPanTime: 3
+  scratchTime: 3
+  Skill1Trans: {fileID: 0}
+  JangPanPersDamage: 10
   playerTransformDataSOArr:
   - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
   - {fileID: 11400000, guid: 024b87a98b7996b489724611756bbd0d, type: 2}
+  <playerTransformDataSO>k__BackingField: {fileID: 0}
 --- !u!1 &7442715257172540171
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +366,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1866299259
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1da526eda429cf549af2e9b07211bce2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
