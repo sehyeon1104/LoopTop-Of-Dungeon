@@ -53,7 +53,7 @@ public partial class Player
     }
     public void ListShuffle()
     {
-        for (int i = 0; i < randomSkillNum.Count; i++)
+        for (int i = 0; i < shuffleCount; i++)
         {
            int randomAt = Random.Range(1,randomSkillNum.Count);
            randomSkillNum.Remove(randomAt);

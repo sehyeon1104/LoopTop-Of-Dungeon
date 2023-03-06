@@ -12,6 +12,9 @@ public abstract class BossPattern : MonoBehaviour
 
     [Header("보스 옵션")]
 
+    [Header("보스방 입장 시 초기 대기 상태")]
+    [SerializeField]
+    private float waitTime = 1f;
     [Header("조건식 패턴 존재 여부")]
     [SerializeField] protected bool isHaveSpecialPattern = false;
     [Header("보스 패턴 후딜레이")]
@@ -72,6 +75,8 @@ public abstract class BossPattern : MonoBehaviour
 
     private IEnumerator RandomPattern()
     {
+        yield return new WaitForSeconds(waitTime);
+
         while (!Boss.Instance.isBDead)
         {
             int patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
