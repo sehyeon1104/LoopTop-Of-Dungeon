@@ -24,6 +24,13 @@ public partial class Player
     float JangPanPersDamage = 10;
     private int ghostSummonCount = 1;
     List<int> randomSkillNum = new List<int>();
+
+    [SerializeField]
+    private int shuffleCount = 100;
+    private int[] randomSkillNumArr = new int[5];
+    private int randomSkilltemp = 0;
+    private int randomSkilltemp2 = 0;
+
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
     {
@@ -35,8 +42,14 @@ public partial class Player
         ListShuffle();
         foreach (int j in randomSkillNum)
         {
-            Debug.Log($"번호 널기: {j}");
+            Debug.Log($"번호 넣기: {j}");
         }
+
+        // 배열 ver
+        //for(int i = 0; i < randomSkillNumArr.Length; ++i)
+        //{
+        //    randomSkillNumArr[i] = i + 1;
+        //}
     }
     public void ListShuffle()
     {
@@ -46,6 +59,15 @@ public partial class Player
            randomSkillNum.Remove(randomAt);
            randomSkillNum.Add(randomAt);
         }
+
+        // 배열 ver
+        //for(int i = 0; i < shuffleCount; ++i)
+        //{
+        //    randomSkilltemp = Random.Range(0, randomSkillNumArr.Length);
+        //    randomSkilltemp2 = randomSkillNumArr[i % 5];
+        //    randomSkillNumArr[i % 5] = randomSkillNumArr[randomSkilltemp];
+        //    randomSkillNumArr[randomSkilltemp] = randomSkilltemp2;
+        //}
     }
     public void Skill1()
     {
