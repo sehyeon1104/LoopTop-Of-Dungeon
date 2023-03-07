@@ -10,6 +10,7 @@ using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    int skillSelectNum = 0;
     [Header("LeftUp")]
     [SerializeField]
     private Image playerIcon = null;
@@ -148,9 +149,13 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillSelecet()
     {
-        print(gameObject.name);
-        int selectNum = int.Parse(gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
-        print(selectNum);
+       skillSelectNum++;
+       GameObject selectObj = EventSystem.current.currentSelectedGameObject;
+       int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
+        if(skillSelectNum>1)
+        {
+            skillSelect.SetActive(false);   
+        }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
