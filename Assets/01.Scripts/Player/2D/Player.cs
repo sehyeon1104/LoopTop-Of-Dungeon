@@ -29,6 +29,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     private void Awake()
     {
+        
         pBase = new PlayerBase();
         if (playerTransformDataSO == null)
         {
@@ -42,20 +43,21 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
-        
+       
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
         pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
     }
     private void Update()
-    { 
-   
-      
+    {
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)
             {
+                _joystick.enabled = false;
+                skillSelect.SetActive(true);
+                Time.timeScale = 0;
                 TransformGhost();
                 Boss.Instance.gameObject.SetActive(false);
                 UIManager.Instance.pressF.gameObject.SetActive(false);
