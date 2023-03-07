@@ -42,7 +42,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
+        
         SkillShuffle();
+        UIManager.Instance.SkillNum(randomSkillNum);
         pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
     }
