@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
+using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -137,11 +138,19 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-        TextMeshProUGUI[] selectTexts = skillSelect.GetComponentsInChildren<TextMeshProUGUI>();
+         Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
+        print($"리스트 수{selectTexts.Length}");
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            selectTexts[i].text = skillList[i].ToString();
+            print(skillList[i]);
+            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
         }
+    }
+    public void SkillSelecet()
+    {
+        print(gameObject.name);
+        int selectNum = int.Parse(gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+        print(selectNum);
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
