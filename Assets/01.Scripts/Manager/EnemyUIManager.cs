@@ -26,6 +26,7 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         }
 
         // 오브젝트의 위로 이동
+        damageTMP.transform.position = new Vector3(damagedObj.transform.position.x + Random.Range(-damagedObj.transform.localScale.x, damagedObj.transform.localScale.x), damagedObj.transform.position.y, 0);
         damageTMP.transform.DOMoveY(damagedObj.transform.position.y + Random.Range(1.5f, 2f), 1f);
         yield return new WaitForSeconds(1f);
         // 1초후 삭제
