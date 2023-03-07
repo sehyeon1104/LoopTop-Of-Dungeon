@@ -32,6 +32,7 @@ public abstract class BossPattern : MonoBehaviour
 
     protected bool isUsedSpecialPattern = false;
     protected bool isCanUseSpecialPattern = false;
+    private bool[] isThisSkillCoolDown = new bool[5];
 
     private void Start()
     {
@@ -79,8 +80,11 @@ public abstract class BossPattern : MonoBehaviour
 
         while (!Boss.Instance.isBDead)
         {
-            int patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
+            int patternChoice = 0;
+            patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
+
+            if (isThisSkillCoolDown[patternChoice]) continue;
 
             if (attackCoroutine == null)
             {
@@ -92,6 +96,7 @@ public abstract class BossPattern : MonoBehaviour
                 }
                 else
                 {
+                    isThisSkillCoolDown[patternChoice] = true;
                     switch (patternChoice)
                     {
                         case 0:
@@ -111,11 +116,17 @@ public abstract class BossPattern : MonoBehaviour
             }
             yield return new WaitUntil(() => attackCoroutine == null);
             yield return new WaitForSeconds(patternDelay);
+
+            StartCoroutine(CoolDownCheck(patternChoice));
         }
         attackCoroutine = null;
         StopAllCoroutines();
     }
-
+    public IEnumerator CoolDownCheck(int nowSkill)
+    {
+        yield return new WaitForSeconds(3f);
+        isThisSkillCoolDown[nowSkill] = false;
+    }
     public virtual int GetRandomCount(int choisedPattern)
     {
         return 0;
