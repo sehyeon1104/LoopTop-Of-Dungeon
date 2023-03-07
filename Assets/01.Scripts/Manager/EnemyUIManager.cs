@@ -10,7 +10,6 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
     [SerializeField]
     private GameObject displayDamageTMP = null;
 
-
     public IEnumerator showDamage(float damage, GameObject damagedObj, bool isCrit = false)
     {
         // TODO : 오브젝트 풀 사용
