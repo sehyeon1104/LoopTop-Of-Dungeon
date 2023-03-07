@@ -6,7 +6,7 @@ public class EnemyTest : EnemyDefault
 {
     private void OnEnable()
     {
-        hp = 5;
+        hp = 15;
         damage = 1;
     }
 
