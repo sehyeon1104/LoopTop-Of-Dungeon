@@ -184,15 +184,11 @@ public class UIManager : MonoSingleton<UIManager>
         }
         for (int i = 0; i < hpbars.Count; i++)
         {
-            hpbars[i].gameObject.SetActive(false);
+            if (i + 1 < hpbars.Count)
+                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
+            hpbars[i].fillAmount = (Player.Instance.pBase.Hp * 0.25f) - i;
+            Debug.Log("까임");
             // Destroy(hpbars[i].gameObject);
-        }
-        for (int i = 0; i <= Player.Instance.pBase.Hp - 1; i++)
-        {
-            hpbars[i].gameObject.SetActive(true);
-            //Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
-            ////Instantiate(hpPrefab, hpSpace.transform);
-            //Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
         }
 
     }
