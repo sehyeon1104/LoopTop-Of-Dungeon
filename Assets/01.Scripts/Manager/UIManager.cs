@@ -18,8 +18,6 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject hpPrefab;
     [SerializeField]
     private GameObject hpSpace;
-    [SerializeField]
-    GameObject skillSelect;
     // [Header("LeftDown")]
 
     [Header("Middle")]
@@ -139,22 +137,12 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-    //     Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
-    //    print($"리스트 수{selectTexts.Length}");
-    //    for (int i = 0; i < selectTexts.Length; i++)
-    //    {
-    //        print(skillList[i]);
-    //        selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
-    //    }
-    }
-    public void SkillSelecet()
-    {
-       skillSelectNum++;
-       GameObject selectObj = EventSystem.current.currentSelectedGameObject;
-       int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
-        if(skillSelectNum>1)
+         Button[] selectTexts =Player.Instance.skillSelect.GetComponentsInChildren<Button>(true);
+        print($"리스트 수{selectTexts.Length}");
+        for (int i = 0; i < selectTexts.Length; i++)
         {
-            skillSelect.SetActive(false);   
+            print(skillList[i]);
+            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
         }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
