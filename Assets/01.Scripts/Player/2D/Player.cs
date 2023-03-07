@@ -74,7 +74,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            StartCoroutine(EnemyUIManager.Instance.showDamage(1, gameObject));
+            StartCoroutine(EnemyUIManager.Instance.showDamage(10, gameObject, false));
         }
     }
 
