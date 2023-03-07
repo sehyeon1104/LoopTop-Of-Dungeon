@@ -26,6 +26,11 @@ public class EnemyTest : EnemyDefault
 
     public override void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
+        if (Random.Range(1, 101) <= critChance)
+        {
+            damage *= 1.5f;
+        }
+        
         hp -= (int)damage;
         if(hp <= 0)
         {

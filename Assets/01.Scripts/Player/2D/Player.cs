@@ -109,6 +109,11 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         if (isPDamaged)
             return;
 
+        if (Random.Range(1, 101) <= critChance)
+        {
+            damage *= 1.5f;
+        }
+
         isPDamaged = true;
 
         // TODO : 피격 애니메이션 재생
