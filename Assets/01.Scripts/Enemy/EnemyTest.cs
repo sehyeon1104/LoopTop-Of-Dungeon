@@ -29,9 +29,11 @@ public class EnemyTest : EnemyDefault
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
+            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
         }
         
         hp -= (int)damage;
+        StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         if(hp <= 0)
         {
             EnemyDead();

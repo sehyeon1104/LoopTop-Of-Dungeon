@@ -139,13 +139,13 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-         Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
-        print($"리스트 수{selectTexts.Length}");
-        for (int i = 0; i < selectTexts.Length; i++)
-        {
-            print(skillList[i]);
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
-        }
+    //     Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
+    //    print($"리스트 수{selectTexts.Length}");
+    //    for (int i = 0; i < selectTexts.Length; i++)
+    //    {
+    //        print(skillList[i]);
+    //        selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+    //    }
     }
     public void SkillSelecet()
     {
