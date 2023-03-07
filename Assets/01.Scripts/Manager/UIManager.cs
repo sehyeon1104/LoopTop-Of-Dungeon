@@ -182,12 +182,12 @@ public class UIManager : MonoSingleton<UIManager>
         {
             hpbars.Add(avc.GetComponent<Image>());
         }
-        for (int i = 1; i < hpbars.Count; i++)
+        for (int i = 0; i < hpbars.Count; i++)
         {
             hpbars[i].gameObject.SetActive(false);
             // Destroy(hpbars[i].gameObject);
         }
-        for (int i = 1; i <= Player.Instance.pBase.Hp; i++)
+        for (int i = 0; i <= Player.Instance.pBase.Hp - 1; i++)
         {
             hpbars[i].gameObject.SetActive(true);
             //Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
