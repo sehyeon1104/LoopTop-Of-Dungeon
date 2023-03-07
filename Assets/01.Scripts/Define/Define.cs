@@ -9,6 +9,10 @@ public static class Define
         Default = 0,
         CenterMap,
         Ghost,
+        LavaSlime,
+        Electricity,
+        Werewolf,
+        Lizard,
     }
 
     public enum RoomTypeFlag

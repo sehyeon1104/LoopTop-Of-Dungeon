@@ -35,6 +35,9 @@ public class EnemyTest : EnemyDefault
 
     public override void EnemyDead()
     {
+        if (transform.parent != null)
+            EnemySpawnManager.Instance.RemoveEnemyInList(gameObject);
+
         gameObject.SetActive(false);
     }
 }

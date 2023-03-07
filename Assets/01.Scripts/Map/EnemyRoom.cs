@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class EnemyRoom : RoomBase
 {
+    [SerializeField]
+    private GameObject enemySpawnPosObj;
+
+    [SerializeField]
+    private Transform[] enemySpawnPos;
+
     private void Start()
     {
+        SetRoomTypeFlag();
+        SetEnemySpawnPos();
+
         SetEnemy();
     }
 
@@ -14,16 +23,26 @@ public class EnemyRoom : RoomBase
         roomTypeFlag = Define.RoomTypeFlag.EnemyRoom;
     }
 
+    private Transform[] SetEnemySpawnPos()
+    {
+        Debug.Log("SetEnemySpawnPos");
+        enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
+        
+        return enemySpawnPos;
+    }
+
     private void SetEnemy()
     {
+        Debug.Log("SetEnemy");
         EnemySpawnManager.Instance.SetKindOfEnemy(mapTypeFlag);
         SpawnEnemies();
     }
 
     private void SpawnEnemies()
     {
+        Debug.Log("SpawnEnemies");
         EnemySpawnManager.Instance.SetRandomEnemyCount();
-        EnemySpawnManager.Instance.SpawnEnemy();
+        StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
     }
 
     protected override bool IsClear()
