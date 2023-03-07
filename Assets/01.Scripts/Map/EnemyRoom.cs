@@ -14,8 +14,6 @@ public class EnemyRoom : RoomBase
     {
         SetRoomTypeFlag();
         SetEnemySpawnPos();
-
-        SetEnemy();
     }
 
     protected override void SetRoomTypeFlag()
@@ -31,6 +29,7 @@ public class EnemyRoom : RoomBase
         return enemySpawnPos;
     }
 
+    // 플레이어 입장 시 실행
     private void SetEnemy()
     {
         Debug.Log("SetEnemy");
