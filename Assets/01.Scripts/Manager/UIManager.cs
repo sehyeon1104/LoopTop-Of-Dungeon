@@ -177,9 +177,12 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void HpUpdate()
     {
-
-        Transform[] hpbars = hpSpace.GetComponentsInChildren<RectTransform>();
-        for (int i = 1; i < hpbars.Length; i++)
+        List<Image> hpbars = new List<Image>();
+        foreach(var avc in hpSpace.GetComponentsInChildren<Heart>())
+        {
+            hpbars.Add(avc.GetComponent<Image>());
+        }
+        for (int i = 1; i < hpbars.Count; i++)
         {
             hpbars[i].gameObject.SetActive(false);
             // Destroy(hpbars[i].gameObject);
