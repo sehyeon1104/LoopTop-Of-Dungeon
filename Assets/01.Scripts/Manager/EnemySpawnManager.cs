@@ -123,14 +123,25 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Debug.Log("wave 2");
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
-            // TODO : 소환 좌표 설정
-            var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)]);
+            randPos = Random.Range(1, enemySpawnPos.Length);
+            while (enemySpawnPos[randPos].childCount != 0)
+            {
+                randPos = Random.Range(1, enemySpawnPos.Length);
+            }
+
+            var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
+            enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
         }
         for (int i = 0; i < wave2EliteEnemyCount; ++i)
         {
-            // TODO : 소환 좌표 설정
-            var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)]);
+            randPos = Random.Range(1, enemySpawnPos.Length);
+            while (enemySpawnPos[randPos].childCount != 0)
+            {
+                randPos = Random.Range(1, enemySpawnPos.Length);
+            }
+
+            var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
             curEnemies.Add(enemy);
         }
     }
