@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
+using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    int skillSelectNum = 0;
     [Header("LeftUp")]
     [SerializeField]
     private Image playerIcon = null;
@@ -137,10 +139,22 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-        TextMeshProUGUI[] selectTexts = skillSelect.GetComponentsInChildren<TextMeshProUGUI>();
+         Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
+        print($"리스트 수{selectTexts.Length}");
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            selectTexts[i].text = skillList[i].ToString();
+            print(skillList[i]);
+            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+        }
+    }
+    public void SkillSelecet()
+    {
+       skillSelectNum++;
+       GameObject selectObj = EventSystem.current.currentSelectedGameObject;
+       int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
+        if(skillSelectNum>1)
+        {
+            skillSelect.SetActive(false);   
         }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
