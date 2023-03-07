@@ -45,6 +45,7 @@ public partial class Player
         //    randomSkillNumArr[i] = i + 1;
         //}
     }
+    
     public void ListShuffle()
     {
         for (int i = 0; i < shuffleCount; i++)
@@ -104,9 +105,8 @@ public partial class Player
         ListInit();
         ListShuffle();
         ListRemove();
-       
-        print("셔플");
     }
+
     #region 고스트 스킬
     public void HillaSkill()  //1번 스킬 힐라 스킬
     {

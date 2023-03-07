@@ -42,4 +42,12 @@ public static class Define
         Effect,
         MaxCount,
     }
+    public enum SkillNum
+    {
+        firstSkill = 1,
+        secondSkill,
+        thirdSkill,
+        fourthSkill,
+        fifthSkill
+    }
 }
