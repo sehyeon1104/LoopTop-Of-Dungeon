@@ -25,14 +25,28 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
 
-        // 임시
-        normalEnemyPrefabs = ghostNormalEnemyPrefabs;
-        eliteEnemyPrefabs = ghostEliteEnemyPrefabs;
+        switch (mapType)
+        {
+            case Define.MapTypeFlag.Ghost:
+                normalEnemyPrefabs = ghostNormalEnemyPrefabs;
+                eliteEnemyPrefabs = ghostEliteEnemyPrefabs;
+                break;
+            case Define.MapTypeFlag.LavaSlime:
+                break;
+            case Define.MapTypeFlag.Electricity:
+                break;
+            case Define.MapTypeFlag.Werewolf:
+                break;
+            case Define.MapTypeFlag.Lizard:
+                break;
+        }
     }
 
     public void SetRandomEnemyCount()
     {
         // TODO : 가독성..
+
+        Debug.Log("SetRandomEnemyCount");
 
         int rand = Random.Range(1, 5);
 
@@ -63,21 +77,41 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 wave2EliteEnemyCount = 2;
                 break;
         }
+
+        Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
+        Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
+        Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
+        Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
     }
 
-    public IEnumerator SpawnEnemy()
+    public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
+        int randPos = 0;
+
         // wave1
+        Debug.Log(enemySpawnPos.Length);
+        Debug.Log("wave 1");
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
-            // TODO : 소환 좌표 설정
-            var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)]);
+            randPos = Random.Range(1, enemySpawnPos.Length);
+            while (enemySpawnPos[randPos].childCount != 0)
+            {
+                randPos = Random.Range(1, enemySpawnPos.Length);
+            }
+
+            var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
+            enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
         }
         for(int i = 0; i < wave1EliteEnemyCount; ++i)
         {
-            // TODO : 소환 좌표 설정
-            var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)]);
+            randPos = Random.Range(1, enemySpawnPos.Length);
+            while (enemySpawnPos[randPos].childCount != 0)
+            {
+                randPos = Random.Range(1, enemySpawnPos.Length);
+            }
+
+            var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
             curEnemies.Add(enemy);
         }
 
@@ -86,6 +120,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         curEnemies.Clear();
 
         // wave2
+        Debug.Log("wave 2");
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
             // TODO : 소환 좌표 설정
@@ -100,7 +135,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
-    public void EraseEnemyInList(GameObject enemy)
+    public void RemoveEnemyInList(GameObject enemy)
     {
         curEnemies.Remove(enemy);
     }

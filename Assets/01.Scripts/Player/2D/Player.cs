@@ -42,7 +42,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
+        
         SkillShuffle();
+        UIManager.Instance.SkillNum(randomSkillNum);
         pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
     }
@@ -106,6 +108,11 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     {
         if (isPDamaged)
             return;
+
+        if (Random.Range(1, 101) <= critChance)
+        {
+            damage *= 1.5f;
+        }
 
         isPDamaged = true;
 

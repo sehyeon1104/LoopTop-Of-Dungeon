@@ -6,9 +6,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
+using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    int skillSelectNum = 0;
     [Header("LeftUp")]
     [SerializeField]
     private Image playerIcon = null;
@@ -137,10 +139,22 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-        TextMeshProUGUI[] selectTexts = skillSelect.GetComponentsInChildren<TextMeshProUGUI>();
+         Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
+        print($"리스트 수{selectTexts.Length}");
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            selectTexts[i].text = skillList[i].ToString();
+            print(skillList[i]);
+            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+        }
+    }
+    public void SkillSelecet()
+    {
+       skillSelectNum++;
+       GameObject selectObj = EventSystem.current.currentSelectedGameObject;
+       int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
+        if(skillSelectNum>1)
+        {
+            skillSelect.SetActive(false);   
         }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
@@ -163,19 +177,18 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void HpUpdate()
     {
-
-        Transform[] hpbars = hpSpace.GetComponentsInChildren<RectTransform>();
-        for (int i = 1; i < hpbars.Length; i++)
+        List<Image> hpbars = new List<Image>();
+        foreach(var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
-            hpbars[i].gameObject.SetActive(false);
-            // Destroy(hpbars[i].gameObject);
+            hpbars.Add(avc.GetComponent<Image>());
         }
-        for (int i = 1; i <= Player.Instance.pBase.Hp; i++)
+        for (int i = 0; i < hpbars.Count; i++)
         {
-            hpbars[i].gameObject.SetActive(true);
-            //Debug.Log("Current Hp : " + Player.Instance.pBase.Hp);
-            ////Instantiate(hpPrefab, hpSpace.transform);
-            //Instantiate(hpPrefab, new Vector3(255 + 105 * i, 1030, 0), Quaternion.identity, hpSpace.transform);
+            if (i + 1 < hpbars.Count)
+                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
+            hpbars[i].fillAmount = (Player.Instance.pBase.Hp * 0.25f) - i;
+            Debug.Log("까임");
+            // Destroy(hpbars[i].gameObject);
         }
 
     }

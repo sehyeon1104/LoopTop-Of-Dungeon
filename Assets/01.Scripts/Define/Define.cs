@@ -9,6 +9,10 @@ public static class Define
         Default = 0,
         CenterMap,
         Ghost,
+        LavaSlime,
+        Electricity,
+        Werewolf,
+        Lizard,
     }
 
     public enum RoomTypeFlag
@@ -37,5 +41,13 @@ public static class Define
         Bgm,
         Effect,
         MaxCount,
+    }
+    public enum SkillNum
+    {
+        firstSkill = 1,
+        secondSkill,
+        thirdSkill,
+        fourthSkill,
+        fifthSkill
     }
 }
