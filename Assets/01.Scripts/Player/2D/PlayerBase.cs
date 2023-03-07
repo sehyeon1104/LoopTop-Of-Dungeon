@@ -135,7 +135,7 @@ public class PlayerBase
 
     public void SetPlayerStat()
     {
-        _maxHp = 3;
+        _maxHp = 12;
         _hp = _maxHp;
         _damage = 5f;
         _critChance = 5f;
