@@ -13,8 +13,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private GameObject[] normalEnemyPrefabs;
     private GameObject[] eliteEnemyPrefabs;
 
-    [SerializeField]
-    private List<GameObject> curEnemies = new List<GameObject>();
+    [field: SerializeField]
+    public List<GameObject> curEnemies { private set; get; } = new List<GameObject>();
 
     private int wave1NormalEnemyCount = 0;
     private int wave1EliteEnemyCount = 0;
