@@ -21,7 +21,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave2NormalEnemyCount = 0;
     private int wave2EliteEnemyCount = 0;
 
-    public void SetKindOfEnemy()
+    public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
 

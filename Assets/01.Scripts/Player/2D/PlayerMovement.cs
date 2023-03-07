@@ -43,9 +43,9 @@ public partial class Player
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // юс╫ц
-        if (collision.CompareTag("EntranceDoor") && Boss.Instance.isBDead)
-        {
-            MapManager.Instance.MoveMap(collision.name);
-        }
+        //if (collision.CompareTag("EntranceDoor") && Boss.Instance.isBDead)
+        //{
+        //    MapManager.Instance.MoveMap(collision.name);
+        //}
     }
 }

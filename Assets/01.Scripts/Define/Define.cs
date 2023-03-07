@@ -11,6 +11,14 @@ public static class Define
         Ghost,
     }
 
+    public enum RoomTypeFlag
+    {
+        Default = 0,
+        EnemyRoom,
+        BossRoom,
+        Shop
+    }
+
     public enum PlayerTransformTypeFlag
     {
         Normal = 0,
