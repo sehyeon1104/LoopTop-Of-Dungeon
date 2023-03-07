@@ -187,8 +187,6 @@ public class UIManager : MonoSingleton<UIManager>
             if (i + 1 < hpbars.Count)
                 if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
             hpbars[i].fillAmount = (Player.Instance.pBase.Hp * 0.25f) - i;
-            Debug.Log("까임");
-            // Destroy(hpbars[i].gameObject);
         }
 
     }
