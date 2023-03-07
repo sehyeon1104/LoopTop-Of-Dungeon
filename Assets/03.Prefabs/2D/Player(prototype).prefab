@@ -274,7 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvincibleTime: 0.2
+  hitVolume: {fileID: 0}
+  reviveInvincibleTime: 2
+  invincibleTime: 0.2
   <GetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -290,6 +292,7 @@ MonoBehaviour:
   scratchTime: 3
   Skill1Trans: {fileID: 0}
   JangPanPersDamage: 10
+  shuffleCount: 100
   playerTransformDataSOArr:
   - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
   - {fileID: 11400000, guid: 024b87a98b7996b489724611756bbd0d, type: 2}
