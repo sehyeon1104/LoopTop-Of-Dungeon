@@ -160,7 +160,7 @@ public class PoolManager
             clone = Pop(GetObject(name),parent).gameObject;
 
         return clone;
-
+        
     }
 
     public void Clear()

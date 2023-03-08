@@ -8,14 +8,17 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(EnemySpawnManager.Instance.curEnemies.Count == 0)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            canMove = true;
-            Debug.Log("Can Move");
-        }
-        else
-        {
-            Debug.Log("Can't Move");
+            if (EnemySpawnManager.Instance.curEnemies.Count == 0)
+            {
+                canMove = true;
+                Debug.Log("Can Move");
+            }
+            else
+            {
+                Debug.Log("Can't Move");
+            }
         }
     }
 

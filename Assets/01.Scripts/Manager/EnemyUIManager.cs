@@ -14,15 +14,14 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
     {
         // TODO : 오브젝트 풀 사용
 
-        // 오브젝트 소환
-        GameObject damageTMP = Instantiate(displayDamageTMP, damagedObj.transform.position, Quaternion.identity);
+        // 텍스트 소환
+        GameObject damageTMP = InstantiateOrSpawnDamageTMP(); //Instantiate(displayDamageTMP, damagedObj.transform.position, Quaternion.identity);
         TextMeshProUGUI damageText = damageTMP.GetComponentInChildren<TextMeshProUGUI>();
         damageText.text = damage.ToString();
         if (isCrit)
         {
-            // 오브젝트의 색 변경
-            damageTMP.GetComponentInChildren<Image>().color = Color.red;
-            damageText.color = Color.white;
+            // 텍스트 색 변경
+            damageText.color = Color.red;
         }
 
         // 오브젝트의 위로 이동
@@ -31,5 +30,33 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         yield return new WaitForSeconds(1f);
         // 1초후 삭제
         Destroy(damageTMP);
+    }
+
+    // 임시 오브젝트 풀링
+
+    private GameObject InstantiateOrSpawnDamageTMP()
+    {
+        GameObject damageTMP = null;
+
+        if (transform.childCount == 0)
+        {
+            damageTMP = Instantiate(displayDamageTMP, transform.position, Quaternion.identity);
+            displayDamageTMP.transform.SetParent(null);
+        }
+        else
+        {
+            damageTMP = gameObject.transform.GetChild(0).gameObject;
+            damageTMP.transform.SetParent(null);
+            damageTMP.SetActive(true);
+        }
+
+        return damageTMP;
+    }
+
+    public IEnumerator PoolDamageTMP(GameObject damageTMP)
+    {
+        yield return new WaitForSeconds(1f);
+        damageTMP.transform.SetParent(gameObject.transform);
+        damageTMP.SetActive(false);
     }
 }
