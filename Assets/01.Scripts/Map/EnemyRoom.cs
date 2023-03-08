@@ -47,6 +47,9 @@ public class EnemyRoom : RoomBase
     protected override bool IsClear()
     {
         // TODO : 맵이 클리어 되었는지 체크
+        if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
+            isClear = true;
+
         return isClear;
     }
 }

@@ -10,7 +10,7 @@ public class Door : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (EnemySpawnManager.Instance.curEnemies.Count == 0)
+            if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
             {
                 canMove = true;
                 Debug.Log("Can Move");
