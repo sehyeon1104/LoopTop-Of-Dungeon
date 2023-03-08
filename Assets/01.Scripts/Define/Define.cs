@@ -18,6 +18,7 @@ public static class Define
     public enum RoomTypeFlag
     {
         Default = 0,
+        StartRoom,
         EnemyRoom,
         BossRoom,
         Shop

@@ -19478,12 +19478,12 @@ MonoBehaviour:
   playerIcon: {fileID: 1510057223}
   hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
   hpSpace: {fileID: 1510057222}
-  skillSelect: {fileID: 0}
   pausePanel: {fileID: 1510057221}
   gameOverPanel: {fileID: 1510057220}
   checkOneMorePanel: {fileID: 1510057219}
   blurPanel: {fileID: 1510057218}
   pressF: {fileID: 1510057217}
+  hpbars: []
 --- !u!4 &520647066
 Transform:
   m_ObjectHideFlags: 0
@@ -19515,7 +19515,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostNormalEnemyPrefabs: []
   ghostEliteEnemyPrefabs: []
-  curEnemies: []
+  <curEnemies>k__BackingField: []
+  dangerMark: {fileID: 0}
+  spawnTime: 1.5
 --- !u!1 &524012580
 GameObject:
   m_ObjectHideFlags: 0
@@ -33869,6 +33871,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1314121983122994, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 1488953661895040, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -33980,6 +33986,14 @@ PrefabInstance:
     - target: {fileID: 4988148050240920, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 61.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 210988187105924672, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 210988187105924672, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -726151
       objectReference: {fileID: 0}
     - target: {fileID: 212057019940918866, guid: 4c64c9b094b5dad46a415c4b6551f0a8, type: 3}
       propertyPath: m_Color.b
@@ -34528,6 +34542,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 593089372, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5702903749562410886, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -34633,6 +34651,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4212746857187955054, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506024, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -34680,6 +34702,10 @@ PrefabInstance:
     - target: {fileID: 7442715256025506025, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442715256025506025, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506028, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: <Attack>k__BackingField.m_PersistentCalls.m_Calls.Array.size
@@ -34747,7 +34773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitVolume: {fileID: 524012581}
   reviveInvincibleTime: 2
-  invincibleTime: 0.2
+  invincibleTime: 0.5
   <GetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -34761,8 +34787,10 @@ MonoBehaviour:
   jangPanPrefab: {fileID: 8923827731549757608, guid: 31e100391db9d7244a15ba012e2531a8, type: 3}
   jangPanTime: 3
   scratchTime: 3
+  skillSelect: {fileID: 0}
   Skill1Trans: {fileID: 878560105}
   JangPanPersDamage: 10
+  skillNum: 
   shuffleCount: 100
   playerTransformDataSOArr:
   - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
