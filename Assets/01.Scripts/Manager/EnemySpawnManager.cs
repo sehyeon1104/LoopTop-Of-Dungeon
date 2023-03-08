@@ -26,6 +26,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private float spawnTime = 1.5f;
 
+    public bool isNextWave { private set; get; } = false;
+
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
@@ -92,7 +94,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
         int randPos = 0;
-
+        isNextWave = false;
         // wave1
         Debug.Log(enemySpawnPos.Length);
         Debug.Log("wave 1");
@@ -126,7 +128,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // wave2
         Debug.Log("wave 2");
-
+        isNextWave = true;
         StartCoroutine(ShowEnemySpawnPos(enemySpawnPos));
         yield return new WaitForSeconds(spawnTime);
 

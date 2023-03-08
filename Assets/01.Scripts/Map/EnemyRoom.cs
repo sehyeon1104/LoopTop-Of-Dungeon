@@ -21,6 +21,8 @@ public class EnemyRoom : RoomBase
         roomTypeFlag = Define.RoomTypeFlag.EnemyRoom;
     }
 
+    public Define.RoomTypeFlag GetRoomTypeFlag => roomTypeFlag;
+
     private Transform[] SetEnemySpawnPos()
     {
         Debug.Log("SetEnemySpawnPos");
@@ -44,9 +46,31 @@ public class EnemyRoom : RoomBase
         StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (!isClear)
+            {
+                StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(enemySpawnPos));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            IsClear();
+        }
+    }
+
     protected override bool IsClear()
     {
         // TODO : 맵이 클리어 되었는지 체크
+        if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
+            isClear = true;
+
         return isClear;
     }
 }
