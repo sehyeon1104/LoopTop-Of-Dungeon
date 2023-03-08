@@ -12,6 +12,9 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject SummonTimer;
     [SerializeField] private Image SummonClock;
 
+    WaitForSeconds waitTime = new WaitForSeconds(1f); 
+
+
     //private void OnEnable()
     //{
     //    Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
@@ -54,7 +57,7 @@ public class GhostPattern : BossPattern
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.identity);
             Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav");
-            yield return new WaitForSeconds(1f);
+            yield return waitTime;
 
             Managers.Pool.PoolManaging("10.Effects/ghost/Thorn", clone.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake();
