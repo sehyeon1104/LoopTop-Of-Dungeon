@@ -23970,29 +23970,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1291585464, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1291585464, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1291585464, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2172384060731873180, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
       propertyPath: m_RootOrder
       value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 2172384060731873180, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2172384060731873180, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2172384060731873180, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24036,17 +24016,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2172384060731873182, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
       propertyPath: m_Name
-      value: RangeAttack
+      value: FPRS
+      objectReference: {fileID: 0}
+    - target: {fileID: 2172384060731873182, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2172384060731873182, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2172384060731873182, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
+      propertyPath: m_TagString
+      value: BossSkill
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
 --- !u!1 &1291585461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2172384060731873182, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
+  m_PrefabInstance: {fileID: 1291585460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1291585463 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2172384060731873183, guid: 4e3d28c193800144a8f6ea89b3ee3873, type: 3}
   m_PrefabInstance: {fileID: 1291585460}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1302519562
@@ -32111,11 +32104,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5546404605262072936, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_Name
-      value: RangeAttackReady
+      value: FPR
       objectReference: {fileID: 0}
     - target: {fileID: 5546404605262072936, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546404605262072937, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5546404605262072937, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_SortingLayer
@@ -32147,11 +32144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5546404605262072942, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.16
+      value: 15.47
       objectReference: {fileID: 0}
     - target: {fileID: 5546404605262072942, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3
+      value: 8.7
       objectReference: {fileID: 0}
     - target: {fileID: 5546404605262072942, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32194,6 +32191,11 @@ PrefabInstance:
 --- !u!1 &2121354333 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5546404605262072936, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
+  m_PrefabInstance: {fileID: 2121354332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2121354334 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5546404605262072937, guid: d41cb813ede61ae40a238511970f4a32, type: 3}
   m_PrefabInstance: {fileID: 2121354332}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2138859926
@@ -32428,6 +32430,18 @@ PrefabInstance:
       propertyPath: FPRS
       value: 
       objectReference: {fileID: 1291585461}
+    - target: {fileID: 7682963109869222221, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: SpriteRenderer
+      value: 
+      objectReference: {fileID: 1291585463}
+    - target: {fileID: 7682963109869222221, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: FPRSpriteRenderer
+      value: 
+      objectReference: {fileID: 2121354334}
+    - target: {fileID: 7682963109869222221, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: FPRSSpriteRenderer
+      value: 
+      objectReference: {fileID: 1291585463}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
 --- !u!1001 &7442715256223835009
@@ -32437,10 +32451,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4207219456636337038, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10.62
-      objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506024, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -32489,10 +32499,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7442715256025506028, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
-      propertyPath: <Attack>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 139299803}
     - target: {fileID: 7442715256223835011, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: _joystick
       value: 

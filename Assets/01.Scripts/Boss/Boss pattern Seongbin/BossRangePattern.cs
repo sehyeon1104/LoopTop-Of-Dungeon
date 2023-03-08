@@ -7,15 +7,22 @@ public class BossRangePattern : MonoBehaviour
     [SerializeField] private GameObject FPR; //Floor Pattern Range
     [SerializeField] private GameObject FPRS; //Floor Pattern Range Start
 
+    public SpriteRenderer FPRSpriteRenderer;
+    public SpriteRenderer FPRSSpriteRenderer;
+
     private WaitForSeconds WaitForRangeStart = new WaitForSeconds(2f);
     private WaitForSeconds WaitForStart = new WaitForSeconds(0.8f);
     private WaitForSeconds FPRSpeed = new WaitForSeconds(0.01f);
+    private WaitForSeconds FPREnd = new WaitForSeconds(1f);
 
     private float ScaleX;
     private float ScaleY;
 
+    public static bool isAttackStart { get; set; }
+
     private void Start()
     {
+        
         StartCoroutine(FloorPattern());
     }
 
@@ -54,9 +61,23 @@ public class BossRangePattern : MonoBehaviour
             yield return FPRSpeed;
         }
 
-        //FPRS.
+        isAttackStart = true;
+
+        FPRSpriteRenderer.enabled = false;
+        FPRSSpriteRenderer.enabled = false;
+
+        yield return FPREnd;
+
+        FPR.gameObject.SetActive(false);
+        FPRS.gameObject.SetActive(false);
+
+        //effect
 
 
     }
+
+    
+
+
 
 }
