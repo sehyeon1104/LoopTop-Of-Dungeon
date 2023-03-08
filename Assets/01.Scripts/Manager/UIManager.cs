@@ -35,6 +35,7 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject blurPanel;
 
     public TextMeshProUGUI pressF = null;
+    public List<Image> hpbars = new List<Image>();
 
     private void Start()
     {
@@ -46,7 +47,15 @@ public class UIManager : MonoSingleton<UIManager>
         playerIcon.sprite = Player.Instance.playerTransformDataSO.playerImg;
 
         DisActiveAllPanels();
+        HPInit();
         HpUpdate();
+    }
+    public void HPInit()
+    {
+        foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
+        {
+            hpbars.Add(avc.GetComponent<Image>());
+        }
     }
     #region Panels
     public void DisActiveAllPanels()
@@ -165,11 +174,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void HpUpdate()
     {
-        List<Image> hpbars = new List<Image>();
-        foreach(var avc in hpSpace.GetComponentsInChildren<Heart>())
-        {
-            hpbars.Add(avc.GetComponent<Image>());
-        }
         for (int i = 0; i < hpbars.Count; i++)
         {
             if (i + 1 < hpbars.Count)
