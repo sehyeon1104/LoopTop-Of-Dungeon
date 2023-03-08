@@ -21,6 +21,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave2NormalEnemyCount = 0;
     private int wave2EliteEnemyCount = 0;
 
+    [SerializeField]
+    private GameObject dangerMark = null;
+    [SerializeField]
+    private float spawnTime = 1.5f;
+
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
@@ -121,6 +126,10 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // wave2
         Debug.Log("wave 2");
+
+        StartCoroutine(ShowEnemySpawnPos(enemySpawnPos));
+        yield return new WaitForSeconds(spawnTime);
+
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
             randPos = Random.Range(1, enemySpawnPos.Length);
@@ -146,6 +155,25 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
+    public IEnumerator ShowEnemySpawnPos(Transform[] enemySpawnPos)
+    {
+        List<GameObject> dangerMarks = new List<GameObject>();
+
+        foreach(var enemySpawnPosItem in enemySpawnPos)
+        {
+            var dangerMarkObj = Instantiate(dangerMark, enemySpawnPosItem.position, Quaternion.identity);
+            dangerMarks.Add(dangerMarkObj);
+        }
+
+        yield return new WaitForSeconds(spawnTime);
+
+        foreach(var dangerMarkItem in dangerMarks)
+        {
+            Destroy(dangerMarkItem);
+        }
+
+        yield break;
+    }
     public void RemoveEnemyInList(GameObject enemy)
     {
         curEnemies.Remove(enemy);
