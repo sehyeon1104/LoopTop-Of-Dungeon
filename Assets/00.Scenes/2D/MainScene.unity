@@ -19294,7 +19294,6 @@ MonoBehaviour:
   playerIcon: {fileID: 678934960}
   hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
   hpSpace: {fileID: 678934959}
-  skillSelect: {fileID: 0}
   pausePanel: {fileID: 678934958}
   gameOverPanel: {fileID: 678934957}
   checkOneMorePanel: {fileID: 678934956}
@@ -20087,6 +20086,10 @@ PrefabInstance:
     - target: {fileID: 7638766926344390198, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7638766926460780707, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
@@ -29946,7 +29949,7 @@ MonoBehaviour:
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
-  m_FrequencyGain: 2
+  m_FrequencyGain: 50
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1839294111
 GameObject:
@@ -32092,6 +32095,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1690432821738326091, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5758580632870723253, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: m_Name
       value: boss_devil_man

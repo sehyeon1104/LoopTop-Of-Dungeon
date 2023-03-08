@@ -126,6 +126,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         // TODO : 피격 애니메이션 재생
 
         pBase.Hp -= (int)damage;
+        UIManager.Instance.HpUpdate();
 
         if (isPDead)
             return;
