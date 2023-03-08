@@ -145,6 +145,8 @@ public class PlayerBase
         _expTable = new int[_maxLevel];
         _exp = 0;
 
+        _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+
         for(int i = 0; i < _maxLevel; ++i)
         {
             _expTable[i] = i + 1;

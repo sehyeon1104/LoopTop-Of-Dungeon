@@ -29,7 +29,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     private void Awake()
     {
-        
         pBase = new PlayerBase();
         if (playerTransformDataSO == null)
         {
@@ -43,11 +42,13 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
-       
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
-        pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         agentInput.Attack.AddListener(Attack);
+        if(StageManager.Instance != null)
+        {
+            transform.position = StageManager.Instance.SetPlayerSpawnPos().position;
+        }
     }
     private void Update()
     {
@@ -72,11 +73,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         if (Input.GetKeyDown(KeyCode.H))
         {
             pBase.Hp += 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            StartCoroutine(EnemyUIManager.Instance.showDamage(10, gameObject, true));
         }
     }
 

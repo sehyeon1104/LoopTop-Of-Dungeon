@@ -21,6 +21,8 @@ public class EnemyRoom : RoomBase
         roomTypeFlag = Define.RoomTypeFlag.EnemyRoom;
     }
 
+    public Define.RoomTypeFlag GetRoomTypeFlag => roomTypeFlag;
+
     private Transform[] SetEnemySpawnPos()
     {
         Debug.Log("SetEnemySpawnPos");
@@ -42,6 +44,25 @@ public class EnemyRoom : RoomBase
         Debug.Log("SpawnEnemies");
         EnemySpawnManager.Instance.SetRandomEnemyCount();
         StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (!isClear)
+            {
+                StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(enemySpawnPos));
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            IsClear();
+        }
     }
 
     protected override bool IsClear()
