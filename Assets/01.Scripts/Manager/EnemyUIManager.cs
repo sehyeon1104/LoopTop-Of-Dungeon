@@ -32,4 +32,23 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         // 1초후 삭제
         Destroy(damageTMP);
     }
+
+    // 임시 오브젝트 풀링
+
+    private GameObject InstantiateOrSpawnDamageTMP()
+    {
+        GameObject damageTMP = null;
+
+        if (transform.childCount == 0)
+        {
+            damageTMP = Instantiate(displayDamageTMP, transform.position, Quaternion.identity);
+            displayDamageTMP.transform.SetParent(null);
+        }
+        else
+        {
+            damageTMP = gameObject.transform.GetChild(0).gameObject;
+            damageTMP.transform.SetParent(null);
+        }
+        return damageTMP;
+    }
 }
