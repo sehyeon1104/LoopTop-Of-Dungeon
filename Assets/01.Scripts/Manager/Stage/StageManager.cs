@@ -15,14 +15,18 @@ public class StageManager : MonoSingleton<StageManager>
     private EnemyRoom[] enemyRooms;
     private Transform playerSpawnPos;
 
+    [SerializeField]
+    private GameObject MoveNextMapPortal;
+
     private void Start()
     {
+        enemyRooms = FindObjectsOfType<EnemyRoom>();
         SetWallGrid();
+        SetMoveNextMapRoom();
     }
 
     public Transform SetPlayerSpawnPos()
     {
-        enemyRooms = FindObjectsOfType<EnemyRoom>();
         foreach(var enemyRoomItem in enemyRooms)
         {
             if(enemyRoomItem.GetRoomTypeFlag == Define.RoomTypeFlag.StartRoom)
@@ -32,6 +36,12 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         return playerSpawnPos;
+    }
+
+    public void SetMoveNextMapRoom()
+    {
+        int rand = Random.Range(0, enemyRooms.Length);
+        enemyRooms[rand].isMoveAnotherStage = true;
     }
 
     public void SetWallGrid()
@@ -55,4 +65,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     }
 
+    public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
+    {
+        Instantiate(MoveNextMapPortal, enemyRoom.gameObject.transform.position, Quaternion.identity);
+    }
 }
