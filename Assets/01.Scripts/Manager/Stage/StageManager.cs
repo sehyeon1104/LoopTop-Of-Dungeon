@@ -7,6 +7,7 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField]
     private GameObject[] wallGrids;
 
+
     private GameObject wallGrid;
 
     private int randWallGrid;
@@ -33,11 +34,25 @@ public class StageManager : MonoSingleton<StageManager>
         return playerSpawnPos;
     }
 
-    private void SetWallGrid()
+    public void SetWallGrid()
     {
+        GameObject map = GameObject.FindGameObjectWithTag("Map");
+       if(map != null)
+        {
+            Destroy(map);
+            randWallGrid = Random.Range(0, wallGrids.Length);
+            wallGrid = wallGrids[randWallGrid];
+            Instantiate(wallGrid);
+        }
+       else if(map == null)
+        {
+
         randWallGrid = Random.Range(0, wallGrids.Length);
         wallGrid = wallGrids[randWallGrid];
         Instantiate(wallGrid);
+        }
+
+
     }
 
 }
