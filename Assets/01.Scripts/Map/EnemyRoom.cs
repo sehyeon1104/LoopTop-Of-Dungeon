@@ -10,6 +10,8 @@ public class EnemyRoom : RoomBase
     [SerializeField]
     private Transform[] enemySpawnPos;
 
+    public bool isMoveAnotherStage = false;
+
     private void Start()
     {
         SetRoomTypeFlag();
@@ -73,6 +75,11 @@ public class EnemyRoom : RoomBase
         // TODO : 맵이 클리어 되었는지 체크
         if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
             isClear = true;
+
+        if(isClear && isMoveAnotherStage)
+        {
+            StageManager.Instance.AssignMoveNextMapPortal(this);
+        }
 
         return isClear;
     }
