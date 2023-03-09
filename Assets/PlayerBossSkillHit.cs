@@ -10,7 +10,7 @@ public class PlayerBossSkillHit : MonoBehaviour
         {
             if (collision.transform.CompareTag("BossSkill"))
             {
-                gameObject.GetComponent<IHittable>().OnDamage(4, gameObject, 0);
+                gameObject.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
                 BossRangePattern.isAttackStart = false;
             }
 

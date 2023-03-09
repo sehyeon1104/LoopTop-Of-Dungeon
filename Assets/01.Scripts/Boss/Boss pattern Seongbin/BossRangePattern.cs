@@ -18,6 +18,8 @@ public class BossRangePattern : MonoBehaviour
     private float ScaleX;
     private float ScaleY;
 
+    Vector2 Vec = new Vector2(0,0);
+
     public static bool isAttackStart { get; set; }
 
     private void Start()
@@ -67,6 +69,9 @@ public class BossRangePattern : MonoBehaviour
         FPRSSpriteRenderer.enabled = false;
 
         yield return FPREnd;
+
+        FPR.transform.localScale = Vector2.zero; 
+        FPRS.transform.localScale = Vector2.zero;
 
         FPR.gameObject.SetActive(false);
         FPRS.gameObject.SetActive(false);
