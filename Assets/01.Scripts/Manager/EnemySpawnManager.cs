@@ -106,6 +106,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 
+            Debug.Log("SpawnEnemy");
             var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
             enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
