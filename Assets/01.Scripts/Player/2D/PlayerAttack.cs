@@ -21,9 +21,9 @@ public partial class Player
 
     public void Attack()
     {
-        Debug.Log("Attack");
         if (isPDead)
             return;
+        Debug.Log("Attack");
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for(int i=0; i<enemys.Length; i++)
