@@ -1862,6 +1862,7 @@ GameObject:
   - component: {fileID: 520647064}
   - component: {fileID: 520647067}
   - component: {fileID: 520647068}
+  - component: {fileID: 520647069}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1948,11 +1949,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d7748a8be659f4fa4190acbb01e90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostNormalEnemyPrefabs: []
-  ghostEliteEnemyPrefabs: []
   <curEnemies>k__BackingField: []
-  dangerMark: {fileID: 0}
+  dangerMark: {fileID: 2304996157544624673, guid: e2d49f116c4d7604788f712f3ab86744, type: 3}
   spawnTime: 1.5
+--- !u!114 &520647069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520647063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70681ea6a32772c4e9cd8bb187d62e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayDamageTMP: {fileID: 6362310668652392891, guid: 3c6c56f0ace1ae14aa5dd76109f60490, type: 3}
 --- !u!1 &524012580
 GameObject:
   m_ObjectHideFlags: 0
