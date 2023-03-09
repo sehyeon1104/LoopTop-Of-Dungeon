@@ -34,7 +34,6 @@ public partial class Player
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
             }
         }
-        Debug.Log("Attack");
 
         //if (Boss.Instance.isBDead)
         //    return;

@@ -50,18 +50,21 @@ public class EnemyRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log("Enter) isClear : " + isClear);
             if (!isClear)
             {
-                StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(enemySpawnPos));
+                SetEnemy();
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+
         if (collision.CompareTag("Player"))
         {
             IsClear();
+            Debug.Log("Exit) isClear : " + isClear);
         }
     }
 
