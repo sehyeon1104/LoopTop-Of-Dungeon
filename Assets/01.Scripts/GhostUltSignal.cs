@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Timeline;
+using UnityEngine.Playables;
 
 public class GhostUltSignal : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class GhostUltSignal : MonoBehaviour
     [SerializeField] private Image panel;
 
     [SerializeField] private SpriteRenderer[] GhostSprite;
+
+    PlayableDirector PD;
 
 
     List<string> animArray;
@@ -21,7 +25,7 @@ public class GhostUltSignal : MonoBehaviour
     float alpha = 0;
 
 
-    public void UltSkill()
+    public void UltSkillAnim()
     {
         
         if (isArrayed == false)
@@ -83,6 +87,11 @@ public class GhostUltSignal : MonoBehaviour
             alpha -= 0.01f;
         }
 
+    }
+    public void UltSkillCast()
+    {
+        PD = GetComponent<PlayableDirector>();
+        PD.Play();
     }
 
 

@@ -10,8 +10,7 @@ public class PlayerBossSkillHit : MonoBehaviour
         {
             if (collision.transform.CompareTag("BossSkill"))
             {
-                //데미지 입기
-                Debug.Log("ㅇㅇ");
+                gameObject.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
                 BossRangePattern.isAttackStart = false;
             }
 
