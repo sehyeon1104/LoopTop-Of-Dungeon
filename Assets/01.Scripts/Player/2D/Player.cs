@@ -46,10 +46,10 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
         agentInput.Attack.AddListener(Attack);
-        if(StageManager.Instance != null)
-        {
-            transform.position = StageManager.Instance.SetPlayerSpawnPos().position;
-        }
+        //if(StageManager.Instance != null)
+        //{
+        //    transform.position = StageManager.Instance.SetPlayerSpawnPos().position;
+        //}
     }
     private void Update()
     {
