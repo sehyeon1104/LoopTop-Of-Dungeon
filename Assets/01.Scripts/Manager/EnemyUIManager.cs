@@ -32,7 +32,7 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         damageTMP.transform.position = new Vector3(damagedObj.transform.position.x + Random.Range(-damagedObj.transform.localScale.x, damagedObj.transform.localScale.x), damagedObj.transform.position.y, 0);
         damageTMP.transform.DOMoveY(damagedObj.transform.position.y + Random.Range(1.5f, 2.5f), 1f);
         // 1초후 삭제
-        StartCoroutine(PoolDamageTMP(damageTMP));
+        //StartCoroutine(PoolDamageTMP(damageTMP));
         yield return null;
     }
 
