@@ -37,4 +37,14 @@ public class Enemy_G_Skull : EnemyDefault
 
     }
 
+    public override void OnDamage(float damage, GameObject damageDealer, float critChance)
+    {
+        base.OnDamage(damage, damageDealer, critChance);
+    }
+
+    public override void EnemyDead()
+    {
+        base.EnemyDead();
+    }
+
 }

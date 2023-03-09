@@ -62,27 +62,31 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     public virtual IEnumerator MoveToPlayer(){ yield break; }
     public virtual IEnumerator AttackToPlayer(){ yield break; }
 
-    public void OnDamage(float damage, GameObject damageDealer, float critChance)
+    public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
         }
+        else
+        {
+            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
+        }
 
         hp -= (int)damage;
-        StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         if (hp <= 0)
         {
             EnemyDead();
         }
     }
 
-    public void EnemyDead()
+    public virtual void EnemyDead()
     {
-        if (transform.parent != null)
-            EnemySpawnManager.Instance.RemoveEnemyInList(gameObject);
+        //if (transform.parent != null)
+        EnemySpawnManager.Instance.RemoveEnemyInList(gameObject);
 
         gameObject.SetActive(false);
+        gameObject.transform.SetParent(null);
     }
 }

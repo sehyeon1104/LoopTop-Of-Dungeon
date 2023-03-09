@@ -8,6 +8,6 @@ public class BossUIMove : MonoBehaviour
     private void Update()
     {
         Vector2 screenPos = Camera.main.WorldToScreenPoint(Boss.Instance.transform.position);
-        transform.position = screenPos;
+        transform.position = Boss.Instance.transform.position;
     }
 }
