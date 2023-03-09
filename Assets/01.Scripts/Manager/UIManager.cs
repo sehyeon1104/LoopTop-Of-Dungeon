@@ -195,4 +195,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         SceneManager.LoadScene("TitleScene");
     }
+
+    
 }
