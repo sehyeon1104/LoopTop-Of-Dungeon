@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 {
@@ -52,6 +53,11 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            StageManager.Instance.SetWallGrid();
+
+        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)
