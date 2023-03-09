@@ -23,13 +23,17 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
             // 텍스트 색 변경
             damageText.color = Color.red;
         }
+        else
+        {
+            damageText.color = Color.white;
+        }
 
         // 오브젝트의 위로 이동
         damageTMP.transform.position = new Vector3(damagedObj.transform.position.x + Random.Range(-damagedObj.transform.localScale.x, damagedObj.transform.localScale.x), damagedObj.transform.position.y, 0);
         damageTMP.transform.DOMoveY(damagedObj.transform.position.y + Random.Range(1.5f, 2.5f), 1f);
-        yield return new WaitForSeconds(1f);
         // 1초후 삭제
-        Destroy(damageTMP);
+        StartCoroutine(PoolDamageTMP(damageTMP));
+        yield return null;
     }
 
     // 임시 오브젝트 풀링
