@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 {
     [Header("Ghost_Field_Enemy")]
-    [SerializeField]
-    private GameObject[] ghostNormalEnemyPrefabs;
-    [SerializeField]
-    private GameObject[] ghostEliteEnemyPrefabs;
+    private GameObject[] ghostNormalEnemyPrefabs = new GameObject[10];
+    private GameObject[] ghostEliteEnemyPrefabs = new GameObject[10];
 
     private GameObject[] normalEnemyPrefabs;
     private GameObject[] eliteEnemyPrefabs;
@@ -27,7 +26,15 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private float spawnTime = 1.5f;
 
     public bool isNextWave { private set; get; } = false;
-
+    private void Start()
+    {
+        Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
+        for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)
+        {
+            ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
+            ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
+        }
+    }
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
