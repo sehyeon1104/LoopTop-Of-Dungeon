@@ -22505,14 +22505,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -7424792349620051841, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
-      propertyPath: moveClip
-      value: 
-      objectReference: {fileID: 7400000, guid: 9e22570e711a2e04cad6c2288bd2f1f8, type: 2}
-    - target: {fileID: -7424792349620051841, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
-      propertyPath: attackClip
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: -848391136873786501, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
       propertyPath: m_Controller
       value: 
@@ -22564,6 +22556,10 @@ PrefabInstance:
     - target: {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
       propertyPath: m_Name
       value: G_Mob_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
@@ -23753,6 +23749,10 @@ PrefabInstance:
     - target: {fileID: 2492190673824565090, guid: 9e41db96d9f76dd499f4b371d4d24df5, type: 3}
       propertyPath: m_Name
       value: G_Mob_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492190673824565090, guid: 9e41db96d9f76dd499f4b371d4d24df5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8613159644541436917, guid: 9e41db96d9f76dd499f4b371d4d24df5, type: 3}
       propertyPath: m_Controller
@@ -25815,18 +25815,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: dc064231b5c37814d9ba4e3b3ae22245, type: 2}
-    - target: {fileID: -5442166235750511021, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
-      propertyPath: moveClip
-      value: 
-      objectReference: {fileID: 7400000, guid: dde69929d15499f42938637afc9480bd, type: 2}
-    - target: {fileID: -5442166235750511021, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
-      propertyPath: animClips
-      value: 
-      objectReference: {fileID: 22100000, guid: 38913f9ddbf0dfc489d974364397c932, type: 2}
-    - target: {fileID: -5442166235750511021, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
-      propertyPath: attackClip
-      value: 
-      objectReference: {fileID: 7400000, guid: d0e809cee69410a4483ba9347ea3600e, type: 2}
     - target: {fileID: 4370624094931511412, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -25883,7 +25871,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: G_Mob_03
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
 --- !u!1 &1443073376
 GameObject:
@@ -31391,10 +31380,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3265220364923367124, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
-      propertyPath: animClips
-      value: 
-      objectReference: {fileID: 22100000, guid: 660036a26c2a8484f9ae6efb2e495fb5, type: 2}
     - target: {fileID: 3922453760918999866, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
       propertyPath: m_Controller
       value: 
@@ -31446,6 +31431,10 @@ PrefabInstance:
     - target: {fileID: 8286087189923719302, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
       propertyPath: m_Name
       value: G_Mob_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286087189923719302, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
@@ -34557,6 +34546,10 @@ PrefabInstance:
     - target: {fileID: 5758580632870723253, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: m_Name
       value: boss_devil_man
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758580632870723253, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: SummonFx

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
-    protected int hp;
-    protected float damage;
+    [SerializeField] private EnemySO enemySO;
+
+    protected float hp = 1;
+    protected float damage = 1;
+    protected float speed = 1;
 
     protected Transform playerTransform;
     protected float distanceToPlayer;
@@ -19,15 +22,23 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     public Coroutine actCoroutine = null;
     public Animator anim;
 
+    protected SpriteRenderer sprite;
+
     protected int _attack = Animator.StringToHash("Attack");
     protected int _move = Animator.StringToHash("Move");
 
     public Vector3 hitPoint => Vector3.zero;
 
+    void OnEnable()
+    {
+        SetStatus();
+    }
+
     void Start()
     {
         playerTransform = Player.Instance.transform;
         anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
         AnimInit();
     }
 
@@ -35,6 +46,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     void Update()
     {
         Act();
+    }
+
+    public void SetStatus()
+    {
+        if (enemySO == null) return;
+
+        hp = enemySO.hp;
+        damage = enemySO.damage;
+        speed = enemySO.speed;
     }
 
     public void AnimInit()
@@ -50,9 +70,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     }
     public void Act()
     {
-        if (actCoroutine != null) return;
         distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
-
+        
+        if (actCoroutine != null) return;
+        
         switch (distanceToPlayer)
         {
             case var a when a <= detectDistance && a >= minDistance:
