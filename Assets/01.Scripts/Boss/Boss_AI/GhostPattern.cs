@@ -25,19 +25,12 @@ public class GhostPattern : BossPattern
     //}
     private void Update()
     {
-       
-        LookAtPlayer();
+
+        transform.eulerAngles = transform.position.x - playerObj.transform.position.x > 0 ? new Vector3(0, 180, 0) : Vector3.zero; 
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
             isCanUseSpecialPattern = true;
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
         base.Update();
-    }
-    public void LookAtPlayer()
-    {
-        if (transform.position.x - playerObj.transform.position.x < 0)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-        }
     }
     public override int GetRandomCount(int choisedPattern)
     {
