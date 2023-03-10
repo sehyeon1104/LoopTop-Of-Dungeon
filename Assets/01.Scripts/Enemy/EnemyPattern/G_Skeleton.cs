@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class G_Skeleton : EnemyDefault
 {
+    [SerializeField] private GameObject ghostPrefab;
     WaitForSeconds attackWait = new WaitForSeconds(2f);
 
     public override IEnumerator MoveToPlayer()
     {
         if (moveClip != null) anim.SetBool(_move, true);
 
+
         Vector2 dir = (playerTransform.position - transform.position).normalized;
+        sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
         transform.Translate(dir * Time.deltaTime * speed);
 
         yield return null;
@@ -40,6 +43,10 @@ public class G_Skeleton : EnemyDefault
 
     public override void EnemyDead()
     {
+        Vector2 dir = (transform.position - playerTransform.position).normalized;
+        GameObject enemy = Instantiate(ghostPrefab, transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
+        enemy.transform.SetParent(null);
+        EnemySpawnManager.Instance.curEnemies.Add(enemy);
         base.EnemyDead();
     }
 

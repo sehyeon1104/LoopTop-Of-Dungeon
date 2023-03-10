@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class G_SkelWar : EnemyDefault
 {
+    [SerializeField] private GameObject ghostPrefab;
     WaitForSeconds attackWait = new WaitForSeconds(3f);
+
 
     public override IEnumerator MoveToPlayer()
     {
@@ -44,6 +46,10 @@ public class G_SkelWar : EnemyDefault
 
     public override void EnemyDead()
     {
+        Vector2 dir = (transform.position - playerTransform.position).normalized;
+        GameObject enemy = Instantiate(ghostPrefab, transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
+        enemy.transform.SetParent(null);
+        EnemySpawnManager.Instance.curEnemies.Add(enemy);
         base.EnemyDead();
     }
 }
