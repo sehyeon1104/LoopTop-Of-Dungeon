@@ -18,7 +18,6 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public Coroutine actCoroutine = null;
     public Animator anim;
-    public AnimatorOverrideController animClips;
 
     protected int _attack = Animator.StringToHash("Attack");
     protected int _move = Animator.StringToHash("Move");
@@ -29,10 +28,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         playerTransform = Player.Instance.transform;
         anim = GetComponent<Animator>();
-        animClips = GetComponent<AnimatorOverrideController>();
-
-        if (moveClip != null) animClips["Move"] = moveClip;
-        if (attackClip != null) animClips["Attack"] = attackClip;
+        AnimInit();
     }
 
 
@@ -41,6 +37,17 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         Act();
     }
 
+    public void AnimInit()
+    {
+        AnimatorOverrideController overrideController = new AnimatorOverrideController();
+
+        overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
+
+        if (moveClip != null) overrideController["Move"] = moveClip;
+        if (attackClip != null) overrideController["Attack"] = attackClip;
+
+        anim.runtimeAnimatorController = overrideController;
+    }
     public void Act()
     {
         if (actCoroutine != null) return;

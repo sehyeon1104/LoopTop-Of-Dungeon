@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 468491cc95ede534e8e0a5cbbe69ca99
+guid: cd6a028a788af9e4aa11262198dba86d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 150
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,10 +67,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: G_Mob_02_Idle_0
+      name: G_Mob_02_move_0
       rect:
         serializedVersion: 2
-        x: 20
+        x: 0
         y: 0
-        width: 88
-        height: 76
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ecf1373363f5a564baddf1818b31c7f7
-      internalID: -1253041449
+      spriteID: 39607bba45114c640b1ee6dfee2a2809
+      internalID: 1009595237
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: G_Mob_02_Idle_1
+      name: G_Mob_02_move_1
       rect:
         serializedVersion: 2
-        x: 144
+        x: 192
         y: 0
-        width: 92
-        height: 72
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8daeb982d9d0c344598654b1cf8174cd
-      internalID: -1405841064
+      spriteID: 8dd4974afefbe51499e64e8d5f0fad8c
+      internalID: -1714119041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: G_Mob_02_Idle_2
+      name: G_Mob_02_move_2
       rect:
         serializedVersion: 2
-        x: 276
+        x: 384
         y: 0
-        width: 88
-        height: 76
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c6bcc8aa978dbc4b8d4390cdc22e76a
-      internalID: -1614170616
+      spriteID: 874ffb78ec88e6a47a32b3ac29427d04
+      internalID: 91543863
       vertices: []
       indices: 
       edges: []
@@ -190,9 +190,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      G_Mob_02_Idle_1: -1405841064
-      G_Mob_02_Idle_2: -1614170616
-      G_Mob_02_Idle_0: -1253041449
+      G_Mob_02_move_0: 1009595237
+      G_Mob_02_move_2: 91543863
+      G_Mob_02_move_1: -1714119041
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

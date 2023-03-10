@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6c9b7e26313dc284caf5e4df3e2acc9b
+guid: fb8244b1cac2e964bb838b38aea11a08
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 150
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -67,10 +67,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: G_Mob_00_Idle_0
+      name: G_Mob_01_Move_0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 0
         y: 0
-        width: 11
-        height: 16
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33a5caee537bf0343b11a7519ee2488d
-      internalID: -1573774820
+      spriteID: 8990fc59b6cfe784894faf99bc4aea99
+      internalID: 1301188264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: G_Mob_00_Idle_1
+      name: G_Mob_01_Move_1
       rect:
         serializedVersion: 2
-        x: 43
+        x: 192
         y: 0
-        width: 11
-        height: 16
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +152,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0143fe8e78495384687071c4c282abd1
-      internalID: 391001637
+      spriteID: ff567b5ad1ec2834fba8fdd4c513849e
+      internalID: 136520905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: G_Mob_01_Move_2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 656de5e642b43e8468bcba3b3d135917
+      internalID: 1756626167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: G_Mob_01_Move_3
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55a21dcc2d99f984b9949bdbd1fe1c73
+      internalID: 599821585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: G_Mob_01_Move_4
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b96caf687289b8945bff687db9043b8d
+      internalID: -1784809518
       vertices: []
       indices: 
       edges: []
@@ -169,8 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      G_Mob_00_Idle_0: -1573774820
-      G_Mob_00_Idle_1: 391001637
+      G_Mob_01_Move_0: 1301188264
+      G_Mob_01_Move_2: 1756626167
+      G_Mob_01_Move_3: 599821585
+      G_Mob_01_Move_1: 136520905
+      G_Mob_01_Move_4: -1784809518
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
