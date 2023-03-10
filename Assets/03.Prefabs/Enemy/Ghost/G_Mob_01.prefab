@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8108133220231646844}
   - component: {fileID: 8108133220231646845}
-  - component: {fileID: -7424792349620051841}
   - component: {fileID: -848391136873786501}
   - component: {fileID: 3246753714900301052}
+  - component: {fileID: -1031663337077617143}
   m_Layer: 0
   m_Name: G_Mob_01
   m_TagString: Enemy
@@ -87,24 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-7424792349620051841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8108133220231646846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1300b45e1cec764190a72363aea0d4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectDistance: 5
-  minDistance: 1
-  moveClip: {fileID: 7400000, guid: 6c732e59dad4ebb45bbd77af2f94126d, type: 2}
-  attackClip: {fileID: 0}
-  anim: {fileID: 0}
-  animClips: {fileID: 22100000, guid: 659d307caa9147546bf50f363b391080, type: 2}
 --- !u!95 &-848391136873786501
 Animator:
   serializedVersion: 4
@@ -115,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 8108133220231646846}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 659d307caa9147546bf50f363b391080, type: 2}
+  m_Controller: {fileID: 9100000, guid: dc064231b5c37814d9ba4e3b3ae22245, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -151,3 +133,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.43, y: 0.49}
   m_EdgeRadius: 0
+--- !u!114 &-1031663337077617143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8108133220231646846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c6a040265990744a19626074330a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySO: {fileID: 11400000, guid: 62ecc37fda9c034499dc889ab19aaf32, type: 2}
+  detectDistance: 10
+  minDistance: 1
+  moveClip: {fileID: 7400000, guid: 9e22570e711a2e04cad6c2288bd2f1f8, type: 2}
+  attackClip: {fileID: 0}
+  anim: {fileID: 0}
