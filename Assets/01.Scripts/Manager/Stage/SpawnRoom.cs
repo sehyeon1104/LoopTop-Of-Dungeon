@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnRoom : MonoSingleton<SpawnRoom>
+public class SpawnRoom : MonoBehaviour
 {
     [SerializeField]
     private Define.MapTypeFlag mapTypeFlag;
@@ -11,6 +11,8 @@ public class SpawnRoom : MonoSingleton<SpawnRoom>
     [SerializeField]
     private GameObject[] mapPrefabs;
     private int mapCount = 0;
+
+    public bool isSetPlayerPos { private set; get; } = false;
 
     private bool isStartRoom = false;
     public bool IsStartRoom
@@ -25,27 +27,39 @@ public class SpawnRoom : MonoSingleton<SpawnRoom>
         }
     }
 
-    private void SpawnRooms()
+    private void Start()
     {
         SetRoomPrefabs();
-        SetRoom();
+        SetPlayerSpawnPos();
     }
 
-    private void SetRoomPrefabs()
+
+    public void SetRoomPrefabs()
     {
-        mapCount = (int)((Directory.GetFiles($"03.Prefabs/Maps/{mapTypeFlag}").Length / 2) - 0.5f);
-        mapPrefabs = new GameObject[Directory.GetFiles($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(1, mapCount)}").Length / 2];
+        mapCount = (int)((Directory.GetFiles($"Assets/03.Prefabs/Maps/{mapTypeFlag}").Length / 2));
+        //mapPrefabs = new GameObject[mapCount - 2];
     }
 
-    public void SetRoom()
+    public void SetAndInstantiateRoom()
     {
         if (isStartRoom)
         {
             Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Start", transform);
+
         }
         else
         {
-            Instantiate(mapPrefabs[Random.Range(0, mapPrefabs.Length)], transform);
+            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(1, 8)}", transform);
+            //Instantiate(mapPrefabs[Random.Range(0, mapPrefabs.Length)], transform);
+        }
+    }
+
+    public void SetPlayerSpawnPos()
+    {
+        if (IsStartRoom)
+        {
+            Player.Instance.transform.position = this.transform.position;
+            isSetPlayerPos = true;
         }
     }
 

@@ -56,7 +56,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void SetMonsterPrefabInMonsterArray()
     {
-        Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
+        // Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
         ghostNormalEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
         ghostEliteEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
         for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)

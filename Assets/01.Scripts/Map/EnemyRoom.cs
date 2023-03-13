@@ -27,10 +27,18 @@ public class EnemyRoom : RoomBase
 
     private Transform[] SetEnemySpawnPos()
     {
-        Debug.Log("SetEnemySpawnPos");
-        enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
-        
-        return enemySpawnPos;
+        if(roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
+        {
+            Debug.Log("SetEnemySpawnPos");
+            enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
+
+            return enemySpawnPos;
+        }
+        else
+        {
+            Debug.LogWarning("RoomTypeFlag is Not EnemyRoom!");
+            return null;
+        }
     }
 
     // 플레이어 입장 시 실행
@@ -50,6 +58,11 @@ public class EnemyRoom : RoomBase
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (StageManager.Instance.isSetting)
+        {
+            return;
+        }
+
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Enter) isClear : " + isClear);
@@ -62,6 +75,10 @@ public class EnemyRoom : RoomBase
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (StageManager.Instance.isSetting)
+        {
+            return;
+        }
 
         if (collision.CompareTag("Player"))
         {
