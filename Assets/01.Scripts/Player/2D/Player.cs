@@ -24,7 +24,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     public Sprite playerVisual { private set; get; }
 
     public Vector3 hitPoint { get; private set; }
-
+    [SerializeField] UnityEvent transformation;
    [field:SerializeField] public UnityEvent GetHit { get; set; }
    [field:SerializeField] public UnityEvent OnDie { get; set; }
 
@@ -53,35 +53,23 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            StageManager.Instance.SetWallGrid();
-
-        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)
             {
-                _joystick.enabled = false;
-                skillSelect.SetActive(true);
-                Time.timeScale = 0;
-                TransformGhost();
-                Boss.Instance.gameObject.SetActive(false);
-                UIManager.Instance.pressF.gameObject.SetActive(false);
+                transformation.Invoke();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            pBase.Exp += 100;
-        }
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            pBase.Hp += 1;
-        }
     }
-
+    public void TransformAilen()
+    {
+        _joystick.enabled = false;
+        skillSelect.SetActive(true);
+        Time.timeScale = 0;
+        TransformGhost();
+        Boss.Instance.gameObject.SetActive(false);
+        UIManager.Instance.pressF.gameObject.SetActive(false);
+    }
     public IEnumerator IEDamaged()
     {
         GetHit.Invoke();
@@ -117,22 +105,16 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     {
         if (isPDamaged)
             return;
-
+        GetHit.Invoke();
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
         }
-
         isPDamaged = true;
-
         // TODO : 피격 애니메이션 재생
-
         pBase.Hp -= (int)damage;
-        UIManager.Instance.HpUpdate();
-
         if (isPDead)
             return;
-
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
