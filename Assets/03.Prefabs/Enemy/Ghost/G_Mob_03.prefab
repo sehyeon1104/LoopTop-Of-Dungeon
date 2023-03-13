@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4370624094931511412}
   - component: {fileID: 4370624094931511415}
-  - component: {fileID: -5442166235750511021}
   - component: {fileID: -8352928487178367536}
   - component: {fileID: 3780863776508659426}
+  - component: {fileID: -1453220847009424768}
   m_Layer: 0
   m_Name: G_Mob_03
   m_TagString: Enemy
@@ -87,24 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-5442166235750511021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4370624094931511414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1300b45e1cec764190a72363aea0d4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectDistance: 5
-  minDistance: 1
-  moveClip: {fileID: 7400000, guid: 573509a603412a14fba26186e5907cd4, type: 2}
-  attackClip: {fileID: 7400000, guid: 2ea586e6d42aed942b448d6cb28140e1, type: 2}
-  anim: {fileID: 0}
-  animClips: {fileID: 22100000, guid: 659d307caa9147546bf50f363b391080, type: 2}
 --- !u!95 &-8352928487178367536
 Animator:
   serializedVersion: 4
@@ -115,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 4370624094931511414}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 659d307caa9147546bf50f363b391080, type: 2}
+  m_Controller: {fileID: 9100000, guid: dc064231b5c37814d9ba4e3b3ae22245, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -151,3 +133,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.88, y: 0.86}
   m_EdgeRadius: 0
+--- !u!114 &-1453220847009424768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4370624094931511414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9fe8792949f3e4eacd2d19a8f0861d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySO: {fileID: 11400000, guid: 85415a3122364704799d032354be70ba, type: 2}
+  detectDistance: 5
+  minDistance: 1
+  moveClip: {fileID: 7400000, guid: dde69929d15499f42938637afc9480bd, type: 2}
+  attackClip: {fileID: 7400000, guid: d0e809cee69410a4483ba9347ea3600e, type: 2}
+  anim: {fileID: 0}
+  ghostPrefab: {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}

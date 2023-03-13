@@ -1937,6 +1937,7 @@ MonoBehaviour:
   - {fileID: 768824066502571607, guid: f2baf61909b18c6459fcacd27a359a2c, type: 3}
   - {fileID: 87888506315717457, guid: adfcfdc45faf28b408be732d0a20e30e, type: 3}
   - {fileID: 2101847423342940240, guid: 2796e0ea60e224a48976f360b65f1114, type: 3}
+  MoveNextMapPortal: {fileID: 0}
 --- !u!114 &520647068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1949,18 +1950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d7748a8be659f4fa4190acbb01e90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostNormalEnemyPrefabs:
-  - {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
-  - {fileID: 2492190673824565090, guid: 9e41db96d9f76dd499f4b371d4d24df5, type: 3}
-  - {fileID: 4370624094931511414, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
-  - {fileID: 8286087189923719302, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
-  - {fileID: 810234765155223560, guid: d328f15407325af459f8182c6b1a34b8, type: 3}
-  ghostEliteEnemyPrefabs:
-  - {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
-  - {fileID: 2492190673824565090, guid: 9e41db96d9f76dd499f4b371d4d24df5, type: 3}
-  - {fileID: 4370624094931511414, guid: e7f89c0745c985a4e855acaad870b3d2, type: 3}
-  - {fileID: 8286087189923719302, guid: cf8169a5fe35f3c43b9d0cbb6a2c5738, type: 3}
-  - {fileID: 810234765155223560, guid: d328f15407325af459f8182c6b1a34b8, type: 3}
+  ghostNormalEnemyPrefabs: []
+  ghostEliteEnemyPrefabs: []
   <curEnemies>k__BackingField: []
   dangerMark: {fileID: 2304996157544624673, guid: e2d49f116c4d7604788f712f3ab86744, type: 3}
   spawnTime: 1.5
