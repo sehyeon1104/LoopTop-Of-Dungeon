@@ -7,6 +7,7 @@ public abstract class RoomBase : MonoBehaviour
     [SerializeField]
     protected Define.MapTypeFlag mapTypeFlag;
 
+    [SerializeField]
     protected Define.RoomTypeFlag roomTypeFlag;
     protected bool isClear = false;
 
