@@ -30,13 +30,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public bool isNextWave { private set; get; } = false;
     private void Start()
     {
-        //Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
-        //for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)
-        //{
-        //    ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
-        //    ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
-        //}
+        SetMonsterPrefabInMonsterArray();
     }
+
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
         // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
@@ -55,6 +51,18 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 break;
             case Define.MapTypeFlag.Lizard:
                 break;
+        }
+    }
+
+    public void SetMonsterPrefabInMonsterArray()
+    {
+        Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
+        ghostNormalEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
+        ghostEliteEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
+        for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)
+        {
+            ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
+            ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
         }
     }
 

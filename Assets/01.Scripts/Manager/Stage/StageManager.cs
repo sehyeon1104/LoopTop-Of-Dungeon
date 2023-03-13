@@ -12,27 +12,46 @@ public class StageManager : MonoSingleton<StageManager>
 
     private int randWallGrid;
 
+    private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
-    private Transform playerSpawnPos;
+    private Vector3 playerSpawnPos;
 
     [SerializeField]
     private GameObject MoveNextMapPortal;
 
     private void Start()
     {
+        spawnRooms = FindObjectsOfType<SpawnRoom>();
         enemyRooms = FindObjectsOfType<EnemyRoom>();
+        SetStartRoom();
         SetWallGrid();
         SetMoveNextMapRoom();
+        Player.Instance.transform.position = SetPlayerSpawnPos();
     }
 
-    public Transform SetPlayerSpawnPos()
+    public void SetStartRoom()
+    {
+        spawnRooms[Random.Range(0, spawnRooms.Length)].IsStartRoom = true;
+        foreach(var room in spawnRooms)
+        {
+            
+        }
+    }
+
+    public Vector3 SetPlayerSpawnPos()
     {
         foreach(var enemyRoomItem in enemyRooms)
         {
             if(enemyRoomItem.GetRoomTypeFlag == Define.RoomTypeFlag.StartRoom)
             {
-                playerSpawnPos = enemyRoomItem.transform;
+                playerSpawnPos = enemyRoomItem.transform.position;
             }
+        }
+
+        if(playerSpawnPos == null)
+        {
+            Debug.LogWarning("StartRoom is NULL!");
+            return Vector3.zero;
         }
 
         return playerSpawnPos;
@@ -57,9 +76,9 @@ public class StageManager : MonoSingleton<StageManager>
        else if(map == null)
         {
 
-        randWallGrid = Random.Range(0, wallGrids.Length);
-        wallGrid = wallGrids[randWallGrid];
-        Instantiate(wallGrid);
+            randWallGrid = Random.Range(0, wallGrids.Length);
+            wallGrid = wallGrids[randWallGrid];
+            Instantiate(wallGrid);
         }
 
 

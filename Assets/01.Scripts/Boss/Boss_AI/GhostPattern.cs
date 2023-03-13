@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GhostPattern : BossPattern
 {
+    private GameObject playerObj;
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject bossMonster;
 
@@ -12,21 +13,27 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject SummonTimer;
     [SerializeField] private Image SummonClock;
 
-    WaitForSeconds waitTime = new WaitForSeconds(1f); 
+    WaitForSeconds waitTime = new WaitForSeconds(1f);
 
-
+    private void Awake()
+    {
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+    }
     //private void OnEnable()
     //{
     //    Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
     //}
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f) 
+
+       
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
             isCanUseSpecialPattern = true;
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
+        else
+            transform.eulerAngles = transform.position.x - playerObj.transform.position.x > 0 ? new Vector3(0, 180, 0) : Vector3.zero;
         base.Update();
     }
-
     public override int GetRandomCount(int choisedPattern)
     {
         switch (choisedPattern)
@@ -144,7 +151,7 @@ public class GhostPattern : BossPattern
         SummonTimer.SetActive(true);
 
         Boss.Instance.isBDamaged = true;
-        for(int i = 1; i < 13; i++)
+        for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
