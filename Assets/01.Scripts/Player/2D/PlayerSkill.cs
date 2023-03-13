@@ -31,6 +31,8 @@ public partial class Player
     List<int> randomSkillNum = new List<int>();
     public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
 
+    [SerializeField]
+    int[] slotLevel = { 1,};
     public Action[] skillEvent = new Action[2];
     [SerializeField]
     private int shuffleCount = 100;
@@ -58,6 +60,7 @@ public partial class Player
     }
     public Action ApplySkill(int skillNum) => skillNum switch 
     {
+
         1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => HillaSkill,
         2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => JangPanSkill,
         3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => TeleportSkill,
@@ -69,7 +72,6 @@ public partial class Player
         4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => ArmStretchSkill,
         5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => RiseUpSkill,
 
-
         _ => Debugs,
     };
     public void SkillSelecet()
@@ -78,7 +80,6 @@ public partial class Player
         selectObj.SetActive(false);
         int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
         skillNum.Add((Define.SkillNum)selectNum);
-        print(skillSelectNum);
         skillEvent[skillSelectNum] = ApplySkill(selectNum);
         skillSelectNum++;
         if (skillSelectNum > 1)
@@ -93,6 +94,7 @@ public partial class Player
     {
         print("디버깅");
     }
+    #region 리스트 셔플
     public void ListShuffle()
     {
         for (int i = 0; i < shuffleCount; i++)
@@ -122,30 +124,32 @@ public partial class Player
         randomSkillNum.Remove(num1);
         randomSkillNum.Remove(num2);
     }
-    public void Skill1()
-    {
-        if (isPDead)
-            return;
-
-        print(skillEvent[0]);
-        skillEvent[0]();
-    }
-
-    public void Skill2()
-    {
-        if (isPDead)
-            return;
-
-        skillEvent[1]();
-    }
     public void SkillShuffle()
     {
         ListInit();
         ListShuffle();
         ListRemove();
     }
+    #endregion
+    public void Skill1()
+    {
+      //if (isPDead)
+      //      return;
+
+        skillEvent[0]();
+    }
+
+    public void Skill2()
+    {
+        //if (isPDead)
+        //    return;
+
+        skillEvent[1]();
+    }
+  
 
     #region 고스트 스킬
+    //스킬에 매개변수 달아서 슬롯 레벨맞춰 하기
     public void HillaSkill()  //1번 스킬 힐라 스킬
     {
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
@@ -247,9 +251,4 @@ public partial class Player
         } while (timer < skillTime);
     }
     #endregion
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 2.5f);
-    }
 }
