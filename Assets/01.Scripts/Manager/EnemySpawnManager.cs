@@ -110,6 +110,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
+        if (Door.Instance.IsFirst)
+        {
+            Door.Instance.IsFirst = false;
+        }
+
         int randPos = 0;
         isNextWave = false;
         // wave1
