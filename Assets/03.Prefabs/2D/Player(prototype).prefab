@@ -392,7 +392,6 @@ GameObject:
   - component: {fileID: -5544824845993973852}
   - component: {fileID: 7442715256025506028}
   - component: {fileID: 7442715256223835011}
-  - component: {fileID: 882001287}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -565,6 +564,9 @@ MonoBehaviour:
   hitVolume: {fileID: 0}
   reviveInvincibleTime: 2
   invincibleTime: 0.5
+  transformation:
+    m_PersistentCalls:
+      m_Calls: []
   <GetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -594,23 +596,12 @@ MonoBehaviour:
   Skill1Trans: {fileID: 653361675}
   JangPanPersDamage: 10
   skillNum: 
+  slotLevel: 01000000
   shuffleCount: 100
   playerTransformDataSOArr:
   - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
   - {fileID: 11400000, guid: 024b87a98b7996b489724611756bbd0d, type: 2}
   <playerTransformDataSO>k__BackingField: {fileID: 0}
---- !u!114 &882001287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b5e059a6649eb48995fde3c0a685b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7442715257172540171
 GameObject:
   m_ObjectHideFlags: 0

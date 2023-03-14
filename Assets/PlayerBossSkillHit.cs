@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerBossSkillHit : MonoBehaviour
 {
-    private void OnTriggerStay2D(Collider2D collision)
+
+    WaitForSeconds DotDamage = new WaitForSeconds(0.8f);
+
+ 
+     
+
+    IEnumerator DotDamageFunc()
     {
-        if (BossRangePattern.isAttackStart == true)
+        while (true)
         {
-            if (collision.transform.CompareTag("BossSkill"))
-            {
-                Debug.Log("hit");
-                gameObject.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
-                BossRangePattern.isAttackStart = false;
-            }
-
+            gameObject.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            yield return DotDamage;
         }
-
-
     }
+
 }
