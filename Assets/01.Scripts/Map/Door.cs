@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Door : MonoSingleton<Door>
+public class Door : MonoBehaviour
 {
     private TilemapCollider2D tilemapCollider2D = null;
+    private TilemapRenderer tilemapRenderer = null;
 
     private bool isFirst = false;
     public bool IsFirst
@@ -23,7 +24,10 @@ public class Door : MonoSingleton<Door>
     private void Start()
     {
         tilemapCollider2D = GetComponent<TilemapCollider2D>();
+        tilemapRenderer = GetComponent<TilemapRenderer>();
         isFirst = true;
+        tilemapCollider2D.isTrigger = true;
+        tilemapRenderer.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,11 +38,13 @@ public class Door : MonoSingleton<Door>
             {
                 Debug.Log("Can Move");
                 tilemapCollider2D.isTrigger = true;
+                tilemapRenderer.enabled = false;
             }
             else
             {
-                tilemapCollider2D.isTrigger = false;
                 Debug.Log("Can't Move");
+                tilemapCollider2D.isTrigger = false;
+                tilemapRenderer.enabled = true;
             }
         }
     }
@@ -51,8 +57,7 @@ public class Door : MonoSingleton<Door>
             {
                 return;
             }
-
-            tilemapCollider2D.isTrigger = false;
         }
     }
+
 }

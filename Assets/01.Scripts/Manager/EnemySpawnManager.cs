@@ -27,10 +27,13 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private float spawnTime = 1.5f;
 
+    private Door door = null;
+
     public bool isNextWave { private set; get; } = false;
     private void Start()
     {
         SetMonsterPrefabInMonsterArray();
+        door = FindObjectOfType<Door>();
     }
 
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
@@ -110,9 +113,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
-        if (Door.Instance.IsFirst)
+        if (door.IsFirst)
         {
-            Door.Instance.IsFirst = false;
+            door.IsFirst = false;
         }
 
         int randPos = 0;

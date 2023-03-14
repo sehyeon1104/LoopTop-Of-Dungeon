@@ -29,10 +29,16 @@ public class SpawnRoom : MonoBehaviour
 
     private void Start()
     {
+        SetMapTypeFlag();
         SetRoomPrefabs();
         SetPlayerSpawnPos();
     }
 
+    public void SetMapTypeFlag()
+    {
+        // 이후 현재 들어간 맵에 따라 타입 변경
+        mapTypeFlag = Define.MapTypeFlag.Ghost;
+    }
 
     public void SetRoomPrefabs()
     {
@@ -42,10 +48,14 @@ public class SpawnRoom : MonoBehaviour
 
     public void SetAndInstantiateRoom()
     {
+        if(mapTypeFlag == Define.MapTypeFlag.Default)
+        {
+            SetMapTypeFlag();
+        }
+
         if (isStartRoom)
         {
             Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Start", transform);
-
         }
         else
         {

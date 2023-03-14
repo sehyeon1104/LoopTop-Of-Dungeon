@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2794950047595396575}
   - component: {fileID: 1924773318547368988}
-  - component: {fileID: 5677433032770509760}
+  - component: {fileID: 5566537274935843498}
   m_Layer: 0
   m_Name: MapSpawner
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5677433032770509760
+--- !u!114 &5566537274935843498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4050352928661905167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75ded80ee8778b049bc8b4b0d4a57f98, type: 3}
+  m_Script: {fileID: 11500000, guid: c556b562be5667f40b43927ddb1bb0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 2
+  mapTypeFlag: 0
+  mapPrefabs: []
