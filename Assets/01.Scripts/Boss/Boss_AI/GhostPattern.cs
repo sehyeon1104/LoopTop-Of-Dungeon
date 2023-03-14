@@ -25,8 +25,6 @@ public class GhostPattern : BossPattern
     //}
     private void Update()
     {
-
-       
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
             isCanUseSpecialPattern = true;
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
