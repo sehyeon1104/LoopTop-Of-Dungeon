@@ -1934,10 +1934,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallGrids:
   - {fileID: 1986968658916020979, guid: 727b9131dd2d846439fe6a151c0524ed, type: 3}
-  - {fileID: 768824066502571607, guid: f2baf61909b18c6459fcacd27a359a2c, type: 3}
-  - {fileID: 87888506315717457, guid: adfcfdc45faf28b408be732d0a20e30e, type: 3}
-  - {fileID: 2101847423342940240, guid: 2796e0ea60e224a48976f360b65f1114, type: 3}
-  MoveNextMapPortal: {fileID: 0}
+  - {fileID: 7514690876322857018, guid: f2baf61909b18c6459fcacd27a359a2c, type: 3}
+  - {fileID: 6068226034593962885, guid: adfcfdc45faf28b408be732d0a20e30e, type: 3}
+  - {fileID: 7260353091977123050, guid: 2796e0ea60e224a48976f360b65f1114, type: 3}
+  spawnRooms: []
+  MoveNextMapPortal: {fileID: 4032134128082279148, guid: ede22b26bce6539439fbb10e1b9e072a, type: 3}
 --- !u!114 &520647068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5058,6 +5059,10 @@ PrefabInstance:
     - target: {fileID: 7442715256025506025, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442715256025506026, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506028, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: <Attack>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Target

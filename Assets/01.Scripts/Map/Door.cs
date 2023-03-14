@@ -1,29 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public class Door : MonoBehaviour
+public class Door : MonoSingleton<Door>
 {
-    public bool canMove { private set; get; } = false;
+    private TilemapCollider2D tilemapCollider2D = null;
+
+    private bool isFirst = false;
+    public bool IsFirst
+    {
+        get
+        {
+            return isFirst;
+        }
+        set
+        {
+            isFirst = value;
+        }
+    }
+
+    private void Start()
+    {
+        tilemapCollider2D = GetComponent<TilemapCollider2D>();
+        isFirst = true;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
+            if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave || isFirst)
             {
-                canMove = true;
                 Debug.Log("Can Move");
+                tilemapCollider2D.isTrigger = true;
             }
             else
             {
+                tilemapCollider2D.isTrigger = false;
                 Debug.Log("Can't Move");
             }
         }
     }
 
-    public bool CanMove()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        return canMove;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (isFirst)
+            {
+                return;
+            }
+
+            tilemapCollider2D.isTrigger = false;
+        }
     }
 }

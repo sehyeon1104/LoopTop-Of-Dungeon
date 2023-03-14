@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
@@ -53,6 +54,7 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)
@@ -103,8 +105,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged)
+        if (isPDamaged || isPDead)
             return;
+
         GetHit.Invoke();
         if (Random.Range(1, 101) <= critChance)
         {
@@ -113,8 +116,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         isPDamaged = true;
         // TODO : 피격 애니메이션 재생
         pBase.Hp -= (int)damage;
-        if (isPDead)
-            return;
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
@@ -122,12 +123,9 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
 
     public void Dead()
     {
-        if (isPDead)
-            return;
 
         isPDead = true;
         // TODO : 플레이어 죽는 모션실행, 모션이 끝났을 때 게임오버패널 활성화
-
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
