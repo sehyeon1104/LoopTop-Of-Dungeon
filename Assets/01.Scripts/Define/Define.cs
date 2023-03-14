@@ -36,8 +36,8 @@ public static class Define
         Unknown,
         TitleScene,
         MainScene,
-        GhostScene1,
-        GhostScene2,
+        Ghost_Stage1,
+        Ghost_Stage2,
         GhostSceneBoss,
     }
     public enum Sound
