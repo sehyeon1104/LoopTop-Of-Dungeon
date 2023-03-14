@@ -22,7 +22,6 @@ public class PlayerBase
             _playerTransformTypeFlag = value;
         }
     }
-
     private int _hp;
     public int Hp
     {
@@ -42,8 +41,6 @@ public class PlayerBase
             {
                 _hp = _maxHp;
             }
-
-            UIManager.Instance.HpUpdate();
         }
     }
 

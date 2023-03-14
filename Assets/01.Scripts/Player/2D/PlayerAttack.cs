@@ -34,17 +34,5 @@ public partial class Player
                 enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
             }
         }
-
-        //if (Boss.Instance.isBDead)
-        //    return;
-
-        //Debug.Log(Vector2.Distance(transform.position, Boss.Instance.transform.position));
-        
-        //if (Vector2.Distance(transform.position, Boss.Instance.transform.position) < attackRange)
-        //{
-        //    Boss.Instance.OnDamage(pBase.Damage, gameObject, pBase.CritChance);
-        //    CinemachineCameraShaking.Instance.CameraShake();
-        //}
-
     }
 }
