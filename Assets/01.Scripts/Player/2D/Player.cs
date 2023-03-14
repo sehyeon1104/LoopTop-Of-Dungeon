@@ -47,7 +47,6 @@ public partial class Player : MonoSingleton<Player>, IHittable , IAgent
     private void Start()
     {
         
-        print(slotLevel.Length);
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
         agentInput.Attack.AddListener(Attack);
