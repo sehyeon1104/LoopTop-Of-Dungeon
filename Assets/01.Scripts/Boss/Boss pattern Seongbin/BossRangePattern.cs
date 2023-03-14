@@ -6,6 +6,7 @@ public class BossRangePattern : MonoBehaviour
 {
     [SerializeField] private GameObject FPR; //Floor Pattern Range
     [SerializeField] private GameObject FPRS; //Floor Pattern Range Start
+    [SerializeField] private GameObject Smoke;
 
     public SpriteRenderer FPRSpriteRenderer;
     public SpriteRenderer FPRSSpriteRenderer;
@@ -30,13 +31,17 @@ public class BossRangePattern : MonoBehaviour
 
     IEnumerator  FloorPattern()
     {
+       
+
         FPR.transform.position = transform.position;
         FPRS.transform.position = transform.position;
 
         FPR.SetActive(true);
         FPRS.SetActive(true);
 
+        
         yield return WaitForRangeStart; //패턴 시전 대기
+
 
         while(ScaleX < 17f)
         {
@@ -61,6 +66,12 @@ public class BossRangePattern : MonoBehaviour
             FPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return FPRSpeed;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", new Vector2(transform.position.x + 1, transform.position.y + 7.7f), Quaternion.identity);
+            Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", new Vector2(transform.position.x + 1, transform.position.y - 7.7f), Quaternion.Euler(new Vector3(0,0,180)));
         }
 
         isAttackStart = true;

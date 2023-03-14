@@ -30,9 +30,7 @@ public partial class Player
     private int ghostSummonCount = 1;
     List<int> randomSkillNum = new List<int>();
     public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
-
-    [SerializeField]
-    int[] slotLevel = { 1,};
+    int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
     [SerializeField]
     private int shuffleCount = 100;
@@ -58,21 +56,20 @@ public partial class Player
     {
         skillCooltime = playerTransformDataSO.skill[num - 1].skillDelay;
     }
-    public Action ApplySkill(int skillNum) => skillNum switch 
+    public Action ApplySkill(int skillNum, int slotLevel) => skillNum switch
     {
+        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
+        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
+        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
+        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
+        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
+        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
+        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
+        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
+        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
+        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
 
-        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => HillaSkill,
-        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => JangPanSkill,
-        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => TeleportSkill,
-        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => ArmStretchSkill,
-        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => RiseUpSkill,
-        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => HillaSkill,
-        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => JangPanSkill,
-        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => TeleportSkill,
-        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => ArmStretchSkill,
-        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => RiseUpSkill,
-
-        _ => Debugs,
+        _ => () => Debugs(slotLevel),
     };
     public void SkillSelecet()
     {
@@ -80,7 +77,7 @@ public partial class Player
         selectObj.SetActive(false);
         int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
         skillNum.Add((Define.SkillNum)selectNum);
-        skillEvent[skillSelectNum] = ApplySkill(selectNum);
+        skillEvent[skillSelectNum] = ApplySkill(selectNum, slotLevel[skillSelectNum]);
         skillSelectNum++;
         if (skillSelectNum > 1)
         {
@@ -90,9 +87,9 @@ public partial class Player
             skillSelect.SetActive(false);
         }
     }
-    public void Debugs()
+    public void Debugs(int level)
     {
-        print("디버깅");
+        print($"디버깅{level}");
     }
     #region 리스트 셔플
     public void ListShuffle()
@@ -133,8 +130,8 @@ public partial class Player
     #endregion
     public void Skill1()
     {
-      //if (isPDead)
-      //      return;
+        //if (isPDead)
+        //      return;
 
         skillEvent[0]();
     }
@@ -146,15 +143,16 @@ public partial class Player
 
         skillEvent[1]();
     }
-  
+
 
     #region 고스트 스킬
     //스킬에 매개변수 달아서 슬롯 레벨맞춰 하기
-    public void HillaSkill()  //1번 스킬 힐라 스킬
-    {
+    public void HillaSkill(int slotLevel)  //1번 스킬 힐라 스킬
+    { 
+
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
-
+        
         ApplySkillCoolTime(1);
         playerAnim.SetTrigger("Attack");
 
@@ -164,24 +162,24 @@ public partial class Player
         }
     }
 
-    public void JangPanSkill() //2번 스킬 장판 스킬 애니메이션 필요
+    public void JangPanSkill(int slotLEvel) //2번 스킬 장판 스킬 애니메이션 필요
     {
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
 
         ApplySkillCoolTime(2);
-        StartCoroutine(JangPanSkill(jangPanTime));
+        StartCoroutine(JangPanSkillCor(jangPanTime));
     }
-    public void TeleportSkill() //3번 스킬 텔레포트 패턴
+    public void TeleportSkill(int slotLEvel) //3번 스킬 텔레포트 패턴
     {
         ApplySkillCoolTime(3);
         StartCoroutine(TeleportPattern(scratchTime));
     }
-    public void ArmStretchSkill() // 4번 스킬 팔 뻗기 스킬 
+    public void ArmStretchSkill(int slotLEvel) // 4번 스킬 팔 뻗기 스킬 
     {
         ApplySkillCoolTime(4);
     }
-    public void RiseUpSkill() // 5번 스킬 솟아 오르기 스킬
+    public void RiseUpSkill(int slotLevel) // 5번 스킬 솟아 오르기 스킬
     {
         ApplySkillCoolTime(5);
     }
@@ -195,7 +193,7 @@ public partial class Player
 
     }
 
-    IEnumerator JangPanSkill(float skillTime)
+    IEnumerator JangPanSkillCor(float skillTime)
     {
         float timer = 0;
         float timerA = 0;

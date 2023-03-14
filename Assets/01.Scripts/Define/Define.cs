@@ -36,6 +36,9 @@ public static class Define
         Unknown,
         TitleScene,
         MainScene,
+        GhostScene1,
+        GhostScene2,
+        GhostSceneBoss,
     }
     public enum Sound
     {
@@ -50,5 +53,16 @@ public static class Define
         thirdSkill,
         fourthSkill,
         fifthSkill
+    }
+
+    public enum StageSceneNum
+    {
+        Default = 0,
+        CenterMap = 1,
+        Ghost = 2,
+        LavaSlime = 5,
+        Electricity = 8,
+        Werewolf = 11,
+        Lizard = 14,
     }
 }
