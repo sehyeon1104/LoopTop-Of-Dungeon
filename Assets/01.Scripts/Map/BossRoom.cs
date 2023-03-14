@@ -9,9 +9,8 @@ public class BossRoom : RoomBase
     {
         roomTypeFlag = Define.RoomTypeFlag.BossRoom;
     }
-    protected override bool IsClear()
+    protected override void IsClear()
     {
         // TODO : 맵이 클리어 되었는지 체크
-        return isClear;
     }
 }

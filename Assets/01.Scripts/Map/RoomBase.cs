@@ -12,6 +12,6 @@ public abstract class RoomBase : MonoBehaviour
     protected bool isClear = false;
 
     protected abstract void SetRoomTypeFlag();
-    protected abstract bool IsClear();
+    protected abstract void IsClear();
     
 }
