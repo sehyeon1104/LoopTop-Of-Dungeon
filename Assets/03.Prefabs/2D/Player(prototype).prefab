@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 7442715256025506028}
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 882001287}
+  - component: {fileID: 5092833302439140341}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -565,9 +566,36 @@ MonoBehaviour:
   hitVolume: {fileID: 0}
   reviveInvincibleTime: 2
   invincibleTime: 0.5
+  transformation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7442715256223835011}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: TransformAilen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <GetHit>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: HpUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <OnDie>k__BackingField:
     m_PersistentCalls:
       m_Calls:
@@ -611,6 +639,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b5e059a6649eb48995fde3c0a685b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5092833302439140341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d11eea570a25e594aa5ce310e6b2f98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefix: SEX
+  backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
+  fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &7442715257172540171
 GameObject:
   m_ObjectHideFlags: 0
