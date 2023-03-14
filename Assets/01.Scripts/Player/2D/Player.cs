@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -44,6 +45,8 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     }
     private void Start()
     {
+        
+        print(slotLevel.Length);
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
         agentInput.Attack.AddListener(Attack);
