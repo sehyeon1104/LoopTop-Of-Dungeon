@@ -118,6 +118,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             door.IsFirst = false;
         }
 
+        door.DisableDoors();
+        
         int randPos = 0;
         isNextWave = false;
         // wave1

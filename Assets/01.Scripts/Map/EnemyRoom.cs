@@ -68,7 +68,19 @@ public class EnemyRoom : RoomBase
             Debug.Log("Enter) isClear : " + isClear);
             if (!isClear)
             {
+                Door.Instance.EnableDoors();
                 SetEnemy();
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (isClear && Door.Instance.isEnableDoor && !StageManager.Instance.isSetting)
+            {
+                Door.Instance.DisableDoors();
             }
         }
     }

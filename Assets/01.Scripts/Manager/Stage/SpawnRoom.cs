@@ -12,7 +12,7 @@ public class SpawnRoom : MonoBehaviour
     private GameObject[] mapPrefabs;
     private int mapCount = 0;
 
-    public bool isSetPlayerPos { private set; get; } = false;
+    private bool isSetPlayerPos = false;
 
     private bool isStartRoom = false;
     public bool IsStartRoom

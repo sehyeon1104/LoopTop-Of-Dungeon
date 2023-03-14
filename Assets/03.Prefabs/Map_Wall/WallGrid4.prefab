@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6399718167145153248}
   - component: {fileID: 4922199212615419316}
   - component: {fileID: 8112852409815947335}
+  - component: {fileID: 8109205778294098855}
   m_Layer: 0
   m_Name: GhostDoors
   m_TagString: Untagged
@@ -1153,6 +1154,18 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &8109205778294098855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476216930883560059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f44785a30565f4fbf3e37c01876175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1164319862015229459
 GameObject:
   m_ObjectHideFlags: 0
