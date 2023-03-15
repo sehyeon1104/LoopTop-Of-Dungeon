@@ -14,7 +14,6 @@ public partial class Player
 
     private void FixedUpdate()
     {
-        Debug.Log("bgy");
         Move();
     }
 
