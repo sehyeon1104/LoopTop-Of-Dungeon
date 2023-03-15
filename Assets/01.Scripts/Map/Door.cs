@@ -10,8 +10,8 @@ public class Door : MonoBehaviour
     private TilemapCollider2D tilemapCollider2D = null;
     private TilemapRenderer tilemapRenderer = null;
 
-    public bool isEnableDoor { private set; get; } = false;
-    public bool isDisableDoor { private set; get; } = false;
+    public bool isOpenDoor { private set; get; } = false;
+    public bool isCloseDoor { private set; get; } = false;
 
     private bool isFirst = false;
     public bool IsFirst
@@ -29,15 +29,15 @@ public class Door : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        isFirst = true;
     }
 
     private void Start()
     {
         tilemapCollider2D = GetComponent<TilemapCollider2D>();
         tilemapRenderer = GetComponent<TilemapRenderer>();
-        isFirst = true;
 
-        EnableDoors();
+        OpenDoors();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -47,27 +47,27 @@ public class Door : MonoBehaviour
             if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave || isFirst)
             {
                 Debug.Log("Can Move");
-                EnableDoors();
+                OpenDoors();
             }
             else
             {
                 Debug.Log("Can't Move");
-                DisableDoors();
+                CloseDoors();
             }
         }
     }
 
-    public void EnableDoors()
+    public void OpenDoors()
     {
-        isEnableDoor = true;
-        isDisableDoor = false;
+        isOpenDoor = true;
+        isCloseDoor = false;
         tilemapCollider2D.isTrigger = true;
         tilemapRenderer.enabled = false;
     }
-    public void DisableDoors()
+    public void CloseDoors()
     {
-        isEnableDoor = false;
-        isDisableDoor = true;
+        isOpenDoor = false;
+        isCloseDoor = true;
         tilemapCollider2D.isTrigger = false;
         tilemapRenderer.enabled = true;
     }

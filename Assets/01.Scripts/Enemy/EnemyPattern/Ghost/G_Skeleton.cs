@@ -9,24 +9,12 @@ public class G_Skeleton : EnemyDefault
 
     public override IEnumerator MoveToPlayer()
     {
-        if (moveClip != null) anim.SetBool(_move, true);
-
-
-        Vector2 dir = (playerTransform.position - transform.position).normalized;
-        sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
-        transform.Translate(dir * Time.deltaTime * speed);
-
-        yield return null;
-
-        actCoroutine = null;
+        return base.MoveToPlayer();
     }
 
     public override IEnumerator AttackToPlayer()
     {
-        if (Player.Instance.isPDead) yield break;
-
-        anim.SetBool(_move, false);
-        if (attackClip != null) anim.SetTrigger(_attack);
+        yield return base.AttackToPlayer();
 
         Player.Instance.OnDamage(damage, gameObject, 0);
 
@@ -44,7 +32,7 @@ public class G_Skeleton : EnemyDefault
     public override void EnemyDead()
     {
         Vector2 dir = (transform.position - playerTransform.position).normalized;
-        GameObject enemy = Instantiate(ghostPrefab, transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
+        GameObject enemy = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
         enemy.transform.SetParent(null);
         EnemySpawnManager.Instance.curEnemies.Add(enemy);
         base.EnemyDead();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PoolManager
@@ -120,6 +121,11 @@ public class PoolManager
             return null;
         return _pool[name].Obj;
     }
+    public GameObject PoolManaging(GameObject gameObject, Vector2 position, Quaternion rotation)
+    {
+        Debug.Log(AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromSource(gameObject)));
+        return null;
+    }
 
     public GameObject PoolManaging(string path, Vector2 position, Quaternion rotation)
     {
@@ -135,7 +141,10 @@ public class PoolManager
         if (GetObject(name) == null)
             clone = Managers.Resource.Instantiate(path);
         else
+        {
             clone = Pop(GetObject(name)).gameObject;
+            Debug.Log(name);
+        }
 
         clone.transform.position = position;
         clone.transform.rotation = rotation;
@@ -155,9 +164,12 @@ public class PoolManager
         }
 
         if (GetObject(name) == null)
-            clone = Managers.Resource.Instantiate(path,parent);
+            clone = Managers.Resource.Instantiate(path, parent);
         else
-            clone = Pop(GetObject(name),parent).gameObject;
+        {
+            clone = Pop(GetObject(name), parent).gameObject;
+            Debug.Log("name");
+        }
 
         return clone;
         

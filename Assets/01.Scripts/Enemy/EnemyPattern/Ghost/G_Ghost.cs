@@ -6,22 +6,12 @@ public class G_Ghost : EnemyDefault
 {
     public override IEnumerator MoveToPlayer()
     {
-        if (moveClip != null) anim.SetBool(_move, true);
-
-        Vector2 dir = (playerTransform.position - transform.position).normalized;
-        transform.Translate(dir * Time.deltaTime * speed);
-
-        yield return null;
-
-        actCoroutine = null;
+        return base.MoveToPlayer();
     }
 
     public override IEnumerator AttackToPlayer()
     {
-        if (Player.Instance.isPDead) yield break;
-
-        anim.SetBool(_move, false);
-        if (attackClip != null) anim.SetTrigger(_attack);
+        yield return base.AttackToPlayer();
 
         Player.Instance.OnDamage(damage, gameObject, 0);
 

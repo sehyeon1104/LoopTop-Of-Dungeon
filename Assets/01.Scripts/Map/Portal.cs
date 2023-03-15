@@ -16,8 +16,8 @@ public class Portal : MonoBehaviour
         {
             1 => Define.Scene.TitleScene,
             2 => Define.Scene.MainScene,
-            3 => Define.Scene.GhostScene1,
-            4 => Define.Scene.GhostScene2,
+            3 => Define.Scene.Ghost_Stage1,
+            4 => Define.Scene.Ghost_Stage2,
             5 => Define.Scene.GhostSceneBoss,
 
             _ => Define.Scene.Unknown
