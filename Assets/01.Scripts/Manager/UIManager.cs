@@ -192,7 +192,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void MoveToTitleScene()
     {
-        SceneManager.LoadScene("TitleScene");
+        Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        //SceneManager.LoadScene("TitleScene");
     }
 
     

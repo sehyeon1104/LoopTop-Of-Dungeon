@@ -29,12 +29,17 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
                         _instance = obj.AddComponent<T>();
                     }
 
-                    DontDestroyOnLoad(_instance);
+                    //DontDestroyOnLoad(_instance);
                 }
             }
 
             return _instance;
         }
+    }
+
+    private void Awake()
+    {
+        shuttingDown = false;
     }
 
     private void OnApplicationQuit()

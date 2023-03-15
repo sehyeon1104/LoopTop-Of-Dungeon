@@ -11,9 +11,11 @@ public class EnemyRoom : RoomBase
     private Transform[] enemySpawnPos;
 
     public bool isMoveAnotherStage = false;
+    public bool isSpawnMonster { private set; get; } = false;
 
     private void Start()
     {
+        isSpawnMonster = false;
         SetRoomTypeFlag();
         SetEnemySpawnPos();
     }
@@ -54,6 +56,16 @@ public class EnemyRoom : RoomBase
         Debug.Log("SpawnEnemies");
         EnemySpawnManager.Instance.SetRandomEnemyCount();
         StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
+
+        StartCoroutine(CheckClear());
+    }
+
+    private IEnumerator CheckClear()
+    {
+        yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
+        Debug.Log("Clear");
+        IsClear();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -66,21 +78,11 @@ public class EnemyRoom : RoomBase
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Enter) isClear : " + isClear);
-            if (!isClear)
+            if (!isClear && !isSpawnMonster)
             {
-                Door.Instance.EnableDoors();
+                isSpawnMonster = true;
+                Door.Instance.CloseDoors();
                 SetEnemy();
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (isClear && Door.Instance.isEnableDoor && !StageManager.Instance.isSetting)
-            {
-                Door.Instance.DisableDoors();
             }
         }
     }
@@ -99,17 +101,15 @@ public class EnemyRoom : RoomBase
         }
     }
 
-    protected override bool IsClear()
+    protected override void IsClear()
     {
         // TODO : 맵이 클리어 되었는지 체크
         if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
             isClear = true;
 
-        if(isClear && isMoveAnotherStage)
+        if (isClear && isMoveAnotherStage)
         {
             StageManager.Instance.AssignMoveNextMapPortal(this);
         }
-
-        return isClear;
     }
 }

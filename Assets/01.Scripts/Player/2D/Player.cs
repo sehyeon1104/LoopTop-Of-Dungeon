@@ -7,10 +7,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public partial class Player : MonoSingleton<Player> , IHittable , IAgent
+public partial class Player : MonoSingleton<Player>, IHittable , IAgent
 {
     public PlayerBase pBase;
     public Volume hitVolume;
+
     private bool isPDamaged = false;
     public bool isPDead { private set; get; } = false;
 
