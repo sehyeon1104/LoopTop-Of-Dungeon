@@ -16,7 +16,7 @@ public class G_Skeleton : EnemyDefault
     {
         yield return base.AttackToPlayer();
 
-        Player.Instance.OnDamage(damage, gameObject, 0);
+        GameManager.Instance.Player.OnDamage(damage, gameObject, 0);
 
         yield return attackWait;
 

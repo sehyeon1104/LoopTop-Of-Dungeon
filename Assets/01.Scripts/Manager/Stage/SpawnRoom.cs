@@ -68,7 +68,7 @@ public class SpawnRoom : MonoBehaviour
     {
         if (IsStartRoom)
         {
-            Player.Instance.transform.position = this.transform.position;
+            GameManager.Instance.Player.transform.position = this.transform.position;
             isSetPlayerPos = true;
         }
     }

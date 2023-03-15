@@ -39,12 +39,12 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
-        UpdateUI();
+        // UpdateUI();
     }
 
     public void UpdateUI()
     {
-        playerIcon.sprite = Player.Instance.playerTransformDataSO.playerImg;
+        playerIcon.sprite = GameManager.Instance.Player.playerTransformDataSO.playerImg;
 
         DisActiveAllPanels();
         HPInit();
@@ -101,7 +101,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         Debug.Log("Revive");
         ToggleGameOverPanel();
-        Player.Instance.RevivePlayer();
+        GameManager.Instance.Player.RevivePlayer();
     }
 
     public void Leave()
@@ -132,22 +132,22 @@ public class UIManager : MonoSingleton<UIManager>
 
         if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill1"))
         {
-            Player.Instance.Skill1();
+            GameManager.Instance.Player.Skill1();
         }
         else if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill2"))
         {
-            Player.Instance.Skill2();
+            GameManager.Instance.Player.Skill2();
         }
         else if (EventSystem.current.currentSelectedGameObject.CompareTag("UltimateSkill"))
         {
-            Player.Instance.UltimateSkill();
+            GameManager.Instance.Player.UltimateSkill();
         }
 
-        StartCoroutine(IESkillCooltime(cooltimeImg, Player.Instance.skillCooltime));
+        StartCoroutine(IESkillCooltime(cooltimeImg, GameManager.Instance.Player.skillCooltime));
     }
     public void SkillNum(List<int> skillList)
     {
-         Button[] selectTexts =Player.Instance.skillSelect.GetComponentsInChildren<Button>(true);
+         Button[] selectTexts = GameManager.Instance.Player.skillSelect.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
@@ -177,7 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             if (i + 1 < hpbars.Count)
                 if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
-            hpbars[i].fillAmount = (Player.Instance.pBase.Hp * 0.25f) - i;
+            hpbars[i].fillAmount = (GameManager.Instance.Player.pBase.Hp * 0.25f) - i;
         }
 
     }

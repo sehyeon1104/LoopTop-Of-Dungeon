@@ -1858,8 +1858,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 520647066}
-  - component: {fileID: 520647065}
   - component: {fileID: 520647064}
+  - component: {fileID: 520647065}
   - component: {fileID: 520647067}
   - component: {fileID: 520647068}
   m_Layer: 0
@@ -1881,6 +1881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e320d4197fcc46e4d908f89b1cefa3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPre: {fileID: 0}
 --- !u!114 &520647065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3729,6 +3730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1200786703}
   - component: {fileID: 1200786702}
+  - component: {fileID: 1200786704}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -3790,6 +3792,18 @@ Transform:
   m_Father: {fileID: 442689536}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1200786704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200786701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a96487ca7ce503142aec52f5efd07788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1202410930
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,6 +5053,10 @@ PrefabInstance:
     - target: {fileID: 4212746857187955054, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5092833302439140341, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: prefix
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506024, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_RootOrder

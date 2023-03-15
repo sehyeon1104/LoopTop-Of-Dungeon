@@ -36,7 +36,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     void Start()
     {
-        playerTransform = Player.Instance.transform;
+        playerTransform = GameManager.Instance.Player.transform;
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         AnimInit();
@@ -103,7 +103,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual IEnumerator AttackToPlayer()
     {
-        if (Player.Instance.isPDead) yield break;
+        if (GameManager.Instance.Player.isPDead) yield break;
 
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);

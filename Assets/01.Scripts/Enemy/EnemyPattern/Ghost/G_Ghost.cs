@@ -13,7 +13,7 @@ public class G_Ghost : EnemyDefault
     {
         yield return base.AttackToPlayer();
 
-        Player.Instance.OnDamage(damage, gameObject, 0);
+        GameManager.Instance.Player.OnDamage(damage, gameObject, 0);
 
         hp -= 1;
         EnemyDead();
