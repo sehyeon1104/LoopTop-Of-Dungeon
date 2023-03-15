@@ -29,7 +29,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
                         _instance = obj.AddComponent<T>();
                     }
 
-                    //DontDestroyOnLoad(_instance);
+                    // DontDestroyOnLoad(_instance);
                 }
             }
 
@@ -49,6 +49,6 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
 
     private void OnDestroy()
     {
-        shuttingDown = true;
+        _instance = null;
     }
 }

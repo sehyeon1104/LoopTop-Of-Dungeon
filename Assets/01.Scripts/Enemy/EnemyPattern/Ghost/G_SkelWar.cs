@@ -20,7 +20,7 @@ public class G_SkelWar : EnemyDefault
         yield return new WaitForSeconds(0.7f);
 
         if(distanceToPlayer <= 1.5f)
-            Player.Instance.OnDamage(damage, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(damage, gameObject, 0);
 
         yield return attackWait;
 

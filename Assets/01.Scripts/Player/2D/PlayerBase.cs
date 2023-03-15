@@ -34,7 +34,7 @@ public class PlayerBase
             _hp = value;
             if(_hp <= 0)
             {
-                Player.Instance.OnDie.Invoke();
+                GameManager.Instance.Player.OnDie.Invoke();
                 _hp = 0;
             }
             else if(_hp > _maxHp)

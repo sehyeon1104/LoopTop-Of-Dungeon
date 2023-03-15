@@ -14,7 +14,7 @@ public class BulletToPlayer : MonoBehaviour
     private IEnumerator Move()
     {
         float timer = 0f;
-        float dist = Vector2.Distance(transform.position, Player.Instance.transform.position);
+        float dist = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
         while (timer <= 3f)
         {
             timer += Time.deltaTime;
@@ -27,7 +27,7 @@ public class BulletToPlayer : MonoBehaviour
             else
             {
                 speed += Time.deltaTime;
-                transform.position = Vector3.LerpUnclamped(transform.position, Player.Instance.transform.position, speed);
+                transform.position = Vector3.LerpUnclamped(transform.position, GameManager.Instance.Player.transform.position, speed);
             }
         }
         Managers.Pool.Push(GetComponent<Poolable>());

@@ -62,7 +62,7 @@ public class GhostSummoner : MonoBehaviour
 
         foreach(var enemy in enemies)
         {
-            dis = Vector2.Distance(enemy.transform.position, Player.Instance.transform.position);
+            dis = Vector2.Distance(enemy.transform.position, GameManager.Instance.Player.transform.position);
             if (dis < shortestDis)
             {
                 nearestEnemy = enemy;

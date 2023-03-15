@@ -15,6 +15,13 @@ public partial class Player
         if (isPDead)
             return;
 
+        if(agentInput == null)
+        {
+            Debug.LogWarning("agentInput is NULL!");
+            agentInput = GetComponent<AgentInput>();
+            agentInput.Attack.AddListener(Attack);
+            return;
+        }
         agentInput.Attack.Invoke();
         playerAnim.SetTrigger("Attack");
     }

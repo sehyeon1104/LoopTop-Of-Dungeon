@@ -20,7 +20,7 @@ public partial class Player
     public void Move()
     {
         float x = _joystick.Horizontal;
-        float y = _joystick.Vertical; 
+        float y = _joystick.Vertical;
 
         moveVec2 = new Vector2 (x, y) * speed * Time.deltaTime;
         rb.MovePosition(rb.position + moveVec2);

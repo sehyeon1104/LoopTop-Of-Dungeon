@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public partial class Player : MonoSingleton<Player>, IHittable , IAgent
+// 플레이어 자체는 싱글톤을 쓰지 않아야해
+public partial class Player : MonoBehaviour, IHittable , IAgent
 {
     public PlayerBase pBase;
     public Volume hitVolume;
@@ -34,31 +35,51 @@ public partial class Player : MonoSingleton<Player>, IHittable , IAgent
 
     private void Awake()
     {
+        InitPlayerData();
+        //pBase = new PlayerBase();
+        //if (playerTransformDataSO == null)
+        //{
+        //    playerTransformDataSO = playerTransformDataSOArr[0];
+        //}
+        //agentInput = GetComponent<AgentInput>();
+        //playerAnim = GetComponent<Animator>();
+        //playerSprite = GetComponent<SpriteRenderer>();
+        //rb = GetComponent<Rigidbody2D>();
+        //_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        //_joystick = FindObjectOfType<FloatingJoystick2D>();
+    }
+
+    // 임시방편
+    private void InitPlayerData()
+    {
         pBase = new PlayerBase();
+
+        playerTransformDataSOArr = new PlayerTransformData[2];
+
+        playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerTransformData>("Assets/07.SO/Player/Power.asset");
+        playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerTransformData>("Assets/07.SO/Player/Ghost.asset");
+
         if (playerTransformDataSO == null)
         {
             playerTransformDataSO = playerTransformDataSOArr[0];
         }
+
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
         playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _joystick = FindObjectOfType<FloatingJoystick2D>();
     }
+
     private void Start()
     {
-        
         SkillShuffle();
-        UIManager.Instance.SkillNum(randomSkillNum);
+        // UIManager.Instance.SkillNum(randomSkillNum);
         agentInput.Attack.AddListener(Attack);
-        //if(StageManager.Instance != null)
-        //{
-        //    transform.position = StageManager.Instance.SetPlayerSpawnPos().position;
-        //}
     }
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (Boss.Instance.isBDead)

@@ -38,7 +38,25 @@ public class StageManager : MonoSingleton<StageManager>
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         SetMoveNextMapRoom();
-        // Player.Instance.transform.position = SetPlayerSpawnPos();
+    }
+
+    // 임시방편
+    public void Stage2()
+    {
+        isSetting = true;
+        StartCoroutine(SetStage());
+
+        // 벽 생성
+        SetWallGrid();
+        // 방 스포너 받아옴
+        spawnRooms = FindObjectsOfType<SpawnRoom>();
+        // 시작 방 설정
+        SetStartRoom();
+        // 방 생성
+        InstantiateRooms();
+
+        enemyRooms = FindObjectsOfType<EnemyRoom>();
+        SetMoveNextMapRoom();
     }
 
     public IEnumerator SetStage()

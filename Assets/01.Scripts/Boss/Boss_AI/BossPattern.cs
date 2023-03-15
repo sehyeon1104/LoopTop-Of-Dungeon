@@ -36,7 +36,7 @@ public abstract class BossPattern : MonoBehaviour
 
     private void Start()
     {
-        player = Player.Instance.transform;
+        player = GameManager.Instance.Player.transform;
         attackAnim = GetComponent<Animation>();
 
         AnimationArray();
