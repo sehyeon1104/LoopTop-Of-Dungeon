@@ -9,16 +9,37 @@ public class PlayerBossSkillHit : MonoBehaviour
 
     WaitForSeconds DotDamage = new WaitForSeconds(0.8f);
 
- 
-     
+    private bool isenter = false;
 
-    IEnumerator DotDamageFunc()
+    public Coroutine DotDamageCor = null;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        while (true)
-        {
-            gameObject.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-            yield return DotDamage;
+        if (collision.gameObject.CompareTag("BossSkill")) 
+        { 
+            if(isenter == false)
+            {
+                isenter = true;
+                DotDamageCor =  StartCoroutine(DotDamageFunc());
+            }
+            else if (isenter == true)
+            {
+                isenter = false;
+                StopCoroutine(DotDamageCor);
+            }
         }
+        
+    }
+
+    public IEnumerator DotDamageFunc()
+    {
+        
+            while (true)
+            {
+                gameObject.GetComponentInParent<IHittable>().OnDamage(1, gameObject, 0);
+                yield return DotDamage;
+
+            }
     }
 
 }
