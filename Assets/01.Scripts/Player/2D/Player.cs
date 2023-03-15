@@ -121,6 +121,8 @@ public partial class Player : MonoSingleton<Player>, IHittable , IAgent
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
+
+        UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
     }
 
