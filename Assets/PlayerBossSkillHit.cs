@@ -19,11 +19,13 @@ public class PlayerBossSkillHit : MonoBehaviour
         { 
             if(isenter == false)
             {
+                Debug.Log("内风凭 矫累");
                 isenter = true;
                 DotDamageCor =  StartCoroutine(DotDamageFunc());
             }
             else if (isenter == true)
             {
+                Debug.Log("内风凭 场");
                 isenter = false;
                 StopCoroutine(DotDamageCor);
             }
@@ -36,7 +38,8 @@ public class PlayerBossSkillHit : MonoBehaviour
         
             while (true)
             {
-                gameObject.GetComponentInParent<IHittable>().OnDamage(1, gameObject, 0);
+            Debug.Log("平 冉荐");
+                gameObject.GetComponentInParent<IHittable>().OnDamage(3, gameObject, 0);
                 yield return DotDamage;
 
             }

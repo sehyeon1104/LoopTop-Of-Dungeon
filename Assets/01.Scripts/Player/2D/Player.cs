@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
+using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -64,6 +65,10 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
             {
                 transformation.Invoke();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            pBase.Hp -= 3;
         }
     }
     public void TransformAilen()
