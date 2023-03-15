@@ -51,5 +51,6 @@ public class Managers : MonoBehaviour
     {
         Scene.Clear();
         Pool.Clear();
+        Time.timeScale = 1f;
     }
 }
