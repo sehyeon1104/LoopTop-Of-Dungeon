@@ -76,10 +76,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         
         switch (distanceToPlayer)
         {
-            case var a when a <= detectDistance && a >= minDistance:
+            case var a when a <= detectDistance && a > minDistance:
                 actCoroutine = StartCoroutine(MoveToPlayer());
                 break;
-            case var a when a < minDistance:
+            case var a when a <= minDistance:
                 actCoroutine = StartCoroutine(AttackToPlayer());
                 break;
             default:
@@ -87,8 +87,28 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         }
     }
 
-    public virtual IEnumerator MoveToPlayer(){ yield break; }
-    public virtual IEnumerator AttackToPlayer(){ yield break; }
+    public virtual IEnumerator MoveToPlayer()
+    {
+        if (moveClip != null) anim.SetBool(_move, true);
+
+
+        Vector2 dir = (playerTransform.position - transform.position).normalized;
+        sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
+        transform.Translate(dir * Time.deltaTime * speed);
+
+        yield return null;
+
+        actCoroutine = null;
+    }
+
+    public virtual IEnumerator AttackToPlayer()
+    {
+        if (Player.Instance.isPDead) yield break;
+
+        anim.SetBool(_move, false);
+        if (attackClip != null) anim.SetTrigger(_attack);
+
+    }
 
     public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)
     {

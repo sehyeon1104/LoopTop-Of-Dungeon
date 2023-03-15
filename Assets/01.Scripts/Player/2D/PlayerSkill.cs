@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 // Player Skill Class
 public partial class Player
 {
-
+    // Solution 1 : 플레이어를 싱글톤화 시키지 말고 플레이어를 가지고 있는 매니저를 싱글톤화 시켜라
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]

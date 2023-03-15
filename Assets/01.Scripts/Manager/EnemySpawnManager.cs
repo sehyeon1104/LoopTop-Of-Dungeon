@@ -113,12 +113,13 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
+        // TODO : 적 소환시 이펙트 추가
         if (door.IsFirst)
         {
             door.IsFirst = false;
         }
 
-        door.DisableDoors();
+        door.CloseDoors();
         
         int randPos = 0;
         isNextWave = false;
@@ -127,15 +128,20 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Debug.Log("wave 1");
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
+            // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
+            // 자식(몹)이 있다면 다시 랜드
             while (enemySpawnPos[randPos].childCount != 0)
             {
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 
             Debug.Log("SpawnEnemy");
+            // 몹 소환
             var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
+            // 적 소환 위치를 부모로 설정
             enemy.transform.SetParent(enemySpawnPos[randPos]);
+            // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
         }
         for(int i = 0; i < wave1EliteEnemyCount; ++i)
@@ -157,9 +163,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // wave2
         Debug.Log("wave 2");
-        isNextWave = true;
         StartCoroutine(ShowEnemySpawnPos(enemySpawnPos));
         yield return new WaitForSeconds(spawnTime);
+        isNextWave = true;
 
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {

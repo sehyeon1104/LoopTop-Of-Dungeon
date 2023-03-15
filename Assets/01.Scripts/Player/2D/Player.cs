@@ -8,10 +8,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public partial class Player : MonoSingleton<Player> , IHittable , IAgent
+public partial class Player : MonoSingleton<Player>, IHittable , IAgent
 {
     public PlayerBase pBase;
     public Volume hitVolume;
+
     private bool isPDamaged = false;
     public bool isPDead { private set; get; } = false;
 
@@ -47,7 +48,6 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
     private void Start()
     {
         
-        print(slotLevel.Length);
         SkillShuffle();
         UIManager.Instance.SkillNum(randomSkillNum);
         agentInput.Attack.AddListener(Attack);
@@ -126,6 +126,8 @@ public partial class Player : MonoSingleton<Player> , IHittable , IAgent
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
+
+        UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
     }
 
