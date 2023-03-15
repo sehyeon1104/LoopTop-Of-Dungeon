@@ -150,7 +150,7 @@ public class UIManager : MonoSingleton<UIManager>
          Button[] selectTexts = GameManager.Instance.Player.skillSelect.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+            selectTexts[i] .GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
         }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)

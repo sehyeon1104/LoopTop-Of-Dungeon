@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
+using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -86,6 +87,10 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
                 transformation.Invoke();
             }
         }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            pBase.Hp -= 3;
+        }
     }
     public void TransformAilen()
     {
@@ -142,6 +147,8 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
         StartCoroutine(IEHitMotion());
+
+        UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
     }
 

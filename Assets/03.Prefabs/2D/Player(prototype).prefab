@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
+  - component: {fileID: 1544384322}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -441,7 +442,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -651,9 +652,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11eea570a25e594aa5ce310e6b2f98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefix: Player
+  prefix: "\u2605"
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &1544384322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000e314d1dfab77f19a89d8b3a497e688b39dc5b163e301728b79ebf4ff354e97c049c46ab753132ad471fbc7e70b2a078c57c6799e1d84a65d
+  m_ShapePath:
+  - {x: -0.7175884, y: -0.54002583, z: 0}
+  - {x: -0.32669806, y: 0.44861162, z: 0}
+  - {x: -0.3092065, y: 0.9051925, z: 0}
+  - {x: -0.13215041, y: 0.49213862, z: 0}
+  - {x: 0.0485909, y: 0.53230333, z: 0}
+  - {x: 0.2637043, y: 0.8765942, z: 0}
+  - {x: 0.20924973, y: 0.4218502, z: 0}
+  - {x: 0.5807736, y: 0.62267375, z: 0}
+  - {x: 0.6418345, y: -0.6194643, z: 0}
+  - {x: 0.30966163, y: -0.58226776, z: 0}
+  - {x: -0.0919857, y: -0.7429267, z: 0}
+  - {x: -0.282768, y: -0.6123915, z: 0}
+  m_ShapePathHash: -1707192275
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 204246
 --- !u!1 &7442715257172540171
 GameObject:
   m_ObjectHideFlags: 0
