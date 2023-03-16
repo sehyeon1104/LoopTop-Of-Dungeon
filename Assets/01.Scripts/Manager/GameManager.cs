@@ -7,6 +7,7 @@ using System.IO;
 public class GameManager : MonoSingleton<GameManager>
 {
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
+    public Define.StageSceneNum stageSceneNum;
 
     [SerializeField]
     private GameObject playerPre;
@@ -56,6 +57,11 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         mapTypeFlag = Define.MapTypeFlag.Ghost;
+    }
+
+    public void SetStageSceneNum(Define.StageSceneNum sceneNum)
+    {
+        stageSceneNum = sceneNum;
     }
 
     public void GameQuit()

@@ -35,10 +35,10 @@ public static class Define
     {
         Unknown,
         TitleScene,
-        MainScene,
+        CenterScene,
         Ghost_Stage1,
         Ghost_Stage2,
-        GhostSceneBoss,
+        Ghost_Boss,
     }
     public enum Sound
     {
