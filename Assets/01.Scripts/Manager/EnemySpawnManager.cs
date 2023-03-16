@@ -34,6 +34,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     {
         SetMonsterPrefabInMonsterArray();
         door = FindObjectOfType<Door>();
+        Managers.Pool.CreatePool(dangerMark, 10);
     }
 
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
@@ -80,28 +81,28 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         switch (rand)
         {
             case 1:
-                wave1NormalEnemyCount = 7;
+                wave1NormalEnemyCount = 4;
                 wave1EliteEnemyCount = 0;
-                wave2NormalEnemyCount = 8;
+                wave2NormalEnemyCount = 5;
                 wave2EliteEnemyCount = 0;
                 break;
             case 2:
-                wave1NormalEnemyCount = 8;
+                wave1NormalEnemyCount = 5;
                 wave1EliteEnemyCount = 0;
                 wave2NormalEnemyCount = 1;
-                wave2EliteEnemyCount = 5;
+                wave2EliteEnemyCount = 3;
                 break;
             case 3:
                 wave1NormalEnemyCount = 1;
-                wave1EliteEnemyCount = 5;
+                wave1EliteEnemyCount = 2;
                 wave2NormalEnemyCount = 1;
-                wave2EliteEnemyCount = 5;
+                wave2EliteEnemyCount = 2;
                 break;
             case 4:
                 wave1NormalEnemyCount = 1;
-                wave1EliteEnemyCount = 5;
+                wave1EliteEnemyCount = 3;
                 wave2NormalEnemyCount = 2;
-                wave2EliteEnemyCount = 2;
+                wave2EliteEnemyCount = 1;
                 break;
         }
 
@@ -163,7 +164,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // wave2
         Debug.Log("wave 2");
-        StartCoroutine(ShowEnemySpawnPos(enemySpawnPos));
         yield return new WaitForSeconds(spawnTime);
         isNextWave = true;
 
@@ -175,6 +175,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 
+            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos]));
             var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
             enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
@@ -193,22 +194,15 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
-    public IEnumerator ShowEnemySpawnPos(Transform[] enemySpawnPos)
+    public IEnumerator ShowEnemySpawnPos(Transform enemySpawnPos)
     {
-        List<GameObject> dangerMarks = new List<GameObject>();
+        //var dangerMarkObj = Instantiate(dangerMark, enemySpawnPos.position, Quaternion.identity);
 
-        foreach(var enemySpawnPosItem in enemySpawnPos)
-        {
-            var dangerMarkObj = Instantiate(dangerMark, enemySpawnPosItem.position, Quaternion.identity);
-            dangerMarks.Add(dangerMarkObj);
-        }
-
+        Managers.Pool.Pop(dangerMark);
+         
         yield return new WaitForSeconds(spawnTime);
 
-        foreach(var dangerMarkItem in dangerMarks)
-        {
-            Destroy(dangerMarkItem);
-        }
+        Managers.Pool.Push(dangerMark.GetComponent<Poolable>());
 
         yield break;
     }

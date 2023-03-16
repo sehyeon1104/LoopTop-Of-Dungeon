@@ -107,9 +107,14 @@ public class EnemyRoom : RoomBase
         if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
             isClear = true;
 
-        if (isClear && isMoveAnotherStage)
+        if (isClear)
         {
-            StageManager.Instance.AssignMoveNextMapPortal(this);
+            Door.Instance.OpenDoors();
+
+            if (isMoveAnotherStage)
+            {
+                StageManager.Instance.AssignMoveNextMapPortal(this);
+            }
         }
     }
 }
