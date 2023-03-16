@@ -65,8 +65,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         ghostEliteEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
         for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)
         {
-            ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
-            ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
+            ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"G_Mob_0{i}"));
+            ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"G_Mob_0{i}"));
         }
     }
 
