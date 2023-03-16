@@ -10,6 +10,9 @@ public class BeamPatternTest : MonoBehaviour
     float lineLength = 0.0f;
     float lineWidth = 0.5f;
 
+    [SerializeField] float length;
+    [SerializeField] float width;
+
     private void Awake()
     {
    
@@ -25,7 +28,7 @@ public class BeamPatternTest : MonoBehaviour
         {
             yield return new WaitForSeconds(2f);
 
-            lineWidth = 0.5f;
+            lineWidth = width;
 
             beam.startWidth = lineWidth;
             beam.endWidth = lineWidth;
@@ -36,7 +39,7 @@ public class BeamPatternTest : MonoBehaviour
 
             startFX.GetComponentInChildren<ParticleSystem>().Play();
 
-            while (beam.GetPosition(1).x <= 50)
+            while (beam.GetPosition(1).x <= length)
             {
                 lineLength += 0.5f;
                 beam.SetPosition(1, new Vector3(lineLength, 0, 0));
