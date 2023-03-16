@@ -38,6 +38,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         SetMoveNextMapRoom();
+
+        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
 
     // 임시방편
