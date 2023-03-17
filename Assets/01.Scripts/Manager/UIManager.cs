@@ -29,6 +29,14 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject checkOneMorePanel;
 
+    [Tooltip("게임 입장 시 현재 스테이지 이름 출력")]
+    [SerializeField]
+    private GameObject showCurStageNameObj;
+    [SerializeField]
+    private TextMeshProUGUI curStageName;
+    [SerializeField]
+    private Image curStageNameLine;
+
     //[Header("RightUp")]
     // [Header("RightDown")]
 
@@ -143,7 +151,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         cooltimeImg.fillAmount = 1f;
 
-            while (cooltimeImg.fillAmount > 0f)
+        while (cooltimeImg.fillAmount > 0f)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
             yield return new WaitForEndOfFrame();
@@ -165,6 +173,29 @@ public class UIManager : MonoSingleton<UIManager>
                 if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
             hpbars[i].fillAmount = (GameManager.Instance.Player.pBase.Hp * 0.25f) - i;
         }
+
+    }
+
+    public IEnumerator ShowCurrentStageName()
+    {
+        showCurStageNameObj.SetActive(true);
+        Vector3 tmpPos = new Vector3(Screen.width + curStageName.transform.localScale.x, Screen.height / 2 + 25);
+        Vector3 linePos = new Vector3(-Screen.width / 2 - curStageNameLine.transform.localScale.x, Screen.height / 2 - 50);
+        curStageName.transform.position = tmpPos;
+        curStageNameLine.transform.position = linePos;
+
+        curStageName.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 + 25), 2f).SetEase(Ease.InOutBack);
+        curStageNameLine.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 - 50), 2f).SetEase(Ease.InOutBack);
+
+        yield return new WaitForSeconds(2.5f);
+
+        curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.transform.localScale.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
+        curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.transform.localScale.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
+
+        yield return new WaitForSeconds(2.5f);
+        showCurStageNameObj.SetActive(false);
+
+        yield return null;
 
     }
 

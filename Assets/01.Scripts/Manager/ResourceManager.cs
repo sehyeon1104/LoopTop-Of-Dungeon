@@ -2,9 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourceManager
 {
+    public T GetResource<T>(string _name)
+    {
+        var _handle = Addressables.LoadAssetAsync<T>(_name);
+
+        _handle.WaitForCompletion();
+
+        return _handle.Result;
+    }
+
     /// <summary>
     /// Assets/폴더명/파일명.확장자
     /// </summary>
@@ -22,8 +33,9 @@ public class ResourceManager
             if (obj != null)
                 return obj as T;
         }
-        //return Resources.Load<T>(path);
-        return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
+
+        return GetResource<T>(path);
+        //return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
     }
     /// <summary>
     /// Assets/랑 확장자는 생략해도 됨
