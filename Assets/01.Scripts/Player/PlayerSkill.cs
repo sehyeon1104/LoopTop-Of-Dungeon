@@ -6,17 +6,18 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 // Player Skill Class
-public partial class Player
+public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
-    // Solution 1 : 플레이어를 싱글톤화 시키지 말고 플레이어를 가지고 있는 매니저를 싱글톤화 시켜라
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
-    [SerializeField]
+    
+    Animator animator;
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
     [Tooltip("장판 지속시간")]
@@ -37,7 +38,17 @@ public partial class Player
     private int[] randomSkillNumArr = new int[5];
     private int randomSkilltemp = 0;
     private int randomSkilltemp2 = 0;
-
+    PlayerBase playerBase = null;
+   public PlayerSkillData skillData = null;
+    private void Start()
+    {
+        SkillShuffle();
+    }
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        playerBase = new PlayerBase();
+    }
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
     {
@@ -52,22 +63,18 @@ public partial class Player
         //    randomSkillNumArr[i] = i + 1;
         //}
     }
-    public void ApplySkillCoolTime(int num)
-    {
-        skillCooltime = playerTransformDataSO.skill[num - 1].skillDelay;
-    }
     public Action ApplySkill(int skillNum, int slotLevel) => skillNum switch
     {
-        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
-        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
-        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
-        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
-        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
-        1 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
-        2 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
-        3 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
-        4 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
-        5 when pBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
 
         _ => () => Debugs(slotLevel),
     };
@@ -83,7 +90,6 @@ public partial class Player
         {
             Time.timeScale = 1;
             skillSelectNum = 0;
-            _joystick.enabled = true;
             skillSelect.SetActive(false);
         }
     }
@@ -91,6 +97,7 @@ public partial class Player
     {
         print($"디버깅{level}");
     }
+
     #region 리스트 셔플
     public void ListShuffle()
     {
@@ -148,13 +155,13 @@ public partial class Player
     #region 고스트 스킬
     //스킬에 매개변수 달아서 슬롯 레벨맞춰 하기
     public void HillaSkill(int slotLevel)  //1번 스킬 힐라 스킬
-    { 
+    {
 
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
-        
-        ApplySkillCoolTime(1);
-        playerAnim.SetTrigger("Attack");
+
+       skillCooltime = skillData.skill[0].skillDelay;
+        animator.SetTrigger("Attack");
 
         for (int i = 0; i < ghostSummonCount; ++i)
         {
@@ -167,29 +174,29 @@ public partial class Player
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
 
-        ApplySkillCoolTime(2);
+        skillCooltime = skillData.skill[1].skillDelay;
         StartCoroutine(JangPanSkillCor(jangPanTime));
     }
     public void TeleportSkill(int slotLEvel) //3번 스킬 텔레포트 패턴
     {
-        ApplySkillCoolTime(3);
+        skillCooltime = skillData.skill[2].skillDelay;
         StartCoroutine(TeleportPattern(scratchTime));
     }
     public void ArmStretchSkill(int slotLEvel) // 4번 스킬 팔 뻗기 스킬 
     {
-        ApplySkillCoolTime(4);
+        skillCooltime = skillData.skill[1].skillDelay;
     }
     public void RiseUpSkill(int slotLevel) // 5번 스킬 솟아 오르기 스킬
     {
-        ApplySkillCoolTime(5);
+        skillCooltime = skillData.skill[1].skillDelay;
     }
     public void UltimateSkill()
     {
-        if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
+        if (PlayerBase.Instance.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("궁극기");
 
-        skillCooltime = playerTransformDataSO.ultiSkillDelay;
+        skillCooltime = skillData.ultiSkillDelay;
 
     }
 
