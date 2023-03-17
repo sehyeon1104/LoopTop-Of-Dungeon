@@ -7,9 +7,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 // 플레이어 자체는 싱글톤을 쓰지 않아야해
-public partial class Player : MonoBehaviour, IHittable , IAgent
+public class Player : MonoBehaviour, IHittable , IAgent
 {
     public PlayerBase pBase;
     public Volume hitVolume;
@@ -21,13 +22,14 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;    // 무적시간
-
+    PlayerTransformation transformat;
     AgentInput agentInput = null;
     Animator playerAnim = null;
     SpriteRenderer playerSprite = null;
-
+    PlayerSkillData playerSkillData =null;
     public Sprite playerVisual { private set; get; }
-
+    Rigidbody2D rb;
+    Joystick _joystick = null;
     public Vector3 hitPoint { get; private set; }
     [SerializeField] UnityEvent transformation;
    [field:SerializeField] public UnityEvent GetHit { get; set; }
@@ -35,18 +37,8 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
 
     private void Awake()
     {
+        transformat = GetComponent<PlayerTransformation>();
         InitPlayerData();
-        //pBase = new PlayerBase();
-        //if (playerTransformDataSO == null)
-        //{
-        //    playerTransformDataSO = playerTransformDataSOArr[0];
-        //}
-        //agentInput = GetComponent<AgentInput>();
-        //playerAnim = GetComponent<Animator>();
-        //playerSprite = GetComponent<SpriteRenderer>();
-        //rb = GetComponent<Rigidbody2D>();
-        //_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        //_joystick = FindObjectOfType<FloatingJoystick2D>();
     }
 
     // 임시방편
@@ -54,36 +46,33 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
     {
         pBase = new PlayerBase();
 
-        playerTransformDataSOArr = new PlayerTransformData[2];
+        transformat.playerTransformDataSOArr = new PlayerSkillData[2];
 
-        playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerTransformData>("Assets/07.SO/Player/Power.asset");
-        playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerTransformData>("Assets/07.SO/Player/Ghost.asset");
+        transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
+        transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
 
-        if (playerTransformDataSO == null)
+        if (playerSkillData == null)
         {
-            playerTransformDataSO = playerTransformDataSOArr[0];
+            playerSkillData = transformat.playerTransformDataSOArr[0];
         }
 
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
         playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _joystick = FindObjectOfType<FloatingJoystick2D>();
     }
 
     private void Start()
     {
-        SkillShuffle();
-        // UIManager.Instance.SkillNum(randomSkillNum);
-        agentInput.Attack.AddListener(Attack);
+
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-        {
+        { 
             if (Boss.Instance.isBDead)
-            {
+            {   
                 transformation.Invoke();
             }
         }
@@ -95,9 +84,8 @@ public partial class Player : MonoBehaviour, IHittable , IAgent
     public void TransformAilen()
     {
         _joystick.enabled = false;
-        skillSelect.SetActive(true);
+       
         Time.timeScale = 0;
-        TransformGhost();
         Boss.Instance.gameObject.SetActive(false);
         UIManager.Instance.pressF.gameObject.SetActive(false);
     }

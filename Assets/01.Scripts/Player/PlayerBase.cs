@@ -2,8 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBase
+public  class PlayerBase
 {
+    static PlayerBase instance;
+    public static PlayerBase Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
     public PlayerBase()
     {
         SetPlayerStat();

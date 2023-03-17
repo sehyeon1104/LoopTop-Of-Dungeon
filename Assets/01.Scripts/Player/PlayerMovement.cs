@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player MoveMent Class
-public partial class Player
+public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
-    [SerializeField] private Joystick _joystick;
+     private Joystick _joystick;
     private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float speed;

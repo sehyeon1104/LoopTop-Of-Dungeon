@@ -4,33 +4,32 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 // Player Attack Class
-public partial class Player
+public class PlayerAttack : MonoBehaviour
 {
     [SerializeField]
     private float attackRange = 1f;
-
+    [SerializeField]
+    Animator playerAnim;
+    private void Awake()
+    {
+        
+    }
     // 공격 버튼을 눌렀을 때 발동될 함수
     public void InvokeAttackEvents()
     {
-        if (isPDead)
-            return;
-
-        if(agentInput == null)
-        {
-            Debug.LogWarning("agentInput is NULL!");
-            agentInput = GetComponent<AgentInput>();
-            agentInput.Attack.AddListener(Attack);
-            return;
-        }
-        agentInput.Attack.Invoke();
-        playerAnim.SetTrigger("Attack");
+        //if(agentInput == null)
+        //{
+        //    Debug.LogWarning("agentInput is NULL!");
+        //    agentInput = GetComponent<AgentInput>();
+        //    agentInput.Attack.AddListener(Attack);
+        //    return;
+        //}
+        //agentInput.Attack.Invoke();
+        //playerAnim.SetTrigger("Attack");
     }
 
     public void Attack()
     {
-        if (isPDead)
-            return;
-        Debug.Log("Attack");
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for(int i=0; i<enemys.Length; i++)
@@ -38,7 +37,8 @@ public partial class Player
             if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss")) { 
                 Debug.Log("닿음");    
                 CinemachineCameraShaking.Instance.CameraShake();
-                enemys[i].GetComponent<IHittable>().OnDamage(pBase.Damage, gameObject, pBase.CritChance);
+                playerAnim.SetTrigger("Attack");
+                enemys[i].GetComponent<IHittable>().OnDamage(PlayerBase.Instance.Damage, gameObject, PlayerBase.Instance.CritChance);
             }
         }
     }
