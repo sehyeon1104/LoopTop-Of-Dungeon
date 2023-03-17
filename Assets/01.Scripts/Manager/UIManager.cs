@@ -40,7 +40,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
-        // UpdateUI();
+        UpdateUI();
     }
 
     public void UpdateUI()
@@ -112,7 +112,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         // TODO : ¿Ã»ƒ ¡ﬂæ” ∏  æ¿ ª˝º∫ Ω√ ¡ﬂæ”∏ ¿∏∑Œ ¿Ãµø
 
-        MoveToCenterMap();
+        LoadToCenterScene();
     }
 
     public void CheckOneMorePanelNo()
@@ -168,15 +168,14 @@ public class UIManager : MonoSingleton<UIManager>
 
     }
 
-
-    public void MoveToCenterMap()
+    public void LoadToCenterScene()
     {
         // TODO : ¡ﬂæ” ∏  æ¿ ª˝º∫Ω√ ¿Ãµø
 
-        MoveToTitleScene(); // ¿”Ω√
+        LoadToTitleScene(); // ¿”Ω√
     }
 
-    public void MoveToTitleScene()
+    public void LoadToTitleScene()
     {
         Managers.Scene.LoadScene(Define.Scene.TitleScene);
         //SceneManager.LoadScene("TitleScene");
