@@ -12,17 +12,9 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     Rigidbody2D rb;
     Vector2 moveVec2;
 
-    private void FixedUpdate()
+    public void Move(Vector2 inputVelocity)
     {
-        Move();
-    }
-
-    public void Move()
-    {
-        float x = _joystick.Horizontal;
-        float y = _joystick.Vertical;
-
-        moveVec2 = new Vector2 (x, y) * speed * Time.deltaTime;
+        moveVec2 = new Vector2 (inputVelocity.x,inputVelocity.y) * speed * Time.deltaTime;
         rb.MovePosition(rb.position + moveVec2);
 
         if(moveVec2.sqrMagnitude == 0)
@@ -30,7 +22,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
             return;
         }
 
-        if (x < 0)
+        if (inputVelocity.x < 0)
         {
             _spriteRenderer.flipX = false;
         }
