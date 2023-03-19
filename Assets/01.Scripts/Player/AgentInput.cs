@@ -50,7 +50,7 @@ public class AgentInput : MonoSingleton<AgentInput>,IAgentInput
     }
     public void GetMovementInputMove()
     {
-        MovementInput.Invoke(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+        MovementInput.Invoke(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
         MovementInput.Invoke(new Vector2(_joyStick.Horizontal, _joyStick.Vertical));
     }
 }

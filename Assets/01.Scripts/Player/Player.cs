@@ -25,7 +25,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
     PlayerTransformation transformat;
     AgentInput agentInput = null;
     Animator playerAnim = null;
-    SpriteRenderer playerSprite = null;
     PlayerSkillData playerSkillData =null;
     public Sprite playerVisual { private set; get; }
     Rigidbody2D rb;
@@ -58,7 +57,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
-        playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _joystick = FindObjectOfType<FloatingJoystick2D>();
     }
@@ -94,27 +92,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
         yield return null;
     }
-    public IEnumerator IEHitMotion()
-    {
-        float timer = 0f;
-
-        playerSprite.color = Color.red;
-        Managers.Pool.PoolManaging("10.Effects/player/Hit_main", transform.position, Quaternion.identity);
-        Managers.Pool.PoolManaging("10.Effects/player/Hit_sub", transform.position, Quaternion.identity);
-        Managers.Sound.Play("SoundEffects/Player/Damaged.wav");
-        while (timer <= 0.25f)
-        {
-            timer += Time.unscaledDeltaTime;
-
-            Time.timeScale -= 0.015f;
-            hitVolume.weight += 0.05f;
-
-            yield return null;
-        }
-        Time.timeScale = 1f;
-        hitVolume.weight = 0;
-        playerSprite.color = Color.white;
-    }
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
@@ -130,7 +107,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         // TODO : 피격 애니메이션 재생
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
-        StartCoroutine(IEHitMotion());
 
         UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
@@ -160,4 +136,5 @@ public class Player : MonoBehaviour, IHittable , IAgent
         yield return new WaitForSeconds(time);
         isPDamaged = false; 
     }
+
 }

@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Player MoveMent Class
 public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField]
     Joystick _joystick;
-    private SpriteRenderer _spriteRenderer;
-
-    [SerializeField] private float speed;
+    SpriteRenderer _spriteRenderer;
+    
+    [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
+
+    public UnityEvent<float> VelocityChange;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -18,22 +21,16 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     public void Move(Vector2 inputVelocity)
     {
-
-        Vector2 moveVec2 = new Vector2(inputVelocity.x, inputVelocity.y) * speed * Time.deltaTime;
-        rb.MovePosition(rb.position + moveVec2);
-        print(inputVelocity);
-        if (moveVec2.sqrMagnitude == 0)
+        if(inputVelocity.x ==0 && inputVelocity.y == 0)
         {
             return;
         }
-
-        if (inputVelocity.x < 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
         else
         {
-            _spriteRenderer.flipX = true;
+            VelocityChange.Invoke(inputVelocity.x);
         }
+        Vector2 VelocityVec = inputVelocity * speed * Time.deltaTime;
+        rb.MovePosition(rb.position + VelocityVec);
     }
+
 }
