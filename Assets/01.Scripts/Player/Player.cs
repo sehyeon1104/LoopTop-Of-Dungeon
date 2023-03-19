@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 // 플레이어 자체는 싱글톤을 쓰지 않아야해
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         InitPlayerData();
     }
 
-    // 임시방편
     private void InitPlayerData()
     {
         pBase = new PlayerBase();
@@ -153,6 +151,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     public void RevivePlayer()
     {
         gameObject.SetActive(true); // 임시
+        UIManager.Instance.ToggleGameOverPanel();
         pBase.Hp = pBase.MaxHp;
         isPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
