@@ -21,14 +21,14 @@ public class Player : MonoBehaviour, IHittable , IAgent
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;    // 무적시간
-    PlayerTransformation transformat;
-    AgentInput agentInput = null;
-    Animator playerAnim = null;
-    SpriteRenderer playerSprite = null;
-    PlayerSkillData playerSkillData =null;
+    private PlayerTransformation transformat;
+    private AgentInput agentInput = null;
+    private Animator playerAnim = null;
+    private SpriteRenderer playerSprite = null;
+    private PlayerSkillData playerSkillData =null;
     public Sprite playerVisual { private set; get; }
-    Rigidbody2D rb;
-    Joystick _joystick = null;
+    private Rigidbody2D rb;
+    private Joystick _joystick = null;
     public Vector3 hitPoint { get; private set; }
     [SerializeField] UnityEvent transformation;
    [field:SerializeField] public UnityEvent GetHit { get; set; }
@@ -44,15 +44,10 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
         pBase = new PlayerBase();
 
-        transformat.playerTransformDataSOArr = new PlayerSkillData[2];
+        //transformat.playerTransformDataSOArr = new PlayerSkillData[2];
 
-        transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
-        transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
-
-        if (playerSkillData == null)
-        {
-            playerSkillData = transformat.playerTransformDataSOArr[0];
-        }
+        //transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
+        //transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
 
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
