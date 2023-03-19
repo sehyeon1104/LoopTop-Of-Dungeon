@@ -40,7 +40,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
         transformat = GetComponent<PlayerTransformation>();
         InitPlayerData();
     }
-
+    
     // 임시방편
     private void InitPlayerData()
     {
@@ -63,10 +63,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         _joystick = FindObjectOfType<FloatingJoystick2D>();
     }
 
-    private void Start()
-    {
-
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))

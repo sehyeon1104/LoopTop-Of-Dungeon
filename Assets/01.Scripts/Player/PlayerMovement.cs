@@ -5,19 +5,24 @@ using UnityEngine;
 // Player MoveMent Class
 public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
-     private Joystick _joystick;
+    [SerializeField]
+    Joystick _joystick;
     private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float speed;
     Rigidbody2D rb;
-    Vector2 moveVec2;
-
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     public void Move(Vector2 inputVelocity)
     {
-        moveVec2 = new Vector2 (inputVelocity.x,inputVelocity.y) * speed * Time.deltaTime;
-        rb.MovePosition(rb.position + moveVec2);
 
-        if(moveVec2.sqrMagnitude == 0)
+        Vector2 moveVec2 = new Vector2(inputVelocity.x, inputVelocity.y) * speed * Time.deltaTime;
+        rb.MovePosition(rb.position + moveVec2);
+        print(inputVelocity);
+        if (moveVec2.sqrMagnitude == 0)
         {
             return;
         }
