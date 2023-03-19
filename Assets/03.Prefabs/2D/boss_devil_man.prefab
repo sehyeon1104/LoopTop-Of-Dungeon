@@ -147,7 +147,7 @@ Transform:
   - {fileID: 5755681704298889179}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -51.939457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -57.29139}
 --- !u!1 &5757960434511342367
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ Transform:
   - {fileID: 5764536056418654899}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -79.10859}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -79.156975}
 --- !u!1 &5758042523900028633
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +813,7 @@ Transform:
   - {fileID: 5756048196294093225}
   m_Father: {fileID: 5759608854821523490}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 79.71945}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 76.89108}
 --- !u!1 &5758119982459603945
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +846,7 @@ Transform:
   - {fileID: 5764372918347310545}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12.377213}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13.862221}
 --- !u!1 &5758125584183038783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1449,7 @@ Transform:
   - {fileID: 5764536636245234267}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 99.55223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 104.38274}
 --- !u!1 &5758546526938867527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,7 +1513,7 @@ Transform:
   - {fileID: 5755853743105285691}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 165.56104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 171.21402}
 --- !u!1 &5758580632870723253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,7 +1540,7 @@ Transform:
   m_GameObject: {fileID: 5758580632870723253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 15.47, y: 8.7, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.017, y: 0.017, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5759608854821523490}
@@ -1841,7 +1841,7 @@ Transform:
   - {fileID: 5764445523672521115}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 99.10817}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 102.329994}
 --- !u!1 &5758662967871791109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2110,7 @@ Transform:
   - {fileID: 5755671917702563533}
   m_Father: {fileID: 5755755249246431841}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -47.335793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -33.22901}
 --- !u!1 &5758828002965221639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2323,7 @@ Transform:
   - {fileID: 5764326332425114347}
   m_Father: {fileID: 5764322353324622211}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45.763397}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 41.78722}
 --- !u!1 &5758896243658520843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,7 +2779,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759608854821523491}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6759959becff8c447a17a03646b28dc2, type: 3}
   m_Name: 
@@ -2794,7 +2794,6 @@ MonoBehaviour:
   FPRSSpriteRenderer: {fileID: 0}
   FPRRSpriteRenderer: {fileID: 0}
   FPRRSSpriteRenderer: {fileID: 0}
-  PBS: {fileID: 0}
 --- !u!114 &5759608854821523489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,13 +2823,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759608854821523491}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 11.410786, y: -17.555023}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2841,7 +2840,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 150, y: 250}
+  m_Size: {x: 172.82156, y: 285.11}
   m_EdgeRadius: 0
 --- !u!111 &5759608854821523502
 Animation:
