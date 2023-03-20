@@ -11,16 +11,15 @@ using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 // Player Skill Class
-public class PlayerSkill : PlayerBase
+public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
     
     Animator animator;
-    GameObject ghostSummonerPrefab = null;
-    [SerializeField]
-    GameObject jangPanPrefab;
+    private GameObject ghostSummonerPrefab = null;
+    [SerializeField] GameObject jangPanPrefab;
     [Tooltip("장판 지속시간")]
     public float jangPanTime = 3;
     [Tooltip("할퀴기 지속시간")]
@@ -39,6 +38,7 @@ public class PlayerSkill : PlayerBase
     private int[] randomSkillNumArr = new int[5];
     private int randomSkilltemp = 0;
     private int randomSkilltemp2 = 0;
+    PlayerBase playerBase = null;
    public PlayerSkillData skillData = null;
     private void Start()
     {
@@ -47,6 +47,7 @@ public class PlayerSkill : PlayerBase
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        playerBase = new PlayerBase();
     }
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
@@ -64,20 +65,22 @@ public class PlayerSkill : PlayerBase
     }
     public Action ApplySkill(int skillNum, int slotLevel) => skillNum switch
     {
-        1 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
-        2 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
-        3 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
-        4 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
-        5 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
-        1 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
-        2 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
-        3 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
-        4 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
-        5 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
+        // Power
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
+        // Ghost
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
 
         _ => () => Debugs(slotLevel),
     };
-    public void SkillSelect()
+    public void SkillSelecet()
     {
         GameObject selectObj = EventSystem.current.currentSelectedGameObject;
         selectObj.SetActive(false);
@@ -89,7 +92,7 @@ public class PlayerSkill : PlayerBase
         {
             Time.timeScale = 1;
             skillSelectNum = 0;
-            selectObj.GetComponentInParent<GameObject>().SetActive(false);
+            skillSelect.SetActive(false);
         }
     }
     public void Debugs(int level)
@@ -191,7 +194,7 @@ public class PlayerSkill : PlayerBase
     }
     public void UltimateSkill()
     {
-        if (PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
+        if (PlayerBase.Instance.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("궁극기");
 

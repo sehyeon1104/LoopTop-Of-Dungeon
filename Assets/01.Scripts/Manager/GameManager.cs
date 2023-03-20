@@ -9,12 +9,10 @@ public class GameManager : MonoSingleton<GameManager>
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
     public Define.StageSceneNum stageSceneNum;
 
-    [SerializeField]
     private GameObject playerPre;
 
     // 임시방편
     public Player Player => _player ??= FindObjectOfType<Player>();
-    [SerializeField]
     private Player _player;
 
     private void Awake()
