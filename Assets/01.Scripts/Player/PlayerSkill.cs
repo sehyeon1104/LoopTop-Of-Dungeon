@@ -38,8 +38,6 @@ public class PlayerSkill : PlayerBase
     private int[] randomSkillNumArr = new int[5];
     private int randomSkilltemp = 0;
     private int randomSkilltemp2 = 0;
-    PlayerBase playerBase = null;
-   public PlayerSkillData skillData = null;
     private void Start()
     {
         SkillShuffle();
@@ -47,7 +45,6 @@ public class PlayerSkill : PlayerBase
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        playerBase = new PlayerBase();
     }
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
@@ -139,18 +136,14 @@ public class PlayerSkill : PlayerBase
     #endregion
     public void Skill1()
     {
-        //if (isPDead)
-        //      return;
-
         skillEvent[0]();
+        UIManager.Instance.SkillCooltime(SkillData, randomSkillNum[0]);
     }
 
     public void Skill2()
     {
-        //if (isPDead)
-        //    return;
-
         skillEvent[1]();
+        UIManager.Instance.SkillCooltime(SkillData, randomSkillNum[1]);
     }
 
 
@@ -162,7 +155,7 @@ public class PlayerSkill : PlayerBase
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
 
-       skillCooltime = skillData.skill[0].skillDelay;
+       skillCooltime = SkillData.skill[0].skillDelay;
         animator.SetTrigger("Attack");
 
         for (int i = 0; i < ghostSummonCount; ++i)
@@ -176,21 +169,21 @@ public class PlayerSkill : PlayerBase
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
 
-        skillCooltime = skillData.skill[1].skillDelay;
+        skillCooltime = SkillData.skill[1].skillDelay;
         StartCoroutine(JangPanSkillCor(jangPanTime));
     }
     public void TeleportSkill(int slotLEvel) //3번 스킬 텔레포트 패턴
     {
-        skillCooltime = skillData.skill[2].skillDelay;
+        skillCooltime = SkillData.skill[2].skillDelay;
         StartCoroutine(TeleportPattern(scratchTime));
     }
     public void ArmStretchSkill(int slotLEvel) // 4번 스킬 팔 뻗기 스킬 
     {
-        skillCooltime = skillData.skill[1].skillDelay;
+        skillCooltime = SkillData.skill[1].skillDelay;
     }
     public void RiseUpSkill(int slotLevel) // 5번 스킬 솟아 오르기 스킬
     {
-        skillCooltime = skillData.skill[1].skillDelay;
+        skillCooltime = SkillData.skill[1].skillDelay;
     }
     public void UltimateSkill()
     {
@@ -198,7 +191,7 @@ public class PlayerSkill : PlayerBase
             return;
         Debug.Log("궁극기");
 
-        skillCooltime = skillData.ultiSkillDelay;
+        skillCooltime = SkillData.ultiSkillDelay;
 
     }
 
