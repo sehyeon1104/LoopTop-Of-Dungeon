@@ -5,7 +5,11 @@ using Debug = Rito.Debug;
 
 public class ItemEffects : MonoBehaviour
 {
-    public abstract class ItemBase
+    private void Awake()
+    {
+        
+    }
+    public abstract class ItemBase : PlayerBase
     {
         public abstract Define.ItemType itemType { get; }
         public abstract void Use();
@@ -29,7 +33,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("µ¥¹ÌÁö 1 »ó½Â");
-            GameManager.Instance.Player.pBase.Damage += 1;
+            Damage += 1;
         }
     }
 
@@ -40,7 +44,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("Å©¸®Æ¼ÄÃ È®·ü 5% »ó½Â");
-            GameManager.Instance.Player.pBase.CritChance += 5;
+            CritChance += 5;
         }
     }
 
