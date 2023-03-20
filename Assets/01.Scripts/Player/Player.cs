@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using Debug = Rito.Debug;
 
-// ÇÃ·¹ÀÌ¾î ÀÚÃ¼´Â ½Ì±ÛÅæÀ» ¾²Áö ¾Ê¾Æ¾ßÇØ
+// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¾ï¿½ï¿½ï¿½
 public class Player : MonoBehaviour, IHittable , IAgent
 {
     public PlayerBase pBase;
@@ -21,14 +21,15 @@ public class Player : MonoBehaviour, IHittable , IAgent
     [SerializeField]
     private float reviveInvincibleTime = 2f;
     [SerializeField]
-    private float invincibleTime = 0.2f;    // ¹«Àû½Ã°£
-    PlayerTransformation transformat;
-    AgentInput agentInput = null;
-    Animator playerAnim = null;
-    PlayerSkillData playerSkillData =null;
+    private float invincibleTime = 0.2f;    // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½
+    private PlayerTransformation transformat;
+    private AgentInput agentInput = null;
+    private Animator playerAnim = null;
+    private SpriteRenderer playerSprite = null;
+    private PlayerSkillData playerSkillData =null;
     public Sprite playerVisual { private set; get; }
-    Rigidbody2D rb;
-    Joystick _joystick = null;
+    private Rigidbody2D rb;
+    private Joystick _joystick = null;
     public Vector3 hitPoint { get; private set; }
     [SerializeField] UnityEvent transformation;
    [field:SerializeField] public UnityEvent GetHit { get; set; }
@@ -39,21 +40,15 @@ public class Player : MonoBehaviour, IHittable , IAgent
         transformat = GetComponent<PlayerTransformation>();
         InitPlayerData();
     }
-    
-    // ÀÓ½Ã¹æÆí
+
     private void InitPlayerData()
     {
         pBase = new PlayerBase();
 
-        transformat.playerTransformDataSOArr = new PlayerSkillData[2];
+        //transformat.playerTransformDataSOArr = new PlayerSkillData[2];
 
-        transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
-        transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
-
-        if (playerSkillData == null)
-        {
-            playerSkillData = transformat.playerTransformDataSOArr[0];
-        }
+        //transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
+        //transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
 
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
@@ -89,7 +84,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         yield return new WaitForSeconds(invincibleTime);
 
         isPDamaged = false;
-
         yield return null;
     }
 
@@ -104,7 +98,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
             damage *= 1.5f;
         }
         isPDamaged = true;
-        // TODO : ÇÇ°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        // TODO : ï¿½Ç°ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
 
@@ -116,7 +110,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
 
         isPDead = true;
-        // TODO : ÇÃ·¹ÀÌ¾î Á×´Â ¸ð¼Ç½ÇÇà, ¸ð¼ÇÀÌ ³¡³µÀ» ¶§ °ÔÀÓ¿À¹öÆÐ³Î È°¼ºÈ­
+        // TODO : ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½×´ï¿½ ï¿½ï¿½Ç½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ È°ï¿½ï¿½È­
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -124,7 +118,8 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
     public void RevivePlayer()
     {
-        gameObject.SetActive(true); // ÀÓ½Ã
+        gameObject.SetActive(true); // ï¿½Ó½ï¿½
+        UIManager.Instance.ToggleGameOverPanel();
         pBase.Hp = pBase.MaxHp;
         isPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
@@ -134,7 +129,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
         isPDamaged = true;
         yield return new WaitForSeconds(time);
-        isPDamaged = false; 
+        isPDamaged = false;
     }
 
 }

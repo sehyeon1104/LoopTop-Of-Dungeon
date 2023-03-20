@@ -9,7 +9,8 @@ using DG.Tweening;
 using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
-{
+{ 
+    Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
     [Header("LeftUp")]
@@ -20,8 +21,10 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject hpSpace;
     // [Header("LeftDown")]
-    
+
     [Header("Middle")]
+ 
+    public GameObject skillSelectObj;
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
@@ -45,7 +48,10 @@ public class UIManager : MonoSingleton<UIManager>
 
     public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
-
+    private void Awake()
+    {
+        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
     private void Start()
     {
         UpdateUI();
@@ -141,7 +147,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-         Button[] selectTexts = PlayerSkill.Instance.skillSelect.GetComponentsInChildren<Button>(true);
+         Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i] .GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
@@ -171,7 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             if (i + 1 < hpbars.Count)
                 if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
-            hpbars[i].fillAmount = (GameManager.Instance.Player.pBase.Hp * 0.25f) - i;
+            hpbars[i].fillAmount = (playerCompo.Hp * 0.25f) - i;
         }
 
     }
@@ -179,8 +185,8 @@ public class UIManager : MonoSingleton<UIManager>
     public IEnumerator ShowCurrentStageName()
     {
         showCurStageNameObj.SetActive(true);
-        Vector3 tmpPos = new Vector3(Screen.width + curStageName.transform.localScale.x, Screen.height / 2 + 25);
-        Vector3 linePos = new Vector3(-Screen.width / 2 - curStageNameLine.transform.localScale.x, Screen.height / 2 - 50);
+        Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
+        Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;
         curStageNameLine.transform.position = linePos;
 
@@ -189,8 +195,8 @@ public class UIManager : MonoSingleton<UIManager>
 
         yield return new WaitForSeconds(2.5f);
 
-        curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.transform.localScale.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
-        curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.transform.localScale.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
+        curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
+        curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(2.5f);
         showCurStageNameObj.SetActive(false);
