@@ -15,12 +15,13 @@ public abstract class BossPattern : MonoBehaviour
     [Header("보스방 입장 시 초기 대기 상태")]
     [SerializeField]
     private float waitTime = 1f;
-    [Header("조건식 패턴 존재 여부")]
-    [SerializeField] protected bool isHaveSpecialPattern = false;
+    [Header("페이즈별 보스 스킬 개수")]
+    [SerializeField] private int[] pase_patternCount;
     [Header("보스 패턴 후딜레이")]
     [SerializeField] private float patternDelay;
     
     protected int[] patternCount = new int[5];
+    protected int nowPase = 1;
 
 
     protected Transform player;
@@ -30,9 +31,7 @@ public abstract class BossPattern : MonoBehaviour
 
     protected Coroutine attackCoroutine = null;
 
-    protected bool isUsedSpecialPattern = false;
-    protected bool isCanUseSpecialPattern = false;
-    private bool[] isThisSkillCoolDown = new bool[5];
+    protected bool[] isThisSkillCoolDown = new bool[5];
 
     private void Start()
     {
@@ -81,41 +80,42 @@ public abstract class BossPattern : MonoBehaviour
         while (!Boss.Instance.isBDead)
         {
             int patternChoice = 0;
-            patternChoice = isHaveSpecialPattern ? Random.Range(0, 3) : Random.Range(0, 4);
+            patternChoice = Random.Range(0, pase_patternCount[nowPase]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
 
+
             if (attackCoroutine == null)
             {
-                if (!isUsedSpecialPattern && isHaveSpecialPattern && isCanUseSpecialPattern)
+                isThisSkillCoolDown[patternChoice] = true;
+                switch (patternChoice)
                 {
-                    isUsedSpecialPattern = true;
-                    patternCount[3] = GetRandomCount(3);
-                    attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
-                }
-                else
-                {
-                    isThisSkillCoolDown[patternChoice] = true;
-                    switch (patternChoice)
-                    {
-                        case 0:
-                            attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
-                            break;
-                        case 1:
-                            attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
-                            break;
-                        case 2:
-                            attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
-                            break;
-                        case 3:
-                            attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
-                            break;
-                    }
+                    case 0:
+                        attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
+                        break;
+                    case 1:
+                        attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
+                        break;
+                    case 2:
+                        attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
+                        break;
+                    case 3:
+                        attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
+                        break;
+                    case 4:
+                        attackCoroutine = StartCoroutine(Pattern5(patternCount[4]));
+                        break;
                 }
             }
-            yield return new WaitUntil(() => attackCoroutine == null);
-            yield return new WaitForSeconds(patternDelay);
+
+            yield return null;
+            
+            if (attackCoroutine != null)
+            {
+                yield return new WaitUntil(() => attackCoroutine == null);
+                yield return new WaitForSeconds(patternDelay);
+            }
 
             StartCoroutine(CoolDownCheck(patternChoice));
         }
@@ -132,11 +132,23 @@ public abstract class BossPattern : MonoBehaviour
         return 0;
     }
 
-    public abstract IEnumerator Pattern1(int count = 0);
-    public abstract IEnumerator Pattern2(int count = 0);
-    public abstract IEnumerator Pattern3(int count = 0);
-
+    public virtual IEnumerator Pattern1(int count = 0)
+    {
+        yield break;
+    }
+    public virtual IEnumerator Pattern2(int count = 0)
+    {
+        yield break;
+    }
+    public virtual IEnumerator Pattern3(int count = 0)
+    {
+        yield break;
+    }
     public virtual IEnumerator Pattern4(int count = 0)
+    {
+        yield break;
+    }
+    public virtual IEnumerator Pattern5(int count = 0)
     {
         yield break;
     }
