@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Playervisual : MonoBehaviour
+public class PlayerVisual : PlayerBase
 {
     SpriteRenderer playerSprite;
     Animator playerAnimator;
@@ -16,6 +16,10 @@ public class Playervisual : MonoBehaviour
     }
 
     // Update is called once per frame
+    public void StartHitMotion()
+    {
+        StartCoroutine(IEHitMotion());
+    }
     public IEnumerator IEHitMotion()
     {
         float timer = 0f;
