@@ -26,13 +26,22 @@ public class AgentInput : MonoSingleton<AgentInput>,IAgentInput
     }
     public void ButtonClick()
     {
-        if(EventSystem.current.currentSelectedGameObject.CompareTag("Attack"))
+        GameObject clickedObj = EventSystem.current.currentSelectedGameObject;
+        if (clickedObj.CompareTag("Attack"))
         {
             Attack.Invoke();
         }
-        else if(EventSystem.current.currentSelectedGameObject.CompareTag("Skill1"))
+        else if(clickedObj.CompareTag("Skill1"))
         {
-
+            Skill1.Invoke();
+        }
+        else if(clickedObj.CompareTag("Skill2"))
+        {
+            skill2.Invoke();
+        }
+        else
+        {
+            ultimateSkill.Invoke();
         }
     }
     private void FixedUpdate()
@@ -41,7 +50,7 @@ public class AgentInput : MonoSingleton<AgentInput>,IAgentInput
     }
     public void GetMovementInputMove()
     {
-        MovementInput.Invoke(new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")));
+        MovementInput.Invoke(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
         MovementInput.Invoke(new Vector2(_joyStick.Horizontal, _joyStick.Vertical));
     }
 }
