@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 
-// ÇÃ·¹ÀÌ¾î ÀÚÃ¼´Â ½Ì±ÛÅæÀ» ¾²Áö ¾Ê¾Æ¾ßÇØ
+// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Æ¾ï¿½ï¿½ï¿½
 public class Player : MonoBehaviour, IHittable , IAgent
 {
     public PlayerBase pBase;
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     [SerializeField]
     private float reviveInvincibleTime = 2f;
     [SerializeField]
-    private float invincibleTime = 0.2f;    // ¹«Àû½Ã°£
+    private float invincibleTime = 0.2f;    // ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½
     private PlayerTransformation transformat;
     private AgentInput agentInput = null;
     private Animator playerAnim = null;
@@ -52,15 +52,10 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
         agentInput = GetComponent<AgentInput>();
         playerAnim = GetComponent<Animator>();
-        playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _joystick = FindObjectOfType<FloatingJoystick2D>();
     }
 
-    private void Start()
-    {
-
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -91,27 +86,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         isPDamaged = false;
         yield return null;
     }
-    public IEnumerator IEHitMotion()
-    {
-        float timer = 0f;
-
-        playerSprite.color = Color.red;
-        Managers.Pool.PoolManaging("10.Effects/player/Hit_main", transform.position, Quaternion.identity);
-        Managers.Pool.PoolManaging("10.Effects/player/Hit_sub", transform.position, Quaternion.identity);
-        Managers.Sound.Play("SoundEffects/Player/Damaged.wav");
-        while (timer <= 0.25f)
-        {
-            timer += Time.unscaledDeltaTime;
-
-            Time.timeScale -= 0.015f;
-            hitVolume.weight += 0.05f;
-
-            yield return null;
-        }
-        Time.timeScale = 1f;
-        hitVolume.weight = 0;
-        playerSprite.color = Color.white;
-    }
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
@@ -124,10 +98,9 @@ public class Player : MonoBehaviour, IHittable , IAgent
             damage *= 1.5f;
         }
         isPDamaged = true;
-        // TODO : ÇÇ°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Àç»ý
+        // TODO : ï¿½Ç°ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
-        StartCoroutine(IEHitMotion());
 
         UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
@@ -137,7 +110,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
 
         isPDead = true;
-        // TODO : ÇÃ·¹ÀÌ¾î Á×´Â ¸ð¼Ç½ÇÇà, ¸ð¼ÇÀÌ ³¡³µÀ» ¶§ °ÔÀÓ¿À¹öÆÐ³Î È°¼ºÈ­
+        // TODO : ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½×´ï¿½ ï¿½ï¿½Ç½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ È°ï¿½ï¿½È­
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -145,7 +118,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
     public void RevivePlayer()
     {
-        gameObject.SetActive(true); // ÀÓ½Ã
+        gameObject.SetActive(true); // ï¿½Ó½ï¿½
         UIManager.Instance.ToggleGameOverPanel();
         pBase.Hp = pBase.MaxHp;
         isPDead = false;
