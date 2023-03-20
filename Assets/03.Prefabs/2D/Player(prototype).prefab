@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 456885712013416507}
   - component: {fileID: 4086107390685430464}
   - component: {fileID: 2341362703312234675}
+  - component: {fileID: 5624895119543162744}
   - component: {fileID: 1617654965204469657}
   m_Layer: 0
   m_Name: PlayerVisual
@@ -280,6 +281,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5624895119543162744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cf0e206e5a6ef46b85a656f72637ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitVolume: {fileID: 0}
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -729,7 +743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVolume: {fileID: 0}
   reviveInvincibleTime: 2
   invincibleTime: 0.5
   transformation:
@@ -881,7 +894,7 @@ MonoBehaviour:
   - {x: -0.049494028, y: -0.505509, z: 0}
   m_ShapePathHash: -1859602289
   m_Mesh: {fileID: 0}
-  m_InstanceId: 229080
+  m_InstanceId: 269658
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player Transformation Class
-public class PlayerTransformation : MonoBehaviour 
+public class PlayerTransformation : PlayerBase 
 {
     [Space]
     [Header("변신")]
-   
-    public PlayerSkillData[] playerTransformDataSOArr; // 모든 변신 데이터
+    public PlayerSkillData[] playerAllDataSOArr; // 모든 변신 데이터
     [field:SerializeField]
-    public PlayerSkillData playerTransformDataSO { private set; get; }      // 현재 변신 데이터
+    public PlayerSkillData playerCurrentDataSO { private set; get; }      // 현재 변신 데이터
 
-
+    private void Awake()
+    {
+        SkillData = playerCurrentDataSO;
+    }
     public void TransformGhost()
     {
-        PlayerBase.Instance.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-        playerTransformDataSO = playerTransformDataSOArr[1];
+        PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerCurrentDataSO = playerAllDataSOArr[1];
         Animator animator = GetComponent<Animator>();
-        animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;
+        animator.runtimeAnimatorController = playerCurrentDataSO.playerAnim;
         UIManager.Instance.UpdateUI();
     }
 

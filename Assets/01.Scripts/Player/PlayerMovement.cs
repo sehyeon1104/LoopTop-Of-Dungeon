@@ -8,8 +8,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField]
     Joystick _joystick;
-    SpriteRenderer _spriteRenderer;
-    
+
     [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
 
@@ -17,7 +16,6 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void Move(Vector2 inputVelocity)
     {

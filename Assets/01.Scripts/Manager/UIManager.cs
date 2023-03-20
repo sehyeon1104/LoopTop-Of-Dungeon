@@ -9,7 +9,8 @@ using DG.Tweening;
 using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
-{
+{ 
+    Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
     [Header("LeftUp")]
@@ -20,8 +21,10 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject hpSpace;
     // [Header("LeftDown")]
-    
+
     [Header("Middle")]
+ 
+    public GameObject skillSelectObj;
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
@@ -45,7 +48,10 @@ public class UIManager : MonoSingleton<UIManager>
 
     public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
-
+    private void Awake()
+    {
+        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+    }
     private void Start()
     {
         UpdateUI();
@@ -141,7 +147,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-         Button[] selectTexts = PlayerSkill.Instance.skillSelect.GetComponentsInChildren<Button>(true);
+         Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i] .GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
@@ -171,7 +177,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             if (i + 1 < hpbars.Count)
                 if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //자신보다 한 칸 위에 HP가 있고 fillAmount가 0보다 크다면 넘기기
-            hpbars[i].fillAmount = (GameManager.Instance.Player.pBase.Hp * 0.25f) - i;
+            hpbars[i].fillAmount = (playerCompo.Hp * 0.25f) - i;
         }
 
     }

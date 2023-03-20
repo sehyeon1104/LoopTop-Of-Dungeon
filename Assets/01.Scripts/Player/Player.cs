@@ -10,11 +10,8 @@ using UnityEngine.SceneManagement;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 // 플레이어 자체는 싱글톤을 쓰지 않아야해
-public class Player : MonoBehaviour, IHittable , IAgent
+public class Player : PlayerBase, IHittable , IAgent
 {
-    public PlayerBase pBase;
-    public Volume hitVolume;
-
     private bool isPDamaged = false;
     public bool isPDead { private set; get; } = false;
 
@@ -22,63 +19,23 @@ public class Player : MonoBehaviour, IHittable , IAgent
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;    // 무적시간
-    PlayerTransformation transformat;
-    AgentInput agentInput = null;
-    Animator playerAnim = null;
-    PlayerSkillData playerSkillData =null;
     public Sprite playerVisual { private set; get; }
     Rigidbody2D rb;
-    Joystick _joystick = null;
     public Vector3 hitPoint { get; private set; }
     [SerializeField] UnityEvent transformation;
    [field:SerializeField] public UnityEvent GetHit { get; set; }
    [field:SerializeField] public UnityEvent OnDie { get; set; }
-
     private void Awake()
     {
-        transformat = GetComponent<PlayerTransformation>();
-        InitPlayerData();
-    }
-    
-    // 임시방편
-    private void InitPlayerData()
-    {
-        pBase = new PlayerBase();
-
-        transformat.playerTransformDataSOArr = new PlayerSkillData[2];
-
-        transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
-        transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
-
-        if (playerSkillData == null)
-        {
-            playerSkillData = transformat.playerTransformDataSOArr[0];
-        }
-
-        agentInput = GetComponent<AgentInput>();
-        playerAnim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        _joystick = FindObjectOfType<FloatingJoystick2D>();
+        SetPlayerStat();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        { 
-            if (Boss.Instance.isBDead)
-            {   
-                transformation.Invoke();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            pBase.Hp -= 3;
-        }
-    }
+
+
+    // 임시방편
     public void TransformAilen()
-    {
-        _joystick.enabled = false;
-       
+    {  
         Time.timeScale = 0;
         Boss.Instance.gameObject.SetActive(false);
         UIManager.Instance.pressF.gameObject.SetActive(false);
@@ -92,7 +49,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
         yield return null;
     }
-
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
         if (isPDamaged || isPDead)
@@ -105,7 +61,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
         }
         isPDamaged = true;
         // TODO : 피격 애니메이션 재생
-        pBase.Hp -= (int)damage;
+        Hp -= (int)damage;
         StartCoroutine(IEDamaged());
 
         UIManager.Instance.HpUpdate();
@@ -125,7 +81,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     public void RevivePlayer()
     {
         gameObject.SetActive(true); // 임시
-        pBase.Hp = pBase.MaxHp;
+        Hp = MaxHp;
         isPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
     }

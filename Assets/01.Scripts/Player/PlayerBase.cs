@@ -2,91 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public  class PlayerBase
+public class PlayerBase : MonoBehaviour
 {
-    static PlayerBase instance;
-    public static PlayerBase Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
     public PlayerBase()
     {
         SetPlayerStat();
     }
+    private PlayerSkillData skillData;
+    protected PlayerSkillData SkillData { get; set; }
+
 
     private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
 
-    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    protected Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
     {
-        get
-        {
-            return _playerTransformTypeFlag;
-        }
-        set
-        {
-            _playerTransformTypeFlag = value;
-        }
+        get => _playerTransformTypeFlag;
+        set => _playerTransformTypeFlag = value;
+
     }
-    private int _hp;
+    private int hp;
     public int Hp
     {
-        get
-        {
-            return _hp;
-        }
+        get => hp;
         set
         {
-            _hp = value;
-            if(_hp <= 0)
+            hp = value;
+            if (hp <= 0)
             {
                 GameManager.Instance.Player.OnDie.Invoke();
-                _hp = 0;
+                hp = 0;
             }
-            else if(_hp > _maxHp)
+            else if (hp > maxHp)
             {
-                _hp = _maxHp;
+                hp = maxHp;
             }
             UIManager.Instance.HpUpdate();
         }
     }
 
-    private int _maxHp;
-    public int MaxHp { get { return _maxHp; } }
+    private int maxHp;
+    protected int MaxHp => maxHp;
 
-    private float _damage;
-    public float Damage
+    private float damage;
+    protected float Damage
     {
-        get
-        {
-            return _damage;
-        }
-        set
-        {
-            _damage = value;
-        }
+        get => damage;
+        set => damage = value;
     }
 
-    private float _critChance;
-    public float CritChance
+    private float critChance;
+    protected float CritChance
     {
-        get
-        {
-            return _critChance;
-        }
+        get => critChance;
         set
         {
-            _critChance = value;
+            critChance = value;
 
-            if(_critChance > 100)
+            if (critChance > 100)
             {
-                _critChance = 100;
+                critChance = 100;
             }
-            else if(_critChance < 0)
+            else if (critChance < 0)
             {
-                _critChance = 0;
+                critChance = 0;
             }
 
         }
@@ -94,66 +72,60 @@ public  class PlayerBase
 
     private int[] _expTable;
 
-    private float _exp;
-    public float Exp
+    private float exp;
+    protected float Exp
     {
-        get 
-        { 
-            return _exp; 
-        }
+        get => exp;
         set
         {
-            _exp = value;
+            exp = value;
 
-            if(_level >= MaxLevel || _exp < 0)
+            if (level >= MaxLevel || exp < 0)
             {
                 return;
             }
 
-            if(_expTable[_level] <= _exp)
+            if (_expTable[level] <= exp)
             {
                 Debug.Log("Level : " + Level);
-                Debug.Log($"Current Exp : {_exp}");
-                Exp = _exp - _expTable[_level++];
+                Debug.Log($"Current Exp : {exp}");
+                Exp = exp - _expTable[level++];
             }
 
             UIManager.Instance.UpdateUI();
         }
     }
 
-    private int _level;
+    private int level;
     private int Level
     {
-        get
-        {
-            return _level;
-        }
+        get => level;
     }
 
-    private int _maxLevel;
-    public int MaxLevel
+    private int maxLevel;
+    protected int MaxLevel
     {
         get
         {
-            return _maxLevel;
+            return maxLevel;
         }
     }
 
-    public void SetPlayerStat()
+    protected void SetPlayerStat()
     {
-        _maxHp = 12;
-        _hp = _maxHp;
-        _damage = 5f;
-        _critChance = 5f;
-
-        _level = 1;
-        _maxLevel = 100;
-        _expTable = new int[_maxLevel];
-        _exp = 0;
+        maxHp = 12;
+        hp = maxHp;
+        damage = 5f;
+        critChance = 5f;
+        
+        level = 1;
+        maxLevel = 100;
+        _expTable = new int[maxLevel];
+        exp = 0;
 
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
 
-        for(int i = 0; i < _maxLevel; ++i)
+        for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
         }

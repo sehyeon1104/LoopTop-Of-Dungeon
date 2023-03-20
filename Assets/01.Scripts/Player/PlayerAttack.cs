@@ -4,16 +4,12 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 // Player Attack Class
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : PlayerBase
 {
     [SerializeField]
     private float attackRange = 1f;
     [SerializeField]
     Animator playerAnim;
-    private void Awake()
-    {
-        
-    }
     // 공격 버튼을 눌렀을 때 발동될 함수
     public void InvokeAttackEvents()
     {
@@ -38,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log("닿음");    
                 CinemachineCameraShaking.Instance.CameraShake();
                 playerAnim.SetTrigger("Attack");
-                enemys[i].GetComponent<IHittable>().OnDamage(PlayerBase.Instance.Damage, gameObject, PlayerBase.Instance.CritChance);
+                enemys[i].GetComponent<IHittable>().OnDamage(Damage, gameObject, CritChance);
             }
         }
     }
