@@ -13,23 +13,22 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject SummonTimer;
     [SerializeField] private Image SummonClock;
 
+    BossRangePattern bossRangePattern;
+
     WaitForSeconds waitTime = new WaitForSeconds(1f);
+    bool isUsedHillaSkill = false;
 
     private void Awake()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        isThisSkillCoolDown[3] = true;
     }
-    //private void OnEnable()
-    //{
-    //    Managers.Sound.Play("BGM/TestBGM.mp3", Define.Sound.Bgm);
-    //}
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
-            isCanUseSpecialPattern = true;
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && !isUsedHillaSkill) isThisSkillCoolDown[3] = false;
+
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
-        else
-            transform.eulerAngles = transform.position.x - playerObj.transform.position.x > 0 ? new Vector3(0, 180, 0) : Vector3.zero;
+        else transform.eulerAngles = transform.position.x - playerObj.transform.position.x > 0 ? new Vector3(0, 180, 0) : Vector3.zero;
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
@@ -131,6 +130,14 @@ public class GhostPattern : BossPattern
 
     public override IEnumerator Pattern4(int count = 0) //Èú¶ó ÆÐÅÏ
     {
+        if (isUsedHillaSkill)
+        {
+            isThisSkillCoolDown[3] = true;
+            attackCoroutine = null;
+            yield break;
+        }
+
+        isUsedHillaSkill = true;
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
 
@@ -170,6 +177,14 @@ public class GhostPattern : BossPattern
         }
         Boss.Instance.Base.Hp += finalCount * 10;
         mobList.Clear();
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    public override IEnumerator Pattern5(int count = 0)
+    {
+        yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
 
         yield return null;
         attackCoroutine = null;

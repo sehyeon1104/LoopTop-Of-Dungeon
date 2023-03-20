@@ -9,10 +9,8 @@ using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 
-public class Player : PlayerBase, IHittable , IAgent
+public class Player : PlayerBase, IHittable, IAgent
 {
-    public PlayerBase pBase;
-    public Volume hitVolume;
 
     private bool isPDamaged = false;
     public bool isPDead { private set; get; } = false;
@@ -21,50 +19,14 @@ public class Player : PlayerBase, IHittable , IAgent
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;    // �����ð�
-    private PlayerTransformation transformat;
-    private AgentInput agentInput = null;
-    private Animator playerAnim = null;
-    private SpriteRenderer playerSprite = null;
-    private PlayerSkillData playerSkillData =null;
-    public Sprite playerVisual { private set; get; }
     private Rigidbody2D rb;
-    private Joystick _joystick = null;
     public Vector3 hitPoint { get; private set; }
-    [SerializeField] UnityEvent transformation;
-   [field:SerializeField] public UnityEvent GetHit { get; set; }
-   [field:SerializeField] public UnityEvent OnDie { get; set; }
+    [field: SerializeField] public UnityEvent GetHit { get; set; }
+    [field: SerializeField] public UnityEvent OnDie { get; set; }
 
     private void Awake()
     {
-        transformat = GetComponent<PlayerTransformation>();
-        InitPlayerData();
-    }
-
-    private void InitPlayerData()
-    {
-       
-
-        //transformat.playerTransformDataSOArr = new PlayerSkillData[2];
-
-        //transformat.playerTransformDataSOArr[0] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset");
-        //transformat.playerTransformDataSOArr[1] = Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset");
-
-        agentInput = GetComponent<AgentInput>();
-        playerAnim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        _joystick = FindObjectOfType<FloatingJoystick2D>();
-    }
-
-    private void Update()
-    {
-    }
-    public void TransformAilen()
-    {
-        _joystick.enabled = false;
-       
-        Time.timeScale = 0;
-        Boss.Instance.gameObject.SetActive(false);
-        UIManager.Instance.pressF.gameObject.SetActive(false);
     }
     public IEnumerator IEDamaged()
     {
@@ -86,19 +48,16 @@ public class Player : PlayerBase, IHittable , IAgent
             damage *= 1.5f;
         }
         isPDamaged = true;
-        // TODO : �ǰ� �ִϸ��̼� ���?
-        pBase.Hp -= (int)damage;
+        Hp -= (int)damage;
         StartCoroutine(IEDamaged());
-
         UIManager.Instance.HpUpdate();
-        CinemachineCameraShaking.Instance.CameraShake(5,0.4f);
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
     }
 
     public void Dead()
     {
 
         isPDead = true;
-        // TODO : �÷��̾� �״� ��ǽ���? �����?������ �� ���ӿ����г� Ȱ��ȭ
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -106,7 +65,7 @@ public class Player : PlayerBase, IHittable , IAgent
 
     public void RevivePlayer()
     {
-        gameObject.SetActive(true); // �ӽ�
+        gameObject.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
         Hp = MaxHp;
         isPDead = false;

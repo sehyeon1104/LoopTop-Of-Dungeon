@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    public PlayerBase()
+    private void Awake()
     {
+        print("qq");
         SetPlayerStat();
     }
     private PlayerSkillData skillData;
     protected PlayerSkillData SkillData { get; set; }
 
-
+    private bool isPDead;
+    protected bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
 
     protected Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
@@ -103,7 +105,7 @@ public class PlayerBase : MonoBehaviour
     }
 
     private int maxLevel;
-    protected int MaxLevel
+    public int MaxLevel
     {
         get
         {

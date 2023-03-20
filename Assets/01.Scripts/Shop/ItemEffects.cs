@@ -27,7 +27,7 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("ÇÇ 1Ä­ È¸º¹");
+            Debug.Log("ï¿½ï¿½ 1Ä­ È¸ï¿½ï¿½");
             GameManager.Instance.Player.Hp += 4;
         }
     }
@@ -38,7 +38,7 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("µ¥¹ÌÁö 1 »ó½Â");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1 ï¿½ï¿½ï¿½");
             GameManager.Instance.Player.Damage += 1;
         }
     }
@@ -49,29 +49,29 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("Å©¸®Æ¼ÄÃ È®·ü 5% »ó½Â");
+            Debug.Log("Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ 5% ï¿½ï¿½ï¿½");
             GameManager.Instance.Player.CritChance += 5;
         }
     }
 
-    // Å×½ºÆ®¿ë
+    // ï¿½×½ï¿½Æ®ï¿½ï¿½
     public class TakeExp : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.Default;
 
         public override void Use()
         {
-            Debug.Log("°æÇèÄ¡ 5 È¹µæ");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½Ä¡ 5 È¹ï¿½ï¿½");
             GameManager.Instance.Player.Exp += 5;
         }
     }
 
     public static ItemBase[] ShopItems = new ItemBase[]
     {
-        new Default(),      // 0¹ø ¾ÆÀÌÅÛ ( 0¹ø ¸Þ²Þ¿ë )
-        new Heal(),         // 1¹ø ¾ÆÀÌÅÛ
-        new DamageBuff(),   // 2¹ø ¾ÆÀÌÅÛ
-        new CritBuff(),     // 3¹ø ¾ÆÀÌÅÛ
-        new TakeExp(),      // 4¹ø ¾ÆÀÌÅÛ ( µð¹ö±ë¿ë )
+        new Default(),      // 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ( 0ï¿½ï¿½ ï¿½Þ²Þ¿ï¿½ )
+        new Heal(),         // 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        new DamageBuff(),   // 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        new CritBuff(),     // 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        new TakeExp(),      // 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
     };
 }

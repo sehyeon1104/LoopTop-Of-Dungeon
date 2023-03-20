@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 // Player Skill Class
-public class PlayerSkill :PlayerBase
+public class PlayerSkill : PlayerBase
 {
     [Space]
     [Header("½ºÅ³")]

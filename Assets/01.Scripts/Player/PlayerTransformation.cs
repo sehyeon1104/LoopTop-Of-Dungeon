@@ -25,5 +25,12 @@ public class PlayerTransformation : PlayerBase
         animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;
         UIManager.Instance.UpdateUI();
     }
+    public void TransformAilen()
+    {
+
+        Time.timeScale = 0;
+        Boss.Instance.gameObject.SetActive(false);
+        UIManager.Instance.pressF.gameObject.SetActive(false);
+    }
 
 }
