@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
-        print("qq");
         SetPlayerStat();
     }
     private PlayerSkillData skillData;
-    protected PlayerSkillData SkillData { get; set; }
+    public PlayerSkillData SkillData { get; set; }
 
     private bool isPDead;
-    protected bool IsPDead { get; set; }
+    public bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
 
     protected Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
