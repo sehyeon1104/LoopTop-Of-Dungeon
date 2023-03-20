@@ -11,6 +11,16 @@ public class ItemEffects : MonoBehaviour
         public abstract void Use();
     }
 
+    public class Default : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.Default;
+
+        public override void Use()
+        {
+            Debug.Log("Default");
+        }
+    }
+
     public class Heal : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.heal;
@@ -44,10 +54,11 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
-    public ItemBase[] items = new ItemBase[]
+    public static ItemBase[] ShopItems = new ItemBase[]
     {
-        new Heal(),
-        new DamageBuff(),
-        new CritBuff(),
+        new Default(),      // 0번 아이템 ( 0번 메꿈용 )
+        new Heal(),         // 1번 아이템
+        new DamageBuff(),   // 2번 아이템
+        new CritBuff(),     // 3번 아이템
     };
 }
