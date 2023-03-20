@@ -179,8 +179,8 @@ public class UIManager : MonoSingleton<UIManager>
     public IEnumerator ShowCurrentStageName()
     {
         showCurStageNameObj.SetActive(true);
-        Vector3 tmpPos = new Vector3(Screen.width + curStageName.transform.localScale.x, Screen.height / 2 + 25);
-        Vector3 linePos = new Vector3(-Screen.width / 2 - curStageNameLine.transform.localScale.x, Screen.height / 2 - 50);
+        Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
+        Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;
         curStageNameLine.transform.position = linePos;
 
@@ -189,8 +189,8 @@ public class UIManager : MonoSingleton<UIManager>
 
         yield return new WaitForSeconds(2.5f);
 
-        curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.transform.localScale.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
-        curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.transform.localScale.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
+        curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
+        curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(2.5f);
         showCurStageNameObj.SetActive(false);

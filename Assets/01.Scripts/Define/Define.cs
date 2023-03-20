@@ -65,4 +65,12 @@ public static class Define
         Werewolf = 11,
         Lizard = 14,
     }
+
+    public enum ItemType
+    {
+        Default = 0,
+        buff,
+        heal,
+        
+    }
 }

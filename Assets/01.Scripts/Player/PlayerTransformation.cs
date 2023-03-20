@@ -12,6 +12,10 @@ public class PlayerTransformation : MonoBehaviour
     [field:SerializeField]
     public PlayerSkillData playerTransformDataSO { private set; get; }      // 현재 변신 데이터
 
+    private void Start()
+    {
+        playerTransformDataSO = playerTransformDataSOArr[(int)PlayerBase.Instance.PlayerTransformTypeFlag];
+    }
 
     public void TransformGhost()
     {

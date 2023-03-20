@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+[Serializable]
+public class Item
+{
+    public Define.ItemType itemType;
+    public int itemNumber;
+    public string itemName;
+    public string itemDescription;
+    public long price;
+
+}
