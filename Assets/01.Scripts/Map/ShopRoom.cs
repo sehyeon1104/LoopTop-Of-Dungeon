@@ -27,7 +27,6 @@ public class ShopRoom : RoomBase
     public void CreateItems()
     {
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
-
     }
 
     public void SetItem()

@@ -5,11 +5,7 @@ using Debug = Rito.Debug;
 
 public class ItemEffects : MonoBehaviour
 {
-    private void Awake()
-    {
-        
-    }
-    public abstract class ItemBase : PlayerBase
+    public abstract class ItemBase
     {
         public abstract Define.ItemType itemType { get; }
         public abstract void Use();
@@ -32,7 +28,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("피 1칸 회복");
-            GameManager.Instance.Player.pBase.Hp += 4;
+            GameManager.Instance.Player.Hp += 4;
         }
     }
 
@@ -43,7 +39,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("데미지 1 상승");
-            Damage += 1;
+            GameManager.Instance.Player.Damage += 1;
         }
     }
 
@@ -54,7 +50,19 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("크리티컬 확률 5% 상승");
-            CritChance += 5;
+            GameManager.Instance.Player.CritChance += 5;
+        }
+    }
+
+    // 테스트용
+    public class TakeExp : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.Default;
+
+        public override void Use()
+        {
+            Debug.Log("경험치 5 획득");
+            GameManager.Instance.Player.Exp += 5;
         }
     }
 
@@ -64,5 +72,6 @@ public class ItemEffects : MonoBehaviour
         new Heal(),         // 1번 아이템
         new DamageBuff(),   // 2번 아이템
         new CritBuff(),     // 3번 아이템
+        new TakeExp(),      // 4번 아이템 ( 디버깅용 )
     };
 }

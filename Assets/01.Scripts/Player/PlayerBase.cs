@@ -44,14 +44,14 @@ public class PlayerBase : MonoBehaviour
     protected int MaxHp => maxHp;
 
     private float damage;
-    protected float Damage
+    public float Damage
     {
         get => damage;
         set => damage = value;
     }
 
     private float critChance;
-    protected float CritChance
+    public float CritChance
     {
         get => critChance;
         set
@@ -73,7 +73,7 @@ public class PlayerBase : MonoBehaviour
     private int[] _expTable;
 
     private float exp;
-    protected float Exp
+    public float Exp
     {
         get => exp;
         set
