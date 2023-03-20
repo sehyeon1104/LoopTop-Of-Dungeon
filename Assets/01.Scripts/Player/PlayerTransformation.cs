@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player Transformation Class
-public class PlayerTransformation : MonoBehaviour 
+public class PlayerTransformation : PlayerBase 
 {
     [Space]
     [Header("º¯½Å")]
@@ -14,12 +14,12 @@ public class PlayerTransformation : MonoBehaviour
 
     private void Start()
     {
-        playerTransformDataSO = playerTransformDataSOArr[(int)PlayerBase.Instance.PlayerTransformTypeFlag];
+        playerTransformDataSO = playerTransformDataSOArr[(int)PlayerTransformTypeFlag];
     }
 
     public void TransformGhost()
     {
-        PlayerBase.Instance.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         playerTransformDataSO = playerTransformDataSOArr[1];
         Animator animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;

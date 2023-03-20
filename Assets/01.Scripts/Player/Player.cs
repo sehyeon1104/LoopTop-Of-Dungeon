@@ -9,8 +9,7 @@ using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 
-// �÷��̾� ��ü�� �̱����� ���� �ʾƾ���
-public class Player : MonoBehaviour, IHittable , IAgent
+public class Player : PlayerBase, IHittable , IAgent
 {
     public PlayerBase pBase;
     public Volume hitVolume;
@@ -43,7 +42,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
     private void InitPlayerData()
     {
-        pBase = new PlayerBase();
+       
 
         //transformat.playerTransformDataSOArr = new PlayerSkillData[2];
 
@@ -58,17 +57,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        { 
-            if (Boss.Instance.isBDead)
-            {   
-                transformation.Invoke();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            pBase.Hp -= 3;
-        }
     }
     public void TransformAilen()
     {
@@ -98,7 +86,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
             damage *= 1.5f;
         }
         isPDamaged = true;
-        // TODO : �ǰ� �ִϸ��̼� ���
+        // TODO : �ǰ� �ִϸ��̼� ���?
         pBase.Hp -= (int)damage;
         StartCoroutine(IEDamaged());
 
@@ -110,7 +98,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
 
         isPDead = true;
-        // TODO : �÷��̾� �״� ��ǽ���, ����� ������ �� ���ӿ����г� Ȱ��ȭ
+        // TODO : �÷��̾� �״� ��ǽ���? �����?������ �� ���ӿ����г� Ȱ��ȭ
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -120,7 +108,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
         gameObject.SetActive(true); // �ӽ�
         UIManager.Instance.ToggleGameOverPanel();
-        pBase.Hp = pBase.MaxHp;
+        Hp = MaxHp;
         isPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
     }
