@@ -18,6 +18,8 @@ public class ItemObj : MonoBehaviour
     private Sprite[] itemSprites = null;
     [SerializeField]
     private Define.ItemType itemType;
+    [SerializeField]
+    private GameObject soldOutPanel;
 
     private Item item = null;
 
@@ -34,5 +36,14 @@ public class ItemObj : MonoBehaviour
         itemNameTMP.SetText(item.itemName);
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
+    }
+
+    public void PurchaseShopItem()
+    {
+        // TODO : 재화 부족할 시 구매 불가 적용
+
+        itemImage.gameObject.SetActive(false);
+        soldOutPanel.SetActive(true);
+        ItemEffects.ShopItems[item.itemNumber].Use();
     }
 }
