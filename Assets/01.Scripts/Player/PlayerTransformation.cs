@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player Transformation Class
-public partial class Player
+public class PlayerTransformation : MonoBehaviour 
 {
     [Space]
     [Header("변신")]
-    [SerializeField]
-    private PlayerTransformData[] playerTransformDataSOArr; // 모든 변신 데이터
+   
+    public PlayerSkillData[] playerTransformDataSOArr; // 모든 변신 데이터
     [field:SerializeField]
-    public PlayerTransformData playerTransformDataSO { private set; get; }      // 현재 변신 데이터
+    public PlayerSkillData playerTransformDataSO { private set; get; }      // 현재 변신 데이터
 
 
     public void TransformGhost()
     {
-        pBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        PlayerBase.Instance.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         playerTransformDataSO = playerTransformDataSOArr[1];
         Animator animator = GetComponent<Animator>();
         animator.runtimeAnimatorController = playerTransformDataSO.playerAnim;

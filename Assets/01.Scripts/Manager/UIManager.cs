@@ -11,6 +11,7 @@ using System.Linq;
 public class UIManager : MonoSingleton<UIManager>
 {
     int skillSelectNum = 0;
+    public GameObject skillSelect;
     [Header("LeftUp")]
     [SerializeField]
     private Image playerIcon = null;
@@ -19,7 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject hpSpace;
     // [Header("LeftDown")]
-
+    
     [Header("Middle")]
     [SerializeField]
     private GameObject pausePanel;
@@ -52,8 +53,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
-        playerIcon.sprite = GameManager.Instance.Player.playerTransformDataSO.playerImg;
-
         DisActiveAllPanels();
         HPInit();
         HpUpdate();
@@ -130,32 +129,19 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public void SkillCooltime(Image cooltimeImg)
+    public void SkillCooltime(PlayerSkillData skillData,int skillNum)
     {
-
-        if (cooltimeImg.fillAmount != 0f)
+        GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
+        Image currentImage = touchedObj.GetComponent<Image>();
+        if (currentImage.fillAmount != 0f)
         {
             return;
         }
-
-        if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill1"))
-        {
-            GameManager.Instance.Player.Skill1();
-        }
-        else if (EventSystem.current.currentSelectedGameObject.CompareTag("Skill2"))
-        {
-            GameManager.Instance.Player.Skill2();
-        }
-        else if (EventSystem.current.currentSelectedGameObject.CompareTag("UltimateSkill"))
-        {
-            GameManager.Instance.Player.UltimateSkill();
-        }
-
-        StartCoroutine(IESkillCooltime(cooltimeImg, GameManager.Instance.Player.skillCooltime));
+        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum-1].skillDelay));
     }
     public void SkillNum(List<int> skillList)
     {
-         Button[] selectTexts = GameManager.Instance.Player.skillSelect.GetComponentsInChildren<Button>(true);
+         Button[] selectTexts = PlayerSkill.Instance.skillSelect.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i] .GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
