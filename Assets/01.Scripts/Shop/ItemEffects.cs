@@ -9,7 +9,7 @@ public class ItemEffects : MonoBehaviour
     {
         
     }
-    public abstract class ItemBase : PlayerBase
+    public abstract class ItemBase
     {
         public abstract Define.ItemType itemType { get; }
         public abstract void Use();
@@ -22,7 +22,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("ÇÇ 1Ä­ È¸º¹");
-            GameManager.Instance.Player.pBase.Hp += 4;
+            GameManager.Instance.Player.Hp += 4;
         }
     }
 
@@ -33,7 +33,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("µ¥¹ÌÁö 1 »ó½Â");
-            Damage += 1;
+            GameManager.Instance.Player.Damage += 1;
         }
     }
 
@@ -44,7 +44,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("Å©¸®Æ¼ÄÃ È®·ü 5% »ó½Â");
-            CritChance += 5;
+            GameManager.Instance.Player.CritChance += 5;
         }
     }
 

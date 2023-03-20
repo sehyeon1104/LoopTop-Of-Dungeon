@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    public PlayerBase()
+    private void Awake()
     {
+        print("qq");
         SetPlayerStat();
     }
     private PlayerSkillData skillData;
     protected PlayerSkillData SkillData { get; set; }
 
-
+    private bool isPDead;
+    protected bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
 
     protected Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
@@ -44,14 +46,14 @@ public class PlayerBase : MonoBehaviour
     protected int MaxHp => maxHp;
 
     private float damage;
-    protected float Damage
+    public float Damage
     {
         get => damage;
         set => damage = value;
     }
 
     private float critChance;
-    protected float CritChance
+    public float CritChance
     {
         get => critChance;
         set
@@ -73,7 +75,7 @@ public class PlayerBase : MonoBehaviour
     private int[] _expTable;
 
     private float exp;
-    protected float Exp
+    public float Exp
     {
         get => exp;
         set
@@ -103,7 +105,7 @@ public class PlayerBase : MonoBehaviour
     }
 
     private int maxLevel;
-    protected int MaxLevel
+    public int MaxLevel
     {
         get
         {
