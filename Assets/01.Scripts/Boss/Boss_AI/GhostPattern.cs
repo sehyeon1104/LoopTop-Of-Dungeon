@@ -13,7 +13,7 @@ public class GhostPattern : BossPattern
     [SerializeField] private GameObject SummonTimer;
     [SerializeField] private Image SummonClock;
 
-    BossRangePattern bossRangePattern;
+    [SerializeField]BossRangePattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     bool isUsedHillaSkill = false;
