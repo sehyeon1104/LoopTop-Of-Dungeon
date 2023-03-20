@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using Debug = Rito.Debug;
 
 // 플레이어 자체는 싱글톤을 쓰지 않아야해
 public class Player : MonoBehaviour, IHittable , IAgent
@@ -88,7 +89,6 @@ public class Player : MonoBehaviour, IHittable , IAgent
         yield return new WaitForSeconds(invincibleTime);
 
         isPDamaged = false;
-
         yield return null;
     }
     public IEnumerator IEHitMotion()
@@ -156,6 +156,7 @@ public class Player : MonoBehaviour, IHittable , IAgent
     {
         isPDamaged = true;
         yield return new WaitForSeconds(time);
-        isPDamaged = false; 
+        isPDamaged = false;
     }
+
 }
