@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
+// using static UnityEditor.Experimental.GraphView.GraphView; // 빌드오류로 인해 일시적 주석
 public class BossArmPattern : MonoBehaviour
 {
     public Player player = null;
@@ -18,11 +16,11 @@ public class BossArmPattern : MonoBehaviour
 
     WaitForSeconds checkTime = new WaitForSeconds(0.1f);
 
+
     public void CheckPlayer()
     {
-        Managers.Pool.PoolManaging("10.Effects/ghost/SummonArm", AttackRange.transform.position, Quaternion.identity);
-
-        Collider2D hit1 = Physics2D.OverlapBox(AttackRange.transform.position, size1, 0, Layer);
+            Managers.Pool.PoolManaging("SummonArm", transform.position, Quaternion.identity);
+            Collider2D hit1 = Physics2D.OverlapBox(AttackRange.transform.position, size1, 0, Layer);
 
             if ((hit1?.gameObject.layer == LayerMask.NameToLayer("Player")  && iscoroutinestart == false))
             {
