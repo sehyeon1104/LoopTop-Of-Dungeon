@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class JangPanRecRange : MonoBehaviour
+public class BossArmPattern : MonoBehaviour
 {
     IEnumerator PlayerDamaged = null;
 
     public TestGameManager GameManager = null;
 
-    private bool iscoroutinestart = false;
-
     public Vector2 size1;
     public Vector2 size2;
     public LayerMask Layer;
+
+    private bool iscoroutinestart = false;
 
     WaitForSeconds checkTime = new WaitForSeconds(0.1f);
 
@@ -24,8 +25,7 @@ public class JangPanRecRange : MonoBehaviour
 
     private void OnDisable()
     {
-        StopCoroutine(CheckPlayer());
-        StopCoroutine(PlayerDamaged);
+        
     }
 
     IEnumerator CheckPlayer()
@@ -38,9 +38,9 @@ public class JangPanRecRange : MonoBehaviour
 
             if ((hit1?.gameObject.layer == LayerMask.NameToLayer("Player") || hit2?.gameObject.layer == LayerMask.NameToLayer("Player")) && iscoroutinestart == false)
             {
+                Debug.Log("¤·¤·");
                 StopCoroutine(PlayerDamaged);
-                iscoroutinestart = true;
-                
+
 
             }
             else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player") && hit2?.gameObject.layer != LayerMask.NameToLayer("Player"))
@@ -50,14 +50,5 @@ public class JangPanRecRange : MonoBehaviour
             }
             yield return checkTime;
         }
-    }
-
-
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position, size1);
-        Gizmos.DrawWireCube(transform.position, size2);
     }
 }
