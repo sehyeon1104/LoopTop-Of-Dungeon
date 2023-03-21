@@ -20,6 +20,11 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject hpPrefab;
     [SerializeField]
     private GameObject hpSpace;
+    [SerializeField]
+    private Image fragmentImage = null;
+    [SerializeField]
+    private TextMeshProUGUI fragmentAmountTMP = null;
+
     // [Header("LeftDown")]
 
     [Header("Middle")]
@@ -108,6 +113,11 @@ public class UIManager : MonoSingleton<UIManager>
         checkOneMorePanel.SetActive(!checkOneMorePanel.activeSelf);
     }
     #endregion
+
+    public void UpdateGoods()
+    {
+        fragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.FragmentAmount.ToString());
+    }
 
     #region GameOver
     public void Revive()
