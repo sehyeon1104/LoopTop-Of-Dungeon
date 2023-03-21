@@ -10,6 +10,9 @@ public class BeamPatternTest : MonoBehaviour
     [SerializeField] LineRenderer beam;
     [SerializeField] Light2D beamLight;
 
+    EdgeCollider2D col;
+    Vector2[] points;
+
     float lineLength = 0.0f;
     float lineWidth = 0.5f;
     Vector3 tempScale;
@@ -25,6 +28,8 @@ public class BeamPatternTest : MonoBehaviour
         foreach(ParticleSystem fx in startFX.GetComponentsInChildren<ParticleSystem>())
             startFXList.Add(fx);
 
+        col = beam.GetComponent<EdgeCollider2D>();
+        points = col.points;
         tempScale = transform.localScale;
     }
 
@@ -55,23 +60,27 @@ public class BeamPatternTest : MonoBehaviour
         beam.startWidth = lineWidth;
         beam.endWidth = lineWidth;
 
+        points[1] = Vector2.zero;
+        col.points = points;
+
         beam.SetPosition(1, Vector3.zero);
     }
 
-    private void CheckPlayer()
-    {
-        Collider2D[] cols = Physics2D.OverlapBoxAll(beam.transform.position + Vector3.right * length * 0.5f, new Vector2(length * 0.5f, width * 0.5f), transform.rotation.z);
-        foreach (var col in cols)
-        {
-            Debug.Log($"충돌체 : {col.transform.name}");
-            Debug.Log($"충돌체 트랜스폼 : {col.transform.position}");
-            if(col.transform.gameObject.layer == pLayer)
-            {
-                Debug.Log("플레이어 충돌!!");
-                GameManager.Instance.Player.OnDamage(2, gameObject, 0);
-            }
-        }
-    }
+    //private void CheckPlayer()
+    //{
+    //    var hits = Physics2D.BoxCastAll(beam.transform.position, new Vector2(length, width), transform.rotation.z, transform.forward);
+
+    //    foreach (var col in hits)
+    //    {
+    //        Debug.Log($"충돌체 : {col.transform.name}");
+    //        Debug.Log($"충돌체 트랜스폼 : {col.transform.position}");
+    //        if(col.transform.CompareTag("Player"))
+    //        {
+    //            Debug.Log("플레이어 충돌!!");
+    //            GameManager.Instance.Player.OnDamage(2, gameObject, 0);
+    //        }
+    //    }
+    //}
 
     private IEnumerator OnBeam()
     {
@@ -91,15 +100,19 @@ public class BeamPatternTest : MonoBehaviour
 
         while (beam.GetPosition(1).x <= length)
         {
-            lineLength += 1.5f;
+            lineLength += 1f;
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
+
+            points[1].x = lineLength;
+            col.points = points;
 
             yield return null;
         }
 
-        CheckPlayer();
+        points[1] = Vector2.zero;
+        col.points = points;
 
-        while(lineWidth >= 0.0f)
+        while (lineWidth >= 0.0f)
         {
             lineWidth -= Time.deltaTime;
 
