@@ -21,6 +21,7 @@ public class BeamPatternTest : MonoBehaviour
     [SerializeField] float width;
     [SerializeField] float intensity = 2f;
 
+    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
     List<ParticleSystem> startFXList = new List<ParticleSystem>();
 
     private void Awake()
@@ -84,15 +85,15 @@ public class BeamPatternTest : MonoBehaviour
 
     private IEnumerator OnBeam()
     {
-        yield return new WaitForSeconds(0.5f);
-
+        yield return waitTime;
         while(beamLight.intensity <= intensity)
         {
-            beamLight.intensity += 0.02f;
+            beamLight.intensity += 0.05f;
             yield return null;
         }
 
         CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+
         for(int i = 0; i < startFXList.Count; i++)
         {
             startFXList[i].Play();

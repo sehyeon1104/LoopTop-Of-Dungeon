@@ -52,8 +52,10 @@ public class G_Patterns : BossPattern
                     Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * rot));
                     break;
                 case 1:
-                    for(int j = -1; j <= 1; j +=2)
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * (rot + j * 30f)));
+                    for (int j = -1; j <= 1; j += 2)
+                    {
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position + (Vector3.down * j * 3), Quaternion.Euler(Vector3.forward * (rot + j * 30f)));
+                    }
                     break;
                 case 2:
                     break;
