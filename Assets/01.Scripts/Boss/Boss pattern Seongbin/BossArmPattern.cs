@@ -19,6 +19,7 @@ public class BossArmPattern : MonoBehaviour
 
     public void CheckPlayer()
     {
+            Managers.Pool.PoolManaging("SummonArm",transform.position, Quaternion.identity);
             Collider2D hit1 = Physics2D.OverlapBox(AttackRange.transform.position, size1, 0, Layer);
 
             if ((hit1?.gameObject.layer == LayerMask.NameToLayer("Player")  && iscoroutinestart == false))
