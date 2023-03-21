@@ -17,7 +17,7 @@ public class PlayerSkill : MonoBehaviour
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
-  
+    Dictionary<Action,int> skillDictionary= new Dictionary<Action,int>();
     Animator animator;
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
@@ -35,10 +35,14 @@ public class PlayerSkill : MonoBehaviour
     int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
     private int shuffleCount = 100;
-    private int[] randomSkillNumArr = new int[5];
-    private int randomSkilltemp = 0;
-    private int randomSkilltemp2 = 0;
     PlayerBase playerBase;
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SkillSelecet();
+        }
+    }
     private void Start()
     {
         SkillShuffle();
@@ -54,19 +58,7 @@ public class PlayerSkill : MonoBehaviour
         SkillToButton();
     }
     public float skillCooltime { private set; get; } = 0f;
-    public void ListInit()
-    {
-        randomSkillNum.Clear();
-        for (int i = 1; i < 6; i++)
-        {
-            randomSkillNum.Add(i);
-        }
-        // 배열 ver
-        //for(int i = 0; i < randomSkillNumArr.Length; ++i)
-        //{
-        //    randomSkillNumArr[i] = i + 1;
-        //}
-    }
+ 
     public void SkillToButton()
     {
         GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
@@ -112,7 +104,28 @@ public class PlayerSkill : MonoBehaviour
         print($"디버깅{level}");
     }
 
+    public void Skill1()
+    {
+        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[0]);
+        skillEvent[0]();
+    }
+
+    public void Skill2()
+    {
+        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[1]);
+        skillEvent[1]();
+    }
+
+
     #region 리스트 셔플
+    public void ListInit()
+    {
+        randomSkillNum.Clear();
+        for (int i = 1; i < 6; i++)
+        {
+            randomSkillNum.Add(i);
+        }
+    }
     public void ListShuffle()
     {
         for (int i = 0; i < shuffleCount; i++)
@@ -149,18 +162,6 @@ public class PlayerSkill : MonoBehaviour
         ListRemove();
     }
     #endregion
-    public void Skill1()
-    {
-        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[0]);
-        skillEvent[0]();
-    }
-
-    public void Skill2()
-    {
-        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[1]);
-        skillEvent[1]();
-    }
-
 
     #region 고스트 스킬
     //스킬에 매개변수 달아서 슬롯 레벨맞춰 하기
