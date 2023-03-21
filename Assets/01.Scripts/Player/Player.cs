@@ -13,12 +13,10 @@ public class Player : PlayerBase, IHittable, IAgent
 {
 
     private bool isPDamaged = false;
-    public bool isPDead { private set; get; } = false;
-
     [SerializeField]
     private float reviveInvincibleTime = 2f;
     [SerializeField]
-    private float invincibleTime = 0.2f;    // �����ð�
+    private float invincibleTime = 0.2f;
     private Rigidbody2D rb;
     public Vector3 hitPoint { get; private set; }
     [field: SerializeField] public UnityEvent GetHit { get; set; }
@@ -27,6 +25,7 @@ public class Player : PlayerBase, IHittable, IAgent
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        SetPlayerStat();
     }
     public IEnumerator IEDamaged()
     {
@@ -39,7 +38,7 @@ public class Player : PlayerBase, IHittable, IAgent
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged || isPDead)
+        if (isPDamaged || IsPDead)
             return;
 
         GetHit.Invoke();
@@ -57,7 +56,7 @@ public class Player : PlayerBase, IHittable, IAgent
     public void Dead()
     {
 
-        isPDead = true;
+        IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -68,7 +67,7 @@ public class Player : PlayerBase, IHittable, IAgent
         gameObject.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
         Hp = MaxHp;
-        isPDead = false;
+        IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
     }
 

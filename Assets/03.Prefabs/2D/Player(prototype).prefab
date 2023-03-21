@@ -183,10 +183,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456885712013416507}
+  - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
   - component: {fileID: 3178110744892233056}
-  - component: {fileID: 2341362703312234675}
+  - component: {fileID: 7178170437923353098}
+  - component: {fileID: 976600497135838362}
   - component: {fileID: 1617654965204469657}
+  - component: {fileID: 1848801262}
+  - component: {fileID: 2121725793028539238}
   m_Layer: 0
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -209,6 +213,26 @@ Transform:
   m_Father: {fileID: 7442715256025506024}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2341362703312234675
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0dbe00f15922fbf4e9962ac6dbad350c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &4086107390685430464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -274,26 +298,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitVolume: {fileID: 0}
---- !u!95 &2341362703312234675
-Animator:
-  serializedVersion: 4
+--- !u!114 &7178170437923353098
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739109838891585982}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 28fb8795df2daeb4393c3bf71f67a00e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfbe9df8480bcc49a1915be111a14fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1
+--- !u!114 &976600497135838362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jangPanPrefab: {fileID: 0}
+  jangPanTime: 3
+  scratchTime: 3
+  skillSelect: {fileID: 0}
+  Skill1Trans: {fileID: 0}
+  JangPanPersDamage: 10
+  skillNum: 
+  shuffleCount: 100
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -390,6 +427,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1848801262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfbe9df8480bcc49a1915be111a14fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 1
+--- !u!114 &2121725793028539238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jangPanPrefab: {fileID: 0}
+  jangPanTime: 3
+  scratchTime: 3
+  skillSelect: {fileID: 0}
+  Skill1Trans: {fileID: 0}
+  JangPanPersDamage: 10
+  skillNum: 
+  shuffleCount: 100
 --- !u!1 &2437888175715823303
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,11 +677,11 @@ GameObject:
   - component: {fileID: 7442715256025506028}
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 5322660876921446628}
-  - component: {fileID: 4168994244650090765}
   - component: {fileID: 7532922233381854325}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
   - component: {fileID: 1544384322}
+  - component: {fileID: 1344632528}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -693,12 +763,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: PlayerSkill, Assembly-CSharp
+        m_MethodName: Skill1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -706,13 +776,40 @@ MonoBehaviour:
         m_CallState: 2
   skill2:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerSkill, Assembly-CSharp
+        m_MethodName: Skill2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  dash:
+    m_PersistentCalls:
       m_Calls: []
   ultimateSkill:
     m_PersistentCalls:
       m_Calls: []
   <Attack>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1848801262}
+        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <SkillFirst>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -743,16 +840,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pBase: {fileID: 0}
-  hitVolume: {fileID: 0}
   reviveInvincibleTime: 2
   invincibleTime: 0.5
-  transformation:
+  <GetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7442715256223835011}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: TransformAilen
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: HpUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -762,12 +857,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  <GetHit>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: HpUpdate
+      - m_Target: {fileID: 3178110744892233056}
+        m_TargetAssemblyTypeName: PlayerVisual, Assembly-CSharp
+        m_MethodName: StartHitMotion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -805,31 +897,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _joystick: {fileID: 0}
-  speed: 0
+  speed: 3
   VelocityChange:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &4168994244650090765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jangPanPrefab: {fileID: 0}
-  jangPanTime: 3
-  scratchTime: 3
-  skillSelect: {fileID: 0}
-  Skill1Trans: {fileID: 0}
-  JangPanPersDamage: 10
-  skillNum: 
-  shuffleCount: 100
-  skillData: {fileID: 0}
+      m_Calls:
+      - m_Target: {fileID: 3178110744892233056}
+        m_TargetAssemblyTypeName: PlayerVisual, Assembly-CSharp
+        m_MethodName: VelocityChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7532922233381854325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,8 +925,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da3cb9ab96fe2cb4ab39bafa9ac2d0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransformDataSOArr: []
-  <playerTransformDataSO>k__BackingField: {fileID: 0}
+  playerTransformDataSOArr:
+  - {fileID: 11400000, guid: 024b87a98b7996b489724611756bbd0d, type: 2}
+  - {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
+  <playerTransformDataSO>k__BackingField: {fileID: 11400000, guid: 6997dd5c7a3430f469514445f457045b, type: 2}
 --- !u!114 &882001287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -896,7 +981,19 @@ MonoBehaviour:
   - {x: -0.049494028, y: -0.505509, z: 0}
   m_ShapePathHash: -1859602289
   m_Mesh: {fileID: 0}
-  m_InstanceId: 293576
+  m_InstanceId: -19724
+--- !u!114 &1344632528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b9de0f5e6dbe74aba25ecbc116e692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0

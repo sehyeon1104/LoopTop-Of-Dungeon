@@ -10,19 +10,20 @@ public class AgentInput : MonoSingleton<AgentInput>,IAgentInput
     Joystick _joyStick;
     public UnityEvent Skill1;
     public UnityEvent skill2;
+    public UnityEvent dash;
     public UnityEvent ultimateSkill;
     [field:SerializeField] public UnityEvent Attack { get; set; }
     [field:SerializeField] public UnityEvent SkillFirst { get; set; }
     [field:SerializeField] public UnityEvent<Vector2> MovementInput { get; set; }
 
-   
+    private void FixedUpdate()
+    {
+        GetMovementInputMove();
+    }
     void Update()   
     {
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-           SkillFirst.Invoke();
-        }
-       
+      
+ 
     }
     public void ButtonClick()
     {
@@ -39,14 +40,14 @@ public class AgentInput : MonoSingleton<AgentInput>,IAgentInput
         {
             skill2.Invoke();
         }
+        else if(clickedObj.CompareTag("Dash"))
+        {
+            dash.Invoke();
+        }
         else
         {
             ultimateSkill.Invoke();
         }
-    }
-    private void FixedUpdate()
-    {
-        GetMovementInputMove();
     }
     public void GetMovementInputMove()
     {

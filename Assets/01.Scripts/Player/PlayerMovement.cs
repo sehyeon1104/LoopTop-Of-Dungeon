@@ -8,7 +8,6 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     [SerializeField]
     Joystick _joystick;
-
     [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
 

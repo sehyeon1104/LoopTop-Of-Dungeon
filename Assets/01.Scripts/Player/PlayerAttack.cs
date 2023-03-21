@@ -1,3 +1,4 @@
+using Microsoft.Win32.SafeHandles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,24 +9,16 @@ public class PlayerAttack : PlayerBase
 {
     [SerializeField]
     private float attackRange = 1f;
-    [SerializeField]
+
     Animator playerAnim;
     // 공격 버튼을 눌렀을 때 발동될 함수
-    public void InvokeAttackEvents()
+    private void Awake()
     {
-        //if(agentInput == null)
-        //{
-        //    Debug.LogWarning("agentInput is NULL!");
-        //    agentInput = GetComponent<AgentInput>();
-        //    agentInput.Attack.AddListener(Attack);
-        //    return;
-        //}
-        //agentInput.Attack.Invoke();
-        //playerAnim.SetTrigger("Attack");
+        playerAnim = GetComponent<Animator>();  
     }
-
     public void Attack()
     {
+
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for(int i=0; i<enemys.Length; i++)
