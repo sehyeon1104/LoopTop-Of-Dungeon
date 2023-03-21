@@ -34,7 +34,6 @@ public class PlayerSkill : MonoBehaviour
     public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
     int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
-    [SerializeField]
     private int shuffleCount = 100;
     private int[] randomSkillNumArr = new int[5];
     private int randomSkilltemp = 0;
