@@ -42,7 +42,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         Time.timeScale = 1f;
         hitVolume.weight = 0;
         playerSprite.color = Color.white;
-    } 
+    }
     public void VelocityChange(float VelocityX)
     {
         playerSprite.flipX = VelocityX < 0 ? false : true;
