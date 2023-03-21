@@ -273,8 +273,6 @@ GameObject:
   - component: {fileID: 7178170437923353098}
   - component: {fileID: 976600497135838362}
   - component: {fileID: 1617654965204469657}
-  - component: {fileID: 1848801262}
-  - component: {fileID: 2121725793028539238}
   m_Layer: 0
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -381,7 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11cf0e206e5a6ef46b85a656f72637ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVolume: {fileID: 0}
 --- !u!114 &7178170437923353098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,38 +507,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1848801262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cfbe9df8480bcc49a1915be111a14fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 1
---- !u!114 &2121725793028539238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jangPanPrefab: {fileID: 0}
-  jangPanTime: 3
-  scratchTime: 3
-  skillSelect: {fileID: 0}
-  Skill1Trans: {fileID: 0}
-  JangPanPersDamage: 10
-  skillNum: 
 --- !u!1 &2437888175715823303
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11eea570a25e594aa5ce310e6b2f98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefix: "\u2605"
+  prefix: 
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &1544384322
@@ -922,7 +887,7 @@ MonoBehaviour:
   - {x: -0.049494028, y: -0.505509, z: 0}
   m_ShapePathHash: -1859602289
   m_Mesh: {fileID: 0}
-  m_InstanceId: -301946
+  m_InstanceId: -2558
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0

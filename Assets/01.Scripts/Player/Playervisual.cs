@@ -7,15 +7,16 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
     SpriteRenderer playerSprite;
     Animator playerAnimator;
-    [SerializeField]
     Volume hitVolume;
     private void Awake()
     {
+        hitVolume = GameObject.FindGameObjectWithTag("HitVolume").GetComponent<Volume>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
     private void Start()
     {
+       
     }
     // Update is called once per frame
     public void StartHitMotion()
