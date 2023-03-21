@@ -3,56 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GhostPattern : BossPattern
+public class G_Patterns : BossPattern
 {
-    private GameObject playerObj;
-    [SerializeField] private GameObject warning;
-    [SerializeField] private GameObject bossMonster;
+    #region Initialize
+    [SerializeField] protected GameObject warning;
+    [SerializeField] protected GameObject bossMonster;
 
-    [SerializeField] private ParticleSystem SummonFx;
-    [SerializeField] private GameObject SummonTimer;
-    [SerializeField] private Image SummonClock;
+    [SerializeField] protected ParticleSystem SummonFx;
+    [SerializeField] protected GameObject SummonTimer;
+    [SerializeField] protected Image SummonClock;
 
-    [SerializeField]BossRangePattern bossRangePattern;
+    [SerializeField] protected BossRangePattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
-    bool isUsedHillaSkill = false;
+    bool isUsedSummonSkill = false;
+    #endregion
 
-    private void Awake()
-    {
-        playerObj = GameObject.FindGameObjectWithTag("Player");
-        isThisSkillCoolDown[3] = true;
-    }
-    private void Update()
-    {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && !isUsedHillaSkill) isThisSkillCoolDown[3] = false;
-
-        if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
-        else transform.eulerAngles = transform.position.x - playerObj.transform.position.x > 0 ? new Vector3(0, 180, 0) : Vector3.zero;
-        base.Update();
-    }
-    public override int GetRandomCount(int choisedPattern)
-    {
-        switch (choisedPattern)
-        {
-            case 0:
-                return Random.Range(3, 6);
-            case 1:
-                return Random.Range(20, 30);
-            case 2:
-                break;
-            case 3:
-                return 10;
-            case 4:
-                break;
-            default:
-                break;
-        }
-        return 0;
-
-    }
-
-    public override IEnumerator Pattern1(int count = 0) //가시 소환 패턴
+    #region pase 1
+    public IEnumerator Pattern_TH(int count)
     {
         for (int i = 0; i < count; i++)
         {
@@ -69,34 +37,18 @@ public class GhostPattern : BossPattern
 
             Destroy(clone);
         }
-
-        yield return null;
-        attackCoroutine = null;
-    }
-
-    public override IEnumerator Pattern2(int count = 0) //탄막 발사 패턴
+    } // 팔뻗기로 대체 예정
+    public IEnumerator Pattern_BM()
     {
-        float angle = 360 / count;
-
-        //애니메이션 적용
-        attackAnim.Play(animArray[0]);
-
-        for (int i = 0; i < count; i++)
-        {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * angle * i));
-            yield return new WaitForSeconds(0.1f);
-        }
-
         yield return null;
-        attackCoroutine = null;
+        for(int i = 0; i < 4; i++)
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Beam.prefab", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
     }
-
-    public override IEnumerator Pattern3(int count = 0) //텔레포트 패턴
+    public IEnumerator Pattern_TP()
     {
         moveSpeed *= 0.5f;
         float timer = 0f;
         Vector3 dir;
-
 
         while (timer <= 3f)
         {
@@ -110,7 +62,6 @@ public class GhostPattern : BossPattern
         transform.position = player.forward + player.position;
         moveSpeed *= 2f;
 
-        //애니메이션 추가
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
@@ -123,21 +74,9 @@ public class GhostPattern : BossPattern
         {
             Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
-
-        yield return null;
-        attackCoroutine = null;
     }
-
-    public override IEnumerator Pattern4(int count = 0) //힐라 패턴
+    public IEnumerator Pattern_SM(int count)
     {
-        if (isUsedHillaSkill)
-        {
-            isThisSkillCoolDown[3] = true;
-            attackCoroutine = null;
-            yield break;
-        }
-
-        isUsedHillaSkill = true;
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
 
@@ -177,14 +116,132 @@ public class GhostPattern : BossPattern
         }
         Boss.Instance.Base.Hp += finalCount * 10;
         mobList.Clear();
+    }
+    #endregion
+}
+public class GhostPattern : G_Patterns
+{
+
+    private void Awake()
+    {
+        isThisSkillCoolDown[3] = true;
+    }
+    private void Update()
+    {
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
+        {
+
+        }
+
+        if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
+        base.Update();
+    }
+    public override int GetRandomCount(int choisedPattern)
+    {
+        switch (choisedPattern)
+        {
+            case 0:
+                return Random.Range(3, 6);
+            case 1:
+                return Random.Range(20, 30);
+            case 2:
+                break;
+            case 3:
+                return 10;
+            case 4:
+                break;
+            default:
+                break;
+        }
+        return 0;
+
+    }
+
+    public override IEnumerator Pattern1(int count = 0) //가시 소환 패턴 -> 장판 패턴으로 교체 예정
+    {
+        switch(NowPase)
+        {
+            case 1:
+                yield return StartCoroutine(Pattern_TH(count));
+                break;
+            case 2:
+                break;
+        }
 
         yield return null;
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern5(int count = 0)
+    public override IEnumerator Pattern2(int count = 0) //탄막 발사 패턴 -> 빔 패턴으로 교체 예정
     {
-        yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
+        switch (NowPase)
+        {
+            case 1:
+                yield return StartCoroutine(Pattern_BM());
+                break;
+            case 2:
+                break;
+        }
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    public override IEnumerator Pattern3(int count = 0) //텔레포트 패턴
+    {
+        switch(NowPase)
+        {
+            case 1:
+                yield return StartCoroutine(Pattern_TP());
+                break;
+            case 2:
+                break;
+        }
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    public override IEnumerator Pattern4(int count = 0) //장판 패턴
+    {
+        switch (NowPase)
+        {
+            case 1:
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
+                break;
+            case 2:
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
+                break;
+        }
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    public override IEnumerator Pattern5(int count = 0) //팔뻗기 패턴, 2페이즈에만 사용
+    {
+        switch (NowPase)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+
+        yield return null;
+        attackCoroutine = null;
+    }
+
+    public override IEnumerator PatternFinal(int count = 0)
+    {
+        switch(NowPase)
+        {
+            case 1:
+                yield return StartCoroutine(Pattern_SM(count));
+                break;
+            case 2:
+                break;
+        }
 
         yield return null;
         attackCoroutine = null;

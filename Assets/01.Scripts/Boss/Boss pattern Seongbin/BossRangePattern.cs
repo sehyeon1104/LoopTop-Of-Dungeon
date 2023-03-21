@@ -24,17 +24,7 @@ public class BossRangePattern : MonoBehaviour
     private float ScaleX;
     private float ScaleY;
 
-    Vector2 Vec = new Vector2(0,0);
-
-    Coroutine DotDamageCor = null;
-
-    private void Start()
-    {
-        StartCoroutine(FloorPatternRectangle());
-        //StartCoroutine(FloorPatternCircle());
-    }
-
-    IEnumerator FloorPatternRectangle()
+    public IEnumerator FloorPatternRectangle()
     {
         FPRR.transform.position = transform.position;
         FPRRS.transform.position = transform.position;
@@ -94,7 +84,7 @@ public class BossRangePattern : MonoBehaviour
         FPRRSCol.SetActive(false);
     }
 
-    IEnumerator  FloorPatternCircle()
+    public IEnumerator  FloorPatternCircle()
     {
        
 
@@ -155,9 +145,6 @@ public class BossRangePattern : MonoBehaviour
         FPR.gameObject.SetActive(false);
         FPRS.gameObject.SetActive(false);
         FPRSCol.gameObject.SetActive(false);
-
-        
-
 
         //effect
 
