@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class Boss : MonoSingleton<Boss>, IHittable
 {
     public BossBase Base;
+    public BossPattern bossPattern;
     public MultiGage.TargetGageValue TargetGage;
 
     public bool isBDamaged { set; get; } = false;
+    public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
 
     public Vector3 hitPoint { get; }
@@ -21,7 +23,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
         TargetGage = new MultiGage.TargetGageValue(Base.Hp);
         MultiGage.Instance.ObserveStart(TargetGage);
 
-        foreach(var child in GetComponentsInChildren<SpriteRenderer>())
+        bossPattern = GetComponent<BossPattern>();
+
+        foreach (var child in GetComponentsInChildren<SpriteRenderer>())
         {
             sprites.Add(child);
         }
@@ -72,6 +76,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     {
         if (isBDead) return;
         if (isBDamaged) return;
+        if (isBInvincible) return;
 
         if(Random.Range(1, 101) <= critChance)
         {
@@ -86,7 +91,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
 
-        if (Base.Hp <= 0)
+        if (Base.Hp <= 0 && bossPattern.NowPase == 2)
         {
             Die();
             return;

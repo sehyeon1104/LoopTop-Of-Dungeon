@@ -103,7 +103,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual IEnumerator AttackToPlayer()
     {
-        //if (GameManager.Instance.Player.isPDead) yield break;
+        if (GameManager.Instance.Player.IsPDead) yield break;
 
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);

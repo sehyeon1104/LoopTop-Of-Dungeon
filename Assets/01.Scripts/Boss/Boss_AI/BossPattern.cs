@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BossPattern : MonoBehaviour
 {
+    public int NowPase = 1;
+
     [Header("보스 이동 관련 스탯")]
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float minDistance;
@@ -21,7 +23,6 @@ public abstract class BossPattern : MonoBehaviour
     [SerializeField] private float patternDelay;
     
     protected int[] patternCount = new int[5];
-    protected int nowPase = 1;
 
 
     protected Transform player;
@@ -40,6 +41,7 @@ public abstract class BossPattern : MonoBehaviour
 
         AnimationArray();
         StartCoroutine(RandomPattern());
+        StartCoroutine(ChangePase());
     }
 
     protected void Update()
@@ -73,6 +75,22 @@ public abstract class BossPattern : MonoBehaviour
         transform.Translate(dir * Time.deltaTime * moveSpeed);
     }
 
+    private IEnumerator ChangePase()
+    {
+        yield return new WaitUntil(() => NowPase == 1 && Boss.Instance.Base.Hp <= 0);
+
+        StopCoroutine(attackCoroutine);
+        Boss.Instance.isBInvincible = true;
+
+        yield return waitTime;
+        Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        NowPase = 2;
+        yield return waitTime;
+
+        attackCoroutine = null;
+        Boss.Instance.isBInvincible = false;
+    }
+
     private IEnumerator RandomPattern()
     {
         yield return new WaitForSeconds(waitTime);
@@ -80,7 +98,7 @@ public abstract class BossPattern : MonoBehaviour
         while (!Boss.Instance.isBDead)
         {
             int patternChoice = 0;
-            patternChoice = Random.Range(0, pase_patternCount[nowPase]);
+            patternChoice = Random.Range(0, pase_patternCount[NowPase]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
@@ -115,9 +133,9 @@ public abstract class BossPattern : MonoBehaviour
             {
                 yield return new WaitUntil(() => attackCoroutine == null);
                 yield return new WaitForSeconds(patternDelay);
+                StartCoroutine(CoolDownCheck(patternChoice));
             }
 
-            StartCoroutine(CoolDownCheck(patternChoice));
         }
         attackCoroutine = null;
         StopAllCoroutines();
