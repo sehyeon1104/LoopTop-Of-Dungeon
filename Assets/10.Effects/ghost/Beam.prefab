@@ -5094,6 +5094,7 @@ GameObject:
   - component: {fileID: 2307732498285989845}
   - component: {fileID: 2307732498285989844}
   - component: {fileID: 2307732498285989835}
+  - component: {fileID: -2156817569657389277}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Untagged
@@ -5183,10 +5184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d1cb86aba6d3340b6c59d2407cd77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pLayer:
+    serializedVersion: 2
+    m_Bits: 0
   startFX: {fileID: 2307732496860329155}
   beam: {fileID: 2307732497052032724}
   beamLight: {fileID: 2307732498016762048}
-  length: 50
+  length: 30
   width: 1.6
   intensity: 2
 --- !u!95 &2307732498285989835
@@ -5209,3 +5213,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2156817569657389277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307732498285989834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 3

@@ -42,7 +42,7 @@ public class G_Patterns : BossPattern
     {
         yield return null;
         for(int i = 0; i < 4; i++)
-            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Beam.prefab", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
+            Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
     }
     public IEnumerator Pattern_TP()
     {
@@ -172,7 +172,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern2(int count = 0) //탄막 발사 패턴 -> 빔 패턴으로 교체 예정
+    public override IEnumerator Pattern2(int count = 0) //빔 패턴
     {
         switch (NowPase)
         {
