@@ -8,35 +8,48 @@ public class ShopRoom : RoomBase
     private GameObject itemPosObj;
     [SerializeField]
     private Transform[] itemSpawnPosArr;
-    [SerializeField]
-    private GameObject itemObj;
 
-    private List<GameObject> itemList = new List<GameObject>();
+    private List<ItemObj> itemList = new List<ItemObj>();
+
+    private ItemObj[] itemobjArr;
 
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
     }
 
-    private void Start()
-    {
-        CreateItems();
-        SetItem();
-    }
-
-    public void CreateItems()
+    private void Awake()
     {
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
     }
 
-    public void SetItem()
+    public void SetItemObjList(List<ItemObj> lists)
     {
-        for(int i = 1; i < itemSpawnPosArr.Length; ++i)
+        itemList.Clear();
+        itemList = lists;
+
+        itemobjArr = lists.ToArray();
+        SetItemPos();
+    }
+
+    public void SetItemPos()
+    {
+        for(int i = 0; i < itemSpawnPosArr.Length - 1; ++i)
         {
-            itemObj.transform.position = itemSpawnPosArr[i].position;
+            itemList[i].transform.position = itemSpawnPosArr[i + 1].position;
         }
 
     }
+
+    public Transform[] GetItemSpawnPos()
+    {
+        foreach(var itemSpawnPos in itemSpawnPosArr)
+        {
+             Debug.Log("return pos");
+        }
+        return itemSpawnPosArr;
+    }
+
 
 
     protected override void IsClear()
@@ -44,4 +57,30 @@ public class ShopRoom : RoomBase
         isClear = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (!ShopManager.Instance.isItemSetting)
+            {
+                ShopManager.Instance.SetItem();
+            }
+
+            foreach (var itemobj in itemobjArr)
+            {
+                StartCoroutine(itemobj.ToggleItemInfoPanel());
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            foreach(var itemobj in itemobjArr)
+            {
+                StopCoroutine(itemobj.ToggleItemInfoPanel());
+            }
+        }
+    }
 }

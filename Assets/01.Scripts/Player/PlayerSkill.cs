@@ -26,7 +26,7 @@ public class PlayerSkill : PlayerBase
     public float scratchTime = 3;
     public GameObject skillSelect;
     [SerializeField] Transform Skill1Trans;
-    [SerializeField] float JangPanPersDamage = 10;
+    [SerializeField] float JangPanPersDamage = 10;  
     int skillSelectNum = 0;
     private int ghostSummonCount = 1;
     List<int> randomSkillNum = new List<int>();

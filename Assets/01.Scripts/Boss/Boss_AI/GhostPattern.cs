@@ -23,7 +23,7 @@ public class G_Patterns : BossPattern
     {
         for (int i = 0; i < count; i++)
         {
-            //º¸½º ¾Ö´Ï¸ÞÀÌ¼Ç 
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ 
             attackAnim.Play(animArray[1]);
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.identity);
@@ -36,7 +36,7 @@ public class G_Patterns : BossPattern
 
             Destroy(clone);
         }
-    } // ÆÈ»¸±â·Î ´ëÃ¼ ¿¹Á¤
+    } // ï¿½È»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
     public IEnumerator Pattern_BM()
     {
         yield return null;
@@ -158,7 +158,7 @@ public class GhostPattern : G_Patterns
 
     }
 
-    public override IEnumerator Pattern1(int count = 0) //°¡½Ã ¼ÒÈ¯ ÆÐÅÏ -> ÀåÆÇ ÆÐÅÏÀ¸·Î ±³Ã¼ ¿¹Á¤
+    public override IEnumerator Pattern1(int count = 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
     {
         switch(NowPase)
         {
@@ -173,7 +173,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
+    public override IEnumerator Pattern2(int count = 0) //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         switch (NowPase)
         {
@@ -188,7 +188,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern3(int count = 0) //ÅÚ·¹Æ÷Æ® ÆÐÅÏ
+    public override IEnumerator Pattern3(int count = 0) //ï¿½Ú·ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     {
         switch(NowPase)
         {
@@ -203,7 +203,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //ÀåÆÇ ÆÐÅÏ
+    public override IEnumerator Pattern4(int count = 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         switch (NowPase)
         {
@@ -219,7 +219,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern5(int count = 0) //ÆÈ»¸±â ÆÐÅÏ, 2ÆäÀÌÁî¿¡¸¸ »ç¿ë
+    public override IEnumerator Pattern5(int count = 0) //ï¿½È»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, 2ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½
     {
         switch (NowPase)
         {

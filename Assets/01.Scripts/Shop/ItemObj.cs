@@ -7,6 +7,8 @@ using TMPro;
 public class ItemObj : MonoBehaviour
 {
     [SerializeField]
+    private Image itemInfoPanel = null;
+    [SerializeField]
     private Image itemImage = null;
     [SerializeField]
     private TextMeshProUGUI itemNameTMP = null;
@@ -15,13 +17,23 @@ public class ItemObj : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI priceTMP = null;
     [SerializeField]
-    private Sprite[] itemSprites = null;
-    [SerializeField]
     private Define.ItemType itemType;
     [SerializeField]
-    private GameObject soldOutPanel;
+    private GameObject soldOutPanel = null;
+
+
+    [SerializeField]
+    private float playerSensingDis = 1.5f;
 
     private Item item = null;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
+
+    private void Start()
+    {
+        soldOutPanel.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);
+    }
 
     public void SetValue(Item item)
     {
@@ -32,7 +44,7 @@ public class ItemObj : MonoBehaviour
     public void UpdateValues()
     {
         itemType = item.itemType;
-        itemImage.sprite = itemSprites[item.itemNumber];
+        itemImage.sprite = ShopManager.Instance.itemSprites[item.itemNumber];
         itemNameTMP.SetText(item.itemName);
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
@@ -43,7 +55,32 @@ public class ItemObj : MonoBehaviour
         // TODO : 재화 부족할 시 구매 불가 적용
 
         itemImage.gameObject.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);
         soldOutPanel.SetActive(true);
         ItemEffects.ShopItems[item.itemNumber].Use();
+    }
+
+    public IEnumerator ToggleItemInfoPanel()
+    {
+        while (true)
+        {
+            if (Vector3.Distance(GameManager.Instance.Player.transform.position, transform.position) < playerSensingDis)
+            {
+                if(!itemInfoPanel.gameObject.activeSelf)
+                {
+                    itemInfoPanel.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                if (itemInfoPanel.gameObject.activeSelf)
+                {
+                    itemInfoPanel.gameObject.SetActive(false);
+                }
+            }
+
+            yield return waitForEndOfFrame;
+        }
+
     }
 }

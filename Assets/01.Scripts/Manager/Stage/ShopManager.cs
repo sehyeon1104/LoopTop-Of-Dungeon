@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = Rito.Debug;
 
 public class ShopManager : MonoSingleton<ShopManager>
 {
@@ -17,33 +18,69 @@ public class ShopManager : MonoSingleton<ShopManager>
     [SerializeField]
     private List<Item> itemList = new List<Item>();
 
+    [field: SerializeField]
+    public Sprite[] itemSprites { private set; get; } = null;
+
     private List<ItemObj> itemObjList = new List<ItemObj>();
 
     private HashSet<int> itemSelectNum = new HashSet<int>();
 
     private ShopRoom shopRoom = null;
 
+    public bool isItemSetting { private set; get; } = false;
+
     private void Awake()
     {
         shopRoom = FindObjectOfType<ShopRoom>();
+        itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ItemObj.prefab");
     }
 
-    private void Start()
+
+    public void SetItem()
     {
+        if(shopRoom == null)
+        {
+            shopRoom = FindObjectOfType<ShopRoom>();
+            if(shopRoom == null)
+            {
+                Debug.LogWarning("shopRoom is Null!");
+            }
+        }
+        isItemSetting = true;
+        itemObjSpawnPos = shopRoom.GetItemSpawnPos();
+
         ShuffleItemSelectNum();
         CreateObject();
     }
+    
 
     public void ShuffleItemSelectNum()
     {
-        if(itemObjSpawnPos.Length > itemList.Count)
+        if(itemObjSpawnPos.Length - 1 > itemList.Count)
         {
-            Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length}");
+            Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
         }
 
-        while (itemSelectNum.Count != itemObjSpawnPos.Length)
+        int index = 0;
+        int randNum = 0;
+
+        while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
         {
-            itemSelectNum.Add(Random.Range(0, itemList.Count));
+            randNum = Random.Range(1, itemList.Count);
+
+            itemSelectNum.Add(randNum);
+            index++;
+
+            if(index > 100)
+            {
+                Debug.Log("break while loop");
+                break;
+            }
+        }
+
+        foreach(var itemselectnumtime in itemSelectNum)
+        {
+            Debug.Log("num : " + itemselectnumtime);
         }
     }
     
@@ -56,6 +93,7 @@ public class ShopManager : MonoSingleton<ShopManager>
         //{
         foreach(var itemSelectNumitem in itemSelectNum)
         {
+            Debug.Log(itemSelectNumitem);
             Item shopItem = itemList[itemSelectNumitem];
 
             newObject = Instantiate(itemObjTemplate);
@@ -64,6 +102,8 @@ public class ShopManager : MonoSingleton<ShopManager>
             newObject.SetActive(true);
             itemObjList.Add(newItemObjComponent);
         }
+
+        shopRoom.SetItemObjList(itemObjList);
         //}
     }
 

@@ -108,6 +108,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
 
+        yield break;
     }
 
     public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)

@@ -68,10 +68,10 @@ public class ItemEffects : MonoBehaviour
 
     public static ItemBase[] ShopItems = new ItemBase[]
     {
-        new Default(),      // 0�� ������ ( 0�� �޲޿� )
-        new Heal(),         // 1�� ������
-        new DamageBuff(),   // 2�� ������
-        new CritBuff(),     // 3�� ������
-        new TakeExp(),      // 4�� ������ ( ������ )
+        new Default(),      // 0번 아이템 ( 0번 메꿈용 )
+        new Heal(),         // 1번 아이템
+        new DamageBuff(),   // 2번 아이템
+        new CritBuff(),     // 3번 아이템
+        new TakeExp(),      // 4번 아이템 ( 테스트용 )
     };
 }
