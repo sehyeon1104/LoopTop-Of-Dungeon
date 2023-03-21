@@ -50,15 +50,6 @@ public class ItemObj : MonoBehaviour
         priceTMP.SetText(string.Format("{0}", item.price));
     }
 
-    public void PurchaseShopItem()
-    {
-        // TODO : 재화 부족할 시 구매 불가 적용
-
-        itemImage.gameObject.SetActive(false);
-        itemInfoPanel.gameObject.SetActive(false);
-        soldOutPanel.SetActive(true);
-        ItemEffects.ShopItems[item.itemNumber].Use();
-    }
 
     public IEnumerator ToggleItemInfoPanel()
     {
@@ -82,5 +73,14 @@ public class ItemObj : MonoBehaviour
             yield return waitForEndOfFrame;
         }
 
+    }
+    public void PurchaseShopItem()
+    {
+        // TODO : 재화 부족할 시 구매 불가 적용
+
+        itemImage.gameObject.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);
+        soldOutPanel.SetActive(true);
+        ItemEffects.ShopItems[item.itemNumber].Use();
     }
 }
