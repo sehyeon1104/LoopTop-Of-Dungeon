@@ -54,7 +54,11 @@ public class G_Patterns : BossPattern
                 case 1:
                     for (int j = -1; j <= 1; j += 2)
                     {
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position + (Vector3.down * j * 3), Quaternion.Euler(Vector3.forward * (rot + j * 30f)));
+                        Vector3 pos = dir.x > dir.y ? Vector3.up : Vector3.left;
+                        dir = player.position - (transform.position + pos * j * 2);
+                        rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position + (pos * j * 2), Quaternion.Euler(Vector3.forward * (rot + j * 30)));
                     }
                     break;
                 case 2:
@@ -182,14 +186,15 @@ public class GhostPattern : G_Patterns
 
     }
 
-    public override IEnumerator Pattern1(int count = 0) //가시 소환 패턴 -> 장판 패턴으로 교체 예정
+    public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {
-        switch(NowPase)
+        switch (NowPase)
         {
             case 1:
-                yield return StartCoroutine(Pattern_TH(count));
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 
@@ -227,7 +232,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //장판 패턴
+    public override IEnumerator Pattern4(int count = 0) //팔뻗기 패턴, 2페이즈에만 사용
     {
         switch (NowPase)
         {
@@ -236,20 +241,6 @@ public class GhostPattern : G_Patterns
                 break;
             case 2:
                 yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
-                break;
-        }
-
-        yield return null;
-        attackCoroutine = null;
-    }
-
-    public override IEnumerator Pattern5(int count = 0) //팔뻗기 패턴, 2페이즈에만 사용
-    {
-        switch (NowPase)
-        {
-            case 1:
-                break;
-            case 2:
                 break;
         }
 
