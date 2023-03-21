@@ -8,8 +8,6 @@ public class JangPanCircleRange : MonoBehaviour
 {
     IEnumerator PlayerDamaged = null;
 
-    public GameObject Player = null;
-
     private bool iscoroutinestart = false;
 
     public float range;
@@ -58,7 +56,7 @@ public class JangPanCircleRange : MonoBehaviour
     {
         while (true)
         {
-            Player.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(1, gameObject, 0);
             yield return DotTime;
         }
     }

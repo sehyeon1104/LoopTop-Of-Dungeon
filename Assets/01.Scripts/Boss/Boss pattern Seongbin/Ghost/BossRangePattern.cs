@@ -86,7 +86,6 @@ public class BossRangePattern : MonoBehaviour
 
     public IEnumerator  FloorPatternCircle()
     {
-       
 
         FPR.transform.position = transform.position;
         FPRS.transform.position = transform.position;
