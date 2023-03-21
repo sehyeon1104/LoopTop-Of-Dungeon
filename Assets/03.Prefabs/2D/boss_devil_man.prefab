@@ -147,7 +147,7 @@ Transform:
   - {fileID: 5755681704298889179}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -57.29139}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -52.22148}
 --- !u!1 &5757960434511342367
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ Transform:
   - {fileID: 5764536056418654899}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -79.156975}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -81.861015}
 --- !u!1 &5758042523900028633
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +813,7 @@ Transform:
   - {fileID: 5756048196294093225}
   m_Father: {fileID: 5759608854821523490}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 76.89108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 75.79587}
 --- !u!1 &5758119982459603945
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +846,7 @@ Transform:
   - {fileID: 5764372918347310545}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13.862221}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 12.886738}
 --- !u!1 &5758125584183038783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1449,7 @@ Transform:
   - {fileID: 5764536636245234267}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 104.38274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 103.23847}
 --- !u!1 &5758546526938867527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,7 +1513,7 @@ Transform:
   - {fileID: 5755853743105285691}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 171.21402}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 173.40462}
 --- !u!1 &5758580632870723253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5758580632870723253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.47, y: 8.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.017, y: 0.017, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1841,7 +1841,7 @@ Transform:
   - {fileID: 5764445523672521115}
   m_Father: {fileID: 5756056326286643117}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 102.329994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 99.999985}
 --- !u!1 &5758662967871791109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2110,7 @@ Transform:
   - {fileID: 5755671917702563533}
   m_Father: {fileID: 5755755249246431841}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -33.22901}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -36.50174}
 --- !u!1 &5758828002965221639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2323,7 @@ Transform:
   - {fileID: 5764326332425114347}
   m_Father: {fileID: 5764322353324622211}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 41.78722}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 43}
 --- !u!1 &5758896243658520843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,7 +2802,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759608854821523491}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68af6515ee181084ab565c6d8d212f0d, type: 3}
   m_Name: 
@@ -2811,7 +2811,7 @@ MonoBehaviour:
   moveSpeed: 2
   minDistance: 1.5
   waitTime: 1
-  pase_patternCount: 
+  pase_patternCount: 0400000005000000
   patternDelay: 2
   warning: {fileID: 2355128624608227669, guid: d6770e4c6d817b245808dfa363dbd17d, type: 3}
   bossMonster: {fileID: 5801919827941628555, guid: 09ef4da0e4165b348880ce4a8b5a623c, type: 3}
@@ -2852,7 +2852,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759608854821523491}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 0}
   m_Animations:
@@ -2872,7 +2872,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759608854821523491}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 017765b7b7d953a42b4daca20261232e, type: 2}
   m_CullingMode: 0
