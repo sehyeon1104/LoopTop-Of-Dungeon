@@ -8,25 +8,26 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 // Player Skill Class
-public class PlayerSkill : PlayerBase
+public class PlayerSkill : MonoBehaviour
 {
     [Space]
     [Header("스킬")]
     [Header("힐라패턴")]
-    
+  
     Animator animator;
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
     [Tooltip("장판 지속시간")]
     public float jangPanTime = 3;
     [Tooltip("할퀴기 지속시간")]
-    public float scratchTime = 3;
+    public float scratchTime = 3;   
     public GameObject skillSelect;
     [SerializeField] Transform Skill1Trans;
-    [SerializeField] float JangPanPersDamage = 10;
+    [SerializeField] float JangPanPersDamage = 10;  
     int skillSelectNum = 0;
     private int ghostSummonCount = 1;
     List<int> randomSkillNum = new List<int>();
@@ -38,13 +39,17 @@ public class PlayerSkill : PlayerBase
     private int[] randomSkillNumArr = new int[5];
     private int randomSkilltemp = 0;
     private int randomSkilltemp2 = 0;
+    PlayerBase playerBase;
     private void Start()
     {
+       
         SkillShuffle();
     }
     private void Awake()
     {
+        playerBase = GameManager.Instance.Player.playerBase;
         animator = GetComponent<Animator>();
+        SkillToButton();
     }
     public float skillCooltime { private set; get; } = 0f;
     public void ListInit()
@@ -60,23 +65,31 @@ public class PlayerSkill : PlayerBase
         //    randomSkillNumArr[i] = i + 1;
         //}
     }
+    public void SkillToButton( )
+    {
+        GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
+        GameObject.FindGameObjectWithTag("Skill2").GetComponent<Button>().onClick.AddListener(Skill2);
+        GameObject.FindGameObjectWithTag("UltimateSkill").GetComponent<Button>().onClick.AddListener(UltimateSkill);
+    }
     public Action ApplySkill(int skillNum, int slotLevel) => skillNum switch
     {
         // Power
-        1 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
-        2 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
-        3 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
-        4 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
-        5 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(slotLevel),
         // Ghost
-        1 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
-        2 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
-        3 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
-        4 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
-        5 when PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
+        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(slotLevel),
+        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkillCor(slotLevel),
+        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(slotLevel),
+        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(slotLevel),
+        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(slotLevel),
 
         _ => () => Debugs(slotLevel),
     };
+    public float GetSkillDelay(int i) => playerBase.SkillData.skill[i-1].skillDelay;
+
     public void SkillSelecet()
     {
         GameObject selectObj = EventSystem.current.currentSelectedGameObject;
@@ -137,13 +150,13 @@ public class PlayerSkill : PlayerBase
     public void Skill1()
     {
         skillEvent[0]();
-        UIManager.Instance.SkillCooltime(SkillData, randomSkillNum[0]);
+        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[0]);
     }
 
     public void Skill2()
     {
         skillEvent[1]();
-        UIManager.Instance.SkillCooltime(SkillData, randomSkillNum[1]);
+        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[1]);
     }
 
 
@@ -154,8 +167,8 @@ public class PlayerSkill : PlayerBase
 
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
-
-       skillCooltime = SkillData.skill[0].skillDelay;
+        GetSkillDelay(1);
+       skillCooltime = playerBase.SkillData.skill[0].skillDelay;
         animator.SetTrigger("Attack");
 
         for (int i = 0; i < ghostSummonCount; ++i)
@@ -168,30 +181,29 @@ public class PlayerSkill : PlayerBase
     {
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
-
-        skillCooltime = SkillData.skill[1].skillDelay;
+        GetSkillDelay(2);
         StartCoroutine(JangPanSkillCor(jangPanTime));
     }
     public void TeleportSkill(int slotLEvel) //3번 스킬 텔레포트 패턴
     {
-        skillCooltime = SkillData.skill[2].skillDelay;
+        GetSkillDelay(1);
         StartCoroutine(TeleportPattern(scratchTime));
     }
     public void ArmStretchSkill(int slotLEvel) // 4번 스킬 팔 뻗기 스킬 
     {
-        skillCooltime = SkillData.skill[1].skillDelay;
+        GetSkillDelay(1);
     }
     public void RiseUpSkill(int slotLevel) // 5번 스킬 솟아 오르기 스킬
     {
-        skillCooltime = SkillData.skill[1].skillDelay;
+        GetSkillDelay(1);
     }
     public void UltimateSkill()
     {
-        if (PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
+        if (playerBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
         Debug.Log("궁극기");
 
-        skillCooltime = SkillData.ultiSkillDelay;
+        skillCooltime = playerBase.SkillData.ultiSkillDelay;
 
     }
 

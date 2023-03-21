@@ -11,6 +11,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private GameObject playerPre;
 
+
     // 임시방편
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;

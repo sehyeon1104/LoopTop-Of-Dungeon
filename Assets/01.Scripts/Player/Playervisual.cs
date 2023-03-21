@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class PlayerVisual : PlayerBase
+public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
     SpriteRenderer playerSprite;
     Animator playerAnimator;
@@ -14,7 +14,9 @@ public class PlayerVisual : PlayerBase
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
-
+    private void Start()
+    {
+    }
     // Update is called once per frame
     public void StartHitMotion()
     {

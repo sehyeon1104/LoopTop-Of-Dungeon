@@ -32,7 +32,7 @@ public class StageManager : MonoSingleton<StageManager>
         // 방 스포너 받아옴
         spawnRooms = FindObjectsOfType<SpawnRoom>();
         // 시작 방 설정
-        SetStartRoom();
+        SetStartRoomNShopRoom();
         // 방 생성
         InstantiateRooms();
 
@@ -42,35 +42,26 @@ public class StageManager : MonoSingleton<StageManager>
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
 
-    // 임시방편
-    public void Stage2()
-    {
-        isSetting = true;
-        StartCoroutine(SetStage());
-
-        // 벽 생성
-        SetWallGrid();
-        // 방 스포너 받아옴
-        spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // 시작 방 설정
-        SetStartRoom();
-        // 방 생성
-        InstantiateRooms();
-
-        enemyRooms = FindObjectsOfType<EnemyRoom>();
-        SetMoveNextMapRoom();
-    }
-
     public IEnumerator SetStage()
     {
         yield return new WaitForSeconds(1.5f);
         isSetting = false;
     }
 
-    public void SetStartRoom()
+    private int randRoom = 0;
+    public void SetStartRoomNShopRoom()
     {
         Debug.Log("SpawnRooms : " + spawnRooms.Length);
         spawnRooms[Random.Range(0, spawnRooms.Length)].IsStartRoom = true;
+        randRoom = Random.Range(0, spawnRooms.Length);
+        if (spawnRooms[randRoom].IsStartRoom)
+        {
+            while (spawnRooms[randRoom].IsStartRoom)
+            {
+                randRoom = Random.Range(0, spawnRooms.Length);
+            }
+        }
+        spawnRooms[randRoom].IsShopRoom = true;
     }
 
     public void InstantiateRooms()

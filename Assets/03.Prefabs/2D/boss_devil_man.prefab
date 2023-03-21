@@ -2735,7 +2735,7 @@ GameObject:
   - component: {fileID: 5759608854821523502}
   - component: {fileID: 1690432821738326091}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Ghost Boss System
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2770,6 +2770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 868268b1b74dcbb4a8d0c129099e847d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossPattern: {fileID: 0}
   TargetGage:
     value: 0
 --- !u!114 &7682963109869222221
@@ -2806,16 +2807,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68af6515ee181084ab565c6d8d212f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowPase: 1
   moveSpeed: 2
   minDistance: 1.5
   waitTime: 1
-  isHaveSpecialPattern: 1
+  pase_patternCount: 
   patternDelay: 2
   warning: {fileID: 2355128624608227669, guid: d6770e4c6d817b245808dfa363dbd17d, type: 3}
   bossMonster: {fileID: 5801919827941628555, guid: 09ef4da0e4165b348880ce4a8b5a623c, type: 3}
   SummonFx: {fileID: 0}
   SummonTimer: {fileID: 0}
   SummonClock: {fileID: 0}
+  bossRangePattern: {fileID: 0}
 --- !u!61 &5759608854821523488
 BoxCollider2D:
   m_ObjectHideFlags: 0

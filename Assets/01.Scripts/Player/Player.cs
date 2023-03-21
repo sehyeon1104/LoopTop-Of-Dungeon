@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
-using UnityEditor.Rendering.PostProcessing;
+//using UnityEditor.PackageManager;
+//using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,45 +9,41 @@ using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 
-public class Player : PlayerBase, IHittable, IAgent
+public class Player : MonoBehaviour, IHittable
 {
-
+    public PlayerBase playerBase = new PlayerBase();   
     private bool isPDamaged = false;
     [SerializeField]
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;
-    private Rigidbody2D rb;
     public Vector3 hitPoint { get; private set; }
-    [field: SerializeField] public UnityEvent GetHit { get; set; }
-    [field: SerializeField] public UnityEvent OnDie { get; set; }
-
-    private void Awake()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        SetPlayerStat();
+        playerBase.SetPlayerStat();
     }
     public IEnumerator IEDamaged()
     {
-        GetHit.Invoke();
+        PlayerVisual.Instance.StartHitMotion();
         yield return new WaitForSeconds(invincibleTime);
-
         isPDamaged = false;
         yield return null;
     }
 
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged || IsPDead)
+        if (isPDamaged || playerBase.IsPDead)
             return;
 
-        GetHit.Invoke();
+        
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
         }
         isPDamaged = true;
-        Hp -= (int)damage;
+        playerBase.Hp -= (int)damage;
+        if(playerBase.Hp < 0) 
+            Dead();
         StartCoroutine(IEDamaged());
         UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
@@ -56,7 +52,7 @@ public class Player : PlayerBase, IHittable, IAgent
     public void Dead()
     {
 
-        IsPDead = true;
+        playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
@@ -66,8 +62,8 @@ public class Player : PlayerBase, IHittable, IAgent
     {
         gameObject.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
-        Hp = MaxHp;
-        IsPDead = false;
+        playerBase.Hp = playerBase.MaxHp;
+        playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
     }
 

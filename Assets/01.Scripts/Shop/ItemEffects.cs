@@ -28,7 +28,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("�� 1ĭ ȸ��");
-            GameManager.Instance.Player.Hp += 4;
+            GameManager.Instance.Player.playerBase.Hp += 4;
         }
     }
 
@@ -38,8 +38,8 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("������ 1 ���");
-            GameManager.Instance.Player.Damage += 1;
+            Debug.Log("������ 1 ���?");
+            GameManager.Instance.Player.playerBase.Damage += 1;
         }
     }
 
@@ -49,8 +49,8 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("ũ��Ƽ�� Ȯ�� 5% ���");
-            GameManager.Instance.Player.CritChance += 5;
+            Debug.Log("ũ��Ƽ�� Ȯ�� 5% ���?");
+            GameManager.Instance.Player.playerBase.CritChance += 5;
         }
     }
 
@@ -62,16 +62,16 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("����ġ 5 ȹ��");
-            GameManager.Instance.Player.Exp += 5;
+            GameManager.Instance.Player.playerBase.Exp += 5;
         }
     }
 
     public static ItemBase[] ShopItems = new ItemBase[]
     {
-        new Default(),      // 0�� ������ ( 0�� �޲޿� )
-        new Heal(),         // 1�� ������
-        new DamageBuff(),   // 2�� ������
-        new CritBuff(),     // 3�� ������
-        new TakeExp(),      // 4�� ������ ( ������ )
+        new Default(),      // 0번 아이템 ( 0번 메꿈용 )
+        new Heal(),         // 1번 아이템
+        new DamageBuff(),   // 2번 아이템
+        new CritBuff(),     // 3번 아이템
+        new TakeExp(),      // 4번 아이템 ( 테스트용 )
     };
 }
