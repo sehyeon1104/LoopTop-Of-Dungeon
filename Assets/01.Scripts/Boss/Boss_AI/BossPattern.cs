@@ -54,7 +54,7 @@ public abstract class BossPattern : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.G))
         {
-            Boss.Instance.OnDamage(5, gameObject, 0);
+            Boss.Instance.OnDamage(20, gameObject, 0);
         }
         MoveToPlayer();
         if(Boss.Instance.isBDead)
@@ -76,7 +76,7 @@ public abstract class BossPattern : MonoBehaviour
 
     public void MoveToPlayer()
     {
-        if (attackCoroutine != null || Boss.Instance.isBDead) return;
+        if (attackCoroutine != null || Boss.Instance.isBDead || Boss.Instance.isBInvincible) return;
 
         float playerDistance = Vector2.Distance(player.position, transform.position);
         if (playerDistance <= minDistance) return;
@@ -89,19 +89,26 @@ public abstract class BossPattern : MonoBehaviour
     {
         yield return new WaitUntil(() => NowPase == 1 && Boss.Instance.Base.Hp <= 0);
 
+        StopCoroutine(RandomPattern());
         StopCoroutine(attackCoroutine);
         Boss.Instance.isBInvincible = true;
 
-        yield return waitTime;
+        yield return patternDelay;
 
+        while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 2;
+            yield return null;
+        }
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         NowPase = 2;
 
-        yield return waitTime;
+        yield return patternDelay;
 
-        attackCoroutine = null;
         Boss.Instance.isBInvincible = false;
+        StartCoroutine(RandomPattern());
+        attackCoroutine = null;
     }
 
     private IEnumerator RandomPattern()
@@ -117,7 +124,6 @@ public abstract class BossPattern : MonoBehaviour
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
-
 
             if (attackCoroutine == null)
             {
