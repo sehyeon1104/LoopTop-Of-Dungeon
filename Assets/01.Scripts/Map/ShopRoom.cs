@@ -11,32 +11,32 @@ public class ShopRoom : RoomBase
     [SerializeField]
     private GameObject itemObj;
 
-    private List<GameObject> itemList = new List<GameObject>();
+    private List<ItemObj> itemList = new List<ItemObj>();
 
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
     }
 
-    private void Start()
+    public void SetItemObjList(List<ItemObj> lists)
     {
-        CreateItems();
-        SetItem();
-    }
+        itemList.Clear();
+        itemList = lists;
 
-    public void CreateItems()
-    {
-        itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
+        SetItem();
     }
 
     public void SetItem()
     {
-        for(int i = 1; i < itemSpawnPosArr.Length; ++i)
+        itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
+
+        for(int i = 0; i < itemSpawnPosArr.Length; ++i)
         {
-            itemObj.transform.position = itemSpawnPosArr[i].position;
+            itemList[i].transform.position = itemSpawnPosArr[i + 1].position;
         }
 
     }
+
 
 
     protected override void IsClear()

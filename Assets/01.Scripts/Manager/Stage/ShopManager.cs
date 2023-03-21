@@ -64,6 +64,8 @@ public class ShopManager : MonoSingleton<ShopManager>
             newObject.SetActive(true);
             itemObjList.Add(newItemObjComponent);
         }
+
+        shopRoom.SetItemObjList(itemObjList);
         //}
     }
 
