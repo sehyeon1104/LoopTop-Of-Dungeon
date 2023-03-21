@@ -28,7 +28,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("�� 1ĭ ȸ��");
-            GameManager.Instance.Player.Hp += 4;
+            GameManager.Instance.Player.playerBase.Hp += 4;
         }
     }
 
@@ -38,8 +38,8 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("������ 1 ���");
-            GameManager.Instance.Player.Damage += 1;
+            Debug.Log("������ 1 ���?");
+            GameManager.Instance.Player.playerBase.Damage += 1;
         }
     }
 
@@ -49,8 +49,8 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("ũ��Ƽ�� Ȯ�� 5% ���");
-            GameManager.Instance.Player.CritChance += 5;
+            Debug.Log("ũ��Ƽ�� Ȯ�� 5% ���?");
+            GameManager.Instance.Player.playerBase.CritChance += 5;
         }
     }
 
@@ -62,7 +62,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("����ġ 5 ȹ��");
-            GameManager.Instance.Player.Exp += 5;
+            GameManager.Instance.Player.playerBase.Exp += 5;
         }
     }
 
