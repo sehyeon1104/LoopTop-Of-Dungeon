@@ -41,7 +41,6 @@ public class PlayerSkill : MonoBehaviour
     PlayerBase playerBase;
     private void Start()
     {
-       
         SkillShuffle();
     }
     private void Awake()
@@ -64,7 +63,7 @@ public class PlayerSkill : MonoBehaviour
         //    randomSkillNumArr[i] = i + 1;
         //}
     }
-    public void SkillToButton( )
+    public void SkillToButton()
     {
         GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
         GameObject.FindGameObjectWithTag("Skill2").GetComponent<Button>().onClick.AddListener(Skill2);
@@ -148,14 +147,14 @@ public class PlayerSkill : MonoBehaviour
     #endregion
     public void Skill1()
     {
-        skillEvent[0]();
         UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[0]);
+        skillEvent[0]();
     }
 
     public void Skill2()
     {
-        skillEvent[1]();
         UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[1]);
+        skillEvent[1]();
     }
 
 
