@@ -184,7 +184,7 @@ public class GhostPattern : BossPattern
 
     public override IEnumerator Pattern5(int count = 0)
     {
-        yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
+        //yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
 
         yield return null;
         attackCoroutine = null;

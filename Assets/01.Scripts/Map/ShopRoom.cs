@@ -8,14 +8,19 @@ public class ShopRoom : RoomBase
     private GameObject itemPosObj;
     [SerializeField]
     private Transform[] itemSpawnPosArr;
-    [SerializeField]
-    private GameObject itemObj;
 
     private List<ItemObj> itemList = new List<ItemObj>();
+
+    private ItemObj[] itemobjArr;
 
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
+    }
+
+    private void Awake()
+    {
+        itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
     }
 
     public void SetItemObjList(List<ItemObj> lists)
@@ -23,18 +28,22 @@ public class ShopRoom : RoomBase
         itemList.Clear();
         itemList = lists;
 
+        itemobjArr = lists.ToArray();
         SetItem();
     }
 
     public void SetItem()
     {
-        itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
-
-        for(int i = 0; i < itemSpawnPosArr.Length; ++i)
+        for(int i = 0; i < itemSpawnPosArr.Length - 1; ++i)
         {
             itemList[i].transform.position = itemSpawnPosArr[i + 1].position;
         }
 
+    }
+
+    public Transform[] GetItemSpawnPos()
+    {
+        return itemSpawnPosArr;
     }
 
 
@@ -44,4 +53,25 @@ public class ShopRoom : RoomBase
         isClear = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            foreach (var itemobj in itemobjArr)
+            {
+                StartCoroutine(itemobj.ToggleItemInfoPanel());
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            foreach(var itemobj in itemobjArr)
+            {
+                StopCoroutine(itemobj.ToggleItemInfoPanel());
+            }
+        }
+    }
 }
