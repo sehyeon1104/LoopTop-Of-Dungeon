@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BossPattern : MonoBehaviour
 {
+    public int NowPase = 1;
+
     [Header("보스 이동 관련 스탯")]
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float minDistance;
@@ -21,7 +23,6 @@ public abstract class BossPattern : MonoBehaviour
     [SerializeField] private float patternDelay;
     
     protected int[] patternCount = new int[5];
-    protected int nowPase = 1;
 
 
     protected Transform player;
@@ -80,7 +81,7 @@ public abstract class BossPattern : MonoBehaviour
         while (!Boss.Instance.isBDead)
         {
             int patternChoice = 0;
-            patternChoice = Random.Range(0, pase_patternCount[nowPase]);
+            patternChoice = Random.Range(0, pase_patternCount[NowPase]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
