@@ -9,7 +9,9 @@ using DG.Tweening;
 using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
-{ 
+{
+     GameObject playerUI = null;
+    public GameObject PlayerUI => playerUI;
     Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
@@ -53,6 +55,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void Awake()
     {
         playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
     }
     private void Start()
     {
