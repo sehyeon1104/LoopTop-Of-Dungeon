@@ -23,7 +23,7 @@ public class G_Patterns : BossPattern
     {
         for (int i = 0; i < count; i++)
         {
-            //ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ 
+            //º¸½º ¾Ö´Ï¸ÞÀÌ¼Ç 
             attackAnim.Play(animArray[1]);
 
             GameObject clone = Instantiate(warning, player.position, Quaternion.identity);
@@ -36,12 +36,34 @@ public class G_Patterns : BossPattern
 
             Destroy(clone);
         }
-    } // ï¿½È»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
-    public IEnumerator Pattern_BM()
+    } // ÆÈ»¸±â·Î ´ëÃ¼ ¿¹Á¤
+    public IEnumerator Pattern_BM(int count)
     {
         yield return null;
-        for(int i = 0; i < 4; i++)
-            Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
+
+        for(int i = 0; i < count; i++)
+        {
+            Vector2 dir = player.position - transform.position;
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            switch (i)
+            {
+                case 0:
+                    Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * rot));
+                    break;
+                case 1:
+                    for(int j = -1; j <= 1; j +=2)
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * (rot + j * 30f)));
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+            yield return new WaitForSeconds(3f);
+        }
     }
     public IEnumerator Pattern_TP()
     {
@@ -64,7 +86,7 @@ public class G_Patterns : BossPattern
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
-        dir = player.position - transform.position;
+        dir = player.position - (transform.position + Vector3.up * 2);
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float angle = 7.2f;
 
@@ -142,7 +164,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return Random.Range(20, 30);
+                return NowPase == 1 ? 2 : 5;
             case 2:
                 break;
             case 3:
@@ -158,7 +180,7 @@ public class GhostPattern : G_Patterns
 
     }
 
-    public override IEnumerator Pattern1(int count = 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+    public override IEnumerator Pattern1(int count = 0) //°¡½Ã ¼ÒÈ¯ ÆÐÅÏ -> ÀåÆÇ ÆÐÅÏÀ¸·Î ±³Ã¼ ¿¹Á¤
     {
         switch(NowPase)
         {
@@ -173,12 +195,12 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern2(int count = 0) //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
     {
         switch (NowPase)
         {
             case 1:
-                yield return StartCoroutine(Pattern_BM());
+                yield return StartCoroutine(Pattern_BM(count));
                 break;
             case 2:
                 break;
@@ -188,7 +210,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern3(int count = 0) //ï¿½Ú·ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
+    public override IEnumerator Pattern3(int count = 0) //ÅÚ·¹Æ÷Æ® ÆÐÅÏ
     {
         switch(NowPase)
         {
@@ -203,7 +225,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public override IEnumerator Pattern4(int count = 0) //ÀåÆÇ ÆÐÅÏ
     {
         switch (NowPase)
         {
@@ -219,7 +241,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern5(int count = 0) //ï¿½È»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, 2ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½
+    public override IEnumerator Pattern5(int count = 0) //ÆÈ»¸±â ÆÐÅÏ, 2ÆäÀÌÁî¿¡¸¸ »ç¿ë
     {
         switch (NowPase)
         {

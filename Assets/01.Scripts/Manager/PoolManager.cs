@@ -121,11 +121,11 @@ public class PoolManager
             return null;
         return _pool[name].Obj;
     }
-    public GameObject PoolManaging(GameObject gameObject, Vector2 position, Quaternion rotation)
-    {
-        Debug.Log(AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromSource(gameObject)));
-        return null;
-    }
+    //public GameObject PoolManaging(GameObject gameObject, Vector2 position, Quaternion rotation)
+    //{
+    //    Debug.Log(AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromSource(gameObject)));
+    //    return null;
+    //}
 
     public GameObject PoolManaging(string path, Vector2 position, Quaternion rotation)
     {

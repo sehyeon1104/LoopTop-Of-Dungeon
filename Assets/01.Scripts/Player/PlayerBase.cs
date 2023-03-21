@@ -2,11 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBase : MonoBehaviour
+public class PlayerBase
 {
-    private void Start()
+    public PlayerBase()
     {
         SetPlayerStat();
+    }
+    public void SetPlayerStat()
+    {
+        maxHp = 12;
+        hp = maxHp;
+        damage = 5f;
+        critChance = 5f;
+
+        level = 1;
+        maxLevel = 100;
+        _expTable = new int[maxLevel];
+        exp = 0;
+
+        _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+
+        for (int i = 0; i < maxLevel; ++i)
+        {
+            _expTable[i] = i + 1;
+        }
     }
     private PlayerSkillData skillData;
     public PlayerSkillData SkillData { get; set; }
@@ -15,7 +34,7 @@ public class PlayerBase : MonoBehaviour
     public bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
 
-    protected Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
     {
         get => _playerTransformTypeFlag;
         set => _playerTransformTypeFlag = value;
@@ -30,7 +49,6 @@ public class PlayerBase : MonoBehaviour
             hp = value;
             if (hp <= 0)
             {
-                GameManager.Instance.Player.OnDie.Invoke();
                 hp = 0;
             }
             else if (hp > maxHp)
@@ -42,7 +60,7 @@ public class PlayerBase : MonoBehaviour
     }
 
     private int maxHp;
-    protected int MaxHp => maxHp;
+    public int MaxHp => maxHp;
 
     private float damage;
     public float Damage
@@ -112,23 +130,5 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    protected void SetPlayerStat()
-    {
-        maxHp = 12;
-        hp = maxHp;
-        damage = 5f;
-        critChance = 5f;
-        
-        level = 1;
-        maxLevel = 100;
-        _expTable = new int[maxLevel];
-        exp = 0;
-
-        _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
-
-        for (int i = 0; i < maxLevel; ++i)
-        {
-            _expTable[i] = i + 1;
-        }
-    }
+  
 }

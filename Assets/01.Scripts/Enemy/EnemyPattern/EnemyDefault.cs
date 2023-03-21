@@ -103,12 +103,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual IEnumerator AttackToPlayer()
     {
-        if (GameManager.Instance.Player.IsPDead) yield break;
+        if (GameManager.Instance.Player.playerBase.IsPDead) yield break;
 
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
 
-        yield break;
     }
 
     public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)
