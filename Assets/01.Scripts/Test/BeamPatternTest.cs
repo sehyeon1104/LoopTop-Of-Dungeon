@@ -60,11 +60,12 @@ public class BeamPatternTest : MonoBehaviour
 
     private void CheckPlayer()
     {
-        Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position, new Vector2(width, length), 0);
-        foreach(var col in cols)
+        Collider2D[] cols = Physics2D.OverlapBoxAll(beam.transform.position + Vector3.right * length * 0.5f, new Vector2(length * 0.5f, width * 0.5f), transform.rotation.z);
+        foreach (var col in cols)
         {
-            Debug.Log($"충돌체 : {col.gameObject.name}");
-            if(col?.gameObject.layer == pLayer)
+            Debug.Log($"충돌체 : {col.transform.name}");
+            Debug.Log($"충돌체 트랜스폼 : {col.transform.position}");
+            if(col.transform.gameObject.layer == pLayer)
             {
                 Debug.Log("플레이어 충돌!!");
                 GameManager.Instance.Player.OnDamage(2, gameObject, 0);

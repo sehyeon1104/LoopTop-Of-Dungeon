@@ -37,11 +37,33 @@ public class G_Patterns : BossPattern
             Destroy(clone);
         }
     } // ∆»ª∏±‚∑Œ ¥Î√º øπ¡§
-    public IEnumerator Pattern_BM()
+    public IEnumerator Pattern_BM(int count)
     {
         yield return null;
-        for(int i = 0; i < 4; i++)
-            Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
+
+        for(int i = 0; i < count; i++)
+        {
+            Vector2 dir = player.position - transform.position;
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            switch (i)
+            {
+                case 0:
+                    Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * rot));
+                    break;
+                case 1:
+                    for(int j = -1; j <= 1; j +=2)
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * (rot + j * 30f)));
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
+            yield return new WaitForSeconds(3f);
+        }
     }
     public IEnumerator Pattern_TP()
     {
@@ -64,7 +86,7 @@ public class G_Patterns : BossPattern
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
-        dir = player.position - transform.position;
+        dir = player.position - (transform.position + Vector3.up * 2);
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float angle = 7.2f;
 
@@ -142,7 +164,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return Random.Range(20, 30);
+                return NowPase == 1 ? 2 : 5;
             case 2:
                 break;
             case 3:
@@ -178,7 +200,7 @@ public class GhostPattern : G_Patterns
         switch (NowPase)
         {
             case 1:
-                yield return StartCoroutine(Pattern_BM());
+                yield return StartCoroutine(Pattern_BM(count));
                 break;
             case 2:
                 break;
