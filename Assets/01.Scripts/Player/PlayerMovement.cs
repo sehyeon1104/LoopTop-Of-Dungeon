@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         }
         Vector2 VelocityVec = inputVelocity * speed * Time.deltaTime;
         rb.MovePosition(rb.position + VelocityVec);
+        
     }
 
 }
