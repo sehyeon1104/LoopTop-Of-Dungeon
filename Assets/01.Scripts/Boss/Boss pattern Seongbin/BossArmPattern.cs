@@ -25,13 +25,11 @@ public class BossArmPattern : MonoBehaviour
             if ((hit1?.gameObject.layer == LayerMask.NameToLayer("Player")  && iscoroutinestart == false))
             {
                 player.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-        }
+            }
             else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player"))
             {
                 iscoroutinestart = false;
             }
-            
-        
     }
     private void OnDrawGizmos()
     {
