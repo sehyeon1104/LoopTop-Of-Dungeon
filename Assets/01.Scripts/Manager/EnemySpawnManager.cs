@@ -106,10 +106,10 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 break;
         }
 
-        Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
-        Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
-        Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
-        Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
+        // Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
+        // Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
+        // Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
+        // Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
     }
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
@@ -120,15 +120,23 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             door.IsFirst = false;
         }
 
+        // 디버깅용, 테스트 필요
+        if(enemySpawnPos.Length == 0)
+        {
+            GameManager.Instance.Player.playerBase.FragmentAmount = 404;
+        }
+
         door.CloseDoors();
         
         int randPos = 0;
         isNextWave = false;
         // wave1
-        Debug.Log(enemySpawnPos.Length);
-        Debug.Log("wave 1");
+        // Debug.Log(enemySpawnPos.Length);
+        // Debug.Log("wave 1");
+        GameManager.Instance.Player.playerBase.FragmentAmount = 404;
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
+
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드

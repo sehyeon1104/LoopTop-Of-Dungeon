@@ -56,7 +56,9 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         mapTypeFlag = Define.MapTypeFlag.Ghost;
+        Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
+    
 
     public void SetStageSceneNum(Define.StageSceneNum sceneNum)
     {

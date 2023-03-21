@@ -66,6 +66,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
+        // playerIcon = GameManager.Instance.Player.
         DisActiveAllPanels();
         HPInit();
         HpUpdate();

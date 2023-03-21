@@ -14,11 +14,12 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
+
     private void Start()
     {
        
     }
-    // Update is called once per frame
+
     public void StartHitMotion()
     {
         StartCoroutine(IEHitMotion());

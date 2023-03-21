@@ -42,10 +42,10 @@ public class PlayerSkill : MonoBehaviour
     private void Start()
     {
         SkillShuffle();
-        foreach(int i in randomSkillNum)
-        {
-            print(i);
-        }
+        //foreach(int i in randomSkillNum)
+        //{
+        //    print(i);
+        //}
     }
     private void Awake()
     {

@@ -22,7 +22,7 @@ public class PlayerTransformation : MonoBehaviour
 
     public void TransformGhost()
     {
-         playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         playerTransformDataSO = playerTransformDataSOArr[1];
         RuntimeAnimatorController animator = GameManager.Instance.Player.playerBase.SkillData.playerAnim;
         animator = playerTransformDataSO.playerAnim;

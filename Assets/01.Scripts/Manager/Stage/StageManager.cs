@@ -22,7 +22,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public bool isSetting { private set; get; }
 
-    private void Start()
+    private IEnumerator Start()
     {
         isSetting = true;
         StartCoroutine(SetStage());
@@ -37,6 +37,7 @@ public class StageManager : MonoSingleton<StageManager>
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
+        yield return new WaitUntil(() => enemyRooms.Length > 9);
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
@@ -51,7 +52,7 @@ public class StageManager : MonoSingleton<StageManager>
     private int randRoom = 0;
     public void SetStartRoomNShopRoom()
     {
-        Debug.Log("SpawnRooms : " + spawnRooms.Length);
+        // Debug.Log("SpawnRooms : " + spawnRooms.Length);
         spawnRooms[Random.Range(0, spawnRooms.Length)].IsStartRoom = true;
         randRoom = Random.Range(0, spawnRooms.Length);
         if (spawnRooms[randRoom].IsStartRoom)
@@ -81,19 +82,18 @@ public class StageManager : MonoSingleton<StageManager>
     public void SetWallGrid()
     {
         GameObject map = GameObject.FindGameObjectWithTag("Map");
-       if(map != null)
+        if(map != null)
         {
-            Destroy(map);
-            randWallGrid = Random.Range(0, wallGrids.Length);
-            wallGrid = wallGrids[randWallGrid];
-            Instantiate(wallGrid);
+             Destroy(map);
+             randWallGrid = Random.Range(0, wallGrids.Length);
+             wallGrid = wallGrids[randWallGrid];
+             Instantiate(wallGrid);
         }
-       else if(map == null)
+        else if(map == null)
         {
-
-            randWallGrid = Random.Range(0, wallGrids.Length);
-            wallGrid = wallGrids[randWallGrid];
-            Instantiate(wallGrid);
+             randWallGrid = Random.Range(0, wallGrids.Length);
+             wallGrid = wallGrids[randWallGrid];
+             Instantiate(wallGrid);
         }
 
 
