@@ -61,6 +61,10 @@ public class Door : MonoBehaviour
     {
         isOpenDoor = true;
         isCloseDoor = false;
+        if(tilemapCollider2D == null)
+        {
+            Debug.Log("tilemapCollider2D is null!");
+        }
         tilemapCollider2D.isTrigger = true;
         tilemapRenderer.enabled = false;
     }
