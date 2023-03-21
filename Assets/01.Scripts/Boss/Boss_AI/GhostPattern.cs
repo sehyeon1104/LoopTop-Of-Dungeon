@@ -152,16 +152,16 @@ public class G_Patterns : BossPattern
 }
 public class GhostPattern : G_Patterns
 {
+    Coroutine ActCoroutine = null;
 
-    private void Awake()
-    {
-    }
     private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPase == 1)
         {
             isUsingFinalPattern = true;
         }
+
+        if (Boss.Instance.isBInvincible && ActCoroutine != null) ECoroutine();
 
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
         base.Update();
@@ -189,15 +189,25 @@ public class GhostPattern : G_Patterns
 
     }
 
+    private Coroutine SCoroutine(IEnumerator act)
+    {
+        return ActCoroutine = StartCoroutine(act);
+    }
+    private void ECoroutine()
+    {
+        StopCoroutine(ActCoroutine);
+        ActCoroutine = null;
+    }
+
     public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {
         switch (NowPase)
         {
             case 1:
-                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
+                yield return SCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
+                yield return SCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 
@@ -208,7 +218,7 @@ public class GhostPattern : G_Patterns
     public override IEnumerator Pattern2(int count = 0) //빔 패턴
     {
 
-        yield return StartCoroutine(Pattern_BM(count));
+        yield return SCoroutine(Pattern_BM(count));
 
         yield return null;
         attackCoroutine = null;
@@ -219,7 +229,7 @@ public class GhostPattern : G_Patterns
         switch(NowPase)
         {
             case 1:
-                yield return StartCoroutine(Pattern_TP());
+                yield return SCoroutine(Pattern_TP());
                 break;
             case 2:
                 break;
@@ -248,7 +258,7 @@ public class GhostPattern : G_Patterns
         switch(NowPase)
         {
             case 1:
-                yield return StartCoroutine(Pattern_SM(count));
+                yield return SCoroutine(Pattern_SM(count));
                 break;
             case 2:
                 break;

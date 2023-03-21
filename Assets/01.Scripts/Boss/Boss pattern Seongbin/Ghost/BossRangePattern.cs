@@ -78,6 +78,8 @@ public class BossRangePattern : MonoBehaviour
         FPRR.transform.localScale = Vector2.zero;
         FPRRS.transform.localScale = Vector2.zero;
 
+        FPRRSpriteRenderer.enabled = true;
+        FPRRSSpriteRenderer.enabled = true;
 
         FPRR.SetActive(false);
         FPRRS.SetActive(false);
@@ -139,7 +141,10 @@ public class BossRangePattern : MonoBehaviour
 
         FPR.transform.localScale = Vector2.zero; 
         FPRS.transform.localScale = Vector2.zero;
-        
+
+        FPRSpriteRenderer.enabled = true;
+        FPRSSpriteRenderer.enabled = true;
+
 
         FPR.gameObject.SetActive(false);
         FPRS.gameObject.SetActive(false);
