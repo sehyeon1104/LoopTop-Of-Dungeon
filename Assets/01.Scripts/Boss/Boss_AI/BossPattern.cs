@@ -41,6 +41,7 @@ public abstract class BossPattern : MonoBehaviour
 
         AnimationArray();
         StartCoroutine(RandomPattern());
+        StartCoroutine(ChangePase());
     }
 
     protected void Update()
@@ -72,6 +73,22 @@ public abstract class BossPattern : MonoBehaviour
 
         Vector2 dir = (player.position - transform.position).normalized;
         transform.Translate(dir * Time.deltaTime * moveSpeed);
+    }
+
+    private IEnumerator ChangePase()
+    {
+        yield return new WaitUntil(() => NowPase == 1 && Boss.Instance.Base.Hp <= 0);
+
+        StopCoroutine(attackCoroutine);
+        Boss.Instance.isBInvincible = true;
+
+        yield return waitTime;
+        Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        NowPase = 2;
+        yield return waitTime;
+
+        attackCoroutine = null;
+        Boss.Instance.isBInvincible = false;
     }
 
     private IEnumerator RandomPattern()
@@ -116,9 +133,9 @@ public abstract class BossPattern : MonoBehaviour
             {
                 yield return new WaitUntil(() => attackCoroutine == null);
                 yield return new WaitForSeconds(patternDelay);
+                StartCoroutine(CoolDownCheck(patternChoice));
             }
 
-            StartCoroutine(CoolDownCheck(patternChoice));
         }
         attackCoroutine = null;
         StopAllCoroutines();

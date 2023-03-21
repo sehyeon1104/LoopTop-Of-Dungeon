@@ -10,6 +10,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public MultiGage.TargetGageValue TargetGage;
 
     public bool isBDamaged { set; get; } = false;
+    public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
 
     public Vector3 hitPoint { get; }
@@ -75,6 +76,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     {
         if (isBDead) return;
         if (isBDamaged) return;
+        if (isBInvincible) return;
 
         if(Random.Range(1, 101) <= critChance)
         {
