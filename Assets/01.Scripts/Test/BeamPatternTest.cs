@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 public class BeamPatternTest : MonoBehaviour
 {
+    [SerializeField] LayerMask pLayer;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
     [SerializeField] Light2D beamLight;
@@ -62,8 +63,10 @@ public class BeamPatternTest : MonoBehaviour
         Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position, new Vector2(width, length), 0);
         foreach(var col in cols)
         {
-            if(col.gameObject.layer == LayerMask.NameToLayer("Player"))
+            Debug.Log($"충돌체 : {col.gameObject.name}");
+            if(col?.gameObject.layer == pLayer)
             {
+                Debug.Log("플레이어 충돌!!");
                 GameManager.Instance.Player.OnDamage(2, gameObject, 0);
             }
         }
@@ -87,7 +90,7 @@ public class BeamPatternTest : MonoBehaviour
 
         while (beam.GetPosition(1).x <= length)
         {
-            lineLength += 1f;
+            lineLength += 1.5f;
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
 
             yield return null;
