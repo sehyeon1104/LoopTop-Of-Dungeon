@@ -22,7 +22,7 @@ public abstract class BossPattern : MonoBehaviour
     [Header("보스 패턴 후딜레이")]
     [SerializeField] private float patternDelay;
     
-    protected int[] patternCount = new int[5];
+    protected int[] patternCount = new int[6];
 
 
     protected Transform player;
@@ -32,12 +32,18 @@ public abstract class BossPattern : MonoBehaviour
 
     protected Coroutine attackCoroutine = null;
 
-    protected bool[] isThisSkillCoolDown = new bool[5];
+    protected bool[] isThisSkillCoolDown = new bool[6];
+
+    protected bool isCanUseFinalPattern = true;
+    protected bool isUsingFinalPattern = false;
 
     private void Start()
     {
         player = GameManager.Instance.Player.transform;
         attackAnim = GetComponent<Animation>();
+
+        isCanUseFinalPattern = true;
+        isUsingFinalPattern = false;
 
         AnimationArray();
         StartCoroutine(RandomPattern());
@@ -46,6 +52,10 @@ public abstract class BossPattern : MonoBehaviour
 
     protected void Update()
     {
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            Boss.Instance.OnDamage(5, gameObject, 0);
+        }
         MoveToPlayer();
         if(Boss.Instance.isBDead)
         {
@@ -84,6 +94,7 @@ public abstract class BossPattern : MonoBehaviour
 
         yield return waitTime;
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        isCanUseFinalPattern = true;
         NowPase = 2;
         yield return waitTime;
 
@@ -106,24 +117,35 @@ public abstract class BossPattern : MonoBehaviour
 
             if (attackCoroutine == null)
             {
-                isThisSkillCoolDown[patternChoice] = true;
-                switch (patternChoice)
+                if (isCanUseFinalPattern && isUsingFinalPattern)
                 {
-                    case 0:
-                        attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
-                        break;
-                    case 1:
-                        attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
-                        break;
-                    case 2:
-                        attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
-                        break;
-                    case 3:
-                        attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
-                        break;
-                    case 4:
-                        attackCoroutine = StartCoroutine(Pattern5(patternCount[4]));
-                        break;
+                    isCanUseFinalPattern = false;
+
+                    attackCoroutine = StartCoroutine(PatternFinal(patternCount[5]));
+
+                    isUsingFinalPattern = false;
+                }
+                else
+                {
+                    isThisSkillCoolDown[patternChoice] = true;
+                    switch (patternChoice)
+                    {
+                        case 0:
+                            attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
+                            break;
+                        case 1:
+                            attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
+                            break;
+                        case 2:
+                            attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
+                            break;
+                        case 3:
+                            attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
+                            break;
+                        case 4:
+                            attackCoroutine = StartCoroutine(Pattern5(patternCount[4]));
+                            break;
+                    }
                 }
             }
 

@@ -16,7 +16,6 @@ public class G_Patterns : BossPattern
     [SerializeField] protected BossRangePattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
-    bool isUsedSummonSkill = false;
     #endregion
 
     #region pase 1
@@ -42,7 +41,7 @@ public class G_Patterns : BossPattern
     {
         yield return null;
         for(int i = 0; i < 4; i++)
-            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Beam.prefab", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
+            Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(new Vector3(0, 0, i * 90)));
     }
     public IEnumerator Pattern_TP()
     {
@@ -128,9 +127,9 @@ public class GhostPattern : G_Patterns
     }
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPase == 1)
         {
-
+            isUsingFinalPattern = true;
         }
 
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
@@ -147,9 +146,11 @@ public class GhostPattern : G_Patterns
             case 2:
                 break;
             case 3:
-                return 10;
+                break;
             case 4:
                 break;
+            case 5:
+                return 10;
             default:
                 break;
         }
@@ -172,7 +173,7 @@ public class GhostPattern : G_Patterns
         attackCoroutine = null;
     }
 
-    public override IEnumerator Pattern2(int count = 0) //ź�� �߻� ���� -> �� �������� ��ü ����
+    public override IEnumerator Pattern2(int count = 0) //�� ����
     {
         switch (NowPase)
         {

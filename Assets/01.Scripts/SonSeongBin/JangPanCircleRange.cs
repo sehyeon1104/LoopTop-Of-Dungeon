@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,7 @@ public class JangPanCircleRange : MonoBehaviour
 {
     IEnumerator PlayerDamaged = null;
 
-    public TestGameManager GameManager = null;
+    public GameObject Player = null;
 
     private bool iscoroutinestart = false;
 
@@ -16,9 +17,11 @@ public class JangPanCircleRange : MonoBehaviour
 
     WaitForSeconds checkTime = new WaitForSeconds(0.1f);
 
+    WaitForSeconds DotTime = new WaitForSeconds(0.8f);
+
     private void OnEnable()
     {
-        PlayerDamaged = GameManager.DotDamageFunc();
+        PlayerDamaged = DotDamageFunc();
         StartCoroutine(CheckPlayer());
     }
 
@@ -51,6 +54,14 @@ public class JangPanCircleRange : MonoBehaviour
         }
     }
 
+    public IEnumerator DotDamageFunc()
+    {
+        while (true)
+        {
+            Player.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            yield return DotTime;
+        }
+    }
 
 
     private void OnDrawGizmos()
