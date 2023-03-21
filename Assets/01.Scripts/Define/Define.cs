@@ -26,7 +26,6 @@ public static class Define
 
     public enum PlayerTransformTypeFlag
     {
-        Normal = 0,
         Power,
         Ghost,
 
