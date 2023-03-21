@@ -54,7 +54,7 @@ public class G_Patterns : BossPattern
                 case 1:
                     for (int j = -1; j <= 1; j += 2)
                     {
-                        Vector3 pos = dir.x > dir.y ? Vector3.up : Vector3.left;
+                        Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
                         dir = player.position - (transform.position + pos * j * 2);
                         rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
@@ -62,13 +62,17 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 2:
+                    for (int j = 0; j < 4; j++)
+                    {
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
+                    }
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
     }
     public IEnumerator Pattern_TP()
@@ -86,7 +90,7 @@ public class G_Patterns : BossPattern
             transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
         }
 
-        transform.position = player.forward + player.position;
+        transform.position = player.right * 3 + player.position;
         moveSpeed *= 2f;
 
         attackAnim.Play(animArray[2]);
@@ -151,7 +155,6 @@ public class GhostPattern : G_Patterns
 
     private void Awake()
     {
-        isThisSkillCoolDown[3] = true;
     }
     private void Update()
     {
@@ -170,7 +173,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return NowPase == 1 ? 2 : 5;
+                return NowPase == 1 ? 3 : 5;
             case 2:
                 break;
             case 3:
@@ -204,14 +207,8 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
     {
-        switch (NowPase)
-        {
-            case 1:
-                yield return StartCoroutine(Pattern_BM(count));
-                break;
-            case 2:
-                break;
-        }
+
+        yield return StartCoroutine(Pattern_BM(count));
 
         yield return null;
         attackCoroutine = null;
@@ -237,10 +234,8 @@ public class GhostPattern : G_Patterns
         switch (NowPase)
         {
             case 1:
-                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 

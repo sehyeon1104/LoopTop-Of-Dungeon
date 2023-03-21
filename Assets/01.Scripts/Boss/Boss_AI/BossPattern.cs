@@ -93,9 +93,11 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.isBInvincible = true;
 
         yield return waitTime;
+
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         NowPase = 2;
+
         yield return waitTime;
 
         attackCoroutine = null;
@@ -108,8 +110,10 @@ public abstract class BossPattern : MonoBehaviour
 
         while (!Boss.Instance.isBDead)
         {
+            if (Boss.Instance.isBInvincible) continue;
+
             int patternChoice = 0;
-            patternChoice = Random.Range(0, pase_patternCount[NowPase]);
+            patternChoice = Random.Range(0, pase_patternCount[NowPase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;

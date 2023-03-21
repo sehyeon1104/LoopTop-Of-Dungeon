@@ -49,7 +49,6 @@ public class BeamPatternTest : MonoBehaviour
     private void SetObjectFlip()
     {
         tempScale.y = transform.rotation.z >= 0.7f ? -1.35f : 1.35f;
-        Debug.Log(transform.rotation.z);
         transform.localScale = tempScale;
     }
 
