@@ -24,6 +24,9 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
         // Get Virtual Camera Noise Profile
         if (VirtualCamera != null)
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
+
+        virtualCameraNoise.m_AmplitudeGain = 0f;
+        virtualCameraNoise.m_FrequencyGain = 0f;
     }
 
     //// µð¹ö±ë
