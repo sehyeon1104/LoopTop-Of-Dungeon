@@ -64,13 +64,19 @@ public class ItemObj : MonoBehaviour
     {
         while (true)
         {
-            if (Vector3.Distance(GameManager.Instance.Player.transform.position, transform.position) < playerSensingDis && !itemInfoPanel.gameObject.activeSelf)
+            if (Vector3.Distance(GameManager.Instance.Player.transform.position, transform.position) < playerSensingDis)
             {
-                itemInfoPanel.gameObject.SetActive(true);
+                if(!itemInfoPanel.gameObject.activeSelf)
+                {
+                    itemInfoPanel.gameObject.SetActive(true);
+                }
             }
             else
             {
-                itemInfoPanel.gameObject.SetActive(false);
+                if (itemInfoPanel.gameObject.activeSelf)
+                {
+                    itemInfoPanel.gameObject.SetActive(false);
+                }
             }
 
             yield return waitForEndOfFrame;

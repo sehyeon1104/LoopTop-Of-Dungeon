@@ -28,6 +28,19 @@ public class SpawnRoom : MonoBehaviour
         }
     }
 
+    private bool isShopRoom = false;
+    public bool IsShopRoom
+    {
+        get
+        {
+            return isShopRoom;
+        }
+        set
+        {
+            isShopRoom = value;
+        }
+    }
+
     private void Start()
     {
         SetMapTypeFlag();
@@ -57,6 +70,10 @@ public class SpawnRoom : MonoBehaviour
         if (isStartRoom)
         {
             Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Start", transform);
+        }
+        else if (isShopRoom)
+        {
+            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Shop", transform);
         }
         else
         {

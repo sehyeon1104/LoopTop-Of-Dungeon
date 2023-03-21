@@ -29,10 +29,10 @@ public class ShopRoom : RoomBase
         itemList = lists;
 
         itemobjArr = lists.ToArray();
-        SetItem();
+        SetItemPos();
     }
 
-    public void SetItem()
+    public void SetItemPos()
     {
         for(int i = 0; i < itemSpawnPosArr.Length - 1; ++i)
         {
@@ -43,6 +43,10 @@ public class ShopRoom : RoomBase
 
     public Transform[] GetItemSpawnPos()
     {
+        foreach(var itemSpawnPos in itemSpawnPosArr)
+        {
+             Debug.Log("return pos");
+        }
         return itemSpawnPosArr;
     }
 
@@ -57,6 +61,11 @@ public class ShopRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
+            if (!ShopManager.Instance.isItemSetting)
+            {
+                ShopManager.Instance.SetItem();
+            }
+
             foreach (var itemobj in itemobjArr)
             {
                 StartCoroutine(itemobj.ToggleItemInfoPanel());

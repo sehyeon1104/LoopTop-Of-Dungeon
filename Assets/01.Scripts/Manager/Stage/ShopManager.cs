@@ -27,18 +27,32 @@ public class ShopManager : MonoSingleton<ShopManager>
 
     private ShopRoom shopRoom = null;
 
+    public bool isItemSetting { private set; get; } = false;
+
     private void Awake()
     {
         shopRoom = FindObjectOfType<ShopRoom>();
+        itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ItemObj.prefab");
     }
 
-    private void Start()
+
+    public void SetItem()
     {
+        if(shopRoom == null)
+        {
+            shopRoom = FindObjectOfType<ShopRoom>();
+            if(shopRoom == null)
+            {
+                Debug.LogWarning("shopRoom is Null!");
+            }
+        }
+        isItemSetting = true;
         itemObjSpawnPos = shopRoom.GetItemSpawnPos();
 
         ShuffleItemSelectNum();
         CreateObject();
     }
+    
 
     public void ShuffleItemSelectNum()
     {
