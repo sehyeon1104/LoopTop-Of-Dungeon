@@ -330,7 +330,6 @@ MonoBehaviour:
   Skill1Trans: {fileID: 0}
   JangPanPersDamage: 10
   skillNum: 
-  shuffleCount: 100
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -459,7 +458,6 @@ MonoBehaviour:
   Skill1Trans: {fileID: 0}
   JangPanPersDamage: 10
   skillNum: 
-  shuffleCount: 100
 --- !u!1 &2437888175715823303
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,14 +672,12 @@ GameObject:
   - component: {fileID: 7442715256025506024}
   - component: {fileID: 7442715256025506027}
   - component: {fileID: 7442715256025506026}
-  - component: {fileID: 7442715256025506028}
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 5322660876921446628}
   - component: {fileID: 7532922233381854325}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
   - component: {fileID: 1544384322}
-  - component: {fileID: 1344632528}
   m_Layer: 0
   m_Name: Player(prototype)
   m_TagString: Player
@@ -746,88 +742,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.008119613, y: -0.04}
   m_Size: {x: 1, y: 1.32}
   m_Direction: 0
---- !u!114 &7442715256025506028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b4bc42fb63bda24e93c9b5588f221f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _joyStick: {fileID: 0}
-  Skill1:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerSkill, Assembly-CSharp
-        m_MethodName: Skill1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  skill2:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerSkill, Assembly-CSharp
-        m_MethodName: Skill2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  dash:
-    m_PersistentCalls:
-      m_Calls: []
-  ultimateSkill:
-    m_PersistentCalls:
-      m_Calls: []
-  <Attack>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1848801262}
-        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
-        m_MethodName: Attack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  <SkillFirst>k__BackingField:
-    m_PersistentCalls:
-      m_Calls: []
-  <MovementInput>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5322660876921446628}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &7442715256223835011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,48 +756,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reviveInvincibleTime: 2
   invincibleTime: 0.5
-  <GetHit>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: HpUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3178110744892233056}
-        m_TargetAssemblyTypeName: PlayerVisual, Assembly-CSharp
-        m_MethodName: StartHitMotion
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  <OnDie>k__BackingField:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7442715256223835011}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Dead
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &5322660876921446628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -896,23 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73006d45b00af146ae1c70e4a656a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystick: {fileID: 0}
   speed: 3
-  VelocityChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3178110744892233056}
-        m_TargetAssemblyTypeName: PlayerVisual, Assembly-CSharp
-        m_MethodName: VelocityChange
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &7532922233381854325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,19 +837,7 @@ MonoBehaviour:
   - {x: -0.049494028, y: -0.505509, z: 0}
   m_ShapePathHash: -1859602289
   m_Mesh: {fileID: 0}
-  m_InstanceId: -19724
---- !u!114 &1344632528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b9de0f5e6dbe74aba25ecbc116e692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_InstanceId: -2572
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0
