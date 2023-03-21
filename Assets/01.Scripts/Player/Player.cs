@@ -11,6 +11,7 @@ using Debug = Rito.Debug;
 
 public class Player : MonoBehaviour, IHittable
 {
+
     public PlayerBase playerBase = new PlayerBase();   
     private bool isPDamaged = false;
     [SerializeField]
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour, IHittable
         }
         isPDamaged = true;
         playerBase.Hp -= (int)damage;
-        if(playerBase.Hp < 0) 
+        if(playerBase.Hp <= 0) 
             Dead();
         StartCoroutine(IEDamaged());
         UIManager.Instance.HpUpdate();
@@ -51,7 +52,6 @@ public class Player : MonoBehaviour, IHittable
 
     public void Dead()
     {
-
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
