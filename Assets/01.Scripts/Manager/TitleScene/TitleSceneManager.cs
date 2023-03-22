@@ -7,22 +7,25 @@ using TMPro;
 
 public class TitleSceneManager : MonoBehaviour
 {
+    private bool isLoading = false;
+
     private void Start()
     {
-
+        isLoading = false;
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isLoading)
         {
-            Debug.Log("Load");
+            // Debug.Log("Load");
             LoadToMainScene();
         }
     }
 
     public void LoadToMainScene()
     {
+        isLoading = true;
         Managers.Scene.LoadScene(Define.Scene.Ghost_Stage1);
     }
 }

@@ -14,6 +14,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
+
     private void Start()
     {
        

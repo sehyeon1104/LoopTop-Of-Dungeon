@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 {
     [Header("Ghost_Field_Enemy")]
     [SerializeField]
-    private GameObject[] ghostNormalEnemyPrefabs;// = new GameObject[10];
+    private List<GameObject> ghostNormalEnemyPrefabs = new List<GameObject>();// = new GameObject[10];
     [SerializeField]
-    private GameObject[] ghostEliteEnemyPrefabs;// = new GameObject[10];
+    private List<GameObject> ghostEliteEnemyPrefabs = new List<GameObject>();// = new GameObject[10];
 
     private GameObject[] normalEnemyPrefabs;
     private GameObject[] eliteEnemyPrefabs;
@@ -30,12 +33,53 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private Door door = null;
 
     public bool isNextWave { private set; get; } = false;
+
+    public AssetLabelReference assetLabel;
+    private IList<IResourceLocation> _locations;
+
+    private void Awake()
+    {
+        GetLocations();
+    }
+
     private void Start()
     {
-        SetMonsterPrefabInMonsterArray();
         door = FindObjectOfType<Door>();
         Managers.Pool.CreatePool(dangerMark, 10);
+        SetEnemyInList();
     }
+
+    #region Addressable
+    public void GetLocations()
+    {
+        // 빌드타겟의 경로를 가져온다.
+        // 경로이기 때문에 메모리에 에셋이 로드되진 않는다.
+        Addressables.LoadResourceLocationsAsync(assetLabel.labelString).Completed +=
+            (handle) =>
+            {
+                _locations = handle.Result;
+            };
+
+    }
+
+    public void SetEnemyInList()
+    {
+        Debug.Log(_locations.Count);
+
+        //if(_locations.Count == 0)
+        //{
+        //    Debug.Log("_locations.Count == 0");
+        //}
+
+        for (int i = 0; i < _locations.Count; ++i)
+        {
+            // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
+            ghostNormalEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            ghostEliteEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+        }
+    }
+
+    #endregion
 
     public void SetKindOfEnemy(Define.MapTypeFlag mapType)
     {
@@ -44,8 +88,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         switch (mapType)
         {
             case Define.MapTypeFlag.Ghost:
-                normalEnemyPrefabs = ghostNormalEnemyPrefabs;
-                eliteEnemyPrefabs = ghostEliteEnemyPrefabs;
+                normalEnemyPrefabs = ghostNormalEnemyPrefabs.ToArray();
+                eliteEnemyPrefabs = ghostEliteEnemyPrefabs.ToArray();
                 break;
             case Define.MapTypeFlag.LavaSlime:
                 break;
@@ -58,16 +102,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
-    public void SetMonsterPrefabInMonsterArray()
+    public void SetMonsterPrefabInMonsterList()
     {
-        // Debug.Log(Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2);
-        ghostNormalEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
-        ghostEliteEnemyPrefabs = new GameObject[Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2];
-        for (int i = 1; i <= Directory.GetFiles($"Assets/03.Prefabs/Enemy/Ghost").Length / 2; i++)
-        {
-            ghostNormalEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
-            ghostEliteEnemyPrefabs[i - 1] = (Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i}.prefab"));
-        }
+
     }
 
     public void SetRandomEnemyCount()
@@ -106,10 +143,10 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 break;
         }
 
-        Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
-        Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
-        Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
-        Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
+        // Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
+        // Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
+        // Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
+        // Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
     }
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
@@ -120,15 +157,23 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             door.IsFirst = false;
         }
 
+        // 디버깅용, 테스트 필요
+        //if(enemySpawnPos.Length == 0)
+        //{
+        //    GameManager.Instance.Player.playerBase.FragmentAmount = 404;
+        //}
+
         door.CloseDoors();
         
         int randPos = 0;
         isNextWave = false;
         // wave1
-        Debug.Log(enemySpawnPos.Length);
-        Debug.Log("wave 1");
+        // Debug.Log(enemySpawnPos.Length);
+        // Debug.Log("wave 1");
+        // GameManager.Instance.Player.playerBase.FragmentAmount = 404;
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
+
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드

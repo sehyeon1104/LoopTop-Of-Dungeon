@@ -15,15 +15,15 @@ using Random = UnityEngine.Random;
 public class PlayerSkill : MonoBehaviour
 {
     [Space]
-    [Header("½ºÅ³")]
-    [Header("Èú¶óÆÐÅÏ")]
+    [Header("ï¿½ï¿½Å³")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     Dictionary<int,Action> skillDictionary= new Dictionary<int,Action>();
     Animator animator;
     private GameObject ghostSummonerPrefab = null;
     [SerializeField] GameObject jangPanPrefab;
-    [Tooltip("ÀåÆÇ Áö¼Ó½Ã°£")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½")]
     public float jangPanTime = 3;
-    [Tooltip("ÇÒÄû±â Áö¼Ó½Ã°£")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½")]
     public float scratchTime = 3;   
     public GameObject skillSelect;
     [SerializeField] Transform Skill1Trans;
@@ -102,7 +102,7 @@ public class PlayerSkill : MonoBehaviour
     }
     public void Debugs(int level)
     {
-        print($"µð¹ö±ë{level}");
+        print($"ï¿½ï¿½ï¿½ï¿½ï¿½{level}");
     }
 
     public void Skill1()
@@ -118,7 +118,7 @@ public class PlayerSkill : MonoBehaviour
     }
 
 
-    #region ¸®½ºÆ® ¼ÅÇÃ
+    #region ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     public void ListInit()
     {
         randomSkillNum.Clear();
@@ -158,9 +158,9 @@ public class PlayerSkill : MonoBehaviour
     }
     #endregion
 
-    #region °í½ºÆ® ½ºÅ³
-    //½ºÅ³¿¡ ¸Å°³º¯¼ö ´Þ¾Æ¼­ ½½·Ô ·¹º§¸ÂÃç ÇÏ±â
-    public void HillaSkill()  //1¹ø ½ºÅ³ Èú¶ó ½ºÅ³
+    #region ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Å³
+    //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±ï¿½
+    public void HillaSkill()  //1ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
     {
 
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
@@ -175,23 +175,23 @@ public class PlayerSkill : MonoBehaviour
         }
     }
 
-    public void JangPanSkill() //2¹ø ½ºÅ³ ÀåÆÇ ½ºÅ³ ¾Ö´Ï¸ÞÀÌ¼Ç ÇÊ¿ä
+    public void JangPanSkill() //2ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Ê¿ï¿½
     {
         //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
         //    return;
         GetSkillDelay(2);
         StartCoroutine(JangPanSkillCor(jangPanTime));
     }
-    public void TeleportSkill() //3¹ø ½ºÅ³ ÅÚ·¹Æ÷Æ® ÆÐÅÏ
+    public void TeleportSkill() //3ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½Ú·ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
     {
         GetSkillDelay(1);
         StartCoroutine(TeleportPattern(scratchTime));
     }
-    public void ArmStretchSkill() // 4¹ø ½ºÅ³ ÆÈ »¸±â ½ºÅ³ 
+    public void ArmStretchSkill() // 4ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ 
     {
         GetSkillDelay(1);
     }
-    public void RiseUpSkill() // 5¹ø ½ºÅ³ ¼Ú¾Æ ¿À¸£±â ½ºÅ³
+    public void RiseUpSkill() // 5ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½Ú¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³
     {
         GetSkillDelay(1);
     }
@@ -199,7 +199,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (playerBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
             return;
-        Debug.Log("±Ã±Ø±â");
+        Debug.Log("ï¿½Ã±Ø±ï¿½");
 
         skillCooltime = playerBase.SkillData.ultiSkillDelay;
 
