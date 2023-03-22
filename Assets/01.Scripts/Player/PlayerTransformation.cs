@@ -6,11 +6,11 @@ using UnityEngine;
 public class PlayerTransformation : MonoSingleton<PlayerTransformation> 
 {
     [Space]
-    [Header("º¯½Å")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
-     List<PlayerSkillData> playerTransformDataSOArr; // ¸ðµç º¯½Å µ¥ÀÌÅÍ
+     List<PlayerSkillData> playerTransformDataSOArr; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    PlayerSkillData playerTransformDataSO;     // ÇöÀç º¯½Å µ¥ÀÌÅÍ
+    PlayerSkillData playerTransformDataSO;     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void Awake()
     {
         playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));

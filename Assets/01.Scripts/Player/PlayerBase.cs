@@ -20,6 +20,8 @@ public class PlayerBase
         _expTable = new int[maxLevel];
         exp = 0;
 
+        _fragmentAmount = 0;
+
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
 
         for (int i = 0; i < maxLevel; ++i)
@@ -130,5 +132,23 @@ public class PlayerBase
         }
     }
 
-  
+    private int _fragmentAmount;
+    public int FragmentAmount
+    {
+        get
+        {
+            return _fragmentAmount;
+        }
+        set
+        {
+            _fragmentAmount = value;
+            if(_fragmentAmount <= 0)
+            {
+                _fragmentAmount = 0;
+            }
+
+            UIManager.Instance.UpdateGoods();
+        }
+    }
+
 }

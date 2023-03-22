@@ -31,7 +31,7 @@ public class EnemyRoom : RoomBase
     {
         if(roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
         {
-            Debug.Log("SetEnemySpawnPos");
+            // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
 
             return enemySpawnPos;
@@ -53,7 +53,8 @@ public class EnemyRoom : RoomBase
 
     private void SpawnEnemies()
     {
-        Debug.Log("SpawnEnemies");
+        // Debug.Log("SpawnEnemies");
+
         EnemySpawnManager.Instance.SetRandomEnemyCount();
         StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
 

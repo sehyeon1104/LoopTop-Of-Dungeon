@@ -13,7 +13,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
-    [SerializeField] protected BossRangePattern bossRangePattern;
+    [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
@@ -68,6 +68,10 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 3:
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * 45 * j));
+                    }
                     break;
                 case 4:
                     break;
@@ -125,13 +129,13 @@ public class G_Patterns : BossPattern
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBDamaged = true;
+        Boss.Instance.isBInvincible = true;
         for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
         }
-        Boss.Instance.isBDamaged = false;
+        Boss.Instance.isBInvincible = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
@@ -173,7 +177,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return NowPase == 1 ? 3 : 5;
+                return NowPase == 1 ? 5 : 5;
             case 2:
                 break;
             case 3:
@@ -204,10 +208,10 @@ public class GhostPattern : G_Patterns
         switch (NowPase)
         {
             case 1:
-                yield return SCoroutine(bossRangePattern.FloorPatternCircle());
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                yield return SCoroutine(bossRangePattern.FloorPatternRectangle());
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 

@@ -380,8 +380,9 @@ GameObject:
   - component: {fileID: 456885712013416507}
   - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
-  - component: {fileID: 6156359498171252509}
+  - component: {fileID: 4087394551302084805}
   - component: {fileID: 7178170437923353098}
+  - component: {fileID: 976600497135838362}
   - component: {fileID: 4875614159471285615}
   - component: {fileID: 1617654965204469657}
   m_Layer: 8
@@ -478,7 +479,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6156359498171252509
+--- !u!114 &4087394551302084805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -487,7 +488,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 739109838891585982}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cf0e206e5a6ef46b85a656f72637ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e572008a680c4447a5024d98843cc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7178170437923353098
@@ -503,6 +504,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1
+--- !u!114 &976600497135838362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jangPanPrefab: {fileID: 0}
+  jangPanTime: 3
+  scratchTime: 3
+  skillSelect: {fileID: 0}
+  Skill1Trans: {fileID: 0}
+  JangPanPersDamage: 10
+  skillNum: 
 --- !u!114 &4875614159471285615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,7 +851,7 @@ GameObject:
   - component: {fileID: 5322660876921446628}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
-  - component: {fileID: 1861917742}
+  - component: {fileID: 1544384322}
   m_Layer: 8
   m_Name: Player(prototype)
   m_TagString: Player
@@ -952,7 +972,7 @@ MonoBehaviour:
   prefix: "\u2605"
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
---- !u!114 &1861917742
+--- !u!114 &1544384322
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -961,9 +981,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 7442715256025506025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000e314d1dfab77f19a89d8b3a497e688b39dc5b163e301728b79ebf4ff354e97c049c46ab753132ad471fbc7e70b2a078c57c6799e1d84a65d
+  m_ShapePath:
+  - {x: -0.18235469, y: 0.22829819, z: 0}
+  - {x: 0.07177353, y: 0.22003186, z: 0}
+  - {x: -0.049494028, y: -0.505509, z: 0}
+  m_ShapePathHash: -1859602289
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -2718
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0

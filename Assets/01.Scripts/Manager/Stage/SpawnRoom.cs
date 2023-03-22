@@ -11,9 +11,8 @@ public class SpawnRoom : MonoBehaviour
 
     [SerializeField]
     private GameObject[] mapPrefabs;
-    private int mapCount = 0;
 
-    private bool isSetPlayerPos = false;
+    // private bool isSetPlayerPos = false;
 
     private bool isStartRoom = false;
     public bool IsStartRoom
@@ -44,7 +43,6 @@ public class SpawnRoom : MonoBehaviour
     private void Start()
     {
         SetMapTypeFlag();
-        SetRoomPrefabs();
         SetPlayerSpawnPos();
     }
 
@@ -52,12 +50,6 @@ public class SpawnRoom : MonoBehaviour
     {
         // 이후 현재 들어간 맵에 따라 타입 변경
         mapTypeFlag = Define.MapTypeFlag.Ghost;
-    }
-
-    public void SetRoomPrefabs()
-    {
-        mapCount = (int)((Directory.GetFiles($"Assets/03.Prefabs/Maps/{mapTypeFlag}").Length / 2));
-        //mapPrefabs = new GameObject[mapCount - 2];
     }
 
     public void SetAndInstantiateRoom()
@@ -87,7 +79,7 @@ public class SpawnRoom : MonoBehaviour
         if (IsStartRoom)
         {
             GameManager.Instance.Player.transform.position = this.transform.position;
-            isSetPlayerPos = true;
+            // isSetPlayerPos = true;
         }
     }
 
