@@ -30,32 +30,31 @@ public class Door : MonoBehaviour
     {
         Instance = this;
         isFirst = true;
+        tilemapCollider2D = GetComponent<TilemapCollider2D>();
+        tilemapRenderer = GetComponent<TilemapRenderer>();
     }
 
     private void Start()
     {
-        tilemapCollider2D = GetComponent<TilemapCollider2D>();
-        tilemapRenderer = GetComponent<TilemapRenderer>();
-
         OpenDoors();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave || isFirst)
-            {
-                Debug.Log("Can Move");
-                OpenDoors();
-            }
-            else
-            {
-                Debug.Log("Can't Move");
-                CloseDoors();
-            }
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave || isFirst)
+    //        {
+    //            Debug.Log("Can Move");
+    //            OpenDoors();
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Can't Move");
+    //            CloseDoors();
+    //        }
+    //    }
+    //}
 
     public void OpenDoors()
     {
@@ -64,6 +63,7 @@ public class Door : MonoBehaviour
         if(tilemapCollider2D == null)
         {
             Debug.Log("tilemapCollider2D is null!");
+            return;
         }
         tilemapCollider2D.isTrigger = true;
         tilemapRenderer.enabled = false;

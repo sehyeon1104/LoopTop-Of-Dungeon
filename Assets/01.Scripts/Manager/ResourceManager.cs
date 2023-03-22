@@ -37,6 +37,7 @@ public class ResourceManager
         return GetResource<T>(path);
         //return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
     }
+
     /// <summary>
     /// Assets/랑 확장자는 생략해도 됨
     /// </summary>

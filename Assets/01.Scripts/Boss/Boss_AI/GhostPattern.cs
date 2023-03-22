@@ -68,6 +68,10 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 3:
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * 45 * j));
+                    }
                     break;
                 case 4:
                     break;
@@ -173,7 +177,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return NowPase == 1 ? 3 : 5;
+                return NowPase == 1 ? 5 : 5;
             case 2:
                 break;
             case 3:
@@ -204,10 +208,10 @@ public class GhostPattern : G_Patterns
         switch (NowPase)
         {
             case 1:
-                yield return SCoroutine(bossRangePattern.FloorPatternCircle());
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                yield return SCoroutine(bossRangePattern.FloorPatternRectangle());
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 
