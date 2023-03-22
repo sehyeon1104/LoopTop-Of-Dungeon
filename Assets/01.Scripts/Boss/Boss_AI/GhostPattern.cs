@@ -129,13 +129,13 @@ public class G_Patterns : BossPattern
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBDamaged = true;
+        Boss.Instance.isBInvincible = true;
         for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
         }
-        Boss.Instance.isBDamaged = false;
+        Boss.Instance.isBInvincible = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
