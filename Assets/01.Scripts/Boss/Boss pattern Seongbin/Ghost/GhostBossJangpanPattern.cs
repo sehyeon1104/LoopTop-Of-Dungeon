@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossRangePattern : MonoBehaviour
+public class GhostBossJangpanPattern : MonoBehaviour
 {
     [SerializeField] private GameObject FPR; //Floor Pattern Range
     [SerializeField] private GameObject FPRS; //Floor Pattern Range Start
