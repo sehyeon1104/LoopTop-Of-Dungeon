@@ -14,7 +14,6 @@ public class BulletToPlayer : MonoBehaviour
     private IEnumerator Move()
     {
         float timer = 0f;
-        float dist = Vector2.Distance(transform.position, GameManager.Instance.Player.transform.position);
         while (timer <= 3f)
         {
             timer += Time.deltaTime;

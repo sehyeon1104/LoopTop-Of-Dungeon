@@ -3,37 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Player Transformation Class
-public class PlayerTransformation : MonoBehaviour 
+public class PlayerTransformation : MonoSingleton<PlayerTransformation> 
 {
     [Space]
-    [Header("º¯½Å")]
-    PlayerBase playerBase;
-    public PlayerSkillData[] playerTransformDataSOArr; // ¸ðµç º¯½Å µ¥ÀÌÅÍ
-    [field:SerializeField]
-    public PlayerSkillData playerTransformDataSO { private set; get; }      // ÇöÀç º¯½Å µ¥ÀÌÅÍ
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField]
+     List<PlayerSkillData> playerTransformDataSOArr; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField]
+    PlayerSkillData playerTransformDataSO;     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void Awake()
     {
-        playerBase = GameManager.Instance.Player.playerBase;
+        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        playerTransformDataSO = playerTransformDataSOArr[0];
     }
-    private void Start()
-    {
-        playerTransformDataSO = playerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
-    }
-
-    public void TransformGhost()
-    {
-        playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-        playerTransformDataSO = playerTransformDataSOArr[1];
-        RuntimeAnimatorController animator = GameManager.Instance.Player.playerBase.SkillData.playerAnim;
-        animator = playerTransformDataSO.playerAnim;
-        UIManager.Instance.UpdateUI();
-    }
-    public void TransformAilen()
-    {
-
-        Time.timeScale = 0;
-        Boss.Instance.gameObject.SetActive(false);
-        UIManager.Instance.pressF.gameObject.SetActive(false);
-    }
-
+    public PlayerSkillData GetPlayerData(int indexAilen) => playerTransformDataSOArr[indexAilen];
 }

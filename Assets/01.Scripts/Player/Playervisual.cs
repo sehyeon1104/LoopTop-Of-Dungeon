@@ -19,7 +19,12 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
        
     }
-
+    public void UpdateVisual(PlayerSkillData data)
+    {
+        playerAnimator.runtimeAnimatorController = data.playerAnim;
+        playerSprite.sprite = data.playerImg;
+    }
+    // Update is called once per frame
     public void StartHitMotion()
     {
         StartCoroutine(IEHitMotion());
