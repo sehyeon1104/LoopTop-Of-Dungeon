@@ -28,7 +28,6 @@ public class PlayerAttack :  MonoBehaviour
         for(int i=0; i<enemys.Length; i++)
         {
             if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss")) { 
-                Debug.Log("´êÀ½");    
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
             }

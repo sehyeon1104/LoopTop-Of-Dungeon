@@ -9,7 +9,9 @@ using DG.Tweening;
 using System.Linq;
 
 public class UIManager : MonoSingleton<UIManager>
-{ 
+{
+     GameObject playerUI = null;
+    public GameObject PlayerUI => playerUI;
     Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
@@ -39,6 +41,8 @@ public class UIManager : MonoSingleton<UIManager>
     private TextMeshProUGUI curStageName;
     [SerializeField]
     private Image curStageNameLine;
+    [SerializeField]
+    private float showCurStageNameTime = 3f;
 
     //[Header("RightUp")]
     // [Header("RightDown")]
@@ -51,6 +55,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void Awake()
     {
         playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
     }
     private void Start()
     {
@@ -193,12 +198,12 @@ public class UIManager : MonoSingleton<UIManager>
         curStageName.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 + 25), 2f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 - 50), 2f).SetEase(Ease.InOutBack);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(showCurStageNameTime);
 
         curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(showCurStageNameTime);
         showCurStageNameObj.SetActive(false);
 
         yield return null;

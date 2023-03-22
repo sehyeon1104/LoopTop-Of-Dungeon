@@ -78,6 +78,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FPRR.transform.localScale = Vector2.zero;
         FPRRS.transform.localScale = Vector2.zero;
 
+        FPRRSpriteRenderer.enabled = true;
+        FPRRSSpriteRenderer.enabled = true;
 
         FPRR.SetActive(false);
         FPRRS.SetActive(false);
@@ -86,7 +88,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     public IEnumerator  FloorPatternCircle()
     {
-       
 
         FPR.transform.position = transform.position;
         FPRS.transform.position = transform.position;
@@ -140,7 +141,10 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FPR.transform.localScale = Vector2.zero; 
         FPRS.transform.localScale = Vector2.zero;
-        
+
+        FPRSpriteRenderer.enabled = true;
+        FPRSSpriteRenderer.enabled = true;
+
 
         FPR.gameObject.SetActive(false);
         FPRS.gameObject.SetActive(false);

@@ -20,10 +20,8 @@ public class SaveManager : MonoSingleton<SaveManager>
             Directory.CreateDirectory(SAVE_PATH);
             File.WriteAllText(SAVE_PATH + SAVE_FILENAME, JsonUtility.ToJson(new PlayerData()), System.Text.Encoding.UTF8);
         }
-        else
-        {
-            LoadFromJson();
-        }
+
+        LoadFromJson();
     }
 
     private void Start()

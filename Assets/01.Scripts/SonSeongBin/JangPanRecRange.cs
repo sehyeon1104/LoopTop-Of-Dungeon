@@ -6,8 +6,6 @@ public class JangPanRecRange : MonoBehaviour
 {
     IEnumerator PlayerDamaged = null;
 
-    public GameObject Player = null;
-
     private bool iscoroutinestart = false;
 
     public Vector2 size1;
@@ -59,7 +57,7 @@ public class JangPanRecRange : MonoBehaviour
     {
         while (true)
         {
-            Player.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(1, gameObject, 0);
             yield return DotTime;
         }
     }

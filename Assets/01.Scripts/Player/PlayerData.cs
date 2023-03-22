@@ -11,5 +11,6 @@ public class PlayerData
     private float damage;
     private float critChance;
     private float exp;
+    private float goods;
 
 }

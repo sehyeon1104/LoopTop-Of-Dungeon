@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 // TODO : Json파일로 저장 후 불러올 수 있도록
-public class ItemList
+public class ItemData
 {
-    List<ItemList> itemsList = new List<ItemList>();
+    List<Item> itemsList = new List<Item>();
 }

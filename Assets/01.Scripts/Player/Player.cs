@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using UnityEditor.PackageManager;
@@ -8,28 +9,38 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour, IHittable
 {
-    public PlayerBase playerBase = new PlayerBase();   
+
+    public PlayerBase playerBase = new PlayerBase();
     private bool isPDamaged = false;
     [SerializeField]
     private float reviveInvincibleTime = 2f;
     [SerializeField]
     private float invincibleTime = 0.2f;
+
     public Vector3 hitPoint { get; private set; }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+            PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag));
+        }
+    }
     private void Start()
     {
         playerBase.SetPlayerStat();
     }
     public IEnumerator IEDamaged()
-    {
+    {   
         PlayerVisual.Instance.StartHitMotion();
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
         yield return null;
     }
-
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead)
@@ -42,7 +53,7 @@ public class Player : MonoBehaviour, IHittable
         }
         isPDamaged = true;
         playerBase.Hp -= (int)damage;
-        if(playerBase.Hp < 0) 
+        if(playerBase.Hp <= 0) 
             Dead();
         StartCoroutine(IEDamaged());
         UIManager.Instance.HpUpdate();
@@ -51,7 +62,6 @@ public class Player : MonoBehaviour, IHittable
 
     public void Dead()
     {
-
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         UIManager.Instance.ToggleGameOverPanel();
