@@ -54,10 +54,9 @@ public class GhostBossArmPattern : MonoBehaviour
         }
     }
 
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, size1);
     }
-}
+}   
