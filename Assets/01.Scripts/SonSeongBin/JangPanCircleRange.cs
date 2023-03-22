@@ -21,12 +21,15 @@ public class JangPanCircleRange : MonoBehaviour
     {
         PlayerDamaged = DotDamageFunc();
         StartCoroutine(CheckPlayer());
+        
+        
     }
 
     private void OnDisable()
     {
-        StopCoroutine(CheckPlayer());
         StopCoroutine(PlayerDamaged);
+        StopCoroutine(CheckPlayer());
+        
     }
 
     IEnumerator CheckPlayer()
@@ -43,7 +46,7 @@ public class JangPanCircleRange : MonoBehaviour
                
 
             }
-            else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player"))
+            else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player") && iscoroutinestart == true)
             {
                 StopCoroutine(PlayerDamaged);
                 iscoroutinestart = false;
