@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // using static UnityEditor.Experimental.GraphView.GraphView; // 빌드오류로 인해 일시적 주석
-public class BossArmPatternAnim : MonoBehaviour
+public class GhostBossArmPatternAnim : MonoBehaviour
 {
     public Player player = null;
 

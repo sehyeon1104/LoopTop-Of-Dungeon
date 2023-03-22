@@ -13,7 +13,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
-    [SerializeField] protected BossRangePattern bossRangePattern;
+    [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
