@@ -16,31 +16,22 @@ public class PlayerSkill : MonoBehaviour
 {
     [Space]
     [Header("스킬")]
-    [Header("힐라패턴")]
-    Dictionary<int,Action> skillDictionary= new Dictionary<int,Action>();
-    Animator animator;
-    private GameObject ghostSummonerPrefab = null;
-    [SerializeField] GameObject jangPanPrefab;
-    [Tooltip("장판 지속시간")]
-    public float jangPanTime = 3;
-    [Tooltip("할퀴기 지속시간")]
-    public float scratchTime = 3;   
+    Dictionary<PlayerSkillBase,Action> skillDictionary= new Dictionary<PlayerSkillBase,Action>();
+    Animator animator; 
     public GameObject skillSelect;
     [SerializeField] Transform Skill1Trans;
-    [SerializeField] float JangPanPersDamage = 10;  
     int skillSelectNum = 0;
     private int ghostSummonCount = 1;
     List<int> randomSkillNum = new List<int>();
     public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
     int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
-    private int shuffleCount = 20;
     PlayerBase playerBase;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            SkillSelecet();
+            //SkillSelecet();
         }
     }
     private void Start()
@@ -55,51 +46,51 @@ public class PlayerSkill : MonoBehaviour
     {
         playerBase = GameManager.Instance.Player.playerBase;
         animator = GetComponent<Animator>();
-        SkillToButton();
+        //SkillToButton();
     }
     public float skillCooltime { private set; get; } = 0f;
  
-    public void SkillToButton()
-    {
-        GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
-        GameObject.FindGameObjectWithTag("Skill2").GetComponent<Button>().onClick.AddListener(Skill2);
-        GameObject.FindGameObjectWithTag("UltimateSkill").GetComponent<Button>().onClick.AddListener(UltimateSkill);
-    }
-    public Action ApplySkill(int skillNum, int slotLevel) => skillNum switch
-    {
-        // Power
-        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(),
-        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(),
-        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(),
-        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(),
-        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(),
-        // Ghost
-        1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(),
-        2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkill(),
-        3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(),
-        4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(),
-        5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(),
+    //public void SkillToButton()
+    //{
+    //    GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
+    //    GameObject.FindGameObjectWithTag("Skill2").GetComponent<Button>().onClick.AddListener(Skill2);
+    //    GameObject.FindGameObjectWithTag("UltimateSkill").GetComponent<Button>().onClick.AddListener(UltimateSkill);
+    //}
+    //public Action ApplySkill(int skillNum,PlayerSkillBase playerSkillbase) => skillNum switch
+    //{
+    //    // Power
+    //    1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(),
+    //    2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(),
+    //    3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(),
+    //    4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(),
+    //    5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(),
+    //    // Ghost
+    //    1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(),
+    //    2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkill(),
+    //    3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(),
+    //    4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(),
+    //    5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(),
 
-        _ => () => Debugs(slotLevel),
-    };
+    //    _ => () => Debugs(slotLevel),
+    //};
     public float GetSkillDelay(int i) => playerBase.SkillData.skill[i-1].skillDelay;
 
-    public void SkillSelecet()
-    {
-        GameObject selectObj = EventSystem.current.currentSelectedGameObject;
-        selectObj.SetActive(false);
-        int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
-        skillNum.Add((Define.SkillNum)selectNum);
-        skillEvent[skillSelectNum] = ApplySkill(selectNum, slotLevel[skillSelectNum]);
-        skillDictionary.Add(slotLevel[skillSelectNum], ApplySkill(selectNum, slotLevel[skillSelectNum])); 
-        skillSelectNum++;
-        if (skillSelectNum > 1)
-        {
-            Time.timeScale = 1;
-            skillSelectNum = 0;
-            skillSelect.SetActive(false);
-        }
-    }
+    //public void SkillSelecet()
+    //{
+    //    GameObject selectObj = EventSystem.current.currentSelectedGameObject;
+    //    selectObj.SetActive(false);
+    //    int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
+    //    skillNum.Add((Define.SkillNum)selectNum);
+    //    skillEvent[skillSelectNum] = ApplySkill(selectNum, playerSkillbase);
+    //    skillDictionary.Add(slotLevel[skillSelectNum], ApplySkill(selectNum, slotLevel[skillSelectNum])); 
+    //    skillSelectNum++;
+    //    if (skillSelectNum > 1)
+    //    {
+    //        Time.timeScale = 1;
+    //        skillSelectNum = 0;
+    //        skillSelect.SetActive(false);
+    //    }
+    //}
     public void Debugs(int level)
     {
         print($"디버깅{level}");
@@ -155,110 +146,6 @@ public class PlayerSkill : MonoBehaviour
         ListInit();
         ListShuffle();
         ListRemove();
-    }
-    #endregion
-
-    #region 고스트 스킬
-    //스킬에 매개변수 달아서 슬롯 레벨맞춰 하기
-    public void HillaSkill()  //1번 스킬 힐라 스킬
-    {
-
-        //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
-        //    return;
-        GetSkillDelay(1);
-       skillCooltime = playerBase.SkillData.skill[0].skillDelay;
-        animator.SetTrigger("Attack");
-
-        for (int i = 0; i < ghostSummonCount; ++i)
-        {
-            Instantiate(ghostSummonerPrefab, transform.position, Quaternion.identity);
-        }
-    }
-
-    public void JangPanSkill() //2번 스킬 장판 스킬 애니메이션 필요
-    {
-        //if (pBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost || isPDead)
-        //    return;
-        GetSkillDelay(2);
-        StartCoroutine(JangPanSkillCor(jangPanTime));
-    }
-    public void TeleportSkill() //3번 스킬 텔레포트 패턴
-    {
-        GetSkillDelay(1);
-        StartCoroutine(TeleportPattern(scratchTime));
-    }
-    public void ArmStretchSkill() // 4번 스킬 팔 뻗기 스킬 
-    {
-        GetSkillDelay(1);
-    }
-    public void RiseUpSkill() // 5번 스킬 솟아 오르기 스킬
-    {
-        GetSkillDelay(1);
-    }
-    public void UltimateSkill()
-    {
-        if (playerBase.PlayerTransformTypeFlag != Define.PlayerTransformTypeFlag.Ghost)
-            return;
-        Debug.Log("궁극기");
-
-        skillCooltime = playerBase.SkillData.ultiSkillDelay;
-
-    }
-
-    IEnumerator JangPanSkillCor(float skillTime)
-    {
-        float timer = 0;
-        float timerA = 0;
-        Instantiate(jangPanPrefab, transform.position, Quaternion.identity, Skill1Trans);
-        do
-        {
-            Collider2D[] attachObjs;
-
-            timer += Time.deltaTime;
-            timerA += Time.deltaTime;
-            if (timerA > 0.1f)
-            {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, 2.5f);
-                foreach (Collider2D c in attachObjs)
-                {
-                    if (c.CompareTag("Enemy") || c.CompareTag("Boss"))
-                    {
-                        c.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-                    }
-                }
-                timerA = 0;
-
-            }
-            if (timer > skillTime)
-            {
-                Destroy(Skill1Trans.GetChild(0).gameObject);
-            }
-            yield return null;
-        } while (timer < skillTime);
-
-    }
-    IEnumerator TeleportPattern(float skillTime)
-    {
-        float timer = 0;
-        float timerA = 0;
-        do
-        {
-            timer += Time.deltaTime;
-            timerA += Time.deltaTime;
-            if (timerA > 0.05f)
-            {
-                RaycastHit2D[] enemys = Physics2D.BoxCastAll(transform.position, new Vector2(2, 2), 0, Vector2.up, 2);
-                foreach (RaycastHit2D c in enemys)
-                {
-                    if (c.collider.CompareTag("Enemy") || c.collider.CompareTag("Boss"))
-                    {
-                        c.collider.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-                    }
-                }
-                timerA = 0;
-            }
-            yield return null;
-        } while (timer < skillTime);
     }
     #endregion
 }
