@@ -131,6 +131,7 @@ public abstract class BossPattern : MonoBehaviour
                 {
                     isCanUseFinalPattern = false;
 
+                    patternCount[5] = GetRandomCount(5);
                     attackCoroutine = StartCoroutine(PatternFinal(patternCount[5]));
 
                     isUsingFinalPattern = false;
