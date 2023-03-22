@@ -73,8 +73,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         for (int i = 0; i < _locations.Count; ++i)
         {
-            ghostNormalEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i + 1}.prefab"));
-            ghostEliteEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/Ghost/G_Mob_0{i + 1}.prefab"));
+            // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
+            ghostNormalEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            ghostEliteEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
         }
     }
 
