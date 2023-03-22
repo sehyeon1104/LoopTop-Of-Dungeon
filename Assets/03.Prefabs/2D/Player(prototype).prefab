@@ -380,10 +380,9 @@ GameObject:
   - component: {fileID: 456885712013416507}
   - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
-  - component: {fileID: 4087394551302084805}
   - component: {fileID: 7178170437923353098}
-  - component: {fileID: 976600497135838362}
   - component: {fileID: 4875614159471285615}
+  - component: {fileID: 1587560799495554440}
   - component: {fileID: 1617654965204469657}
   m_Layer: 8
   m_Name: PlayerVisual
@@ -479,18 +478,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4087394551302084805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e572008a680c4447a5024d98843cc70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7178170437923353098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,25 +491,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1
---- !u!114 &976600497135838362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jangPanPrefab: {fileID: 0}
-  jangPanTime: 3
-  scratchTime: 3
-  skillSelect: {fileID: 0}
-  Skill1Trans: {fileID: 0}
-  JangPanPersDamage: 10
-  skillNum: 
 --- !u!114 &4875614159471285615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +505,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransformDataSOArr: []
   playerTransformDataSO: {fileID: 0}
+--- !u!114 &1587560799495554440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSelect: {fileID: 0}
+  Skill1Trans: {fileID: 0}
+  skillNum: 
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -852,6 +835,7 @@ GameObject:
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
   - component: {fileID: 1544384322}
+  - component: {fileID: 1861917742}
   m_Layer: 8
   m_Name: Player(prototype)
   m_TagString: Player
@@ -997,7 +981,19 @@ MonoBehaviour:
   - {x: -0.049494028, y: -0.505509, z: 0}
   m_ShapePathHash: -1859602289
   m_Mesh: {fileID: 0}
-  m_InstanceId: -2718
+  m_InstanceId: -18214
+--- !u!114 &1861917742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0
