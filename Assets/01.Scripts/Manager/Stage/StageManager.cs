@@ -15,7 +15,6 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField]
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
-    private Vector3 playerSpawnPos;
 
     [SerializeField]
     private GameObject MoveNextMapPortal;
