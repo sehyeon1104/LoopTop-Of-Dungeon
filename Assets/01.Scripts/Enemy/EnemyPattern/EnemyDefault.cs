@@ -132,9 +132,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     public virtual void EnemyDead()
     {
         //if (transform.parent != null)
-        EnemySpawnManager.Instance.RemoveEnemyInList(gameObject);
+        EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
 
         gameObject.SetActive(false);
-        gameObject.transform.SetParent(null);
     }
 }
