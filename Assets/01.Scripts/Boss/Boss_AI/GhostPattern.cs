@@ -89,23 +89,13 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(2f);
         }
     }
-    public IEnumerator Pattern_TP() //텔포
+    public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
     {
-        moveSpeed *= 0.5f;
-        float timer = 0f;
         Vector3 dir;
 
-        while (timer <= 3f)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-
-            dir = player.position - transform.position;
-            transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
-        }
+        yield return new WaitForSeconds(3f);
 
         transform.position = player.right * 3 + player.position;
-        moveSpeed *= 2f;
 
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
@@ -115,9 +105,9 @@ public class G_Patterns : BossPattern
         float angle = 7.2f;
 
 
-        for (int i = -4; i < 4; i++)
+        for (int i = -4; i < count; i++)
         {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
     }
     public IEnumerator Pattern_SM(int count) //힐라
@@ -189,7 +179,7 @@ public class GhostPattern : G_Patterns
             case 1:
                 return NowPhase == 1 ? 3 : 5;
             case 2:
-                break;
+                return NowPhase == 1 ? -4 : 4;
             case 3:
                 break;
             case 4:
