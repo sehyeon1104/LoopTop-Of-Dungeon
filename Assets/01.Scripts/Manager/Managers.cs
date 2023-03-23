@@ -34,7 +34,7 @@ public class Managers : MonoBehaviour
     {
         if (instance == null)
         {
-            GameObject obj = GameObject.Find("@Managers");
+            GameObject obj = GameObject.Find("@Managers");  
             if (obj == null)
             {
                 obj = new GameObject { name = "@Managers" };

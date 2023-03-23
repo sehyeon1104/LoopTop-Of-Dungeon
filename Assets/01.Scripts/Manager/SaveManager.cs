@@ -39,7 +39,7 @@ public class SaveManager : MonoSingleton<SaveManager>
             // 복호화
             json = Crypto.AESDecrypt128(json);
             playerData = JsonUtility.FromJson<PlayerData>(json);
-            Debug.Log("로딩완료");
+            Rito.Debug.Log("로딩완료");
         }
     }
 
@@ -50,7 +50,7 @@ public class SaveManager : MonoSingleton<SaveManager>
         // 암호화
         json = Crypto.AESEncrypt128(json);
         File.WriteAllText(SAVE_PATH + SAVE_FILENAME, json, System.Text.Encoding.UTF8);
-        Debug.Log("저장완료");
+        Rito.Debug.Log("저장완료");
 
     }
 

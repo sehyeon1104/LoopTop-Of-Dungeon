@@ -24,17 +24,17 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
-        Debug.Log("Get Player Instance");
+        Rito.Debug.Log("Get Player Instance");
         _player = FindObjectOfType<Player>();
 
         if(_player == null)
         {
-            Debug.Log("Get Player Instance One more");
+            Rito.Debug.Log("Get Player Instance One more");
             _player = FindObjectOfType<Player>();
 
             if (_player == null)
             {
-                Debug.Log("Instantiate Player");
+                Rito.Debug.Log("Instantiate Player");
                 playerPre = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Player(prototype).prefab");
                 var temp = Instantiate(playerPre, transform.position, Quaternion.identity);
                 _player = temp.GetComponent<Player>();

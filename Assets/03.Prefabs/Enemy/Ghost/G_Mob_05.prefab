@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -5454199494349497183}
   - component: {fileID: 664149233974197144}
   - component: {fileID: 7316007871763870198}
+  - component: {fileID: -2723981203196407933}
   m_Layer: 0
   m_Name: G_Mob_05
   m_TagString: Enemy
@@ -152,3 +153,17 @@ MonoBehaviour:
   attackClip: {fileID: 0}
   anim: {fileID: 0}
   ghostPrefab: {fileID: 8108133220231646846, guid: 6a02262bcdc5cd94b988130c2c3fb62b, type: 3}
+--- !u!114 &-2723981203196407933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810234765155223560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 0

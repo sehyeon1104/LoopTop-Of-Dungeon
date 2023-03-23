@@ -13,9 +13,7 @@ public class PlayerTransformation : MonoSingleton<PlayerTransformation>
     public PlayerSkillData PlayerTransformDataSO => playerTransformDataSO;
     private void Awake()
     {
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
-        playerTransformDataSO = playerTransformDataSOArr[0];
+       
     }
-    public PlayerSkillData GetPlayerData(int indexAilen) => playerTransformDataSOArr[indexAilen];
+    public PlayerSkillData GetPlayerData(Define.PlayerTransformTypeFlag playerTransformType) => playerTransformDataSOArr[(int)playerTransformType];
 }

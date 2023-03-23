@@ -46,7 +46,6 @@ public class EnemyRoom : RoomBase
     // 플레이어 입장 시 실행
     private void SetEnemy()
     {
-        Debug.Log("SetEnemy");
         EnemySpawnManager.Instance.SetKindOfEnemy(mapTypeFlag);
         SpawnEnemies();
     }
@@ -64,7 +63,6 @@ public class EnemyRoom : RoomBase
     private IEnumerator CheckClear()
     {
         yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
-        Debug.Log("Clear");
         IsClear();
 
     }
@@ -78,7 +76,6 @@ public class EnemyRoom : RoomBase
 
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Enter) isClear : " + isClear);
             if (!isClear && !isSpawnMonster)
             {
                 isSpawnMonster = true;
@@ -98,7 +95,6 @@ public class EnemyRoom : RoomBase
         if (collision.CompareTag("Player"))
         {
             IsClear();
-            Debug.Log("Exit) isClear : " + isClear);
         }
     }
 

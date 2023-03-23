@@ -27,13 +27,14 @@ public class Player : MonoBehaviour, IHittable
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag));
+            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformDataSO);
         }
     }
     private void Start()
     {
         playerBase.SetPlayerStat();
-        PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag)); 
+        PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformDataSO);
+        UIManager.Instance.HpUpdate();
     }
     public IEnumerator IEDamaged()
     {   
@@ -57,7 +58,6 @@ public class Player : MonoBehaviour, IHittable
         if(playerBase.Hp <= 0) 
             Dead();
         StartCoroutine(IEDamaged());
-        UIManager.Instance.HpUpdate();
         CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
     }
 
