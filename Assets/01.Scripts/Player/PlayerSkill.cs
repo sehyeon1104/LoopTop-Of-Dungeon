@@ -105,8 +105,8 @@ public class PlayerSkill : MonoBehaviour
         skillEvent[1]();
     }
 
-
     #region ¸®½ºÆ® ¼ÅÇÃ
+
     public void ListInit()
     {
         randomSkillNum.Clear();
@@ -144,5 +144,6 @@ public class PlayerSkill : MonoBehaviour
         ListShuffle();
         ListRemove();
     }
+
     #endregion
 }

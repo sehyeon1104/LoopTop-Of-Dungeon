@@ -51,7 +51,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     //[Header("RightUp")]
     // [Header("RightDown")]
-
+    GameObject AttackButton;
+    GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
 
@@ -61,6 +62,8 @@ public class UIManager : MonoSingleton<UIManager>
     {
         playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
+        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
+        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
     }
     private void Start()
     {
@@ -197,7 +200,16 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
     }
-
+    public void RotateInteractionButton()
+    {
+        AttackButton.SetActive(false);
+        InteractionButton.SetActive(true);
+    }
+    public void RotateAttackButton()
+    {
+        AttackButton.SetActive(true);
+        InteractionButton.SetActive(false);
+    }
     public IEnumerator ShowCurrentStageName()
     {
         showCurStageNameObj.SetActive(true);

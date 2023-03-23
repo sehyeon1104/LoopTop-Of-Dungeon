@@ -55,15 +55,18 @@ public class ItemObj : MonoBehaviour
     {
         while (true)
         {
-            if (Vector3.Distance(GameManager.Instance.Player.transform.position, transform.position) < playerSensingDis)
+            if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) < playerSensingDis * playerSensingDis)
             {
-                if(!itemInfoPanel.gameObject.activeSelf)
+                print("enter");
+                UIManager.Instance.RotateInteractionButton();
+                if (!itemInfoPanel.gameObject.activeSelf)
                 {
                     itemInfoPanel.gameObject.SetActive(true);
                 }
             }
             else
             {
+                UIManager.Instance.RotateAttackButton();
                 if (itemInfoPanel.gameObject.activeSelf)
                 {
                     itemInfoPanel.gameObject.SetActive(false);
@@ -82,5 +85,6 @@ public class ItemObj : MonoBehaviour
         itemInfoPanel.gameObject.SetActive(false);
         soldOutPanel.SetActive(true);
         ItemEffects.ShopItems[item.itemNumber].Use();
+        
     }
 }
