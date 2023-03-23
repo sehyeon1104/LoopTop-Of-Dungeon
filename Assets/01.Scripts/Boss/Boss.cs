@@ -89,7 +89,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
 
-        if (Base.Hp <= 0 && bossPattern.NowPase == 2)
+        if (Base.Hp <= 0 && bossPattern.NowPhase == 2)
         {
             Die();
             return;

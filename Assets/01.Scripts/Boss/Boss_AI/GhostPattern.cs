@@ -18,7 +18,7 @@ public class G_Patterns : BossPattern
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
 
-    #region pase 1
+    #region phase 1
     public IEnumerator Pattern_TH(int count) //가시
     {
         for (int i = 0; i < count; i++)
@@ -171,7 +171,7 @@ public class GhostPattern : G_Patterns
 
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPase == 1)
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPhase == 1)
         {
             isUsingFinalPattern = true;
         }
@@ -188,7 +188,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return NowPase == 1 ? 3 : 5;
+                return NowPhase == 1 ? 3 : 5;
             case 2:
                 break;
             case 3:
@@ -219,14 +219,15 @@ public class GhostPattern : G_Patterns
     {
 
 
-        switch (NowPase)
+        switch (NowPhase)
         {
             case 1:
                 attackAnim.Play(animArray[0]);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
+                StartCoroutine(bossRangePattern.FloorPatternRectangle());
+                yield return new WaitForSeconds(5f);
                 break;
         }
 
@@ -245,7 +246,7 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern3(int count = 0) //텔레포트 패턴
     {
-        switch(NowPase)
+        switch(NowPhase)
         {
             case 1:
                 yield return SCoroutine(Pattern_TP());
@@ -260,7 +261,7 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern4(int count = 0) //팔뻗기 패턴, 2페이즈에만 사용
     {
-        switch (NowPase)
+        switch (NowPhase)
         {
             case 1:
                 break;
@@ -274,7 +275,7 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator PatternFinal(int count = 0)
     {
-        switch(NowPase)
+        switch(NowPhase)
         {
             case 1:
                 yield return SCoroutine(Pattern_SM(count));
