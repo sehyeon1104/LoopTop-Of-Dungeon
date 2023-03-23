@@ -33,7 +33,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FPRR.SetActive(true);
         FPRRS.SetActive(true);
         
-
         yield return WaitForRangeStart;
 
         while (ScaleX < 30f)
@@ -95,11 +94,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FPR.SetActive(true);
         FPRS.SetActive(true);
-        
-
-        
+                
         yield return WaitForRangeStart; //패턴 시전 대기
-
 
         while(ScaleX < 17f)
         {
@@ -125,15 +121,14 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
             yield return AttackRangeSpeed;
         }
-
-        
-
+               
         ScaleX = 0;
         ScaleY = 0;
 
         FPRSpriteRenderer.enabled = false;
         FPRSSpriteRenderer.enabled = false;
 
+        Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
         FPRSCol.SetActive(true);
 
         yield return AttackEnd;

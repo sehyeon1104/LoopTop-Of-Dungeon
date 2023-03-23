@@ -6,14 +6,15 @@ public class JangPanRecRange : MonoBehaviour
 {
     IEnumerator PlayerDamaged = null;
 
-    private bool iscoroutinestart = false;
+    private bool iscoroutinestart = true;
 
     public Vector2 size1;
     public Vector2 size2;
     public LayerMask Layer;
 
     WaitForSeconds checkTime = new WaitForSeconds(0.1f);
- 
+
+    Coroutine actCoroutinee = null;
 
     WaitForSeconds DotTime = new WaitForSeconds(0.8f);
 
@@ -21,12 +22,14 @@ public class JangPanRecRange : MonoBehaviour
     {
         PlayerDamaged = DotDamageFunc();
         StartCoroutine(CheckPlayer());
+        
     }
 
     private void OnDisable()
     {
-        StopCoroutine(CheckPlayer());
         StopCoroutine(PlayerDamaged);
+        StopCoroutine(CheckPlayer());
+        
     }
 
     IEnumerator CheckPlayer()
@@ -44,7 +47,7 @@ public class JangPanRecRange : MonoBehaviour
                 
 
             }
-            else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player") && hit2?.gameObject.layer != LayerMask.NameToLayer("Player"))
+            else if ((hit1?.gameObject.layer != LayerMask.NameToLayer("Player") && hit2?.gameObject.layer != LayerMask.NameToLayer("Player")) && iscoroutinestart == true)
             {
                 StartCoroutine(PlayerDamaged);
                 iscoroutinestart = false;

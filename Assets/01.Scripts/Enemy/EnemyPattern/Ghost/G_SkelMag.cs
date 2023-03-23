@@ -34,8 +34,7 @@ public class G_SkelMag : EnemyDefault
     public override void EnemyDead()
     {
         Vector2 dir = (transform.position - playerTransform.position).normalized;
-        GameObject enemy = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
-        enemy.transform.SetParent(null);
+        Poolable enemy = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
         EnemySpawnManager.Instance.curEnemies.Add(enemy);
         base.EnemyDead();
     }

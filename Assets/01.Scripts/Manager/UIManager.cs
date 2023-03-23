@@ -201,6 +201,9 @@ public class UIManager : MonoSingleton<UIManager>
     public IEnumerator ShowCurrentStageName()
     {
         showCurStageNameObj.SetActive(true);
+
+        curStageName.SetText(SceneManager.GetActiveScene().name);
+
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;

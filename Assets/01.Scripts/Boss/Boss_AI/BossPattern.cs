@@ -90,7 +90,8 @@ public abstract class BossPattern : MonoBehaviour
         yield return new WaitUntil(() => NowPase == 1 && Boss.Instance.Base.Hp <= 0);
 
         StopCoroutine(RandomPattern());
-        StopCoroutine(attackCoroutine);
+        if(attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
         Boss.Instance.isBInvincible = true;
 
         yield return patternDelay;
@@ -117,7 +118,11 @@ public abstract class BossPattern : MonoBehaviour
 
         while (!Boss.Instance.isBDead)
         {
-            if (Boss.Instance.isBInvincible) continue;
+            if (Boss.Instance.isBInvincible)
+            {
+                yield return null;
+                continue;
+            }
 
             int patternChoice = 0;
             patternChoice = Random.Range(0, pase_patternCount[NowPase - 1]);

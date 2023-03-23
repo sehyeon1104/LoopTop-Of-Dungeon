@@ -127,7 +127,7 @@ public class PoolManager
     //    return null;
     //}
 
-    public GameObject PoolManaging(string path, Vector2 position, Quaternion rotation)
+    public Poolable PoolManaging(string path, Vector2 position, Quaternion rotation)
     {
         GameObject clone;
         string name = path;
@@ -149,7 +149,7 @@ public class PoolManager
         clone.transform.position = position;
         clone.transform.rotation = rotation;
 
-        return clone;
+        return clone?.GetComponent<Poolable>();
     }
 
     public GameObject PoolManaging(string path, Transform parent)
