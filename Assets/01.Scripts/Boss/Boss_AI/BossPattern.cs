@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BossPattern : MonoBehaviour
 {
-    public int NowPase = 1;
+    public int NowPhase = 1;
 
     [Header("보스 이동 관련 스탯")]
     [SerializeField] protected float moveSpeed;
@@ -18,7 +18,7 @@ public abstract class BossPattern : MonoBehaviour
     [SerializeField]
     private float waitTime = 1f;
     [Header("페이즈별 보스 스킬 개수")]
-    [SerializeField] private int[] pase_patternCount;
+    [SerializeField] private int[] phase_patternCount;
     [Header("보스 패턴 후딜레이")]
     [SerializeField] private float patternDelay;
     
@@ -88,7 +88,7 @@ public abstract class BossPattern : MonoBehaviour
 
     private IEnumerator ChangePase()
     {
-        yield return new WaitUntil(() => NowPase == 1 && Boss.Instance.Base.Hp <= 0);
+        yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
 
         StopCoroutine(RandomPattern());
         if(attackCoroutine != null)
@@ -104,7 +104,7 @@ public abstract class BossPattern : MonoBehaviour
         }
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
-        NowPase = 2;
+        NowPhase = 2;
 
         yield return patternDelay;
 
@@ -127,7 +127,7 @@ public abstract class BossPattern : MonoBehaviour
             }
 
             int patternChoice = 0;
-            patternChoice = Random.Range(0, pase_patternCount[NowPase - 1]);
+            patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
