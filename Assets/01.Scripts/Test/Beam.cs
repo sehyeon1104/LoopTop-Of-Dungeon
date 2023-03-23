@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class BeamPatternTest : MonoBehaviour
+public class Beam : MonoBehaviour
 {
     [SerializeField] LayerMask pLayer;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
     [SerializeField] Light2D beamLight;
+    [SerializeField] GameObject ShowRange;
 
     EdgeCollider2D col;
     Vector2[] points;
@@ -39,6 +40,8 @@ public class BeamPatternTest : MonoBehaviour
         Init();
         SetObjectFlip();
         StartCoroutine(OnBeam());
+
+        ShowRange.SetActive(true);
     }
 
     private void OnDisable()
@@ -98,7 +101,9 @@ public class BeamPatternTest : MonoBehaviour
             startFXList[i].Play();
         }
 
-        while (beam.GetPosition(1).x <= length)
+        ShowRange.SetActive(false);
+
+        while (lineLength <= length)
         {
             lineLength += 1f;
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));

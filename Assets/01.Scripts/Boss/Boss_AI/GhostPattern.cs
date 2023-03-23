@@ -13,7 +13,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
-    [SerializeField] protected BossRangePattern bossRangePattern;
+    [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
@@ -74,6 +74,12 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 4:
+                    int randomCount = Random.Range(8, 13);
+                    for(int j = 0; j < randomCount; j++)
+                    {
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", new Vector2(-9 + j * 7.5f, 18.5f), Quaternion.Euler(Vector3.forward * 270));
+                        yield return null;
+                    }
                     break;
             }
             yield return new WaitForSeconds(2f);
@@ -129,13 +135,13 @@ public class G_Patterns : BossPattern
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBDamaged = true;
+        Boss.Instance.isBInvincible = true;
         for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
         }
-        Boss.Instance.isBDamaged = false;
+        Boss.Instance.isBInvincible = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
@@ -165,7 +171,7 @@ public class GhostPattern : G_Patterns
             isUsingFinalPattern = true;
         }
 
-        if (Boss.Instance.isBInvincible && ActCoroutine != null) ECoroutine();
+        if (Boss.Instance.isBInvincible && ActCoroutine != null) StartCoroutine(ECoroutine());
 
         if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
         base.Update();
@@ -177,7 +183,7 @@ public class GhostPattern : G_Patterns
             case 0:
                 return Random.Range(3, 6);
             case 1:
-                return NowPase == 1 ? 5 : 5;
+                return NowPase == 1 ? 3 : 5;
             case 2:
                 break;
             case 3:
@@ -197,9 +203,10 @@ public class GhostPattern : G_Patterns
     {
         return ActCoroutine = StartCoroutine(act);
     }
-    private void ECoroutine()
+    private IEnumerator ECoroutine()
     {
         StopCoroutine(ActCoroutine);
+        yield return null;
         ActCoroutine = null;
     }
 
