@@ -37,7 +37,7 @@ public class Player : MonoBehaviour, IHittable
     }
     public IEnumerator IEDamaged()
     {   
-        PlayerVisual.Instance.StartHitMotion();
+        PlayerVisual .Instance.StartHitMotion();
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
         yield return null;
