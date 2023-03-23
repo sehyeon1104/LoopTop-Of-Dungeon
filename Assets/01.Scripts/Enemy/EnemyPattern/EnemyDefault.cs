@@ -32,6 +32,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     void OnEnable()
     {
         SetStatus();
+        if (actCoroutine != null) actCoroutine = null;
     }
 
     void Start()
@@ -133,6 +134,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         //if (transform.parent != null)
         EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+        GameManager.Instance.Player.playerBase.FragmentAmount += Random.Range(5, 10);
 
         gameObject.SetActive(false);
     }
