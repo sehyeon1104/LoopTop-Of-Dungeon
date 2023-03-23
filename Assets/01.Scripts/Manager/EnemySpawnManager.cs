@@ -50,6 +50,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     }
 
     #region Addressable
+
+    // SO에 몹 배열을 선언, 해당 SO에 잡몹 넣고 어드레서블 적용. 그리고 사용할 때 SO에 있는 몹 불러오기
+
     public void GetLocations()
     {
         // 빌드타겟의 경로를 가져온다.
