@@ -22,7 +22,7 @@ public class Beam : MonoBehaviour
     [SerializeField] float width;
     [SerializeField] float intensity = 2f;
 
-    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
+    WaitForSeconds waitTime = new WaitForSeconds(0.25f);
     List<ParticleSystem> startFXList = new List<ParticleSystem>();
 
     private void Awake()
@@ -90,7 +90,7 @@ public class Beam : MonoBehaviour
         yield return waitTime;
         while(beamLight.intensity <= intensity)
         {
-            beamLight.intensity += 0.05f;
+            beamLight.intensity += 0.1f;
             yield return null;
         }
 
