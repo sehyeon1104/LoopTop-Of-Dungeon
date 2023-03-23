@@ -27,12 +27,12 @@ public class PlayerSkill : MonoBehaviour
     int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
     private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
+     {
+         if (Input.GetKeyDown(KeyCode.O))
         {
             //SkillSelecet();
         }
-    }
+     }
     private void Start()
     {
         SkillShuffle();
