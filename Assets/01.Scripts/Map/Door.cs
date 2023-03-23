@@ -62,7 +62,7 @@ public class Door : MonoBehaviour
         isCloseDoor = false;
         if(tilemapCollider2D == null)
         {
-            Debug.Log("tilemapCollider2D is null!");
+            Rito.Debug.Log("tilemapCollider2D is null!");
             return;
         }
         tilemapCollider2D.isTrigger = true;

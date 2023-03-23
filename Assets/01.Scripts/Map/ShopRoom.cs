@@ -43,10 +43,6 @@ public class ShopRoom : RoomBase
 
     public Transform[] GetItemSpawnPos()
     {
-        foreach(var itemSpawnPos in itemSpawnPosArr)
-        {
-             Debug.Log("return pos");
-        }
         return itemSpawnPosArr;
     }
 
