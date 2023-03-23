@@ -38,6 +38,11 @@ public class BossUI : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// ±Ã±Ø±â ÆÄÈÑ ½Ã°£ ³Ö¾îÁÖ±â
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     public IEnumerator FillBossUltGage(float time)
     {
         float fillTime = 0f;
