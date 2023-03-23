@@ -269,6 +269,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     }
     public void RemoveEnemyInList(Poolable enemy)
     {
+        if(enemy == null)
+        {
+            Debug.Log("enemy is null");
+            return;
+        }
         curEnemies.Remove(enemy);
         Managers.Pool.Push(enemy);
     }

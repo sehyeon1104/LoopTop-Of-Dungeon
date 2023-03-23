@@ -35,7 +35,6 @@ public class G_SkelMag : EnemyDefault
     {
         Vector2 dir = (transform.position - playerTransform.position).normalized;
         Poolable enemy = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", transform.position + transform.right * Mathf.Sign(dir.x), Quaternion.identity);
-        enemy.transform.SetParent(null);
         EnemySpawnManager.Instance.curEnemies.Add(enemy);
         base.EnemyDead();
     }
