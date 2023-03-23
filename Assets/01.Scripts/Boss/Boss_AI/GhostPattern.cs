@@ -7,7 +7,6 @@ public class G_Patterns : BossPattern
 {
     #region Initialize
     [SerializeField] protected GameObject warning;
-    [SerializeField] protected GameObject bossMonster;
 
     [SerializeField] protected ParticleSystem SummonFx;
     [SerializeField] protected GameObject SummonTimer;
@@ -128,25 +127,25 @@ public class G_Patterns : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
+            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
             GameObject pattern33 = Instantiate(SummonFx.gameObject, clone.transform.position, Quaternion.Euler(Vector3.zero));
 
             ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
 
             particle.Play();
 
-            mobList.Add(clone);
+            mobList.Add(clone.gameObject);
         }
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBInvincible = true;
+        Boss.Instance.isBDamaged = true;
         for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
         }
-        Boss.Instance.isBInvincible = false;
+        Boss.Instance.isBDamaged = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
@@ -252,6 +251,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_TP());
                 break;
             case 2:
+                yield return SCoroutine(Pattern_TP());
                 break;
         }
 
