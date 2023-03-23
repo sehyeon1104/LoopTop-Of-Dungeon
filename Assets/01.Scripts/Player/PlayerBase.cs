@@ -7,7 +7,6 @@ public class PlayerBase
 {
     public void SetPlayerStat()
     {
-        Debug.Log("»£√‚");
         maxHp = 12;
         hp = maxHp;
         damage = 5f;
