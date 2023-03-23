@@ -238,10 +238,10 @@ public class GhostPattern : G_Patterns
         switch(NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_TP());
+                yield return SCoroutine(Pattern_TP(count));
                 break;
             case 2:
-                yield return SCoroutine(Pattern_TP());
+                yield return SCoroutine(Pattern_TP(count));
                 break;
         }
 
