@@ -45,6 +45,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
+        dangerMark = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ShowWave2EnemySpawnPos.prefab");
         Managers.Pool.CreatePool(dangerMark, 10);
         SetEnemyInList();
     }
@@ -67,13 +68,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void SetEnemyInList()
     {
-        Debug.Log(_locations.Count);
-
-        //if(_locations.Count == 0)
-        //{
-        //    Debug.Log("_locations.Count == 0");
-        //}
-
         for (int i = 0; i < _locations.Count; ++i)
         {
             // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
@@ -113,8 +107,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public void SetRandomEnemyCount()
     {
         // TODO : 가독성..
-
-        Debug.Log("SetRandomEnemyCount");
 
         int rand = Random.Range(1, 5);
 
@@ -160,20 +152,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             door.IsFirst = false;
         }
 
-        // 디버깅용, 테스트 필요
-        //if(enemySpawnPos.Length == 0)
-        //{
-        //    GameManager.Instance.Player.playerBase.FragmentAmount = 404;
-        //}
-
         door.CloseDoors();
         
         int randPos = 0;
         isNextWave = false;
-        // wave1
-        // Debug.Log(enemySpawnPos.Length);
-        // Debug.Log("wave 1");
-        // GameManager.Instance.Player.playerBase.FragmentAmount = 404;
+
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
 
@@ -190,8 +173,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             // 적 소환 위치를 부모로 설정
             var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
-            // var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
-            // enemy.transform.SetParent(enemySpawnPos[randPos]);
             // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
         }
@@ -205,8 +186,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
             var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
-            // var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
-            // enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
         }
 
@@ -214,8 +193,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         curEnemies.Clear();
 
-        // wave2
-        Debug.Log("wave 2");
         yield return new WaitForSeconds(spawnTime);
         isNextWave = true;
 
@@ -229,8 +206,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
             var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
-            //var enemy = Instantiate(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
-            //enemy.transform.SetParent(enemySpawnPos[randPos]);
             curEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
@@ -245,8 +220,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
             var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
-            //var enemy = Instantiate(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos].position, Quaternion.identity);
-            //enemy.transform.SetParent(enemySpawnPos[randPos]);
             enemy.gameObject.SetActive(false);
             curEnemies.Add(enemy);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
@@ -255,8 +228,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
     {
-        //var dangerMarkObj = Instantiate(dangerMark, enemySpawnPos.position, Quaternion.identity);
-
         var dangerMarkObj = Managers.Pool.Pop(dangerMark);
         dangerMarkObj.transform.position = spawnPos.position;
          
@@ -271,7 +242,13 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     {
         if(enemy == null)
         {
-            Debug.Log("enemy is null");
+            for(int i = 0; i < curEnemies.Count; ++i)
+            {
+                if(curEnemies[i] == null)
+                {
+                    curEnemies.RemoveAt(i);
+                }
+            }
             return;
         }
         curEnemies.Remove(enemy);

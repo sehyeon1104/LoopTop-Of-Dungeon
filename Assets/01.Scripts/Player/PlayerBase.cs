@@ -7,6 +7,7 @@ public class PlayerBase
 {
     public void SetPlayerStat()
     {
+        Debug.Log("»£√‚");
         maxHp = 12;
         hp = maxHp;
         damage = 5f;
@@ -17,14 +18,18 @@ public class PlayerBase
         exp = 0;
         _fragmentAmount = 0;
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
-        skillData = PlayerTransformation.Instance.PlayerTransformDataSO;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
         }
+        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        playerTransformDataSO = playerTransformDataSOArr[0];
     }
-    private PlayerSkillData skillData;
-    public PlayerSkillData SkillData { get; set; }
+        List<PlayerSkillData> playerTransformDataSOArr = new List<PlayerSkillData>();
+    public List<PlayerSkillData> PlayerTransformDataSOArr() => playerTransformDataSOArr;
+    PlayerSkillData playerTransformDataSO;
+    public PlayerSkillData PlayerTransformDataSO => playerTransformDataSO;
 
     private bool isPDead;
     public bool IsPDead { get; set; }

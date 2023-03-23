@@ -26,7 +26,6 @@ public class PlayerSkill : MonoBehaviour
     public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
     int[] slotLevel = new int[2] { 1, 1};
     public Action[] skillEvent = new Action[2];
-    PlayerBase playerBase;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
@@ -44,7 +43,6 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Awake()
     {
-        playerBase = GameManager.Instance.Player.playerBase;
         animator = GetComponent<Animator>();
         //SkillToButton();
     }
@@ -73,7 +71,6 @@ public class PlayerSkill : MonoBehaviour
 
     //    _ => () => Debugs(slotLevel),
     //};
-    public float GetSkillDelay(int i) => playerBase.SkillData.skill[i-1].skillDelay;
 
     //public void SkillSelecet()
     //{
@@ -98,18 +95,18 @@ public class PlayerSkill : MonoBehaviour
 
     public void Skill1()
     {
-        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[0]);
+        UIManager.Instance.SkillCooltime(PlayerTransformation.Instance.GetPlayerData(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag), randomSkillNum[0]);
         skillEvent[0]();
     }
 
     public void Skill2()
     {
-        UIManager.Instance.SkillCooltime(playerBase.SkillData, randomSkillNum[1]);
+        UIManager.Instance.SkillCooltime(PlayerTransformation.Instance.GetPlayerData(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag), randomSkillNum[1]);
         skillEvent[1]();
     }
 
-
     #region ¸®½ºÆ® ¼ÅÇÃ
+
     public void ListInit()
     {
         randomSkillNum.Clear();
@@ -147,5 +144,6 @@ public class PlayerSkill : MonoBehaviour
         ListShuffle();
         ListRemove();
     }
+
     #endregion
 }

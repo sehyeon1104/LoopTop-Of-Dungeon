@@ -16,9 +16,6 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         playerAnimator = GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-    }
     public void UpdateVisual(PlayerSkillData data)
     {
         UIManager.Instance.PlayerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
@@ -43,7 +40,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 
             Time.timeScale -= 0.015f;
             hitVolume.weight += 0.05f;
-
+            
             yield return null;
         }
         Time.timeScale = 1f;
@@ -54,4 +51,5 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         playerSprite.flipX = VelocityX < 0 ? false : true;
     }
+    
 }
