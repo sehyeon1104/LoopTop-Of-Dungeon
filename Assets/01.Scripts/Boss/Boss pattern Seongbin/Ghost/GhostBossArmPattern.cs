@@ -17,12 +17,15 @@ public class GhostBossArmPattern : MonoBehaviour
 
     private float RandomSizeY = 0f;
 
+    private Material[] setMat = new Material[3];
+
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
     private void Start()
     {
         StartCoroutine(AAA());
     }
+    
 
     IEnumerator AAA()
     {
@@ -42,7 +45,18 @@ public class GhostBossArmPattern : MonoBehaviour
             Debug.Log(RealRandomPos.x); 
             Debug.Log(RealRandomPos.y);
 
-           Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternAnim", RealRandomPos, Quaternion.identity);
+
+            Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternAnim", RealRandomPos, Quaternion.identity);
+            Debug.Log(clone.GetComponentsInChildren<Renderer>().Length);
+            for(int i = 0; i < clone.GetComponentsInChildren<Renderer>().Length; i++)
+            {
+                setMat[i] = clone.GetComponentsInChildren<Renderer>()[i].material;
+                Debug.Log(setMat[i]);
+            }
+            foreach (var mat in setMat)
+            {
+                mat.SetFloat("_StepValue", RealRandomPos.y);
+            }
 
             time++;
 

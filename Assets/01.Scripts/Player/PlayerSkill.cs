@@ -28,12 +28,12 @@ public class PlayerSkill : MonoBehaviour
     public Action[] skillEvent = new Action[2];
     PlayerBase playerBase;
     private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
+     {
+         if (Input.GetKeyDown(KeyCode.O))
         {
             //SkillSelecet();
         }
-    }
+     }
     private void Start()
     {
         SkillShuffle();
