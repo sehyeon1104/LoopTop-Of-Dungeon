@@ -211,8 +211,8 @@ public class GhostPattern : G_Patterns
     private IEnumerator ECoroutine()
     {
         StopCoroutine(ActCoroutine);
-        yield return null;
         ActCoroutine = null;
+        yield return null;
     }
 
     public override IEnumerator Pattern1(int count = 0) //장판 패턴

@@ -119,9 +119,10 @@ public abstract class BossPattern : MonoBehaviour
 
         while (!Boss.Instance.isBDead)
         {
+            yield return null;
+
             if (Boss.Instance.isBInvincible)
             {
-                yield return null;
                 continue;
             }
 
