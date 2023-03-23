@@ -212,9 +212,12 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {
+
+
         switch (NowPase)
         {
             case 1:
+
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
