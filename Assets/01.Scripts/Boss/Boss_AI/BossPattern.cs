@@ -81,6 +81,7 @@ public abstract class BossPattern : MonoBehaviour
         float playerDistance = Vector2.Distance(player.position, transform.position);
         if (playerDistance <= minDistance) return;
 
+        attackAnim.Play(animArray[3]);
         Vector2 dir = (player.position - transform.position).normalized;
         transform.Translate(dir * Time.deltaTime * moveSpeed);
     }

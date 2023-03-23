@@ -19,7 +19,7 @@ public class G_Patterns : BossPattern
     #endregion
 
     #region pase 1
-    public IEnumerator Pattern_TH(int count)
+    public IEnumerator Pattern_TH(int count) //°¡½Ã
     {
         for (int i = 0; i < count; i++)
         {
@@ -37,7 +37,7 @@ public class G_Patterns : BossPattern
             Destroy(clone);
         }
     } // ÆÈ»¸±â·Î ´ëÃ¼ ¿¹Á¤
-    public IEnumerator Pattern_BM(int count)
+    public IEnumerator Pattern_BM(int count) //ºö
     {
         yield return null;
 
@@ -49,9 +49,11 @@ public class G_Patterns : BossPattern
             switch (i)
             {
                 case 0:
+                    attackAnim.Play(animArray[1]);
                     Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * rot));
                     break;
                 case 1:
+                    attackAnim.Play(animArray[1]);
                     for (int j = -1; j <= 1; j += 2)
                     {
                         Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
@@ -62,18 +64,21 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 2:
+                    attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 4; j++)
                     {
                         Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
                     }
                     break;
                 case 3:
+                    attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 8; j++)
                     {
                         Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * 45 * j));
                     }
                     break;
                 case 4:
+                    attackAnim.Play(animArray[1]);
                     int randomCount = Random.Range(8, 13);
                     for(int j = 0; j < randomCount; j++)
                     {
@@ -85,7 +90,7 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(2f);
         }
     }
-    public IEnumerator Pattern_TP()
+    public IEnumerator Pattern_TP() //ÅÚÆ÷
     {
         moveSpeed *= 0.5f;
         float timer = 0f;
@@ -116,7 +121,7 @@ public class G_Patterns : BossPattern
             Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
     }
-    public IEnumerator Pattern_SM(int count)
+    public IEnumerator Pattern_SM(int count) //Èú¶ó
     {
         int finalCount = 0;
         List<GameObject> mobList = new List<GameObject>();
@@ -217,7 +222,7 @@ public class GhostPattern : G_Patterns
         switch (NowPase)
         {
             case 1:
-
+                attackAnim.Play(animArray[0]);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:

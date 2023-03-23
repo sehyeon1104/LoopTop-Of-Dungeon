@@ -62,12 +62,11 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public void Die()
     {
         if (isBDead) return;
-
+        
         // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
         MultiGage.Instance.ObserveEnd();
 
         isBDead = true;
-        Debug.Log("Died!");
         //gameObject.SetActive(false);
     }
 
