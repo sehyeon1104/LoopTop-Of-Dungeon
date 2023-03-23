@@ -88,10 +88,6 @@ public class PlayerSkill : MonoBehaviour
     //        skillSelect.SetActive(false);
     //    }
     //}
-    public void Debugs(int level)
-    {
-        print($"µð¹ö±ë{level}");
-    }
 
     public void Skill1()
     {
