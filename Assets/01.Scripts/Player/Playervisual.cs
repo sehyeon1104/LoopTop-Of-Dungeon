@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
@@ -17,10 +18,10 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 
     private void Start()
     {
-       
     }
     public void UpdateVisual(PlayerSkillData data)
     {
+        UIManager.Instance.PlayerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
         playerAnimator.runtimeAnimatorController = data.playerAnim;
         playerSprite.sprite = data.playerImg;
     }

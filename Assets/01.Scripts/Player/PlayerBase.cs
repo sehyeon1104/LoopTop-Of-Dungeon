@@ -1,29 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBase
 {
-    public PlayerBase()
-    {
-        SetPlayerStat();
-    }
     public void SetPlayerStat()
     {
         maxHp = 12;
         hp = maxHp;
         damage = 5f;
         critChance = 5f;
-
         level = 1;
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-
         _fragmentAmount = 0;
-
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
-
+        skillData = PlayerTransformation.Instance.PlayerTransformDataSO;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
@@ -142,7 +136,7 @@ public class PlayerBase
         set
         {
             _fragmentAmount = value;
-            if(_fragmentAmount <= 0)
+            if (_fragmentAmount <= 0)
             {
                 _fragmentAmount = 0;
             }

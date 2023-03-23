@@ -33,6 +33,7 @@ public class Player : MonoBehaviour, IHittable
     private void Start()
     {
         playerBase.SetPlayerStat();
+        PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag)); 
     }
     public IEnumerator IEDamaged()
     {   
