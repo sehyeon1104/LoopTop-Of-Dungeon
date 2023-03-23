@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            PlayerVisuall.Instance.VelocityChange(inputVelocity.x);
+            PlayerVisual.Instance.VelocityChange(inputVelocity.x);
         }
         Vector2 VelocityVec = inputVelocity * speed * Time.deltaTime;
         rb.MovePosition(rb.position + VelocityVec);

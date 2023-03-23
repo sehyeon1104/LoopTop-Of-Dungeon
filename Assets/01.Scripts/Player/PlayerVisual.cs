@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class PlayerVisuall : MonoSingleton<PlayerVisuall>
+public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
     SpriteRenderer playerSprite;
     Animator playerAnimator;

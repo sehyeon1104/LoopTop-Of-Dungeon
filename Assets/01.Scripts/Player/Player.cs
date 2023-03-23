@@ -27,17 +27,17 @@ public class Player : MonoBehaviour, IHittable
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            PlayerVisuall.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag));
+            PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag));
         }
     }
     private void Start()
     {
         playerBase.SetPlayerStat();
-        PlayerVisuall.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag)); 
+        PlayerVisual.Instance.UpdateVisual(PlayerTransformation.Instance.GetPlayerData((int)playerBase.PlayerTransformTypeFlag)); 
     }
     public IEnumerator IEDamaged()
     {   
-        PlayerVisuall .Instance.StartHitMotion();
+        PlayerVisual .Instance.StartHitMotion();
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
         yield return null;
