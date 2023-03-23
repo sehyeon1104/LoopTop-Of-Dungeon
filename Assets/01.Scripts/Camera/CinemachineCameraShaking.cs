@@ -135,7 +135,7 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
         }
         else
         {
-            Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
+            Rito.Debug.LogError("VirtualCamera is null or virtualCameraNoise is null");
         }
 
         yield break;
