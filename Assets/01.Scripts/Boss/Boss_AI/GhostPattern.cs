@@ -7,7 +7,6 @@ public class G_Patterns : BossPattern
 {
     #region Initialize
     [SerializeField] protected GameObject warning;
-    [SerializeField] protected GameObject bossMonster;
 
     [SerializeField] protected ParticleSystem SummonFx;
     [SerializeField] protected GameObject SummonTimer;
@@ -90,23 +89,13 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(2f);
         }
     }
-    public IEnumerator Pattern_TP() //텔포
+    public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
     {
-        moveSpeed *= 0.5f;
-        float timer = 0f;
         Vector3 dir;
 
-        while (timer <= 3f)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-
-            dir = player.position - transform.position;
-            transform.Translate(dir.normalized * Time.deltaTime * moveSpeed);
-        }
+        yield return new WaitForSeconds(3f);
 
         transform.position = player.right * 3 + player.position;
-        moveSpeed *= 2f;
 
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
@@ -116,9 +105,9 @@ public class G_Patterns : BossPattern
         float angle = 7.2f;
 
 
-        for (int i = -4; i < 4; i++)
+        for (int i = -4; i < count; i++)
         {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position + Vector3.up * 2, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
         }
     }
     public IEnumerator Pattern_SM(int count) //힐라
@@ -128,25 +117,25 @@ public class G_Patterns : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            GameObject clone = Instantiate(bossMonster, new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
+            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
             GameObject pattern33 = Instantiate(SummonFx.gameObject, clone.transform.position, Quaternion.Euler(Vector3.zero));
 
             ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
 
             particle.Play();
 
-            mobList.Add(clone);
+            mobList.Add(clone.gameObject);
         }
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBInvincible = true;
+        Boss.Instance.isBDamaged = true;
         for (int i = 1; i < 13; i++)
         {
             yield return new WaitForSeconds(2f);
             SummonClock.fillAmount = (float)i / 12;
         }
-        Boss.Instance.isBInvincible = false;
+        Boss.Instance.isBDamaged = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
@@ -190,7 +179,7 @@ public class GhostPattern : G_Patterns
             case 1:
                 return NowPhase == 1 ? 3 : 5;
             case 2:
-                break;
+                return NowPhase == 1 ? -4 : 4;
             case 3:
                 break;
             case 4:
@@ -249,9 +238,10 @@ public class GhostPattern : G_Patterns
         switch(NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_TP());
+                yield return SCoroutine(Pattern_TP(count));
                 break;
             case 2:
+                yield return SCoroutine(Pattern_TP(count));
                 break;
         }
 

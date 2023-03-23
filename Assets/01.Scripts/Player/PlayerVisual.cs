@@ -40,7 +40,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 
             Time.timeScale -= 0.015f;
             hitVolume.weight += 0.05f;
-
+            
             yield return null;
         }
         Time.timeScale = 1f;
@@ -51,4 +51,5 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         playerSprite.flipX = VelocityX < 0 ? false : true;
     }
+    
 }
