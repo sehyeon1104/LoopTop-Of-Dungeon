@@ -14,9 +14,6 @@ public class GhostBossArmPatternAnim : MonoBehaviour
 
     private bool iscoroutinestart = false;
 
-    WaitForSeconds checkTime = new WaitForSeconds(0.1f);
-
-
     public void CheckPlayer()
     {
             Managers.Pool.PoolManaging("SummonArm",transform.position, Quaternion.identity);
@@ -31,6 +28,13 @@ public class GhostBossArmPatternAnim : MonoBehaviour
                 iscoroutinestart = false;
             }
     }
+
+    public void GhostArmDownEffect()
+    {
+        Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternSmoke", transform.position, Quaternion.identity);
+    }
+
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
