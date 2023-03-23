@@ -65,7 +65,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
         MultiGage.Instance.ObserveEnd();
-        UIManager.Instance.TransformUITest();
 
         isBDead = true;
         Debug.Log("Died!");

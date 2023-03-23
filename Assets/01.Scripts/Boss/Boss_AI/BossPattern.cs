@@ -118,7 +118,11 @@ public abstract class BossPattern : MonoBehaviour
 
         while (!Boss.Instance.isBDead)
         {
-            if (Boss.Instance.isBInvincible) continue;
+            if (Boss.Instance.isBInvincible)
+            {
+                yield return null;
+                continue;
+            }
 
             int patternChoice = 0;
             patternChoice = Random.Range(0, pase_patternCount[NowPase - 1]);
