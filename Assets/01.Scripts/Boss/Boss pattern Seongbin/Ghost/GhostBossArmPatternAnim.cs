@@ -4,7 +4,6 @@ using UnityEngine;
 // using static UnityEditor.Experimental.GraphView.GraphView; // 빌드오류로 인해 일시적 주석
 public class GhostBossArmPatternAnim : MonoBehaviour
 {
-    public Player player = null;
 
     public GameObject AttackRange = null;
 
@@ -16,17 +15,13 @@ public class GhostBossArmPatternAnim : MonoBehaviour
 
     public void CheckPlayer()
     {
-            Managers.Pool.PoolManaging("SummonArm",transform.position, Quaternion.identity);
-            Collider2D hit1 = Physics2D.OverlapBox(AttackRange.transform.position, size1, 0, Layer);
+        Managers.Pool.PoolManaging("SummonArm",transform.position, Quaternion.identity);
+        Collider2D hit1 = Physics2D.OverlapBox(AttackRange.transform.position, size1, 0, Layer);
 
-            if ((hit1?.gameObject.layer == LayerMask.NameToLayer("Player")  && iscoroutinestart == false))
-            {
-                player.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
-            }
-            else if (hit1?.gameObject.layer != LayerMask.NameToLayer("Player"))
-            {
-                iscoroutinestart = false;
-            }
+        if (hit1?.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            GameManager.Instance.Player.OnDamage(1, gameObject, 0);
+        }
     }
 
     public void GhostArmDownEffect()
