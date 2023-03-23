@@ -249,8 +249,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 15
-      minScalar: 13.5
+      scalar: 30
+      minScalar: 27
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4669,9 +4669,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1282873705
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: -726151
+  m_SortingLayer: 7
+  m_SortingOrder: 5
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 3
@@ -4951,7 +4951,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 18
+      scalar: 36
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -9653,7 +9653,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16.5
+      scalar: 33
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -14117,6 +14117,7 @@ GameObject:
   - component: {fileID: 4939922740802426468}
   - component: {fileID: 3579254085613374540}
   - component: {fileID: 4066194255986946942}
+  - component: {fileID: -5240771847141755828}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -18933,3 +18934,17 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-5240771847141755828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7629636018476893130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 5

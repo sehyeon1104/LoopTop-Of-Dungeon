@@ -44,7 +44,6 @@ public class GhostBossArmPattern : MonoBehaviour
 
            GameObject clone = Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternAnim", RealRandomPos, Quaternion.identity);
 
-            print(clone.transform.position);
             time++;
 
             yield return Delay;
