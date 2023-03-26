@@ -51,6 +51,12 @@ public class ItemObj : MonoBehaviour
     {
         // TODO : 재화 부족할 시 구매 불가 적용
 
+        if(GameManager.Instance.Player.playerBase.FragmentAmount < item.price)
+        {
+            Rito.Debug.Log("구매 불가");
+            return;
+        }
+
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);
