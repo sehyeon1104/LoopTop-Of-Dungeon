@@ -19,7 +19,7 @@ public class GhostBossArmPattern : MonoBehaviour
 
     private Material[] setMat = new Material[3];
 
-    WaitForSeconds Delay = new WaitForSeconds(0.2f);
+    WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class GhostBossArmPattern : MonoBehaviour
     public IEnumerator AAA()
     {
         Vector2 Owntransform = transform.position;
-        while(time < 20)
+        while(time < 25)
         {
             RandomSizeX = 0f;
             RandomSizeY = 0f;
