@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 using System.Linq;
+using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -49,6 +50,9 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private float showCurStageNameTime = 3f;
 
+    TextMeshProUGUI fpsText;
+    float timer = 0;
+    int num = 0;
     //[Header("RightUp")]
     [Header("RightDown")]
     private GameObject AttackButton;
@@ -72,18 +76,35 @@ public class UIManager : MonoSingleton<UIManager>
         Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject; 
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
+        fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
     private void Start()
     {
         UpdateUI();
     }
-
+    private void Update()
+    {
+        FPSUpdate();
+    }
     public void UpdateUI()
     {
         // playerIcon = GameManager.Instance.Player.
         DisActiveAllPanels();
         HPInit();
         HpUpdate();
+        
+    }
+    public void FPSUpdate()
+    {
+
+        num++;
+        timer += Time.deltaTime;
+        if(timer>1)
+        {
+            fpsText.text =  $"{Convert.ToString(num)}FPS";
+            timer = 0;
+            num = 0;
+        }
     }
     public void HPInit()
     {
