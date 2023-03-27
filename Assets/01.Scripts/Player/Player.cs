@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {
+    {   
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour, IHittable
         UIManager.Instance.HpUpdate();
     }
     public IEnumerator IEDamaged()
-    {   
+    {
         PlayerVisual.Instance.StartHitMotion();
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
@@ -48,17 +48,20 @@ public class Player : MonoBehaviour, IHittable
         if (isPDamaged || playerBase.IsPDead)
             return;
 
-        
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
         }
         isPDamaged = true;
         playerBase.Hp -= (int)damage;
-        if(playerBase.Hp <= 0) 
+        if (playerBase.Hp <= 0)
             Dead();
-        StartCoroutine(IEDamaged());
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+        else
+        {
+            StartCoroutine(IEDamaged());
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+        }
     }
 
     public void Dead()
@@ -68,7 +71,6 @@ public class Player : MonoBehaviour, IHittable
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
-
     public void RevivePlayer()
     {
         gameObject.SetActive(true);

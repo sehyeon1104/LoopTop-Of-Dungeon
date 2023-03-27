@@ -8,6 +8,7 @@ public class ItemObj : MonoBehaviour
 {
     [SerializeField]
     private Image itemInfoPanel = null;
+    public Image ItemInfoPanel => itemInfoPanel;
     [SerializeField]
     private Image itemImage = null;
     [SerializeField]
@@ -20,14 +21,9 @@ public class ItemObj : MonoBehaviour
     private Define.ItemType itemType;
     [SerializeField]
     private GameObject soldOutPanel = null;
-
-
-    [SerializeField]
-    private float playerSensingDis = 1.5f;
-
+    int num = 0;
+    public int Num { get; set; }
     private Item item = null;
-
-    private WaitForEndOfFrame waitForEndOfFrame;
 
     private void Start()
     {
@@ -51,32 +47,6 @@ public class ItemObj : MonoBehaviour
     }
 
 
-    public IEnumerator ToggleItemInfoPanel()
-    {
-        while (true)
-        {
-            if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) < playerSensingDis * playerSensingDis)
-            {
-                print("enter");
-                UIManager.Instance.RotateInteractionButton();
-                if (!itemInfoPanel.gameObject.activeSelf)
-                {
-                    itemInfoPanel.gameObject.SetActive(true);
-                }
-            }
-            else
-            {
-                UIManager.Instance.RotateAttackButton();
-                if (itemInfoPanel.gameObject.activeSelf)
-                {
-                    itemInfoPanel.gameObject.SetActive(false);
-                }
-            }
-
-            yield return waitForEndOfFrame;
-        }
-
-    }
     public void PurchaseShopItem()
     {
         // TODO : 재화 부족할 시 구매 불가 적용
@@ -88,7 +58,7 @@ public class ItemObj : MonoBehaviour
         }
 
         itemImage.gameObject.SetActive(false);
-        itemInfoPanel.gameObject.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);
         ItemEffects.ShopItems[item.itemNumber].Use();
         

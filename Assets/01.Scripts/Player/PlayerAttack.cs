@@ -10,14 +10,10 @@ public class PlayerAttack :  MonoBehaviour
 {
     [SerializeField]
     private float attackRange = 1f;
-    Material hitMat;
-    Material spriteLitMat;
     Animator playerAnim;
     // 공격 버튼을 눌렀을 때 발동될 함수
     private void Awake()
     {
-        hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
-        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
         playerAnim = GetComponent<Animator>();  
         GameObject.FindGameObjectWithTag("Attack").GetComponent<Button>().onClick.AddListener(Attack);
     }
@@ -34,17 +30,9 @@ public class PlayerAttack :  MonoBehaviour
             {
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
-                Material targetMat = enemys[i].GetComponent<Renderer>().material;
-                StartCoroutine(ChangeMat(targetMat, enemys[i].GetComponent<SpriteRenderer>().sprite.texture));
+
             }
         }
     }
-   IEnumerator ChangeMat(Material mat,Texture2D texture)
-    {
-        print(texture.name);
-        hitMat.SetTexture("_Texture2D", texture);
-        mat = hitMat;
-        yield return new WaitForSeconds(0.1f);
-        mat = spriteLitMat;
-    }
+   
 }
