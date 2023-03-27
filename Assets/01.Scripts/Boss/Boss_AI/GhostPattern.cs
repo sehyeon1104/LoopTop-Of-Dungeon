@@ -66,7 +66,12 @@ public class G_Patterns : BossPattern
                     attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 4; j++)
                     {
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
+                        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
+
+                        float y = j > 1 ? -1.5f : 1.5f;
+                        float x = j >= 1 && j <= 2 ? -1.5f : 1.5f;
+
+                        clone.transform.position = new Vector2(clone.transform.position.x + x, clone.transform.position.y + y);
                     }
                     break;
                 case 3:
@@ -86,7 +91,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
         }
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
@@ -100,14 +105,18 @@ public class G_Patterns : BossPattern
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
-        dir = player.position - (transform.position + Vector3.up * 2);
-        float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float angle = 7.2f;
 
-
-        for (int i = -4; i < count; i++)
+        if (count > -4)
         {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            dir = player.position - (transform.position);
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = 7.2f;
+
+
+            for (int i = -4; i < count; i++)
+            {
+                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot)));
+            }
         }
     }
     public IEnumerator Pattern_SM(int count) //힐라
