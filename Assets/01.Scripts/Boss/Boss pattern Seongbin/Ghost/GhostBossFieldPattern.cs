@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
-public class GhostBossArmPattern : MonoBehaviour
+public class GhostBossFieldPattern : MonoBehaviour
 {
     public Vector2 size1;
 
     private int time = 0;
+
+    private int Randomtime = 0;
 
     private float SizeX = 35.1f;
 
@@ -23,10 +25,11 @@ public class GhostBossArmPattern : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(AAA());
+        StartCoroutine(GhostBossArmPattern());
     }
 
-    public IEnumerator AAA()
+    //ÆÈ ¼Ú¾Æ¿À¸£±â ÆÐÅÏ
+    public IEnumerator GhostBossArmPattern()
     {
         Vector2 Owntransform = transform.position;
         while(time < 25)
@@ -55,13 +58,24 @@ public class GhostBossArmPattern : MonoBehaviour
             time++;
 
             yield return Delay;
-
-
-
         }
     }
 
-    private void OnDrawGizmos()
+    public IEnumerator GhostBossUltPattern()
+    {
+        while (true)
+        {
+            Randomtime = Random.Range(0, 5);
+
+            Vector2 Owntransform = transform.position;
+        }
+
+
+    }
+
+
+
+        private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, size1);
