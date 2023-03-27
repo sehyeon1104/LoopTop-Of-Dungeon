@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
@@ -27,18 +30,25 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected int _attack = Animator.StringToHash("Attack");
     protected int _move = Animator.StringToHash("Move");
 
+    Material hitMat;
+    Material spriteLitMat;
+    WaitForSeconds hitChangeTime = new WaitForSeconds(0.05f);
     public Vector3 hitPoint => Vector3.zero;
-
     void OnEnable()
     {
         SetStatus();
         if (actCoroutine != null) actCoroutine = null;
     }
-
+    private void Awake()
+    {
+        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
+        hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
+    }
     void Start()
     {
         playerTransform = GameManager.Instance.Player.transform;
         anim = GetComponent<Animator>();
+
         sprite = GetComponent<SpriteRenderer>();
         AnimInit();
     }
@@ -122,14 +132,21 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         }
-
         hp -= (int)damage;
         if (hp <= 0)
-        {
             EnemyDead();
-        }
-    }
+        else
+            StartCoroutine(GetHit());
 
+
+    }
+    IEnumerator GetHit()
+    {
+        hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        sprite.material = hitMat;
+        yield return hitChangeTime;
+        sprite.material = spriteLitMat;
+    }
     public virtual void EnemyDead()
     {
         //if (transform.parent != null)
