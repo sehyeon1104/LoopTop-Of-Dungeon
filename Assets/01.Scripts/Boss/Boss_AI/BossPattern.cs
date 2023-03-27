@@ -48,8 +48,8 @@ public abstract class BossPattern : MonoBehaviour
         isUsingFinalPattern = false;
 
         AnimationArray();
-        //StartCoroutine(RandomPattern());
-        //StartCoroutine(ChangePase());
+        StartCoroutine(RandomPattern());
+        StartCoroutine(ChangePase());
 
         constScale = transform.localScale;
     }
