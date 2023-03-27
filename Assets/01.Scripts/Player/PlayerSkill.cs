@@ -16,7 +16,9 @@ public class PlayerSkill : MonoBehaviour
 {
     [Space]
     [Header("½ºÅ³")]
-    Dictionary<PlayerSkillBase,Action> skillDictionary= new Dictionary<PlayerSkillBase,Action>();
+
+    Dictionary<PlayerSkillBase,Action> skillDictionary= new Dictionary<PlayerSkillBase, Action>();
+
     Animator animator; 
     public GameObject skillSelect;
     [SerializeField] Transform Skill1Trans;
@@ -46,49 +48,7 @@ public class PlayerSkill : MonoBehaviour
         animator = GetComponent<Animator>();
         //SkillToButton();
     }
-    public float skillCooltime { private set; get; } = 0f;
  
-    //public void SkillToButton()
-    //{
-    //    GameObject.FindGameObjectWithTag("Skill1").GetComponent<Button>().onClick.AddListener(Skill1);
-    //    GameObject.FindGameObjectWithTag("Skill2").GetComponent<Button>().onClick.AddListener(Skill2);
-    //    GameObject.FindGameObjectWithTag("UltimateSkill").GetComponent<Button>().onClick.AddListener(UltimateSkill);
-    //}
-    //public Action ApplySkill(int skillNum,PlayerSkillBase playerSkillbase) => skillNum switch
-    //{
-    //    // Power
-    //    1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => HillaSkill(),
-    //    2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => JangPanSkill(),
-    //    3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => TeleportSkill(),
-    //    4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => ArmStretchSkill(),
-    //    5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Power => () => RiseUpSkill(),
-    //    // Ghost
-    //    1 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => HillaSkill(),
-    //    2 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => JangPanSkill(),
-    //    3 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => TeleportSkill(),
-    //    4 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => ArmStretchSkill(),
-    //    5 when playerBase.PlayerTransformTypeFlag == Define.PlayerTransformTypeFlag.Ghost => () => RiseUpSkill(),
-
-    //    _ => () => Debugs(slotLevel),
-    //};
-
-    //public void SkillSelecet()
-    //{
-    //    GameObject selectObj = EventSystem.current.currentSelectedGameObject;
-    //    selectObj.SetActive(false);
-    //    int selectNum = int.Parse(selectObj.GetComponentInChildren<TextMeshProUGUI>().text);
-    //    skillNum.Add((Define.SkillNum)selectNum);
-    //    skillEvent[skillSelectNum] = ApplySkill(selectNum, playerSkillbase);
-    //    skillDictionary.Add(slotLevel[skillSelectNum], ApplySkill(selectNum, slotLevel[skillSelectNum])); 
-    //    skillSelectNum++;
-    //    if (skillSelectNum > 1)
-    //    {
-    //        Time.timeScale = 1;
-    //        skillSelectNum = 0;
-    //        skillSelect.SetActive(false);
-    //    }
-    //}
-
     public void Skill1()
     {
         UIManager.Instance.SkillCooltime(PlayerTransformation.Instance.GetPlayerData(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag), randomSkillNum[0]);

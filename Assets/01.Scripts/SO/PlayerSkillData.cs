@@ -9,14 +9,13 @@ using UnityEngine.UI;
 public class PlayerSkillData : ScriptableObject
 {
     public List<PlayerSkillInfo> skill;
-    public List<PlayerSkillBase> skillBase;
     public float ultiSkillDelay = 15f;
     public Sprite playerImg = null;
     public RuntimeAnimatorController playerAnim;
 }
 
 [Serializable]
-public class PlayerSkillInfo 
+public class PlayerSkillInfo
 {   
    public string skillName;
    public float skillDelay;
