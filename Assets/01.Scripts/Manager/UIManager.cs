@@ -148,7 +148,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     public void ToggleGameOverPanel()
-    {
+    {   
         TogglePlayerAttackUI();
         blurPanel.SetActive(!pausePanel.activeSelf);
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
@@ -171,9 +171,8 @@ public class UIManager : MonoSingleton<UIManager>
         // TODO : 이후 광고시청 후 부활 or 재화 소모 후 부활 구현
 
         Debug.Log("Revive");
-        ToggleGameOverPanel();
-        GameManager.Instance.Player.RevivePlayer();
         TogglePlayerAttackUI();
+        GameManager.Instance.Player.RevivePlayer();
     }
 
     public void Leave()
