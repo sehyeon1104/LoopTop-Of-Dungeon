@@ -50,9 +50,14 @@ public class UIManager : MonoSingleton<UIManager>
     private float showCurStageNameTime = 3f;
 
     //[Header("RightUp")]
-    // [Header("RightDown")]
-    GameObject AttackButton;
-    GameObject InteractionButton;
+    [Header("RightDown")]
+    private GameObject AttackButton;
+    private GameObject Skill1Button;
+    private GameObject Skill2Button;
+    private GameObject UltButton;
+    private GameObject InteractionButton;
+
+
     [SerializeField]
     private GameObject blurPanel;
 
@@ -62,7 +67,10 @@ public class UIManager : MonoSingleton<UIManager>
     {
         playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
+        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
+        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
+        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
+        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject; 
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
     }
     private void Start()
@@ -84,6 +92,15 @@ public class UIManager : MonoSingleton<UIManager>
             hpbars.Add(avc.GetComponent<Image>());
         }
     }
+    
+    public void TogglePlayerAttackUI()
+    {
+        AttackButton.SetActive(!AttackButton.activeSelf);
+        Skill1Button.SetActive(!Skill1Button.activeSelf);
+        Skill2Button.SetActive(!Skill2Button.activeSelf);
+        UltButton.SetActive(!UltButton.activeSelf);
+    }
+
     #region Panels
     public void DisActiveAllPanels()
     {
@@ -134,6 +151,7 @@ public class UIManager : MonoSingleton<UIManager>
         Debug.Log("Revive");
         ToggleGameOverPanel();
         GameManager.Instance.Player.RevivePlayer();
+        TogglePlayerAttackUI();
     }
 
     public void Leave()
