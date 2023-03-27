@@ -37,6 +37,8 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isCanUseFinalPattern = true;
     protected bool isUsingFinalPattern = false;
 
+    Vector3 constScale;
+
     private void Start()
     {
         player = GameManager.Instance.Player.transform;
@@ -46,8 +48,10 @@ public abstract class BossPattern : MonoBehaviour
         isUsingFinalPattern = false;
 
         AnimationArray();
-        StartCoroutine(RandomPattern());
-        StartCoroutine(ChangePase());
+        //StartCoroutine(RandomPattern());
+        //StartCoroutine(ChangePase());
+
+        constScale = transform.localScale;
     }
 
     protected void Update()
@@ -82,8 +86,15 @@ public abstract class BossPattern : MonoBehaviour
         if (playerDistance <= minDistance) return;
 
         attackAnim.Play(animArray[3]);
-        Vector2 dir = (player.position - transform.position).normalized;
-        transform.Translate(dir * Time.deltaTime * moveSpeed);
+        Vector2 dir = (player.position - transform.position);
+        Vector3 scale = transform.localScale;
+
+        scale.x = Mathf.Sign(dir.x) * constScale.x;
+
+        if(Mathf.Abs(dir.x) > 0.2f)
+            transform.localScale = scale;
+
+        transform.Translate((Vector2.up * dir.normalized + Vector2.right * Mathf.Sign(scale.x)) * Time.deltaTime * moveSpeed);
     }
 
     private IEnumerator ChangePase()
