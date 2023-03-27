@@ -7,7 +7,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
     [SerializeField] private GameObject FPR; //Floor Pattern Range
     [SerializeField] private GameObject FPRS; //Floor Pattern Range Start
     [SerializeField] private GameObject FPRR; //Floor Pattern Range Rectangle 
-    [SerializeField] private GameObject FPRRS; //Floor Pattern Range Rectangle Start
+    [SerializeField] private GameObject FRPRS; //Floor Pattern Range Rectangle Start
     [SerializeField] private GameObject FPRSCol;
     [SerializeField] private GameObject FPRRSCol;
 
@@ -23,15 +23,28 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     private float ScaleX;
     private float ScaleY;
-
+    private void Awake()
+    {   
+        FPR = transform.Find("Effect/FPR").gameObject;
+        FPRR = transform.Find("Effect/FRPR").gameObject;
+        FPRS = transform.Find("Effect/FPRS").gameObject;
+        FRPRS = transform.Find("Effect/FRPRS").gameObject;
+        FPRSCol = transform.Find("Effect/CircleCol").gameObject;
+        FPRRSCol = transform.Find("Effect/RacCol").gameObject;
+        FPRSpriteRenderer = FPR.GetComponent<SpriteRenderer>();
+        FPRSSpriteRenderer = FPRS.GetComponent<SpriteRenderer>();
+        FPRRSpriteRenderer = FPRR.GetComponent<SpriteRenderer>();
+        FPRRSSpriteRenderer = FRPRS.GetComponent<SpriteRenderer>();
+    }
     public IEnumerator FloorPatternRectangle()
     {
+        
         FPRR.transform.position = transform.position;
-        FPRRS.transform.position = transform.position;
+        FRPRS.transform.position = transform.position;
         FPRRSCol.transform.position = transform.position;
 
         FPRR.SetActive(true);
-        FPRRS.SetActive(true);
+        FRPRS.SetActive(true);
         
         yield return WaitForRangeStart;
 
@@ -54,8 +67,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
         {
             ScaleX += 0.2f;
             ScaleY += 0.2f;
-
-            FPRRS.transform.localScale = new Vector2(ScaleX, ScaleY);
+                
+            FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return AttackRangeSpeed;
         }
@@ -75,13 +88,13 @@ public class GhostBossJangpanPattern : MonoBehaviour
         ScaleY = 0;
 
         FPRR.transform.localScale = Vector2.zero;
-        FPRRS.transform.localScale = Vector2.zero;
+        FRPRS.transform.localScale = Vector2.zero;
 
         FPRRSpriteRenderer.enabled = true;
         FPRRSSpriteRenderer.enabled = true;
 
         FPRR.SetActive(false);
-        FPRRS.SetActive(false);
+        FRPRS.SetActive(false);
         FPRRSCol.SetActive(false);
     }
 
