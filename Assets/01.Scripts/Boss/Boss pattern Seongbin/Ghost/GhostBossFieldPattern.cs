@@ -34,11 +34,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay1 = new WaitForSeconds(1f);
 
-    private void Start()
-    {
-        StartCoroutine(GhostBossArmPattern());
-        StartCoroutine(GhostBossUltPattern());
-    }
+    Coroutine UltPattern = null;
 
     //ÆÈ ¼Ú¾Æ¿À¸£±â ÆÐÅÏ
     public IEnumerator GhostBossArmPattern()
@@ -73,6 +69,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         }
     }
 
+    //±Ã±Ø±â ÆÐÅÏ
     public IEnumerator GhostBossUltPattern()
     {
         while (true)
@@ -101,7 +98,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
 
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, size1);
