@@ -30,6 +30,10 @@ public class PlayerBossSkillHit : MonoBehaviour
                 StopCoroutine(DotDamageCor);
             }
         }
+        if(collision.gameObject.CompareTag("Bubble"))
+        {
+            //
+        }
         
     }
 
