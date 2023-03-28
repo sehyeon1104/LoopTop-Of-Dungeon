@@ -9,6 +9,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public BossPattern bossPattern;
     // public MultiGage.TargetGageValue TargetGage;
 
+    private BossUI bossUI;
+
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
@@ -33,6 +35,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private void Start()
     {
+        bossUI = FindObjectOfType<BossUI>();
         UpdateBossHP();
     }
 
@@ -98,7 +101,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     public void UpdateBossHP()
     {
-        BossUI.Instance.UpdateHpBar();
+        bossUI.UpdateHpBar();
         // TargetGage.value = Base.Hp;
     }
 }
