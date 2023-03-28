@@ -11,8 +11,7 @@ using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-     GameObject playerUI = null;
-    public GameObject PlayerUI => playerUI;
+    public GameObject playerUI;
     Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
@@ -64,8 +63,7 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     private void Awake()
     {
-        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
+        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();;
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   

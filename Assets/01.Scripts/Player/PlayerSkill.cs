@@ -14,51 +14,49 @@ using Random = UnityEngine.Random;
 // Player Skill Class
 public class PlayerSkill : MonoBehaviour
 {
+    PlayerBase playerBase;
     [Space]
     [Header("스킬")]
-
-    Dictionary<PlayerSkillBase,Action> skillDictionary= new Dictionary<PlayerSkillBase, Action>();
-
-    Animator animator; 
-    public GameObject skillSelect;
-    [SerializeField] Transform Skill1Trans;
-    int skillSelectNum = 0;
-    private int ghostSummonCount = 1;
+    List<PlayerSkillBase> SkillBase; 
+    Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
-    public List<Define.SkillNum> skillNum = new List<Define.SkillNum>();
-    int[] slotLevel = new int[2] { 1, 1};
-    public Action[] skillEvent = new Action[2];
-    private void Update()
-     {
-         if (Input.GetKeyDown(KeyCode.O))
-        {
-            //SkillSelecet();
-        }
-     }
+
+    int[] slotLevel = new int[2] { 1, 1 };
+    public Action<int>[] skillEvent = new Action<int>[2];
+    private void Awake()
+    { 
+        playerBase = GameManager.Instance.Player.playerBase;
+        skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());    
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
+    }
     private void Start()
     {
         SkillShuffle();
-        foreach(int i  in randomSkillNum)
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.O))
         {
-            print(i);
+            SkillSelect();
         }
     }
-    private void Awake()
+    void SkillSelect()
     {
-        animator = GetComponent<Animator>();
-        //SkillToButton();
+        PlayerSkillBase playerSkill;
+        if(skillData.TryGetValue(playerBase.PlayerTransformTypeFlag,out playerSkill))
+        {
+            skillEvent[0] = playerSkill.playerSkills[0];
+        }
     }
- 
     public void Skill1()
     {
-        UIManager.Instance.SkillCooltime(PlayerTransformation.Instance.GetPlayerData(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag), randomSkillNum[0]);
-        skillEvent[0]();
+        skillEvent[0](slotLevel[0]);
     }
 
     public void Skill2()
     {
-        UIManager.Instance.SkillCooltime(PlayerTransformation.Instance.GetPlayerData(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag), randomSkillNum[1]);
-        skillEvent[1]();
+        skillEvent[1](slotLevel[1]);
     }
 
     #region 리스트 셔플
@@ -73,12 +71,12 @@ public class PlayerSkill : MonoBehaviour
     }
     public void ListShuffle()
     {
- 
+
         for (int i = 0; i < randomSkillNum.Count; i++)
         {
-            int randomAt = Random.Range(1, randomSkillNum.Count+1);
-            int randomAt2 = Random.Range(1, randomSkillNum.Count+1);
-            while(randomAt == randomAt2)
+            int randomAt = Random.Range(1, randomSkillNum.Count + 1);
+            int randomAt2 = Random.Range(1, randomSkillNum.Count + 1);
+            while (randomAt == randomAt2)
             {
                 randomAt2 = Random.Range(1, randomSkillNum.Count + 1);
             }
@@ -92,7 +90,7 @@ public class PlayerSkill : MonoBehaviour
     }
     public void ListRemove()
     {
-        randomSkillNum.RemoveRange(3,2);
+        randomSkillNum.RemoveRange(3, 2);
     }
     public void SkillShuffle()
     {
