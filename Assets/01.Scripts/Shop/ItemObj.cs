@@ -57,6 +57,8 @@ public class ItemObj : MonoBehaviour
             return;
         }
 
+        GameManager.Instance.Player.playerBase.FragmentAmount -= (int)item.price;
+
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);
