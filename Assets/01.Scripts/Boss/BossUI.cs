@@ -6,18 +6,28 @@ using UnityEngine.UI;
 public class BossUI : MonoBehaviour
 {
     [SerializeField]
+    private GameObject hpBar = null;
+    [SerializeField]
     private GameObject bossUltGage = null;
     private Image[] bossUltGageImages = null;
 
+    private Slider hpBarSlider = null;
+
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    private static BossUI _instance;
+    public static BossUI Instance = _instance;
 
     private void Awake()
     {
+        _instance = this;
         bossUltGageImages = bossUltGage.GetComponentsInChildren<Image>();
     }
 
     private void Start()
     {
+        hpBarSlider = hpBar.GetComponentInChildren<Slider>();
+
         InitUltGage();
     }
 
@@ -75,6 +85,11 @@ public class BossUI : MonoBehaviour
         }
 
         InitUltGage();
+    }
+
+    public void UpdateHpBar()
+    {
+        hpBarSlider.value = Boss.Instance.Base.Hp / Boss.Instance.Base.MaxHp;
     }
 
 }

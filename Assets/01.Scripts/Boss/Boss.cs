@@ -7,7 +7,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 {
     public BossBase Base;
     public BossPattern bossPattern;
-    public MultiGage.TargetGageValue TargetGage;
+    // public MultiGage.TargetGageValue TargetGage;
 
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
@@ -20,8 +20,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
     private void Awake()
     {
         Base = new BossBase();
-        TargetGage = new MultiGage.TargetGageValue(Base.Hp);
-        MultiGage.Instance.ObserveStart(TargetGage);
+        //TargetGage = new MultiGage.TargetGageValue(Base.Hp);
+        //MultiGage.Instance.ObserveStart(TargetGage);
 
         bossPattern = GetComponent<BossPattern>();
 
@@ -98,6 +98,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     public void UpdateBossHP()
     {
-        TargetGage.value = Base.Hp;
+        BossUI.Instance.UpdateHpBar();
+        // TargetGage.value = Base.Hp;
     }
 }
