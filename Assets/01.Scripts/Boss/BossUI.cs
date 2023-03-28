@@ -26,7 +26,7 @@ public class BossUI : MonoBehaviour
 
     private void Start()
     {
-        hpBarSlider = hpBar.GetComponentInChildren<Slider>();
+        hpBarSlider = hpBar.GetComponentInChildren<Slider>();   
 
         InitUltGage();
     }
