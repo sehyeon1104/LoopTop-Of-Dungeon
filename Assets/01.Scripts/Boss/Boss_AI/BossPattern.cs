@@ -37,7 +37,7 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isCanUseFinalPattern = true;
     protected bool isUsingFinalPattern = false;
 
-    Vector3 constScale;
+    protected Vector3 constScale;
 
     private void Start()
     {
@@ -89,12 +89,17 @@ public abstract class BossPattern : MonoBehaviour
         Vector2 dir = (player.position - transform.position);
         Vector3 scale = transform.localScale;
 
-        scale.x = Mathf.Sign(dir.x) * constScale.x;
-
-        if(Mathf.Abs(dir.x) > 0.2f)
-            transform.localScale = scale;
+        CheckFlipValue(dir, scale);
 
         transform.Translate((Vector2.up * dir.normalized + Vector2.right * Mathf.Sign(scale.x)) * Time.deltaTime * moveSpeed);
+    }
+
+    public void CheckFlipValue(Vector2 dir, Vector3 scale)
+    {
+        scale.x = Mathf.Sign(dir.x) * constScale.x;
+
+        if (Mathf.Abs(dir.x) > 0.2f)
+            transform.localScale = scale;
     }
 
     private IEnumerator ChangePase()

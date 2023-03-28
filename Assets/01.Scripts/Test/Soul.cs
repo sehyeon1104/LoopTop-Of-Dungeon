@@ -7,6 +7,6 @@ public class Soul : MonoBehaviour
 {
     private void OnEnable() 
     {
-        transform.DOMove(Boss.Instance.transform.position, 0.5f);
+        transform.DOMove(Boss.Instance.transform.position, 1f);
     }
 }

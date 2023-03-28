@@ -11,8 +11,7 @@ using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-     GameObject playerUI = null;
-    public GameObject PlayerUI => playerUI;
+    public GameObject playerUI;
     Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
@@ -40,7 +39,7 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject checkOneMorePanel;
 
-    [Tooltip("°ÔÀÓ ÀÔÀå ½Ã ÇöÀç ½ºÅ×ÀÌÁö ÀÌ¸§ Ãâ·Â")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½")]
     [SerializeField]
     private GameObject showCurStageNameObj;
     [SerializeField]
@@ -54,14 +53,9 @@ public class UIManager : MonoSingleton<UIManager>
     float timer = 0;
     int num = 0;
     //[Header("RightUp")]
-    [Header("RightDown")]
-    private GameObject AttackButton;
-    private GameObject Skill1Button;
-    private GameObject Skill2Button;
-    private GameObject UltButton;
-    private GameObject InteractionButton;
-
-
+    // [Header("RightDown")]
+    GameObject AttackButton;
+    GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
 
@@ -69,12 +63,8 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     private void Awake()
     {
-        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
-        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
-        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
-        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject; 
+        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();;
+        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
@@ -113,15 +103,6 @@ public class UIManager : MonoSingleton<UIManager>
             hpbars.Add(avc.GetComponent<Image>());
         }
     }
-    
-    public void TogglePlayerAttackUI()
-    {
-        AttackButton.SetActive(!AttackButton.activeSelf);
-        Skill1Button.SetActive(!Skill1Button.activeSelf);
-        Skill2Button.SetActive(!Skill2Button.activeSelf);
-        UltButton.SetActive(!UltButton.activeSelf);
-    }
-
     #region Panels
     public void DisActiveAllPanels()
     {
@@ -168,10 +149,10 @@ public class UIManager : MonoSingleton<UIManager>
     #region GameOver
     public void Revive()
     {
-        // TODO : ÀÌÈÄ ±¤°í½ÃÃ» ÈÄ ºÎÈ° or ÀçÈ­ ¼Ò¸ð ÈÄ ºÎÈ° ±¸Çö
+        // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã» ï¿½ï¿½ ï¿½ï¿½È° or ï¿½ï¿½È­ ï¿½Ò¸ï¿½ ï¿½ï¿½ ï¿½ï¿½È° ï¿½ï¿½ï¿½ï¿½
 
         Debug.Log("Revive");
-        TogglePlayerAttackUI();
+        ToggleGameOverPanel();
         GameManager.Instance.Player.RevivePlayer();
     }
 
@@ -182,7 +163,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void CheckOneMorePanelYes()
     {
-        // TODO : ÀÌÈÄ Áß¾Ó ¸Ê ¾À »ý¼º ½Ã Áß¾Ó¸ÊÀ¸·Î ÀÌµ¿
+        // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ß¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß¾Ó¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 
         LoadToCenterScene();
     }
@@ -234,7 +215,7 @@ public class UIManager : MonoSingleton<UIManager>
         for (int i = 0; i < hpbars.Count; i++)
         {
             if (i + 1 < hpbars.Count)
-                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //ÀÚ½Åº¸´Ù ÇÑ Ä­ À§¿¡ HP°¡ ÀÖ°í fillAmount°¡ 0º¸´Ù Å©´Ù¸é ³Ñ±â±â
+                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //ï¿½Ú½Åºï¿½ï¿½ï¿½ ï¿½ï¿½ Ä­ ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ ï¿½Ö°ï¿½ fillAmountï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ Å©ï¿½Ù¸ï¿½ ï¿½Ñ±ï¿½ï¿½
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
 
@@ -277,9 +258,9 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LoadToCenterScene()
     {
-        // TODO : Áß¾Ó ¸Ê ¾À »ý¼º½Ã ÀÌµ¿
+        // TODO : ï¿½ß¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 
-        LoadToTitleScene(); // ÀÓ½Ã
+        LoadToTitleScene(); // ï¿½Ó½ï¿½
     }
 
     public void LoadToTitleScene()

@@ -7,7 +7,7 @@ public class PlayerBase
 {
     public void SetPlayerStat()
     {
-        // TODO : JSON ÆÄÀÏ ³»¿¡ ÀÖ´Â ÇÃ·¹ÀÌ¾î Á¤º¸ ºÒ·¯¿À±â
+        // TODO : JSON ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 
         maxHp = 12;
         hp = maxHp;
@@ -17,31 +17,29 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
+        _fragmentAmount = 0;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         _fragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
         }
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
-        playerTransformDataSO = playerTransformDataSOArr[0];
+       
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        PlayerTransformData = PlayerTransformDataSOArr[0];
     }
-        List<PlayerSkillData> playerTransformDataSOArr = new List<PlayerSkillData>();
-    public List<PlayerSkillData> PlayerTransformDataSOArr() => playerTransformDataSOArr;
-    PlayerSkillData playerTransformDataSO;
-    public PlayerSkillData PlayerTransformDataSO => playerTransformDataSO;
+
+    public List<PlayerSkillData> PlayerTransformDataSOArr { get; set; } = new List<PlayerSkillData>();
+    public PlayerSkillData PlayerTransformData { get; set; }
 
     private bool isPDead;
     public bool IsPDead { get; set; }
-    private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
+    private Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 
-    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
-    {
-        get => _playerTransformTypeFlag;
-        set => _playerTransformTypeFlag = value;
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag { get; set; }
 
-    }
     private int hp;
     public int Hp
     {

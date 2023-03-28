@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 public class GhostBossJangpanPattern : MonoBehaviour
@@ -52,8 +53,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FRPR.SetActive(true);
         FRPRS.SetActive(true);
         
-        yield return WaitForRangeStart;
-
         while (ScaleX < 30f)
         {
             ScaleX += 0.5f;
@@ -67,23 +66,43 @@ public class GhostBossJangpanPattern : MonoBehaviour
         ScaleX = 0;
         ScaleY = 0;
 
-        yield return WaitForStart;
-
         while (ScaleX < 30f)
         {
-            ScaleX += 0.2f;
-            ScaleY += 0.2f;
+            ScaleX += 0.4f;
+            ScaleY += 0.4f;
 
             FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return AttackRangeSpeed;
         }
+
         ScaleX = 0;
         ScaleY = 0;
-
-        
+                
         FPRRSpriteRenderer.enabled = false;
         FPRRSSpriteRenderer.enabled = false;
+
+        Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone.transform.position = new Vector2(3.31f, -6.98f);
+        Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone1.transform.position = new Vector2(-9.27f, 6.45f);
+        Poolable clone2 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone2.transform.position = new Vector2(2.85f, 19.42f);
+        Poolable clone3 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone3.transform.position = new Vector2(15.36f, 29.75f);
+        Poolable clone4 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone4.transform.position = new Vector2(27.06f, 18.4f);
+        Poolable clone5 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone5.transform.position = new Vector2(38.35f, 6.91f);
+        Poolable clone6 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone6.transform.position = new Vector2(28.04f, -6.74f);
+        Poolable clone7 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        clone7.transform.position = new Vector2(14.72f, -17.88f);
+
+
+        //clone.transform.localScale = 
+
+        yield return WaitForStart;
 
         FPRRSCol.SetActive(true);
 
@@ -113,9 +132,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FPR.SetActive(true);
         FPRS.SetActive(true);
-                
-        yield return WaitForRangeStart; //패턴 시전 대기
-
+       
         while(ScaleX < 17f)
         {
             ScaleX += 0.5f;
@@ -129,12 +146,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
         ScaleX = 0;
         ScaleY = 0;
 
-        yield return WaitForStart;
 
         while (ScaleX < 17f)
         {
-            ScaleX += 0.2f;
-            ScaleY += 0.2f;
+            ScaleX += 0.4f;
+            ScaleY += 0.4f;
 
             FPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -144,14 +160,17 @@ public class GhostBossJangpanPattern : MonoBehaviour
         ScaleX = 0;
         ScaleY = 0;
 
+        
+
         FPRSpriteRenderer.enabled = false;
         FPRSSpriteRenderer.enabled = false;
 
         Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+
+        yield return WaitForStart;
         FPRSCol.SetActive(true);
 
         yield return AttackEnd;
-
 
         FPR.transform.localScale = Vector2.zero; 
         FPRS.transform.localScale = Vector2.zero;

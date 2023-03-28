@@ -26,7 +26,7 @@ public static class Define
 
     public enum PlayerTransformTypeFlag
     {
-        Power,
+        Power = 0,
         Ghost,
 
     }
@@ -44,14 +44,6 @@ public static class Define
         Bgm,
         Effect,
         MaxCount,
-    }
-    public enum SkillNum
-    {
-        firstSkill = 1,
-        secondSkill,
-        thirdSkill,
-        fourthSkill,
-        fifthSkill
     }
 
     public enum StageSceneNum

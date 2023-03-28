@@ -32,7 +32,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     Material hitMat;
     Material spriteLitMat;
-    WaitForSeconds hitChangeTime = new WaitForSeconds(0.05f);
+    float changeTime = 0.5f;
+    WaitForEndOfFrame wait;
     public Vector3 hitPoint => Vector3.zero;
     void OnEnable()
     {
@@ -142,10 +143,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     }
     IEnumerator GetHit()
     {
-        hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        float timer = 0;
         sprite.material = hitMat;
-        yield return hitChangeTime;
+        while(changeTime > timer)
+        {
+            timer+= Time.deltaTime;
+            hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        }
         sprite.material = spriteLitMat;
+        yield return null;
     }
     public virtual void EnemyDead()
     {
