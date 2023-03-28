@@ -66,7 +66,12 @@ public class G_Patterns : BossPattern
                     attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 4; j++)
                     {
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
+                        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
+
+                        float y = j > 1 ? -1.5f : 1.5f;
+                        float x = j >= 1 && j <= 2 ? -1.5f : 1.5f;
+
+                        clone.transform.position = new Vector2(clone.transform.position.x + x, clone.transform.position.y + y);
                     }
                     break;
                 case 3:
@@ -86,7 +91,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
         }
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
@@ -100,52 +105,55 @@ public class G_Patterns : BossPattern
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
-        dir = player.position - (transform.position + Vector3.up * 2);
-        float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        float angle = 7.2f;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position, Quaternion.Euler(new Vector3(0,0,237.5f)));
 
-
-        for (int i = -4; i < count; i++)
+        yield return new WaitForSeconds(0.5f);
+        if (count > -4)
         {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            dir = player.position - (transform.position);
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = 7.2f;
+
+            for (int i = -4; i < count; i++)
+            {
+                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot)));
+            }
         }
     }
     public IEnumerator Pattern_SM(int count) //힐라
     {
         int finalCount = 0;
-        List<GameObject> mobList = new List<GameObject>();
+        List<Poolable> mobList = new List<Poolable>();
+        WaitForSeconds waitTime = new WaitForSeconds(2f);
 
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
-            GameObject pattern33 = Instantiate(SummonFx.gameObject, clone.transform.position, Quaternion.Euler(Vector3.zero));
-
-            ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
-
-            particle.Play();
-
-            mobList.Add(clone.gameObject);
+            mobList.Add(clone);
         }
 
         SummonTimer.SetActive(true);
 
         Boss.Instance.isBDamaged = true;
+
         for (int i = 1; i < 13; i++)
         {
-            yield return new WaitForSeconds(2f);
+            yield return waitTime;
             SummonClock.fillAmount = (float)i / 12;
         }
+
         Boss.Instance.isBDamaged = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
 
-        foreach (var mob in mobList)
+        foreach (Poolable mob in mobList)
         {
-            if (mob != null)
+            if (mob.isActiveAndEnabled)
             {
                 finalCount++;
-                Destroy(mob);
+                Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
+                Managers.Pool.Push(mob);
             }
 
         }

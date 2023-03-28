@@ -7,7 +7,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
 {
     public BossBase Base;
     public BossPattern bossPattern;
-    public MultiGage.TargetGageValue TargetGage;
+    // public MultiGage.TargetGageValue TargetGage;
+
+    private BossUI bossUI;
 
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
@@ -20,8 +22,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
     private void Awake()
     {
         Base = new BossBase();
-        TargetGage = new MultiGage.TargetGageValue(Base.Hp);
-        MultiGage.Instance.ObserveStart(TargetGage);
+        //TargetGage = new MultiGage.TargetGageValue(Base.Hp);
+        //MultiGage.Instance.ObserveStart(TargetGage);
 
         bossPattern = GetComponent<BossPattern>();
 
@@ -33,6 +35,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private void Start()
     {
+        bossUI = FindObjectOfType<BossUI>();
         UpdateBossHP();
     }
 
@@ -64,7 +67,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (isBDead) return;
         
         // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
-        MultiGage.Instance.ObserveEnd();
+        // MultiGage.Instance.ObserveEnd();
 
         isBDead = true;
         //gameObject.SetActive(false);
@@ -98,6 +101,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     public void UpdateBossHP()
     {
-        TargetGage.value = Base.Hp;
+        bossUI.UpdateHpBar();
+        // TargetGage.value = Base.Hp;
     }
 }

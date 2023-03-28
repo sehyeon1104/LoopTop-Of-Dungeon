@@ -30,6 +30,13 @@ public class PlayerBossSkillHit : MonoBehaviour
                 StopCoroutine(DotDamageCor);
             }
         }
+        if(collision.gameObject.CompareTag("Bubble"))
+        {
+            Debug.Log("¤·¤·");
+            Managers.Pool.Push(collision.gameObject.GetComponent<Poolable>());
+            Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", collision.transform.position, Quaternion.identity);
+
+        }
         
     }
 
