@@ -24,6 +24,7 @@ public class BossUI : MonoBehaviour
     private void Start()
     {
         InitUltGage();
+        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
 
     private void Update()
