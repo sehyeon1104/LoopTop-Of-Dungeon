@@ -23,18 +23,21 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {   
+    {
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformDataSO);
+            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
+            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
         }
+    }
+    private void Awake()
+    {
+        playerBase.SetPlayerStat();
     }
     private void Start()
     {
-        playerBase.SetPlayerStat();
-        PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformDataSO);
-        UIManager.Instance.HpUpdate();
+        PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
     public IEnumerator IEDamaged()
     {
@@ -63,7 +66,7 @@ public class Player : MonoBehaviour, IHittable
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
     }
-
+    
     public void Dead()
     {
         playerBase.IsPDead = true;
@@ -72,7 +75,7 @@ public class Player : MonoBehaviour, IHittable
         gameObject.SetActive(false);
     }
     public void RevivePlayer()
-    {
+    {   
         gameObject.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;

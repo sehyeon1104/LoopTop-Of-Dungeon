@@ -51,8 +51,8 @@ public class Beam : MonoBehaviour
 
     private void SetObjectFlip()
     {
-        tempScale.y = transform.rotation.z >= 0.7f ? -1.35f : 1.35f;
-        transform.localScale = tempScale;
+        //tempScale.y = transform.rotation.z >= 0.7f ? -1.35f : 1.35f;
+        //transform.localScale = tempScale;
     }
 
     private void Init()

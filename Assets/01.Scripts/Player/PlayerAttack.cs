@@ -15,7 +15,10 @@ public class PlayerAttack :  MonoBehaviour
     private void Awake()
     {
         playerAnim = GetComponent<Animator>();  
-        GameObject.FindGameObjectWithTag("Attack").GetComponent<Button>().onClick.AddListener(Attack);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
+    }
+    private void Start()
+    {
     }
     public void Attack()
     {
