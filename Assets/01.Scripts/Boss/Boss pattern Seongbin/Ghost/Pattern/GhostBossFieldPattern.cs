@@ -32,11 +32,16 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
-    WaitForSeconds Delay1 = new WaitForSeconds(1f);
+    WaitForSeconds Delay1 = new WaitForSeconds(4f);
 
     Coroutine UltPattern = null;
 
     //ÆÈ ¼Ú¾Æ¿À¸£±â ÆÐÅÏ
+
+    private void Start()
+    {
+        StartCoroutine(GhostBossUltPattern());
+    }
     public IEnumerator GhostBossArmPattern()
     {
         Vector2 Owntransform = transform.position;
@@ -84,7 +89,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             BubbleRandomSizeX = Random.Range((BubbleSizeX / 2) * -1, BubbleSizeX / 2);
             BubbleRandomSizeY = Random.Range((BubbleSizeY / 2) * -1, BubbleSizeY / 2);
 
-            Vector2 RandomPos = new Vector2(ArmRandomSizeX, ArmRandomSizeY);
+            Vector2 RandomPos = new Vector2(BubbleRandomSizeX, BubbleRandomSizeY);
 
             Vector2 RealRandomPos = Owntransform + RandomPos;
 
@@ -92,12 +97,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             yield return Delay1;
         }
-
-
     }
-
-
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
