@@ -32,7 +32,9 @@ public class PlayerBossSkillHit : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Bubble"))
         {
-            //
+            Managers.Pool.Push(collision.gameObject.GetComponent<Poolable>());
+            Managers.Pool.PoolManaging("Effects/ghost/EatBubble", collision.transform.position, Quaternion.identity);
+
         }
         
     }
