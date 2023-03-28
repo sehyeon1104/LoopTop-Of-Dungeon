@@ -145,6 +145,7 @@ public class PlayerBase
                 _fragmentAmount = 0;
             }
 
+            PlayerPrefs.SetInt("PlayerFragmentAmount", _fragmentAmount);
             UIManager.Instance.UpdateGoods();
         }
     }
