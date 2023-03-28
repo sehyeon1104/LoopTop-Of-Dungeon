@@ -172,6 +172,8 @@ public class PoolManager
             Debug.Log("name");
         }
 
+        clone.transform.position = parent.position;
+
         return clone;
         
     }
