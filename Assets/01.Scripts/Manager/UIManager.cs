@@ -53,7 +53,10 @@ public class UIManager : MonoSingleton<UIManager>
     float timer = 0;
     int num = 0;
     //[Header("RightUp")]
-    // [Header("RightDown")]
+    [Header("RightDown")]
+    private GameObject Skill1Button;
+    private GameObject Skill2Button;
+    private GameObject UltButton;
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -64,7 +67,10 @@ public class UIManager : MonoSingleton<UIManager>
     private void Awake()
     {
         playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();;
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
+        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
+        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
+        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
+        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
@@ -103,6 +109,16 @@ public class UIManager : MonoSingleton<UIManager>
             hpbars.Add(avc.GetComponent<Image>());
         }
     }
+
+    public void TogglePlayerAttackUI()
+    {
+        AttackButton.SetActive(!AttackButton.activeSelf);
+        Skill1Button.SetActive(!Skill1Button.activeSelf);
+        Skill2Button.SetActive(!Skill2Button.activeSelf);
+        UltButton.SetActive(!UltButton.activeSelf);
+    }
+
+
     #region Panels
     public void DisActiveAllPanels()
     {

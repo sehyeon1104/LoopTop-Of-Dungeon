@@ -20,7 +20,6 @@ public class PlayerBase
         _fragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         _fragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
-        _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
