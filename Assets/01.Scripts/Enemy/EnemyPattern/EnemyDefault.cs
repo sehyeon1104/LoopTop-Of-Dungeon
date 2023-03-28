@@ -157,7 +157,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         //if (transform.parent != null)
         EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
-        GameManager.Instance.Player.playerBase.FragmentAmount += Random.Range(5, 10);
+        FragmentCollectManager.Instance.AddFragment(gameObject);
 
         gameObject.SetActive(false);
     }

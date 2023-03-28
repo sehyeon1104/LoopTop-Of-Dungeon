@@ -16,25 +16,24 @@ public class G_Patterns : BossPattern
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
-
     #region phase 1
     public IEnumerator Pattern_BM(int count) //빔
     {
         yield return null;
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             Vector2 dir = player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
+            anim.SetTrigger(_hashAttack);
+
             switch (i)
             {
                 case 0:
-                    attackAnim.Play(animArray[1]);
                     Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * rot));
                     break;
                 case 1:
-                    attackAnim.Play(animArray[1]);
                     for (int j = -1; j <= 1; j += 2)
                     {
                         Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
@@ -45,7 +44,6 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 2:
-                    attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 4; j++)
                     {
                         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position,Quaternion.Euler(Vector3.forward * (90 * j + 45)));
@@ -57,14 +55,12 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 3:
-                    attackAnim.Play(animArray[1]);
                     for (int j = 0; j < 8; j++)
                     {
                         Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position, Quaternion.Euler(Vector3.forward * 45 * j));
                     }
                     break;
                 case 4:
-                    attackAnim.Play(animArray[1]);
                     int randomCount = Random.Range(8, 13);
                     for(int j = 0; j < randomCount; j++)
                     {
@@ -79,8 +75,8 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
     {
         Vector2 dir;
-
         bossObject.SetActive(false);
+
         yield return new WaitForSeconds(3f);
         bossObject.SetActive(true);
 
@@ -91,7 +87,7 @@ public class G_Patterns : BossPattern
         bool playerDir = player.GetComponentInChildren<SpriteRenderer>().flipX;
         transform.position = (playerDir? -player.right : player.right) * 3f + player.position;
 
-        attackAnim.Play(animArray[2]);
+        anim.SetTrigger(_hashAttack);
         yield return new WaitForSeconds(0.5f);
 
         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2, Quaternion.Euler(new Vector3(0,0,237.5f)));
@@ -159,6 +155,7 @@ public class G_Patterns : BossPattern
     }
     #endregion
 }
+
 public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
@@ -211,12 +208,10 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {
-
-
         switch (NowPhase)
         {
             case 1:
-                attackAnim.Play(animArray[0]);
+                anim.SetTrigger(_hashAttack);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:

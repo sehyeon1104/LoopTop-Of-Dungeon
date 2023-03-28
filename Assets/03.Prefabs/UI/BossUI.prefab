@@ -228,7 +228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 34.3, y: -239.2}
+  m_AnchoredPosition: {x: 0, y: -240}
   m_SizeDelta: {x: 900, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2212349274443065283
@@ -1188,6 +1188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 1573597247623314311}
   bossUltGage: {fileID: 2212349274443065286}
+  Icon: {fileID: 2589592077360165920}
 --- !u!1 &2212349275706305036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1746,7 @@ GameObject:
   - component: {fileID: 3269885283640380468}
   - component: {fileID: 1854291586200932462}
   - component: {fileID: 2589592077360165920}
+  - component: {fileID: 1417262088198852255}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1769,7 +1771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -197}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 240, y: 360}
   m_Pivot: {x: 0.5291327, y: 0.5}
 --- !u!222 &1854291586200932462
@@ -1810,6 +1812,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1417262088198852255
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272268420693896442}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96352494678434348b1a7422034ef0e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2664080588149426127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1999,8 +2021,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.5964, y: -175.80005}
-  m_SizeDelta: {x: 600, y: 450}
+  m_AnchoredPosition: {x: 0, y: -175.80005}
+  m_SizeDelta: {x: 640, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5399669541688910082
 MonoBehaviour:
@@ -2041,7 +2063,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2494759434369999931}
   m_FillRect: {fileID: 3391853154185854007}
   m_HandleRect: {fileID: 9212238153961951171}

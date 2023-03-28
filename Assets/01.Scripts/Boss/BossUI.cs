@@ -9,6 +9,9 @@ public class BossUI : MonoBehaviour
     private GameObject hpBar = null;
     [SerializeField]
     private GameObject bossUltGage = null;
+    [SerializeField]
+    private Image Icon = null;
+
     private Image[] bossUltGageImages = null;
 
     private Slider hpBarSlider = null;
@@ -89,6 +92,11 @@ public class BossUI : MonoBehaviour
     public void UpdateHpBar()
     {
         hpBarSlider.value = (float)Boss.Instance.Base.Hp / (float)Boss.Instance.Base.MaxHp;
+    }
+
+    public void TogglePhase2Icon()
+    {
+        Icon.gameObject.GetComponent<Animator>().enabled = true;
     }
 
 }

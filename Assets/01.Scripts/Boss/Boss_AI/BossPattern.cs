@@ -24,36 +24,37 @@ public abstract class BossPattern : MonoBehaviour
     
     protected int[] patternCount = new int[6];
 
-
+    #region init
     protected Transform player;
-    
-    protected Animation attackAnim;
-    protected List<string> animArray;
-
+    protected Animator anim;
     protected Coroutine attackCoroutine = null;
 
     protected bool[] isThisSkillCoolDown = new bool[6];
-
     protected bool isCanUseFinalPattern = true;
     protected bool isUsingFinalPattern = false;
 
     protected Vector3 constScale;
+    #endregion
+    #region AnimHash
+    protected readonly int _hashMove = Animator.StringToHash("Move");
+    protected readonly int _hashSkill = Animator.StringToHash("Skill");
+    protected readonly int _hashAttack = Animator.StringToHash("Attack");
+    protected readonly int _hashDeath = Animator.StringToHash("Death");
+    #endregion
 
     private void Start()
     {
         player = GameManager.Instance.Player.transform;
-        attackAnim = GetComponent<Animation>();
+        anim = GetComponent<Animator>();
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
 
-        AnimationArray();
         StartCoroutine(RandomPattern());
         StartCoroutine(ChangePase());
 
         constScale = transform.localScale;
     }
-
     protected void Update()
     {
         if(Input.GetKeyDown(KeyCode.G))
@@ -68,16 +69,6 @@ public abstract class BossPattern : MonoBehaviour
         }
     }
 
-    public void AnimationArray()
-    {
-        animArray = new List<string>();
-
-        foreach (AnimationState states in attackAnim)
-        {
-            animArray.Add(states.name);
-        }
-    }
-
     public void MoveToPlayer()
     {
         if (attackCoroutine != null || Boss.Instance.isBDead || Boss.Instance.isBInvincible) return;
@@ -85,7 +76,7 @@ public abstract class BossPattern : MonoBehaviour
         float playerDistance = Vector2.Distance(player.position, transform.position);
         if (playerDistance <= minDistance) return;
 
-        attackAnim.Play(animArray[3]);
+        anim.SetBool(_hashMove,true);
         Vector2 dir = (player.position - transform.position);
         Vector3 scale = transform.localScale;
 
@@ -93,7 +84,6 @@ public abstract class BossPattern : MonoBehaviour
 
         transform.Translate((Vector2.up * dir.normalized + Vector2.right * Mathf.Sign(scale.x)) * Time.deltaTime * moveSpeed);
     }
-
     public void CheckFlipValue(Vector2 dir, Vector3 scale)
     {
         scale.x = Mathf.Sign(dir.x) * constScale.x;
@@ -125,6 +115,7 @@ public abstract class BossPattern : MonoBehaviour
         yield return patternDelay;
 
         Boss.Instance.isBInvincible = false;
+        Boss.Instance.Phase2();
         StartCoroutine(RandomPattern());
         attackCoroutine = null;
     }
@@ -150,6 +141,9 @@ public abstract class BossPattern : MonoBehaviour
 
             if (attackCoroutine == null)
             {
+                anim.SetBool(_hashMove, false);
+                anim.SetInteger(_hashSkill, patternChoice);
+
                 if (isCanUseFinalPattern && isUsingFinalPattern)
                 {
                     isCanUseFinalPattern = false;
@@ -201,6 +195,7 @@ public abstract class BossPattern : MonoBehaviour
         yield return new WaitForSeconds(3f);
         isThisSkillCoolDown[nowSkill] = false;
     }
+
     public virtual int GetRandomCount(int choisedPattern)
     {
         return 0;
