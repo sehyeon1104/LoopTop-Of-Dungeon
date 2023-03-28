@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
 public class GhostBossFieldPattern : MonoBehaviour
@@ -11,22 +12,29 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private int Randomtime = 0;
 
-    private float SizeX = 35.1f;
+    private float ArmSizeX = 35.1f;
 
-    private float SizeY = 23f;
+    private float ArmSizeY = 23f;
 
-    private float RandomSizeX = 0f;
+    private float BubbleSizeX = 35.1f;
 
-    private float RandomSizeY = 0f;
+    private float BubbleSizeY = 20.5f;
+
+    private float ArmRandomSizeX = 0f;
+
+    private float ArmRandomSizeY = 0f;
+
+    private float BubbleRandomSizeX = 0f;
+
+    private float BubbleRandomSizeY = 0f;
 
     private Material[] setMat = new Material[3];
 
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
-    private void Start()
-    {
-        StartCoroutine(GhostBossArmPattern());
-    }
+    WaitForSeconds Delay1 = new WaitForSeconds(1f);
+
+    Coroutine UltPattern = null;
 
     //ÆÈ ¼Ú¾Æ¿À¸£±â ÆÐÅÏ
     public IEnumerator GhostBossArmPattern()
@@ -34,13 +42,13 @@ public class GhostBossFieldPattern : MonoBehaviour
         Vector2 Owntransform = transform.position;
         while(time < 25)
         {
-            RandomSizeX = 0f;
-            RandomSizeY = 0f;
+            ArmRandomSizeX = 0f;
+            ArmRandomSizeY = 0f;
 
-            RandomSizeX = Random.Range((SizeX / 2) * -1, SizeX / 2);
-            RandomSizeY = Random.Range((SizeY / 2) * -1, SizeY / 2);
+            ArmRandomSizeX = Random.Range((ArmSizeX / 2) * -1, ArmSizeX / 2);
+            ArmRandomSizeY = Random.Range((ArmSizeY / 2) * -1, ArmSizeY / 2);
 
-            Vector2 RandomPos = new Vector2(RandomSizeX, RandomSizeY);
+            Vector2 RandomPos = new Vector2(ArmRandomSizeX, ArmRandomSizeY);
 
             Vector2 RealRandomPos = Owntransform + RandomPos;
 
@@ -61,6 +69,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         }
     }
 
+    //±Ã±Ø±â ÆÐÅÏ
     public IEnumerator GhostBossUltPattern()
     {
         while (true)
@@ -68,6 +77,20 @@ public class GhostBossFieldPattern : MonoBehaviour
             Randomtime = Random.Range(0, 5);
 
             Vector2 Owntransform = transform.position;
+
+            BubbleRandomSizeX = 0f;
+            BubbleRandomSizeY = 0f;
+
+            BubbleRandomSizeX = Random.Range((BubbleSizeX / 2) * -1, BubbleSizeX / 2);
+            BubbleRandomSizeY = Random.Range((BubbleSizeY / 2) * -1, BubbleSizeY / 2);
+
+            Vector2 RandomPos = new Vector2(ArmRandomSizeX, ArmRandomSizeY);
+
+            Vector2 RealRandomPos = Owntransform + RandomPos;
+
+            Managers.Pool.PoolManaging("10.Effects/ghost/Bubble", RealRandomPos, Quaternion.identity);
+
+            yield return Delay1;
         }
 
 
@@ -75,7 +98,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
 
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, size1);

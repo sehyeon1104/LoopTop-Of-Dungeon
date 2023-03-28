@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Portal : MonoBehaviour
 {
+    private bool isLoadScene = false;
     private int nextSceneNum = 0;
     Define.Scene sceneType;
+
+    private void Start()
+    {
+        isLoadScene = false;
+    }
 
     private void FixedUpdate()
     {
@@ -18,20 +24,26 @@ public class Portal : MonoBehaviour
 
     public void MoveNextStage()
     {
-        nextSceneNum = SceneManager.GetActiveScene().buildIndex + 1;
-
-        sceneType = nextSceneNum switch
+        if (!isLoadScene)
         {
-            0 => Define.Scene.TitleScene,
-            //1 => Define.Scene.CenterScene,
-            1 => Define.Scene.Ghost_Stage1,
-            2 => Define.Scene.Ghost_Stage2,
-            3 => Define.Scene.Ghost_Boss,
+            isLoadScene = true;
 
-            _ => Define.Scene.Unknown
-        };
+            nextSceneNum = SceneManager.GetActiveScene().buildIndex + 1;
 
-        Managers.Scene.LoadScene(sceneType);
+            sceneType = nextSceneNum switch
+            {
+                0 => Define.Scene.TitleScene,
+                //1 => Define.Scene.CenterScene,
+                1 => Define.Scene.Ghost_Stage1,
+                2 => Define.Scene.Ghost_Stage2,
+                3 => Define.Scene.Ghost_Boss,
+
+                _ => Define.Scene.Unknown
+            };
+
+            Managers.Scene.LoadScene(sceneType);
+
+        }
     }
 
 }

@@ -26,7 +26,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
     private void Awake()
     {   
         FPR = transform.Find("Effect/FPR").gameObject;
-        FPRR = transform.Find("Effect/FRPR").gameObject;
+        FPRR = transform.Find("Effect/FPRR").gameObject;
         FPRS = transform.Find("Effect/FPRS").gameObject;
         FRPRS = transform.Find("Effect/FRPRS").gameObject;
         FPRSCol = transform.Find("Effect/CircleCol").gameObject;
@@ -67,7 +67,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
         {
             ScaleX += 0.2f;
             ScaleY += 0.2f;
-                
+
             FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return AttackRangeSpeed;
