@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GhostSkill : PlayerSkillBase
 {
+    float janpanDuration = 5f;
     GameObject smoke;
     PlayerSkillData skillData;
 
@@ -17,7 +18,7 @@ public class GhostSkill : PlayerSkillBase
     private void Start()
     {
         print(playerBase.PlayerTransformTypeFlag);
-        
+
     }
 
     public override void FirstSkill(int level)
@@ -26,7 +27,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void SecondSkill(int level)
     {
-      
+
     }
     public override void ThirdSkill(int level)
     {
@@ -34,20 +35,20 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void ForuthSkill(int level)
     {
-        
+
     }
     public override void FifthSkill(int level)
     {
-       
+
     }
     public override void UltimateSkill()
     {
-        
+
     }
 
     public override void DashSkill()
     {
-        
+
     }
 
     #region 스킬 구현
@@ -56,26 +57,35 @@ public class GhostSkill : PlayerSkillBase
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
-        Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
-        while (timer > 1)
+        GameObject smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
+
+        while (timer < janpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.5f);
-                for(int i=0; i<attachObjs.Length; i++)
+                attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.7f);
+                for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(5, attachObjs[i].gameObject, playerBase.CritChance);
+                    if (attachObjs[i].CompareTag("Enemy")||attachObjs[i].CompareTag("Boss"))
+                    {
+                        attachObjs[i].GetComponent<IHittable>().OnDamage(1, attachObjs[i].gameObject, playerBase.CritChance);
+                    }
                 }
                 timerA = 0;
             }
             yield return null;
         }
+        Managers.Pool.Push(smoke.GetComponent<Poolable>());
 
     }
 
 
 
     #endregion
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 1.5f);
+    }
 }

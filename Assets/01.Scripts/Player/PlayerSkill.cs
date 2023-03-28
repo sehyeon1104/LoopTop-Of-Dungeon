@@ -36,6 +36,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
+        print(playerBase.PlayerTransformTypeFlag);
         if(Input.GetKeyDown(KeyCode.O))
         {
             SkillSelect();
