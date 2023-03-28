@@ -32,7 +32,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
-    WaitForSeconds Delay1 = new WaitForSeconds(5f);
+    WaitForSeconds Delay1 = new WaitForSeconds(4f);
 
     Coroutine UltPattern = null;
 
