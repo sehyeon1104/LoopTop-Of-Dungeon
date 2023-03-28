@@ -51,6 +51,7 @@ public class GameManager : MonoSingleton<GameManager>
             //    }
             //}
         }
+        InitPlayerInfo();
     }
 
     private void Start()
@@ -59,6 +60,12 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
+
+    public void InitPlayerInfo()
+    {
+        Player.playerBase.FragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
+        UIManager.Instance.UpdateGoods();
+    }
 
     public void SetStageSceneNum(Define.StageSceneNum sceneNum)
     {
