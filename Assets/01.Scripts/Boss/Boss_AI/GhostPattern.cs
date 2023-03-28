@@ -105,13 +105,14 @@ public class G_Patterns : BossPattern
         attackAnim.Play(animArray[2]);
         yield return new WaitForSeconds(0.35f);
 
+        Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position, Quaternion.Euler(new Vector3(0,0,237.5f)));
 
+        yield return new WaitForSeconds(0.5f);
         if (count > -4)
         {
             dir = player.position - (transform.position);
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             float angle = 7.2f;
-
 
             for (int i = -4; i < count; i++)
             {
@@ -122,39 +123,37 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_SM(int count) //Èú¶ó
     {
         int finalCount = 0;
-        List<GameObject> mobList = new List<GameObject>();
+        List<Poolable> mobList = new List<Poolable>();
+        WaitForSeconds waitTime = new WaitForSeconds(2f);
 
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
-            GameObject pattern33 = Instantiate(SummonFx.gameObject, clone.transform.position, Quaternion.Euler(Vector3.zero));
-
-            ParticleSystem particle = pattern33.GetComponent<ParticleSystem>();
-
-            particle.Play();
-
-            mobList.Add(clone.gameObject);
+            mobList.Add(clone);
         }
 
         SummonTimer.SetActive(true);
 
         Boss.Instance.isBDamaged = true;
+
         for (int i = 1; i < 13; i++)
         {
-            yield return new WaitForSeconds(2f);
+            yield return waitTime;
             SummonClock.fillAmount = (float)i / 12;
         }
+
         Boss.Instance.isBDamaged = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
 
-        foreach (var mob in mobList)
+        foreach (Poolable mob in mobList)
         {
-            if (mob != null)
+            if (mob.isActiveAndEnabled)
             {
                 finalCount++;
-                Destroy(mob);
+                Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
+                Managers.Pool.Push(mob);
             }
 
         }
