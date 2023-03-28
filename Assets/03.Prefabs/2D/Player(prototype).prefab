@@ -270,9 +270,9 @@ GameObject:
   - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
   - component: {fileID: 7178170437923353098}
-  - component: {fileID: 4875614159471285615}
   - component: {fileID: 6605350721465296871}
   - component: {fileID: 1587560799495554440}
+  - component: {fileID: 7073810304199504610}
   - component: {fileID: 1617654965204469657}
   m_Layer: 8
   m_Name: PlayerVisual
@@ -381,20 +381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1
---- !u!114 &4875614159471285615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da3cb9ab96fe2cb4ab39bafa9ac2d0ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTransformDataSOArr: []
-  playerTransformDataSO: {fileID: 0}
 --- !u!114 &6605350721465296871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,9 +405,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillSelect: {fileID: 0}
-  Skill1Trans: {fileID: 0}
-  skillNum: 
+--- !u!114 &7073810304199504610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -821,13 +816,29 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6718196134229605431, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
+      propertyPath: m_Color.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
     - target: {fileID: 6718196134229606345, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6718196134229606345, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718196135564616592, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
+      propertyPath: m_Color.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
     - target: {fileID: 6718196135564616594, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6718196135564616594, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6718458682304306707, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_Layer
