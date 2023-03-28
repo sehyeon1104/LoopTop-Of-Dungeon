@@ -15,20 +15,16 @@ public class BossUI : MonoBehaviour
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
-    private static BossUI _instance;
-    public static BossUI Instance = _instance;
-
     private void Awake()
     {
-        _instance = this;
         bossUltGageImages = bossUltGage.GetComponentsInChildren<Image>();
+        hpBarSlider = hpBar.GetComponentInChildren<Slider>();
     }
 
     private void Start()
     {
-        hpBarSlider = hpBar.GetComponentInChildren<Slider>();
-
         InitUltGage();
+        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
 
     private void Update()
@@ -45,6 +41,7 @@ public class BossUI : MonoBehaviour
         {
             bossUltGageImages[i].fillAmount = 0;
         }
+        // bossUltGage.SetActive(false);
     }
 
 
@@ -55,6 +52,8 @@ public class BossUI : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FillBossUltGage(float time)
     {
+        // bossUltGage.SetActive(true);
+
         float fillTime = 0f;
         float firstFill = time * 0.25f;
         float secondFill = time - (2 * firstFill);
@@ -89,7 +88,7 @@ public class BossUI : MonoBehaviour
 
     public void UpdateHpBar()
     {
-        hpBarSlider.value = Boss.Instance.Base.Hp / Boss.Instance.Base.MaxHp;
+        hpBarSlider.value = (float)Boss.Instance.Base.Hp / (float)Boss.Instance.Base.MaxHp;
     }
 
 }
