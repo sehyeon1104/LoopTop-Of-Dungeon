@@ -100,9 +100,5 @@ public class PlayerSkill : MonoBehaviour
     }
 
     #endregion
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 1.5f);
-    }
+  
 }
