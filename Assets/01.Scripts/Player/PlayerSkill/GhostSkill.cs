@@ -11,6 +11,7 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         init();
+
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/ghost/Smoke.prefab");
     }
     private void Start()
@@ -21,8 +22,7 @@ public class GhostSkill : PlayerSkillBase
 
     public override void FirstSkill(int level)
     {
-        print("장판스킬 호출");
-        StartCoroutine(JanpangSkill());
+        StartCoroutine(JanpangSkill(level));
     }
     public override void SecondSkill(int level)
     {
@@ -51,11 +51,12 @@ public class GhostSkill : PlayerSkillBase
     }
 
     #region 스킬 구현
-    IEnumerator JanpangSkill()
+    IEnumerator JanpangSkill(int level)
     {
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
+        Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
         while (timer > 1)
         {
             timer += Time.deltaTime;
@@ -65,7 +66,7 @@ public class GhostSkill : PlayerSkillBase
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.5f);
                 for(int i=0; i<attachObjs.Length; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(5, attachObjs[i].gameObject, 0);
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(5, attachObjs[i].gameObject, playerBase.CritChance);
                 }
                 timerA = 0;
             }
