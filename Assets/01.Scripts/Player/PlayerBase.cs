@@ -16,30 +16,26 @@ public class PlayerBase
         _expTable = new int[maxLevel];
         exp = 0;
         _fragmentAmount = 0;
-        _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
         }
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
-        playerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
-        playerTransformDataSO = playerTransformDataSOArr[0];
+       
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        PlayerTransformData = PlayerTransformDataSOArr[0];
     }
-        List<PlayerSkillData> playerTransformDataSOArr = new List<PlayerSkillData>();
-    public List<PlayerSkillData> PlayerTransformDataSOArr() => playerTransformDataSOArr;
-    PlayerSkillData playerTransformDataSO;
-    public PlayerSkillData PlayerTransformDataSO => playerTransformDataSO;
+
+    public List<PlayerSkillData> PlayerTransformDataSOArr { get; set; } = new List<PlayerSkillData>();
+    public PlayerSkillData PlayerTransformData { get; set; }
 
     private bool isPDead;
     public bool IsPDead { get; set; }
-    private Define.PlayerTransformTypeFlag _playerTransformTypeFlag;
+    private Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 
-    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
-    {
-        get => _playerTransformTypeFlag;
-        set => _playerTransformTypeFlag = value;
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag { get; set; }
 
-    }
     private int hp;
     public int Hp
     {

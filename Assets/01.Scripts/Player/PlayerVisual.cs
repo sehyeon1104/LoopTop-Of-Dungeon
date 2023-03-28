@@ -18,7 +18,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 
     public void UpdateVisual(PlayerSkillData data)
     {
-        UIManager.Instance.PlayerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
+        UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
         playerAnimator.runtimeAnimatorController = data.playerAnim;
         playerSprite.sprite = data.playerImg;
     }

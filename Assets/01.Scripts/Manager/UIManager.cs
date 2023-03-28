@@ -11,8 +11,7 @@ using System;
 
 public class UIManager : MonoSingleton<UIManager>
 {
-     GameObject playerUI = null;
-    public GameObject PlayerUI => playerUI;
+    public GameObject playerUI;
     Player playerCompo = null;
     int skillSelectNum = 0;
     public GameObject skillSelect;
@@ -54,14 +53,9 @@ public class UIManager : MonoSingleton<UIManager>
     float timer = 0;
     int num = 0;
     //[Header("RightUp")]
-    [Header("RightDown")]
-    private GameObject AttackButton;
-    private GameObject Skill1Button;
-    private GameObject Skill2Button;
-    private GameObject UltButton;
-    private GameObject InteractionButton;
-
-
+    // [Header("RightDown")]
+    GameObject AttackButton;
+    GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
 
@@ -69,12 +63,8 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     private void Awake()
     {
-        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        playerUI = GameObject.FindGameObjectWithTag("PlayerUI");
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
-        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
-        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
-        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject; 
+        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();;
+        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject; 
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
@@ -113,15 +103,6 @@ public class UIManager : MonoSingleton<UIManager>
             hpbars.Add(avc.GetComponent<Image>());
         }
     }
-    
-    public void TogglePlayerAttackUI()
-    {
-        AttackButton.SetActive(!AttackButton.activeSelf);
-        Skill1Button.SetActive(!Skill1Button.activeSelf);
-        Skill2Button.SetActive(!Skill2Button.activeSelf);
-        UltButton.SetActive(!UltButton.activeSelf);
-    }
-
     #region Panels
     public void DisActiveAllPanels()
     {
@@ -148,8 +129,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     public void ToggleGameOverPanel()
-    {   
-        TogglePlayerAttackUI();
+    {
         blurPanel.SetActive(!pausePanel.activeSelf);
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
     }
@@ -171,7 +151,7 @@ public class UIManager : MonoSingleton<UIManager>
         // TODO : 이후 광고시청 후 부활 or 재화 소모 후 부활 구현
 
         Debug.Log("Revive");
-        TogglePlayerAttackUI();
+        ToggleGameOverPanel();
         GameManager.Instance.Player.RevivePlayer();
     }
 
