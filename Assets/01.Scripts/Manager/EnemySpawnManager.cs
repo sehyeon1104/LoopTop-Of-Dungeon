@@ -73,7 +73,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
             ghostNormalEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
             ghostEliteEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            Managers.Pool.CreatePool(ghostNormalEnemyPrefabs[i], 5);
         }
+
     }
 
     #endregion

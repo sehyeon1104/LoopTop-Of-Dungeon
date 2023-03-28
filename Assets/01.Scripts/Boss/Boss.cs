@@ -67,7 +67,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (isBDead) return;
         
         // StartCoroutine(CameraShaking.Instance.IECameraShakeMultiple(2f));
-        MultiGage.Instance.ObserveEnd();
+        // MultiGage.Instance.ObserveEnd();
 
         isBDead = true;
         //gameObject.SetActive(false);
