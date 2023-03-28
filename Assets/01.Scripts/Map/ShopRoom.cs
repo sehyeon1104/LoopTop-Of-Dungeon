@@ -30,7 +30,7 @@ public class ShopRoom : RoomBase
 
     public void SpawnNPC()
     {
-        Instantiate(shopNpc, transform.position, Quaternion.identity);
+        Instantiate(shopNpc, transform.position + Vector3.up * 3, Quaternion.identity);
     }
 
     public void SetItemObjList(List<ItemObj> lists)
