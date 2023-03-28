@@ -115,6 +115,7 @@ public abstract class BossPattern : MonoBehaviour
         yield return patternDelay;
 
         Boss.Instance.isBInvincible = false;
+        Boss.Instance.Phase2();
         StartCoroutine(RandomPattern());
         attackCoroutine = null;
     }

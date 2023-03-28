@@ -30,6 +30,11 @@ public class Player : MonoBehaviour, IHittable
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            FragmentCollectManager.Instance.AddFragment(gameObject);
+        }
     }
     private void Awake()
     {
@@ -89,5 +94,9 @@ public class Player : MonoBehaviour, IHittable
         yield return new WaitForSeconds(time);
         isPDamaged = false;
     }
-
+    private void OnDrawGizmos()
+    {
+        
+        Gizmos.DrawWireSphere(transform.position, 1.5f);
+    }
 }
