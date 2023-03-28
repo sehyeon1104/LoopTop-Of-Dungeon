@@ -104,4 +104,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
         bossUI.UpdateHpBar();
         // TargetGage.value = Base.Hp;
     }
+
+    public void Phase2()
+    {
+        bossUI.TogglePhase2Icon();
+    }
 }

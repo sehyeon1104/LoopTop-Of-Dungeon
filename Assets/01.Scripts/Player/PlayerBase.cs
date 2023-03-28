@@ -7,6 +7,8 @@ public class PlayerBase
 {
     public void SetPlayerStat()
     {
+        // TODO : JSON 파일 내에 있는 플레이어 정보 불러오기
+
         maxHp = 12;
         hp = maxHp;
         damage = 5f;
@@ -15,7 +17,7 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        _fragmentAmount = 0;
+        _fragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
         _playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {

@@ -29,6 +29,11 @@ public class Player : MonoBehaviour, IHittable
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformDataSO);
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            FragmentCollectManager.Instance.AddFragment(gameObject);
+        }
     }
     private void Start()
     {
