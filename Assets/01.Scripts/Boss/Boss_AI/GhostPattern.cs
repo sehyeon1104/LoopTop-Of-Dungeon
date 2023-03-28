@@ -2,40 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class G_Patterns : BossPattern
 {
     #region Initialize
-    [SerializeField] protected GameObject warning;
 
-    [SerializeField] protected ParticleSystem SummonFx;
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
     [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
+    [SerializeField] protected GameObject bossObject;
 
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
 
     #region phase 1
-    public IEnumerator Pattern_TH(int count) //가시
-    {
-        for (int i = 0; i < count; i++)
-        {
-            //보스 애니메이션 
-            attackAnim.Play(animArray[1]);
-
-            GameObject clone = Instantiate(warning, player.position, Quaternion.identity);
-            Managers.Sound.Play("SoundEffects/Ghost/G_Warning.wav");
-            yield return waitTime;
-
-            Managers.Pool.PoolManaging("10.Effects/ghost/Thorn", clone.transform.position, Quaternion.identity);
-            CinemachineCameraShaking.Instance.CameraShake();
-            Managers.Sound.Play("SoundEffects/Ghost/G_Thorn.wav");
-
-            Destroy(clone);
-        }
-    } // 팔뻗기로 대체 예정
     public IEnumerator Pattern_BM(int count) //빔
     {
         yield return null;
@@ -96,21 +78,33 @@ public class G_Patterns : BossPattern
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
     {
-        Vector3 dir;
+        Vector2 dir;
 
+        bossObject.SetActive(false);
         yield return new WaitForSeconds(3f);
+        bossObject.SetActive(true);
 
-        transform.position = player.right * 3 + player.position;
+        dir = player.position - transform.position;
+        Vector3 scale = transform.localScale;
+        CheckFlipValue(dir, scale);
+
+        bool playerDir = player.GetComponentInChildren<SpriteRenderer>().flipX;
+        transform.position = (playerDir? -player.right : player.right) * 3f + player.position;
 
         attackAnim.Play(animArray[2]);
-        yield return new WaitForSeconds(0.35f);
-
-        Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position, Quaternion.Euler(new Vector3(0,0,237.5f)));
-
         yield return new WaitForSeconds(0.5f);
+
+        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2, Quaternion.Euler(new Vector3(0,0,237.5f)));
+
+        Vector3 cloneScale = new Vector3(1.8f, scale.x * 1.5f, 1f);
+        clone.transform.localScale = cloneScale;
+        clone.GetComponent<VisualEffect>().Play();
+
+        yield return new WaitForSeconds(1.5f);
+
         if (count > -4)
         {
-            dir = player.position - (transform.position);
+            dir = player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             float angle = 7.2f;
 
@@ -157,8 +151,11 @@ public class G_Patterns : BossPattern
             }
 
         }
-        Boss.Instance.Base.Hp += finalCount * 10;
+        int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
+        Boss.Instance.Base.Hp = hpFinal;
         mobList.Clear();
+
+        yield return new WaitForSeconds(0.75f);
     }
     #endregion
 }

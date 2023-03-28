@@ -4193,6 +4193,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1208058099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5758119291833457477, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+  m_PrefabInstance: {fileID: 5759608855094527911}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1221071485
 GameObject:
   m_ObjectHideFlags: 0
@@ -6823,10 +6828,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5757968363346291425, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758119291833457477, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5758580632870723253, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: m_Name
       value: boss_devil_man
       objectReference: {fileID: 0}
+    - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: bossObject
+      value: 
+      objectReference: {fileID: 1208058099}
     - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: SummonClock
       value: 
@@ -6914,6 +6931,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993502852686156556, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_ShadowIntensityEnabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086107390685430464, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4207219456636337038, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
