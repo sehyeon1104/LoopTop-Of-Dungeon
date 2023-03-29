@@ -11,10 +11,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     private GameObject playerPre;
 
-
     // 임시방편
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
+
+    private GameObject hitEffect = null;
 
     private void Awake()
     {
@@ -51,11 +52,13 @@ public class GameManager : MonoSingleton<GameManager>
             //    }
             //}
         }
+        hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
         InitPlayerInfo();
     }
 
     private void Start()
     {
+        Managers.Pool.CreatePool(hitEffect, 10);
         mapTypeFlag = Define.MapTypeFlag.Ghost;
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
@@ -71,6 +74,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         stageSceneNum = sceneNum;
     }
+
+    //public void PlayHitEffect(Transform objTransform)
+    //{
+    //    var effect = Managers.Pool.Pop(hitEffect, objTransform);
+    //    effect.transform.position = objTransform.position;
+    //}
 
     public void GameQuit()
     {
