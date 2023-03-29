@@ -39,7 +39,6 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject checkOneMorePanel;
 
-    [Tooltip("���� ���� �� ���� �������� �̸� ���")]
     [SerializeField]
     private GameObject showCurStageNameObj;
     [SerializeField]
@@ -165,7 +164,7 @@ public class UIManager : MonoSingleton<UIManager>
     #region GameOver
     public void Revive()
     {
-        // TODO : ���� �����û �� ��Ȱ or ��ȭ �Ҹ� �� ��Ȱ ����
+        // TODO : ���� ������?�� ��Ȱ or ��ȭ �Ҹ� �� ��Ȱ ����
 
         Debug.Log("Revive");
         ToggleGameOverPanel();
@@ -193,11 +192,13 @@ public class UIManager : MonoSingleton<UIManager>
     public void SkillCooltime(PlayerSkillData skillData,int skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-        Image currentImage = touchedObj.GetComponent<Image>();
-        if (currentImage.fillAmount != 0f)
-        {
+        print(touchedObj);
+        Image currentImage = touchedObj?.GetComponent<Image>();
+        if (currentImage.fillAmount != 1f)
+        {   
             return;
         }
+
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum-1].skillDelay));
     }
     public void SkillNum(List<int> skillList)
@@ -210,11 +211,10 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
-        cooltimeImg.fillAmount = 1f;
-
-        while (cooltimeImg.fillAmount > 0f)
+        cooltimeImg.fillAmount = 0f;
+        while (cooltimeImg.fillAmount < 1f)
         {
-            cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
+            cooltimeImg.fillAmount += Time.deltaTime / skillCooltime;
             yield return new WaitForEndOfFrame();
         }
 
@@ -231,7 +231,7 @@ public class UIManager : MonoSingleton<UIManager>
         for (int i = 0; i < hpbars.Count; i++)
         {
             if (i + 1 < hpbars.Count)
-                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //�ڽź��� �� ĭ ���� HP�� �ְ� fillAmount�� 0���� ũ�ٸ� �ѱ��
+                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //�ڽź��� �� ĭ ���� HP�� �ְ� fillAmount�� 0���� ũ�ٸ� �ѱ��?
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
 
