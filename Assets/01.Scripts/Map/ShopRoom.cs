@@ -19,13 +19,23 @@ public class ShopRoom : RoomBase
         roomTypeFlag = Define.RoomTypeFlag.Shop;
     }
 
+    [SerializeField]
+    private GameObject shopNpc;
+
     private void Awake()
     {
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
+        shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
+    }
+
+    public void SpawnNPC()
+    {
+        Instantiate(shopNpc, transform.position + Vector3.up * 3, Quaternion.identity);
     }
 
     public void SetItemObjList(List<ItemObj> lists)
     {
+        SpawnNPC();
         itemList.Clear();
         itemList = lists;
 

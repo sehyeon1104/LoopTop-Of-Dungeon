@@ -84,12 +84,14 @@ public abstract class BossPattern : MonoBehaviour
 
         transform.Translate((Vector2.up * dir.normalized + Vector2.right * Mathf.Sign(scale.x)) * Time.deltaTime * moveSpeed);
     }
-    public void CheckFlipValue(Vector2 dir, Vector3 scale)
+    public Vector3 CheckFlipValue(Vector2 dir, Vector3 scale)
     {
         scale.x = Mathf.Sign(dir.x) * constScale.x;
 
         if (Mathf.Abs(dir.x) > 0.2f)
             transform.localScale = scale;
+
+        return scale;
     }
 
     private IEnumerator ChangePase()
