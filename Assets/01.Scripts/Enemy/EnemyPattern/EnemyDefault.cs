@@ -35,6 +35,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     float changeTime = 0.5f;
     WaitForEndOfFrame wait;
     public Vector3 hitPoint => Vector3.zero;
+
     void OnEnable()
     {
         SetStatus();
@@ -133,7 +134,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         }
-        hp -= (int)damage;
+
+        // GameManager.Instance.PlayHitEffect(transform);
+
         if (hp <= 0)
             EnemyDead();
         else
