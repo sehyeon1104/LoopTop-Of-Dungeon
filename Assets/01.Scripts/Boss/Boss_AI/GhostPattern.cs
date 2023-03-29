@@ -82,7 +82,7 @@ public class G_Patterns : BossPattern
 
         dir = player.position - transform.position;
         Vector3 scale = transform.localScale;
-        CheckFlipValue(dir, scale);
+        scale = CheckFlipValue(dir, scale);
 
         bool playerDir = player.GetComponentInChildren<SpriteRenderer>().flipX;
         transform.position = (playerDir? -player.right : player.right) * 3f + player.position;
@@ -90,13 +90,16 @@ public class G_Patterns : BossPattern
         anim.SetTrigger(_hashAttack);
         yield return new WaitForSeconds(0.5f);
 
-        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2, Quaternion.Euler(new Vector3(0,0,237.5f)));
 
-        Vector3 cloneScale = new Vector3(1.8f, scale.x * 1.5f, 1f);
+
+        Debug.Log(scale.x);
+        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2.5f, Quaternion.Euler(new Vector3(0,0,237.5f)));
+
+        Vector3 cloneScale = new Vector3(2.8f, scale.x * 1.75f, 1f);
         clone.transform.localScale = cloneScale;
         clone.GetComponent<VisualEffect>().Play();
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
         if (count > -4)
         {
@@ -106,7 +109,7 @@ public class G_Patterns : BossPattern
 
             for (int i = -4; i < count; i++)
             {
-                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot)));
+                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
             }
         }
     }
@@ -118,7 +121,7 @@ public class G_Patterns : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)), Quaternion.identity);
+            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
             mobList.Add(clone);
         }
 

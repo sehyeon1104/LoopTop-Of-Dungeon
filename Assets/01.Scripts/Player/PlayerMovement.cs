@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     Joystick joystick;
     [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
+
+    private float x;
+    private float y;
+
     private void Awake()
     {
         joystick = FindObjectOfType<Joystick>();
@@ -16,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+        Move(new Vector2(x, y));
         Move(new Vector2(joystick.Horizontal, joystick.Vertical));
     }
     public void Move(Vector2 inputVelocity)
