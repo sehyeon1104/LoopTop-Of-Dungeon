@@ -106,7 +106,7 @@ public class PoolManager
         _pool[name].Push(poolable);
     }
 
-    public Poolable Pop(GameObject obj, Transform parent = null)
+    public Poolable Pop(GameObject obj, Transform parent = null, Transform pos = null)
     {
         if (_pool.ContainsKey(obj.name) == false)
         {

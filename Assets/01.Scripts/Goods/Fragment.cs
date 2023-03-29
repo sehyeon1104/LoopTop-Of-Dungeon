@@ -13,22 +13,28 @@ public class Fragment : MonoBehaviour
     private Transform playerTransform;
     private Poolable fragmentPoolable;
 
+    private bool isCreate = false;
+
     private void Start()
     {
         fragmentPoolable = GetComponent<Poolable>();
+        playerTransform = GameManager.Instance.Player.transform;
     }
 
     private void OnEnable()
     {
-        playerTransform = GameManager.Instance.Player.transform;
-        transform.position = playerTransform.position;
+        if (!isCreate)
+        {
+            isCreate = true;
+            return;
+        }
 
-        FallToGround();
+        Invoke("FallToGround", 0.01f);
     }
 
     public void FallToGround()
     {
-        transform.DOMove( (Random.insideUnitCircle * 0.5f) + (Vector2)transform.position , 0.4f);
+        transform.DOMove( (Random.insideUnitCircle * 0.75f) + (Vector2)transform.position , 0.4f);
         StartCoroutine(MoveToPlayer());
     }
 
