@@ -32,7 +32,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     Material hitMat;
     Material spriteLitMat;
-    float changeTime = 0.5f;
+
+    float changeTime = 0.07f;
     WaitForEndOfFrame wait;
     public Vector3 hitPoint => Vector3.zero;
 
@@ -135,7 +136,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         }
 
-        // GameManager.Instance.PlayHitEffect(transform);
+        hp -= damage;
+
+        GameManager.Instance.PlayHitEffect(transform);
 
         if (hp <= 0)
             EnemyDead();
@@ -152,9 +155,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             timer+= Time.deltaTime;
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+             yield return null;
         }
         sprite.material = spriteLitMat;
-        yield return null;
     }
     public virtual void EnemyDead()
     {

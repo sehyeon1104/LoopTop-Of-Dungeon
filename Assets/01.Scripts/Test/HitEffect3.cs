@@ -22,11 +22,16 @@ public class HitEffect3 : MonoBehaviour
 
         anim.SetTrigger("Hit");
 
-        Invoke("PopEffect", 0.5f);
+        Invoke("PopEffect", 0.3f);
     }
 
     private void PopEffect()
     {
+        if(poolable == null)
+        {
+            poolable = GetComponent<Poolable>();
+        }
+
         Managers.Pool.Push(poolable);
     }
 }
