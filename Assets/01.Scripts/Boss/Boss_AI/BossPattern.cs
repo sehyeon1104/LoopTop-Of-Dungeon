@@ -47,7 +47,7 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isUsingFinalPattern = false;
 
     protected Vector3 constScale;
-    protected AnimatorOverrideController overrideController = new AnimatorOverrideController();
+    protected AnimatorOverrideController overrideController;
     #endregion
     #region AnimHash
     protected readonly int _hashMove = Animator.StringToHash("Move");
@@ -60,6 +60,7 @@ public abstract class BossPattern : MonoBehaviour
     {
         player = GameManager.Instance.Player.transform;
         anim = GetComponent<Animator>();
+        overrideController = new AnimatorOverrideController();
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
@@ -89,7 +90,7 @@ public abstract class BossPattern : MonoBehaviour
     {
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 
-        if (moveClip != null) overrideController["Moving"] = moveClip;
+        if (moveClip != null) overrideController["Move"] = moveClip;
         if (idleClip != null) overrideController["Idle"] = idleClip;
 
         overrideController = SetSkillAnimation(overrideController);
@@ -104,12 +105,16 @@ public abstract class BossPattern : MonoBehaviour
             {
                 case 1:
                     if (Phase_One_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_One_AnimArray[i];
+                    if (Phase_One_AnimArray[5] != null) overrideController[$"SkillFinal"] = Phase_One_AnimArray[5];
                     break;
                 case 2:
                     if (Phase_Two_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_Two_AnimArray[i];
+                    if (Phase_Two_AnimArray[5] != null) overrideController[$"SkillFinal"] = Phase_Two_AnimArray[5];
                     break;
             }
         }
+
+        
 
         return overrideController;
     }
