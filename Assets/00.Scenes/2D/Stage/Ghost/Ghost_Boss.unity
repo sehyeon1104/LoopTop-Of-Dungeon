@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &9307520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
+  m_PrefabInstance: {fileID: 1498750862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddf19c1d4e81fb14093598ce4dc2e718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &15837292
 GameObject:
   m_ObjectHideFlags: 0
@@ -6933,7 +6944,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5702903748690381113}
     - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: bossFieldPattern
+      value: 
+      objectReference: {fileID: 9307520}
+    - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: Phase_One_AnimArray.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
+      propertyPath: Phase_Two_AnimArray.Array.size
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5759608854821523489, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}

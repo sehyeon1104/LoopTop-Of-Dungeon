@@ -14,6 +14,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected Image SummonClock;
 
     [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
+    [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
 
     protected List<Poolable> mobList = new List<Poolable>();
@@ -265,6 +266,7 @@ public class GhostPattern : G_Patterns
             case 1:
                 break;
             case 2:
+                yield return SCoroutine(bossFieldPattern.GhostBossArmPattern());
                 break;
         }
 
