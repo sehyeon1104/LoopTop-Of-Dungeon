@@ -6,6 +6,8 @@ using UnityEngine.VFX;
 
 public class G_Patterns : BossPattern
 {
+    [Space]
+    [Header("°í½ºÆ®")]
     #region Initialize
 
     [SerializeField] protected GameObject SummonTimer;
@@ -14,6 +16,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
     [SerializeField] protected GameObject bossObject;
 
+    protected List<Poolable> mobList = new List<Poolable>();
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
     #region phase 1
@@ -116,7 +119,6 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_SM(int count) //Èú¶ó
     {
         int finalCount = 0;
-        List<Poolable> mobList = new List<Poolable>();
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
         for (int i = 0; i < count; i++)
@@ -172,7 +174,15 @@ public class GhostPattern : G_Patterns
 
         if (Boss.Instance.isBInvincible && ActCoroutine != null) StartCoroutine(ECoroutine());
 
-        if (Boss.Instance.isBDead) SummonTimer.gameObject.SetActive(false);
+        if (Boss.Instance.isBDead || NowPhase == 2)
+        {
+            if(mobList.Count > 0)
+                for(int i = 0; i < mobList.Count; i++)
+                    Managers.Pool.Push(mobList[i]);
+
+            bossObject.SetActive(true);
+            SummonTimer.gameObject.SetActive(false); 
+        }
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
