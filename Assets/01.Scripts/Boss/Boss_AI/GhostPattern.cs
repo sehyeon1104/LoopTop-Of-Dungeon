@@ -14,10 +14,11 @@ public class G_Patterns : BossPattern
     [SerializeField] protected Image SummonClock;
 
     [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
+    [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
 
     protected List<Poolable> mobList = new List<Poolable>();
-    WaitForSeconds waitTime = new WaitForSeconds(1f);
+    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
     #endregion
     #region phase 1
     public IEnumerator Pattern_BM(int count) //ºö
@@ -79,6 +80,7 @@ public class G_Patterns : BossPattern
     {
         Vector2 dir;
         bossObject.SetActive(false);
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
         bossObject.SetActive(true);
@@ -87,22 +89,17 @@ public class G_Patterns : BossPattern
         Vector3 scale = transform.localScale;
         scale = CheckFlipValue(dir, scale);
 
-        bool playerDir = player.GetComponentInChildren<SpriteRenderer>().flipX;
-        transform.position = (playerDir? -player.right : player.right) * 3f + player.position;
+        transform.position = Vector3.left * scale.x * 3f + player.position;
 
         anim.SetTrigger(_hashAttack);
-        yield return new WaitForSeconds(0.5f);
+        yield return waitTime;
 
-
-
-        Debug.Log(scale.x);
         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2.5f, Quaternion.Euler(new Vector3(0,0,237.5f)));
 
-        Vector3 cloneScale = new Vector3(2.8f, scale.x * 1.75f, 1f);
-        clone.transform.localScale = cloneScale;
+        clone.transform.localScale = new Vector3(2.8f, scale.x * 1.75f, 1f);
         clone.GetComponent<VisualEffect>().Play();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return waitTime;
 
         if (count > -4)
         {
@@ -269,6 +266,7 @@ public class GhostPattern : G_Patterns
             case 1:
                 break;
             case 2:
+                yield return SCoroutine(bossFieldPattern.GhostBossArmPattern());
                 break;
         }
 
