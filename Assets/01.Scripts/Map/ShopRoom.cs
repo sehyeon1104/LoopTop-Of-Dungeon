@@ -87,6 +87,7 @@ public class ShopRoom : RoomBase
                     if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
+                        itemobjArr[i].IsPurchaseAble = true;
                     }
                 }
                 else
@@ -94,6 +95,7 @@ public class ShopRoom : RoomBase
                     if (itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(false);
+                        itemobjArr[i].IsPurchaseAble = false;
                     }
                 }
             }
@@ -117,5 +119,18 @@ public class ShopRoom : RoomBase
                 StopCoroutine(ToggleItemInfoPanel());
             }
         }
+    }
+
+    public ItemObj GetPurchaseableItem()
+    {
+        for(int i = 0; i < itemobjArr.Length; ++i)
+        {
+            if (itemobjArr[i].IsPurchaseAble)
+            {
+                return itemobjArr[i];
+            }
+        }
+
+        return null;
     }
 }

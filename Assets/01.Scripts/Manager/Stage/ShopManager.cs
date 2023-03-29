@@ -107,4 +107,16 @@ public class ShopManager : MonoSingleton<ShopManager>
         //}
     }
 
+    // 아이템 구매 함수
+    public void InteractiveToItem()
+    {
+        if(shopRoom.GetPurchaseableItem() == null)
+        {
+            return;
+        }
+
+        shopRoom.GetPurchaseableItem().PurchaseShopItem();
+
+    }
+
 }

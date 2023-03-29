@@ -25,6 +25,20 @@ public class ItemObj : MonoBehaviour
     public int Num { get; set; }
     private Item item = null;
 
+    private bool _isPurchaseAble = false;
+
+    public bool IsPurchaseAble
+    {
+        get
+        {
+            return _isPurchaseAble;
+        }
+        set
+        {
+            _isPurchaseAble = value;
+        }
+    }
+
     private void Start()
     {
         soldOutPanel.SetActive(false);
