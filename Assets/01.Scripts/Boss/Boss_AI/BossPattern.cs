@@ -4,27 +4,40 @@ using UnityEngine;
 
 public abstract class BossPattern : MonoBehaviour
 {
-    public int NowPhase = 1;
+    [HideInInspector] public int NowPhase = 1;
 
-    [Header("보스 이동 관련 스탯")]
+    #region Serialize
+    [Header("이동 관련")]
+
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float minDistance;
+    
+    [Space]
+    
+    [Header("보스 옵션")]
+
+    [Tooltip("보스방 입장 시 초기 대기 상태")]
+    [SerializeField] private float waitTime = 1f;
+    [Tooltip("페이즈별 보스 스킬 개수")]
+    [SerializeField] private int[] phase_patternCount;
+    [Tooltip("보스 패턴 후딜레이")]
+    [SerializeField] private float patternDelay;
 
     [Space]
 
-    [Header("보스 옵션")]
+    [Header("애니메이션")]
 
-    [Header("보스방 입장 시 초기 대기 상태")]
-    [SerializeField]
-    private float waitTime = 1f;
-    [Header("페이즈별 보스 스킬 개수")]
-    [SerializeField] private int[] phase_patternCount;
-    [Header("보스 패턴 후딜레이")]
-    [SerializeField] private float patternDelay;
-    
+    [SerializeField] protected AnimationClip idleClip;
+    [SerializeField] protected AnimationClip moveClip;
+
+    [Tooltip("1페이즈 애니메이션")]
+    [SerializeField] protected AnimationClip[] Phase_One_AnimArray;
+    [Tooltip("2페이즈 애니메이션")]
+    [SerializeField] protected AnimationClip[] Phase_Two_AnimArray;
+    #endregion
+    #region init
     protected int[] patternCount = new int[6];
 
-    #region init
     protected Transform player;
     protected Animator anim;
     protected Coroutine attackCoroutine = null;
@@ -34,6 +47,7 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isUsingFinalPattern = false;
 
     protected Vector3 constScale;
+    protected AnimatorOverrideController overrideController = new AnimatorOverrideController();
     #endregion
     #region AnimHash
     protected readonly int _hashMove = Animator.StringToHash("Move");
@@ -49,6 +63,8 @@ public abstract class BossPattern : MonoBehaviour
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
+
+        AnimInit();
 
         StartCoroutine(RandomPattern());
         StartCoroutine(ChangePase());
@@ -67,6 +83,35 @@ public abstract class BossPattern : MonoBehaviour
             attackCoroutine = null;
             StopAllCoroutines();
         }
+    }
+
+    public void AnimInit()
+    {
+        overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
+
+        if (moveClip != null) overrideController["Moving"] = moveClip;
+        if (idleClip != null) overrideController["Idle"] = idleClip;
+
+        overrideController = SetSkillAnimation(overrideController);
+
+        anim.runtimeAnimatorController = overrideController;
+    }
+    public AnimatorOverrideController SetSkillAnimation(AnimatorOverrideController overrideController)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            switch (NowPhase)
+            {
+                case 1:
+                    if (Phase_One_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_One_AnimArray[i];
+                    break;
+                case 2:
+                    if (Phase_Two_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_Two_AnimArray[i];
+                    break;
+            }
+        }
+
+        return overrideController;
     }
 
     public void MoveToPlayer()
@@ -113,6 +158,7 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         NowPhase = 2;
+        overrideController = SetSkillAnimation(overrideController);
 
         yield return patternDelay;
 
