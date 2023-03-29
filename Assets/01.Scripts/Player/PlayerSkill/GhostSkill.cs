@@ -6,19 +6,11 @@ using UnityEngine;
 public class GhostSkill : PlayerSkillBase
 {
     float janpanDuration = 5f;
-    GameObject smoke;
     PlayerSkillData skillData;
 
     private void Awake()
     {
         init();
-
-        smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/ghost/Smoke.prefab");
-    }
-    private void Start()
-    {
-        print(playerBase.PlayerTransformTypeFlag);
-
     }
 
     public override void FirstSkill(int level)

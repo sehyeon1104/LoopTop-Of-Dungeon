@@ -53,6 +53,7 @@ public class PlayerSkill : MonoBehaviour
     public void Skill1()
     {
         skillEvent[0](slotLevel[0]);
+        UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,1);
     }
 
     public void Skill2()
