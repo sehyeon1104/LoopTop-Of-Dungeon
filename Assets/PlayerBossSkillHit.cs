@@ -12,7 +12,6 @@ public class PlayerBossSkillHit : MonoBehaviour
     private bool isenter = false;
 
     public Coroutine DotDamageCor = null;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("BossSkill")) 
@@ -32,8 +31,8 @@ public class PlayerBossSkillHit : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Bubble"))
         {
-            Debug.Log("¤·¤·");
             Managers.Pool.Push(collision.gameObject.GetComponent<Poolable>());
+            BossUI.fillTime += 10;
             Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", collision.transform.position, Quaternion.identity);
 
         }
@@ -42,13 +41,10 @@ public class PlayerBossSkillHit : MonoBehaviour
 
     public IEnumerator DotDamageFunc()
     {
-        
             while (true)
             {
-            Debug.Log("Æ½ È½¼ö");
-                gameObject.GetComponentInParent<IHittable>().OnDamage(3, gameObject, 0);
-                yield return DotDamage;
-
+            GameManager.Instance.Player.OnDamage(3, gameObject, 0);
+            yield return DotDamage;
             }
     }
 
