@@ -65,6 +65,7 @@ public class Beam : MonoBehaviour
 
         points[1] = Vector2.zero;
         col.points = points;
+        col.edgeRadius = lineWidth * 0.5f;
 
         beam.SetPosition(1, Vector3.zero);
     }
