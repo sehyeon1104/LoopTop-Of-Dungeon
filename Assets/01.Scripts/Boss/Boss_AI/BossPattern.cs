@@ -162,6 +162,7 @@ public abstract class BossPattern : MonoBehaviour
         }
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
+        isUsingFinalPattern = false;
         NowPhase = 2;
         overrideController = SetSkillAnimation(overrideController);
 
@@ -169,8 +170,9 @@ public abstract class BossPattern : MonoBehaviour
 
         Boss.Instance.isBInvincible = false;
         Boss.Instance.Phase2();
-        StartCoroutine(RandomPattern());
+
         attackCoroutine = null;
+        StartCoroutine(RandomPattern());
     }
 
     private IEnumerator RandomPattern()
@@ -190,6 +192,7 @@ public abstract class BossPattern : MonoBehaviour
             patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
+            Debug.Log("Ω√¿€");
             if (isThisSkillCoolDown[patternChoice]) continue;
 
             if (attackCoroutine == null)
