@@ -189,17 +189,15 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public void SkillCooltime(PlayerSkillData skillData,int skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData,int skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-        print(touchedObj);
-        Image currentImage = touchedObj?.GetComponent<Image>();
+        Image currentImage = touchedObj.GetComponent<Image>();
         if (currentImage.fillAmount != 1f)
-        {   
-            return;
-        }
+            return false;
 
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum-1].skillDelay));
+        return true;
     }
     public void SkillNum(List<int> skillList)
     {

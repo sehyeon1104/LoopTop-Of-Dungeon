@@ -36,7 +36,6 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        print(playerBase.PlayerTransformTypeFlag);
         if(Input.GetKeyDown(KeyCode.O))
         {
             SkillSelect();
@@ -52,13 +51,15 @@ public class PlayerSkill : MonoBehaviour
     }
     public void Skill1()
     {
-        skillEvent[0](slotLevel[0]);
-        UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,1);
+        if(UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 1))
+            skillEvent[0](slotLevel[0]);
     }
 
     public void Skill2()
     {
-        skillEvent[1](slotLevel[1]);
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 2))
+            skillEvent[1](slotLevel[1]);
+
     }
 
     #region ¸®½ºÆ® ¼ÅÇÃ
