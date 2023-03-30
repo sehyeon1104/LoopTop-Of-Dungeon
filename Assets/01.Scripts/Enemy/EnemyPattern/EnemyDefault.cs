@@ -14,6 +14,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected float speed = 1;
 
     protected Transform playerTransform;
+    protected Rigidbody2D rigid;
     protected float distanceToPlayer;
 
     [SerializeField] private float detectDistance = 5f;
@@ -44,6 +45,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     }
     private void Awake()
     {
+        rigid = GetComponent<Rigidbody2D>();
         spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
         hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
     }
@@ -107,11 +109,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
 
         Vector2 dir = (playerTransform.position - transform.position).normalized;
-        sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
-        transform.Translate(dir * Time.deltaTime * speed);
+        sprite.flipX = Mathf.Sign(dir.x) > 0;
+        rigid.velocity = dir * speed;
+
 
         yield return null;
-
         actCoroutine = null;
     }
 
@@ -120,6 +122,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (GameManager.Instance.Player.playerBase.IsPDead) yield break;
 
         anim.SetBool(_move, false);
+        if(rigid != null)
+        rigid.velocity = Vector2.zero;
         if (attackClip != null) anim.SetTrigger(_attack);
 
     }
