@@ -115,6 +115,8 @@ public class G_Patterns : BossPattern
         int finalCount = 0;
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
+        anim.SetTrigger(_hashAttack);
+
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
@@ -226,7 +228,7 @@ public class GhostPattern : G_Patterns
                 break;
             case 2:
                 StartCoroutine(bossRangePattern.FloorPatternRectangle());
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(4f);
                 break;
         }
 

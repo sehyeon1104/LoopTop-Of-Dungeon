@@ -183,16 +183,12 @@ public abstract class BossPattern : MonoBehaviour
         {
             yield return null;
 
-            if (Boss.Instance.isBInvincible)
-            {
-                continue;
-            }
+            if (Boss.Instance.isBInvincible) continue;
 
             int patternChoice = 0;
             patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
-            Debug.Log("½ÃÀÛ");
             if (isThisSkillCoolDown[patternChoice]) continue;
 
             if (attackCoroutine == null)
@@ -205,6 +201,7 @@ public abstract class BossPattern : MonoBehaviour
                     isCanUseFinalPattern = false;
 
                     patternCount[5] = GetRandomCount(5);
+                    anim.SetInteger(_hashSkill, 5);
                     attackCoroutine = StartCoroutine(PatternFinal(patternCount[5]));
 
                     isUsingFinalPattern = false;
@@ -238,8 +235,8 @@ public abstract class BossPattern : MonoBehaviour
             if (attackCoroutine != null)
             {
                 yield return new WaitUntil(() => attackCoroutine == null);
-                yield return new WaitForSeconds(patternDelay);
                 StartCoroutine(CoolDownCheck(patternChoice));
+                yield return new WaitForSeconds(patternDelay);
             }
 
         }
