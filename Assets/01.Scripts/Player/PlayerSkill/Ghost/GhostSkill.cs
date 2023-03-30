@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
-    float cicleRange;
+    float cicleRange = 3f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
     GameObject ghostMob;
@@ -22,7 +22,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void SecondSkill(int level)
     {
-
+        HillaSkill(level);
     }
     public override void ThirdSkill(int level)
     {
@@ -75,9 +75,9 @@ public class GhostSkill : PlayerSkillBase
         Managers.Pool.Push(smoke.GetComponent<Poolable>());
     }
 
-    public void HillaSkill()
+    public void HillaSkill(int level)
     {
-        Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/G_Mob_01.prefab", new Vector2(Mathf.Cos(Random.Range(0,360)), Mathf.Sin(Random.Range(0,360))),quaternion.identity);
+      Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
     }
 
     #endregion
