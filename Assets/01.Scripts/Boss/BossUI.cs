@@ -18,6 +18,11 @@ public class BossUI : MonoBehaviour
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
+    public static float fillTime { get; set; } = 0f;
+    float firstFill = 0f;
+    float secondFill = 0f;
+    float thirdFill = 0f;
+
     private void Awake()
     {
         bossUltGageImages = bossUltGage.GetComponentsInChildren<Image>();
@@ -28,16 +33,8 @@ public class BossUI : MonoBehaviour
     {
         InitUltGage();
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+        StartCoroutine(FillBossUltGage(100f));
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(FillBossUltGage(10f));
-        }
-    }
-
     public void InitUltGage()
     {
         for(int i = 0; i < bossUltGageImages.Length; ++i)
@@ -57,36 +54,30 @@ public class BossUI : MonoBehaviour
     {
         // bossUltGage.SetActive(true);
 
-        float fillTime = 0f;
-        float firstFill = time * 0.25f;
-        float secondFill = time - (2 * firstFill);
-        float thirdFill = time * 0.75f;
+        firstFill = time * 0.4f;
+        secondFill = time - (2 * firstFill);
+        thirdFill = time * 0.6f;
 
-        int index = 0;
-
-        while (fillTime <= time)
+        while (true)
         {
+            Debug.Log(fillTime);
             if(fillTime <= firstFill)
             {
-                index = 0;
-                bossUltGageImages[index].fillAmount = 1 * (fillTime / firstFill);
+                bossUltGageImages[0].fillAmount = 1 * (fillTime / firstFill);
             }
             else if(fillTime > firstFill && fillTime <= thirdFill)
             {
-                index = 1;
-                bossUltGageImages[index].fillAmount = 1 * ((fillTime - firstFill) / secondFill);
+                bossUltGageImages[1].fillAmount = 1 * ((fillTime - firstFill) / secondFill);
             }
             else if(fillTime > thirdFill)
             {
-                index = 2;
-                bossUltGageImages[index].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
+                bossUltGageImages[2].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
             }
-
-            fillTime += Time.deltaTime;
+            
+            
             yield return waitForFixedUpdate;
         }
-
-        InitUltGage();
+        
     }
 
     public void UpdateHpBar()

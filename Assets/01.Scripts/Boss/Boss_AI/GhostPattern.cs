@@ -18,7 +18,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject bossObject;
 
     protected List<Poolable> mobList = new List<Poolable>();
-    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
+    WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
     #region phase 1
     public IEnumerator Pattern_BM(int count) //빔
@@ -73,7 +73,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1.25f);
         }
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
@@ -92,13 +92,6 @@ public class G_Patterns : BossPattern
         transform.position = Vector3.left * scale.x * 3f + player.position;
 
         anim.SetTrigger(_hashAttack);
-        yield return waitTime;
-
-        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Claw",transform.position + transform.right * scale.x * 2.5f, Quaternion.Euler(new Vector3(0,0,237.5f)));
-
-        clone.transform.localScale = new Vector3(2.8f, scale.x * 1.75f, 1f);
-        clone.GetComponent<VisualEffect>().Play();
-
         yield return waitTime;
 
         if (count > -4)
@@ -177,8 +170,11 @@ public class GhostPattern : G_Patterns
                 for(int i = 0; i < mobList.Count; i++)
                     Managers.Pool.Push(mobList[i]);
 
-            bossObject.SetActive(true);
-            SummonTimer.gameObject.SetActive(false); 
+            if (Boss.Instance.isBInvincible)
+            {
+                bossObject.SetActive(true);
+                SummonTimer.gameObject.SetActive(false);
+            }
         }
         base.Update();
     }
