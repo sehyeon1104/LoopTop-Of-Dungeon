@@ -6,7 +6,7 @@ using UnityEngine.Events;
 // Player MoveMent Class
 public class PlayerMovement : MonoBehaviour
 {
-    Joystick joystick;
+    public Joystick joystick { private set; get; }
     [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
 
