@@ -2759,8 +2759,8 @@ MonoBehaviour:
   moveClip: {fileID: 7400000, guid: e560df2a2b11fc34a9c66c7e506b6a5a, type: 2}
   Phase_One_AnimArray:
   - {fileID: 7400000, guid: f3472a9cc9fcbd444b4e223721469a3f, type: 2}
-  - {fileID: 7400000, guid: 82a7ace1c3560da4abdaad4e7aa5318d, type: 2}
-  - {fileID: 0}
+  - {fileID: 7400000, guid: cf135e425662c47428f01ca0058a9d34, type: 2}
+  - {fileID: 7400000, guid: b1318097817bb0946a0d0555668a3601, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 7400000, guid: f9ee3fe1ff3f8a44394800a8f26e3c83, type: 2}
@@ -3067,11 +3067,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 52492451760953970, guid: 1889adb60b65b9741935af368db0df96, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 52492451760953971, guid: 1889adb60b65b9741935af368db0df96, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 52492451760953971, guid: 1889adb60b65b9741935af368db0df96, type: 3}
       propertyPath: m_SortingLayer
@@ -3089,3 +3089,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 52492451760953969, guid: 1889adb60b65b9741935af368db0df96, type: 3}
   m_PrefabInstance: {fileID: 3622556384346757453}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3674825480610382655 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 52492451760953970, guid: 1889adb60b65b9741935af368db0df96, type: 3}
+  m_PrefabInstance: {fileID: 3622556384346757453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &750602986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3674825480610382655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eefe1c8f8331c1c43930b3bb71c9c406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
