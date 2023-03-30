@@ -77,9 +77,11 @@ public class GhostBossFieldPattern : MonoBehaviour
     //±Ã±Ø±â ÆÐÅÏ
     public IEnumerator GhostBossUltPattern()
     {
-        if(BossUI.fillTime > 40 || BossUI.fillTime < 60)
+
+
+        if(BossUI.fillTime < 40 || BossUI.fillTime > 60)
         {
-            GameManager.Instance.Player.OnDamage(12, gameObject, 0);
+            //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
         }
         while (true)
         {
