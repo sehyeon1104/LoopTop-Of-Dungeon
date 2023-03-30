@@ -75,7 +75,9 @@ public class UIManager : MonoSingleton<UIManager>
     }
     private void Start()
     {
+        HPInit();
         UpdateUI();
+        DisActiveAllPanels();
     }
     private void Update()
     {
@@ -83,9 +85,6 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void UpdateUI()
     {
-        // playerIcon = GameManager.Instance.Player.
-        DisActiveAllPanels();
-        HPInit();
         HpUpdate();
         
     }
@@ -229,7 +228,7 @@ public class UIManager : MonoSingleton<UIManager>
         for (int i = 0; i < hpbars.Count; i++)
         {
             if (i + 1 < hpbars.Count)
-                if(hpbars[i + 1].fillAmount > float.Epsilon) continue; //�ڽź��� �� ĭ ���� HP�� �ְ� fillAmount�� 0���� ũ�ٸ� �ѱ��?
+                if(hpbars[i + 1].fillAmount > float.Epsilon) continue;
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
 

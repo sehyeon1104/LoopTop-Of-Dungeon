@@ -116,7 +116,6 @@ public class ShopManager : MonoSingleton<ShopManager>
         }
 
         shopRoom.GetPurchaseableItem().PurchaseShopItem();
-
     }
 
 }
