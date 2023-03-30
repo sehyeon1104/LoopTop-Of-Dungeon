@@ -32,15 +32,19 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
-    WaitForSeconds Delay1 = new WaitForSeconds(4f);
+    WaitForSeconds waittime4s = new WaitForSeconds(4f);
+
+    WaitForSeconds waittime6s = new WaitForSeconds(6f);
 
     Coroutine UltPattern = null;
+
+    public static bool isPushAllBubbles { get; set; } = false;
 
     //팔 솟아오르기 패턴
 
     private void Start()
     {
-        StartCoroutine(GhostBossUltPattern());
+        UltPattern =  StartCoroutine(GhostBossUltPattern());
     }
     public IEnumerator GhostBossArmPattern()
     {
@@ -77,10 +81,7 @@ public class GhostBossFieldPattern : MonoBehaviour
     //궁극기 패턴
     public IEnumerator GhostBossUltPattern()
     {
-        if(BossUI.fillTime > 40 || BossUI.fillTime < 60)
-        {
-            GameManager.Instance.Player.OnDamage(12, gameObject, 0);
-        }
+        
         while (true)
         {
             Randomtime = Random.Range(0, 5);
@@ -99,9 +100,29 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             Managers.Pool.PoolManaging("10.Effects/ghost/Bubble", RealRandomPos, Quaternion.identity);
 
-            yield return Delay1;
+            yield return waittime4s;
         }
     }
+
+    public IEnumerator GhostUltStart()
+    {
+        isPushAllBubbles = true;
+        StopCoroutine(UltPattern);
+
+        //애니메이션 넣기 
+        yield return waittime4s;
+
+        if (BossUI.fillTime < 40 || BossUI.fillTime > 60)
+        {
+            //애니메이션 넣기
+            //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
+        }
+
+        yield return waittime6s;
+
+    }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
