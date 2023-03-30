@@ -65,6 +65,5 @@ public class BossBase
         _maxHp = 100;
         _hp = _maxHp;
         _maxShield = 50;
-        _shield = _maxShield;
     }
 }
