@@ -65,6 +65,7 @@ public class Beam : MonoBehaviour
 
         points[1] = Vector2.zero;
         col.points = points;
+        col.edgeRadius = lineWidth * 0.5f;
 
         beam.SetPosition(1, Vector3.zero);
     }
@@ -94,7 +95,7 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+        CinemachineCameraShaking.Instance.CameraShake(2, 0.4f);
 
         for(int i = 0; i < startFXList.Count; i++)
         {
@@ -114,19 +115,24 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        points[1] = Vector2.zero;
-        col.points = points;
+        yield return new WaitForSeconds(0.2f);
+        CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
+        
+        lineWidth *= 2;
 
         while (lineWidth >= 0.0f)
         {
-            lineWidth -= Time.deltaTime;
+            lineWidth -= Time.deltaTime * 2f;
 
+            col.edgeRadius = lineWidth * 0.5f;
             beamLight.intensity -= 0.01f;
             beam.startWidth = lineWidth;
             beam.endWidth = lineWidth;
 
             yield return null;
         }
+        points[1] = Vector2.zero;
+        col.points = points;
 
         beamLight.intensity = 0;
         beam.startWidth = 0;

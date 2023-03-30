@@ -12,9 +12,14 @@ public class BossUI : MonoBehaviour
     [SerializeField]
     private Image Icon = null;
 
+    [SerializeField]
+    private GameObject shieldBar = null;
+
+
     private Image[] bossUltGageImages = null;
 
     private Slider hpBarSlider = null;
+    private Slider shieldBarSlider = null;
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
@@ -27,6 +32,7 @@ public class BossUI : MonoBehaviour
     {
         bossUltGageImages = bossUltGage.GetComponentsInChildren<Image>();
         hpBarSlider = hpBar.GetComponentInChildren<Slider>();
+        shieldBarSlider = shieldBar.GetComponentInChildren<Slider>();
     }
 
     private void Start()
@@ -72,7 +78,7 @@ public class BossUI : MonoBehaviour
             {
                 bossUltGageImages[2].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
             }
-            
+            fillTime -= Time.deltaTime * 0.1f;
             
             yield return waitForFixedUpdate;
         }
@@ -82,6 +88,11 @@ public class BossUI : MonoBehaviour
     public void UpdateHpBar()
     {
         hpBarSlider.value = (float)Boss.Instance.Base.Hp / (float)Boss.Instance.Base.MaxHp;
+    }
+
+    public void UpdateShieldBar()
+    {
+        shieldBarSlider.value = (float)Boss.Instance.Base.Shield / (float)Boss.Instance.Base.MaxShield;
     }
 
     public void TogglePhase2Icon()

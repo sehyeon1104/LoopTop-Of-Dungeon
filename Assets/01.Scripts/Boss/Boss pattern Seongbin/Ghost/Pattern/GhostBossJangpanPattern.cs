@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
-    [SerializeField] GameObject Effect;
+    [SerializeField]  GameObject Effect;
     [SerializeField]  GameObject FPR; //Floor Pattern Range
     [SerializeField]  GameObject FPRS; //Floor Pattern Range Start
     [SerializeField]  GameObject FRPR; //Floor Pattern Range Rectangle 
@@ -18,10 +18,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
     public SpriteRenderer FPRRSpriteRenderer;
     public SpriteRenderer FPRRSSpriteRenderer;
 
-    private WaitForSeconds WaitForRangeStart = new WaitForSeconds(2f);
-    private WaitForSeconds WaitForStart = new WaitForSeconds(0.8f);
-    private WaitForSeconds AttackRangeSpeed = new WaitForSeconds(0.01f);
-    private WaitForSeconds AttackEnd = new WaitForSeconds(5f);
+
+    private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
+    private WaitForSeconds WaitzerodotzerooneS = new WaitForSeconds(0.01f);
+    private WaitForSeconds WaitfiveS = new WaitForSeconds(5f);
+    private WaitForSeconds WaitzerodotfiveS = new WaitForSeconds(0.5f);
 
     private float ScaleX;
     private float ScaleY;
@@ -60,20 +61,22 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
             FRPR.transform.localScale = new Vector2(ScaleX, ScaleY);
 
-            yield return AttackRangeSpeed;
+            yield return WaitzerodotzerooneS;
         }
+
+        yield return WaitzerodotfiveS;
 
         ScaleX = 0;
         ScaleY = 0;
 
         while (ScaleX < 30f)
         {
-            ScaleX += 0.4f;
-            ScaleY += 0.4f;
+            ScaleX += 0.2f;
+            ScaleY += 0.2f;
 
             FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
-            yield return AttackRangeSpeed;
+            yield return WaitzerodotzerooneS;
         }
 
         ScaleX = 0;
@@ -102,12 +105,12 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         //clone.transform.localScale = 
 
-        yield return WaitForStart;
+        yield return WaitzerodoteightS;
 
         FPRRSCol.SetActive(true);
 
 
-        yield return AttackEnd;
+        yield return WaitfiveS;
 
         ScaleX = 0;
         ScaleY = 0;
@@ -140,21 +143,22 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
             FPR.transform.localScale = new Vector2(ScaleX, ScaleY);
 
-            yield return AttackRangeSpeed;
+            yield return WaitzerodotzerooneS;
         }
 
         ScaleX = 0;
         ScaleY = 0;
+        yield return WaitzerodotfiveS;
 
 
         while (ScaleX < 17f)
         {
-            ScaleX += 0.4f;
-            ScaleY += 0.4f;
+            ScaleX += 0.2f;
+            ScaleY += 0.2f;
 
             FPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
-            yield return AttackRangeSpeed;
+            yield return WaitzerodotzerooneS;
         }
                
         ScaleX = 0;
@@ -167,10 +171,10 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
 
-        yield return WaitForStart;
+        yield return WaitzerodoteightS;
         FPRSCol.SetActive(true);
 
-        yield return AttackEnd;
+        yield return WaitfiveS;
 
         FPR.transform.localScale = Vector2.zero; 
         FPRS.transform.localScale = Vector2.zero;

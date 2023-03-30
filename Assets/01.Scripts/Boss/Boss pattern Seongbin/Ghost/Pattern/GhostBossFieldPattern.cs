@@ -28,13 +28,17 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private float BubbleRandomSizeY = 0f;
 
+    float checktime = 0f;
+
     private Material[] setMat = new Material[3];
 
     WaitForSeconds Delay = new WaitForSeconds(0.4f);
 
     WaitForSeconds waittime4s = new WaitForSeconds(4f);
+    
+    WaitForSeconds waittime2dot5s = new WaitForSeconds(2.5f);
 
-    WaitForSeconds waittime6s = new WaitForSeconds(6f);
+    WaitForSeconds waittime10s = new WaitForSeconds(10f);
 
     Coroutine UltPattern = null;
 
@@ -61,6 +65,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             Vector2 RealRandomPos = Owntransform + RandomPos;
 
+            Managers.Pool.PoolManaging("10.Effects/ghost/BossArmRangeCircle", RealRandomPos, Quaternion.identity);
             Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternAnim", RealRandomPos, Quaternion.identity);
 
             for(int i = 0; i < clone.GetComponentsInChildren<Renderer>().Length; i++)
@@ -106,20 +111,37 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     public IEnumerator GhostUltStart()
     {
-        isPushAllBubbles = true;
-        StopCoroutine(UltPattern);
+        Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
-        //애니메이션 넣기 
-        yield return waittime4s;
+        isPushAllBubbles = true; //필드 내 버블 다 사라짐
+        StopCoroutine(UltPattern); // 버블 생성 중지
 
-        if (BossUI.fillTime < 40 || BossUI.fillTime > 60)
+        //애니메이션 넣기 (흡수 시작 애니메이션 시전) 
+        yield return waittime2dot5s; 
+
+        if (BossUI.fillTime < 40)
         {
-            //애니메이션 넣기
+            //애니메이션 넣기 (흡수 애니메이션 시전)
             //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
         }
 
-        yield return waittime6s;
+        //애니메이션 넣기 (흡수 대기 애니메이션 시전)
 
+        StartCoroutine(GhostshieldOffCheck());
+
+        yield return waittime10s;
+
+    }
+
+    public IEnumerator GhostshieldOffCheck()
+    {
+        
+        while (checktime < 10f)
+        {
+            //쉴드 게이지 0일때 끝냄 + 맞는 애니메이션 추가
+            yield return null;
+            checktime += Time.deltaTime;
+        }
     }
 
 
