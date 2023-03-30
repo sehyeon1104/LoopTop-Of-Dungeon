@@ -32,9 +32,38 @@ public class BossBase
 
     public int MaxHp { get { return _maxHp; } }
 
+    private int _shield;
+    public int Shield
+    {
+        get
+        {
+            return _shield;
+        }
+        set
+        {
+            _shield = value;
+
+            if(_shield <= 0)
+            {
+                Debug.Log("½Çµå ÆÄ±«");
+            }
+            if(_shield > _maxShield)
+            {
+                _shield = _maxShield;
+            }
+
+            Boss.Instance.UpdateBossShield();
+
+        }
+    }
+
+    private int _maxShield;
+    public int MaxShield { get { return _maxShield; } }
+
     private void SetBossStat()
     {
         _maxHp = 100;
         _hp = _maxHp;
+        _maxShield = 50;
     }
 }
