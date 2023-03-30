@@ -111,6 +111,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     public IEnumerator GhostUltStart()
     {
+        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
         Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
         isPushAllBubbles = true; //필드 내 버블 다 사라짐

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1445090250939597165}
   - component: {fileID: 1445090250939597074}
   - component: {fileID: 1445090250939597075}
+  - component: {fileID: -976391711385597285}
   m_Layer: 0
   m_Name: Absorb
   m_TagString: Untagged
@@ -110,3 +111,17 @@ VFXRenderer:
   m_SortingLayerID: -726151
   m_SortingLayer: 8
   m_SortingOrder: 0
+--- !u!114 &-976391711385597285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445090250939597072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 12.5
