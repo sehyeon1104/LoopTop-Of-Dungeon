@@ -75,6 +75,7 @@ public class ShopRoom : RoomBase
             {
                 ShopManager.Instance.SetItem();
             }
+            
             StartCoroutine(ToggleItemInfoPanel());
         }
     }
@@ -96,6 +97,7 @@ public class ShopRoom : RoomBase
                 }
                 else
                 {
+                    InteractionBtn.onClick.RemoveListener(itemobjArr[i].PurchaseShopItem);
                     if (itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(false);
@@ -103,21 +105,23 @@ public class ShopRoom : RoomBase
                     }
                 }
             }
+
             if (itemobjCount > 0)
                 UIManager.Instance.RotateInteractionButton();
             else
                 UIManager.Instance.RotateAttackButton();
 
-
+         
             itemobjCount = 0;
             yield return waitForEndOfFrame;
+            
         }
 
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {
+        {   
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;

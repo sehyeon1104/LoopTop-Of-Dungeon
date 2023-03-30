@@ -47,6 +47,7 @@ public class PlayerSkill : MonoBehaviour
         if(skillData.TryGetValue(playerBase.PlayerTransformTypeFlag,out playerSkill))
         {
             skillEvent[0] = playerSkill.playerSkills[0];
+            skillEvent[1] = playerSkill.playerSkills[1];
         }
     }
     public void Skill1()
