@@ -65,7 +65,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             Vector2 RealRandomPos = Owntransform + RandomPos;
 
-            Managers.Pool.PoolManaging("10.Effects / ghost / BossArmRangeCircle", RealRandomPos, Quaternion.identity);
+            Managers.Pool.PoolManaging("10.Effects/ghost/BossArmRangeCircle", RealRandomPos, Quaternion.identity);
             Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/GhostBossArmPatternAnim", RealRandomPos, Quaternion.identity);
 
             for(int i = 0; i < clone.GetComponentsInChildren<Renderer>().Length; i++)
