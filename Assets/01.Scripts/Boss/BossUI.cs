@@ -78,7 +78,7 @@ public class BossUI : MonoBehaviour
             {
                 bossUltGageImages[2].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
             }
-            
+            fillTime -= Time.deltaTime * 0.1f;
             
             yield return waitForFixedUpdate;
         }

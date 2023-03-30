@@ -111,6 +111,8 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     public IEnumerator GhostUltStart()
     {
+        Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
+
         isPushAllBubbles = true; //필드 내 버블 다 사라짐
         StopCoroutine(UltPattern); // 버블 생성 중지
 

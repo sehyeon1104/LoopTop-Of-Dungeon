@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
-    [SerializeField] GameObject Effect;
+    [SerializeField]  GameObject Effect;
     [SerializeField]  GameObject FPR; //Floor Pattern Range
     [SerializeField]  GameObject FPRS; //Floor Pattern Range Start
     [SerializeField]  GameObject FRPR; //Floor Pattern Range Rectangle 
