@@ -144,7 +144,6 @@ public class PoolManager
         else
         {
             clone = Pop(GetObject(name)).gameObject;
-            Debug.Log(name);
         }
 
         clone.transform.position = position;

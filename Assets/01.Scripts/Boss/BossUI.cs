@@ -60,7 +60,6 @@ public class BossUI : MonoBehaviour
 
         while (true)
         {
-            Debug.Log(fillTime);
             if(fillTime <= firstFill)
             {
                 bossUltGageImages[0].fillAmount = 1 * (fillTime / firstFill);

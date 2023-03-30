@@ -94,7 +94,7 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+        CinemachineCameraShaking.Instance.CameraShake(2, 0.4f);
 
         for(int i = 0; i < startFXList.Count; i++)
         {
@@ -114,12 +114,17 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
+        yield return new WaitForSeconds(0.2f);
+        CinemachineCameraShaking.Instance.CameraShake(3, 0.75f);
+        
+        lineWidth *= 2;
+
         points[1] = Vector2.zero;
         col.points = points;
 
         while (lineWidth >= 0.0f)
         {
-            lineWidth -= Time.deltaTime;
+            lineWidth -= Time.deltaTime * 2f;
 
             beamLight.intensity -= 0.01f;
             beam.startWidth = lineWidth;
