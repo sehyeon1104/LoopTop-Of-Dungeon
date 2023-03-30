@@ -164,7 +164,7 @@ public class UIManager : MonoSingleton<UIManager>
     #region GameOver
     public void Revive()
     {
-        // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã?ï¿½ï¿½ ï¿½ï¿½È° or ï¿½ï¿½È­ ï¿½Ò¸ï¿½ ï¿½ï¿½ ï¿½ï¿½È° ï¿½ï¿½ï¿½ï¿½
+        // TODO : ±¤°í½ÃÃ» ÈÄ ºÎÈ° or ÀçÈ­¼Ò¸ð ÈÄ ºÎÈ° ±¸Çö
 
         Debug.Log("Revive");
         ToggleGameOverPanel();

@@ -15,7 +15,7 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
     private void Start()
     {
-        Managers.Pool.CreatePool(fragmentCollect, 10);
+        Managers.Pool.CreatePool(fragmentCollect, 20);
     }
 
     public void AddFragment(GameObject obj)
