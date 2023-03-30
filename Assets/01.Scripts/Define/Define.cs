@@ -21,7 +21,7 @@ public static class Define
         StartRoom,
         EnemyRoom,
         BossRoom,
-        Shop
+        Shop,
     }
 
     public enum PlayerTransformTypeFlag

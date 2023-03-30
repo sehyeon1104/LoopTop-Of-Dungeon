@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ghostMobAI : MonoBehaviour
+public class ghostMobAI : MonoBehaviour,IHittable
 {
     [SerializeField] private EnemySO enemySO;
 
-    protected float hp = 1;
-    protected float damage = 1;
-    protected float speed = 1;
-
-    protected Transform playerTransform;
-    protected float distanceToPlayer;
-
+    [SerializeField] float hp = 1;
+    [SerializeField] float damage = 1;
+    [SerializeField] float speed = 1;
     [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
 
@@ -21,7 +17,7 @@ public class ghostMobAI : MonoBehaviour
     [SerializeField] protected AnimationClip attackClip;
 
     public Coroutine actCoroutine = null;
-    public Animator anim;
+    Animator anim;
     Vector2 flipVector = Vector2.zero;
     float shortestdistance = 0;
     protected SpriteRenderer sprite;
@@ -33,7 +29,6 @@ public class ghostMobAI : MonoBehaviour
     Material spriteLitMat;
 
     float changeTime = 0.07f;
-    WaitForEndOfFrame wait;
     public Vector3 hitPoint => Vector3.zero;
 
     void OnEnable()
