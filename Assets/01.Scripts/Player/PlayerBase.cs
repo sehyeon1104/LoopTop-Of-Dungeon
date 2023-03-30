@@ -7,7 +7,6 @@ public class PlayerBase
 {
     public void SetPlayerStat()
     {
-        // TODO : JSON ���� ���� �ִ� �÷��̾� ���� �ҷ�����
 
         maxHp = 12;
         hp = maxHp;

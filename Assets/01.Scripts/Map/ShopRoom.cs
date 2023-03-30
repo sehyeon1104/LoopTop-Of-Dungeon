@@ -25,12 +25,16 @@ public class ShopRoom : RoomBase
 
     private void Awake()
     {
+
         InteractionBtn = UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Interaction_Btn").GetComponent<Button>();
-        
+
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
     }
-
+    private void Start()
+    {
+        InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
+    }
     public void SpawnNPC()
     {
         Instantiate(shopNpc, transform.position + Vector3.up * 3, Quaternion.identity);
@@ -75,7 +79,7 @@ public class ShopRoom : RoomBase
             {
                 ShopManager.Instance.SetItem();
             }
-            
+
             StartCoroutine(ToggleItemInfoPanel());
         }
     }
@@ -86,9 +90,9 @@ public class ShopRoom : RoomBase
             for (int i = 0; i < itemobjArr.Length; ++i)
             {
                 if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - itemobjArr[i].transform.position) < playerSensingDis * playerSensingDis)
-                {   
+                {
                     itemobjCount++;
-                    InteractionBtn.onClick.AddListener(itemobjArr[i].PurchaseShopItem);
+
                     if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
@@ -97,7 +101,6 @@ public class ShopRoom : RoomBase
                 }
                 else
                 {
-                    InteractionBtn.onClick.RemoveListener(itemobjArr[i].PurchaseShopItem);
                     if (itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(false);
@@ -111,17 +114,17 @@ public class ShopRoom : RoomBase
             else
                 UIManager.Instance.RotateAttackButton();
 
-         
+
             itemobjCount = 0;
             yield return waitForEndOfFrame;
-            
+
         }
 
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {   
+        {
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;
@@ -132,7 +135,7 @@ public class ShopRoom : RoomBase
 
     public ItemObj GetPurchaseableItem()
     {
-        for(int i = 0; i < itemobjArr.Length; ++i)
+        for (int i = 0; i < itemobjArr.Length; ++i)
         {
             if (itemobjArr[i].IsPurchaseAble)
             {

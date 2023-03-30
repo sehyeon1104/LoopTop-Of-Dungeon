@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3246753714900301052}
   - component: {fileID: -1031663337077617143}
   - component: {fileID: 7381877799696664029}
+  - component: {fileID: 4459698833291953953}
   m_Layer: 0
   m_Name: G_Mob_01
   m_TagString: Enemy
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 75b73ed42062340c1a13fdf450695eb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -166,3 +167,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsUsing: 0
   PushTime: 0
+--- !u!50 &4459698833291953953
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8108133220231646846}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
