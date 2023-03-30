@@ -77,6 +77,5 @@ public class ItemObj : MonoBehaviour
         itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);
         ItemEffects.ShopItems[item.itemNumber].Use();
-        
     }
 }
