@@ -25,6 +25,7 @@ public class ItemObj : MonoBehaviour
     public int Num { get; set; }
     private Item item = null;
 
+    private bool isSold = false;
     private bool _isPurchaseAble = false;
 
     public bool IsPurchaseAble
@@ -65,11 +66,13 @@ public class ItemObj : MonoBehaviour
     {
         // TODO : 재화 부족할 시 구매 불가 적용
 
-        if(GameManager.Instance.Player.playerBase.FragmentAmount < item.price)
+        if(GameManager.Instance.Player.playerBase.FragmentAmount < item.price || isSold)
         {
             Rito.Debug.Log("구매 불가");
             return;
         }
+
+        isSold = true;
 
         GameManager.Instance.Player.playerBase.FragmentAmount -= (int)item.price;
 

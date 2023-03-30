@@ -33,7 +33,7 @@ public class Player : MonoBehaviour, IHittable
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            FragmentCollectManager.Instance.AddFragment(gameObject);
+            playerBase.FragmentAmount += 100;
         }
     }
     private void Awake()
