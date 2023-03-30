@@ -164,7 +164,7 @@ public class UIManager : MonoSingleton<UIManager>
     #region GameOver
     public void Revive()
     {
-        // TODO : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã?ï¿½ï¿½ ï¿½ï¿½È° or ï¿½ï¿½È­ ï¿½Ò¸ï¿½ ï¿½ï¿½ ï¿½ï¿½È° ï¿½ï¿½ï¿½ï¿½
+        // TODO : ±¤°í½ÃÃ» ÈÄ ºÎÈ° or ÀçÈ­¼Ò¸ð ÈÄ ºÎÈ° ±¸Çö
 
         Debug.Log("Revive");
         ToggleGameOverPanel();
@@ -189,17 +189,15 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public void SkillCooltime(PlayerSkillData skillData,int skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData,int skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-        print(touchedObj);
-        Image currentImage = touchedObj?.GetComponent<Image>();
+        Image currentImage = touchedObj.GetComponent<Image>();
         if (currentImage.fillAmount != 1f)
-        {   
-            return;
-        }
+            return false;
 
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum-1].skillDelay));
+        return true;
     }
     public void SkillNum(List<int> skillList)
     {

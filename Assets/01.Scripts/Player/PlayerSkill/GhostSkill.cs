@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
+    float cicleRange;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
-
+    GameObject ghostMob;
     private void Awake()
     {
         init();
@@ -70,10 +73,12 @@ public class GhostSkill : PlayerSkillBase
             yield return null;
         }
         Managers.Pool.Push(smoke.GetComponent<Poolable>());
-
     }
 
-
+    public void HillaSkill()
+    {
+        Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/G_Mob_01.prefab", new Vector2(Mathf.Cos(Random.Range(0,360)), Mathf.Sin(Random.Range(0,360))),quaternion.identity);
+    }
 
     #endregion
     private void OnDrawGizmos()

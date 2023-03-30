@@ -73,16 +73,18 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(1.25f);
+            yield return new WaitForSeconds(2f);
         }
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
     {
         Vector2 dir;
         bossObject.SetActive(false);
+        Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
+        Boss.Instance.isBDamaged = false;
         bossObject.SetActive(true);
 
         dir = player.position - transform.position;
@@ -105,6 +107,8 @@ public class G_Patterns : BossPattern
                 Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
             }
         }
+
+        yield return waitTime;
     }
     public IEnumerator Pattern_SM(int count) //힐라
     {

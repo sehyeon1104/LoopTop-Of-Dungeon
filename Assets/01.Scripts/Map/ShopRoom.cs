@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopRoom : RoomBase
 {
@@ -8,7 +9,7 @@ public class ShopRoom : RoomBase
     private GameObject itemPosObj;
     [SerializeField]
     private Transform[] itemSpawnPosArr;
-
+    private Button InteractionBtn;
     private List<ItemObj> itemList = new List<ItemObj>();
     private float playerSensingDis = 1.5f;
     private ItemObj[] itemobjArr;
@@ -24,6 +25,8 @@ public class ShopRoom : RoomBase
 
     private void Awake()
     {
+        InteractionBtn = UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Interaction_Btn").GetComponent<Button>();
+        
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
     }
@@ -84,6 +87,7 @@ public class ShopRoom : RoomBase
                 if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - itemobjArr[i].transform.position) < playerSensingDis * playerSensingDis)
                 {   
                     itemobjCount++;
+                    InteractionBtn.onClick.AddListener(itemobjArr[i].PurchaseShopItem);
                     if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
@@ -103,6 +107,7 @@ public class ShopRoom : RoomBase
                 UIManager.Instance.RotateInteractionButton();
             else
                 UIManager.Instance.RotateAttackButton();
+
 
             itemobjCount = 0;
             yield return waitForEndOfFrame;
