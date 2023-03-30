@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5187963438320297806}
   - component: {fileID: -5931894590024254706}
   - component: {fileID: 962729601202327797}
+  - component: {fileID: 4644144816129033926}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Bubble
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945687541
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 78a132a170796a94f8842c0e2e20ca1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,3 +117,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.6
+--- !u!114 &4644144816129033926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9202358969430207982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c99693d1c03e1442adc76c62d547b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
