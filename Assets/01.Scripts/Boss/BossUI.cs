@@ -23,7 +23,7 @@ public class BossUI : MonoBehaviour
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
-    public static float fillTime { get; set; } = 0f;
+    public static float fillTime { get; set; } = 20f;
     float firstFill = 0f;
     float secondFill = 0f;
     float thirdFill = 0f;
@@ -60,9 +60,9 @@ public class BossUI : MonoBehaviour
     {
         // bossUltGage.SetActive(true);
 
-        firstFill = time * 0.4f;
+        firstFill = time * 0.3f;
         secondFill = time - (2 * firstFill);
-        thirdFill = time * 0.6f;
+        thirdFill = time * 0.7f;
 
         while (true)
         {
@@ -72,13 +72,19 @@ public class BossUI : MonoBehaviour
             }
             else if(fillTime > firstFill && fillTime <= thirdFill)
             {
+                bossUltGageImages[0].fillAmount = 1;
                 bossUltGageImages[1].fillAmount = 1 * ((fillTime - firstFill) / secondFill);
             }
             else if(fillTime > thirdFill)
             {
+                bossUltGageImages[1].fillAmount = 1;
                 bossUltGageImages[2].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
             }
-            fillTime -= Time.deltaTime * 0.1f;
+
+            if (fillTime > 0)
+            {
+                fillTime -= Time.deltaTime;
+            }
             
             yield return waitForFixedUpdate;
         }
