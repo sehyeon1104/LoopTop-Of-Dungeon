@@ -17,6 +17,9 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
 
+    [Space]
+    [SerializeField] protected AnimationClip absorbEnd;
+
     protected List<Poolable> mobList = new List<Poolable>();
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
@@ -76,7 +79,7 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(1.75f);
         }
     }
-    public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
+    public IEnumerator Pattern_TP(int count) //텔포
     {
         Vector2 dir;
         bossObject.SetActive(false);
@@ -117,6 +120,7 @@ public class G_Patterns : BossPattern
 
         anim.SetTrigger(_hashAttack);
 
+        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
@@ -148,6 +152,9 @@ public class G_Patterns : BossPattern
             }
 
         }
+        overrideController[$"SkillFinal"] = absorbEnd;
+        anim.SetTrigger(_hashAttack);
+
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
         Boss.Instance.Base.Hp = hpFinal;
         mobList.Clear();
@@ -163,7 +170,7 @@ public class GhostPattern : G_Patterns
 
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPhase == 1)
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {
             isUsingFinalPattern = true;
         }
@@ -284,7 +291,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_SM(count));
                 break;
             case 2:
-                yield return SCoroutine(bossFieldPattern.GhostBossUltPattern());
+                yield return SCoroutine(bossFieldPattern.GhostUltStart());
                 break;
         }
 

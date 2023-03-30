@@ -38,8 +38,8 @@ public abstract class BossPattern : MonoBehaviour
     #region init
     protected int[] patternCount = new int[6];
 
+    public Animator anim { protected set; get; }
     protected Transform player;
-    protected Animator anim;
     protected Coroutine attackCoroutine = null;
 
     protected bool[] isThisSkillCoolDown = new bool[6];
@@ -47,13 +47,13 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isUsingFinalPattern = false;
 
     protected Vector3 constScale;
-    protected AnimatorOverrideController overrideController;
+    public AnimatorOverrideController overrideController { protected set; get; }
     #endregion
     #region AnimHash
-    protected readonly int _hashMove = Animator.StringToHash("Move");
-    protected readonly int _hashSkill = Animator.StringToHash("Skill");
-    protected readonly int _hashAttack = Animator.StringToHash("Attack");
-    protected readonly int _hashDeath = Animator.StringToHash("Death");
+    public readonly int _hashMove = Animator.StringToHash("Move");
+    public readonly int _hashSkill = Animator.StringToHash("Skill");
+    public readonly int _hashAttack = Animator.StringToHash("Attack");
+    public readonly int _hashDeath = Animator.StringToHash("Death");
     #endregion
 
     private void Start()
