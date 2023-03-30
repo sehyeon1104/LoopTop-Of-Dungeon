@@ -105,6 +105,11 @@ public class Boss : MonoSingleton<Boss>, IHittable
         // TargetGage.value = Base.Hp;
     }
 
+    public void UpdateBossShield()
+    {
+        bossUI.UpdateShieldBar();
+    }
+
     public void Phase2()
     {
         bossUI.TogglePhase2Icon();
