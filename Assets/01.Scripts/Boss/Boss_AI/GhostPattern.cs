@@ -73,7 +73,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.75f);
         }
     }
     public IEnumerator Pattern_TP(int count) //텔포 -> 현재 바꾸는 작업중
