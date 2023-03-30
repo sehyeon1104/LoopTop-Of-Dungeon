@@ -282,6 +282,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_SM(count));
                 break;
             case 2:
+                yield return SCoroutine(bossFieldPattern.GhostBossUltPattern());
                 break;
         }
 
