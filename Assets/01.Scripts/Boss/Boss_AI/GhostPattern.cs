@@ -69,9 +69,24 @@ public class G_Patterns : BossPattern
                     break;
                 case 4:
                     int randomCount = Random.Range(8, 13);
-                    for(int j = 0; j < randomCount; j++)
+                    Vector2 randDir = Vector2.zero;
+                    Vector3 randRot = Vector3.zero;
+
+                    for (int j = 0; j < randomCount; j++)
                     {
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", new Vector2(-9 + j * 7.5f, 18.5f), Quaternion.Euler(Vector3.forward * 270));
+                        int rand = Random.Range(0, 2);
+                        switch (rand)
+                        {
+                            case 0:
+                                randDir = new Vector2(-4.5f,Random.Range(-2.5f,18.5f));
+                                randRot = Vector3.forward * Random.Range(-30f, 30f);
+                                break;
+                            case 1:
+                                randDir = new Vector2(Random.Range(-4.5f,33.5f),18.5f);
+                                randRot = Vector3.forward * (270 + Random.Range(-30f, 30f));
+                                break;
+                            }
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", randDir, Quaternion.Euler(randRot));
                         yield return null;
                     }
                     break;
