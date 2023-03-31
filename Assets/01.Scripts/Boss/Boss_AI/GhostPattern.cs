@@ -40,10 +40,10 @@ public class G_Patterns : BossPattern
 
         for (int i = 0; i < count; i++)
         {
-            Vector2 dir = player.position - transform.position;
+            Vector2 dir = Boss.Instance.player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            anim.SetTrigger(_hashAttack);
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
             switch (i)
             {
@@ -54,7 +54,7 @@ public class G_Patterns : BossPattern
                     for (int j = -1; j <= 1; j += 2)
                     {
                         Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
-                        dir = player.position - (transform.position + pos * j * 2);
+                        dir = Boss.Instance.player.position - (transform.position + pos * j * 2);
                         rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
                         Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position + (pos * j * 2), Quaternion.Euler(Vector3.forward * (rot + j * 30)));
@@ -117,18 +117,18 @@ public class G_Patterns : BossPattern
         Boss.Instance.isBDamaged = false;
         bossObject.SetActive(true);
 
-        dir = player.position - transform.position;
+        dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
-        scale = CheckFlipValue(dir, scale);
+        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
 
-        transform.position = Vector3.left * scale.x * 3f + player.position;
+        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
 
-        anim.SetTrigger(_hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waitTime;
 
         if (count > -4)
         {
-            dir = player.position - transform.position;
+            dir = Boss.Instance.player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             float angle = 7.2f;
 
@@ -145,7 +145,7 @@ public class G_Patterns : BossPattern
         int finalCount = 0;
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
-        anim.SetTrigger(_hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
         for (int i = 0; i < count; i++)
@@ -179,8 +179,8 @@ public class G_Patterns : BossPattern
             }
 
         }
-        overrideController[$"SkillFinal"] = absorbEnd;
-        anim.SetTrigger(_hashAttack);
+        Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
         Boss.Instance.Base.Hp = hpFinal;
@@ -268,7 +268,7 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                anim.SetTrigger(_hashAttack);
+                Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
@@ -278,7 +278,7 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
@@ -287,7 +287,7 @@ public class GhostPattern : G_Patterns
         yield return SCoroutine(Pattern_BM(count));
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern3(int count = 0) //ÅÚ·¹Æ÷Æ® ÆÐÅÏ
@@ -303,7 +303,7 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern4(int count = 0) //ÆÈ»¸±â ÆÐÅÏ, 2ÆäÀÌÁî¿¡¸¸ »ç¿ë
@@ -318,10 +318,10 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator PatternFinal(int count = 0)
+    public override IEnumerator PatternFinal(int count = 0) //Èú¶ó, ±Ã±Ø±â
     {
         switch(NowPhase)
         {
@@ -334,6 +334,6 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 }

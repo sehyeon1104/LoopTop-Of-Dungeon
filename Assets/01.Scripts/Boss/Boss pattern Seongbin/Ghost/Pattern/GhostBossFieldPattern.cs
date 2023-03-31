@@ -42,7 +42,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     Coroutine UltPattern = null;
 
-    [SerializeField] BossPattern bossPattern;
+    [SerializeField] BossAnim bossAnim;
     [SerializeField] AnimationClip absorbEnd;
     public static bool isPushAllBubbles { get; set; } = false;
 
@@ -113,20 +113,20 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     public IEnumerator GhostUltStart()
     {
-        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossPattern.transform.position, Quaternion.identity);
+        Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossAnim.transform.position, Quaternion.identity);
         Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
         isPushAllBubbles = true; //필드 내 버블 다 사라짐
         StopCoroutine(UltPattern); // 버블 생성 중지
 
         //애니메이션 넣기 (흡수 시작 애니메이션 시전) 
-        bossPattern.anim.SetTrigger(bossPattern._hashAttack);
+        bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waittime2dot5s; 
 
         if (BossUI.fillTime < 40)
         {
-            bossPattern.overrideController[$"SkillFinal"] = absorbEnd;
-            bossPattern.anim.SetTrigger(bossPattern._hashAttack);
+            bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+            bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             //애니메이션 넣기 (흡수 애니메이션 시전)
             //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
         }

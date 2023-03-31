@@ -6,10 +6,19 @@ using UnityEngine.UI;
 public class Boss : MonoSingleton<Boss>, IHittable
 {
     public BossBase Base;
-    public BossPattern bossPattern;
+
+    public BossPattern bossPattern { private set; get; }
+    public BossMove bossMove { private set; get; }
+    public BossAnim bossAnim { private set; get; }
+
+    public Transform player;
+
+    public Coroutine actCoroutine = null;
+
     // public MultiGage.TargetGageValue TargetGage;
 
     private BossUI bossUI;
+
 
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
@@ -19,13 +28,23 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private List<SpriteRenderer> sprites = new List<SpriteRenderer>();
 
+    #region AnimHash
+    public readonly int _hashMove = Animator.StringToHash("Move");
+    public readonly int _hashSkill = Animator.StringToHash("Skill");
+    public readonly int _hashAttack = Animator.StringToHash("Attack");
+    public readonly int _hashDeath = Animator.StringToHash("Death");
+    #endregion
+
     private void Awake()
     {
         Base = new BossBase();
-        //TargetGage = new MultiGage.TargetGageValue(Base.Hp);
-        //MultiGage.Instance.ObserveStart(TargetGage);
 
         bossPattern = GetComponent<BossPattern>();
+        bossMove = GetComponent<BossMove>();
+        bossAnim = GetComponent<BossAnim>();
+
+        bossMove.Init();
+        bossAnim.Init();
 
         foreach (var child in GetComponentsInChildren<SpriteRenderer>())
         {
@@ -36,7 +55,12 @@ public class Boss : MonoSingleton<Boss>, IHittable
     private void Start()
     {
         bossUI = FindObjectOfType<BossUI>();
+
+        player = GameManager.Instance.Player.transform;
+
         UpdateBossHP();
+        bossAnim.AnimInit();
+        bossPattern.Init();
     }
 
     public IEnumerator IEHitAction()
@@ -70,6 +94,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
         // MultiGage.Instance.ObserveEnd();
 
         isBDead = true;
+
+        actCoroutine = null;
+        StopAllCoroutines();
         //gameObject.SetActive(false);
     }
 
