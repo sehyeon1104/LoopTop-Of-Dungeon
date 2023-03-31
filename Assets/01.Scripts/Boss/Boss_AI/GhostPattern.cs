@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 public class G_Patterns : BossPattern
 {
@@ -13,16 +14,25 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
-    [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
+
     [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
 
     [Space]
     [SerializeField] protected AnimationClip absorbEnd;
 
+    protected GhostBossJangpanPattern bossRangePattern;
+
+
     protected List<Poolable> mobList = new List<Poolable>();
-    WaitForSeconds waitTime = new WaitForSeconds(1f);
+    protected WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
+
+    private void Awake()
+    {
+        bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+    }
+
     #region patterns
     public IEnumerator Pattern_BM(int count) //ºö
     {
@@ -97,11 +107,13 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_TP(int count) //ÅÚÆ÷
     {
         Vector2 dir;
+
         bossObject.SetActive(false);
         Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
+
         Boss.Instance.isBDamaged = false;
         bossObject.SetActive(true);
 
