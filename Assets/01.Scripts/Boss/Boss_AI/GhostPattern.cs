@@ -23,7 +23,7 @@ public class G_Patterns : BossPattern
     protected List<Poolable> mobList = new List<Poolable>();
     WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
-    #region phase 1
+    #region patterns
     public IEnumerator Pattern_BM(int count) //ºö
     {
         yield return null;
@@ -68,7 +68,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 4:
-                    int randomCount = Random.Range(8, 13);
+                    int randomCount = Random.Range(10, 16);
                     Vector2 randDir = Vector2.zero;
                     Vector3 randRot = Vector3.zero;
 
@@ -175,6 +175,17 @@ public class G_Patterns : BossPattern
         mobList.Clear();
 
         yield return new WaitForSeconds(0.75f);
+    }
+    public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
+    {
+        bossObject.SetActive(false);
+        Boss.Instance.isBDamaged = true;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
+
+        yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
+
+        bossObject.SetActive(true);
+        Boss.Instance.isBDamaged = false;
     }
     #endregion
 }
@@ -290,7 +301,7 @@ public class GhostPattern : G_Patterns
             case 1:
                 break;
             case 2:
-                yield return SCoroutine(bossFieldPattern.GhostBossArmPattern());
+                yield return StartCoroutine(Pattern_GA(count));
                 break;
         }
 
