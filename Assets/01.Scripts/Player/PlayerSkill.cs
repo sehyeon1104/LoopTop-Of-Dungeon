@@ -25,13 +25,13 @@ public class PlayerSkill : MonoBehaviour
     public Action<int>[] skillEvent = new Action<int>[2];
     private void Awake()
     { 
-        playerBase = GameManager.Instance.Player.playerBase;
-        skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());    
+        playerBase = GameManager.Instance.Player.playerBase;   
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
     }
     private void Start()
     {
+        skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
         SkillShuffle();
     }
     private void Update()

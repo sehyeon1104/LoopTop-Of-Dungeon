@@ -18,10 +18,13 @@ public class PlayerMovement : MonoBehaviour
         joystick = FindObjectOfType<Joystick>();
         rb = GetComponent<Rigidbody2D>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
+    }
+    private void FixedUpdate()
+    {
         Move(new Vector2(x, y));
         Move(new Vector2(joystick.Horizontal, joystick.Vertical));
     }

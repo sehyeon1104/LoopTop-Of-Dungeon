@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7096029032921635625}
   m_Layer: 0
   m_Name: GhostMob11
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,8 +161,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: 62ecc37fda9c034499dc889ab19aaf32, type: 2}
+  hp: 1
+  damage: 1
+  speed: 1
   detectDistance: 10
   minDistance: 1
   moveClip: {fileID: 7400000, guid: 9e22570e711a2e04cad6c2288bd2f1f8, type: 2}
   attackClip: {fileID: 0}
-  anim: {fileID: 0}

@@ -77,7 +77,8 @@ public class GhostSkill : PlayerSkillBase
 
     public void HillaSkill(int level)
     {
-      Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
+        Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11",transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad) * Random.Range(1, cicleRange),0),quaternion.identity);
+        
     }
 
     #endregion

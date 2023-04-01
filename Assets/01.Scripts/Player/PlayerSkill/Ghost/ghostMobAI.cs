@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ghostMobAI : MonoBehaviour,IHittable
-{
-    [SerializeField] private EnemySO enemySO;
-
-    [SerializeField] float hp = 1;
+public class ghostMobAI : MonoBehaviour
+{ 
     [SerializeField] float damage = 1;
     [SerializeField] float speed = 1;
     [SerializeField] private float detectDistance = 5f;
@@ -15,16 +12,17 @@ public class ghostMobAI : MonoBehaviour,IHittable
 
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
-
+    
     public Coroutine actCoroutine = null;
+    Transform playerTrans = null;
     Animator anim;
     Vector2 flipVector = Vector2.zero;
-    float shortestdistance = 0;
+    float shortestdistance = 100;
     protected SpriteRenderer sprite;
 
-    protected int _attack = Animator.StringToHash("Attack");
-    protected int _move = Animator.StringToHash("Move");
-
+    readonly int _attack = Animator.StringToHash("Attack");
+    readonly int _move   = Animator.StringToHash("Move");
+    readonly int _idle   = Animator.StringToHash("Idle");
     Material hitMat;
     Material spriteLitMat;
 
@@ -33,11 +31,11 @@ public class ghostMobAI : MonoBehaviour,IHittable
 
     void OnEnable()
     {
-        SetStatus();
         if (actCoroutine != null) actCoroutine = null;
     }
     private void Awake()
     {
+        playerTrans = GameManager.Instance.Player.transform;
         spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
         hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
     }
@@ -55,14 +53,6 @@ public class ghostMobAI : MonoBehaviour,IHittable
         Act();
     }
 
-    public void SetStatus()
-    {
-        if (enemySO == null) return;
-
-        hp = enemySO.hp;
-        damage = enemySO.damage;
-        speed = enemySO.speed;
-    }
 
     public void AnimInit()
     {
@@ -70,56 +60,66 @@ public class ghostMobAI : MonoBehaviour,IHittable
 
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 
-        if (moveClip != null) overrideController["Move"] = moveClip;
+        if (moveClip != null)
+        {
+            overrideController["Move"] = moveClip;
+            overrideController["Idle"] = moveClip;
+        }
         if (attackClip != null) overrideController["Attack"] = attackClip;
-
+       
         anim.runtimeAnimatorController = overrideController;
     }
+
     public void Act()
     {
 
         if (actCoroutine != null) return;
-
-        Collider2D[] inEnemy = Physics2D.OverlapCircleAll(transform.position, detectDistance);
-        for(int i=0; i<inEnemy.Length; i++)
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance);
+        for(int i = 0; i < enemies.Length; i++)
         {
-            if (inEnemy[i].CompareTag("Boss")|| inEnemy[i].CompareTag("Enemy"))
-            {
-                Vector2 flipFloatX = transform.position - inEnemy[i].transform.position;
-                float distanceEnemy = Vector2.SqrMagnitude(transform.position - inEnemy[i].transform.position);
-                if (distanceEnemy < shortestdistance)
+            if (enemies[i].CompareTag("Enemy") || enemies[i].CompareTag("Boss")) {
+                float playerMagnitude = Vector2.SqrMagnitude(transform.position - enemies[i].transform.position);
+                Vector2 playeyToEnemyVec = transform.position - enemies[i].transform.position;
+                print(playerMagnitude);
+                if (shortestdistance > playerMagnitude)
                 {
-                    flipVector = flipFloatX;
-                    shortestdistance = distanceEnemy;
+                    shortestdistance = playerMagnitude;
+                    flipVector = playeyToEnemyVec;
                 }
             }
         }
-
+        print(shortestdistance);
         switch (Mathf.Sqrt(shortestdistance))
         {
             case var a when a <= detectDistance && a > minDistance:
-                actCoroutine = StartCoroutine(MoveToPlayer(flipVector));
+                actCoroutine = StartCoroutine(MoveToEnemy(flipVector.normalized));
                 break;
             case var a when a <= minDistance:
-                actCoroutine = StartCoroutine(AttackToPlayer());
+                actCoroutine = StartCoroutine(AttackToEnemy());
                 break;
             default:
                 break;
         }
-    }
 
-    public virtual IEnumerator MoveToPlayer(Vector2 dir)
+    }
+    public void Idle()
     {
+        
+    }
+    public virtual IEnumerator MoveToEnemy(Vector2 dir)
+    {
+
         if (moveClip != null) anim.SetBool(_move, true);
         sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
-        transform.Translate(dir * Time.deltaTime * speed);
+        transform.Translate((Vector2)playerTrans.position +(dir * Time.deltaTime * speed));
 
         yield return null;
 
         actCoroutine = null;
     }
 
-    public virtual IEnumerator AttackToPlayer()
+
+    public virtual IEnumerator AttackToEnemy()
     {
         if (GameManager.Instance.Player.playerBase.IsPDead) yield break;
 
@@ -128,47 +128,10 @@ public class ghostMobAI : MonoBehaviour,IHittable
 
     }
 
-    public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)
-    {
-        if (Random.Range(1, 101) <= critChance)
-        {
-            damage *= 1.5f;
-            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
-        }
-        else
-        {
-            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
-        }
 
-        hp -= damage;
-
-        GameManager.Instance.PlayHitEffect(transform);
-
-        if (hp <= 0)
-            EnemyDead();
-        else
-            StartCoroutine(GetHit());
-
-
-    }
-    IEnumerator GetHit()
-    {
-        float timer = 0;
-        sprite.material = hitMat;
-        while (changeTime > timer)
-        {
-            timer += Time.deltaTime;
-            hitMat.SetTexture("_Texture2D", sprite.sprite.texture);
-            yield return null;
-        }
-        sprite.material = spriteLitMat;
-    }
     public virtual void EnemyDead()
     {
         //if (transform.parent != null)
-        EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
-        FragmentCollectManager.Instance.AddFragment(gameObject);
-
         gameObject.SetActive(false);
     }
 }
