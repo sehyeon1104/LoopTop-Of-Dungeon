@@ -8,6 +8,7 @@ public class PlayerBeamColCheck : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
+            Debug.Log("BeamHit");
             collision.GetComponent<IHittable>().OnDamage(2, GameManager.Instance.Player.gameObject, GameManager.Instance.Player.playerBase.CritChance);
         }
     }

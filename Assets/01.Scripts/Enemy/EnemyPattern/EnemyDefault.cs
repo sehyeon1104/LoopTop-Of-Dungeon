@@ -38,10 +38,13 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     WaitForEndOfFrame wait;
     public Vector3 hitPoint => Vector3.zero;
 
+    private bool isDead = false;
+
     void OnEnable()
     {
         SetStatus();
         if (actCoroutine != null) actCoroutine = null;
+        isDead = false;
     }
     private void Awake()
     {
@@ -130,6 +133,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
@@ -166,6 +174,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     public virtual void EnemyDead()
     {
         //if (transform.parent != null)
+        isDead = true;
         EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
         FragmentCollectManager.Instance.AddFragment(gameObject);
 
