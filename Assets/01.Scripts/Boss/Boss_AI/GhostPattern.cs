@@ -266,10 +266,11 @@ public class GhostPattern : G_Patterns
 
     public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
         switch (NowPhase)
         {
             case 1:
-                Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
