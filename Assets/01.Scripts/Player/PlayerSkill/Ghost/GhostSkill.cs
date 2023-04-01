@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
-    float cicleRange = 3f;
+    float cicleRange = 2f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
     GameObject ghostMob;
