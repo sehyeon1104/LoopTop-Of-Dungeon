@@ -13,6 +13,7 @@ public static class Define
         Electricity,
         Werewolf,
         Lizard,
+        Power,
     }
 
     public enum RoomTypeFlag
