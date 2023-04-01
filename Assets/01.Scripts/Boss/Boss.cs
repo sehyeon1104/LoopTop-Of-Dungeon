@@ -63,6 +63,14 @@ public class Boss : MonoSingleton<Boss>, IHittable
         bossPattern.Init();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Base.Shield += 100;
+        }
+    }
+
     public IEnumerator IEHitAction()
     {
         // TODO : 피격 애니메이션
@@ -113,7 +121,16 @@ public class Boss : MonoSingleton<Boss>, IHittable
         }
 
         isBDamaged = true;
-        Base.Hp -= (int)damage;
+
+        if(Base.Shield > 0)
+        {
+            Base.Shield -= (int)damage;
+        }
+        else
+        {
+            Base.Hp -= (int)damage;
+        }
+
         StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         UpdateBossHP();
         Debug.Log(Base.Hp);
