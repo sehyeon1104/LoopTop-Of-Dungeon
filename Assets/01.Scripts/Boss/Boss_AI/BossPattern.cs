@@ -31,6 +31,8 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isCanUseFinalPattern = true;
     protected bool isUsingFinalPattern = false;
 
+    protected bool nowBPhaseChange = false;
+
     #endregion
 
     public void Init()
@@ -61,6 +63,8 @@ public abstract class BossPattern : MonoBehaviour
         StopCoroutine(RandomPattern());
         if(Boss.Instance.actCoroutine != null)
             StopCoroutine(Boss.Instance.actCoroutine);
+        
+        nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
 
         yield return patternDelay;
@@ -79,6 +83,7 @@ public abstract class BossPattern : MonoBehaviour
         yield return patternDelay;
 
         Boss.Instance.isBInvincible = false;
+        nowBPhaseChange = false;
         Boss.Instance.Phase2();
 
         Boss.Instance.actCoroutine = null;
@@ -91,7 +96,7 @@ public abstract class BossPattern : MonoBehaviour
         {
             yield return null;
 
-            if (Boss.Instance.isBInvincible) continue;
+            if (nowBPhaseChange) continue;
 
             int patternChoice = 0;
             patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);

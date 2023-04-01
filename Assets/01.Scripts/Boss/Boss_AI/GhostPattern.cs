@@ -110,12 +110,12 @@ public class G_Patterns : BossPattern
         Vector2 dir;
 
         bossObject.SetActive(false);
-        Boss.Instance.isBDamaged = true;
+        Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
 
-        Boss.Instance.isBDamaged = false;
+        Boss.Instance.isBInvincible = false;
         bossObject.SetActive(true);
 
         dir = Boss.Instance.player.position - transform.position;
@@ -157,7 +157,7 @@ public class G_Patterns : BossPattern
 
         SummonTimer.SetActive(true);
 
-        Boss.Instance.isBDamaged = true;
+        Boss.Instance.isBInvincible = true;
 
         for (int i = 1; i < 13; i++)
         {
@@ -165,7 +165,7 @@ public class G_Patterns : BossPattern
             SummonClock.fillAmount = (float)i / 12;
         }
 
-        Boss.Instance.isBDamaged = false;
+        Boss.Instance.isBInvincible = false;
 
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
@@ -214,7 +214,7 @@ public class GhostPattern : G_Patterns
             isUsingFinalPattern = true;
         }
 
-        if (Boss.Instance.isBInvincible && ActCoroutine != null) StartCoroutine(ECoroutine());
+        if (nowBPhaseChange && ActCoroutine != null) StartCoroutine(ECoroutine());
 
         if (Boss.Instance.isBDead || NowPhase == 2)
         {
@@ -222,7 +222,7 @@ public class GhostPattern : G_Patterns
                 for(int i = 0; i < mobList.Count; i++)
                     Managers.Pool.Push(mobList[i]);
 
-            if (Boss.Instance.isBInvincible)
+            if (nowBPhaseChange)
             {
                 bossObject.SetActive(true);
                 SummonTimer.gameObject.SetActive(false);
