@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-// Player MoveMent Class
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     public Joystick joystick { private set; get; }
     [Range(1,5)] [SerializeField] float speed = 3;
@@ -13,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float x;
     private float y;
 
+    public Vector2 GetVector => new Vector2(x, y);
     private void Awake()
     {
         joystick = FindObjectOfType<Joystick>();
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move(new Vector2(x, y));
-        Move(new Vector2(joystick.Horizontal, joystick.Vertical));
+        Move(joystick.Direction);
     }
     public void Move(Vector2 inputVelocity)
     {
