@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class ghostMobAI : MonoBehaviour
-{ 
+{
     [SerializeField] float damage = 1;
     [SerializeField] float speed = 3;
     [SerializeField] private float detectDistance = 5f;
@@ -13,7 +14,7 @@ public class ghostMobAI : MonoBehaviour
 
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
-    
+
     public Coroutine actCoroutine = null;
     Transform playerTrans = null;
     Animator anim;
@@ -23,11 +24,11 @@ public class ghostMobAI : MonoBehaviour
     protected SpriteRenderer sprite;
     int enemyLayer;
     readonly int _attack = Animator.StringToHash("Attack");
-    readonly int _move   = Animator.StringToHash("Move");
-    readonly int _idle   = Animator.StringToHash("Idle");
+    readonly int _move = Animator.StringToHash("Move");
+    readonly int _idle = Animator.StringToHash("Idle");
     Material hitMat;
     Material spriteLitMat;
-
+    WaitForSeconds attackTime = new WaitForSeconds(0.5f);
     float changeTime = 0.07f;
     public Vector3 hitPoint => Vector3.zero;
 
@@ -45,7 +46,7 @@ public class ghostMobAI : MonoBehaviour
     }
     void Start()
     {
-       enemyLayer = LayerMask.NameToLayer("Enemy");
+        enemyLayer = LayerMask.NameToLayer("Enemy");
         AnimInit();
     }
 
@@ -68,7 +69,7 @@ public class ghostMobAI : MonoBehaviour
             overrideController["Idle"] = moveClip;
         }
         if (attackClip != null) overrideController["Attack"] = attackClip;
-       
+
         anim.runtimeAnimatorController = overrideController;
     }
 
@@ -81,11 +82,11 @@ public class ghostMobAI : MonoBehaviour
             case 0:
                 actCoroutine = StartCoroutine(Idle());
                 break;
-            case var a when a <= detectDistance && a > minDistance:
+            case var a when a > minDistance:
                 actCoroutine = StartCoroutine(MoveToEnemy(flipVector.normalized));
                 break;
-            case var a when a <= minDistance:
-                actCoroutine = StartCoroutine(AttackToEnemy(enemy));
+            case var a when a > 0 && a <= minDistance:
+                actCoroutine = StartCoroutine(AttackToEnemy());
                 break;
             default:
                 break;
@@ -95,56 +96,58 @@ public class ghostMobAI : MonoBehaviour
     IEnumerator Idle()
     {
         Vector2 playerVec = (playerTrans.position - transform.position).normalized;
-        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) > 1)
+        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) < 1)
         {
-            yield return null;
             actCoroutine = null;
+            yield break;
         }
 
         transform.Translate(playerVec * speed * Time.deltaTime);
+        yield return null;
+        actCoroutine = null;
     }
     public void FindEnemies()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance, 1 << enemyLayer);
+        if (enemies.Length == 0)
+        {
+            shortestdistance = 0;
+            flipVector = Vector2.zero;
+            return;
+        }
         for (int i = 0; i < enemies.Length; i++)
         {
-            if (enemies[i].CompareTag("Enemy") || enemies[i].CompareTag("Boss"))
+            float playerMagnitude = Vector2.SqrMagnitude(transform.position - enemies[i].transform.position);
+            Vector2 playeyToEnemyVec = enemies[i].transform.position - transform.position;
+            if (i == 0) shortestdistance = playerMagnitude;
+            if (shortestdistance > playerMagnitude || enemies[i].gameObject.activeSelf)
             {
-                float playerMagnitude = Vector2.SqrMagnitude(transform.position - enemies[i].transform.position);
-                Vector2 playeyToEnemyVec = enemies[i].transform.position - transform.position;
-
-                if (i == 0) shortestdistance = playerMagnitude;
-                if (shortestdistance > playerMagnitude)
-                {
-                    enemy = enemies[i].gameObject;
-                    shortestdistance = playerMagnitude;
-                    flipVector = playeyToEnemyVec;
-                }
+                enemy = enemies[i].gameObject;
+                shortestdistance = playerMagnitude;
+                flipVector = playeyToEnemyVec;
             }
         }
-        
     }
     public virtual IEnumerator MoveToEnemy(Vector2 dir)
     {
-
         if (moveClip != null) anim.SetBool(_move, true);
+
         sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
         transform.Translate(dir * Time.deltaTime * speed);
 
         yield return null;
-
         actCoroutine = null;
     }
 
 
-    public virtual IEnumerator AttackToEnemy(GameObject enemy)
+    public virtual IEnumerator AttackToEnemy()
     {
-        if(enemy == null)
-            yield break;
-
         enemy.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
+
+        yield return attackTime;
+        actCoroutine = null;
 
     }
 

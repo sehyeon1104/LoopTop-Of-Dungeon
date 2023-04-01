@@ -11,7 +11,7 @@ public class GhostSkill : PlayerSkillBase
     float janpanDuration = 5f;
     PlayerSkillData skillData;
     GameObject ghostMob;
-
+    private float hiilaDuration = 5;
     private PlayerMovement playerMovement;
     [SerializeField]
     private float beamDistanceFromPlayer = 1f;
@@ -39,7 +39,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void SecondSkill(int level)
     {
-        HillaSkill(level);
+        StartCoroutine(HillaSkill(level));
     }
     public override void ThirdSkill(int level)
     {
@@ -92,11 +92,22 @@ public class GhostSkill : PlayerSkillBase
         Managers.Pool.Push(smoke.GetComponent<Poolable>());
     }
 
-    public void HillaSkill(int level)
+    IEnumerator HillaSkill(int level)
     {
-        Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
+        float timer = 0;
+       Poolable ghostMob =  Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
+        while (true)
+        {
+            if (timer > hiilaDuration)
+            {
+                Managers.Pool.Push(ghostMob);
+                break;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
-
+    
     public void BeamPattern(int level)
     {
         beamPos = (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
