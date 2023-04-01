@@ -89,6 +89,7 @@ public class Beam : MonoBehaviour
     private IEnumerator OnBeam()
     {
         yield return waitTime;
+
         while(beamLight.intensity <= intensity)
         {
             beamLight.intensity += 0.1f;
