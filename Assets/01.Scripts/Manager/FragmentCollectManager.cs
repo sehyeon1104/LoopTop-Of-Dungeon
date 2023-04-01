@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 {
@@ -20,7 +19,6 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
     public void AddFragment(GameObject obj)
     {
-        Debug.Log("AddFragment");
         for(int i = 0; i < 3; ++i)
         {
             fragmentObj = Managers.Pool.Pop(fragmentCollect);

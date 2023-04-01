@@ -95,7 +95,7 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        CinemachineCameraShaking.Instance.CameraShake(2, 0.4f);
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
 
         for(int i = 0; i < startFXList.Count; i++)
         {
@@ -115,10 +115,10 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.2f);
-        CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
+        //yield return new WaitForSeconds(0.2f);
+        //CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
         
-        lineWidth *= 2;
+        //lineWidth *= 2;
 
         while (lineWidth >= 0.0f)
         {

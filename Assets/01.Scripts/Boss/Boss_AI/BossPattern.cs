@@ -7,17 +7,11 @@ public abstract class BossPattern : MonoBehaviour
     [HideInInspector] public int NowPhase = 1;
 
     #region Serialize
-    [Header("이동 관련")]
-
-    [SerializeField] protected float moveSpeed;
-    [SerializeField] protected float minDistance;
     
     [Space]
     
     [Header("보스 옵션")]
 
-    [Tooltip("보스방 입장 시 초기 대기 상태")]
-    [SerializeField] private float waitTime = 1f;
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] private int[] phase_patternCount;
     [Tooltip("보스 패턴 후딜레이")]
@@ -25,132 +19,48 @@ public abstract class BossPattern : MonoBehaviour
 
     [Space]
 
-    [Header("애니메이션")]
+    [Header("페이즈별 애니메이션")]
+    public AnimationClip[] Phase_One_AnimArray;
+    public AnimationClip[] Phase_Two_AnimArray;
 
-    [SerializeField] protected AnimationClip idleClip;
-    [SerializeField] protected AnimationClip moveClip;
-
-    [Tooltip("1페이즈 애니메이션")]
-    [SerializeField] protected AnimationClip[] Phase_One_AnimArray;
-    [Tooltip("2페이즈 애니메이션")]
-    [SerializeField] protected AnimationClip[] Phase_Two_AnimArray;
     #endregion
     #region init
     protected int[] patternCount = new int[6];
-
-    protected Transform player;
-    protected Animator anim;
-    protected Coroutine attackCoroutine = null;
 
     protected bool[] isThisSkillCoolDown = new bool[6];
     protected bool isCanUseFinalPattern = true;
     protected bool isUsingFinalPattern = false;
 
-    protected Vector3 constScale;
-    protected AnimatorOverrideController overrideController;
-    #endregion
-    #region AnimHash
-    protected readonly int _hashMove = Animator.StringToHash("Move");
-    protected readonly int _hashSkill = Animator.StringToHash("Skill");
-    protected readonly int _hashAttack = Animator.StringToHash("Attack");
-    protected readonly int _hashDeath = Animator.StringToHash("Death");
     #endregion
 
-    private void Start()
+    public void Init()
     {
-        player = GameManager.Instance.Player.transform;
-        anim = GetComponent<Animator>();
-        overrideController = new AnimatorOverrideController();
-
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
 
-        AnimInit();
-
         StartCoroutine(RandomPattern());
-        StartCoroutine(ChangePase());
-
-        constScale = transform.localScale;
+        StartCoroutine(ChangePhase());
     }
     protected void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             Boss.Instance.OnDamage(20, gameObject, 0);
         }
-        MoveToPlayer();
-        if(Boss.Instance.isBDead)
+        if (Boss.Instance.isBDead)
         {
-            attackCoroutine = null;
+            Boss.Instance.actCoroutine = null;
             StopAllCoroutines();
         }
     }
 
-    public void AnimInit()
-    {
-        overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
-
-        if (moveClip != null) overrideController["Move"] = moveClip;
-        if (idleClip != null) overrideController["Idle"] = idleClip;
-
-        overrideController = SetSkillAnimation(overrideController);
-
-        anim.runtimeAnimatorController = overrideController;
-    }
-    public AnimatorOverrideController SetSkillAnimation(AnimatorOverrideController overrideController)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            switch (NowPhase)
-            {
-                case 1:
-                    if (Phase_One_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_One_AnimArray[i];
-                    if (Phase_One_AnimArray[5] != null) overrideController[$"SkillFinal"] = Phase_One_AnimArray[5];
-                    break;
-                case 2:
-                    if (Phase_Two_AnimArray[i] != null) overrideController[$"Skill{i + 1}"] = Phase_Two_AnimArray[i];
-                    if (Phase_Two_AnimArray[5] != null) overrideController[$"SkillFinal"] = Phase_Two_AnimArray[5];
-                    break;
-            }
-        }
-
-        
-
-        return overrideController;
-    }
-
-    public void MoveToPlayer()
-    {
-        if (attackCoroutine != null || Boss.Instance.isBDead || Boss.Instance.isBInvincible) return;
-
-        float playerDistance = Vector2.Distance(player.position, transform.position);
-        if (playerDistance <= minDistance) return;
-
-        anim.SetBool(_hashMove,true);
-        Vector2 dir = (player.position - transform.position);
-        Vector3 scale = transform.localScale;
-
-        CheckFlipValue(dir, scale);
-
-        transform.Translate((Vector2.up * dir.normalized + Vector2.right * Mathf.Sign(scale.x)) * Time.deltaTime * moveSpeed);
-    }
-    public Vector3 CheckFlipValue(Vector2 dir, Vector3 scale)
-    {
-        scale.x = Mathf.Sign(dir.x) * constScale.x;
-
-        if (Mathf.Abs(dir.x) > 0.2f)
-            transform.localScale = scale;
-
-        return scale;
-    }
-
-    private IEnumerator ChangePase()
+    private IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
 
         StopCoroutine(RandomPattern());
-        if(attackCoroutine != null)
-            StopCoroutine(attackCoroutine);
+        if(Boss.Instance.actCoroutine != null)
+            StopCoroutine(Boss.Instance.actCoroutine);
         Boss.Instance.isBInvincible = true;
 
         yield return patternDelay;
@@ -164,21 +74,19 @@ public abstract class BossPattern : MonoBehaviour
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
         NowPhase = 2;
-        overrideController = SetSkillAnimation(overrideController);
+        Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 
         yield return patternDelay;
 
         Boss.Instance.isBInvincible = false;
         Boss.Instance.Phase2();
 
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
         StartCoroutine(RandomPattern());
     }
 
     private IEnumerator RandomPattern()
     {
-        yield return new WaitForSeconds(waitTime);
-
         while (!Boss.Instance.isBDead)
         {
             yield return null;
@@ -191,18 +99,18 @@ public abstract class BossPattern : MonoBehaviour
 
             if (isThisSkillCoolDown[patternChoice]) continue;
 
-            if (attackCoroutine == null)
+            if (Boss.Instance.actCoroutine == null)
             {
-                anim.SetBool(_hashMove, false);
-                anim.SetInteger(_hashSkill, patternChoice);
+                Boss.Instance.bossAnim.anim.SetBool(Boss.Instance._hashMove, false);
+                Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, patternChoice);
 
                 if (isCanUseFinalPattern && isUsingFinalPattern)
                 {
                     isCanUseFinalPattern = false;
 
                     patternCount[5] = GetRandomCount(5);
-                    anim.SetInteger(_hashSkill, 5);
-                    attackCoroutine = StartCoroutine(PatternFinal(patternCount[5]));
+                    Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 5);
+                    Boss.Instance.actCoroutine = StartCoroutine(PatternFinal(patternCount[5]));
 
                     isUsingFinalPattern = false;
                 }
@@ -212,19 +120,19 @@ public abstract class BossPattern : MonoBehaviour
                     switch (patternChoice)
                     {
                         case 0:
-                            attackCoroutine = StartCoroutine(Pattern1(patternCount[0]));
+                            Boss.Instance.actCoroutine = StartCoroutine(Pattern1(patternCount[0]));
                             break;
                         case 1:
-                            attackCoroutine = StartCoroutine(Pattern2(patternCount[1]));
+                            Boss.Instance.actCoroutine = StartCoroutine(Pattern2(patternCount[1]));
                             break;
                         case 2:
-                            attackCoroutine = StartCoroutine(Pattern3(patternCount[2]));
+                            Boss.Instance.actCoroutine = StartCoroutine(Pattern3(patternCount[2]));
                             break;
                         case 3:
-                            attackCoroutine = StartCoroutine(Pattern4(patternCount[3]));
+                            Boss.Instance.actCoroutine = StartCoroutine(Pattern4(patternCount[3]));
                             break;
                         case 4:
-                            attackCoroutine = StartCoroutine(Pattern5(patternCount[4]));
+                            Boss.Instance.actCoroutine = StartCoroutine(Pattern5(patternCount[4]));
                             break;
                     }
                 }
@@ -232,16 +140,14 @@ public abstract class BossPattern : MonoBehaviour
 
             yield return null;
             
-            if (attackCoroutine != null)
+            if (Boss.Instance.actCoroutine != null)
             {
-                yield return new WaitUntil(() => attackCoroutine == null);
+                yield return new WaitUntil(() => Boss.Instance.actCoroutine == null);
                 StartCoroutine(CoolDownCheck(patternChoice));
                 yield return new WaitForSeconds(patternDelay);
             }
 
         }
-        attackCoroutine = null;
-        StopAllCoroutines();
     }
     public IEnumerator CoolDownCheck(int nowSkill)
     {
@@ -254,6 +160,7 @@ public abstract class BossPattern : MonoBehaviour
         return 0;
     }
 
+    #region Patterns
     public virtual IEnumerator Pattern1(int count = 0)
     {
         yield break;
@@ -278,5 +185,6 @@ public abstract class BossPattern : MonoBehaviour
     {
         yield break;
     }
+    #endregion
 
 }

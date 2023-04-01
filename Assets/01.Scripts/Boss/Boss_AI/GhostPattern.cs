@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 public class G_Patterns : BossPattern
 {
@@ -13,24 +14,36 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject SummonTimer;
     [SerializeField] protected Image SummonClock;
 
-    [SerializeField] protected GhostBossJangpanPattern bossRangePattern;
+
     [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
 
+    [Space]
+    [SerializeField] protected AnimationClip absorbEnd;
+
+    protected GhostBossJangpanPattern bossRangePattern;
+
+
     protected List<Poolable> mobList = new List<Poolable>();
-    WaitForSeconds waitTime = new WaitForSeconds(1f);
+    protected WaitForSeconds waitTime = new WaitForSeconds(1f);
     #endregion
-    #region phase 1
+
+    private void Awake()
+    {
+        bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+    }
+
+    #region patterns
     public IEnumerator Pattern_BM(int count) //ºö
     {
         yield return null;
 
         for (int i = 0; i < count; i++)
         {
-            Vector2 dir = player.position - transform.position;
+            Vector2 dir = Boss.Instance.player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            anim.SetTrigger(_hashAttack);
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
             switch (i)
             {
@@ -41,7 +54,7 @@ public class G_Patterns : BossPattern
                     for (int j = -1; j <= 1; j += 2)
                     {
                         Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
-                        dir = player.position - (transform.position + pos * j * 2);
+                        dir = Boss.Instance.player.position - (transform.position + pos * j * 2);
                         rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
                         Managers.Pool.PoolManaging("10.Effects/ghost/Beam", transform.position + (pos * j * 2), Quaternion.Euler(Vector3.forward * (rot + j * 30)));
@@ -65,10 +78,25 @@ public class G_Patterns : BossPattern
                     }
                     break;
                 case 4:
-                    int randomCount = Random.Range(8, 13);
-                    for(int j = 0; j < randomCount; j++)
+                    int randomCount = Random.Range(10, 16);
+                    Vector2 randDir = Vector2.zero;
+                    Vector3 randRot = Vector3.zero;
+
+                    for (int j = 0; j < randomCount; j++)
                     {
-                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", new Vector2(-9 + j * 7.5f, 18.5f), Quaternion.Euler(Vector3.forward * 270));
+                        int rand = Random.Range(0, 2);
+                        switch (rand)
+                        {
+                            case 0:
+                                randDir = new Vector2(-4.5f,Random.Range(-2.5f,18.5f));
+                                randRot = Vector3.forward * Random.Range(-30f, 30f);
+                                break;
+                            case 1:
+                                randDir = new Vector2(Random.Range(-4.5f,33.5f),18.5f);
+                                randRot = Vector3.forward * (270 + Random.Range(-30f, 30f));
+                                break;
+                            }
+                        Managers.Pool.PoolManaging("10.Effects/ghost/Beam", randDir, Quaternion.Euler(randRot));
                         yield return null;
                     }
                     break;
@@ -76,29 +104,31 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(1.75f);
         }
     }
-    public IEnumerator Pattern_TP(int count) //ÅÚÆ÷ -> ÇöÀç ¹Ù²Ù´Â ÀÛ¾÷Áß
+    public IEnumerator Pattern_TP(int count) //ÅÚÆ÷
     {
         Vector2 dir;
+
         bossObject.SetActive(false);
         Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
+
         Boss.Instance.isBDamaged = false;
         bossObject.SetActive(true);
 
-        dir = player.position - transform.position;
+        dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
-        scale = CheckFlipValue(dir, scale);
+        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
 
-        transform.position = Vector3.left * scale.x * 3f + player.position;
+        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
 
-        anim.SetTrigger(_hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waitTime;
 
         if (count > -4)
         {
-            dir = player.position - transform.position;
+            dir = Boss.Instance.player.position - transform.position;
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             float angle = 7.2f;
 
@@ -115,8 +145,9 @@ public class G_Patterns : BossPattern
         int finalCount = 0;
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
-        anim.SetTrigger(_hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
+        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
@@ -148,11 +179,25 @@ public class G_Patterns : BossPattern
             }
 
         }
+        Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
         Boss.Instance.Base.Hp = hpFinal;
         mobList.Clear();
 
         yield return new WaitForSeconds(0.75f);
+    }
+    public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
+    {
+        bossObject.SetActive(false);
+        Boss.Instance.isBDamaged = true;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
+
+        yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
+
+        bossObject.SetActive(true);
+        Boss.Instance.isBDamaged = false;
     }
     #endregion
 }
@@ -163,7 +208,7 @@ public class GhostPattern : G_Patterns
 
     private void Update()
     {
-        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f && NowPhase == 1)
+        if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {
             isUsingFinalPattern = true;
         }
@@ -223,7 +268,7 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                anim.SetTrigger(_hashAttack);
+                Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
@@ -233,7 +278,7 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
@@ -242,7 +287,7 @@ public class GhostPattern : G_Patterns
         yield return SCoroutine(Pattern_BM(count));
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern3(int count = 0) //ÅÚ·¹Æ÷Æ® ÆÐÅÏ
@@ -258,7 +303,7 @@ public class GhostPattern : G_Patterns
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
     public override IEnumerator Pattern4(int count = 0) //ÆÈ»¸±â ÆÐÅÏ, 2ÆäÀÌÁî¿¡¸¸ »ç¿ë
@@ -268,15 +313,15 @@ public class GhostPattern : G_Patterns
             case 1:
                 break;
             case 2:
-                yield return SCoroutine(bossFieldPattern.GhostBossArmPattern());
+                yield return StartCoroutine(Pattern_GA(count));
                 break;
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator PatternFinal(int count = 0)
+    public override IEnumerator PatternFinal(int count = 0) //Èú¶ó, ±Ã±Ø±â
     {
         switch(NowPhase)
         {
@@ -284,11 +329,11 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_SM(count));
                 break;
             case 2:
-                yield return SCoroutine(bossFieldPattern.GhostBossUltPattern());
+                yield return SCoroutine(bossFieldPattern.GhostUltStart());
                 break;
         }
 
         yield return null;
-        attackCoroutine = null;
+        Boss.Instance.actCoroutine = null;
     }
 }

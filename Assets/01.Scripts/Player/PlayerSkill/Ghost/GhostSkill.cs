@@ -11,9 +11,26 @@ public class GhostSkill : PlayerSkillBase
     float janpanDuration = 5f;
     PlayerSkillData skillData;
     GameObject ghostMob;
+
+    private PlayerMovement playerMovement;
+    [SerializeField]
+    private float beamDistanceFromPlayer = 1f;
+    private Vector3 beamDir;
+    private float beamRot;
+    private Vector3 beamPos;
+
     private void Awake()
     {
         init();
+        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            BeamPattern(1);
+        }
     }
 
     public override void FirstSkill(int level)
@@ -77,8 +94,22 @@ public class GhostSkill : PlayerSkillBase
 
     public void HillaSkill(int level)
     {
-        Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11",transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad) * Random.Range(1, cicleRange),0),quaternion.identity);
-        
+        Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
+    }
+
+    public void BeamPattern(int level)
+    {
+        beamPos = (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
+        Poolable beam = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, Quaternion.identity);
+        SetBeamRotation(beamPos);
+        beam.transform.Rotate(new Vector3(0, 0, beamRot));
+        //Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized * beamDistanceFromPlayer, Quaternion.identity);
+    }
+
+    public void SetBeamRotation(Vector3 pos)
+    {
+        beamDir = pos - transform.position;
+        beamRot = Mathf.Atan2(beamDir.y, beamDir.x) * Mathf.Rad2Deg;
     }
 
     #endregion

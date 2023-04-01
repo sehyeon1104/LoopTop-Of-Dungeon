@@ -6,17 +6,18 @@ using UnityEngine;
 public class GhostBossJangpanPattern : MonoBehaviour
 {
     [SerializeField]  GameObject Effect;
-    [SerializeField]  GameObject FPR; //Floor Pattern Range
-    [SerializeField]  GameObject FPRS; //Floor Pattern Range Start
-    [SerializeField]  GameObject FRPR; //Floor Pattern Range Rectangle 
-    [SerializeField]  GameObject FRPRS; //Floor Pattern Range Rectangle Start
-    [SerializeField]  GameObject FPRSCol;
-    [SerializeField]  GameObject FPRRSCol;
+
+    [HideInInspector] GameObject FPR; //Floor Pattern Range
+    [HideInInspector] GameObject FPRS; //Floor Pattern Range Start
+    [HideInInspector] GameObject FRPR; //Floor Pattern Range Rectangle 
+    [HideInInspector] GameObject FRPRS; //Floor Pattern Range Rectangle Start
+    [HideInInspector] GameObject FPRSCol;
+    [HideInInspector] GameObject FPRRSCol;
     
-    public SpriteRenderer FPRSpriteRenderer;
-    public SpriteRenderer FPRSSpriteRenderer;
-    public SpriteRenderer FPRRSpriteRenderer;
-    public SpriteRenderer FPRRSSpriteRenderer;
+    [HideInInspector] public SpriteRenderer FPRSpriteRenderer;
+    [HideInInspector] public SpriteRenderer FPRSSpriteRenderer;
+    [HideInInspector] public SpriteRenderer FPRRSpriteRenderer;
+    [HideInInspector] public SpriteRenderer FPRRSSpriteRenderer;
 
 
     private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
