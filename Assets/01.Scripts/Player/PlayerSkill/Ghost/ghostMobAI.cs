@@ -120,7 +120,7 @@ public class ghostMobAI : MonoBehaviour
             float playerMagnitude = Vector2.SqrMagnitude(transform.position - enemies[i].transform.position);
             Vector2 playeyToEnemyVec = enemies[i].transform.position - transform.position;
             if (i == 0) shortestdistance = playerMagnitude;
-            if (shortestdistance > playerMagnitude || enemies[i].gameObject.activeSelf)
+            if (shortestdistance > playerMagnitude && enemies[i].gameObject.activeSelf)
             {
                 enemy = enemies[i].gameObject;
                 shortestdistance = playerMagnitude;

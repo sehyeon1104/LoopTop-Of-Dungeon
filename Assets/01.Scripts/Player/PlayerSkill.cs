@@ -15,18 +15,21 @@ using Random = UnityEngine.Random;
 // Player Skill Class
 public class PlayerSkill : MonoBehaviour
 {
+    [SerializeField]
+    float dashDistance = 3f;
     PlayerBase playerBase;
     [Space]
     [Header("½ºÅ³")]
     List<PlayerSkillBase> SkillBase;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
-
+    Rigidbody2D rb;
     int[] slotLevel = new int[2] { 1, 1 };
     Action<int>[] skillEvent = new Action<int>[2];
     Action ultimateSkill;
     private void Awake()
     {
+        rb = GameManager.Instance.Player.gameObject.GetComponent<Rigidbody2D>();
         playerBase = GameManager.Instance.Player.playerBase;
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
@@ -65,11 +68,12 @@ public class PlayerSkill : MonoBehaviour
     {
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 2))
             skillEvent[1](slotLevel[1]);
-
     }
     void DashSkill()
     {
-         
+        PlayerMovement.Instance.Rb.isKinematic=false;
+        rb.MovePosition(rb.position + PlayerMovement.Instance.Direction * dashDistance);
+        PlayerMovement.Instance.Rb.isKinematic = true;
     }
     void UltimateSkill()
     {

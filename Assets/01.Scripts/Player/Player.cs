@@ -69,7 +69,7 @@ public class Player : MonoBehaviour, IHittable
         else
         {
             playerBase.Hp -= (int)damage;
-        }
+        }   
         isPDamaged = true;
         
         if (playerBase.Hp <= 0)
