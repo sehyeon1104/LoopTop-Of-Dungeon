@@ -32,8 +32,8 @@ public class BossBase
 
     public int MaxHp { get { return _maxHp; } }
 
-    private int _shield;
-    public int Shield
+    private float _shield;
+    public float Shield
     {
         get
         {
@@ -57,13 +57,13 @@ public class BossBase
         }
     }
 
-    private int _maxShield;
-    public int MaxShield { get { return _maxShield; } }
+    private float _maxShield;
+    public float MaxShield { get { return _maxShield; } }
 
     private void SetBossStat()
     {
         _maxHp = 100;
         _hp = _maxHp;
-        _maxShield = 50;
+        _maxShield = 50f;
     }
 }

@@ -55,13 +55,9 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void UltimateSkill()
     {
-
+      
     }
 
-    public override void DashSkill()
-    {
-
-    }
 
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)

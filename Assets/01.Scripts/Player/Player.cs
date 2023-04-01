@@ -15,6 +15,7 @@ public class Player : MonoBehaviour, IHittable
 {
 
     public PlayerBase playerBase = new PlayerBase();
+    
     private bool isPDamaged = false;
     [SerializeField]
     private float reviveInvincibleTime = 2f;
@@ -55,14 +56,22 @@ public class Player : MonoBehaviour, IHittable
     {
         if (isPDamaged || playerBase.IsPDead)
             return;
-
-
+        
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
         }
+        if (Boss.Instance.Base.Shield > 0)
+        {
+            Boss.Instance.Base.Shield -= damage;
+            Debug.Log("");
+        }
+        else
+        {
+            playerBase.Hp -= (int)damage;
+        }
         isPDamaged = true;
-        playerBase.Hp -= (int)damage;
+        
         if (playerBase.Hp <= 0)
             Dead();
         else
@@ -79,6 +88,7 @@ public class Player : MonoBehaviour, IHittable
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
+
     public void RevivePlayer()
     {   
         gameObject.SetActive(true);
