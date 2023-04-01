@@ -44,6 +44,7 @@ public class G_Patterns : BossPattern
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Warning.wav");
 
             switch (i)
             {
