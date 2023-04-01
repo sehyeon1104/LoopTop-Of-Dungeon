@@ -46,6 +46,7 @@ public class BossBase
             if(_shield <= 0)
             {
                 Debug.Log("실드 파괴");
+                // TODO : 보스 그로기 구현
             }
             if(_shield > _maxShield)
             {

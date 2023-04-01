@@ -61,15 +61,9 @@ public class Player : MonoBehaviour, IHittable
         {
             damage *= 1.5f;
         }
-        if (Boss.Instance.Base.Shield > 0)
-        {
-            Boss.Instance.Base.Shield -= damage;
-            Debug.Log("");
-        }
-        else
-        {
-            playerBase.Hp -= (int)damage;
-        }
+
+        playerBase.Hp -= (int)damage;
+
         isPDamaged = true;
         
         if (playerBase.Hp <= 0)
