@@ -11,7 +11,8 @@ public class Game : Base
         switch(MapType)
         {
             case Define.MapTypeFlag.Ghost:
-                if(SceneType == Define.Scene.Ghost_Stage1 || SceneType == Define.Scene.Ghost_Stage2) { }
+                if (SceneType == Define.Scene.Ghost_Stage1 || SceneType == Define.Scene.Ghost_Stage2)
+                    Managers.Sound.Play("Assets/05.Sounds/BGM/Field_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
                 else
                     Managers.Sound.Play("Assets/05.Sounds/BGM/Boss_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
                 break;
