@@ -18,10 +18,13 @@ public class GhostSkill : PlayerSkillBase
     private Vector3 beamDir;
     private float beamRot;
     private Vector3 beamPos;
-
+    [SerializeField]
+    private float attackRange = 1f;
+    Animator playerAnim;
     private void Awake()
     {
         init();
+        playerAnim = GetComponent<Animator>();
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
@@ -32,7 +35,22 @@ public class GhostSkill : PlayerSkillBase
             BeamPattern(1);
         }
     }
+    public override void Attack()
+    {
+        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            return;
+        playerAnim.SetTrigger("Attack");
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
+            {
+                CinemachineCameraShaking.Instance.CameraShake();
+                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
 
+            }
+        }
+    }
     public override void FirstSkill(int level)
     {
         StartCoroutine(JanpangSkill(level));
@@ -57,7 +75,10 @@ public class GhostSkill : PlayerSkillBase
     {
       
     }
-
+    public override void DashSkill()
+    {
+      
+    }
 
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
@@ -124,4 +145,6 @@ public class GhostSkill : PlayerSkillBase
     {
         Gizmos.DrawWireSphere(transform.position, 1.5f);
     }
+
+   
 }

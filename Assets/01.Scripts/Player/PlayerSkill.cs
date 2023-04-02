@@ -16,7 +16,7 @@ using Random = UnityEngine.Random;
 public class PlayerSkill : MonoBehaviour
 {
     [SerializeField]
-    float dashDistance = 3f;
+    float dashDistance = 2f;
     PlayerBase playerBase;
     [Space]
     [Header("스킬")]
@@ -24,9 +24,9 @@ public class PlayerSkill : MonoBehaviour
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
+    Define.SkillNum[] skillNum = null;
     int[] slotLevel = new int[2] { 1, 1 };
-    Action<int>[] skillEvent = new Action<int>[2];
-    Action ultimateSkill;
+    Action[] skillEvent = new Action[5];
     private void Awake()
     {
         rb = GameManager.Instance.Player.gameObject.GetComponent<Rigidbody2D>();
@@ -35,6 +35,7 @@ public class PlayerSkill : MonoBehaviour
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Dash_Btn").GetComponent<Button>().onClick.AddListener(DashSkill);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").GetComponent<Button>().onClick.AddListener(UltimateSkill);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
     }
     private void Start()
     {
@@ -53,31 +54,35 @@ public class PlayerSkill : MonoBehaviour
         PlayerSkillBase playerSkill;
         if (skillData.TryGetValue(playerBase.PlayerTransformTypeFlag, out playerSkill))
         {
-            skillEvent[0] = playerSkill.playerSkills[0];
-            skillEvent[1] = playerSkill.playerSkills[1];
-            ultimateSkill = playerSkill.UltimateSkill;
+            skillEvent[0] = () => playerSkill.playerSkills[0](0);
+            skillEvent[1] = () => playerSkill.playerSkills[1](0);
+            skillEvent[4] = playerSkill.ultimateSkill;
         }
+    }
+    void Attack()
+    {
+
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 1))
-            skillEvent[0](slotLevel[0]);
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill))
+            skillEvent[0].Invoke();
     }
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 2))
-            skillEvent[1](slotLevel[1]);
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill))
+            skillEvent[1]();
     }
     void DashSkill()
     {
-        PlayerMovement.Instance.Rb.isKinematic=false;
-        rb.MovePosition(rb.position + PlayerMovement.Instance.Direction * dashDistance);
-        PlayerMovement.Instance.Rb.isKinematic = true;
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.DashSkill))
+            transform.parent.position =  rb.position + PlayerMovement.Instance.Direction * dashDistance;
     }
     void UltimateSkill()
     {
-        ultimateSkill();
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill))
+            skillEvent[4]();
     }
     #region 리스트 셔플
 
@@ -111,6 +116,7 @@ public class PlayerSkill : MonoBehaviour
     public void ListRemove()
     {
         randomSkillNum.RemoveRange(3, 2);
+
     }
     public void SkillShuffle()
     {

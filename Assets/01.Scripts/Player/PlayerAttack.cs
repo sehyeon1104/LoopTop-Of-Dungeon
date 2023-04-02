@@ -23,19 +23,6 @@ public class PlayerAttack :  MonoBehaviour
     public void Attack()
     {
         // TODO : 적 공격시 공격 애니메이션 작동 및 적에게 피격판정 체크
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            return;
-        playerAnim.SetTrigger("Attack");
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
-        for (int i = 0; i < enemys.Length; i++)
-        {
-            if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
-            {
-                CinemachineCameraShaking.Instance.CameraShake();
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
-
-            }
-        }
     }
    
 }

@@ -4,6 +4,17 @@ using UnityEngine;
 
 public static class Define
 {
+    public enum SkillNum
+    {
+        FirstSkill,
+        SecondSkill,
+        ThirdSkill,
+        ForthSkill,
+        FifthSkill,
+        Attack,
+        UltimateSkill,
+        DashSkill,
+    }
     public enum MapTypeFlag
     {
         Default = 0,

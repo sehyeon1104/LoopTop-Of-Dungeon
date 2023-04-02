@@ -7,7 +7,9 @@ public abstract  class PlayerSkillBase : MonoBehaviour
 {
     public  PlayerBase playerBase;
     public  List<Action<int>> playerSkills = new List<Action<int>>();
+    public Action ultimateSkill;
     public Action dashSkill;
+    public Action attack;
     public abstract void FirstSkill(int level);
 
     public abstract void SecondSkill(int level);
@@ -17,6 +19,9 @@ public abstract  class PlayerSkillBase : MonoBehaviour
 
     public abstract void FifthSkill(int level);
 
+    public abstract void Attack();
+
+    public abstract void DashSkill();
     public abstract void UltimateSkill();
 
 
@@ -28,5 +33,9 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         playerSkills.Add(ThirdSkill);
         playerSkills.Add(ForuthSkill);
         playerSkills.Add(FifthSkill);
+        attack = Attack;
+        ultimateSkill = UltimateSkill;
+        dashSkill = DashSkill;
+
     }
 }
