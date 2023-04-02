@@ -21,13 +21,13 @@ public class GhostSkill : PlayerSkillBase
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
-    private void Awake()
+
+    private void OnEnable()
     {
         init();
         playerAnim = GetComponent<Animator>();
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -39,6 +39,7 @@ public class GhostSkill : PlayerSkillBase
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             return;
+
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for (int i = 0; i < enemys.Length; i++)
