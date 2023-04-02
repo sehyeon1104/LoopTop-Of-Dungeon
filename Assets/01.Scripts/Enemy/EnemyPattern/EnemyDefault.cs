@@ -108,6 +108,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual IEnumerator MoveToPlayer()
     {
+        if (rigid == null) yield break;
         if (moveClip != null) anim.SetBool(_move, true);
 
 
