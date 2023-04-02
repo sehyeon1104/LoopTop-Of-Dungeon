@@ -181,7 +181,7 @@ public class G_Patterns : BossPattern
 
         }
         Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
 
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
         Boss.Instance.Base.Hp = hpFinal;
