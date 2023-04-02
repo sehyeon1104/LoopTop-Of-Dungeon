@@ -17,10 +17,19 @@ public class GhostSkill : PlayerSkillBase
     private float beamDistanceFromPlayer = 1f;
     private Vector3 beamDir;
     private float beamRot;
-    private Vector3 beamPos;
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
+
+    // Beam
+    private Vector3 beamPos;
+    private Poolable beam;
+    private Vector3 subBeamPosLeft;
+    private Poolable subBeamLeft;
+    private Vector3 subBeamPosRight;
+    private Poolable subBeamRight;
+    private Vector3 joystickDir;
+    
     private void Awake()
     {
         init();
@@ -32,9 +41,10 @@ public class GhostSkill : PlayerSkillBase
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            BeamPattern(1);
+            BeamPattern(5);
         }
     }
+
     public override void Attack()
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -61,7 +71,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void ThirdSkill(int level)
     {
-
+        BeamPattern(level);
     }
     public override void ForuthSkill(int level)
     {
@@ -127,17 +137,39 @@ public class GhostSkill : PlayerSkillBase
     
     public void BeamPattern(int level)
     {
-        beamPos = (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
-        Poolable beam = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, Quaternion.identity);
-        SetBeamRotation(beamPos);
-        beam.transform.Rotate(new Vector3(0, 0, beamRot));
-        //Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized * beamDistanceFromPlayer, Quaternion.identity);
+        joystickDir = new Vector3(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
+
+        Debug.Log("Player Beam Pattern");
+
+        beamPos = transform.position + joystickDir;
+        beam = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", beamPos, Quaternion.identity);
+        beam.transform.Rotate(new Vector3(0, 0, SetBeamRotation(beamPos)));
+
+        switch (level)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                subBeamLeft = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
+                subBeamLeft.transform.position = beamPos + new Vector3(-joystickDir.y, joystickDir.x);
+
+                subBeamRight = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
+                subBeamRight.transform.position = beamPos + new Vector3(joystickDir.y, -joystickDir.x);
+                break;
+        }
     }
 
-    public void SetBeamRotation(Vector3 pos)
+    public float SetBeamRotation(Vector3 pos)
     {
         beamDir = pos - transform.position;
         beamRot = Mathf.Atan2(beamDir.y, beamDir.x) * Mathf.Rad2Deg;
+        return beamRot;
     }
 
     #endregion
