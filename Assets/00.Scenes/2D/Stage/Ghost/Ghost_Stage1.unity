@@ -326,8 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb7f73c2f479e44bafc8669978cfaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneType: 0
-  MapType: 0
+  SceneType: 3
+  MapType: 2
 --- !u!4 &283287101
 Transform:
   m_ObjectHideFlags: 0
@@ -2366,6 +2366,10 @@ PrefabInstance:
     - target: {fileID: 1716297132, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_Intensity
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1716297132, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_LightVolumeIntensityEnabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4086107390685430464, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_SortingOrder
