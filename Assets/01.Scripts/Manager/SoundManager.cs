@@ -44,7 +44,7 @@ public class SoundManager
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1f, float volume = 1f)
     {
         AudioClip audioClip = GetorAddAudioClip(path, type);
-        Play(audioClip, type, pitch);
+        Play(audioClip, type, pitch, volume);
     }
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1f, float volume = 1f)
     {

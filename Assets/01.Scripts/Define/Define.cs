@@ -4,6 +4,17 @@ using UnityEngine;
 
 public static class Define
 {
+    public enum SkillNum
+    {
+        FirstSkill,
+        SecondSkill,
+        ThirdSkill,
+        ForthSkill,
+        FifthSkill,
+        Attack,
+        UltimateSkill,
+        DashSkill,
+    }
     public enum MapTypeFlag
     {
         Default = 0,
@@ -13,6 +24,7 @@ public static class Define
         Electricity,
         Werewolf,
         Lizard,
+        Power,
     }
 
     public enum RoomTypeFlag

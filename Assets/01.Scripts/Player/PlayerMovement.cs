@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-// Player MoveMent Class
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoSingleton<PlayerMovement>
 {
     public Joystick joystick { private set; get; }
     [Range(1,5)] [SerializeField] float speed = 3;
     Rigidbody2D rb;
-
+    public Rigidbody2D Rb ;
     private float x;
     private float y;
-
+    Vector2 direction = Vector2.zero; 
+    public Vector2 Direction => direction;
     private void Awake()
     {
         joystick = FindObjectOfType<Joystick>();
@@ -26,16 +26,17 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move(new Vector2(x, y));
-        Move(new Vector2(joystick.Horizontal, joystick.Vertical));
+        Move(joystick.Direction);
     }
     public void Move(Vector2 inputVelocity)
     {
-        if(inputVelocity.x ==0 && inputVelocity.y == 0)
+        if (inputVelocity.x ==0 && inputVelocity.y == 0)
         {
             return;
         }
         else
         {
+            direction = inputVelocity;
             PlayerVisual.Instance.VelocityChange(inputVelocity.x);
         }
         Vector2 VelocityVec = inputVelocity * speed * Time.deltaTime;

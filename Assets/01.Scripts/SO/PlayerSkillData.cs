@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class PlayerSkillData : ScriptableObject
 {
     public List<PlayerSkillInfo> skill;
-    public float ultiSkillDelay = 15f;
     public Sprite playerImg = null;
     public RuntimeAnimatorController playerAnim;
 }

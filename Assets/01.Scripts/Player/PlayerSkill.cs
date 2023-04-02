@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -14,20 +15,27 @@ using Random = UnityEngine.Random;
 // Player Skill Class
 public class PlayerSkill : MonoBehaviour
 {
+    [SerializeField]
+    float dashDistance = 2f;
     PlayerBase playerBase;
     [Space]
     [Header("스킬")]
-    List<PlayerSkillBase> SkillBase; 
+    List<PlayerSkillBase> SkillBase;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
-
+    Rigidbody2D rb;
+    Define.SkillNum[] skillNum = null;
     int[] slotLevel = new int[2] { 1, 1 };
-    public Action<int>[] skillEvent = new Action<int>[2];
+    Action[] skillEvent = new Action[5];
     private void Awake()
-    { 
-        playerBase = GameManager.Instance.Player.playerBase;   
+    {
+        rb = GameManager.Instance.Player.gameObject.GetComponent<Rigidbody2D>();
+        playerBase = GameManager.Instance.Player.playerBase;
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Dash_Btn").GetComponent<Button>().onClick.AddListener(DashSkill);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").GetComponent<Button>().onClick.AddListener(UltimateSkill);
+        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
     }
     private void Start()
     {
@@ -36,7 +44,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             SkillSelect();
         }
@@ -44,25 +52,38 @@ public class PlayerSkill : MonoBehaviour
     void SkillSelect()
     {
         PlayerSkillBase playerSkill;
-        if(skillData.TryGetValue(playerBase.PlayerTransformTypeFlag,out playerSkill))
+        if (skillData.TryGetValue(playerBase.PlayerTransformTypeFlag, out playerSkill))
         {
-            skillEvent[0] = playerSkill.playerSkills[0];
-            skillEvent[1] = playerSkill.playerSkills[1];
+            skillEvent[0] = () => playerSkill.playerSkills[0](0);
+            skillEvent[1] = () => playerSkill.playerSkills[1](0);
+            skillEvent[4] = playerSkill.ultimateSkill;
         }
     }
-    public void Skill1()
+    void Attack()
     {
-        if(UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 1))
-            skillEvent[0](slotLevel[0]);
-    }
-
-    public void Skill2()
-    {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 2))
-            skillEvent[1](slotLevel[1]);
 
     }
+    void Skill1()
+    {
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill))
+            skillEvent[0].Invoke();
+    }
 
+    void Skill2()
+    {
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill))
+            skillEvent[1]();
+    }
+    void DashSkill()
+    {
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.DashSkill))
+            transform.parent.position =  rb.position + PlayerMovement.Instance.Direction * dashDistance;
+    }
+    void UltimateSkill()
+    {
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill))
+            skillEvent[4]();
+    }
     #region 리스트 셔플
 
     public void ListInit()
@@ -95,6 +116,7 @@ public class PlayerSkill : MonoBehaviour
     public void ListRemove()
     {
         randomSkillNum.RemoveRange(3, 2);
+
     }
     public void SkillShuffle()
     {
@@ -104,5 +126,5 @@ public class PlayerSkill : MonoBehaviour
     }
 
     #endregion
-  
+
 }
