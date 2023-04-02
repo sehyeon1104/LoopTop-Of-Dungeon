@@ -151,7 +151,7 @@ public class G_Patterns : BossPattern
         Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
-            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_02", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
+            Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
             mobList.Add(clone);
         }
 
