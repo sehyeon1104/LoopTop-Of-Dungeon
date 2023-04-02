@@ -126,7 +126,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         if (BossUI.fillTime < 40)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-            bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
             //애니메이션 넣기 (흡수 애니메이션 시전)
             //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
         }
