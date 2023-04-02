@@ -180,14 +180,15 @@ public class G_Patterns : BossPattern
             }
 
         }
+        Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 5);
         Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
         Boss.Instance.Base.Hp = hpFinal;
         mobList.Clear();
 
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(2f);
     }
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {
