@@ -31,7 +31,7 @@ public class PlayerSkill : MonoBehaviour
     PlayerSkillBase[] playerSkillBases = new PlayerSkillBase[2];
     private void Awake()
     {  
-        playerSkillBases[(int)Define.PlayerTransformTypeFlag.Power] = GetComponent<PowerSkill>();
+        //playerSkillBases[(int)Define.PlayerTransformTypeFlag.Power] = GetComponent<PowerSkill>();
         playerSkillBases[(int)Define.PlayerTransformTypeFlag.Ghost] = GetComponent<GhostSkill>();
         rb = GameManager.Instance.Player.gameObject.GetComponent<Rigidbody2D>();
         playerBase = GameManager.Instance.Player.playerBase;
