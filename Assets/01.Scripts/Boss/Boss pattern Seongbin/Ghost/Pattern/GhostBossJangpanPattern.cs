@@ -87,21 +87,21 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FPRRSSpriteRenderer.enabled = false;
 
         Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone.transform.position = new Vector2(3.31f, -6.98f);
+        clone.transform.position = new Vector2(transform.position.x + 3.31f, transform.position.y + (-6.98f));
         Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone1.transform.position = new Vector2(-9.27f, 6.45f);
+        clone1.transform.position = new Vector2(transform.position.x + (-9.27f), transform.position.y + 6.45f);
         Poolable clone2 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone2.transform.position = new Vector2(2.85f, 19.42f);
+        clone2.transform.position = new Vector2(transform.position.x + 2.85f, transform.position.y + 19.42f);
         Poolable clone3 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone3.transform.position = new Vector2(15.36f, 29.75f);
+        clone3.transform.position = new Vector2(transform.position.x + 15.36f, transform.position.y + 29.75f);
         Poolable clone4 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone4.transform.position = new Vector2(27.06f, 18.4f);
+        clone4.transform.position = new Vector2(transform.position.x + 27.06f, transform.position.y + 18.4f);
         Poolable clone5 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone5.transform.position = new Vector2(38.35f, 6.91f);
+        clone5.transform.position = new Vector2(transform.position.x + 38.35f, transform.position.y + 6.91f);
         Poolable clone6 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone6.transform.position = new Vector2(28.04f, -6.74f);
+        clone6.transform.position = new Vector2(transform.position.x + 28.04f, transform.position.y + (-6.74f));
         Poolable clone7 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
-        clone7.transform.position = new Vector2(14.72f, -17.88f);
+        clone7.transform.position = new Vector2(transform.position.x + 14.72f, transform.position.y + (-17.88f));
 
 
         //clone.transform.localScale = 
