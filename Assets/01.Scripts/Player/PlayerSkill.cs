@@ -71,7 +71,7 @@ public class PlayerSkill : MonoBehaviour
         PlayerSkillBase playerSkill;
         if (skillData.TryGetValue(playerBase.PlayerTransformTypeFlag, out playerSkill))
         {
-            playerSkill.enabled = true;
+            // playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[0](0);
             skillEvent[1] = () => playerSkill.playerSkills[1](0);
             skillEvent[2] = playerSkill.attack;

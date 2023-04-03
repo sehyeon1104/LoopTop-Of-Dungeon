@@ -57,7 +57,17 @@ public class PlayerBase
     }
 
     private int maxHp;
-    public int MaxHp => maxHp;
+    public int MaxHp
+    {
+        get
+        {
+            return maxHp;
+        }
+        set
+        {
+            maxHp = value;
+        }
+    }
 
     private float damage;
     public float Damage
@@ -87,6 +97,18 @@ public class PlayerBase
     }
 
     private int[] _expTable;
+
+    public int[] ExpTable
+    {
+        get
+        {
+            return _expTable;
+        }
+        set
+        {
+            _expTable = value;
+        }
+    }
 
     private float exp;
     public float Exp
@@ -120,12 +142,16 @@ public class PlayerBase
     }
 
     private int maxLevel;
-    public int MaxLevel
-    {
-        get
-        {
-            return maxLevel;
-        }
+    public int MaxLevel 
+    {  
+        get 
+        { 
+            return maxLevel; 
+        } 
+        set 
+        { 
+            maxLevel = value; 
+        } 
     }
 
     private int _fragmentAmount;
