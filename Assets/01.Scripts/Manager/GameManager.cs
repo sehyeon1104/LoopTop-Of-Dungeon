@@ -33,7 +33,7 @@ public class GameManager : MonoSingleton<GameManager>
 
                 if (_player == null)
                 {
-                    Debug.LogError("Can't Get Player Instance");
+                    Rito.Debug.LogError("Can't Get Player Instance");
                 }
             }
         }
@@ -43,21 +43,17 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (!SaveManager.GetCheckBool())
         {
-            Debug.Log("[GameManager] 저장파일 없음");
+            Rito.Debug.Log("[GameManager] 저장파일 없음");
             Player.playerBase.InitPlayerStat();
             SetPlayerStat();
             SaveManager.Save<PlayerData>(ref playerData);
         }
         else
         {
-            Debug.Log("[GameManager] 저장파일 있음");
+            Rito.Debug.Log("[GameManager] 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
-            Debug.Log(playerData.hp);
             LoadPlayerStat();
-            Debug.Log($"Load {Player.playerBase.Hp}");
         }
-
-
 
         if(SceneManager.GetActiveScene().name == "TitleScene")
         {
@@ -72,10 +68,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            Debug.Log("Save");
-            Debug.Log("Update 전 플레이어Data : " + playerData.hp);
             SetPlayerStat();
-            Debug.Log("Update 후 player정보: " + playerData.hp);
             SaveManager.Save<PlayerData>(ref playerData);
         }
     }
@@ -121,7 +114,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void LoadPlayerStat()
     {
-        Debug.Log($"LoadPlayerStat.HP : {playerData.hp}");
         Player.playerBase.MaxHp = playerData.maxHp;
         Player.playerBase.Hp = playerData.hp;
         Player.playerBase.MaxLevel = playerData.maxLevel;
