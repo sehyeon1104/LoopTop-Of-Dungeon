@@ -148,7 +148,7 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
+        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position + Vector3.down * 2f, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
@@ -180,6 +180,8 @@ public class G_Patterns : BossPattern
             }
 
         }
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
+
         Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 5);
         Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
