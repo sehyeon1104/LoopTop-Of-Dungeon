@@ -25,12 +25,6 @@ public class Player : MonoBehaviour, IHittable
     public Vector3 hitPoint { get; private set; }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
