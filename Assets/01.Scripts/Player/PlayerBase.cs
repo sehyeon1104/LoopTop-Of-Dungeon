@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerBase
 {
-    public void SetPlayerStat()
+    // save¿ë
+    public void InitPlayerStat()
     {
-
         maxHp = 12;
         hp = maxHp;
         damage = 5f;
@@ -18,7 +18,6 @@ public class PlayerBase
         exp = 0;
         _fragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
-        _fragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
@@ -114,9 +113,10 @@ public class PlayerBase
     }
 
     private int level;
-    private int Level
+    public int Level
     {
         get => level;
+        set => level = value;
     }
 
     private int maxLevel;
@@ -143,7 +143,6 @@ public class PlayerBase
                 _fragmentAmount = 0;
             }
 
-            PlayerPrefs.SetInt("PlayerFragmentAmount", _fragmentAmount);
             UIManager.Instance.UpdateGoods();
         }
     }

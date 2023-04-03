@@ -5,12 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    private int level;
-    private int hp;
-    private Define.PlayerTransformTypeFlag playerTransformTypeFlag;
-    private float damage;
-    private float critChance;
-    private float exp;
-    private float goods;
+    public int hp;
+    public int maxHp;
+    public int level;
+    public int maxLevel;
+    public float damage;
+    public float critChance;
+    public float exp;
+    public int[] expTable;
+    public int _fragmentAmount;
+    public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 
 }

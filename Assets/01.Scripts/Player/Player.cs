@@ -31,10 +31,7 @@ public class Player : MonoBehaviour, IHittable
             playerBase.FragmentAmount += 100;
         }
     }
-    private void Awake()
-    {
-        playerBase.SetPlayerStat();
-    }
+
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
