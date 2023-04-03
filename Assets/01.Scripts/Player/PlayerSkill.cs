@@ -45,9 +45,9 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
-        for(int i =0; i < playerSkillBases.Length; i++) {
-            playerSkillBases[i].enabled = false;    
-        }
+        //for(int i =0; i < playerSkillBases.Length; i++) {
+        //    playerSkillBases[i].enabled = false;    
+        //}
         SkillShuffle();
         SkillSelect();
     }
