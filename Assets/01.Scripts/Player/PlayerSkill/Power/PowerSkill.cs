@@ -6,9 +6,9 @@ public class PowerSkill : PlayerSkillBase
 {
     Animator playerAnim;
     float attackRange=1f;
-    private void OnEnable()
+    private void Awake()
     {
-        init();
+        Cashing();
         playerAnim = GetComponent<Animator>();
     }
     public override void Attack()

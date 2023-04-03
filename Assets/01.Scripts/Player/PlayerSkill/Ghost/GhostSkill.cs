@@ -12,7 +12,6 @@ public class GhostSkill : PlayerSkillBase
     PlayerSkillData skillData;
     GameObject ghostMob;
     private float hiilaDuration = 5;
-    private PlayerMovement playerMovement;
     [SerializeField]
     private float beamDistanceFromPlayer = 1f;
     private Vector3 beamDir;
@@ -21,12 +20,15 @@ public class GhostSkill : PlayerSkillBase
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
-
-    private void OnEnable()
+    WaitForSeconds dashTime = new WaitForSeconds(0.1f);
+    private void Awake()
     {
-        init();
+        Cashing();
         playerAnim = GetComponent<Animator>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
+    private void Start()
+    {
+        
     }
     private void Update()
     {
@@ -78,7 +80,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void DashSkill()
     {
-      
+        StartCoroutine(Dash());
     }
 
     #region 스킬 구현
@@ -140,7 +142,13 @@ public class GhostSkill : PlayerSkillBase
         beamDir = pos - transform.position;
         beamRot = Mathf.Atan2(beamDir.y, beamDir.x) * Mathf.Rad2Deg;
     }
-
+    public IEnumerator Dash()
+    {
+         playerMovement.IsMove = false;
+         playerRigid.velocity = playerMovement.Direction * dashVelocity;
+         yield return dashTime;
+         playerMovement.IsMove = true;
+    }
     #endregion
     private void OnDrawGizmos()
     {

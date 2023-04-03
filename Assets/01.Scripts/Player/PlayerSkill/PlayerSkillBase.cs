@@ -5,8 +5,13 @@ using UnityEngine;
 
 public abstract  class PlayerSkillBase : MonoBehaviour
 {
-    public  PlayerBase playerBase;
-    public  List<Action<int>> playerSkills = new List<Action<int>>();
+    public PlayerMovement playerMovement;
+    public Rigidbody2D playerRigid;
+    public SpriteRenderer playerSprite;
+    public float dashVelocity = 0;
+    public float dashDuration = 0;
+    public PlayerBase playerBase;
+    public List<Action<int>> playerSkills = new List<Action<int>>();
     public Action ultimateSkill;
     public Action dashSkill;
     public Action attack;
@@ -20,14 +25,10 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     public abstract void FifthSkill(int level);
 
     public abstract void Attack();
-
-    public abstract void DashSkill();
     public abstract void UltimateSkill();
 
-    private void OnEnable()
-    {
-        init();
-    }
+    public abstract void DashSkill();
+
     public void init()
     {
         playerBase = GameManager.Instance.Player.playerBase;
@@ -39,6 +40,14 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
-
+        dashVelocity = 30f;
+        dashDuration = 0.2f;
+    }
+    public void Cashing()
+    {
+        playerSprite = GetComponent<SpriteRenderer>();
+        playerMovement = GetComponentInParent<PlayerMovement>();
+        playerRigid = GetComponentInParent<Rigidbody2D>();
+        init();
     }
 }
