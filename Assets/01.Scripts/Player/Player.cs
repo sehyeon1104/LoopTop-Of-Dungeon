@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour, IHittable
 {
 
-    public PlayerBase playerBase = new PlayerBase();
+    public PlayerBase playerBase;
     
     private bool isPDamaged = false;
     [SerializeField]

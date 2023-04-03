@@ -25,6 +25,7 @@ public static class SaveManager
 			Debug.Log("[SaveManager] 저장파일 있음");
 		}
 		string jsonData = JsonUtility.ToJson(userSaveData, true);
+		jsonData = Crypto.AESEncrypt128(jsonData);
 		File.WriteAllText(SAVE_PATH + SAVE_FILENAME, jsonData, System.Text.Encoding.UTF8);
 		Debug.Log("[SaveManager] 저장완료");
 		
@@ -40,6 +41,7 @@ public static class SaveManager
 		if (File.Exists(SAVE_PATH + SAVE_FILENAME))
 		{
 			string jsonData = File.ReadAllText(SAVE_PATH + SAVE_FILENAME);
+			jsonData = Crypto.AESDecrypt128(jsonData);
 			T saveData = JsonUtility.FromJson<T>(jsonData);
 			userSaveData = saveData;
 			Debug.Log("[SaveManager] 로딩완료");

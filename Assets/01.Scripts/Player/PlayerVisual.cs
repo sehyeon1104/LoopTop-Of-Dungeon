@@ -13,7 +13,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     private void Awake()
     {
         hitVolume = GameObject.Find("HitVolume").GetComponent<Volume>();
-        weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
+        //weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
@@ -21,9 +21,10 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     public void UpdateVisual(PlayerSkillData data)
     {
         UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        playerAnimator.runtimeAnimatorController = data.playerAnim;
+        // playerAnimator.runtimeAnimatorController = data.playerAnim;
         playerSprite.sprite = data.playerImg;
     }
+
     public void StartHitMotion(float damage = 0)
     {
         StartCoroutine(IEHitMotion(damage));

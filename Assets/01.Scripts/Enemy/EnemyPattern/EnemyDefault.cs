@@ -164,12 +164,13 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     IEnumerator GetHit()
     {
         float timer = 0;
+         hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
         sprite.material = hitMat;
         while(changeTime > timer)
         {
             timer+= Time.deltaTime;
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
-             yield return null;
+            yield return null;
         }
         sprite.material = spriteLitMat;
     }

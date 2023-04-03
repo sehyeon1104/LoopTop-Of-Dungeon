@@ -27,13 +27,11 @@ public class PlayerSkill : MonoBehaviour
     Define.SkillNum[] skillNum = null;
     int[] slotLevel = new int[2] { 1, 1 };
     Action[] skillEvent = new Action[5];
-    GhostSkill ghostSkill = null;
     PlayerSkillBase[] playerSkillBases = new PlayerSkillBase[2];
     private void Awake()
     {  
-        //playerSkillBases[(int)Define.PlayerTransformTypeFlag.Power] = GetComponent<PowerSkill>();
-        playerSkillBases[(int)Define.PlayerTransformTypeFlag.Ghost] = GetComponent<GhostSkill>();
-        rb = GameManager.Instance.Player.gameObject.GetComponent<Rigidbody2D>();
+        playerSkillBases[0] = GetComponent<PowerSkill>();
+        playerSkillBases[1] = GetComponent<GhostSkill>();
         playerBase = GameManager.Instance.Player.playerBase;
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
@@ -45,11 +43,11 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
-        //for(int i =0; i < playerSkillBases.Length; i++) {
-        //    playerSkillBases[i].enabled = false;    
-        //}
+        SkillSelect(playerBase.PlayerTransformTypeFlag);
+        for (int i =0; i < playerSkillBases.Length; i++) {
+            playerSkillBases[i].enabled = false;    
+        }
         SkillShuffle();
-        SkillSelect();
     }
     private void Update()
     {
@@ -59,17 +57,13 @@ public class PlayerSkill : MonoBehaviour
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SkillSelect();
+            SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
     }
-    void SkillSelect()
+    void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
-
         PlayerSkillBase playerSkill;
-        if (skillData.TryGetValue(playerBase.PlayerTransformTypeFlag, out playerSkill))
+        if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[0](0);
@@ -78,10 +72,6 @@ public class PlayerSkill : MonoBehaviour
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;
         }
-    }
-    void Attack()
-    {
-        skillEvent[2]();
     }
     void Skill1()
     {
@@ -94,15 +84,20 @@ public class PlayerSkill : MonoBehaviour
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill))
             skillEvent[1]();
     }
-    void DashSkill()
+    void Attack()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.DashSkill))
-            transform.parent.position =  rb.position + PlayerMovement.Instance.Direction * dashDistance;
+        skillEvent[2]();
     }
     void UltimateSkill()
     {
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill))
-            skillEvent[4]();
+            skillEvent[3]();
+    }
+
+    void DashSkill()
+    {
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
+            skillEvent[4]();      
     }
     #region ¸®½ºÆ® ¼ÅÇÃ
 
