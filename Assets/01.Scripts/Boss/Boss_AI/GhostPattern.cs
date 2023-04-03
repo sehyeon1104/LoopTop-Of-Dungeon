@@ -182,12 +182,18 @@ public class G_Patterns : BossPattern
         }
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
 
-        Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 5);
+
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
-        Boss.Instance.Base.Hp = hpFinal;
+        while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 1;
+            yield return null;
+        }
+        Debug.Log("³¡");
         mobList.Clear();
 
         yield return new WaitForSeconds(2f);
