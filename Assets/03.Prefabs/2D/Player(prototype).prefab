@@ -269,11 +269,11 @@ GameObject:
   - component: {fileID: 456885712013416507}
   - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
-  - component: {fileID: 7178170437923353098}
   - component: {fileID: 6605350721465296871}
   - component: {fileID: 1587560799495554440}
   - component: {fileID: 7073810304199504610}
   - component: {fileID: 1617654965204469657}
+  - component: {fileID: 7340307882004977393}
   m_Layer: 8
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -355,7 +355,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 35f2e540a1fa88040995a55d8110168f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -368,19 +368,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7178170437923353098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cfbe9df8480bcc49a1915be111a14fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 1
 --- !u!114 &6605350721465296871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashDistance: 2
 --- !u!114 &7073810304199504610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +405,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beamDistanceFromPlayer: 1
+  attackRange: 1
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -513,6 +503,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7340307882004977393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c64930a9182f744697b429b39afc1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2437888175715823303
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  Rb: {fileID: 0}
 --- !u!114 &882001287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beamDistanceFromPlayer: 1
+  attackRange: 1
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0

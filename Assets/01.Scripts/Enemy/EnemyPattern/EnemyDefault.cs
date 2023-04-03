@@ -102,6 +102,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
                 actCoroutine = StartCoroutine(AttackToPlayer());
                 break;
             default:
+                if(rigid != null) rigid.velocity = Vector3.zero;
                 break;
         }
     }
@@ -127,7 +128,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
         anim.SetBool(_move, false);
         if(rigid != null)
-        rigid.velocity = Vector2.zero;
+        rigid.velocity = Vector3.zero;
         if (attackClip != null) anim.SetTrigger(_attack);
 
     }

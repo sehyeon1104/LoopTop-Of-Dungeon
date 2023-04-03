@@ -24,7 +24,10 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     public abstract void DashSkill();
     public abstract void UltimateSkill();
 
-
+    private void OnEnable()
+    {
+        init();
+    }
     public void init()
     {
         playerBase = GameManager.Instance.Player.playerBase;

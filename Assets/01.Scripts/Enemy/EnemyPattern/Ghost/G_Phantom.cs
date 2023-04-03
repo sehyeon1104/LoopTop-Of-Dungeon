@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class G_Phantom : EnemyDefault
 {
-    [SerializeField] private GameObject ghostPrefab;
     WaitForSeconds attackWait = new WaitForSeconds(1.5f);
     SpriteRenderer spriteRenderer;
 
@@ -28,7 +27,6 @@ public class G_Phantom : EnemyDefault
             timer -= Time.deltaTime;
 
             if (moveClip != null) anim.SetBool(_move, true);
-
 
             dir = (playerTransform.position - transform.position).normalized;
             sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;

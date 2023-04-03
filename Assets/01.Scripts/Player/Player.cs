@@ -25,12 +25,6 @@ public class Player : MonoBehaviour, IHittable
     public Vector3 hitPoint { get; private set; }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-        }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
@@ -45,9 +39,9 @@ public class Player : MonoBehaviour, IHittable
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
-    public IEnumerator IEDamaged()
+    public IEnumerator IEDamaged(float damage = 0)
     {
-        PlayerVisual.Instance.StartHitMotion();
+        PlayerVisual.Instance.StartHitMotion(damage);
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
         yield return null;
@@ -70,7 +64,7 @@ public class Player : MonoBehaviour, IHittable
             Dead();
         else
         {
-            StartCoroutine(IEDamaged());
+            StartCoroutine(IEDamaged(damage));
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
     }
