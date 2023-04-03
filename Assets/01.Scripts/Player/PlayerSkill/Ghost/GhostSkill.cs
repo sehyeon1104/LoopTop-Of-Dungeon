@@ -12,29 +12,33 @@ public class GhostSkill : PlayerSkillBase
     PlayerSkillData skillData;
     GameObject ghostMob;
     private float hiilaDuration = 5;
+    private PlayerMovement playerMovement;
+    [SerializeField]
+    private float attackRange = 1f;
+    Animator playerAnim;
+
+    // Beam
     [SerializeField]
     private float beamDistanceFromPlayer = 1f;
     private Vector3 beamDir;
     private float beamRot;
     private Vector3 beamPos;
-    [SerializeField]
-    private float attackRange = 1f;
-    Animator playerAnim;
-    WaitForSeconds dashTime = new WaitForSeconds(0.1f);
-    private void Awake()
+    private Poolable beam;
+    private Poolable subBeamLeft;
+    private Poolable subBeamRight;
+    private Vector3 joystickDir;
+
+    private void OnEnable()
     {
-        Cashing();
+        init();
         playerAnim = GetComponent<Animator>();
-    }
-    private void Start()
-    {
-        
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            BeamPattern(1);
+            BeamPattern(5);
         }
     }
     public override void Attack()
@@ -64,7 +68,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void ThirdSkill(int level)
     {
-
+        BeamPattern(level);
     }
     public override void ForuthSkill(int level)
     {
@@ -80,7 +84,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void DashSkill()
     {
-        StartCoroutine(Dash());
+      
     }
 
     #region 스킬 구현
@@ -130,25 +134,41 @@ public class GhostSkill : PlayerSkillBase
     
     public void BeamPattern(int level)
     {
-        beamPos = (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
-        Poolable beam = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, Quaternion.identity);
-        SetBeamRotation(beamPos);
-        beam.transform.Rotate(new Vector3(0, 0, beamRot));
-        //Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", (Vector2)transform.position + new Vector2(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized * beamDistanceFromPlayer, Quaternion.identity);
+        joystickDir = new Vector3(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
+
+        Debug.Log("Player Beam Pattern");
+
+        beamPos = transform.position + joystickDir;
+        beam = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", beamPos, Quaternion.identity);
+        beam.transform.Rotate(new Vector3(0, 0, SetBeamRotation(beamPos)));
+
+        switch (level)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                subBeamLeft = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
+                subBeamLeft.transform.position = beamPos + new Vector3(-joystickDir.y, joystickDir.x);
+
+                subBeamRight = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
+                subBeamRight.transform.position = beamPos + new Vector3(joystickDir.y, -joystickDir.x);
+                break;
+        }
     }
 
-    public void SetBeamRotation(Vector3 pos)
+    public float SetBeamRotation(Vector3 pos)
     {
         beamDir = pos - transform.position;
         beamRot = Mathf.Atan2(beamDir.y, beamDir.x) * Mathf.Rad2Deg;
+        return beamRot;
     }
-    public IEnumerator Dash()
-    {
-         playerMovement.IsMove = false;
-         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-         yield return dashTime;
-         playerMovement.IsMove = true;
-    }
+
     #endregion
     private void OnDrawGizmos()
     {

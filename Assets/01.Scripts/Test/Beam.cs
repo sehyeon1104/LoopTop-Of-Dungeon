@@ -102,6 +102,7 @@ public class Beam : MonoBehaviour
         {
             startFXList[i].Play();
         }
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Beam.wav",Define.Sound.Effect,1,0.5f);
 
         ShowRange.SetActive(false);
 

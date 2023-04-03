@@ -3,60 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class SaveManager : MonoSingleton<SaveManager>
+public static class SaveManager
 {
-    private string SAVE_PATH = "";
-    private string SAVE_FILENAME = "/SaveFile.json";
+	private static string SAVE_PATH = Application.dataPath + "/Json/";
+	private static string SAVE_FILENAME = "";
 
-    [SerializeField] private PlayerData playerData = null;
+	/// <summary>
+	/// 유저 데이터 저장
+	/// </summary>
+	public static void Save<T>(ref T userSaveData)
+	{
+		SAVE_FILENAME = typeof(T).FullName + ".json";
 
-    public PlayerData CurrentData { get { return playerData; } }
-
-    private void Awake()
-    {
-        SAVE_PATH = Application.dataPath + "/Json";
-        if (!Directory.Exists(SAVE_PATH))
+		if (!File.Exists(SAVE_PATH + SAVE_FILENAME))
+		{
+			Debug.Log("[SaveManager] 저장파일 없음");
+			Directory.CreateDirectory(SAVE_PATH);
+		}
+        else
         {
-            Directory.CreateDirectory(SAVE_PATH);
-            File.WriteAllText(SAVE_PATH + SAVE_FILENAME, JsonUtility.ToJson(new PlayerData()), System.Text.Encoding.UTF8);
-        }
+			Debug.Log("[SaveManager] 저장파일 있음");
+		}
+		string jsonData = JsonUtility.ToJson(userSaveData, true);
+		File.WriteAllText(SAVE_PATH + SAVE_FILENAME, jsonData, System.Text.Encoding.UTF8);
+		Debug.Log("[SaveManager] 저장완료");
+		
+	}
 
-        LoadFromJson();
-    }
+	/// <summary>
+	/// 유저 데이터 불러오기
+	/// </summary>
+	public static void Load<T>(ref T userSaveData)
+	{
+		SAVE_FILENAME = typeof(T).FullName + ".json";
 
-    private void Start()
-    {
-        SaveToJson();
-        InvokeRepeating("SaveToJson", 1f, 60f);
-    }
-
-    [ContextMenu("LoadFromJson")]
-    private void LoadFromJson()
-    {
-        if (File.Exists(SAVE_PATH + SAVE_FILENAME))
+		if (File.Exists(SAVE_PATH + SAVE_FILENAME))
+		{
+			string jsonData = File.ReadAllText(SAVE_PATH + SAVE_FILENAME);
+			T saveData = JsonUtility.FromJson<T>(jsonData);
+			userSaveData = saveData;
+			Debug.Log("[SaveManager] 로딩완료");
+		}
+        else
         {
-            string json = File.ReadAllText(SAVE_PATH + SAVE_FILENAME);
-            // 복호화
-            json = Crypto.AESDecrypt128(json);
-            playerData = JsonUtility.FromJson<PlayerData>(json);
-            Rito.Debug.Log("로딩완료");
+			Debug.Log($"[SaveManager] {SAVE_PATH + SAVE_FILENAME} 경로 없음");
         }
-    }
+	}
 
-    [ContextMenu("SaveToJson")]
-    public void SaveToJson()
-    {
-        string json = JsonUtility.ToJson(playerData, true);
-        // 암호화
-        json = Crypto.AESEncrypt128(json);
-        File.WriteAllText(SAVE_PATH + SAVE_FILENAME, json, System.Text.Encoding.UTF8);
-        Rito.Debug.Log("저장완료");
-
-    }
-
-    private void OnApplicationQuit()
-    {
-        SaveToJson();
-    }
-
+	/// <summary>
+	/// 세이브한 적이 있는지 체크
+	/// </summary>
+	/// <returns></returns>
+	public static bool GetCheckBool()
+	{
+		return File.Exists(SAVE_PATH + "PlayerData.json");
+	}
 }

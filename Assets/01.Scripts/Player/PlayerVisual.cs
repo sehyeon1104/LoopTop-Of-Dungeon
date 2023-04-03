@@ -9,9 +9,11 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     SpriteRenderer playerSprite;
     Animator playerAnimator;
     Volume hitVolume;
+    Volume weakHitVolume;
     private void Awake()
     {
-        hitVolume = GameObject.FindGameObjectWithTag("HitVolume").GetComponent<Volume>();
+        hitVolume = GameObject.Find("HitVolume").GetComponent<Volume>();
+        //weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }
@@ -19,14 +21,15 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     public void UpdateVisual(PlayerSkillData data)
     {
         UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        playerAnimator.runtimeAnimatorController = data.playerAnim;
+        // playerAnimator.runtimeAnimatorController = data.playerAnim;
         playerSprite.sprite = data.playerImg;
     }
-    public void StartHitMotion()
+
+    public void StartHitMotion(float damage = 0)
     {
-        StartCoroutine(IEHitMotion());
+        StartCoroutine(IEHitMotion(damage));
     }
-    public IEnumerator IEHitMotion()
+    public IEnumerator IEHitMotion(float damage = 0)
     {
         float timer = 0f;
 
@@ -39,12 +42,17 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
             timer += Time.unscaledDeltaTime;
 
             Time.timeScale -= 0.015f;
-            hitVolume.weight += 0.05f;
+
+            if(damage >= 2)
+                hitVolume.weight += 0.05f; 
+            else
+                weakHitVolume.weight += 0.05f;
             
             yield return null;
         }
         Time.timeScale = 1f;
         hitVolume.weight = 0;
+        weakHitVolume.weight = 0;
         playerSprite.color = Color.white;
     }
     public void VelocityChange(float VelocityX)

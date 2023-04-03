@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour, IHittable
 {
 
-    public PlayerBase playerBase = new PlayerBase();
+    public PlayerBase playerBase;
     
     private bool isPDamaged = false;
     [SerializeField]
@@ -31,17 +31,14 @@ public class Player : MonoBehaviour, IHittable
             playerBase.FragmentAmount += 100;
         }
     }
-    private void Awake()
-    {
-        playerBase.SetPlayerStat();
-    }
+
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
-    public IEnumerator IEDamaged()
+    public IEnumerator IEDamaged(float damage = 0)
     {
-        PlayerVisual.Instance.StartHitMotion();
+        PlayerVisual.Instance.StartHitMotion(damage);
         yield return new WaitForSeconds(invincibleTime);
         isPDamaged = false;
         yield return null;
@@ -64,7 +61,7 @@ public class Player : MonoBehaviour, IHittable
             Dead();
         else
         {
-            StartCoroutine(IEDamaged());
+            StartCoroutine(IEDamaged(damage));
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
     }

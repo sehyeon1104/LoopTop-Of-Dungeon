@@ -7,6 +7,10 @@ using UnityEngine.Playables;
 
 public class GhostUltSignal : MonoBehaviour
 {
+    [SerializeField] private GameObject GhostBoss;
+
+    [SerializeField] private GameObject Player;
+
     [SerializeField] private Animation GhostUltAnim;
 
     [SerializeField] private Image panel;
@@ -14,6 +18,8 @@ public class GhostUltSignal : MonoBehaviour
     [SerializeField] private SpriteRenderer[] GhostSprite;
 
     PlayableDirector PD;
+
+    Vector3 ghosttrasnform = new Vector3 (0, -10,0);
 
 
     List<string> animArray;
@@ -92,6 +98,11 @@ public class GhostUltSignal : MonoBehaviour
     {
         PD = GetComponent<PlayableDirector>();
         PD.Play();
+    }
+
+    public void GhostBossTransform()
+    {
+        GhostBoss.transform.position = Player.transform.position + ghosttrasnform;
     }
 
 

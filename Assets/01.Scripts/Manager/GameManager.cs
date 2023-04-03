@@ -15,49 +15,74 @@ public class GameManager : MonoSingleton<GameManager>
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
+    private PlayerData playerData;
+
     private GameObject hitEffect = null;
 
     private void Awake()
     {
+        if(_player == null)
+        {
+            Rito.Debug.Log("Get Player Instance");
+            _player = FindObjectOfType<Player>();
+
+            if (_player == null)
+            {
+                Rito.Debug.Log("Get Player Instance One more");
+                _player = FindObjectOfType<Player>();
+
+                if (_player == null)
+                {
+                    Debug.LogError("Can't Get Player Instance");
+                }
+            }
+        }
+
+        playerData = new PlayerData();
+        Player.playerBase = new PlayerBase();
+
+        if (!SaveManager.GetCheckBool())
+        {
+            Debug.Log("[GameManager] 저장파일 없음");
+            Player.playerBase.InitPlayerStat();
+            SetPlayerStat();
+            SaveManager.Save<PlayerData>(ref playerData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] 저장파일 있음");
+            SaveManager.Load<PlayerData>(ref playerData);
+            Debug.Log(playerData.hp);
+            LoadPlayerStat();
+            Debug.Log($"Load {Player.playerBase.Hp}");
+        }
+
+
+
         if(SceneManager.GetActiveScene().name == "TitleScene")
         {
             _player = null;
             return;
         }
 
-        Rito.Debug.Log("Get Player Instance");
-        _player = FindObjectOfType<Player>();
-
-        if(_player == null)
-        {
-            Rito.Debug.Log("Get Player Instance One more");
-            _player = FindObjectOfType<Player>();
-
-            if (_player == null)
-            {
-                Rito.Debug.Log("Instantiate Player");
-                playerPre = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Player(prototype).prefab");
-                var temp = Instantiate(playerPre, transform.position, Quaternion.identity);
-                _player = temp.GetComponent<Player>();
-            }
-            //else
-            //{
-            //    players = FindObjectsOfType<Player>();
-            //    if (players.Length > 1)
-            //    {
-            //        for (int i = 1; i < players.Length; ++i)
-            //        {
-            //            Destroy(players[i]);
-            //        }
-            //    }
-            //}
-        }
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
-        InitPlayerInfo();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log("Save");
+            Debug.Log("Update 전 플레이어Data : " + playerData.hp);
+            SetPlayerStat();
+            Debug.Log("Update 후 player정보: " + playerData.hp);
+            SaveManager.Save<PlayerData>(ref playerData);
+        }
     }
 
     private void Start()
     {
+        InitPlayerInfo();
         Managers.Pool.CreatePool(hitEffect, 10);
         mapTypeFlag = Define.MapTypeFlag.Ghost;
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
@@ -66,7 +91,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void InitPlayerInfo()
     {
-        Player.playerBase.FragmentAmount = PlayerPrefs.GetInt("PlayerFragmentAmount");
         UIManager.Instance.UpdateGoods();
     }
 
@@ -79,6 +103,35 @@ public class GameManager : MonoSingleton<GameManager>
     {
         var effect = Managers.Pool.Pop(hitEffect);
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
+    }
+
+    public void SetPlayerStat()
+    {
+        playerData.maxHp = Player.playerBase.MaxHp;
+        playerData.hp = Player.playerBase.Hp;
+        playerData.maxLevel = Player.playerBase.MaxLevel;
+        playerData.level = Player.playerBase.Level;
+        playerData.damage = Player.playerBase.Damage;
+        playerData.critChance = Player.playerBase.CritChance;
+        playerData.expTable = Player.playerBase.ExpTable;
+        playerData.exp = Player.playerBase.Exp;
+        playerData._fragmentAmount = Player.playerBase.FragmentAmount;
+        playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
+    }
+
+    public void LoadPlayerStat()
+    {
+        Debug.Log($"LoadPlayerStat.HP : {playerData.hp}");
+        Player.playerBase.MaxHp = playerData.maxHp;
+        Player.playerBase.Hp = playerData.hp;
+        Player.playerBase.MaxLevel = playerData.maxLevel;
+        Player.playerBase.Level = playerData.level;
+        Player.playerBase.Damage = playerData.damage;
+        Player.playerBase.CritChance = playerData.critChance;
+        Player.playerBase.ExpTable = playerData.expTable;
+        Player.playerBase.Exp = playerData.exp;
+        Player.playerBase.FragmentAmount = playerData._fragmentAmount;
+        Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
     }
 
     public void GameQuit()
