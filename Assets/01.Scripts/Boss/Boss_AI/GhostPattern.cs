@@ -148,7 +148,7 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position, Quaternion.identity);
+        Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", transform.position + Vector3.down * 2f, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("03.Prefabs/Enemy/Ghost/G_Mob_01", new Vector2(Random.Range(-2.5f, 29.5f), Random.Range(-3, 17.5f)), Quaternion.identity);
@@ -180,12 +180,20 @@ public class G_Patterns : BossPattern
             }
 
         }
-        Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 5);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
+
+
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
-        Boss.Instance.Base.Hp = hpFinal;
+        while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 1;
+            yield return null;
+        }
+        Debug.Log("³¡");
         mobList.Clear();
 
         yield return new WaitForSeconds(2f);
