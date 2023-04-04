@@ -173,7 +173,7 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        Physics2D.BoxCastAll(playerPos,(Vector2)currentPlayerPos,)
+        //Physics2D.BoxCastAll(playerPos,(Vector2)currentPlayerPos,)
         playerMovement.IsMove = true;
 
     }
