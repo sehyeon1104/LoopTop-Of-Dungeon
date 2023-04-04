@@ -12,7 +12,6 @@ public class GhostSkill : PlayerSkillBase
     PlayerSkillData skillData;
     GameObject ghostMob;
     private float hiilaDuration = 5;
-    private PlayerMovement playerMovement;
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
@@ -28,11 +27,10 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamRight;
     private Vector3 joystickDir;
 
-    private void OnEnable()
+    private void Awake()
     {
-        init();
+        Cashing();
         playerAnim = GetComponent<Animator>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
     }
     private void Update()
     {

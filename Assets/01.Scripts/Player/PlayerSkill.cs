@@ -51,11 +51,13 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
+        print(playerBase.PlayerTransformTypeFlag);
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
+            
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
