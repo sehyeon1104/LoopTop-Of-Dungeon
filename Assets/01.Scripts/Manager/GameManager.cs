@@ -55,7 +55,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
-        Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[0];
+        Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
 
         #endregion
 

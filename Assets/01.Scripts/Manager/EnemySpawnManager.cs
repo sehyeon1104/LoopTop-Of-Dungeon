@@ -26,7 +26,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave2EliteEnemyCount = 0;
 
     [SerializeField]
-    private GameObject dangerMark = null;
+    private GameObject enemySpawnEffect = null;
     [SerializeField]
     private float spawnTime = 1.5f;
 
@@ -45,14 +45,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
-        dangerMark = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ShowWave2EnemySpawnPos.prefab");
-        Managers.Pool.CreatePool(dangerMark, 10);
+        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect.prefab");
+        Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
 
     #region Addressable
 
-    // SO에 몹 배열을 선언, 해당 SO에 잡몹 넣고 어드레서블 적용. 그리고 사용할 때 SO에 있는 몹 불러오기
+    // 이외 방법 : SO에 몹 배열을 선언, 해당 SO에 잡몹 넣고 어드레서블 적용. 그리고 사용할 때 SO에 있는 몹 불러오기
 
     public void GetLocations()
     {
@@ -196,7 +196,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         curEnemies.Clear();
 
         yield return new WaitForSeconds(spawnTime);
-        isNextWave = true;
 
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
@@ -230,14 +229,15 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
     {
-        var dangerMarkObj = Managers.Pool.Pop(dangerMark);
-        dangerMarkObj.transform.position = spawnPos.position;
-         
+        var effect = Managers.Pool.Pop(enemySpawnEffect);
+        effect.transform.position = spawnPos.position;
+
         yield return new WaitForSeconds(spawnTime);
 
-        Managers.Pool.Push(dangerMarkObj);
+        Managers.Pool.Push(effect);
         enemy.gameObject.SetActive(true);
 
+        isNextWave = true;
         yield return null;
     }
     public void RemoveEnemyInList(Poolable enemy)
