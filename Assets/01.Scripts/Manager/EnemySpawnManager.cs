@@ -28,11 +28,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private GameObject enemySpawnEffect = null;
     [SerializeField]
-    private float spawnTime = 1.5f;
+    private float spawnTime = 1f;
 
     private Door door = null;
 
     public bool isNextWave { private set; get; } = false;
+
+    private WaitForSeconds waitForSpawnTime;
+    private WaitForSeconds waitForHalfSpawnTime;
 
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
@@ -45,7 +48,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
-        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect.prefab");
+        waitForSpawnTime = new WaitForSeconds(spawnTime);
+        waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
+        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
@@ -177,6 +182,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             enemy.transform.position = enemySpawnPos[randPos].position;
             // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
         for(int i = 0; i < wave1EliteEnemyCount; ++i)
         {
@@ -189,13 +196,18 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
             curEnemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
 
+
         curEnemies.Clear();
 
-        yield return new WaitForSeconds(spawnTime);
+        yield return waitForSpawnTime;
+
+        isNextWave = true;
 
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
@@ -227,18 +239,23 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
+    public void StartNextWave()
+    {
+        isNextWave = true;
+    }
+
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
     {
         var effect = Managers.Pool.Pop(enemySpawnEffect);
-        effect.transform.position = spawnPos.position;
+        effect.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - enemy.transform.localScale.y / 2, 0);
 
-        yield return new WaitForSeconds(spawnTime);
+        yield return waitForHalfSpawnTime;
 
-        Managers.Pool.Push(effect);
         enemy.gameObject.SetActive(true);
 
-        isNextWave = true;
-        yield return null;
+        yield return waitForHalfSpawnTime;
+
+        Managers.Pool.Push(effect);
     }
     public void RemoveEnemyInList(Poolable enemy)
     {

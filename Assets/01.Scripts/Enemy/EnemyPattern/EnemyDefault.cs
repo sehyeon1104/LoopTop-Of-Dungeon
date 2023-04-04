@@ -48,6 +48,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (actCoroutine != null) actCoroutine = null;
         isDead = false;
         isPlayGetHitEffect = false;
+        if(sprite != null)
+        {
+            sprite.material = spriteLitMat;
+        }
     }
     private void Awake()
     {

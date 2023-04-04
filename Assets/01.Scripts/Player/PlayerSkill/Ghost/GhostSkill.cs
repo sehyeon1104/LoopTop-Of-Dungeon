@@ -1,6 +1,8 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.VFX;
+using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
@@ -11,9 +13,11 @@ public class GhostSkill : PlayerSkillBase
     private float hiilaDuration = 5;
     [SerializeField]
     private float attackRange = 1f;
+    WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
+    float telpoVelocity = 20f;
     Animator playerAnim;
     float dashtime = 0.1f;
-
+    SpriteRenderer ghostDash;
     // Beam
     [SerializeField]
     private float beamDistanceFromPlayer = 1f;
@@ -67,7 +71,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void ForuthSkill(int level)
     {
-
+        StartCoroutine(telpoSkill(level));
     }
     public override void FifthSkill(int level)
     {
@@ -129,13 +133,11 @@ public class GhostSkill : PlayerSkillBase
 
     public void BeamPattern(int level)
     {
-        joystickDir = new Vector3(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
 
-        Debug.Log("Player Beam Pattern");
-
-        beamPos = transform.position + joystickDir;
-        beam = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", beamPos, Quaternion.identity);
-        beam.transform.Rotate(new Vector3(0, 0, SetBeamRotation(beamPos)));
+        beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(beamRot, Vector3.forward);
+        print(beamPos);
+        beam = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", transform.position, angleAxis);
 
         switch (level)
         {
@@ -155,6 +157,25 @@ public class GhostSkill : PlayerSkillBase
                 subBeamRight.transform.position = beamPos + new Vector3(joystickDir.y, -joystickDir.x);
                 break;
         }
+    }
+    IEnumerator telpoSkill(int level)
+    {
+        playerMovement.IsMove = false;
+        Vector3 playerPos = transform.position;
+        playerRigid.velocity = telpoVelocity * playerMovement.Direction;
+        yield return telpoDuration;
+        Vector3 currentPlayerPos = transform.position - playerPos;
+        float angle = Mathf.Atan2(currentPlayerPos.y, currentPlayerPos.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        var telpoEffect =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", playerPos,angleAxis);
+        VisualEffect[] effects =  telpoEffect.GetComponentsInChildren<VisualEffect>();
+        for (int i = 0; i < effects.Length; i++)
+        {
+            effects[i].Play();
+        }
+        //Physics2D.BoxCastAll(playerPos,(Vector2)currentPlayerPos,)
+        playerMovement.IsMove = true;
+
     }
     IEnumerator Dash()
     {
@@ -183,13 +204,6 @@ public class GhostSkill : PlayerSkillBase
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
     }
-    public float SetBeamRotation(Vector3 pos)
-    {
-        beamDir = pos - transform.position;
-        beamRot = Mathf.Atan2(beamDir.y, beamDir.x) * Mathf.Rad2Deg;
-        return beamRot;
-    }
-
     #endregion
     private void OnDrawGizmos()
     {
