@@ -177,6 +177,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             enemy.transform.position = enemySpawnPos[randPos].position;
             // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
         for(int i = 0; i < wave1EliteEnemyCount; ++i)
         {
@@ -189,9 +191,13 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
             enemy.transform.position = enemySpawnPos[randPos].position;
             curEnemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
+
+        isNextWave = true;
 
         curEnemies.Clear();
 
@@ -227,6 +233,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
+    public void StartNextWave()
+    {
+        isNextWave = true;
+    }
+
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
     {
         var effect = Managers.Pool.Pop(enemySpawnEffect);
@@ -237,7 +248,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Managers.Pool.Push(effect);
         enemy.gameObject.SetActive(true);
 
-        isNextWave = true;
         yield return null;
     }
     public void RemoveEnemyInList(Poolable enemy)

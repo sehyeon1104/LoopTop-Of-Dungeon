@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e572008a680c4447a5024d98843cc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSprite: {fileID: 0}
 --- !u!114 &1587560799495554440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +726,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  Rb: {fileID: 0}
 --- !u!114 &882001287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6719222096460403493, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6719227303304682481, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_Layer
