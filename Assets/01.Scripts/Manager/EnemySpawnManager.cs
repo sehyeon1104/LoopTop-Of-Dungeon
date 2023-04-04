@@ -28,7 +28,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private GameObject enemySpawnEffect = null;
     [SerializeField]
-    private float spawnTime = 0.8f;
+    private float spawnTime = 1f;
 
     private Door door = null;
 
@@ -45,7 +45,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
-        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/ghost/SummonEffect.prefab");
+        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
@@ -244,9 +244,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         var effect = Managers.Pool.Pop(enemySpawnEffect);
         effect.transform.position = spawnPos.position;
 
-        enemy.gameObject.SetActive(true);
-
         yield return new WaitForSeconds(spawnTime);
+
+        enemy.gameObject.SetActive(true);
 
         Managers.Pool.Push(effect);
 
