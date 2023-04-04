@@ -12,7 +12,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
         set => isMove = value;
     }
     public Joystick joystick { private set; get; }
-    [Range(1, 5)][SerializeField] float speed = 3;
+    [Range(1, 5)][SerializeField] float speed = 4.25f;
     Rigidbody2D rb;
     public Rigidbody2D Rb;
     private float x;
