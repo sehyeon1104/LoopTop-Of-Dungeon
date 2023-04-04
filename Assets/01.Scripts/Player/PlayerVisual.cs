@@ -49,6 +49,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
             
             yield return null;
         }
+
         Time.timeScale = 1f;
         hitVolume.weight = 0;
         weakHitVolume.weight = 0;

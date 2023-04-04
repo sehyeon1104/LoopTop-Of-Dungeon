@@ -34,8 +34,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     Material hitMat;
     Material spriteLitMat;
 
+    private Coroutine getHitCoroutine;
     float changeTime = 0.07f;
     WaitForEndOfFrame wait;
+    private bool isPlayGetHitEffect = false;
     public Vector3 hitPoint => Vector3.zero;
 
     private bool isDead = false;
@@ -45,12 +47,13 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         SetStatus();
         if (actCoroutine != null) actCoroutine = null;
         isDead = false;
+        isPlayGetHitEffect = false;
     }
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
-        hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
     }
     void Start()
     {
@@ -157,23 +160,38 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (hp <= 0)
             EnemyDead();
         else
-            StartCoroutine(GetHit());
-
-
+        {
+            if (isPlayGetHitEffect)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(GetHit());
+            }
+            //if(getHitCoroutine != null)
+            //{
+            //    StopCoroutine(getHitCoroutine);
+            //}
+            //getHitCoroutine = StartCoroutine(GetHit());
+        }
     }
-    IEnumerator GetHit()
+    private IEnumerator GetHit()
     {
+        isPlayGetHitEffect = true;
         float timer = 0;
-         hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
         sprite.material = hitMat;
         while(changeTime > timer)
-        {
+        {   
             timer+= Time.deltaTime;
-            hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
-            yield return null;
+            hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
+            yield return wait;
         }
         sprite.material = spriteLitMat;
+        isPlayGetHitEffect = false;
     }
+
     public virtual void EnemyDead()
     {
         //if (transform.parent != null)
