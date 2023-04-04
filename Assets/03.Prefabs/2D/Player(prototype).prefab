@@ -406,10 +406,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 0}
-  dashVelocity: 0
   playerRigid: {fileID: 0}
-  beamDistanceFromPlayer: 1
+  playerSprite: {fileID: 0}
+  dashVelocity: 0
+  dashDuration: 0
   attackRange: 1
+  beamDistanceFromPlayer: 1
 --- !u!114 &7340307882004977393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,8 +425,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 0}
-  dashVelocity: 0
   playerRigid: {fileID: 0}
+  playerSprite: {fileID: 0}
+  dashVelocity: 0
+  dashDuration: 0
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -628,7 +632,6 @@ GameObject:
   - component: {fileID: 5322660876921446628}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
-  - component: {fileID: 1861917742}
   m_Layer: 8
   m_Name: Player(prototype)
   m_TagString: Player
@@ -750,23 +753,6 @@ MonoBehaviour:
   prefix: 
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
---- !u!114 &1861917742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
-  dashVelocity: 0
-  playerRigid: {fileID: 0}
-  beamDistanceFromPlayer: 1
-  attackRange: 1
 --- !u!1001 &7442715257189859915
 PrefabInstance:
   m_ObjectHideFlags: 0
