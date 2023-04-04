@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour, IHittable
 {
 
-    public PlayerBase playerBase;
+    public PlayerBase playerBase = new PlayerBase();
     
     private bool isPDamaged = false;
     [SerializeField]
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {
+    {   
 
         if (Input.GetKeyDown(KeyCode.C))
         {
