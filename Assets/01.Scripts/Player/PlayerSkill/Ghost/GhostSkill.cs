@@ -12,7 +12,6 @@ public class GhostSkill : PlayerSkillBase
     PlayerSkillData skillData;
     GameObject ghostMob;
     private float hiilaDuration = 5;
-    private PlayerMovement playerMovement;
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
@@ -32,7 +31,6 @@ public class GhostSkill : PlayerSkillBase
     {
         init();
         playerAnim = GetComponent<Animator>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
     }
     private void Update()
     {
