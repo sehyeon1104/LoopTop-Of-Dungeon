@@ -13,7 +13,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     private void Awake()
     {
         hitVolume = GameObject.Find("HitVolume").GetComponent<Volume>();
-        //weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
+        weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
     }

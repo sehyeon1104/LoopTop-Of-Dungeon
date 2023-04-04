@@ -46,7 +46,7 @@ public class Fragment : MonoBehaviour
         yield return new WaitForSeconds(moveToPlayerTime);
 
         Managers.Pool.Push(fragmentPoolable);
-        GameManager.Instance.Player.playerBase.FragmentAmount += Random.Range(2, 3);
+        GameManager.Instance.Player.playerBase.FragmentAmount += Random.Range(2, 5);
     }
 
 
