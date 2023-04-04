@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
-    SpriteRenderer playerSprite;
+    public SpriteRenderer playerSprite;
     Animator playerAnimator;
     Volume hitVolume;
     Volume weakHitVolume;
