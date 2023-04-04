@@ -6,12 +6,6 @@ using UnityEngine.UI;
 public class PlayerBase
 {
     // save¿ë
-
-    public PlayerBase()
-    {
-        InitPlayerStat();
-    }
-
     public void InitPlayerStat()
     {
         maxHp = 12;
@@ -28,12 +22,13 @@ public class PlayerBase
         {
             _expTable[i] = i + 1;
         }
-
-        PlayerTransformDataSOList = new List<PlayerSkillData>();
-        PlayerTransformData = null;
+       
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        PlayerTransformDataSOArr.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        PlayerTransformData = PlayerTransformDataSOArr[0];
     }
 
-    public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
+    public List<PlayerSkillData> PlayerTransformDataSOArr { get; set; } = new List<PlayerSkillData>();
     public PlayerSkillData PlayerTransformData { get; set; }
 
     private bool isPDead;

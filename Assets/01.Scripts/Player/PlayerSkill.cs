@@ -55,7 +55,7 @@ public class PlayerSkill : MonoBehaviour
         {
             playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
+            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOArr[(int)playerBase.PlayerTransformTypeFlag];
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
