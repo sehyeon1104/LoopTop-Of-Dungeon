@@ -1026,8 +1026,8 @@ MonoBehaviour:
   ghostNormalEnemyPrefabs: []
   ghostEliteEnemyPrefabs: []
   <curEnemies>k__BackingField: []
-  EnemySpawnEffect: {fileID: 0}
-  isPlaySpawnAnimation: 0
+  enemySpawnEffect: {fileID: 0}
+  spawnTime: 0.8
   assetLabel:
     m_LabelString: GhostEnemy
 --- !u!114 &520647069
@@ -2426,6 +2426,10 @@ PrefabInstance:
     - target: {fileID: 4086107390685430464, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_SortingOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322660876921446628, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: speed
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 7442715256025506024, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_RootOrder

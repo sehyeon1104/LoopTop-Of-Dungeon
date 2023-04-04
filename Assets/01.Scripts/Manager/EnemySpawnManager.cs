@@ -28,7 +28,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private GameObject enemySpawnEffect = null;
     [SerializeField]
-    private float spawnTime = 1.5f;
+    private float spawnTime = 0.8f;
 
     private Door door = null;
 
@@ -245,8 +245,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         yield return new WaitForSeconds(spawnTime);
 
-        Managers.Pool.Push(effect);
         enemy.gameObject.SetActive(true);
+
+        Managers.Pool.Push(effect);
 
         yield return null;
     }
