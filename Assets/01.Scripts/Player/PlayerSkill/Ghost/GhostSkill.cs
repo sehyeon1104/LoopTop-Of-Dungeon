@@ -8,12 +8,11 @@ public class GhostSkill : PlayerSkillBase
     float cicleRange = 2f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
-    GameObject ghostMob;
-    GameObject dashEffect;
     private float hiilaDuration = 5;
     [SerializeField]
     private float attackRange = 1f;
     Animator playerAnim;
+    float dashtime = 0.1f;
 
     // Beam
     [SerializeField]
@@ -25,7 +24,6 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
     private Vector3 joystickDir;
-    WaitForSeconds dashTime = new WaitForSeconds(0.1f);
     private void Awake()
     {
         Cashing();
@@ -77,7 +75,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void UltimateSkill()
     {
-      
+
     }
     public override void DashSkill()
     {
@@ -101,7 +99,7 @@ public class GhostSkill : PlayerSkillBase
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.7f);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    if (attachObjs[i].CompareTag("Enemy")||attachObjs[i].CompareTag("Boss"))
+                    if (attachObjs[i].CompareTag("Enemy") || attachObjs[i].CompareTag("Boss"))
                     {
                         attachObjs[i].GetComponent<IHittable>().OnDamage(1, attachObjs[i].gameObject, playerBase.CritChance);
                     }
@@ -116,7 +114,7 @@ public class GhostSkill : PlayerSkillBase
     IEnumerator HillaSkill(int level)
     {
         float timer = 0;
-       Poolable ghostMob =  Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position +  new Vector3(Mathf.Cos(Random.Range(0,360f)*Mathf.Deg2Rad), Mathf.Sin(Random.Range(0,360f) * Mathf.Deg2Rad),0) * cicleRange, quaternion.identity);
+        Poolable ghostMob = Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity);
         while (true)
         {
             if (timer > hiilaDuration)
@@ -128,7 +126,7 @@ public class GhostSkill : PlayerSkillBase
             yield return null;
         }
     }
-    
+
     public void BeamPattern(int level)
     {
         joystickDir = new Vector3(playerMovement.joystick.Horizontal, playerMovement.joystick.Vertical).normalized;
@@ -160,9 +158,29 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator Dash()
     {
+        float timer = 0;
+        float timerA = 0;
+        Color dashColor =new Color(1,1,1,0);
         playerMovement.IsMove = false;
+        Vector3 playerPos = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        yield return dashTime;
+        while (timer < dashtime)
+        {
+            if(timerA >= dashtime/5)
+            {
+
+                dashColor.a += 0.25f;
+                playerSprite.color = dashColor;
+                timerA = 0;
+            }
+            timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            yield return null;
+        }
+        Vector3 playerPoss = transform.position - playerPos;
+        float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
     }
     public float SetBeamRotation(Vector3 pos)
@@ -178,5 +196,5 @@ public class GhostSkill : PlayerSkillBase
         Gizmos.DrawWireSphere(transform.position, 1.5f);
     }
 
-   
+
 }

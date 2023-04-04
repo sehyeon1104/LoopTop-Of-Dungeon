@@ -5,11 +5,16 @@ using UnityEngine;
 public class PowerSkill : PlayerSkillBase
 {
     Animator playerAnim;
+    ParticleSystem attackPar;
     float attackRange=1f;
     private void Awake()
     {
         Cashing();
         playerAnim = GetComponent<Animator>();
+    }
+    private void Start()
+    {
+        attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
     }
     public override void Attack()
     {
@@ -17,6 +22,10 @@ public class PowerSkill : PlayerSkillBase
             return;
 
         playerAnim.SetTrigger("Attack");
+
+        attackPar.transform.localPosition = Mathf.Sign(PlayerMovement.Instance.Direction.x) >= 1 ? Vector3.right : Vector3.left;
+        attackPar.Play();
+
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for (int i = 0; i < enemys.Length; i++)
         {
