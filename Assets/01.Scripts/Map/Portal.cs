@@ -27,6 +27,7 @@ public class Portal : MonoBehaviour
         if (!isLoadScene)
         {
             isLoadScene = true;
+            GameManager.Instance.SavePlayerStat();
 
             nextSceneNum = SceneManager.GetActiveScene().buildIndex + 1;
 

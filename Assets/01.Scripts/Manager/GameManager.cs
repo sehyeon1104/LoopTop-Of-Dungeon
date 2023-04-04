@@ -50,7 +50,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Rito.Debug.Log("[GameManager] 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
-            LoadPlayerStat();
+            GetPlayerStat();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -116,7 +116,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
     }
 
-    public void LoadPlayerStat()
+    public void GetPlayerStat()
     {
         Player.playerBase.MaxHp = playerData.maxHp;
         Player.playerBase.Hp = playerData.hp;
@@ -128,6 +128,15 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+    }
+
+    /// <summary>
+    /// 플레이어 데이터 저장
+    /// </summary>
+    public void SavePlayerStat()
+    {
+        SetPlayerStat();
+        SaveManager.Save<PlayerData>(ref playerData);
     }
 
     public void GameQuit()
