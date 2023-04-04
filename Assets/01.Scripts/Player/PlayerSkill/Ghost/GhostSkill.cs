@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,6 +9,7 @@ public class GhostSkill : PlayerSkillBase
     float janpanDuration = 5f;
     PlayerSkillData skillData;
     GameObject ghostMob;
+    GameObject dashEffect;
     private float hiilaDuration = 5;
     [SerializeField]
     private float attackRange = 1f;
@@ -26,7 +25,7 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
     private Vector3 joystickDir;
-
+    WaitForSeconds dashTime = new WaitForSeconds(0.1f);
     private void Awake()
     {
         Cashing();
@@ -82,7 +81,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void DashSkill()
     {
-      
+        StartCoroutine(Dash());
     }
 
     #region 스킬 구현
@@ -159,7 +158,13 @@ public class GhostSkill : PlayerSkillBase
                 break;
         }
     }
-
+    IEnumerator Dash()
+    {
+        playerMovement.IsMove = false;
+        playerRigid.velocity = playerMovement.Direction * dashVelocity;
+        yield return dashTime;
+        playerMovement.IsMove = true;
+    }
     public float SetBeamRotation(Vector3 pos)
     {
         beamDir = pos - transform.position;

@@ -13,8 +13,8 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     public Joystick joystick { private set; get; }
     [Range(1, 5)][SerializeField] float speed = 4.25f;
+
     Rigidbody2D rb;
-    public Rigidbody2D Rb;
     private float x;
     private float y;
     Vector2 direction = Vector2.zero;
