@@ -23,8 +23,12 @@ public class PowerSkill : PlayerSkillBase
 
         playerAnim.SetTrigger("Attack");
 
-        attackPar.transform.localPosition = PlayerVisual.Instance.playerSprite.flipX? Vector3.left : Vector3.right;
+        attackPar.transform.SetParent(transform);
+
+        attackPar.transform.localPosition = PlayerVisual.Instance.playerSprite.flipX ? Vector3.right : Vector3.left;
         attackPar.Play();
+
+        attackPar.transform.SetParent(null);
 
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for (int i = 0; i < enemys.Length; i++)
