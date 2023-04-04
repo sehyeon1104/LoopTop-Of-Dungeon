@@ -21,8 +21,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     public void UpdateVisual(PlayerSkillData data)
     {
         UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        // playerAnimator.runtimeAnimatorController = data.playerAnim;
-        playerSprite.sprite = data.playerImg;
+        playerAnimator.runtimeAnimatorController = data.playerAnim;
     }
 
     public void StartHitMotion(float damage = 0)

@@ -27,9 +27,9 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamRight;
     private Vector3 joystickDir;
 
-    private void OnEnable()
+    private void Awake()
     {
-        init();
+        Cashing();
         playerAnim = GetComponent<Animator>();
     }
     private void Update()
