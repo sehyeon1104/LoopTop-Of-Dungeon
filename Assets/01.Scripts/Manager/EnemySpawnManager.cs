@@ -244,9 +244,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         var effect = Managers.Pool.Pop(enemySpawnEffect);
         effect.transform.position = spawnPos.position;
 
-        yield return new WaitForSeconds(spawnTime);
+        yield return new WaitForSeconds(spawnTime / 2);
 
         enemy.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(spawnTime / 2);
 
         Managers.Pool.Push(effect);
 
