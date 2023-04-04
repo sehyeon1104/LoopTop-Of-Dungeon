@@ -28,11 +28,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [SerializeField]
     private GameObject enemySpawnEffect = null;
     [SerializeField]
-    private float spawnTime = 0.8f;
+    private float spawnTime = 1f;
 
     private Door door = null;
 
     public bool isNextWave { private set; get; } = false;
+
+    private WaitForSeconds waitForSpawnTime;
+    private WaitForSeconds waitForHalfSpawnTime;
 
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
@@ -45,7 +48,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
-        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/ghost/SummonEffect.prefab");
+        waitForSpawnTime = new WaitForSeconds(spawnTime);
+        waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
+        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
@@ -200,7 +205,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         curEnemies.Clear();
 
-        yield return new WaitForSeconds(spawnTime);
+        yield return waitForSpawnTime;
 
         isNextWave = true;
 
@@ -242,15 +247,15 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
     {
         var effect = Managers.Pool.Pop(enemySpawnEffect);
-        effect.transform.position = spawnPos.position;
+        effect.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - enemy.transform.localScale.y / 2, 0);
+
+        yield return waitForHalfSpawnTime;
 
         enemy.gameObject.SetActive(true);
 
-        yield return new WaitForSeconds(spawnTime);
+        yield return waitForHalfSpawnTime;
 
         Managers.Pool.Push(effect);
-
-        yield return null;
     }
     public void RemoveEnemyInList(Poolable enemy)
     {
