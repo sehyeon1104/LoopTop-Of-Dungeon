@@ -5,9 +5,9 @@ using UnityEngine;
 
 public abstract  class PlayerSkillBase : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
-    public Rigidbody2D playerRigid;
-    public SpriteRenderer playerSprite;
+    [HideInInspector] public PlayerMovement playerMovement;
+    [HideInInspector] public Rigidbody2D playerRigid;
+    [HideInInspector] public SpriteRenderer playerSprite;
     public float dashVelocity = 0;
     public float dashDuration = 0;
     public PlayerBase playerBase;

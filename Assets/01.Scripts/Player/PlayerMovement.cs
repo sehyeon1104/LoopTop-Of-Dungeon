@@ -37,7 +37,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     {
         Vector2 VelocityVec = inputVelocity * speed;
         rb.velocity = VelocityVec;
-        PlayerVisual.Instance.VelocityChange(inputVelocity.x);
+        PlayerVisual.Instance.VelocityChange(direction.x);
         if (inputVelocity.x != 0 || inputVelocity.y != 0)
         {
             direction = inputVelocity;

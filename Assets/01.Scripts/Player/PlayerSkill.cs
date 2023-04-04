@@ -51,7 +51,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        print(playerBase.PlayerTransformTypeFlag);
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
