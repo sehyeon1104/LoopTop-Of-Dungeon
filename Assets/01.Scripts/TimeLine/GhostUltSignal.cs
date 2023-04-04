@@ -11,6 +11,8 @@ public class GhostUltSignal : MonoBehaviour
 
     [SerializeField] private GameObject Player;
 
+    [SerializeField] private GameObject GhostBossHeads;
+
     [SerializeField] private Animation GhostUltAnim;
 
     [SerializeField] private Image panel;
@@ -20,6 +22,8 @@ public class GhostUltSignal : MonoBehaviour
     PlayableDirector PD;
 
     Vector3 ghosttrasnform = new Vector3 (0, -10,0);
+
+    Vector3 ghostheadtransform = new Vector3(-4.7f, 8.5f);
 
 
     List<string> animArray;
@@ -103,6 +107,7 @@ public class GhostUltSignal : MonoBehaviour
     public void GhostBossTransform()
     {
         GhostBoss.transform.position = Player.transform.position + ghosttrasnform;
+        GhostBossHeads.transform.position = Player.transform.position + ghostheadtransform;
     }
 
 

@@ -2531,6 +2531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GhostBoss: {fileID: 106456884}
   Player: {fileID: 217447005}
+  GhostBossHeads: {fileID: 0}
   GhostUltAnim: {fileID: 106456887}
   panel: {fileID: 1652394335}
   GhostSprite: []
@@ -2686,6 +2687,10 @@ PlayableDirector:
     value: {fileID: 184450412}
   - key: {fileID: -1739120376106190708, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
     value: {fileID: 336537418}
+  - key: {fileID: -2855584749768473169, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 1267202470}
+  - key: {fileID: -237177909683600273, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 106456884}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &661218159
@@ -4374,6 +4379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1267202469}
+  - component: {fileID: 1267202470}
   m_Layer: 0
   m_Name: GhostUltPattern
   m_TagString: Untagged
@@ -4388,8 +4394,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267202468}
-  m_LocalRotation: {x: -0, y: -0, z: 0.8898946, w: 0.45616627}
-  m_LocalPosition: {x: -3.9, y: -19.9, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.8898946, w: 0.45616627}
+  m_LocalPosition: {x: -4.7, y: 8.5, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4400,6 +4406,26 @@ Transform:
   m_Father: {fileID: 367252700}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 125.72}
+--- !u!95 &1267202470
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267202468}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1295835924
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,7 +6562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2846695619369104224, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2847917337649561076, guid: 4286b889d5b19b241a1d5c1bc1983c1a, type: 3}
       propertyPath: SummonClock
