@@ -193,7 +193,6 @@ public class G_Patterns : BossPattern
             Boss.Instance.Base.Hp += 1;
             yield return null;
         }
-        Debug.Log("³¡");
         mobList.Clear();
 
         yield return new WaitForSeconds(2f);
