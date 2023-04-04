@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {
+    {   
 
         if (Input.GetKeyDown(KeyCode.C))
         {

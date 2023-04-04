@@ -2539,6 +2539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5031a51ed841ca445a8354df13cc8b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GhostBoss: {fileID: 0}
+  Player: {fileID: 0}
   GhostUltAnim: {fileID: 171815777}
   panel: {fileID: 1652394335}
   GhostSprite: []
@@ -7084,6 +7086,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4086107390685430464, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c23d40612f301a741b7f850d23f15492, type: 3}
     - target: {fileID: 4207219456636337038, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_LocalPosition.y
       value: -10.62
@@ -7110,7 +7116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5322660876921446628, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: speed
-      value: 5
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 7179671707416565487, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_ShadowIntensityEnabled
