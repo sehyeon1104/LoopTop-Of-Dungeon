@@ -43,6 +43,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log(playerBase.PlayerTransformTypeFlag);
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         for (int i =0; i < playerSkillBases.Length; i++) {
             playerSkillBases[i].enabled = false;    
@@ -51,7 +52,6 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        print(playerBase.PlayerTransformTypeFlag);
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
