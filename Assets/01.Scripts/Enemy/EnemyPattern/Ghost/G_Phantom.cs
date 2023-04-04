@@ -5,14 +5,7 @@ using UnityEngine;
 public class G_Phantom : EnemyDefault
 {
     WaitForSeconds attackWait = new WaitForSeconds(1.5f);
-    SpriteRenderer spriteRenderer;
-
     float timer = 2.5f;
-
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
     public override IEnumerator MoveToPlayer()
     {
@@ -32,14 +25,14 @@ public class G_Phantom : EnemyDefault
             sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
             transform.Translate(dir * Time.deltaTime * speed);
 
-            spriteRenderer.color = new Color(1, 1, 1, timer);
+            sprite.color = new Color(1, 1, 1, timer);
 
             yield return null;
 
         }
 
         timer = 2.5f;
-        spriteRenderer.color = new Color(1, 1, 1, 1);
+        sprite.color = new Color(1, 1, 1, 1);
 
         dir = (transform.position - playerTransform.position).normalized;
         transform.position = playerTransform.position + transform.right * Mathf.Sign(dir.x);

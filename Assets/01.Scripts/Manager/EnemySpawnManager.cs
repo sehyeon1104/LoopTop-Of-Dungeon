@@ -45,7 +45,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private void Start()
     {
         door = FindObjectOfType<Door>();
-        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect.prefab");
+        enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/ghost/SummonEffect.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
@@ -197,11 +197,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
 
-        isNextWave = true;
 
         curEnemies.Clear();
 
         yield return new WaitForSeconds(spawnTime);
+
+        isNextWave = true;
 
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
@@ -243,9 +244,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         var effect = Managers.Pool.Pop(enemySpawnEffect);
         effect.transform.position = spawnPos.position;
 
-        yield return new WaitForSeconds(spawnTime);
-
         enemy.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(spawnTime);
 
         Managers.Pool.Push(effect);
 
