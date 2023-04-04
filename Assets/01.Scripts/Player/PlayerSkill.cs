@@ -19,7 +19,7 @@ public class PlayerSkill : MonoBehaviour
     float dashDistance = 2f;
     PlayerBase playerBase;
     [Space]
-    [Header("½ºÅ³")]
+    [Header("ï¿½ï¿½Å³")]
     List<PlayerSkillBase> SkillBase;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
@@ -43,6 +43,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log(playerBase.PlayerTransformTypeFlag);
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         for (int i =0; i < playerSkillBases.Length; i++) {
             playerSkillBases[i].enabled = false;    
@@ -51,7 +52,6 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.I))
         {
             playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
@@ -101,7 +101,7 @@ public class PlayerSkill : MonoBehaviour
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
             skillEvent[4]();      
     }
-    #region ¸®½ºÆ® ¼ÅÇÃ
+    #region ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
     public void ListInit()
     {
