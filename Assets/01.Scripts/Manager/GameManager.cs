@@ -15,7 +15,7 @@ public class GameManager : MonoSingleton<GameManager>
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
-    private PlayerData playerData;
+    private PlayerData playerData = new PlayerData();
 
     private GameObject hitEffect = null;
 
@@ -38,9 +38,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
 
-        playerData = new PlayerData();
-        Player.playerBase = new PlayerBase();
-
+        #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckBool())
         {
             Rito.Debug.Log("[GameManager] 저장파일 없음");
@@ -55,7 +53,13 @@ public class GameManager : MonoSingleton<GameManager>
             LoadPlayerStat();
         }
 
-        if(SceneManager.GetActiveScene().name == "TitleScene")
+        Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
+        Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[0];
+
+        #endregion
+
+        if (SceneManager.GetActiveScene().name == "TitleScene")
         {
             _player = null;
             return;
