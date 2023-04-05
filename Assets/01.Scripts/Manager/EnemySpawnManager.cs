@@ -25,10 +25,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave2NormalEnemyCount = 0;
     private int wave2EliteEnemyCount = 0;
 
-    [SerializeField]
     private GameObject enemySpawnEffect = null;
     [SerializeField]
     private float spawnTime = 1f;
+
+    private GameObject enemyDeadEffect = null;
 
     private Door door = null;
 
@@ -39,6 +40,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
+
 
     private void Awake()
     {
@@ -51,6 +53,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         waitForSpawnTime = new WaitForSeconds(spawnTime);
         waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
+        enemyDeadEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/GhostDeadEffect.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
@@ -270,6 +273,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             }
             return;
         }
+        var enemyDeadEffectClone = Managers.Pool.Pop(enemyDeadEffect);
+        enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
         Managers.Pool.Push(enemy);
     }
