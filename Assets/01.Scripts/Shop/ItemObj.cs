@@ -21,7 +21,6 @@ public class ItemObj : MonoBehaviour
     private Define.ItemType itemType;
     [SerializeField]
     private GameObject soldOutPanel = null;
-    int num = 0;
     public int Num { get; set; }
     private Item item = null;
 

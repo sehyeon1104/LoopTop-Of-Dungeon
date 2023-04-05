@@ -11,22 +11,17 @@ public class GhostUltSignal : MonoBehaviour
 
     [SerializeField] private GameObject Player;
 
-    [SerializeField] private GameObject GhostBossHeads;
+    [SerializeField] private GameObject GhostBossSkill;
 
     [SerializeField] private Animation GhostUltAnim;
 
-    [SerializeField] private Image panel;
-
-    [SerializeField] private SpriteRenderer[] GhostSprite;
+    [SerializeField] private SpriteRenderer panel1, panel2;
 
     PlayableDirector PD;
 
-    Vector3 ghosttrasnform = new Vector3 (0, -10,0);
-
-    Vector3 ghostheadtransform = new Vector3(-4.7f, 8.5f);
-
-
     List<string> animArray;
+
+    WaitForSeconds zerodotzeroone = new WaitForSeconds(0.01f);
 
     internal int index = 0;
 
@@ -34,19 +29,10 @@ public class GhostUltSignal : MonoBehaviour
 
     float alpha = 0;
 
-
-    public void UltSkillAnim()
+    private void Awake()
     {
-        
-        if (isArrayed == false)
-        {
-            animArray = new List<string>();
-            AnimationArray();
-        }
-        
-        GhostUltAnim.Play(animArray[0]);
+        UltSkillAnim(); //이걸 스타트에 해주고 시네머신에는 몇번째 울트 애니메이션인지 넣자
     }
-
     public void AnimationArray()
     {
         foreach (AnimationState states in GhostUltAnim)
@@ -57,6 +43,18 @@ public class GhostUltSignal : MonoBehaviour
         isArrayed = true;
     }
 
+
+    public void UltSkillAnim()
+    {
+        
+        if (isArrayed == false)
+        {
+            animArray = new List<string>();
+            AnimationArray();
+        }
+    }
+
+    
     public void ScreenDark()
     {
         StartCoroutine(ScreenDarkCor());
@@ -64,37 +62,34 @@ public class GhostUltSignal : MonoBehaviour
 
     public void ScreenWhite()
     {
-        StartCoroutine(ScreenWhiteCor());
+        Color color = panel1.color;
+        color.a = 0;
+        panel1.color = color;
+        panel2.color = color;
     }
 
     public IEnumerator ScreenDarkCor()
     {
-        
-        panel.GetComponent<Image>();
-        Color color = panel.color;
-        
-        while(alpha < 0.5f)
+        alpha = 0f;
+        Color color = panel1.color;
+
+       
+        while(alpha <= 1.1f)
         {
             color.a = alpha;
-            yield return new WaitForSeconds(0.01f);
-            panel.color = color;
-            alpha += 0.01f;
-        }
+            yield return zerodotzeroone;
+            panel1.color = color;
+            panel2.color = color;
+            if (alpha > 0.7f)
+            {
+                alpha += 0.05f;
+            }
+            else
+            {
+                alpha += 0.025f;
+            }
 
-    }
 
-    public IEnumerator ScreenWhiteCor()
-    {
-
-        panel.GetComponent<Image>();
-        Color color = panel.color;
-
-        while (alpha > 0.0f)
-        {
-            color.a = alpha;
-            yield return new WaitForSeconds(0.01f);
-            panel.color = color;
-            alpha -= 0.01f;
         }
 
     }
@@ -106,8 +101,28 @@ public class GhostUltSignal : MonoBehaviour
 
     public void GhostBossTransform()
     {
-        GhostBoss.transform.position = Player.transform.position + ghosttrasnform;
-        GhostBossHeads.transform.position = Player.transform.position + ghostheadtransform;
+        GhostBoss.transform.position = Player.transform.position;
+        GhostBossSkill.transform.position = new Vector3(Player.transform.position.x + (-4.77f), Player.transform.position.y +(8.54f), 0);
+    }
+
+    public void Ult1()
+    {
+        GhostUltAnim.Play(animArray[0]);
+    }
+
+    public void Ult2()
+    {
+        GhostUltAnim.Play(animArray[1]);
+    }
+
+    public void Ult3()
+    {
+        GhostUltAnim.Play(animArray[2]);
+    }
+
+    public void Ult4()
+    {
+        GhostUltAnim.Play(animArray[3]);
     }
 
 

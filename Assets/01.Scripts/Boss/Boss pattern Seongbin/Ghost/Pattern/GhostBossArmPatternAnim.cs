@@ -11,8 +11,6 @@ public class GhostBossArmPatternAnim : MonoBehaviour
     public Vector2 size1;
     public LayerMask Layer;
 
-    private bool iscoroutinestart = false;
-
     public void CheckPlayer()
     {
         Managers.Pool.PoolManaging("SummonArm",transform.position, Quaternion.identity);

@@ -13,17 +13,12 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject playerUI;
     Player playerCompo = null;
-    int skillSelectNum = 0;
     public GameObject skillSelect;
     [Header("LeftUp")]
-    [SerializeField]
-    private Image playerIcon = null;
     [SerializeField]
     private GameObject hpPrefab;
     [SerializeField]
     private GameObject hpSpace;
-    [SerializeField]
-    private Image fragmentImage = null;
     [SerializeField]
     private TextMeshProUGUI fragmentAmountTMP = null;
 

@@ -133,7 +133,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         UpdateBossHP();
-        Debug.Log(Base.Hp);
         StartCoroutine(IEHitAction());
 
         if (Base.Hp <= 0 && bossPattern.NowPhase == 2)
