@@ -177,8 +177,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6718196133792488882}
-  - component: {fileID: 6718196133792488894}
-  - component: {fileID: 6718196133792488888}
   m_Layer: 8
   m_Name: GhostBoss
   m_TagString: Untagged
@@ -203,44 +201,6 @@ Transform:
   m_Father: {fileID: 6713422122011933125}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &6718196133792488894
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6718196133792488883}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 007714aa2afbfbf498b307535d84b19c, type: 2}
-  - {fileID: 7400000, guid: 853d7065745f6924d825cf39db036c18, type: 2}
-  - {fileID: 7400000, guid: 87ede38dc5da3e1448f8d235d8a91ed0, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!95 &6718196133792488888
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6718196133792488883}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 007bf7bdc8d3aa04099bd40be84c1013, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6718196134229606345
 GameObject:
   m_ObjectHideFlags: 0
@@ -2409,7 +2369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6713422122011933125
 Transform:
   m_ObjectHideFlags: 0
