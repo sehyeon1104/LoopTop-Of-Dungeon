@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Debug = Rito.Debug;
@@ -71,6 +72,24 @@ public class PoolManager
 
             return poolable;
         }
+        public Poolable Pop(Vector3 parent) //풀에서 꺼낼 때
+        {
+            Poolable poolable;
+
+            if (_poolStack.Count > 0)
+                poolable = _poolStack.Pop();
+            else
+                poolable = CreateObj();
+            if (parent == null)
+            {
+                poolable.transform.SetParent(null);
+            }
+            poolable.gameObject.SetActive(true);
+             poolable.transform.position = parent;
+            poolable.IsUsing = true;
+
+            return poolable;
+        }
     }
     #endregion
     Dictionary<string, Pool> _pool = new Dictionary<string, Pool>();
@@ -115,7 +134,15 @@ public class PoolManager
 
         return _pool[obj.name].Pop(parent);
     }
+    public Poolable Pop(GameObject obj, Vector3 pos)
+    {
+        if (_pool.ContainsKey(obj.name) == false)
+        {
+            CreatePool(obj);
+        }
 
+        return _pool[obj.name].Pop(pos);
+    }
     public GameObject GetObject(string name)
     {
         if (_pool.ContainsKey(name) == false)
@@ -152,7 +179,7 @@ public class PoolManager
         return clone?.GetComponent<Poolable>();
     }
 
-    public GameObject PoolManaging(string path, Transform parent)
+    public Poolable PoolManaging(string path, Transform parent)
     {
         GameObject clone;
         string name = path;
@@ -173,7 +200,7 @@ public class PoolManager
 
         clone.transform.position = parent.position;
 
-        return clone;
+        return clone.GetComponent<Poolable>();
         
     }
 

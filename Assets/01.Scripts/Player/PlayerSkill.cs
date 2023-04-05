@@ -96,9 +96,9 @@ public class PlayerSkill : MonoBehaviour
     void DashSkill()
     {
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
-            skillEvent[4]();      
+            skillEvent[4]();        
     }
-    #region 리스트 셔플
+    #region 리스???�플
 
     public void ListInit()
     {
