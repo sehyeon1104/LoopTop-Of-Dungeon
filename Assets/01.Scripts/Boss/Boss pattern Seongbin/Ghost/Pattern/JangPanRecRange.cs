@@ -14,8 +14,6 @@ public class JangPanRecRange : MonoBehaviour
 
     WaitForSeconds checkTime = new WaitForSeconds(0.1f);
 
-    Coroutine actCoroutinee = null;
-
     WaitForSeconds DotTime = new WaitForSeconds(0.8f);
 
     private void OnEnable()

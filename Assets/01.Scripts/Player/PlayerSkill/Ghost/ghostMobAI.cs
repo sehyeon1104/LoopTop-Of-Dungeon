@@ -6,12 +6,9 @@ using UnityEngine;
 
 public class ghostMobAI : MonoBehaviour
 {
-    [SerializeField] float damage = 1;
     [SerializeField] float speed = 3;
     [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
-    [SerializeField] private float duration = 5f;
-
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
 
@@ -29,7 +26,6 @@ public class ghostMobAI : MonoBehaviour
     Material hitMat;
     Material spriteLitMat;
     WaitForSeconds attackTime = new WaitForSeconds(0.5f);
-    float changeTime = 0.07f;
     public Vector3 hitPoint => Vector3.zero;
 
     void OnEnable()

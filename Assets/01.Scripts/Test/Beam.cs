@@ -23,7 +23,10 @@ public class Beam : MonoBehaviour
     [SerializeField] float intensity = 2f;
 
     WaitForSeconds waitTime = new WaitForSeconds(0.4f);
+    Material dissolveMat;
     List<ParticleSystem> startFXList = new List<ParticleSystem>();
+
+    float alphaSet = -0.53f;
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class Beam : MonoBehaviour
 
         col = beam.GetComponent<EdgeCollider2D>();
         points = col.points;
+        dissolveMat = GetComponent<Renderer>().material;
         tempScale = transform.localScale;
     }
 
@@ -57,6 +61,8 @@ public class Beam : MonoBehaviour
 
     private void Init()
     {
+        StopAllCoroutines();
+
         lineLength = 0;
         lineWidth = width;
 
@@ -66,6 +72,9 @@ public class Beam : MonoBehaviour
         points[1] = Vector2.zero;
         col.points = points;
         col.edgeRadius = lineWidth * 0.5f;
+
+        dissolveMat.SetFloat("_Alpha", -0.55f);
+        alphaSet = -0.55f;
 
         beam.SetPosition(1, Vector3.zero);
     }
@@ -114,6 +123,7 @@ public class Beam : MonoBehaviour
             points[1].x = lineLength;
             col.points = points;
 
+
             yield return null;
         }
 
@@ -133,11 +143,20 @@ public class Beam : MonoBehaviour
 
             yield return null;
         }
+
         points[1] = Vector2.zero;
         col.points = points;
 
         beamLight.intensity = 0;
         beam.startWidth = 0;
         beam.endWidth = 0;
+
+        while (alphaSet <= 1.5f)
+        {
+            alphaSet += Time.deltaTime * 2;
+
+            dissolveMat.SetFloat("_Alpha", alphaSet);
+            yield return null;
+        }
     }
 }
