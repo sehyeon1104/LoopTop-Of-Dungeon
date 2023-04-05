@@ -127,27 +127,26 @@ public class GhostBossFieldPattern : MonoBehaviour
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
-            //애니메이션 넣기 (흡수 애니메이션 시전)
-            //GameManager.Instance.Player.OnDamage(12, gameObject, 0);
+            Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", bossAnim.transform.position, Quaternion.identity);
+            clone1.transform.localScale = new Vector3(10, 10, 0);
+            GameManager.Instance.Player.OnDamage(0, gameObject, 0);
         }
 
+        checktime = 0f;
         //애니메이션 넣기 (흡수 대기 애니메이션 시전)
-
-        StartCoroutine(GhostshieldOffCheck());
-
-        yield return waittime10s;
-
-    }
-
-    public IEnumerator GhostshieldOffCheck()
-    {
-        
         while (checktime < 10f)
         {
-            //쉴드 게이지 0일때 끝냄 + 맞는 애니메이션 추가
+            if(Boss.Instance.Base.Shield <= 0)
+            {
+                Managers.Pool.Push(clone.GetComponent<Poolable>());
+                yield break;
+            }
             yield return null;
             checktime += Time.deltaTime;
         }
+
+        yield return waittime10s;
+
     }
 
 
