@@ -85,7 +85,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
                 
         FPRRSpriteRenderer.enabled = false;
         FPRRSSpriteRenderer.enabled = false;
-        Debug.Log(transform.position);
         Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
         clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
         Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);

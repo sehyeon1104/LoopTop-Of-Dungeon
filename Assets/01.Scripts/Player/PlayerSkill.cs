@@ -15,8 +15,6 @@ using Random = UnityEngine.Random;
 // Player Skill Class
 public class PlayerSkill : MonoBehaviour
 {
-    [SerializeField]
-    float dashDistance = 2f;
     PlayerBase playerBase;
     [Space]
     [Header("��ų")]
@@ -24,7 +22,6 @@ public class PlayerSkill : MonoBehaviour
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
-    Define.SkillNum[] skillNum = null;
     int[] slotLevel = new int[2] { 1, 1 };
     Action[] skillEvent = new Action[5];
     PlayerSkillBase[] playerSkillBases = new PlayerSkillBase[2];

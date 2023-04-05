@@ -15,9 +15,7 @@ public class GhostUltSignal : MonoBehaviour
 
     [SerializeField] private Animation GhostUltAnim;
 
-    [SerializeField] private Image panel;
-
-    [SerializeField] private SpriteRenderer[] GhostSprite;
+    [SerializeField] private SpriteRenderer panel1, panel2;
 
     PlayableDirector PD;
 
@@ -31,7 +29,7 @@ public class GhostUltSignal : MonoBehaviour
 
     float alpha = 0;
 
-    private void Start()
+    private void Awake()
     {
         UltSkillAnim(); //이걸 스타트에 해주고 시네머신에는 몇번째 울트 애니메이션인지 넣자
     }
@@ -54,8 +52,6 @@ public class GhostUltSignal : MonoBehaviour
             animArray = new List<string>();
             AnimationArray();
         }
-        
-        
     }
 
     
@@ -66,37 +62,34 @@ public class GhostUltSignal : MonoBehaviour
 
     public void ScreenWhite()
     {
-        StartCoroutine(ScreenWhiteCor());
+        Color color = panel1.color;
+        color.a = 0;
+        panel1.color = color;
+        panel2.color = color;
     }
 
     public IEnumerator ScreenDarkCor()
     {
-        
-        panel.GetComponent<Image>();
-        Color color = panel.color;
-        
-        while(alpha < 1f)
+        alpha = 0f;
+        Color color = panel1.color;
+
+       
+        while(alpha <= 1.1f)
         {
             color.a = alpha;
             yield return zerodotzeroone;
-            panel.color = color;
-            alpha += 0.01f;
-        }
+            panel1.color = color;
+            panel2.color = color;
+            if (alpha > 0.7f)
+            {
+                alpha += 0.05f;
+            }
+            else
+            {
+                alpha += 0.025f;
+            }
 
-    }
 
-    public IEnumerator ScreenWhiteCor()
-    {
-
-        panel.GetComponent<Image>();
-        Color color = panel.color;
-
-        while (alpha > 0.0f)
-        {
-            color.a = alpha;
-            yield return zerodotzeroone;
-            panel.color = color;
-            alpha -= 0.01f;
         }
 
     }
@@ -109,7 +102,7 @@ public class GhostUltSignal : MonoBehaviour
     public void GhostBossTransform()
     {
         GhostBoss.transform.position = Player.transform.position;
-        GhostBossSkill.transform.position = Player.transform.position;
+        GhostBossSkill.transform.position = new Vector3(Player.transform.position.x + (-4.77f), Player.transform.position.y +(8.54f), 0);
     }
 
     public void Ult1()

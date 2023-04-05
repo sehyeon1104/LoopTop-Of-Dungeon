@@ -20,7 +20,6 @@ public class GhostSkill : PlayerSkillBase
     SpriteRenderer ghostDash;
     // Beam
     [SerializeField]
-    private float beamDistanceFromPlayer = 1f;
     private Vector3 beamDir;
     private float beamRot;
     private Vector3 beamPos;
