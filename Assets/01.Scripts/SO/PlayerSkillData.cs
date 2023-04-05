@@ -10,7 +10,11 @@ public class PlayerSkillData : ScriptableObject
 {
     public List<PlayerSkillInfo> skill;
     public Sprite playerImg = null;
-    public RuntimeAnimatorController playerAnim;
+    //public RuntimeAnimatorController playerAnim;
+
+    public AnimationClip idlClip;
+    public AnimationClip atkClip;
+    public AnimationClip dieClip;
 }
 
 [Serializable]

@@ -95,7 +95,6 @@ public class GhostUltSignal : MonoBehaviour
     }
     public void UltSkillCast()
     {
-        Debug.Log("¤·¤·");
         PD = GetComponent<PlayableDirector>();
         PD.Play();
     }
