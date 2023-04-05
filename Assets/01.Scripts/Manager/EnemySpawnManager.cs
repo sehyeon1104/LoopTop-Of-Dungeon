@@ -147,11 +147,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 wave2EliteEnemyCount = 1;
                 break;
         }
-
-        // Debug.Log("wave1NormalEnemyCount : " + wave1NormalEnemyCount);
-        // Debug.Log("wave1EliteEnemyCount : " + wave1EliteEnemyCount);
-        // Debug.Log("wave2NormalEnemyCount : " + wave2NormalEnemyCount);
-        // Debug.Log("wave2EliteEnemyCount : " + wave2EliteEnemyCount);
     }
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
