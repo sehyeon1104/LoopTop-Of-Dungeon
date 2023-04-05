@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
+    [SerializeField] private GameObject GhostUltsignal;
     float cicleRange = 2f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;

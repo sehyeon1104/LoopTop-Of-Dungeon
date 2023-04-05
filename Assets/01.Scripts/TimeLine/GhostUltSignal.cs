@@ -82,11 +82,11 @@ public class GhostUltSignal : MonoBehaviour
             panel2.color = color;
             if (alpha > 0.7f)
             {
-                alpha += 0.05f;
+                alpha += 0.07f;
             }
             else
             {
-                alpha += 0.025f;
+                alpha += 0.01f;
             }
 
 

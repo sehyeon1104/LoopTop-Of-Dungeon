@@ -1,0 +1,218 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3032885900961695491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3032885900961695495}
+  - component: {fileID: 3032885900961695494}
+  - component: {fileID: 3032885900961695493}
+  - component: {fileID: 3032885900961695492}
+  m_Layer: 0
+  m_Name: GhostUlt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3032885900961695495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032885900961695491}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &3032885900961695494
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032885900961695491}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 6313097015419066949, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 8002791544129060725, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2263031456863590993, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1739120376106190708, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -237177909683600273, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 364802117683324309, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 9104492025719441069, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2774948178804329725, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6351770294115246863, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1587237532956975431, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5430323063690665171, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8130443997480394712, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5240313481911893859, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 2687820367357076587, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4401905809988721453, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 7068941366466991337, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1296008656481351195, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6926686725708982652, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1654013457568851258, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6392724218186925998, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1182712778425794716, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &3032885900961695493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032885900961695491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: b30fc479ac524f54fabd682449ecbe18, type: 2}
+    - {fileID: 11400000, guid: 1233e51537f702e4a98de2f617fb9055, type: 2}
+    - {fileID: 11400000, guid: adca66df2c2bc6549ba8cb5fefdcfc22, type: 2}
+    - {fileID: 11400000, guid: d93e6c958f68a6b45a73c852bd1f835f, type: 2}
+    - {fileID: 11400000, guid: fc42a4ec6210bea4982468568e9450e0, type: 2}
+    - {fileID: 11400000, guid: 2cf9310987118d942af473b4d9fcc031, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: Ult1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: ScreenDark
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: ScreenWhite
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: GhostBossTransform
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: Ult2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3032885900961695492}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: Ult3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &3032885900961695492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032885900961695491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031a51ed841ca445a8354df13cc8b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GhostBoss: {fileID: 0}
+  Player: {fileID: 0}
+  GhostBossSkill: {fileID: 0}
+  GhostUltAnim: {fileID: 0}
+  panel1: {fileID: 0}
+  panel2: {fileID: 0}
