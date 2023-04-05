@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
-
+    [SerializeField] private GhostUltSignal ghostUltSignal;
     float cicleRange = 2f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
@@ -81,7 +81,8 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void UltimateSkill()
     {
-
+        print("ss");    
+        ghostUltSignal.UltSkillCast();
     }
     public override void DashSkill()
     {
