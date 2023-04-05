@@ -160,6 +160,7 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator telpoSkill(int level)
     {
+        RaycastHit2D[] hit;
         playerMovement.IsMove = false;
         Vector3 playerPos = transform.position;
         playerRigid.velocity = telpoVelocity * playerMovement.Direction;
@@ -173,7 +174,15 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        //Physics2D.BoxCastAll(playerPos,(Vector2)currentPlayerPos,)
+        hit =  Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles);
+        for(int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
+            {
+
+                hit[i].transform.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
+            }
+        }
         playerMovement.IsMove = true;
 
     }
@@ -207,7 +216,7 @@ public class GhostSkill : PlayerSkillBase
     #endregion
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, 1.5f);
+
     }
 
 

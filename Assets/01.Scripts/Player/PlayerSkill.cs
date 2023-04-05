@@ -68,7 +68,7 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[2](0);
+            skillEvent[0] = () => playerSkill.playerSkills[0](0);
             skillEvent[1] = () => playerSkill.playerSkills[3](0);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
@@ -101,7 +101,7 @@ public class PlayerSkill : MonoBehaviour
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
             skillEvent[4]();      
     }
-    #region ����Ʈ ����
+    #region 리스트 셔플
 
     public void ListInit()
     {
