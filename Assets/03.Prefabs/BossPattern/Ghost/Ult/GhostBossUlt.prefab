@@ -177,6 +177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6718196133792488882}
+  - component: {fileID: 8558323423033703126}
   m_Layer: 8
   m_Name: GhostBoss
   m_TagString: Untagged
@@ -201,6 +202,24 @@ Transform:
   m_Father: {fileID: 6713422122011933125}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!111 &8558323423033703126
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6718196133792488883}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 007714aa2afbfbf498b307535d84b19c, type: 2}
+  - {fileID: 7400000, guid: 853d7065745f6924d825cf39db036c18, type: 2}
+  - {fileID: 7400000, guid: 87ede38dc5da3e1448f8d235d8a91ed0, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6718196134229606345
 GameObject:
   m_ObjectHideFlags: 0

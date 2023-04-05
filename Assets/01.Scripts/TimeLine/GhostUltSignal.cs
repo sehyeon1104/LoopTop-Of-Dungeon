@@ -121,10 +121,5 @@ public class GhostUltSignal : MonoBehaviour
         GhostUltAnim.Play(animArray[2]);
     }
 
-    public void Ult4()
-    {
-        GhostUltAnim.Play(animArray[3]);
-    }
-
 
 }
