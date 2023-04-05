@@ -306,7 +306,7 @@ Animator:
   m_GameObject: {fileID: 739109838891585982}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0dbe00f15922fbf4e9962ac6dbad350c, type: 2}
+  m_Controller: {fileID: 9100000, guid: b1408e9d4fd34dc438a3cc624988c150, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -357,7 +357,7 @@ SpriteRenderer:
   m_SortingLayerID: -726151
   m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 35f2e540a1fa88040995a55d8110168f, type: 3}
+  m_Sprite: {fileID: -1292953530, guid: 16cb5b01f3744ef46967020f481c100b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashDistance: 2
 --- !u!114 &7073810304199504610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,8 +410,9 @@ MonoBehaviour:
   playerSprite: {fileID: 0}
   dashVelocity: 0
   dashDuration: 0
+  ghostUltSignal: {fileID: 0}
   attackRange: 1
-  beamDistanceFromPlayer: 1
+  beamDir: {x: 0, y: 0, z: 0}
 --- !u!114 &7340307882004977393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73006d45b00af146ae1c70e4a656a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 4.25
 --- !u!114 &882001287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -998,7 +998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6719222096460403493, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6719227303304682481, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
       propertyPath: m_Layer

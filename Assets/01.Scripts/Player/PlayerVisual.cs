@@ -8,6 +8,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 {
     public SpriteRenderer playerSprite;
     Animator playerAnimator;
+    AnimatorOverrideController overrideController;
     Volume hitVolume;
     Volume weakHitVolume;
     private void Awake()
@@ -16,12 +17,24 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         weakHitVolume = GameObject.Find("HitVolume_Weak").GetComponent<Volume>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
-    }
+        overrideController = new AnimatorOverrideController();
 
+        AnimInit();
+    }
+    public void AnimInit()
+    {
+        overrideController.runtimeAnimatorController = playerAnimator.runtimeAnimatorController;
+        playerAnimator.runtimeAnimatorController = overrideController;
+    }
     public void UpdateVisual(PlayerSkillData data)
     {
         UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        playerAnimator.runtimeAnimatorController = data.playerAnim;
+        if(data.idlClip != null) overrideController["Idle"] = data.idlClip;
+        if (data.atkClip != null) overrideController["Attack1"] = data.atkClip;
+        if (data.dieClip != null) overrideController["Death"] = data.dieClip;
+                    
+        playerAnimator.runtimeAnimatorController = overrideController;
+        //playerAnimator.runtimeAnimatorController = data.playerAnim;
     }
 
     public void StartHitMotion(float damage = 0)
