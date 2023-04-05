@@ -32,6 +32,8 @@ public abstract class BossPattern : MonoBehaviour
     protected bool isUsingFinalPattern = false;
 
     protected bool nowBPhaseChange = false;
+    
+    int patternChoice = 0;
 
     #endregion
 
@@ -61,7 +63,11 @@ public abstract class BossPattern : MonoBehaviour
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
 
         StopCoroutine(RandomPattern());
-        if(Boss.Instance.actCoroutine != null)
+
+        isThisSkillCoolDown[patternChoice] = false;
+        StopCoroutine(CoolDownCheck(patternChoice));
+
+        if (Boss.Instance.actCoroutine != null)
             StopCoroutine(Boss.Instance.actCoroutine);
         
         nowBPhaseChange = true;
@@ -98,7 +104,6 @@ public abstract class BossPattern : MonoBehaviour
 
             if (nowBPhaseChange) continue;
 
-            int patternChoice = 0;
             patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
