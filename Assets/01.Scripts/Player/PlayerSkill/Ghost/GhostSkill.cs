@@ -42,7 +42,7 @@ public class GhostSkill : PlayerSkillBase
             BeamPattern(5);
         }
     }
-    public override void Attack()
+    protected override void Attack()
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             return;
@@ -59,32 +59,31 @@ public class GhostSkill : PlayerSkillBase
             }
         }
     }
-    public override void FirstSkill(int level)
+    protected override void FirstSkill(int level)
     {
         StartCoroutine(JanpangSkill(level));
     }
-    public override void SecondSkill(int level)
+    protected override void SecondSkill(int level)
     {
         StartCoroutine(HillaSkill(level));
     }
-    public override void ThirdSkill(int level)
+    protected override void ThirdSkill(int level)
     {
         BeamPattern(level);
     }
-    public override void ForuthSkill(int level)
+    protected override void ForuthSkill(int level)
     {
         StartCoroutine(telpoSkill(level));
     }
-    public override void FifthSkill(int level)
+    protected override void FifthSkill(int level)
     {
         StartCoroutine(ArmSkill(level));
     }
-    public override void UltimateSkill()
+    protected override void UltimateSkill()
     {
-        print("ss");    
         ghostUltSignal.UltSkillCast();
     }
-    public override void DashSkill()
+    protected override void DashSkill()
     {
         StartCoroutine(Dash());
     }
@@ -177,7 +176,7 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles,3,enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
@@ -192,17 +191,27 @@ public class GhostSkill : PlayerSkillBase
     {
         GameObject[] arm = new GameObject[2];
         arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
-        arm[0].transform.localPosition += new Vector3(2, 3, 0);
+        arm[0].transform.position += new Vector3(-1, 2, 0);
+        print(arm[0].transform.position);
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
-        arm[1].transform.localPosition += new Vector3(-2, 3, 0);
+        arm[1].transform.position += new Vector3(1, 2, 0);
+        print(arm[1].transform.position);
         while (true)
         {
-            for (int i = 0; i < arm.Length; i++)
+
+            arm[0].transform.localPosition = new Vector3(arm[0].transform.localPosition.x, Mathf.Lerp(arm[0].transform.localPosition.y, 0, Time.deltaTime * armSpeed), 0);
+            arm[1].transform.localPosition = new Vector3(arm[1].transform.localPosition.x, Mathf.Lerp(arm[1].transform.localPosition.y, 0, Time.deltaTime * armSpeed), 0);
+            if (arm[0].transform.localPosition.y < 0.01f)
             {
-                arm[i].transform.localPosition = new Vector3(0, Mathf.Lerp(arm[i].transform.localPosition.y, 2, Time.deltaTime* armSpeed), 0);
-            }
-            if (arm[0].transform.localPosition.y < 2.01f && arm[1].transform.localPosition.y <2.01f)
-            {
+                Collider2D[] attachLeftHand = Physics2D.OverlapCircleAll(arm[0].transform.position, 1f,enemyLayer);
+                Collider2D[] attachRightHand = Physics2D.OverlapCircleAll(arm[1].transform.position, 1f,enemyLayer);
+                for (int j = 0; j < attachLeftHand.Length; j++)
+                {
+
+                }
+                for (int j = 0; j < attachRightHand.Length; j++)
+                {
+                }
                 Managers.Pool.Push(arm[0].GetComponent<Poolable>());
                 Managers.Pool.Push(arm[1].GetComponent<Poolable>());
                 yield break;
@@ -240,7 +249,8 @@ public class GhostSkill : PlayerSkillBase
     #endregion
     private void OnDrawGizmos()
     {
-
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
 
 
