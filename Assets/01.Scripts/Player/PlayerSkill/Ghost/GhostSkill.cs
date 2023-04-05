@@ -191,9 +191,9 @@ public class GhostSkill : PlayerSkillBase
     {
         GameObject[] arm = new GameObject[2];
         arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
-        arm[1] = Managers.Pool.PoolManaging("htArm.prefabfects/player/Ghost/RightArm.prefab",transform);
-        arm[0].transform.position += new Vector3(1, 3, 0);
-        arm[1].transform.position += new Vector3(-1, 3, 0);
+        arm[0].transform.localPosition += new Vector3(2, 3, 0);
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
+        arm[1].transform.localPosition += new Vector3(-2, 3, 0);
         while (true)
         {
             for (int i = 0; i < arm.Length; i++)
