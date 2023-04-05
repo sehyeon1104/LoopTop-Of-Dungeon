@@ -53,7 +53,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         waitForSpawnTime = new WaitForSeconds(spawnTime);
         waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
-        enemyDeadEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/GhostDeadEffect.prefab");
+        enemyDeadEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemyDeadEffect.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         SetEnemyInList();
     }
