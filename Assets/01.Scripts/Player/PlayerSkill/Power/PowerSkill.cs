@@ -16,7 +16,7 @@ public class PowerSkill : PlayerSkillBase
     {
         attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
     }
-    public override void Attack()
+    protected override void Attack()
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             return;
@@ -43,37 +43,37 @@ public class PowerSkill : PlayerSkillBase
         }
     }
 
-    public override void DashSkill()
+    protected override void DashSkill()
     {
         
     }
 
-    public override void FifthSkill(int level)
+    protected override void FifthSkill(int level)
     {
         
     }
 
-    public override void FirstSkill(int level)
+    protected override void FirstSkill(int level)
     {
         
     }
-    public override void SecondSkill(int level)
+    protected override void SecondSkill(int level)
     {
         
     }
 
-    public override void ThirdSkill(int level)
+    protected override void ThirdSkill(int level)
     {
        
     }
 
-    public override void ForuthSkill(int level)
+    protected override void ForuthSkill(int level)
     {
        
     }
 
 
-    public override void UltimateSkill()
+    protected override void UltimateSkill()
     {
         
     }
