@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
-    [SerializeField] private GameObject GhostUltsignal;
+
     float cicleRange = 2f;
     float janpanDuration = 5f;
     PlayerSkillData skillData;
@@ -27,6 +27,8 @@ public class GhostSkill : PlayerSkillBase
     private Poolable beam;
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
+    [Header("솟아오르기 스킬")]
+    float armSpeed = 10f;
     private Vector3 joystickDir;
     private void Awake()
     {
@@ -75,7 +77,7 @@ public class GhostSkill : PlayerSkillBase
     }
     public override void FifthSkill(int level)
     {
-
+        StartCoroutine(ArmSkill(level));
     }
     public override void UltimateSkill()
     {
@@ -168,37 +170,58 @@ public class GhostSkill : PlayerSkillBase
         Vector3 currentPlayerPos = transform.position - playerPos;
         float angle = Mathf.Atan2(currentPlayerPos.y, currentPlayerPos.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        var telpoEffect =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", playerPos,angleAxis);
-        VisualEffect[] effects =  telpoEffect.GetComponentsInChildren<VisualEffect>();
+        var telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", playerPos, angleAxis);
+        VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
         for (int i = 0; i < effects.Length; i++)
         {
             effects[i].Play();
         }
-        hit =  Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles);
-        for(int i = 0; i < hit.Length; i++)
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles);
+        for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
             {
-
                 hit[i].transform.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
             }
         }
         playerMovement.IsMove = true;
 
     }
+    IEnumerator ArmSkill(int level)
+    {
+        GameObject[] arm = new GameObject[2];
+        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
+        arm[0].transform.localPosition += new Vector3(2, 3, 0);
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
+        arm[1].transform.localPosition += new Vector3(-2, 3, 0);
+        while (true)
+        {
+            for (int i = 0; i < arm.Length; i++)
+            {
+                arm[i].transform.localPosition = new Vector3(0, Mathf.Lerp(arm[i].transform.localPosition.y, 2, Time.deltaTime* armSpeed), 0);
+            }
+            if (arm[0].transform.localPosition.y < 2.01f && arm[1].transform.localPosition.y <2.01f)
+            {
+                Managers.Pool.Push(arm[0].GetComponent<Poolable>());
+                Managers.Pool.Push(arm[1].GetComponent<Poolable>());
+                yield break;
+            }
+            yield return null;
+        }
+
+    }
     IEnumerator Dash()
     {
         float timer = 0;
         float timerA = 0;
-        Color dashColor =new Color(1,1,1,0);
+        Color dashColor = new Color(1, 1, 1, 0);
         playerMovement.IsMove = false;
         Vector3 playerPos = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
         while (timer < dashtime)
         {
-            if(timerA >= dashtime/5)
+            if (timerA >= dashtime / 5)
             {
-
                 dashColor.a += 0.25f;
                 playerSprite.color = dashColor;
                 timerA = 0;

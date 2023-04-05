@@ -61,6 +61,8 @@ public class Beam : MonoBehaviour
 
     private void Init()
     {
+        StopAllCoroutines();
+
         lineLength = 0;
         lineWidth = width;
 
@@ -151,9 +153,10 @@ public class Beam : MonoBehaviour
 
         while (alphaSet <= 1.5f)
         {
-            alphaSet += Time.deltaTime;
+            alphaSet += Time.deltaTime * 2;
 
             dissolveMat.SetFloat("_Alpha", alphaSet);
+            yield return null;
         }
     }
 }
