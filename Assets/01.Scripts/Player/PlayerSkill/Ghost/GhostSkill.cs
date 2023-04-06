@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -177,6 +178,9 @@ public class GhostSkill : PlayerSkillBase
         yield return telpoDuration;
         Vector3 currentPlayerPos = transform.position - playerPos;
         float angle = Mathf.Atan2(currentPlayerPos.y, currentPlayerPos.x) * Mathf.Rad2Deg;
+        Vector2 boxVector = Vector2.zero;
+        boxVector.x = currentPlayerPos.x == 0 ? 2 : Mathf.Abs(currentPlayerPos.x);
+        boxVector.y = currentPlayerPos.y == 0 ? 2 : Mathf.Abs(currentPlayerPos.y);
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         var telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", playerPos, angleAxis);
         VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
@@ -184,14 +188,12 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles,Vector2.Distance(currentPlayerPos, transform.position), enemyLayer);
+        print(boxVector);
+        hit = Physics2D.BoxCastAll(playerPos, boxVector, 0, (Vector2)currentPlayerPos, 0 ,1 << enemyLayer);
+        print(currentPlayerPos);
         for (int i = 0; i < hit.Length; i++)
-        {
-            print("ss");
-            if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
-            {
-                hit[i].transform.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
-            }
+        {          
+                hit[i].transform.GetComponent<IHittable>().OnDamage(10, gameObject, 0);
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
@@ -201,40 +203,8 @@ public class GhostSkill : PlayerSkillBase
         Poolable[] arm = new Poolable[2];
         arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
         arm[0].transform.localPosition += new Vector3(-3, 0, 0);
-        for (int i = 0; i < arm[0].GetComponentsInChildren<Renderer>().Length; i++)
-        {
-            setMat[i] = arm[0].GetComponentsInChildren<Renderer>()[i].material;
-        }
-        foreach (var mat in setMat)
-        {
-            mat.SetFloat("_StepValue", transform.localPosition.y);
-        }
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
-        for (int i = 0; i < arm[1].GetComponentsInChildren<Renderer>().Length; i++)
-        {
-            setMat[i] = arm[1].GetComponentsInChildren<Renderer>()[i].material;
-        }
-        foreach (var mat in setMat)
-        {
-            mat.SetFloat("_StepValue", transform.localPosition.y);
-        }
-
-        if (arm[0].transform.localPosition.y < 0.1f)
-        {
-            Collider2D[] attachLeftHand = Physics2D.OverlapCircleAll(arm[0].transform.position, 1f, 1 << enemyLayer);
-            Collider2D[] attachRightHand = Physics2D.OverlapCircleAll(arm[1].transform.position, 1f, 1 << enemyLayer);
-            for (int j = 0; j < attachLeftHand.Length; j++)
-            {
-                attachLeftHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
-            }
-            for (int j = 0; j < attachRightHand.Length; j++)
-            {
-                attachRightHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachRightHand[j].transform.position + Vector3.down, quaternion.identity);
-            }
-        }
         yield return null;
 
 
@@ -290,8 +260,7 @@ public class GhostSkill : PlayerSkillBase
     
 private void OnDrawGizmos()
 {
-    Gizmos.color = Color.green;
-    Gizmos.DrawWireSphere(transform.position, 1f);
+
 }
 }
 #endregion
