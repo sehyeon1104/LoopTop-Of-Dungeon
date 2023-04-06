@@ -189,7 +189,7 @@ public class GhostSkill : PlayerSkillBase
             effects[i].Play();
         }
         print(boxVector);
-        hit = Physics2D.BoxCastAll(playerPos, boxVector, 0, (Vector2)currentPlayerPos, 100,1 << enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, boxVector, 0, (Vector2)currentPlayerPos, 0 ,1 << enemyLayer);
         print(currentPlayerPos);
         for (int i = 0; i < hit.Length; i++)
         {          
