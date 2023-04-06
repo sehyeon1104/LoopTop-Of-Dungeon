@@ -7,6 +7,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 {
     [SerializeField]  GameObject Effect;
 
+    private SpriteRenderer FRPRSpriterenderer;
+    private SpriteRenderer FRPRStartSpriterenderer;
     
 
 
@@ -21,13 +23,18 @@ public class GhostBossJangpanPattern : MonoBehaviour
     {
         Poolable FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
         Poolable FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
+        Poolable FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", transform.position, Quaternion.identity);
+
+        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
+        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
+
 
         FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
-        FPRRSCol.transform.position = transform.position;
+        FRPRCol.transform.position = transform.position;
 
-        FRPR.SetActive(true);
-        FRPRS.SetActive(true);
+        FRPR.gameObject.SetActive(true);
+        FRPRS.gameObject.SetActive(true);
         
         while (ScaleX < 30f)
         {
@@ -56,9 +63,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         ScaleX = 0;
         ScaleY = 0;
-                
-        FPRRSpriteRenderer.enabled = false;
-        FPRRSSpriteRenderer.enabled = false;
+        
+        
+
+        FRPRSpriterenderer.enabled = false;
+        FRPRStartSpriterenderer.enabled = false;
         Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
         clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
         Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
@@ -81,7 +90,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         yield return WaitzerodoteightS;
 
-        FPRRSCol.SetActive(true);
+        FRPRCol.gameObject.SetActive(true);
 
 
         yield return WaitfiveS;
@@ -92,16 +101,25 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FRPR.transform.localScale = Vector2.zero;
         FRPRS.transform.localScale = Vector2.zero;
 
-        FPRRSpriteRenderer.enabled = true;
-        FPRRSSpriteRenderer.enabled = true;
+        FRPRSpriterenderer.enabled = true;
+        FRPRStartSpriterenderer.enabled = true;
 
-        FRPR.SetActive(false);
-        FRPRS.SetActive(false);
-        FPRRSCol.SetActive(false);
+        FRPR.gameObject.SetActive(false);
+        FRPRS.gameObject.SetActive(false);
+        FRPRCol.gameObject.SetActive(false);
+
+        Managers.Pool.Push(FRPR);
+        Managers.Pool.Push(FRPRS);
+        Managers.Pool.Push(FRPRCol);
+
     }
 
     public IEnumerator  FloorPatternCircle()
     {
+
+        Poolable FPR = Managers.Pool.PoolManaging("03.Prefabs/BossPattern/Ghost/JangPan/Circle/FPR", transform.position, Quaternion.identity);
+        Poolable FPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", transform.position, Quaternion.identity);
+
 
         FPR.transform.position = transform.position;
         FPRS.transform.position = transform.position;
