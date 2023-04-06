@@ -1,12 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.VFX;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
