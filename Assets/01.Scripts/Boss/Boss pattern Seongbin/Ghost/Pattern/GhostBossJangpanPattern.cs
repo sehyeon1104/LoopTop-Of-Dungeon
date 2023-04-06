@@ -13,6 +13,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
     private SpriteRenderer FRPSpriterenderer;
     private SpriteRenderer FRPStartSpriterenderer;
 
+    Poolable FRPR;
 
 
     private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
@@ -22,19 +23,23 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     private float ScaleX;
     private float ScaleY;
+
+    private void Start()
+    {
+       
+    }
+
     public IEnumerator FloorPatternRectangle()
     {
         Poolable FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
         Poolable FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
-        Poolable FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", transform.position, Quaternion.identity);
 
         FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
         FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
 
-
         FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
-        FRPRCol.transform.position = transform.position;
+       
 
         FRPR.gameObject.SetActive(true);
         FRPRS.gameObject.SetActive(true);
@@ -71,30 +76,27 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FRPRSpriterenderer.enabled = false;
         FRPRStartSpriterenderer.enabled = false;
-        Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
-        Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone1.transform.position = new Vector2(transform.position.x + (-23.73f), transform.position.y);
-        Poolable clone2 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone2 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone2.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + 12.18f);
-        Poolable clone3 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone3 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone3.transform.position = new Vector2(transform.position.x, transform.position.y + 24);
-        Poolable clone4 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone4 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone4.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + 12.18f);
-        Poolable clone5 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone5 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone5.transform.position = new Vector2(transform.position.x + 23.73f, transform.position.y);
-        Poolable clone6 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone6 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone6.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + (-12.18f));
-        Poolable clone7 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Poolable clone7 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
         clone7.transform.position = new Vector2(transform.position.x, transform.position.y + (-23.73f));
-
-
-        //clone.transform.localScale = 
 
         yield return WaitzerodoteightS;
 
-        FRPRCol.gameObject.SetActive(true);
-
+        Poolable FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", transform.position, Quaternion.identity);
+        FRPRCol.transform.position = transform.position;
 
         yield return WaitfiveS;
 
@@ -117,24 +119,24 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     }
 
-    public IEnumerator  FloorPatternCircle()
+    public IEnumerator FloorPatternCircle()
     {
 
         Poolable FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", transform.position, Quaternion.identity);
         Poolable FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", transform.position, Quaternion.identity);
-        Poolable FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", transform.position, Quaternion.identity);
+        
 
         FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
         FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
 
         FRP.transform.position = transform.position;
         FRPS.transform.position = transform.position;
-        FRPCol.transform.position = transform.position;
+        
 
         FRP.gameObject.SetActive(true);
         FRPS.gameObject.SetActive(true);
        
-        while(ScaleX < 17f)
+        while(ScaleX < 30f)
         {
             ScaleX += 0.5f;
             ScaleY += 0.5f;
@@ -149,7 +151,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
         yield return WaitzerodotfiveS;
 
 
-        while (ScaleX < 17f)
+        while (ScaleX < 30f)
         {
             ScaleX += 0.2f;
             ScaleY += 0.2f;
@@ -161,16 +163,17 @@ public class GhostBossJangpanPattern : MonoBehaviour
                
         ScaleX = 0;
         ScaleY = 0;
-
         
 
         FRPSpriterenderer.enabled = false;
         FRPStartSpriterenderer.enabled = false;
 
-        Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
+        Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", transform.position, Quaternion.identity);
 
         yield return WaitzerodoteightS;
-        FRPCol.gameObject.SetActive(true);
+
+        Poolable FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", transform.position, Quaternion.identity);
+        FRPCol.transform.position = transform.position;
 
         yield return WaitfiveS;
 
