@@ -232,7 +232,7 @@ public class GhostSkill : PlayerSkillBase
             for (int j = 0; j < attachRightHand.Length; j++)
             {
                 attachRightHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachRightHand[j].transform.position + Vector3.down, quaternion.identity);
             }
         }
         yield return null;

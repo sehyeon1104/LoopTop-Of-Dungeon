@@ -13,14 +13,14 @@ public class BossMove : MonoBehaviour
     {
         constScale = transform.localScale;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         MoveToPlayer();
     }
 
     public void MoveToPlayer()
     {
-        if (Boss.Instance.actCoroutine != null || Boss.Instance.isBDead || Boss.Instance.isBInvincible) return;
+        if (Boss.Instance.actCoroutine != null || Boss.Instance.isBDead || Boss.Instance.isBInvincible || Boss.Instance.isStartMotionPlaying) return;
 
         float playerDistance = Vector2.Distance(Boss.Instance.player.position, transform.position);
         if (playerDistance <= minDistance) return;

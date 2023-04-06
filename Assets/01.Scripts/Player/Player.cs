@@ -31,7 +31,6 @@ public class Player : MonoBehaviour, IHittable
     public Vector3 hitPoint { get; private set; }
     private void Update()
     {
-        print(invincibility);
         if (Input.GetKeyDown(KeyCode.C))
         {
             playerBase.FragmentAmount += 100;
@@ -42,6 +41,7 @@ public class Player : MonoBehaviour, IHittable
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
+
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IHittable
         isPDamaged = false;
         yield return null;
     }
+
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
@@ -76,6 +77,11 @@ public class Player : MonoBehaviour, IHittable
     {
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
+        // TODO : 플레이어 애니메이션 실행
+    }
+
+    public void GameoverPlayer()
+    {
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
