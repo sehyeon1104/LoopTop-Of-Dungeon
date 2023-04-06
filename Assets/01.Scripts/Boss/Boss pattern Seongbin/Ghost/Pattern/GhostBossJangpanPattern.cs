@@ -7,17 +7,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
 {
     [SerializeField]  GameObject Effect;
 
-    [HideInInspector] GameObject FPR; //Floor Pattern Range
-    [HideInInspector] GameObject FPRS; //Floor Pattern Range Start
-    [HideInInspector] GameObject FRPR; //Floor Pattern Range Rectangle 
-    [HideInInspector] GameObject FRPRS; //Floor Pattern Range Rectangle Start
-    [HideInInspector] GameObject FPRSCol;
-    [HideInInspector] GameObject FPRRSCol;
     
-    [HideInInspector] public SpriteRenderer FPRSpriteRenderer;
-    [HideInInspector] public SpriteRenderer FPRSSpriteRenderer;
-    [HideInInspector] public SpriteRenderer FPRRSpriteRenderer;
-    [HideInInspector] public SpriteRenderer FPRRSSpriteRenderer;
 
 
     private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
@@ -27,27 +17,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     private float ScaleX;
     private float ScaleY;
-    private void Awake()
-    {
-        FPR = Effect.transform.Find("FPR").gameObject;
-        FRPR =Effect.transform.Find("FRPR").gameObject;
-        FPRS = Effect.transform.Find("FPRS").gameObject;
-        FRPRS = Effect.transform.Find("FRPRS").gameObject;
-        FPRSCol = Effect.transform.Find("CircleCol").gameObject;
-        FPRRSCol = Effect.transform.Find("RacCol").gameObject;
-        FPRSpriteRenderer = FPR.GetComponent<SpriteRenderer>();
-        FPRSSpriteRenderer = FPRS.GetComponent<SpriteRenderer>();
-        FPRRSpriteRenderer = FRPR.GetComponent<SpriteRenderer>();
-        FPRRSSpriteRenderer = FRPRS.GetComponent<SpriteRenderer>();
-    }
-    private void Start()
-    {
-       
-        print(FPRRSCol.name);
-    }
     public IEnumerator FloorPatternRectangle()
     {
-        
+        Poolable FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
+        Poolable FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
+
         FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
         FPRRSCol.transform.position = transform.position;
