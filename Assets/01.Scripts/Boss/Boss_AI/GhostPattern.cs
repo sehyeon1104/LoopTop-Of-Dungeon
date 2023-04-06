@@ -215,7 +215,7 @@ public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
 
-    private void Update()
+    protected override void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {
@@ -236,6 +236,7 @@ public class GhostPattern : G_Patterns
                 SummonTimer.gameObject.SetActive(false);
             }
         }
+
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
