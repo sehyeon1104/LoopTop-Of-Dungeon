@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -12,6 +14,7 @@ public class GhostSkill : PlayerSkillBase
     [SerializeField] private GhostUltSignal ghostUltSignal;
     float cicleRange = 2f;
     float janpanDuration = 5f;
+    WaitForSeconds dashTime2 = new WaitForSeconds(0.2f);
     PlayerSkillData skillData;
     private float hiilaDuration = 5;
     [SerializeField]
@@ -234,6 +237,7 @@ public class GhostSkill : PlayerSkillBase
 
 
     }
+
     IEnumerator Dash()
     {
         float timer = 0;
@@ -250,29 +254,35 @@ public class GhostSkill : PlayerSkillBase
        
         dashSprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
         Poolable clone = null;
+        List<Poolable> cloneList = new List<Poolable>();
 
 
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        //while (timer < dashtime)
-        //{
-        //    if (timerA >= dashtime / 5)
-        //    {
-        //        flusA += 0.2f;
-        //        dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
-        //        clone = Managers.Pool.Pop(dashSprite, transform.position);
-        //        clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
-        //    }
-        //    timer  += Time.deltaTime;
-        //    timerA += Time.deltaTime;
-        //    yield return null;
-        //}
-        yield return new WaitForSeconds(0.1f);
-        playerMovement.IsMove = true;
+        while (timer < dashtime)
+        {
+            if (timerA >= dashtime / 5)
+            {
+                flusA += 0.2f;
+                dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
+                clone = Managers.Pool.Pop(dashSprite, transform.position);
+                clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
+                cloneList.Add(clone);
+            }
+            timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            yield return null;
+        }
         Vector3 playerPoss = transform.position - playerPos;
         float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        //Managers.Pool.Push(clone);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
+        playerMovement.IsMove = true;
+        yield return dashTime2;
+        foreach(var c in cloneList)
+        {
+            Managers.Pool.Push(c);
+        }
+        cloneList.Clear();
     }
     
 private void OnDrawGizmos()
