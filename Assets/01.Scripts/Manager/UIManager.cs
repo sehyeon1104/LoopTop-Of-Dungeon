@@ -240,6 +240,12 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public IEnumerator ShowCurrentStageName()
     {
+        if(showCurStageNameObj.gameObject == null)
+        {
+            Debug.LogWarning("showCurStageNameObj is Null!");
+            yield break;
+        }
+
         showCurStageNameObj.SetActive(true);
 
         curStageName.SetText(SceneManager.GetActiveScene().name);

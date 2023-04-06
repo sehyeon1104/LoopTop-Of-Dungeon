@@ -15,7 +15,13 @@ public class Player : MonoBehaviour, IHittable
 {
 
     public PlayerBase playerBase = new PlayerBase();
-    
+
+    private bool invincibility = false;
+    public bool IsInvincibility
+    {
+        get => invincibility;
+        set => invincibility = value;
+    }
     private bool isPDamaged = false;
     [SerializeField]
     private float reviveInvincibleTime = 2f;
@@ -24,8 +30,7 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {   
-
+    {
         if (Input.GetKeyDown(KeyCode.C))
         {
             playerBase.FragmentAmount += 100;
@@ -36,6 +41,7 @@ public class Player : MonoBehaviour, IHittable
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
+
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);
@@ -43,9 +49,10 @@ public class Player : MonoBehaviour, IHittable
         isPDamaged = false;
         yield return null;
     }
+
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged || playerBase.IsPDead)
+        if (isPDamaged || playerBase.IsPDead || invincibility)
             return;
         
         if (Random.Range(1, 101) <= critChance)
@@ -70,6 +77,13 @@ public class Player : MonoBehaviour, IHittable
     {
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
+        PlayerVisual.Instance.playerAnimator.SetTrigger("Death");
+        StartCoroutine(GameoverPlayer());
+    }
+
+    public IEnumerator GameoverPlayer()
+    {
+        yield return new WaitForSeconds(2.5f);
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }

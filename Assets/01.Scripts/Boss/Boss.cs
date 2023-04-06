@@ -23,6 +23,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
+    public bool isStartMotionPlaying { private set; get; } = false;
 
     public Vector3 hitPoint { get; }
 
@@ -39,6 +40,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
     {
         Base = new BossBase();
 
+        isStartMotionPlaying = true;
+
         bossPattern = GetComponent<BossPattern>();
         bossMove = GetComponent<BossMove>();
         bossAnim = GetComponent<BossAnim>();
@@ -50,6 +53,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         {
             sprites.Add(child);
         }
+
     }
 
     private void Start()
@@ -59,8 +63,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         player = GameManager.Instance.Player.transform;
 
         UpdateBossHP();
-        bossAnim.AnimInit();
-        bossPattern.Init();
     }
 
     private void Update()
@@ -156,5 +158,13 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public void Phase2()
     {
         bossUI.TogglePhase2Icon();
+    }
+
+    public void StartBossAct()
+    {
+        isStartMotionPlaying = false;
+
+        bossAnim.AnimInit();
+        bossPattern.Init();
     }
 }

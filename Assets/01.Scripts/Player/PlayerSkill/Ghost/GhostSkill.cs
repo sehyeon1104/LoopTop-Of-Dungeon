@@ -1,12 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.VFX;
-using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
@@ -171,6 +167,7 @@ public class GhostSkill : PlayerSkillBase
     {
         RaycastHit2D[] hit;
         playerMovement.IsMove = false;
+        player.IsInvincibility = true;
         Vector3 playerPos = transform.position;
         playerRigid.velocity = telpoVelocity * playerMovement.Direction;
         yield return telpoDuration;
@@ -183,16 +180,17 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 3, enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles,Vector2.Distance(currentPlayerPos, transform.position), enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
+            print("ss");
             if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
             {
                 hit[i].transform.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
             }
         }
         playerMovement.IsMove = true;
-
+        player.IsInvincibility = false;
     }
     IEnumerator ArmSkill(int level)
     {
@@ -230,7 +228,7 @@ public class GhostSkill : PlayerSkillBase
             for (int j = 0; j < attachRightHand.Length; j++)
             {
                 attachRightHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachRightHand[j].transform.position + Vector3.down, quaternion.identity);
             }
         }
         yield return null;
@@ -245,6 +243,7 @@ public class GhostSkill : PlayerSkillBase
         float flusA = 0;
         Color dashColor = new Color(1, 1, 1, 0);
         playerMovement.IsMove = false;
+        player.IsInvincibility = true;
         Vector3 playerPos = transform.position;
         GameObject dashSprite = new GameObject();
         dashSprite.AddComponent<SpriteRenderer>();
@@ -277,7 +276,7 @@ public class GhostSkill : PlayerSkillBase
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
-        yield return dashTime2;
+        player.IsInvincibility = false;
         foreach(var c in cloneList)
         {
             Managers.Pool.Push(c);
