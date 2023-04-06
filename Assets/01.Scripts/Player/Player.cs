@@ -31,7 +31,6 @@ public class Player : MonoBehaviour, IHittable
     public Vector3 hitPoint { get; private set; }
     private void Update()
     {
-        print(invincibility);
         if (Input.GetKeyDown(KeyCode.C))
         {
             playerBase.FragmentAmount += 100;
