@@ -18,7 +18,7 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
             return;
 
         CinemachineCameraShaking.Instance.CameraShake();

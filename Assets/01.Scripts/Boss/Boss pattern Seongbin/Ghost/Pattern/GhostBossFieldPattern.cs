@@ -44,6 +44,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     [SerializeField] BossAnim bossAnim;
     [SerializeField] AnimationClip absorbEnd;
+    [SerializeField] AnimationClip finalHitted;
     public static bool isPushAllBubbles { get; set; } = false;
 
     //ÆÈ ¼Ú¾Æ¿À¸£±â ÆÐÅÏ
@@ -129,6 +130,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
             Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", bossAnim.transform.position, Quaternion.identity);
             clone1.transform.localScale = new Vector3(10, 10, 0);
+            yield return new WaitForSeconds(1f);
             GameManager.Instance.Player.OnDamage(0, gameObject, 0);
         }
 
@@ -139,6 +141,9 @@ public class GhostBossFieldPattern : MonoBehaviour
             if(Boss.Instance.Base.Shield <= 0)
             {
                 Managers.Pool.Push(clone.GetComponent<Poolable>());
+                bossAnim.overrideController[$"SkillFinal"] = finalHitted;
+                bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+                yield return new WaitForSeconds(2f);
                 yield break;
             }
             yield return null;

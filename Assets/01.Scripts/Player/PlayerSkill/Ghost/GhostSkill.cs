@@ -1,5 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.VFX;
 using static UnityEditor.PlayerSettings;
@@ -10,12 +14,13 @@ public class GhostSkill : PlayerSkillBase
     [SerializeField] private GhostUltSignal ghostUltSignal;
     float cicleRange = 2f;
     float janpanDuration = 5f;
+    WaitForSeconds dashTime2 = new WaitForSeconds(0.2f);
     PlayerSkillData skillData;
     private float hiilaDuration = 5;
     [SerializeField]
     private float attackRange = 1f;
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
-    float telpoVelocity = 20f;
+    float telpoVelocity = 50f;
     Animator playerAnim;
     float dashtime = 0.1f;
     SpriteRenderer ghostDash;
@@ -30,11 +35,13 @@ public class GhostSkill : PlayerSkillBase
     [Header("솟아오르기 스킬")]
     float armSpeed = 10f;
     private Vector3 joystickDir;
+    private Material[] setMat = new Material[3];
     private void Awake()
     {
         Cashing();
         playerAnim = GetComponent<Animator>();
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -44,7 +51,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
             return;
 
         playerAnim.SetTrigger("Attack");
@@ -94,7 +101,7 @@ public class GhostSkill : PlayerSkillBase
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
-        GameObject smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
+        Poolable smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
 
         while (timer < janpanDuration)
         {
@@ -176,7 +183,7 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles,3,enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 3, enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
@@ -189,52 +196,77 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator ArmSkill(int level)
     {
-        GameObject[] arm = new GameObject[2];
+        Poolable[] arm = new Poolable[2];
         arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
-        arm[0].transform.position += new Vector3(-1, 2, 0);
-        print(arm[0].transform.position);
-        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
-        arm[1].transform.position += new Vector3(1, 2, 0);
-        print(arm[1].transform.position);
-        while (true)
+        arm[0].transform.localPosition += new Vector3(-3, 0, 0);
+        for (int i = 0; i < arm[0].GetComponentsInChildren<Renderer>().Length; i++)
         {
-
-            arm[0].transform.localPosition = new Vector3(arm[0].transform.localPosition.x, Mathf.Lerp(arm[0].transform.localPosition.y, 0, Time.deltaTime * armSpeed), 0);
-            arm[1].transform.localPosition = new Vector3(arm[1].transform.localPosition.x, Mathf.Lerp(arm[1].transform.localPosition.y, 0, Time.deltaTime * armSpeed), 0);
-            if (arm[0].transform.localPosition.y < 0.01f)
-            {
-                Collider2D[] attachLeftHand = Physics2D.OverlapCircleAll(arm[0].transform.position, 1f,enemyLayer);
-                Collider2D[] attachRightHand = Physics2D.OverlapCircleAll(arm[1].transform.position, 1f,enemyLayer);
-                for (int j = 0; j < attachLeftHand.Length; j++)
-                {
-
-                }
-                for (int j = 0; j < attachRightHand.Length; j++)
-                {
-                }
-                Managers.Pool.Push(arm[0].GetComponent<Poolable>());
-                Managers.Pool.Push(arm[1].GetComponent<Poolable>());
-                yield break;
-            }
-            yield return null;
+            setMat[i] = arm[0].GetComponentsInChildren<Renderer>()[i].material;
+        }
+        foreach (var mat in setMat)
+        {
+            mat.SetFloat("_StepValue", transform.localPosition.y);
+        }
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
+        arm[1].transform.localPosition += new Vector3(3, 0, 0);
+        for (int i = 0; i < arm[1].GetComponentsInChildren<Renderer>().Length; i++)
+        {
+            setMat[i] = arm[1].GetComponentsInChildren<Renderer>()[i].material;
+        }
+        foreach (var mat in setMat)
+        {
+            mat.SetFloat("_StepValue", transform.localPosition.y);
         }
 
+        if (arm[0].transform.localPosition.y < 0.1f)
+        {
+            Collider2D[] attachLeftHand = Physics2D.OverlapCircleAll(arm[0].transform.position, 1f, 1 << enemyLayer);
+            Collider2D[] attachRightHand = Physics2D.OverlapCircleAll(arm[1].transform.position, 1f, 1 << enemyLayer);
+            for (int j = 0; j < attachLeftHand.Length; j++)
+            {
+                attachLeftHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
+            }
+            for (int j = 0; j < attachRightHand.Length; j++)
+            {
+                attachRightHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
+            }
+        }
+        yield return null;
+
+
     }
+
     IEnumerator Dash()
     {
         float timer = 0;
         float timerA = 0;
+        float flusA = 0;
         Color dashColor = new Color(1, 1, 1, 0);
         playerMovement.IsMove = false;
         Vector3 playerPos = transform.position;
+        GameObject dashSprite = new GameObject();
+        dashSprite.AddComponent<SpriteRenderer>();
+        dashSprite.AddComponent<Poolable>();
+        dashSprite.GetComponent<SpriteRenderer>().sprite = playerSprite.sprite;
+        dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
+       
+        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
+        Poolable clone = null;
+        List<Poolable> cloneList = new List<Poolable>();
+
+
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
         while (timer < dashtime)
         {
             if (timerA >= dashtime / 5)
             {
-                dashColor.a += 0.25f;
-                playerSprite.color = dashColor;
-                timerA = 0;
+                flusA += 0.2f;
+                dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
+                clone = Managers.Pool.Pop(dashSprite, transform.position);
+                clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
+                cloneList.Add(clone);
             }
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
@@ -245,13 +277,20 @@ public class GhostSkill : PlayerSkillBase
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
+        yield return dashTime2;
+        foreach(var c in cloneList)
+        {
+            Managers.Pool.Push(c);
+        }
+        cloneList.Clear();
     }
-    #endregion
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 1f);
-    }
-
-
+    
+private void OnDrawGizmos()
+{
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(transform.position, 1f);
 }
+}
+#endregion
+
+
