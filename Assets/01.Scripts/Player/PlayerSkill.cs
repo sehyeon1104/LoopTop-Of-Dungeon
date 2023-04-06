@@ -40,37 +40,42 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
+        playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
+
+        PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         for (int i =0; i < playerSkillBases.Length; i++) {
             playerSkillBases[i].enabled = false;    
         }
         SkillShuffle();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
-            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
+    //private void Update()
+    //{
+    //    //if (Input.GetKeyDown(KeyCode.I))
+    //    //{
+    //    //    playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
+    //    //    playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+    //    //    playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
             
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-            SkillSelect(playerBase.PlayerTransformTypeFlag);
-        }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            Skill1Select(playerBase.PlayerTransformTypeFlag);
-        }
+    //    //    PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
+    //    //    SkillSelect(playerBase.PlayerTransformTypeFlag);
+    //    //}
+    //    //if(Input.GetKeyDown(KeyCode.O))
+    //    //{
+    //    //    Skill1Select(playerBase.PlayerTransformTypeFlag);
+    //    //}
 
-    }
+    //}
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         PlayerSkillBase playerSkill;
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[3](0);
-            skillEvent[1] = () => playerSkill.playerSkills[4](0);
+            skillEvent[0] = () => playerSkill.playerSkills[0](0);
+            skillEvent[1] = () => playerSkill.playerSkills[1](0);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;
