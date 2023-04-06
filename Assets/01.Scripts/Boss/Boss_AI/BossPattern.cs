@@ -153,7 +153,7 @@ public abstract class BossPattern : MonoBehaviour
     {
         Debug.Log($"Äð´Ù¿î ÆÐÅÏ : {patternChoice}");
         print($"Skill{nowSkill}Started! Time : {Time.time}");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         print($"Skill{nowSkill} CoolDowned! Time : {Time.time}");
         isThisSkillCoolDown[nowSkill] = false;
     }
