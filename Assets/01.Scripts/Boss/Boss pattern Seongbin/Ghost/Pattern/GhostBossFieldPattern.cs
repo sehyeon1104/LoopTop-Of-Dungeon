@@ -56,6 +56,7 @@ public class GhostBossFieldPattern : MonoBehaviour
     public IEnumerator GhostBossArmPattern()
     {
         Vector2 Owntransform = transform.position;
+        time = 0;
         while(time < 25)
         {
             ArmRandomSizeX = 0f;

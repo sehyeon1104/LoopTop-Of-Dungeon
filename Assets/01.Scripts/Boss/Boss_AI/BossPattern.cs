@@ -14,8 +14,8 @@ public abstract class BossPattern : MonoBehaviour
 
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] private int[] phase_patternCount;
-    [Tooltip("보스 패턴 후딜레이")]
-    [SerializeField] private float patternDelay;
+    //[Tooltip("보스 패턴 후딜레이")]
+    private WaitForSeconds patternDelay = new WaitForSeconds(2f);
 
     [Space]
 
@@ -61,15 +61,13 @@ public abstract class BossPattern : MonoBehaviour
     private IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
-
-        StopCoroutine(RandomPattern());
-
         isThisSkillCoolDown[patternChoice] = false;
-        StopCoroutine(CoolDownCheck(patternChoice));
 
         if (Boss.Instance.actCoroutine != null)
             StopCoroutine(Boss.Instance.actCoroutine);
-        
+
+        Boss.Instance.actCoroutine = null;
+
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
 
@@ -91,9 +89,6 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
         Boss.Instance.Phase2();
-
-        Boss.Instance.actCoroutine = null;
-        StartCoroutine(RandomPattern());
     }
 
     private IEnumerator RandomPattern()
@@ -127,6 +122,7 @@ public abstract class BossPattern : MonoBehaviour
                 else
                 {
                     isThisSkillCoolDown[patternChoice] = true;
+                    Debug.Log($"현재 패턴 : {patternChoice}");
                     switch (patternChoice)
                     {
                         case 0:
@@ -148,20 +144,17 @@ public abstract class BossPattern : MonoBehaviour
                 }
             }
 
-            yield return null;
-            
-            if (Boss.Instance.actCoroutine != null)
-            {
-                yield return new WaitUntil(() => Boss.Instance.actCoroutine == null);
-                StartCoroutine(CoolDownCheck(patternChoice));
-                yield return new WaitForSeconds(patternDelay);
-            }
-
+            yield return new WaitUntil(() => Boss.Instance.actCoroutine == null);
+            StartCoroutine(CoolDownCheck(patternChoice));
+            yield return patternDelay;
         }
     }
     public IEnumerator CoolDownCheck(int nowSkill)
     {
-        yield return new WaitForSeconds(3f);
+        Debug.Log($"쿨다운 패턴 : {patternChoice}");
+        print($"Skill{nowSkill}Started! Time : {Time.time}");
+        yield return new WaitForSeconds(10f);
+        print($"Skill{nowSkill} CoolDowned! Time : {Time.time}");
         isThisSkillCoolDown[nowSkill] = false;
     }
 

@@ -237,6 +237,7 @@ public class GhostPattern : G_Patterns
                 SummonTimer.gameObject.SetActive(false);
             }
         }
+
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
