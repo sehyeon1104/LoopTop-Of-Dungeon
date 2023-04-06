@@ -215,7 +215,7 @@ public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
 
-    protected override void Update()
+    private void Update()
     {
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {

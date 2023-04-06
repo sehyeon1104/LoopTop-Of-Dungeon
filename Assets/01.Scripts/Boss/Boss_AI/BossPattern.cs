@@ -14,8 +14,8 @@ public abstract class BossPattern : MonoBehaviour
 
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] private int[] phase_patternCount;
-    [Tooltip("보스 패턴 후딜레이")]
-    [SerializeField] private float patternDelay;
+    //[Tooltip("보스 패턴 후딜레이")]
+    private WaitForSeconds patternDelay = new WaitForSeconds(2f);
 
     [Space]
 
@@ -45,7 +45,7 @@ public abstract class BossPattern : MonoBehaviour
         StartCoroutine(RandomPattern());
         StartCoroutine(ChangePhase());
     }
-    protected virtual void Update()
+    protected void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -61,9 +61,6 @@ public abstract class BossPattern : MonoBehaviour
     private IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
-
-        StopCoroutine(RandomPattern());
-
         isThisSkillCoolDown[patternChoice] = false;
 
         if (Boss.Instance.actCoroutine != null)
@@ -92,8 +89,6 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
         Boss.Instance.Phase2();
-
-        StartCoroutine(RandomPattern());
     }
 
     private IEnumerator RandomPattern()
@@ -102,11 +97,10 @@ public abstract class BossPattern : MonoBehaviour
         {
             yield return null;
 
-            if (nowBPhaseChange || Boss.Instance.actCoroutine != null) continue;
+            if (nowBPhaseChange) continue;
 
             patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
             patternCount[patternChoice] = GetRandomCount(patternChoice);
-            Debug.Log($"{patternChoice}번 패턴 참조중...");
 
             if (isThisSkillCoolDown[patternChoice]) continue;
 
@@ -150,14 +144,9 @@ public abstract class BossPattern : MonoBehaviour
                 }
             }
 
-            yield return null;
-
-            if (Boss.Instance.actCoroutine != null && !nowBPhaseChange)
-            {
-                yield return new WaitUntil(() => Boss.Instance.actCoroutine == null);
-                StartCoroutine(CoolDownCheck(patternChoice));
-            }
-            yield return new WaitForSeconds(patternDelay);
+            yield return new WaitUntil(() => Boss.Instance.actCoroutine == null);
+            StartCoroutine(CoolDownCheck(patternChoice));
+            yield return patternDelay;
         }
     }
     public IEnumerator CoolDownCheck(int nowSkill)
