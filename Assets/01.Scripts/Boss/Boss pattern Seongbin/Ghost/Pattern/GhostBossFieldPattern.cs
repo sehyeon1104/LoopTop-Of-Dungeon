@@ -143,7 +143,7 @@ public class GhostBossFieldPattern : MonoBehaviour
                 Managers.Pool.Push(clone.GetComponent<Poolable>());
                 bossAnim.overrideController[$"SkillFinal"] = finalHitted;
                 bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(6f);
                 yield break;
             }
             yield return null;
