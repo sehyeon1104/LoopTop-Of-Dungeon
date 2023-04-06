@@ -49,6 +49,7 @@ public class ghostMobAI : MonoBehaviour
 
     void Update()
     {
+        print(enemy);
         Act();
     }
 
@@ -72,8 +73,8 @@ public class ghostMobAI : MonoBehaviour
     public void Act()
     {
         if (actCoroutine != null) return;
-        FindEnemies();
-        switch (Mathf.Sqrt(shortestdistance))
+
+        switch (Mathf.Sqrt(FindEnemies()))
         {
             case 0:
                 actCoroutine = StartCoroutine(Idle());
@@ -102,14 +103,14 @@ public class ghostMobAI : MonoBehaviour
         yield return null;
         actCoroutine = null;
     }
-    public void FindEnemies()
+    public float FindEnemies()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance, 1 << enemyLayer);
         if (enemies.Length == 0)
         {
             shortestdistance = 0;
             flipVector = Vector2.zero;
-            return;
+            return 0; 
         }
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -123,6 +124,7 @@ public class ghostMobAI : MonoBehaviour
                 flipVector = playeyToEnemyVec;
             }
         }
+        return shortestdistance;
     }
     public virtual IEnumerator MoveToEnemy(Vector2 dir)
     {
@@ -138,7 +140,7 @@ public class ghostMobAI : MonoBehaviour
 
     public virtual IEnumerator AttackToEnemy()
     {
-        enemy.GetComponent<IHittable>().OnDamage(1, gameObject, 0);
+        enemy.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
 

@@ -252,7 +252,6 @@ public class GhostSkill : PlayerSkillBase
         float timer = 0;
         float timerA = 0;
         float flusA = 0;
-        Color dashColor = new Color(1, 1, 1, 0);
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
         Vector3 playerPos = transform.position;
@@ -275,7 +274,6 @@ public class GhostSkill : PlayerSkillBase
                 dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
                 Poolable clone = Managers.Pool.Pop(dashSprite, transform.position);
                 clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
-                print(clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA));
                 cloneList.Add(clone);
             }
             timer += Time.deltaTime;

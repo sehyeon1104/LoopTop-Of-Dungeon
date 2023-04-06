@@ -115,7 +115,7 @@ public class PlayerSkill : MonoBehaviour
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
             skillEvent[4]();        
     }
-    #region ë¦¬ìŠ¤???”í”Œ
+    #region ½ºÅ³ ¼ÅÇÃ
 
     public void ListInit()
     {
