@@ -77,6 +77,11 @@ public class Player : MonoBehaviour, IHittable
     {
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
+        // TODO : 플레이어 애니메이션 실행
+    }
+
+    public void GameoverPlayer()
+    {
         UIManager.Instance.ToggleGameOverPanel();
         gameObject.SetActive(false);
     }
