@@ -8,6 +8,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Rigidbody2D playerRigid;
     [HideInInspector] public SpriteRenderer playerSprite;
+    [HideInInspector] protected Player player;
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
@@ -50,6 +51,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         playerSprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerRigid = GetComponentInParent<Rigidbody2D>();
+        player = GameManager.Instance.Player;
         init();
     }
 }

@@ -15,7 +15,13 @@ public class Player : MonoBehaviour, IHittable
 {
 
     public PlayerBase playerBase = new PlayerBase();
-    
+
+    private bool invincibility = false;
+    public bool IsInvincibility
+    {
+        get => invincibility;
+        set => invincibility = value;
+    }
     private bool isPDamaged = false;
     [SerializeField]
     private float reviveInvincibleTime = 2f;
@@ -24,8 +30,8 @@ public class Player : MonoBehaviour, IHittable
 
     public Vector3 hitPoint { get; private set; }
     private void Update()
-    {   
-
+    {
+        print(invincibility);
         if (Input.GetKeyDown(KeyCode.C))
         {
             playerBase.FragmentAmount += 100;
@@ -45,7 +51,7 @@ public class Player : MonoBehaviour, IHittable
     }
     public void OnDamage(float damage, GameObject damageDealer, float critChance)
     {
-        if (isPDamaged || playerBase.IsPDead)
+        if (isPDamaged || playerBase.IsPDead || invincibility)
             return;
         
         if (Random.Range(1, 101) <= critChance)
