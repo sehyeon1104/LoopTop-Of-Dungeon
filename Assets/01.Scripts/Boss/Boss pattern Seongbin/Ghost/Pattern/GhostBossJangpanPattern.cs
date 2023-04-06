@@ -9,7 +9,10 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     private SpriteRenderer FRPRSpriterenderer;
     private SpriteRenderer FRPRStartSpriterenderer;
-    
+
+    private SpriteRenderer FRPSpriterenderer;
+    private SpriteRenderer FRPStartSpriterenderer;
+
 
 
     private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
@@ -117,23 +120,26 @@ public class GhostBossJangpanPattern : MonoBehaviour
     public IEnumerator  FloorPatternCircle()
     {
 
-        Poolable FPR = Managers.Pool.PoolManaging("03.Prefabs/BossPattern/Ghost/JangPan/Circle/FPR", transform.position, Quaternion.identity);
-        Poolable FPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", transform.position, Quaternion.identity);
+        Poolable FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", transform.position, Quaternion.identity);
+        Poolable FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", transform.position, Quaternion.identity);
+        Poolable FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", transform.position, Quaternion.identity);
 
+        FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
+        FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
 
-        FPR.transform.position = transform.position;
-        FPRS.transform.position = transform.position;
-        FPRSCol.transform.position = transform.position;
+        FRP.transform.position = transform.position;
+        FRPS.transform.position = transform.position;
+        FRPCol.transform.position = transform.position;
 
-        FPR.SetActive(true);
-        FPRS.SetActive(true);
+        FRP.gameObject.SetActive(true);
+        FRPS.gameObject.SetActive(true);
        
         while(ScaleX < 17f)
         {
             ScaleX += 0.5f;
             ScaleY += 0.5f;
 
-            FPR.transform.localScale = new Vector2(ScaleX, ScaleY);
+            FRP.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return WaitzerodotzerooneS;
         }
@@ -148,7 +154,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
             ScaleX += 0.2f;
             ScaleY += 0.2f;
 
-            FPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
+            FRPS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
             yield return WaitzerodotzerooneS;
         }
@@ -158,28 +164,29 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         
 
-        FPRSpriteRenderer.enabled = false;
-        FPRSSpriteRenderer.enabled = false;
+        FRPSpriterenderer.enabled = false;
+        FRPStartSpriterenderer.enabled = false;
 
         Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", transform.position, Quaternion.identity);
 
         yield return WaitzerodoteightS;
-        FPRSCol.SetActive(true);
+        FRPCol.gameObject.SetActive(true);
 
         yield return WaitfiveS;
 
-        FPR.transform.localScale = Vector2.zero; 
-        FPRS.transform.localScale = Vector2.zero;
+        FRP.transform.localScale = Vector2.zero; 
+        FRPS.transform.localScale = Vector2.zero;
 
-        FPRSpriteRenderer.enabled = true;
-        FPRSSpriteRenderer.enabled = true;
+        FRPSpriterenderer.enabled = true;
+        FRPStartSpriterenderer.enabled = true;
 
+        FRP.gameObject.SetActive(false);
+        FRPS.gameObject.SetActive(false);
+        FRPCol.gameObject.SetActive(false);
 
-        FPR.gameObject.SetActive(false);
-        FPRS.gameObject.SetActive(false);
-        FPRSCol.gameObject.SetActive(false);
-
-        //effect
+        Managers.Pool.Push(FRP);
+        Managers.Pool.Push(FRPS);
+        Managers.Pool.Push(FRPCol);
 
 
     }
