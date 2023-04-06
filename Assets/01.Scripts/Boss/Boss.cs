@@ -53,6 +53,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         {
             sprites.Add(child);
         }
+
     }
 
     private void Start()
