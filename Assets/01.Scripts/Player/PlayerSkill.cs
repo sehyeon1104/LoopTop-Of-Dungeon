@@ -69,8 +69,8 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[3](0);
-            skillEvent[1] = () => playerSkill.playerSkills[4](0);
+            skillEvent[0] = () => playerSkill.playerSkills[4](0);
+            skillEvent[1] = () => playerSkill.playerSkills[1](0);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;

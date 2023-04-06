@@ -20,6 +20,8 @@ public class GhostSkill : PlayerSkillBase
     Animator playerAnim;
     float dashtime = 0.1f;
     SpriteRenderer ghostDash;
+    List<Poolable> pool = new List<Poolable>();
+    List<Poolable> cloneList = new List<Poolable>();
     // Beam
     [SerializeField]
     private Vector3 beamDir;
@@ -122,14 +124,23 @@ public class GhostSkill : PlayerSkillBase
 
     IEnumerator HillaSkill(int level)
     {
+        
         float timer = 0;
-        Poolable ghostMob = Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity);
+        for (int i =0;i<3+level;i++)
+        {
+            pool.Add(Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
+        }
+      
         while (true)
         {
             if (timer > hiilaDuration)
             {
-                Managers.Pool.Push(ghostMob);
-                break;
+                for(int i = 0; i<pool.Count; i++)
+                {
+                    Managers.Pool.Push(pool[i]);
+                    pool.Clear();
+                }
+               yield break;
             }
             timer += Time.deltaTime;
             yield return null;
@@ -252,19 +263,19 @@ public class GhostSkill : PlayerSkillBase
         dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
        
         dashSprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
-        Poolable clone = null;
-        List<Poolable> cloneList = new List<Poolable>();
+       
 
 
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
         while (timer < dashtime)
         {
-            if (timerA >= dashtime / 5)
+            if (timerA > 0.02f)
             {
                 flusA += 0.2f;
                 dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
-                clone = Managers.Pool.Pop(dashSprite, transform.position);
+                Poolable clone = Managers.Pool.Pop(dashSprite, transform.position);
                 clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
+                print(clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA));
                 cloneList.Add(clone);
             }
             timer += Time.deltaTime;
