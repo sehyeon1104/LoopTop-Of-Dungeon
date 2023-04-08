@@ -61,6 +61,8 @@ public class Beam : MonoBehaviour
 
     private void Init()
     {
+        StopCoroutine(OnBeam());
+
         lineLength = 0;
         lineWidth = width;
 
