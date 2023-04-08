@@ -9,7 +9,12 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     public bool IsMove
     {
         get => isMove;
-        set => isMove = value;
+        set
+        {
+            if (value == false)
+                rb.velocity = Vector2.zero;
+            isMove = value;
+        }
     }
     public Joystick joystick { private set; get; }
     [SerializeField] float speed = 4.25f;
@@ -26,15 +31,18 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     private void FixedUpdate()
     {
-        //if (isMove)
-        //{
-        //    Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
-        //}
+       
+        if (isMove)
+         Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
 
-        Move(joystick.Direction);
+        //Move(joystick.Direction);
     }
     public void Move(Vector2 inputVelocity)
     {
+        if(!IsMove)
+        {
+            return;
+        }
         Vector2 VelocityVec = inputVelocity * speed;
         rb.velocity = VelocityVec;
         PlayerVisual.Instance.VelocityChange(direction.x);
