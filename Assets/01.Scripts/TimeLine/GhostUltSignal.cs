@@ -9,13 +9,14 @@ public class GhostUltSignal : MonoBehaviour
 {
     [SerializeField] private GameObject GhostBoss;
 
-    [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject player;
 
     [SerializeField] private GameObject GhostBossSkill;
 
     [SerializeField] private Animation GhostUltAnim;
 
     [SerializeField] private SpriteRenderer panel1, panel2;
+     
 
     PlayableDirector PD;
 
@@ -31,8 +32,10 @@ public class GhostUltSignal : MonoBehaviour
 
     private void Awake()
     {
-        UltSkillAnim(); //이걸 스타트에 해주고 시네머신에는 몇번째 울트 애니메이션인지 넣자
+        player = GameObject.FindGameObjectWithTag("Player");
+        UltSkillAnim(); 
     }
+
     public void AnimationArray()
     {
         foreach (AnimationState states in GhostUltAnim)
@@ -62,10 +65,12 @@ public class GhostUltSignal : MonoBehaviour
 
     public void ScreenWhite()
     {
+
         Color color = panel1.color;
         color.a = 0;
         panel1.color = color;
         panel2.color = color;
+        PlayerMovement.Instance.IsMove = true;
     }
 
     public IEnumerator ScreenDarkCor()
@@ -101,8 +106,9 @@ public class GhostUltSignal : MonoBehaviour
 
     public void GhostBossTransform()
     {
-        GhostBoss.transform.position = Player.transform.position;
-        GhostBossSkill.transform.position = new Vector3(Player.transform.position.x + (-4.77f), Player.transform.position.y +(8.54f), 0);
+        PlayerMovement.Instance.IsMove = false;
+        GhostBoss.transform.position = player.transform.position;
+        GhostBossSkill.transform.position = new Vector3(player.transform.position.x + (-4.77f), player.transform.position.y +(8.54f), 0);
     }
 
     public void Ult1()
