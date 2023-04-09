@@ -25,7 +25,6 @@ public class GhostSkill : PlayerSkillBase
     [SerializeField]
     private Vector3 beamDir;
     private float beamRot;
-    private Vector3 beamPos;
     private Poolable beam;
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
@@ -154,27 +153,8 @@ public class GhostSkill : PlayerSkillBase
 
         beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(beamRot, Vector3.forward);
-        print(beamPos);
-        beam = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/PlayerBeam.prefab", transform.position, angleAxis);
+        beam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
 
-        switch (level)
-        {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                subBeamLeft = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
-                subBeamLeft.transform.position = beamPos + new Vector3(-joystickDir.y, joystickDir.x);
-
-                subBeamRight = Managers.Pool.PoolManaging("10.Effects/ghost/PlayerBeam", beamPos, beam.transform.rotation);
-                subBeamRight.transform.position = beamPos + new Vector3(joystickDir.y, -joystickDir.x);
-                break;
-        }
     }
     IEnumerator telpoSkill(int level)
     {
