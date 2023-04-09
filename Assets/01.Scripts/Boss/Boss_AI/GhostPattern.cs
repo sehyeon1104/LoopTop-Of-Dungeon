@@ -109,6 +109,10 @@ public class G_Patterns : BossPattern
     {
         Vector2 dir;
 
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
+
+        yield return new WaitForSeconds(1f);
+
         bossObject.SetActive(false);
         Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
