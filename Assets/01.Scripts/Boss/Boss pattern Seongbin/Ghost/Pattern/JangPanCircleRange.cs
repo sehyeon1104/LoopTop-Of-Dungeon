@@ -59,7 +59,7 @@ public class JangPanCircleRange : MonoBehaviour
     {
         while (true)
         {
-            GameManager.Instance.Player.OnDamage(1, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(1, 0);
             yield return DotTime;
         }
     }

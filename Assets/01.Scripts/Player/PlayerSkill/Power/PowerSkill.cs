@@ -37,7 +37,7 @@ public class PowerSkill : PlayerSkillBase
             if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
             {
                 CinemachineCameraShaking.Instance.CameraShake(5,0.3f);
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
+                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
 
             }
         }

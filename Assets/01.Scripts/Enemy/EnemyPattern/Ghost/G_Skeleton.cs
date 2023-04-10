@@ -16,7 +16,7 @@ public class G_Skeleton : EnemyDefault
     {
         yield return base.AttackToPlayer();
 
-        GameManager.Instance.Player.OnDamage(damage, gameObject, 0);
+        GameManager.Instance.Player.OnDamage(damage, 0);
 
         yield return attackWait;
 
@@ -24,9 +24,9 @@ public class G_Skeleton : EnemyDefault
 
     }
 
-    public override void OnDamage(float damage, GameObject damageDealer, float critChance)
+    public override void OnDamage(float damage, float critChance)
     {
-        base.OnDamage(damage, damageDealer, critChance);
+        base.OnDamage(damage ,critChance);
     }
 
     public override void EnemyDead()

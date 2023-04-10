@@ -36,6 +36,8 @@ public class G_Patterns : BossPattern
     #region patterns
     public IEnumerator Pattern_BM(int count) //ºö
     {
+        WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.25f);
+
         yield return null;
 
         for (int i = 0; i < count; i++)
@@ -102,7 +104,7 @@ public class G_Patterns : BossPattern
                     }
                     break;
             }
-            yield return new WaitForSeconds(1.75f);
+            yield return wait;
         }
     }
     public IEnumerator Pattern_TP(int count) //ÅÚÆ÷

@@ -11,7 +11,7 @@ public class Claw : MonoBehaviour
         {
             if (col.CompareTag("Player"))
             {
-                GameManager.Instance.Player.OnDamage(2, gameObject, 0);
+                GameManager.Instance.Player.OnDamage(2, 0);
             }
         }
     }
