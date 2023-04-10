@@ -23,6 +23,8 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     private string[] asdsa = new string[3];
 
+    private BoxCollider2D col = null;
+
     private void Awake()
     {
         waitForSeconds = new WaitForSeconds(waitTime);
@@ -41,7 +43,7 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ToggleDialoguePanel();
-            SetContentNPos(asdsa, GameManager.Instance.Player.transform.position);
+            SetContentNPos(asdsa, GameManager.Instance.Player.gameObject);
         }
     }
 
@@ -50,15 +52,23 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         DialoguePanel.gameObject.SetActive(!DialoguePanel.gameObject.activeSelf);
     }
 
-    public void SetContentNPos(string[] contents, Vector3 pos)
+    public void SetContentNPos(string[] contents, GameObject obj)
     {
+        col = obj.GetComponent<BoxCollider2D>();
+
+        if(col == null)
+        {
+            Debug.LogWarning("BoxCollider is null");
+            return;
+        }
+
         contentArr = new string[contents.Length];
         for(int i = 0; i < contents.Length; ++i)
         {
             contentArr[i] += contents[i];
         }
 
-        dialoguePos = Camera.main.WorldToScreenPoint(pos) + Vector3.up * 100;
+        dialoguePos = Camera.main.WorldToScreenPoint(new Vector3(obj.transform.position.x, obj.transform.position.y + col.size.y / 2));
 
         DialoguePanel.transform.position = dialoguePos;
 
@@ -67,6 +77,8 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     public IEnumerator IEStartDialogue()
     {
+        contentTmp.SetText("");
+
         for(int i = 0; i < contentArr.Length; ++i)
         {
             contentTmp.DOText($"{contentArr[i]}", 2f);
