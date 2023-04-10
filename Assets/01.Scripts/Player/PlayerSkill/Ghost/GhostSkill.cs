@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
-    [SerializeField] private GhostUltSignal ghostUltSignal;
     float cicleRange = 2f;
     float janpanDuration = 5f;
     WaitForSeconds dashTime2 = new WaitForSeconds(0.2f);
@@ -33,10 +32,13 @@ public class GhostSkill : PlayerSkillBase
     [Header("¼Ú¾Æ¿À¸£±â ½ºÅ³")]
     float armSpeed = 10f;
     private Vector3 joystickDir;
-    private Material[] setMat = new Material[3];
+    [Header("±Ã±Ø±â")]
+   [SerializeField]  GhostUltSignal ghostUlt;
+
     private void Awake()
     {
         Cashing();
+        
         playerAnim = GetComponent<Animator>();
     }
 
@@ -86,7 +88,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void UltimateSkill()
     {
-        ghostUltSignal.UltSkillCast();
+        ghostUlt.UltSkillCast();    
     }
     protected override void DashSkill()
     {
@@ -206,42 +208,10 @@ public class GhostSkill : PlayerSkillBase
     IEnumerator ArmSkill(int level)
     {
         Poolable[] arm = new Poolable[2];
-        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform);
+        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position,Quaternion.Euler(0,180,0));
         arm[0].transform.localPosition += new Vector3(-3, 0, 0);
-        for (int i = 0; i < arm[0].GetComponentsInChildren<Renderer>().Length; i++)
-        {
-            setMat[i] = arm[0].GetComponentsInChildren<Renderer>()[i].material;
-        }
-        foreach (var mat in setMat)
-        {
-            mat.SetFloat("_StepValue", transform.localPosition.y);
-        }
-        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform);
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position,Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
-        for (int i = 0; i < arm[1].GetComponentsInChildren<Renderer>().Length; i++)
-        {
-            setMat[i] = arm[1].GetComponentsInChildren<Renderer>()[i].material;
-        }
-        foreach (var mat in setMat)
-        {
-            mat.SetFloat("_StepValue", transform.localPosition.y);
-        }
-
-        if (arm[0].transform.localPosition.y < 0.1f)
-        {
-            Collider2D[] attachLeftHand = Physics2D.OverlapCircleAll(arm[0].transform.position, 1f, 1 << enemyLayer);
-            Collider2D[] attachRightHand = Physics2D.OverlapCircleAll(arm[1].transform.position, 1f, 1 << enemyLayer);
-            for (int j = 0; j < attachLeftHand.Length; j++)
-            {
-                attachLeftHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachLeftHand[j].transform.position + Vector3.down, quaternion.identity);
-            }
-            for (int j = 0; j < attachRightHand.Length; j++)
-            {
-                attachRightHand[j].GetComponent<IHittable>().OnDamage(5, gameObject, 0);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmSkill.prefab", attachRightHand[j].transform.position + Vector3.down, quaternion.identity);
-            }
-        }
         yield return null;
 
 
