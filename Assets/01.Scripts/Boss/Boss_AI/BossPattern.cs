@@ -14,8 +14,7 @@ public abstract class BossPattern : MonoBehaviour
 
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] private int[] phase_patternCount;
-    //[Tooltip("보스 패턴 후딜레이")]
-    private WaitForSeconds patternDelay = new WaitForSeconds(2f);
+    private WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
 
     [Space]
 
@@ -39,6 +38,8 @@ public abstract class BossPattern : MonoBehaviour
 
     public void Init()
     {
+        patternDelay = new WaitForSeconds(1.5f);
+
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
 
@@ -81,6 +82,7 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
+        patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
         Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 
