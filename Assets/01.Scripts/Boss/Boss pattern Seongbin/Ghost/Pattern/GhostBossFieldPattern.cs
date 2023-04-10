@@ -132,7 +132,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", bossAnim.transform.position, Quaternion.identity);
             clone1.transform.localScale = new Vector3(10, 10, 0);
             yield return new WaitForSeconds(1f);
-            GameManager.Instance.Player.OnDamage(0, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(0, 0);
         }
 
         checktime = 0f;

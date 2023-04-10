@@ -49,7 +49,6 @@ public class ghostMobAI : MonoBehaviour
 
     void Update()
     {
-        print(enemy);
         Act();
     }
 
@@ -140,7 +139,7 @@ public class ghostMobAI : MonoBehaviour
 
     public virtual IEnumerator AttackToEnemy()
     {
-        enemy.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
+        enemy.GetComponent<IHittable>().OnDamage(3, 0);
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
 

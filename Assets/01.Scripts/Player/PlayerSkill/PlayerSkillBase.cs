@@ -42,7 +42,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
-        dashVelocity = 30f;
+        dashVelocity = 20f;
         dashDuration = 0.2f;
         enemyLayer = LayerMask.NameToLayer("Enemy");
     }

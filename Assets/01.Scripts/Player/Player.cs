@@ -50,7 +50,7 @@ public class Player : MonoBehaviour, IHittable
         yield return null;
     }
 
-    public void OnDamage(float damage, GameObject damageDealer, float critChance)
+    public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
             return;
@@ -102,4 +102,5 @@ public class Player : MonoBehaviour, IHittable
         yield return new WaitForSeconds(time);
         isPDamaged = false;
     }
+
 }

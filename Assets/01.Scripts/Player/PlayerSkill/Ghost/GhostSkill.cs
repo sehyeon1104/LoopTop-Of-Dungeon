@@ -9,7 +9,6 @@ public class GhostSkill : PlayerSkillBase
 {
     float cicleRange = 2f;
     float janpanDuration = 5f;
-    WaitForSeconds dashTime2 = new WaitForSeconds(0.2f);
     PlayerSkillData skillData;
     private float hiilaDuration = 5;
     [SerializeField]
@@ -17,7 +16,7 @@ public class GhostSkill : PlayerSkillBase
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
     float telpoVelocity = 50f;
     Animator playerAnim;
-    float dashtime = 0.1f;
+    float dashtime = 0.2f;
     SpriteRenderer ghostDash;
     List<Poolable> pool = new List<Poolable>();
     List<Poolable> cloneList = new List<Poolable>();
@@ -32,12 +31,12 @@ public class GhostSkill : PlayerSkillBase
     float armSpeed = 10f;
     private Vector3 joystickDir;
     [Header("±Ã±Ø±â")]
-   [SerializeField]  GhostUltSignal ghostUlt;
+    [SerializeField] GhostUltSignal ghostUlt;
 
     private void Awake()
     {
         Cashing();
-        
+
         playerAnim = GetComponent<Animator>();
     }
 
@@ -60,14 +59,18 @@ public class GhostSkill : PlayerSkillBase
             if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
             {
                 CinemachineCameraShaking.Instance.CameraShake();
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, gameObject, GameManager.Instance.Player.playerBase.CritChance);
+                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
 
             }
         }
     }
     protected override void FirstSkill(int level)
     {
-        StartCoroutine(JanpangSkill(level));
+        if (level == 5)
+            StartCoroutine(Jangpan5Skill());
+        else
+            StartCoroutine(JanpangSkill(level));
+
     }
     protected override void SecondSkill(int level)
     {
@@ -87,7 +90,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void UltimateSkill()
     {
-        ghostUlt.UltSkillCast();    
+        ghostUlt.UltSkillCast();
     }
     protected override void DashSkill()
     {
@@ -108,13 +111,10 @@ public class GhostSkill : PlayerSkillBase
             timerA += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.7f);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.7f, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    if (attachObjs[i].CompareTag("Enemy") || attachObjs[i].CompareTag("Boss"))
-                    {
-                        attachObjs[i].GetComponent<IHittable>().OnDamage(1, attachObjs[i].gameObject, playerBase.CritChance);
-                    }
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
                 }
                 timerA = 0;
             }
@@ -122,26 +122,76 @@ public class GhostSkill : PlayerSkillBase
         }
         Managers.Pool.Push(smoke.GetComponent<Poolable>());
     }
-
+    IEnumerator Jangpan5Skill()
+    {
+        float shortestdistance = 0;
+        Collider2D[] attachObjs = null;
+        Collider2D[] attachObjs2 = null;
+        Collider2D[] enemies = null;
+        Vector3 targetPos = Vector3.zero;
+        Poolable smoke =null;
+        float timer = 0;
+        float timerA = 0;
+        if (playerRigid.velocity != Vector2.zero)
+        {
+             smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity);
+        }
+        while (timer < janpanDuration)
+        {
+            timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            enemies = Physics2D.OverlapCircleAll(smoke.transform.position, 25, 1 << enemyLayer);
+            if (enemies.Length == 0)
+            {
+                targetPos = Vector3.zero;
+                shortestdistance = 0;
+            }
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                float playerMagnitude = Vector2.SqrMagnitude(enemies[i].transform.position - smoke.transform.position);
+                if (i == 0)
+                {
+                    shortestdistance = playerMagnitude;
+                    targetPos = (enemies[0].transform.position - smoke.transform.position).normalized;
+                }
+                if (shortestdistance > playerMagnitude && enemies[i].gameObject.activeSelf)
+                {
+                    targetPos = (enemies[i].transform.position - smoke.transform.position).normalized;
+                    shortestdistance = playerMagnitude;
+                }
+            }
+            if (timerA > 0.1f)
+            {
+                attachObjs = Physics2D.OverlapCircleAll(smoke.transform.position, 1.7f, 1 << enemyLayer);
+                for (int i = 0; i < attachObjs.Length; i++)
+                {
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
+                }
+            }
+            smoke.transform.Translate(targetPos * 3 * Time.deltaTime);
+            yield return null;
+        }
+        Managers.Pool.Push(smoke);
+    }
     IEnumerator HillaSkill(int level)
     {
-        
+
         float timer = 0;
-        for (int i =0;i<3+level;i++)
+        for (int i = 0; i < 3 + level; i++)
         {
             pool.Add(Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
         }
-      
+
         while (true)
         {
             if (timer > hiilaDuration)
             {
-                for(int i = 0; i<pool.Count; i++)
+                for (int i = 0; i < pool.Count; i++)
                 {
                     Managers.Pool.Push(pool[i]);
                     pool.Clear();
                 }
-               yield break;
+                yield break;
             }
             timer += Time.deltaTime;
             yield return null;
@@ -173,13 +223,13 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles,Vector2.Distance(currentPlayerPos, transform.position), enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, Vector2.Distance(currentPlayerPos, transform.position), enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
             print("ss");
             if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
             {
-                hit[i].transform.GetComponent<IHittable>().OnDamage(3, gameObject, 0);
+                hit[i].transform.GetComponent<IHittable>().OnDamage(3, 0);
             }
         }
         playerMovement.IsMove = true;
@@ -188,9 +238,9 @@ public class GhostSkill : PlayerSkillBase
     IEnumerator ArmSkill(int level)
     {
         Poolable[] arm = new Poolable[2];
-        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position,Quaternion.Euler(0,180,0));
+        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position, Quaternion.Euler(0, 180, 0));
         arm[0].transform.localPosition += new Vector3(-3, 0, 0);
-        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position,Quaternion.identity);
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position, Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
         yield return null;
 
@@ -210,9 +260,9 @@ public class GhostSkill : PlayerSkillBase
         dashSprite.AddComponent<Poolable>();
         dashSprite.GetComponent<SpriteRenderer>().sprite = playerSprite.sprite;
         dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
-       
-        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
-       
+
+        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+
 
 
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
@@ -236,18 +286,18 @@ public class GhostSkill : PlayerSkillBase
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
-        foreach(var c in cloneList)
+        foreach (var c in cloneList)
         {
             Managers.Pool.Push(c);
         }
         cloneList.Clear();
     }
-    
-private void OnDrawGizmos()
-{
-    Gizmos.color = Color.green;
-    Gizmos.DrawWireSphere(transform.position, 1f);
-}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 25f);
+    }
 }
 #endregion
 

@@ -110,7 +110,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         //gameObject.SetActive(false);
     }
 
-    public void OnDamage(float damage, GameObject damageDealer, float critChance)
+    public void OnDamage(float damage, float critChance)
     {
         if (isBDead) return;
         if (isBDamaged) return;

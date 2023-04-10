@@ -49,7 +49,7 @@ public abstract class BossPattern : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Boss.Instance.OnDamage(20, gameObject, 0);
+            Boss.Instance.OnDamage(20, 0);
         }
         if (Boss.Instance.isBDead)
         {

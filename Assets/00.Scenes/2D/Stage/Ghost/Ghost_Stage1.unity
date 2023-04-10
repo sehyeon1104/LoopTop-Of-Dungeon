@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!111 &15787629 stripped
-Animation:
-  m_CorrespondingSourceObject: {fileID: 4211435051968372725, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
-  m_PrefabInstance: {fileID: 7442715256223835009}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &119251785
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +280,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945687541
-  m_SortingLayer: 13
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 302f8dc320c23a349ba27699c2a2f5b1, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -376,11 +371,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GhostBoss: {fileID: 0}
-  Player: {fileID: 0}
-  GhostBossHeads: {fileID: 0}
-  GhostUltAnim: {fileID: 15787629}
-  panel: {fileID: 1309951694}
-  GhostSprite: []
+  player: {fileID: 0}
+  GhostBossSkill: {fileID: 0}
+  GhostUltAnim: {fileID: 0}
+  panel1: {fileID: 0}
+  panel2: {fileID: 0}
 --- !u!114 &330303115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +460,7 @@ PlayableDirector:
   - key: {fileID: -1739120376106190708, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
     value: {fileID: 336537418}
   - key: {fileID: -5480474949089158406, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
-    value: {fileID: 7442715256223835010}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &330303117
@@ -575,7 +570,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945687541
-  m_SortingLayer: 13
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 302f8dc320c23a349ba27699c2a2f5b1, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -959,10 +954,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUI: {fileID: 1599856481}
   skillSelect: {fileID: 0}
-  playerIcon: {fileID: 678934960}
   hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
   hpSpace: {fileID: 678934959}
-  fragmentImage: {fileID: 1839593438}
   fragmentAmountTMP: {fileID: 1839593437}
   skillSelectObj: {fileID: 0}
   pausePanel: {fileID: 678934958}
@@ -1027,7 +1020,6 @@ MonoBehaviour:
   ghostNormalEnemyPrefabs: []
   ghostEliteEnemyPrefabs: []
   <curEnemies>k__BackingField: []
-  enemySpawnEffect: {fileID: 0}
   spawnTime: 0.8
   assetLabel:
     m_LabelString: GhostEnemy
@@ -1439,17 +1431,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7638766927014733958, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
   m_PrefabInstance: {fileID: 678934955}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &678934960 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8615511920610775398, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
-  m_PrefabInstance: {fileID: 678934955}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &688839365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,7 +1523,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945687541
-  m_SortingLayer: 13
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 302f8dc320c23a349ba27699c2a2f5b1, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -1728,7 +1709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0189326aa3c230e4ea077251e56c4381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShakeAmplitude: 2
   ShakeFrequency: 50
   VirtualCamera: {fileID: 1200786702}
 --- !u!1 &1099245693
@@ -2049,17 +2029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc0d9046a9121e4ab16eff2a4cfbcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1309951694 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1899721884726832045, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
-  m_PrefabInstance: {fileID: 678934955}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1443073376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,7 +2121,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1945687541
-  m_SortingLayer: 13
+  m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 302f8dc320c23a349ba27699c2a2f5b1, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -2362,17 +2331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1839593438 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4912508105988638601, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
-  m_PrefabInstance: {fileID: 678934955}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2138859926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,8 +2440,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
---- !u!1 &7442715256223835010 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4212746857187955054, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
-  m_PrefabInstance: {fileID: 7442715256223835009}
-  m_PrefabAsset: {fileID: 0}

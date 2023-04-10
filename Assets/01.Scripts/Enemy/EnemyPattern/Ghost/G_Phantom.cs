@@ -42,7 +42,7 @@ public class G_Phantom : EnemyDefault
         yield return attackWait;
 
         if (distanceToPlayer <= 1.5f)
-            GameManager.Instance.Player.OnDamage(damage, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(damage, 0);
 
         actCoroutine = null;
     }

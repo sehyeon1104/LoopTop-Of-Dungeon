@@ -18,7 +18,7 @@ public class GhostBossArmPatternAnim : MonoBehaviour
 
         if (hit1?.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameManager.Instance.Player.OnDamage(1, gameObject, 0);
+            GameManager.Instance.Player.OnDamage(1, 0);
         }
     }
 

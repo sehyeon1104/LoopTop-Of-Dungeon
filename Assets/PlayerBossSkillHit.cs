@@ -14,13 +14,13 @@ public class PlayerBossSkillHit : MonoBehaviour
     public Coroutine DotDamageCor = null;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("BossSkill")) 
-        { 
-            if(isenter == false)
+        if (collision.gameObject.CompareTag("BossSkill"))
+        {
+            if (isenter == false)
             {
                 Debug.Log("코루틴 시작");
                 isenter = true;
-                DotDamageCor =  StartCoroutine(DotDamageFunc());
+                DotDamageCor = StartCoroutine(DotDamageFunc());
             }
             else if (isenter == true)
             {
@@ -29,23 +29,23 @@ public class PlayerBossSkillHit : MonoBehaviour
                 StopCoroutine(DotDamageCor);
             }
         }
-        if(collision.gameObject.CompareTag("Bubble"))
+        if (collision.gameObject.CompareTag("Bubble"))
         {
             Managers.Pool.Push(collision.gameObject.GetComponent<Poolable>());
             BossUI.fillTime += 10;
             Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", collision.transform.position, Quaternion.identity);
 
         }
-        
+
     }
 
     public IEnumerator DotDamageFunc()
     {
-            while (true)
-            {
-            GameManager.Instance.Player.OnDamage(3, gameObject, 0);
+        while (true)
+        {
+            GameManager.Instance.Player.OnDamage(3, 0);
             yield return DotDamage;
-            }
+        }
     }
 
 }

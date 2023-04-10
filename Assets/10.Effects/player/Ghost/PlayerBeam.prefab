@@ -4779,8 +4779,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayerID: -406324367
+  m_SortingLayer: 11
   m_SortingOrder: 4
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5039,7 +5039,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f14e126d28d289a439ac7112a8282500, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5142,7 +5142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5546638213371523776
 Transform:
   m_ObjectHideFlags: 0
@@ -5398,6 +5398,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198707468491091662, guid: 5df8a2906a731344291aeb50b4023f07, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198777417319761982, guid: 5df8a2906a731344291aeb50b4023f07, type: 3}
+      propertyPath: prewarm
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198777417319761982, guid: 5df8a2906a731344291aeb50b4023f07, type: 3}
