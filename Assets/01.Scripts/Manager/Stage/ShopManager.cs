@@ -44,6 +44,7 @@ public class ShopManager : MonoSingleton<ShopManager>
             if(shopRoom == null)
             {
                 Debug.LogWarning("shopRoom is Null!");
+                return;
             }
         }
         isItemSetting = true;
@@ -77,11 +78,6 @@ public class ShopManager : MonoSingleton<ShopManager>
                 break;
             }
         }
-
-        foreach(var itemselectnumtime in itemSelectNum)
-        {
-            Debug.Log("num : " + itemselectnumtime);
-        }
     }
     
     public void CreateObject()
@@ -93,7 +89,6 @@ public class ShopManager : MonoSingleton<ShopManager>
         //{
         foreach(var itemSelectNumitem in itemSelectNum)
         {
-            Debug.Log(itemSelectNumitem);
             Item shopItem = itemList[itemSelectNumitem];
 
             newObject = Instantiate(itemObjTemplate);

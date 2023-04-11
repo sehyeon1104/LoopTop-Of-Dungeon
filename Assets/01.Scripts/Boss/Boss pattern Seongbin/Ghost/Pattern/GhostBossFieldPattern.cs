@@ -126,14 +126,14 @@ public class GhostBossFieldPattern : MonoBehaviour
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waittime2dot5s; 
 
-        if (BossUI.fillTime < 30f)
+        if (BossUI.fillTime < 30f || BossUI.fillTime > 70f)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
             Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/Smoke", bossAnim.transform.position, Quaternion.identity);
             clone1.transform.localScale = new Vector3(10, 10, 0);
             yield return new WaitForSeconds(1f);
-            GameManager.Instance.Player.OnDamage(0, 0);
+            GameManager.Instance.Player.OnDamage(12f, 0);
         }
 
         checktime = 0f;
