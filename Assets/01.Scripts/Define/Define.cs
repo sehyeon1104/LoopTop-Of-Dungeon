@@ -15,6 +15,7 @@ public static class Define
         UltimateSkill,
         DashSkill,
     }
+
     public enum MapTypeFlag
     {
         Default = 0,

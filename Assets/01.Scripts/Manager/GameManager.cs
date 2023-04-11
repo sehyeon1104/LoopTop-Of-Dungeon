@@ -38,14 +38,14 @@ public class GameManager : MonoSingleton<GameManager>
         #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckBool())
         {
-            Rito.Debug.Log("[GameManager] 저장파일 없음");
+            Debug.Log("[GameManager] 저장파일 없음");
             Player.playerBase.InitPlayerStat();
             SetPlayerStat();
             SaveManager.Save<PlayerData>(ref playerData);
         }
         else
         {
-            Rito.Debug.Log("[GameManager] 저장파일 있음");
+            Debug.Log("[GameManager] 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
             GetPlayerStat();
         }
@@ -62,6 +62,7 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
+        mapTypeFlag = Define.MapTypeFlag.Ghost;
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
 
@@ -69,7 +70,6 @@ public class GameManager : MonoSingleton<GameManager>
     {
         InitPlayerInfo();
         Managers.Pool.CreatePool(hitEffect, 10);
-        mapTypeFlag = Define.MapTypeFlag.Ghost;
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
@@ -122,6 +122,12 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+        mapTypeFlag = playerData.mapTypeFlag;
+    }
+
+    public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
+    {
+        this.mapTypeFlag = mapTypeFlag;
     }
 
     /// <summary>

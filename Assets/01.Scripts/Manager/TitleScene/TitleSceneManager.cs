@@ -26,6 +26,7 @@ public class TitleSceneManager : MonoBehaviour
     public void LoadToMainScene()
     {
         isLoading = true;
+        GameManager.Instance.SetMapTypeFlag(Define.MapTypeFlag.Ghost);
         Managers.Scene.LoadScene(Define.Scene.Ghost_Stage1);
     }
 }

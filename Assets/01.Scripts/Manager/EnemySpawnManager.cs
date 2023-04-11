@@ -76,6 +76,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void SetEnemyInList()
     {
+        Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
+
         for (int i = 0; i < _locations.Count; ++i)
         {
             // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
