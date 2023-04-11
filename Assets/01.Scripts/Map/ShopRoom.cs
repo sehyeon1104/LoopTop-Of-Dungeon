@@ -16,8 +16,6 @@ public class ShopRoom : RoomBase
     int itemobjCount = 0;
     private WaitForEndOfFrame waitForEndOfFrame;
 
-    private bool isNearPlayer;
-
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
@@ -42,8 +40,6 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
-
-        StartCoroutine(ToggleItemInfoPanel());
     }
     public void SpawnNPC()
     {
@@ -83,14 +79,11 @@ public class ShopRoom : RoomBase
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
-        {
-            isNearPlayer = true;
-        }
+        StartCoroutine(ToggleItemInfoPanel());
     }
     public IEnumerator ToggleItemInfoPanel()
     {
-        while (isNearPlayer)
+        while (true)
         {
             for (int i = 0; i < itemobjArr.Length; ++i)
             {
@@ -130,7 +123,6 @@ public class ShopRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
-            isNearPlayer = false;
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;

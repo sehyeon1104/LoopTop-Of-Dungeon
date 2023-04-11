@@ -102,8 +102,7 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
-        float JanpanRange = level;
-        janpnaPartical.startSize = 3;
+        janpnaPartical.startSize = 3.5f * level;
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
@@ -115,7 +114,7 @@ public class GhostSkill : PlayerSkillBase
             timerA += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position,1, 1 << enemyLayer);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position,level, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
                     attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
@@ -287,7 +286,7 @@ public class GhostSkill : PlayerSkillBase
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 25f);
-        Gizmos.DrawWireSphere(transform.position, 1f);
+        Gizmos.DrawWireSphere(transform.position, 4f);
     }
 }
 #endregion
