@@ -175,7 +175,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 
-            Debug.Log("SpawnEnemy");
             // 몹 소환
             // 적 소환 위치를 부모로 설정
             var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
