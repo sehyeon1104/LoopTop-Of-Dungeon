@@ -102,8 +102,7 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
-        float JanpanRange = level;
-        janpnaPartical.startSize = 3;
+        janpnaPartical.startSize = 3.5f * level;
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
