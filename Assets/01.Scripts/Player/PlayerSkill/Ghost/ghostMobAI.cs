@@ -97,7 +97,7 @@ public class ghostMobAI : MonoBehaviour
             actCoroutine = null;
             yield break;
         }
-
+        sprite.flipX = playerVec.x >= 0 ? true : false;
         transform.Translate(playerVec * speed * Time.deltaTime);
         yield return null;
         actCoroutine = null;
