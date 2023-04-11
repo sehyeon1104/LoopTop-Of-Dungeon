@@ -125,7 +125,7 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = false;
         bossObject.SetActive(true);
-        bossAura.SetActive(true);
+        bossAura.SetActive(NowPhase == 2);
 
         dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
@@ -209,14 +209,14 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {
         bossObject.SetActive(false);
-        bossAura.SetActive(false);
+        bossAura.SetActive(NowPhase == 2);
         Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
 
         yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
 
         bossObject.SetActive(true);
-        bossAura.SetActive(true);
+        bossAura.SetActive(false);
         Boss.Instance.isBDamaged = false;
     }
     #endregion
@@ -225,6 +225,11 @@ public class G_Patterns : BossPattern
 public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
+
+    private void Awake()
+    {
+        bossAura.SetActive(false);
+    }
 
     private void Update()
     {
