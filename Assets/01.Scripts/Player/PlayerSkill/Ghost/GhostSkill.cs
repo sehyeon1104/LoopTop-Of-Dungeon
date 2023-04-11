@@ -19,9 +19,8 @@ public class GhostSkill : PlayerSkillBase
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
     float telpoVelocity = 50f;
     Animator playerAnim;
-    float dashtime = 0.2f;
     SpriteRenderer ghostDash;
-    List<Poolable> cloneList = new List<Poolable>();
+    
     // Beam
     [SerializeField]
     private Vector3 beamDir;
@@ -54,7 +53,7 @@ public class GhostSkill : PlayerSkillBase
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
             return;
 
-
+       
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for (int i = 0; i < enemys.Length; i++)
@@ -103,6 +102,8 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
+        float JanpanRange = level;
+        janpnaPartical.startSize = 3;
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
@@ -114,7 +115,7 @@ public class GhostSkill : PlayerSkillBase
             timerA += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, 1.7f, 1 << enemyLayer);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position,1, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
                     attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
@@ -185,12 +186,10 @@ public class GhostSkill : PlayerSkillBase
             Managers.Pool.Push(poolMob[i]);
         }
         poolMob.Clear();
-
     }
 
     public void BeamPattern(int level)
     {
-
         beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(beamRot, Vector3.forward);
         beam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
@@ -256,7 +255,7 @@ public class GhostSkill : PlayerSkillBase
 
 
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        while (timer < dashtime)
+        while (timer < dashTime)
         {
             if (timerA > 0.02f)
             {
@@ -281,6 +280,7 @@ public class GhostSkill : PlayerSkillBase
             Managers.Pool.Push(c);
         }
         cloneList.Clear();
+        dashSprite = null;
     }
 
     private void OnDrawGizmos()

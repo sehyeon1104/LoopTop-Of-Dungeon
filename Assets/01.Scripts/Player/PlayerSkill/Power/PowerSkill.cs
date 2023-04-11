@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerSkill : PlayerSkillBase
 {
+    
     Animator playerAnim;
     ParticleSystem attackPar;
     float attackRange=1f;
@@ -18,7 +20,7 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || player.playerBase.IsPDead)
             return;
 
         CinemachineCameraShaking.Instance.CameraShake();
@@ -43,10 +45,6 @@ public class PowerSkill : PlayerSkillBase
         }
     }
 
-    protected override void DashSkill()
-    {
-        
-    }
 
     protected override void FifthSkill(int level)
     {
@@ -76,5 +74,52 @@ public class PowerSkill : PlayerSkillBase
     protected override void UltimateSkill()
     {
         
+    }
+    protected override void DashSkill()
+    {
+        StartCoroutine(Dash());
+    }
+    IEnumerator Dash()
+    {
+        float timer = 0;
+        float timerA = 0;
+        float flusA = 0;
+        playerMovement.IsMove = false;
+        player.IsInvincibility = true;
+        Vector3 playerPos = transform.position;
+        GameObject dashSprite = new GameObject();
+        dashSprite.AddComponent<SpriteRenderer>();
+        dashSprite.AddComponent<Poolable>();
+        dashSprite.GetComponent<SpriteRenderer>().sprite = playerSprite.sprite;
+        dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
+        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+
+
+
+        playerRigid.velocity = playerMovement.Direction * dashVelocity;
+        while (timer < dashTime)
+        {
+            if (timerA > 0.02f)
+            {
+                flusA += 0.2f;
+                dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
+                Poolable clone = Managers.Pool.Pop(dashSprite, transform.position);
+                clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
+                cloneList.Add(clone);
+            }
+            timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            yield return null;
+        }
+        //Vector3 playerPoss = transform.position - playerPos;
+        //float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
+        //Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        playerMovement.IsMove = true;
+        player.IsInvincibility = false;
+        foreach (var c in cloneList)
+        {
+            Managers.Pool.Push(c);
+        }
+        cloneList.Clear();
     }
 }
