@@ -37,7 +37,6 @@ public class GhostUltSignal : MonoBehaviour
         playerScript = player.GetComponent<Player>();
         UltSkillAnim(); 
     }
-
     public void AnimationArray()
     {
         foreach (AnimationState states in GhostUltAnim)
@@ -70,7 +69,7 @@ public class GhostUltSignal : MonoBehaviour
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0,1<< enemyLayer);
         for(int i =0; i<attachEnemises.Length; i++)
         {
-            attachEnemises[i].GetComponent<IHittable>().OnDamage(10, 0);
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
         }
         Color color = panel1.color;
         color.a = 0;

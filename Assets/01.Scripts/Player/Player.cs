@@ -34,7 +34,10 @@ public class Player : MonoBehaviour, IHittable
         playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
     }
-
+    private void Update()
+    {
+        print(invincibility);
+    }
     private void Start()
     {
         playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
