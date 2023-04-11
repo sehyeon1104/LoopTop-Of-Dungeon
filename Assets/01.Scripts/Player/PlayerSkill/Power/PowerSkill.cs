@@ -111,10 +111,9 @@ public class PowerSkill : PlayerSkillBase
             timerA += Time.deltaTime;
             yield return null;
         }
-        Vector3 playerPoss = transform.position - playerPos;
-        float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
+        //Vector3 playerPoss = transform.position - playerPos;
+        //float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
+        //Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
         foreach (var c in cloneList)

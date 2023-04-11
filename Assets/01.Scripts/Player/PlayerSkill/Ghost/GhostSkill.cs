@@ -43,7 +43,7 @@ public class GhostSkill : PlayerSkillBase
 
     private void Update()
     {
-        print(janpnaPartical.startSize);
+       
         if (Input.GetKeyDown(KeyCode.B))
         {
             BeamPattern(5);
@@ -54,7 +54,7 @@ public class GhostSkill : PlayerSkillBase
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
             return;
 
-
+        janpnaPartical.startSize++;
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
         for (int i = 0; i < enemys.Length; i++)
