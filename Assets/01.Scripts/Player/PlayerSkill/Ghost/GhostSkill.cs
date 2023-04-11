@@ -7,10 +7,13 @@ using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
+    [Header("장판스킬")]
+    ParticleSystem janpnaPartical;
     float cicleRange = 2f;
     float janpanDuration = 5f;
-    PlayerSkillData skillData;
-    private float hiilaDuration = 5;
+    [Header("힐라 스킬")]
+    List<Poolable> poolMob = new List<Poolable>();
+    WaitForSeconds hillaDuration = new WaitForSeconds(10f);
     [SerializeField]
     private float attackRange = 1f;
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
@@ -18,7 +21,6 @@ public class GhostSkill : PlayerSkillBase
     Animator playerAnim;
     float dashtime = 0.2f;
     SpriteRenderer ghostDash;
-    List<Poolable> pool = new List<Poolable>();
     List<Poolable> cloneList = new List<Poolable>();
     // Beam
     [SerializeField]
@@ -36,7 +38,7 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         Cashing();
-
+        janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/PlayerSmoke.prefab").transform.Find("smoke").GetComponent<ParticleSystem>();
         playerAnim = GetComponent<Animator>();
     }
 
@@ -51,6 +53,7 @@ public class GhostSkill : PlayerSkillBase
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
             return;
+
 
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
@@ -124,78 +127,65 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator Jangpan5Skill()
     {
-        float shortestdistance = 0;
         Collider2D[] attachObjs = null;
-        Collider2D[] attachObjs2 = null;
-        Collider2D[] enemies = null;
-        Vector3 targetPos = Vector3.zero;
-        Poolable smoke =null;
+        Collider2D[] attachObj2 = null;
+        List<Poolable> smoke = new List<Poolable>();
         float timer = 0;
         float timerA = 0;
-        if (playerRigid.velocity != Vector2.zero)
-        {
-             smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity);
-        }
+        float timerB = 0;
+        smoke.Add(Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity));
+        Poolable playerSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform);
+
         while (timer < janpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
-            enemies = Physics2D.OverlapCircleAll(smoke.transform.position, 25, 1 << enemyLayer);
-            if (enemies.Length == 0)
-            {
-                targetPos = Vector3.zero;
-                shortestdistance = 0;
-            }
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                float playerMagnitude = Vector2.SqrMagnitude(enemies[i].transform.position - smoke.transform.position);
-                if (i == 0)
-                {
-                    shortestdistance = playerMagnitude;
-                    targetPos = (enemies[0].transform.position - smoke.transform.position).normalized;
-                }
-                if (shortestdistance > playerMagnitude && enemies[i].gameObject.activeSelf)
-                {
-                    targetPos = (enemies[i].transform.position - smoke.transform.position).normalized;
-                    shortestdistance = playerMagnitude;
-                }
-            }
+            timerB += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(smoke.transform.position, 1.7f, 1 << enemyLayer);
-                for (int i = 0; i < attachObjs.Length; i++)
+
+                attachObj2 = Physics2D.OverlapCircleAll(transform.position, 1.7f, 1 << enemyLayer);
+                for (int i = 0; i < smoke.Count; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
+                    attachObjs = Physics2D.OverlapCircleAll(smoke[i].transform.position, 1.7f, 1 << enemyLayer);
+                    for (int j = 0; j < attachObjs.Length; j++)
+                    {
+                        attachObjs[j].GetComponent<IHittable>().OnDamage(1, 0);
+                    }
                 }
+                for (int i = 0; i < attachObj2.Length; i++)
+                {
+                    attachObj2[i].GetComponent<IHittable>().OnDamage(1, 0);
+                }
+                timerA = 0;
             }
-            smoke.transform.Translate(targetPos * 3 * Time.deltaTime);
+            if (timerB > 1f)
+            {
+                smoke.Add(Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity));
+                timerB = 0;
+            }
             yield return null;
         }
-        Managers.Pool.Push(smoke);
+        Managers.Pool.Push(playerSmoke);
+        for (int i = 0; i < smoke.Count; i++)
+        {
+            Managers.Pool.Push(smoke[i]);
+        }
     }
     IEnumerator HillaSkill(int level)
     {
 
-        float timer = 0;
-        for (int i = 0; i < 3 + level; i++)
+        for (int i = 0; i < level; i++)
         {
-            pool.Add(Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
+            poolMob.Add(Managers.Pool.PoolManaging("03.Prefabs/Player/Ghost/GhostMob11", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
         }
+        yield return hillaDuration;
+        for (int i = 0; i < poolMob.Count; i++)
+        {
+            Managers.Pool.Push(poolMob[i]);
+        }
+        poolMob.Clear();
 
-        while (true)
-        {
-            if (timer > hiilaDuration)
-            {
-                for (int i = 0; i < pool.Count; i++)
-                {
-                    Managers.Pool.Push(pool[i]);
-                    pool.Clear();
-                }
-                yield break;
-            }
-            timer += Time.deltaTime;
-            yield return null;
-        }
     }
 
     public void BeamPattern(int level)
@@ -297,6 +287,7 @@ public class GhostSkill : PlayerSkillBase
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 25f);
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
 }
 #endregion

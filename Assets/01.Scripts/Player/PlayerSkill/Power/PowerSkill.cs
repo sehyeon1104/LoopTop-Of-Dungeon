@@ -26,7 +26,7 @@ public class PowerSkill : PlayerSkillBase
 
         attackPar.transform.SetParent(transform);
 
-        attackPar.transform.localPosition = PlayerVisual.Instance.playerSprite.flipX ? Vector3.right : Vector3.left;
+        attackPar.transform.localPosition = playerSprite.flipX ? Vector3.right : Vector3.left;
         attackPar.Play();
 
         attackPar.transform.SetParent(null);

@@ -15,7 +15,7 @@ public class ghostMobAI : MonoBehaviour
     public Coroutine actCoroutine = null;
     Transform playerTrans = null;
     Animator anim;
-    GameObject enemy;
+    Collider2D enemy;
     Vector2 flipVector = Vector2.zero;
     float shortestdistance = 0;
     protected SpriteRenderer sprite;
@@ -108,17 +108,16 @@ public class ghostMobAI : MonoBehaviour
         if (enemies.Length == 0)
         {
             shortestdistance = 0;
-            flipVector = Vector2.zero;
             return 0; 
         }
         for (int i = 0; i < enemies.Length; i++)
         {
             float playerMagnitude = Vector2.SqrMagnitude(transform.position - enemies[i].transform.position);
             Vector2 playeyToEnemyVec = enemies[i].transform.position - transform.position;
-            if (i == 0) shortestdistance = playerMagnitude;
-            if (shortestdistance > playerMagnitude && enemies[i].gameObject.activeSelf)
+
+            if ((shortestdistance > playerMagnitude && enemies[i].gameObject.activeSelf)||i==0)
             {
-                enemy = enemies[i].gameObject;
+                enemy = enemies[i];
                 shortestdistance = playerMagnitude;
                 flipVector = playeyToEnemyVec;
             }
@@ -139,6 +138,7 @@ public class ghostMobAI : MonoBehaviour
 
     public virtual IEnumerator AttackToEnemy()
     {
+
         enemy.GetComponent<IHittable>().OnDamage(3, 0);
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
@@ -146,11 +146,5 @@ public class ghostMobAI : MonoBehaviour
         yield return attackTime;
         actCoroutine = null;
 
-    }
-
-
-    public virtual void EnemyDead()
-    {
-        gameObject.SetActive(false);
     }
 }
