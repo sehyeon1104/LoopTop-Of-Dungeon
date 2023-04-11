@@ -77,7 +77,7 @@ public class Player : MonoBehaviour, IHittable
     {
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
-        PlayerVisual.Instance.playerAnimator.SetTrigger("Death");
+        PlayerVisual.Instance.PlayerAnimator.SetTrigger("Death");
         StartCoroutine(GameoverPlayer());
     }
 
