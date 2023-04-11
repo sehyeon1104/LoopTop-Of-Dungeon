@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 // using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
 
@@ -40,7 +41,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds waittime10s = new WaitForSeconds(10f);
 
-    Coroutine UltPattern = null;
+    public Coroutine UltPattern { get; set; } = null;
 
     [SerializeField] BossAnim bossAnim;
     [SerializeField] AnimationClip absorbEnd;
@@ -90,7 +91,7 @@ public class GhostBossFieldPattern : MonoBehaviour
     //±Ã±Ø±â ÆÐÅÏ
     public IEnumerator GhostBossUltPattern()
     {
-        
+        yield return new WaitUntil(() => Boss.Instance.bossPattern.NowPhase == 2);
         while (true)
         {
             Randomtime = Random.Range(0, 5);
@@ -125,7 +126,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waittime2dot5s; 
 
-        if (BossUI.fillTime < 40)
+        if (BossUI.fillTime < 30f)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
