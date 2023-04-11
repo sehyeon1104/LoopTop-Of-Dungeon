@@ -9,9 +9,6 @@ public class GameManager : MonoSingleton<GameManager>
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
     public Define.StageSceneNum stageSceneNum;
 
-    private GameObject playerPre;
-
-    // 임시방편
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
@@ -68,15 +65,6 @@ public class GameManager : MonoSingleton<GameManager>
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SetPlayerStat();
-            SaveManager.Save<PlayerData>(ref playerData);
-        }
-    }
-
     private void Start()
     {
         InitPlayerInfo();
@@ -102,6 +90,9 @@ public class GameManager : MonoSingleton<GameManager>
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 
+    /// <summary>
+    /// playerData에 현재 플레이어 정보 저장
+    /// </summary>
     public void SetPlayerStat()
     {
         playerData.maxHp = Player.playerBase.MaxHp;
@@ -116,6 +107,9 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
     }
 
+    /// <summary>
+    /// 현재 플레이어 정보에 playerData 불러옴
+    /// </summary>
     public void GetPlayerStat()
     {
         Player.playerBase.MaxHp = playerData.maxHp;

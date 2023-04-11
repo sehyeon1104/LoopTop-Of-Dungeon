@@ -916,8 +916,6 @@ GameObject:
   - component: {fileID: 520647066}
   - component: {fileID: 520647064}
   - component: {fileID: 520647065}
-  - component: {fileID: 520647067}
-  - component: {fileID: 520647068}
   - component: {fileID: 520647069}
   - component: {fileID: 520647070}
   - component: {fileID: 520647071}
@@ -987,43 +985,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &520647067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ad393719b5f0342b833c0a0f8059f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallGrids:
-  - {fileID: 3499458163439891936, guid: 727b9131dd2d846439fe6a151c0524ed, type: 3}
-  - {fileID: 1619358233114564192, guid: 67d11f24c58cac041a844e2fa9792533, type: 3}
-  - {fileID: 4426551915172731430, guid: 000b1177245079642950b640d58ddfaa, type: 3}
-  - {fileID: 5883231942822065183, guid: fcb5da90e791e06499306c3a428b97ab, type: 3}
-  spawnRooms: []
-  MoveNextMapPortal: {fileID: 5731706546575025831, guid: b48358b74488be24896b90372a798e39, type: 3}
---- !u!114 &520647068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36d7748a8be659f4fa4190acbb01e90d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ghostNormalEnemyPrefabs: []
-  ghostEliteEnemyPrefabs: []
-  <curEnemies>k__BackingField: []
-  spawnTime: 0.8
-  assetLabel:
-    m_LabelString: GhostEnemy
 --- !u!114 &520647069
 MonoBehaviour:
   m_ObjectHideFlags: 0
