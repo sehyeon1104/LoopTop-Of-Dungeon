@@ -29,16 +29,15 @@ public class Player : MonoBehaviour, IHittable
     private float invincibleTime = 0.2f;
 
     public Vector3 hitPoint { get; private set; }
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            playerBase.FragmentAmount += 100;
-        }
+        playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
+        playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
     }
 
     private void Start()
     {
+        playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
 

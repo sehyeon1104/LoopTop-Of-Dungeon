@@ -9,9 +9,6 @@ public class GameManager : MonoSingleton<GameManager>
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
     public Define.StageSceneNum stageSceneNum;
 
-    private GameObject playerPre;
-
-    // 임시방편
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
@@ -41,14 +38,14 @@ public class GameManager : MonoSingleton<GameManager>
         #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckBool())
         {
-            Rito.Debug.Log("[GameManager] 저장파일 없음");
+            Debug.Log("[GameManager] 저장파일 없음");
             Player.playerBase.InitPlayerStat();
             SetPlayerStat();
             SaveManager.Save<PlayerData>(ref playerData);
         }
         else
         {
-            Rito.Debug.Log("[GameManager] 저장파일 있음");
+            Debug.Log("[GameManager] 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
             GetPlayerStat();
         }
@@ -65,23 +62,14 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
+        mapTypeFlag = Define.MapTypeFlag.Ghost;
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SetPlayerStat();
-            SaveManager.Save<PlayerData>(ref playerData);
-        }
     }
 
     private void Start()
     {
         InitPlayerInfo();
         Managers.Pool.CreatePool(hitEffect, 10);
-        mapTypeFlag = Define.MapTypeFlag.Ghost;
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
@@ -102,6 +90,9 @@ public class GameManager : MonoSingleton<GameManager>
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 
+    /// <summary>
+    /// playerData에 현재 플레이어 정보 저장
+    /// </summary>
     public void SetPlayerStat()
     {
         playerData.maxHp = Player.playerBase.MaxHp;
@@ -116,6 +107,9 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
     }
 
+    /// <summary>
+    /// 현재 플레이어 정보에 playerData 불러옴
+    /// </summary>
     public void GetPlayerStat()
     {
         Player.playerBase.MaxHp = playerData.maxHp;
@@ -128,6 +122,12 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+        mapTypeFlag = playerData.mapTypeFlag;
+    }
+
+    public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
+    {
+        this.mapTypeFlag = mapTypeFlag;
     }
 
     /// <summary>

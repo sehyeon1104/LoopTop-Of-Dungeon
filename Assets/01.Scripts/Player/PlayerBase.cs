@@ -135,7 +135,7 @@ public class PlayerBase
                 Exp = exp - _expTable[level++];
             }
 
-            UIManager.Instance.UpdateUI();
+            // UIManager.Instance.UpdateUI();
         }
     }
 

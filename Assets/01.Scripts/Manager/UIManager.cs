@@ -12,7 +12,6 @@ using System;
 public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject playerUI;
-    Player playerCompo = null;
     public GameObject skillSelect;
     [Header("LeftUp")]
     [SerializeField]
@@ -60,7 +59,6 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     private void Awake()
     {
-        playerCompo = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();;
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
@@ -81,7 +79,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateUI()
     {
         HpUpdate();
-        
+        UpdateGoods();
     }
     public void FPSUpdate()
     {

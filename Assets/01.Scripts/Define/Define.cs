@@ -15,6 +15,7 @@ public static class Define
         UltimateSkill,
         DashSkill,
     }
+
     public enum MapTypeFlag
     {
         Default = 0,
@@ -38,7 +39,7 @@ public static class Define
 
     public enum PlayerTransformTypeFlag
     {
-        Power,
+        Power = 0,
         Ghost,
 
     }
