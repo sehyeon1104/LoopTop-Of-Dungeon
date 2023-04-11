@@ -22,6 +22,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
 
         AnimInit();
     }
+
     public void AnimInit()
     {
         overrideController.runtimeAnimatorController = playerAnimator.runtimeAnimatorController;
