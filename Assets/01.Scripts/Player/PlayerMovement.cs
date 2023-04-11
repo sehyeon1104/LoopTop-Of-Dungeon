@@ -41,6 +41,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     {
         if(!IsMove || GameManager.Instance.Player.playerBase.IsPDead)
         {
+            rb.velocity = Vector3.zero;
             return;
         }
         Vector2 VelocityVec = inputVelocity * speed;
