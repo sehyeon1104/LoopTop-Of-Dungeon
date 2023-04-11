@@ -39,7 +39,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     public void Move(Vector2 inputVelocity)
     {
-        if(!IsMove)
+        if(!IsMove || GameManager.Instance.Player.playerBase.IsPDead)
         {
             return;
         }
