@@ -59,6 +59,11 @@ public abstract class BossPattern : MonoBehaviour
             Boss.Instance.actCoroutine = null;
             StopAllCoroutines();
         }
+
+        for (int i = 0; i < Boss.Instance.sprites.Count; i++)
+        {
+            Boss.Instance.sprites[i].color = Phase_Two_Color;
+        }
     }
 
     private IEnumerator ChangePhase()
