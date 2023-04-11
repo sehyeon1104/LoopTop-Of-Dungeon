@@ -27,7 +27,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     public Vector3 hitPoint { get; }
 
-    private List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+    public Dictionary<int, SpriteRenderer> sprites = new Dictionary<int, SpriteRenderer>();
 
     #region AnimHash
     public readonly int _hashMove = Animator.StringToHash("Move");
@@ -49,9 +49,11 @@ public class Boss : MonoSingleton<Boss>, IHittable
         bossMove.Init();
         bossAnim.Init();
 
-        foreach (var child in GetComponentsInChildren<SpriteRenderer>())
+        SpriteRenderer[] sprite = GetComponentsInChildren<SpriteRenderer>();
+
+        for(int i = 0; i < GetComponentsInChildren<SpriteRenderer>().Length; i++)
         {
-            sprites.Add(child);
+            sprites.Add(i,sprite[i]);
         }
 
     }
@@ -80,14 +82,15 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         //StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
-        foreach(SpriteRenderer sprite in sprites)
+        for(int i =0; i < sprites.Count; i++)
         {
-            sprite.color = Color.black;
+            sprites[i].color = Color.black;
         }
         yield return new WaitForSeconds(0.01f);
-        foreach (SpriteRenderer sprite in sprites)
+
+        for (int i = 0; i < sprites.Count; i++)
         {
-            sprite.color = Color.white;
+            sprites[i].color = bossPattern.NowPhase == 1? Color.white : bossPattern.Phase_Two_Color;
         }
 
         yield return new WaitForSeconds(0.05f);
