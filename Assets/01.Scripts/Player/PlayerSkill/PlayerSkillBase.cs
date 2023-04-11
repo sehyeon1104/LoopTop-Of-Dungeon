@@ -9,6 +9,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     [HideInInspector] public Rigidbody2D playerRigid;
     [HideInInspector] public SpriteRenderer playerSprite;
     [HideInInspector] protected Player player;
+    [HideInInspector] public float dashTime;
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
@@ -17,6 +18,8 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     public Action ultimateSkill;
     public Action dashSkill;
     public Action attack;
+   protected List<Poolable> cloneList = new List<Poolable>();
+    
     protected abstract void FirstSkill(int level);
 
     protected abstract void SecondSkill(int level);
@@ -44,10 +47,12 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         dashSkill = DashSkill;
         dashVelocity = 20f;
         dashDuration = 0.2f;
+        dashTime = 0.2f;
         enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     protected void Cashing()
     {
+
         playerSprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerRigid = GetComponentInParent<Rigidbody2D>();
