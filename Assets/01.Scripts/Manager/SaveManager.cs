@@ -6,14 +6,13 @@ using Debug = Rito.Debug;
 
 public static class SaveManager
 {
-    private static string SAVE_PATH = "";
+    private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
 
     /// <summary>
     /// 유저 데이터 저장
     /// </summary>
     public static void Save<T>(ref T userSaveData)
     {
-        SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
         string SAVE_FILENAME = typeof(T).FullName + ".json";
 
         if (!Directory.Exists(SAVE_PATH))
@@ -32,7 +31,6 @@ public static class SaveManager
     /// </summary>
     public static void Load<T>(ref T userSaveData)
     {
-        SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
         string SAVE_FILENAME = typeof(T).FullName + ".json";
 
         string filePath = Path.Combine(SAVE_PATH, SAVE_FILENAME);
@@ -57,7 +55,6 @@ public static class SaveManager
     /// <returns></returns>
     public static bool GetCheckBool()
     {
-        SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
         string SAVE_FILENAME = "PlayerData.json";
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
