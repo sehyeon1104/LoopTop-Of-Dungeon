@@ -29,13 +29,14 @@ public class Portal : MonoBehaviour
             isLoadScene = true;
             GameManager.Instance.SavePlayerStat();
 
-            GameManager.Instance.StageClearCount++;
+            GameManager.Instance.StageMoveCount++;
+            Debug.Log($"StageMoveCount : {GameManager.Instance.StageMoveCount}");
 
-            if (GameManager.Instance.StageClearCount == 0 && GameManager.Instance.mapTypeFlag != Define.MapTypeFlag.CenterMap)
+            if (GameManager.Instance.StageMoveCount == 0 && GameManager.Instance.sceneType != Define.Scene.BossScene)
             {
                 sceneType = Define.Scene.BossScene;
             }
-            else if(GameManager.Instance.StageClearCount < 2 && GameManager.Instance.sceneType != Define.Scene.BossScene)
+            else if(GameManager.Instance.StageMoveCount < 3 && GameManager.Instance.sceneType != Define.Scene.BossScene)
             {
                 sceneType = Define.Scene.StageScene;
             }
@@ -43,6 +44,7 @@ public class Portal : MonoBehaviour
             {
                 sceneType = Define.Scene.CenterScene;
             }
+            GameManager.Instance.SetSceneType(sceneType);
 
             Managers.Scene.LoadScene(sceneType);
 

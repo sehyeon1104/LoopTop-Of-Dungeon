@@ -6,17 +6,17 @@ using System.IO;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public static int stageClearCount { get; private set; } = 0;
-    public int StageClearCount
+    public static int stageMoveCount { get; private set; } = 0;
+    public int StageMoveCount
     {
         get
         {
-            return stageClearCount;
+            return stageMoveCount;
         }
         set
         {
-            stageClearCount = value;
-            stageClearCount %= 2;
+            stageMoveCount = value;
+            stageMoveCount %= 3;
         }
     }
 
@@ -91,7 +91,7 @@ public class GameManager : MonoSingleton<GameManager>
     
     public void ResetStageClearCount()
     {
-        stageClearCount = 0;
+        StageMoveCount = 0;
     }
 
     public void InitPlayerInfo()
@@ -148,6 +148,10 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
+    }
+    public void SetSceneType(Define.Scene sceneType)
+    {
+        this.sceneType = sceneType;
     }
 
     /// <summary>
