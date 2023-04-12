@@ -46,7 +46,7 @@ public class EnemyRoom : RoomBase
     // 플레이어 입장 시 실행
     private void SetEnemy()
     {
-        EnemySpawnManager.Instance.SetKindOfEnemy(mapTypeFlag);
+        EnemySpawnManager.Instance.SetKindOfEnemy();
         SpawnEnemies();
     }
 

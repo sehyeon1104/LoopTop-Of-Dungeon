@@ -246,7 +246,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         showCurStageNameObj.SetActive(true);
 
-        curStageName.SetText(SceneManager.GetActiveScene().name);
+        curStageName.SetText(string.Format("{0}Stage", GameManager.Instance.mapTypeFlag.ToString()));
 
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);

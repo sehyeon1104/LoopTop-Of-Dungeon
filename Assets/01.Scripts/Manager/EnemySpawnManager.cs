@@ -10,9 +10,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 {
     [Header("Ghost_Field_Enemy")]
     [SerializeField]
-    private List<GameObject> ghostNormalEnemyPrefabs = new List<GameObject>();// = new GameObject[10];
+    private List<GameObject> normalEnemyPrefabsList = new List<GameObject>();// = new GameObject[10];
     [SerializeField]
-    private List<GameObject> ghostEliteEnemyPrefabs = new List<GameObject>();// = new GameObject[10];
+    private List<GameObject> eliteEnemyPrefabsList = new List<GameObject>();// = new GameObject[10];
 
     private GameObject[] normalEnemyPrefabs;
     private GameObject[] eliteEnemyPrefabs;
@@ -81,39 +81,20 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         for (int i = 0; i < _locations.Count; ++i)
         {
             // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
-            ghostNormalEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            ghostEliteEnemyPrefabs.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            Managers.Pool.CreatePool(ghostNormalEnemyPrefabs[i], 5);
+            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            //eliteEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}_Elite.prefab"));
+            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
+            //Managers.Pool.CreatePool(eliteEnemyPrefabsList[i], 5);
         }
-
     }
 
     #endregion
 
-    public void SetKindOfEnemy(Define.MapTypeFlag mapType)
+    public void SetKindOfEnemy()
     {
-        // TODO : 현재 스테이지의 종류에 따라 적 종류 설정
-
-        switch (mapType)
-        {
-            case Define.MapTypeFlag.Ghost:
-                normalEnemyPrefabs = ghostNormalEnemyPrefabs.ToArray();
-                eliteEnemyPrefabs = ghostEliteEnemyPrefabs.ToArray();
-                break;
-            case Define.MapTypeFlag.LavaSlime:
-                break;
-            case Define.MapTypeFlag.Electricity:
-                break;
-            case Define.MapTypeFlag.Werewolf:
-                break;
-            case Define.MapTypeFlag.Lizard:
-                break;
-        }
-    }
-
-    public void SetMonsterPrefabInMonsterList()
-    {
-
+        normalEnemyPrefabs = normalEnemyPrefabsList.ToArray();
+        eliteEnemyPrefabs = normalEnemyPrefabsList.ToArray();
+        //eliteEnemyPrefabs = eliteEnemyPrefabsList.ToArray();
     }
 
     public void SetRandomEnemyCount()
@@ -256,6 +237,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Pool.Push(effect);
     }
+
     public void RemoveEnemyInList(Poolable enemy)
     {
         if(enemy == null)

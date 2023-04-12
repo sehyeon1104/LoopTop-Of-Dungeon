@@ -6,8 +6,22 @@ using System.IO;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public static int stageClearCount { get; private set; } = 0;
+    public int StageClearCount
+    {
+        get
+        {
+            return stageClearCount;
+        }
+        set
+        {
+            stageClearCount = value;
+            stageClearCount %= 2;
+        }
+    }
+
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
-    public Define.StageSceneNum stageSceneNum;
+    public Define.Scene sceneType { private set; get; }
 
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
@@ -75,15 +89,19 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
+    public void ResetStageClearCount()
+    {
+        stageClearCount = 0;
+    }
 
     public void InitPlayerInfo()
     {
         UIManager.Instance.UpdateGoods();
     }
 
-    public void SetStageSceneNum(Define.StageSceneNum sceneNum)
+    public void SetStageSceneNum(Define.Scene sceneNum)
     {
-        stageSceneNum = sceneNum;
+        sceneType = sceneNum;
     }
 
     public void PlayHitEffect(Transform objTransform)
