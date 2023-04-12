@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
+using static Cinemachine.DocumentationSortingAttribute;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
 {
     [Header("장판스킬")]
+    WaitForSeconds janpanWait = new WaitForSeconds(0.3f);
     ParticleSystem janpnaPartical;
     float cicleRange = 2f;
     float janpanDuration = 5f;
@@ -102,19 +105,19 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
-        janpnaPartical.startSize = 3.5f * level;
+        janpnaPartical.startSize = 2 * level +2;
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
         Poolable smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
-
+        yield return janpanWait;
         while (timer < janpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
             if (timerA > 0.1f)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position,level, 1 << enemyLayer);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position,level/3.5f*2 + 0.57f, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
                     attachObjs[i].GetComponent<IHittable>().OnDamage(1, 0);
@@ -135,7 +138,7 @@ public class GhostSkill : PlayerSkillBase
         float timerB = 0;
         smoke.Add(Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity));
         Poolable playerSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform);
-
+        yield return janpanWait; 
         while (timer < janpanDuration)
         {
             timer += Time.deltaTime;
@@ -231,8 +234,6 @@ public class GhostSkill : PlayerSkillBase
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position, Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
         yield return null;
-
-
     }
 
     IEnumerator Dash()
@@ -250,10 +251,17 @@ public class GhostSkill : PlayerSkillBase
         dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
 
         dashSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-
-
-
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
+        //SpriteRenderer data = playerSprite;
+
+        //Component tempData = dashSprite.AddComponent(data.GetType());
+
+        //foreach (FieldInfo f in data.GetType().GetFields())
+        //{
+        //    f.SetValue(tempData, f.GetValue(data));
+
+        //}
+
         while (timer < dashTime)
         {
             if (timerA > 0.02f)
@@ -286,7 +294,7 @@ public class GhostSkill : PlayerSkillBase
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 25f);
-        Gizmos.DrawWireSphere(transform.position, 4f);
+        Gizmos.DrawWireSphere(transform.position, 1 / 3.5f * 2 + 0.57f);
     }
 }
 #endregion

@@ -32,6 +32,7 @@ public class G_Patterns : BossPattern
     private void Awake()
     {
         bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+        bossAura.SetActive(false);
     }
 
     #region patterns
@@ -225,11 +226,6 @@ public class G_Patterns : BossPattern
 public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
-
-    private void Awake()
-    {
-        bossAura.SetActive(false);
-    }
 
     private void Update()
     {
