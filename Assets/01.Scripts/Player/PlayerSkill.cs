@@ -66,7 +66,7 @@ public class PlayerSkill : MonoBehaviour
         {
             playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[0](4);
-            skillEvent[1] = () => playerSkill.playerSkills[1](1);
+            skillEvent[1] = () => playerSkill.playerSkills[2](1);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;
