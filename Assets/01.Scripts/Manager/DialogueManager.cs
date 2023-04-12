@@ -21,8 +21,6 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     private string[] contentArr;
 
-    private string[] asdsa = new string[3];
-
     private BoxCollider2D col = null;
 
     private void Awake()
@@ -32,19 +30,10 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     private void Start()
     {
-        asdsa[0] = "안녕하세요!";
-        asdsa[1] = "반갑습니다!";
-        asdsa[2] = "당신은 이제..\n싸우시면 됩니다!!";
-        DialoguePanel.gameObject.SetActive(false);
-    }
+        DialoguePanel = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject;
+        contentTmp = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject.GetComponent<TextMeshProUGUI>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ToggleDialoguePanel();
-            SetContentNPos(asdsa, GameManager.Instance.Player.gameObject);
-        }
+        DialoguePanel.gameObject.SetActive(false);
     }
 
     public void ToggleDialoguePanel()
