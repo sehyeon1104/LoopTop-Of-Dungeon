@@ -17,6 +17,7 @@ public class G_Patterns : BossPattern
 
     [SerializeField] protected GhostBossFieldPattern bossFieldPattern;
     [SerializeField] protected GameObject bossObject;
+    [SerializeField] protected GameObject bossAura;
 
     [Space]
     [SerializeField] protected AnimationClip absorbEnd;
@@ -31,6 +32,7 @@ public class G_Patterns : BossPattern
     private void Awake()
     {
         bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+        bossAura.SetActive(false);
     }
 
     #region patterns
@@ -116,6 +118,7 @@ public class G_Patterns : BossPattern
         yield return new WaitForSeconds(1f);
 
         bossObject.SetActive(false);
+        bossAura.SetActive(false);
         Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
@@ -123,6 +126,7 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = false;
         bossObject.SetActive(true);
+        bossAura.SetActive(NowPhase == 2);
 
         dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
@@ -206,12 +210,14 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {
         bossObject.SetActive(false);
+        bossAura.SetActive(NowPhase == 2);
         Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
 
         yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
 
         bossObject.SetActive(true);
+        bossAura.SetActive(false);
         Boss.Instance.isBDamaged = false;
     }
     #endregion
@@ -240,6 +246,7 @@ public class GhostPattern : G_Patterns
             if (nowBPhaseChange)
             {
                 bossObject.SetActive(true);
+                bossAura.SetActive(true);
                 SummonTimer.gameObject.SetActive(false);
             }
         }
