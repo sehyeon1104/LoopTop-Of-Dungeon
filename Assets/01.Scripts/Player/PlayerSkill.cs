@@ -24,48 +24,41 @@ public class PlayerSkill : MonoBehaviour
     Rigidbody2D rb;
     int[] slotLevel = new int[2] { 1, 1 };
     Action[] skillEvent = new Action[5];
-    PlayerSkillBase[] playerSkillBases = new PlayerSkillBase[2];
     private void Awake()
     {  
-        playerSkillBases[0] = GetComponent<PowerSkill>();
-        playerSkillBases[1] = GetComponent<GhostSkill>();
         playerBase = GameManager.Instance.Player.playerBase;
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Dash_Btn").GetComponent<Button>().onClick.AddListener(DashSkill);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").GetComponent<Button>().onClick.AddListener(UltimateSkill);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
-        skillData.Add(Define.PlayerTransformTypeFlag.Power, playerSkillBases[0]);
-        skillData.Add(Define.PlayerTransformTypeFlag.Ghost, playerSkillBases[1]);
+        skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
+        skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
     }
     private void Start()
     {
         SkillSelect(playerBase.PlayerTransformTypeFlag);
-        for (int i =0; i < playerSkillBases.Length; i++) {
-            playerSkillBases[i].enabled = false;    
-        }
         SkillShuffle();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            playerSkillBases[(int)playerBase.PlayerTransformTypeFlag].enabled = false;
+
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
             
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
-
     }
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         PlayerSkillBase playerSkill;
+
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
-            playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[0](4);
+            skillEvent[0] = () => playerSkill.playerSkills[0](5);
             skillEvent[1] = () => playerSkill.playerSkills[2](1);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
