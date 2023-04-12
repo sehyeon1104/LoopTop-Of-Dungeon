@@ -213,7 +213,7 @@ public class GhostSkill : PlayerSkillBase
         }
         else if (2 < level && level <= 4)
         {
-            for (int i = 0; i < level; i++)
+            for (int i = 0; i < level -2; i++)
             {
                 poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostMob2.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
             }
