@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyElite : EnemyDefault
 {
-    [SerializeField] private AnimationClip[] attackClips;
+    [SerializeField] protected AnimationClip[] attackClips;
     protected int _count = Animator.StringToHash("Count");
 
     public override void Init()
@@ -14,7 +14,7 @@ public class EnemyElite : EnemyDefault
 
     public override void AnimInit()
     {
-        AnimatorOverrideController overrideController = new AnimatorOverrideController();
+        overrideController = new AnimatorOverrideController();
 
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 

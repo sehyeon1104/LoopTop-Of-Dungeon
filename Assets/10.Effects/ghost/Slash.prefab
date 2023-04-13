@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8748861912384974200}
   - component: {fileID: 8748861912384974201}
   - component: {fileID: 1012866747}
-  - component: {fileID: 1259150487402273220}
+  - component: {fileID: 8080292386287663198}
+  - component: {fileID: 16330481524684609}
   m_Layer: 0
   m_Name: Slash
   m_TagString: Untagged
@@ -27,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8748861912384974150}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 12.91, y: 7.32, z: -0.44869533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.91, y: 7.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &8748861912384974200
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -125,10 +126,10 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.4, y: 1}
+  m_Offset: {x: 1.65, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
---- !u!114 &1259150487402273220
+--- !u!114 &8080292386287663198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +138,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 8748861912384974150}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982f46a7f6e082043bd89ed4edf36ed0, type: 3}
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  IsUsing: 0
+  PushTime: 2
+--- !u!114 &16330481524684609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8748861912384974150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a068fabca543e204ebd99cacfbe57653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1

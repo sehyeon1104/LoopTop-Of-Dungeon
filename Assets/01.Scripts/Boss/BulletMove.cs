@@ -13,7 +13,7 @@ public class BulletMove : MonoBehaviour
     }
     private void Update()
     {
-        transform.Translate(transform.right * Time.deltaTime * speed);
+        transform.Translate(Vector3.right * Time.deltaTime * speed);
     }
     private IEnumerator Push()
     {
