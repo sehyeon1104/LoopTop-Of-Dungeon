@@ -6,7 +6,11 @@ public class EnemyElite : EnemyDefault
 {
     [SerializeField] private AnimationClip[] attackClips;
     protected int _count = Animator.StringToHash("Count");
-    
+
+    public override void Init()
+    {
+        base.Init();
+    }
 
     public override void AnimInit()
     {

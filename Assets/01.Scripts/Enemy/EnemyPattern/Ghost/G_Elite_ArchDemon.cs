@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class G_Elite_ArchDemon : EnemyElite
 {
-    [SerializeField] private GameObject trail;
+    private GameObject trail;
 
-    private void OnEnable()
+    public override void Init()
     {
+        base.Init();
+        trail = GetComponentInChildren<MoveToTrailUV>().gameObject;
         trail?.SetActive(false);
     }
 
@@ -22,7 +24,7 @@ public class G_Elite_ArchDemon : EnemyElite
 
             Vector2 dir = (playerTransform.position - transform.position).normalized;
             sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
-            rigid.velocity = dir * speed * 10f;
+            rigid.velocity = dir * speed * 5f;
 
             yield return null;
         }
@@ -46,6 +48,7 @@ public class G_Elite_ArchDemon : EnemyElite
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(3f);
     }
+
     protected override IEnumerator Attack3()
     {
         distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
