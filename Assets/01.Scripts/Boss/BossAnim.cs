@@ -9,6 +9,7 @@ public class BossAnim : MonoBehaviour
 
     [SerializeField] protected AnimationClip idleClip;
     [SerializeField] protected AnimationClip moveClip;
+    [SerializeField] protected AnimationClip deathClip;
 
     public void Init()
     {
@@ -22,6 +23,7 @@ public class BossAnim : MonoBehaviour
 
         if (moveClip != null) overrideController["Move"] = moveClip;
         if (idleClip != null) overrideController["Idle"] = idleClip;
+        if (deathClip != null) overrideController["death"] = deathClip;
 
         overrideController = SetSkillAnimation(overrideController);
 
