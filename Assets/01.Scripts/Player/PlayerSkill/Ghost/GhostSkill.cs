@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
 using static Cinemachine.DocumentationSortingAttribute;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
@@ -38,6 +39,7 @@ public class GhostSkill : PlayerSkillBase
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
 
+
     private void Awake()
     {
         Cashing();
@@ -45,9 +47,10 @@ public class GhostSkill : PlayerSkillBase
         playerAnim = GetComponent<Animator>();
     }
 
-    private void Update()
+    private void Update()   
     {
-
+       
+        
         if (Input.GetKeyDown(KeyCode.B))
         {
             BeamPattern(5);
@@ -232,11 +235,36 @@ public class GhostSkill : PlayerSkillBase
 
     public void BeamPattern(int level)
     {
+        float angle = Mathf.Atan2((transform.up.y - playerMovement.Direction.y), (transform.up.x - playerMovement.Direction.x)) * Mathf.Rad2Deg;
         beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis = Quaternion.AngleAxis(beamRot, Vector3.forward);
-        beam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-
+        Quaternion angleAxis;
+        Quaternion instancePortal;
+        switch (level)
+        {
+            case 1:
+                 angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
+                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
+                break;
+            case 2:
+                 if(playerMovement.Direction.y > 0) { }
+                 angleAxis = Quaternion.AngleAxis(beamRot-45, transform.forward);
+                 
+                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Quaternion.AngleAxis(angle-45,transform.forward).eulerAngles, angleAxis);
+                 angleAxis = Quaternion.AngleAxis(beamRot + 45, transform.forward);
+                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Quaternion.AngleAxis(angle + 45, transform.forward).eulerAngles, angleAxis);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                break;
+            
+        }
     }
+    
     IEnumerator telpoSkill(int level)
     {
         RaycastHit2D[] hit;
@@ -254,7 +282,7 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, Vector2.Distance(currentPlayerPos, transform.position), enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 0, 1<<enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
             print("ss");

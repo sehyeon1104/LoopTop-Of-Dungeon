@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Portal : MonoBehaviour
 {
     private bool isLoadScene = false;
-    private int nextSceneNum = 0;
     Define.Scene sceneType;
 
     private void Start()
@@ -27,10 +26,8 @@ public class Portal : MonoBehaviour
         if (!isLoadScene)
         {
             isLoadScene = true;
-            GameManager.Instance.SavePlayerStat();
 
             GameManager.Instance.StageMoveCount++;
-            Debug.Log($"StageMoveCount : {GameManager.Instance.StageMoveCount}");
 
             if (GameManager.Instance.StageMoveCount == 0 && GameManager.Instance.sceneType != Define.Scene.BossScene)
             {
@@ -46,6 +43,7 @@ public class Portal : MonoBehaviour
             }
             GameManager.Instance.SetSceneType(sceneType);
 
+            GameManager.Instance.SaveData();
             Managers.Scene.LoadScene(sceneType);
 
         }
