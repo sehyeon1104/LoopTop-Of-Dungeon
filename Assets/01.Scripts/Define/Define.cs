@@ -46,28 +46,16 @@ public static class Define
     public enum Scene
     {
         Unknown,
-        TitleScene,
+        TitleScene = 0,
         CenterScene,
-        Ghost_Stage1,
-        Ghost_Stage2,
-        Ghost_Boss,
+        StageScene,
+        BossScene,
     }
     public enum Sound
     {
         Bgm,
         Effect,
         MaxCount,
-    }
-
-    public enum StageSceneNum
-    {
-        Default = 0,
-        CenterMap = 1,
-        Ghost = 2,
-        LavaSlime = 5,
-        Electricity = 8,
-        Werewolf = 11,
-        Lizard = 14,
     }
 
     public enum ItemType

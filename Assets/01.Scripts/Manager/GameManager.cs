@@ -6,8 +6,22 @@ using System.IO;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    public static int stageMoveCount { get; private set; } = 0;
+    public int StageMoveCount
+    {
+        get
+        {
+            return stageMoveCount;
+        }
+        set
+        {
+            stageMoveCount = value;
+            stageMoveCount %= 3;
+        }
+    }
+
     public Define.MapTypeFlag mapTypeFlag { private set; get; }
-    public Define.StageSceneNum stageSceneNum;
+    public Define.Scene sceneType { private set; get; }
 
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
@@ -18,7 +32,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        if(_player == null)
+        Application.targetFrameRate = 30;
+
+        if (_player == null)
         {
             Rito.Debug.Log("Get Player Instance");
             _player = FindObjectOfType<Player>();
@@ -73,15 +89,19 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
+    public void ResetStageClearCount()
+    {
+        StageMoveCount = 0;
+    }
 
     public void InitPlayerInfo()
     {
         UIManager.Instance.UpdateGoods();
     }
 
-    public void SetStageSceneNum(Define.StageSceneNum sceneNum)
+    public void SetStageSceneNum(Define.Scene sceneNum)
     {
-        stageSceneNum = sceneNum;
+        sceneType = sceneNum;
     }
 
     public void PlayHitEffect(Transform objTransform)
@@ -128,6 +148,10 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
+    }
+    public void SetSceneType(Define.Scene sceneType)
+    {
+        this.sceneType = sceneType;
     }
 
     /// <summary>

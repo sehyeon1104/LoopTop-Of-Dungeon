@@ -83,7 +83,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         speed = enemySO.speed;
     }
 
-    public void AnimInit()
+    public virtual void AnimInit()
     {
         AnimatorOverrideController overrideController = new AnimatorOverrideController();
 
@@ -137,7 +137,6 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if(rigid != null)
         rigid.velocity = Vector3.zero;
         if (attackClip != null) anim.SetTrigger(_attack);
-
     }
 
     public virtual void OnDamage(float damage, float critChance)
@@ -201,6 +200,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (!isDead)
         {
             isDead = true;
+
             EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
             FragmentCollectManager.Instance.AddFragment(gameObject);
 

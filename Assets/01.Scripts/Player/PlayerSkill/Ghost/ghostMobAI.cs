@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ghostMobAI : MonoBehaviour
 {
+    [SerializeField] float damage =3;
     [SerializeField] float speed = 3;
     [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
@@ -32,6 +34,7 @@ public class ghostMobAI : MonoBehaviour
     {
         if (actCoroutine != null) actCoroutine = null;
     }
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -40,6 +43,7 @@ public class ghostMobAI : MonoBehaviour
         spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
         hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
     }
+
     void Start()
     {
         enemyLayer = LayerMask.NameToLayer("Enemy");
@@ -47,8 +51,9 @@ public class ghostMobAI : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
+        print((playerTrans.position - transform.position).normalized);
         Act();
     }
 
@@ -56,7 +61,7 @@ public class ghostMobAI : MonoBehaviour
     public void AnimInit()
     {
         AnimatorOverrideController overrideController = new AnimatorOverrideController();
-
+            
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 
         if (moveClip != null)
@@ -71,6 +76,11 @@ public class ghostMobAI : MonoBehaviour
 
     public void Act()
     {
+        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) >36)
+        {
+              transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x,(transform.position - playerTrans.position).normalized.y , 0);
+        }
+        
         if (actCoroutine != null) return;
 
         switch (Mathf.Sqrt(FindEnemies()))
@@ -139,7 +149,7 @@ public class ghostMobAI : MonoBehaviour
     public virtual IEnumerator AttackToEnemy()
     {
 
-        enemy.GetComponent<IHittable>().OnDamage(3, 0);
+        enemy.GetComponent<IHittable>().OnDamage(damage, 0);
         anim.SetBool(_move, false);
         if (attackClip != null) anim.SetTrigger(_attack);
 
