@@ -20,12 +20,12 @@ public static class Define
     {
         Default = 0,
         CenterMap,
+        Power,
         Ghost,
         LavaSlime,
         Electricity,
         Werewolf,
         Lizard,
-        Power,
     }
 
     public enum RoomTypeFlag
@@ -41,6 +41,10 @@ public static class Define
     {
         Power = 0,
         Ghost,
+        LavaSlime,
+        Electricity,
+        Werewolf,
+        Lizard,
 
     }
     public enum Scene

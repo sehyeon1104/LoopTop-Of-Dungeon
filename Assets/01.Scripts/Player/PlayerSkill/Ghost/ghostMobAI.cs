@@ -53,7 +53,6 @@ public class ghostMobAI : MonoBehaviour
 
     void FixedUpdate()
     {
-        print((playerTrans.position - transform.position).normalized);
         Act();
     }
 
@@ -77,9 +76,7 @@ public class ghostMobAI : MonoBehaviour
     public void Act()
     {
         if (Vector2.SqrMagnitude(transform.position - playerTrans.position) >36)
-        {
               transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x,(transform.position - playerTrans.position).normalized.y , 0);
-        }
         
         if (actCoroutine != null) return;
 

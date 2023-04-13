@@ -6,7 +6,10 @@ using Debug = Rito.Debug;
 
 public static class SaveManager
 {
-    private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
+    // PC
+    private static string SAVE_PATH = Path.Combine(Application.dataPath, "Json/");
+    // Android
+    //private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
 
     /// <summary>
     /// 유저 데이터 저장
@@ -53,9 +56,15 @@ public static class SaveManager
     /// 세이브한 적이 있는지 체크
     /// </summary>
     /// <returns></returns>
-    public static bool GetCheckBool()
+    public static bool GetCheckPlayerDataBool()
     {
         string SAVE_FILENAME = "PlayerData.json";
+
+        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
+    }
+    public static bool GetCheckGameDataBool()
+    {
+        string SAVE_FILENAME = "GameData.json";
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
     }
