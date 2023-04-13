@@ -6,7 +6,10 @@ using Debug = Rito.Debug;
 
 public static class SaveManager
 {
-    private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
+    // PC
+    private static string SAVE_PATH = Path.Combine(Application.dataPath, "Json/");
+    // Android
+    //private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
 
     /// <summary>
     /// 유저 데이터 저장
