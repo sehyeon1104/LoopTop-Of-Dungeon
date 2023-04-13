@@ -24,6 +24,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
 
+    protected AnimatorOverrideController overrideController;
+
     public Coroutine actCoroutine = null;
     public Animator anim;
 
@@ -96,7 +98,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual void AnimInit()
     {
-        AnimatorOverrideController overrideController = new AnimatorOverrideController();
+        overrideController = new AnimatorOverrideController();
 
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 

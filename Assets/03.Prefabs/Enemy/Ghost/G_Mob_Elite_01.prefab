@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 237465772}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1724425340}
@@ -49,11 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 237465773}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 853
+  m_shaderPropertyID: 855
   m_materialData:
   - m_trailRenderer: {fileID: 1724425341}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0.99280524
+    m_move: 0.4330449
 --- !u!199 &237465775
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4922,23 +4922,23 @@ TrailRenderer:
   m_Time: 1.2
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2.7
+    widthMultiplier: 5
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.12194824
+        value: 0.2
         inSlope: 0.42028603
-        outSlope: 0.37805176
+        outSlope: 0.8
         tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.23015873
       - serializedVersion: 3
         time: 1
-        value: 0.5
-        inSlope: 0.37805176
+        value: 1
+        inSlope: 0.8
         outSlope: 0.699223
         tangentMode: 69
         weightedMode: 0
@@ -4982,7 +4982,7 @@ TrailRenderer:
     textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.04
+  m_MinVertexDistance: 0.4
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &9171237707045324146
@@ -5164,4 +5164,3 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 04c3014b55f42d5469c8af4b675e9987, type: 2}
   - {fileID: 7400000, guid: b93c22f8e1bf52e46ae0f9627c26fb46, type: 2}
   - {fileID: 7400000, guid: 212875d2e8fb07941912bc5f398fb0d1, type: 2}
-  trail: {fileID: 237465772}
