@@ -20,6 +20,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     [SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
 
+    [SerializeField] protected AnimationClip idleClip;
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
 
@@ -31,16 +32,20 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected int _attack = Animator.StringToHash("Attack");
     protected int _move = Animator.StringToHash("Move");
 
-    Material hitMat;
-    Material spriteLitMat;
+    private Material hitMat;
+    private Material spriteLitMat;
 
     private Coroutine getHitCoroutine;
-    float changeTime = 0.07f;
-    WaitForEndOfFrame wait;
+
+    private float changeTime = 0.07f;
+    private WaitForEndOfFrame wait;
     private bool isPlayGetHitEffect = false;
+    
     public Vector3 hitPoint => Vector3.zero;
 
-    private bool isDead = false;
+    protected bool isMove { private set; get; } = false;
+    protected bool isDead { private set; get; } = false;
+    protected bool isFlip { private set; get; } = false;
 
     void OnEnable()
     {
@@ -65,6 +70,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         anim = GetComponent<Animator>();
 
         sprite = GetComponent<SpriteRenderer>();
+        isFlip = sprite.flipX;
         AnimInit();
     }
 
@@ -89,6 +95,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 
+        if (idleClip != null) overrideController["Idle"] = idleClip;
         if (moveClip != null) overrideController["Move"] = moveClip;
         if (attackClip != null) overrideController["Attack"] = attackClip;
 
@@ -98,15 +105,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
         
-        if (actCoroutine != null) return;
-        
         switch (distanceToPlayer)
         {
             case var a when a <= detectDistance && a > minDistance:
-                actCoroutine = StartCoroutine(MoveToPlayer());
+                isMove = true;
+                if(actCoroutine == null) actCoroutine = StartCoroutine(MoveToPlayer());
                 break;
             case var a when a <= minDistance:
-                actCoroutine = StartCoroutine(AttackToPlayer());
+                isMove = false;
+                if (actCoroutine == null) actCoroutine = StartCoroutine(AttackToPlayer());
                 break;
             default:
                 if(rigid != null) rigid.velocity = Vector3.zero;
@@ -119,11 +126,14 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (rigid == null) yield break;
         if (moveClip != null) anim.SetBool(_move, true);
 
+        while (isMove)
+        {
+            Vector2 dir = (playerTransform.position - transform.position).normalized;
+            sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
+            rigid.velocity = dir * speed;
 
-        Vector2 dir = (playerTransform.position - transform.position).normalized;
-        sprite.flipX = Mathf.Sign(dir.x) > 0;
-        rigid.velocity = dir * speed;
-
+            yield return null;
+        }
 
         yield return null;
         actCoroutine = null;
