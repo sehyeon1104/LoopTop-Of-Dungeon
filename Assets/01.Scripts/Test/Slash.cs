@@ -16,7 +16,7 @@ public class Slash : MonoBehaviour
     }
     private void Update()
     {
-        nowSpeed += nowSpeed * 0.05f;
+        nowSpeed += nowSpeed * Time.deltaTime * 5;
         transform.Translate(Vector3.right * Time.deltaTime * nowSpeed);
     }
 

@@ -101,7 +101,8 @@ public class Beam : MonoBehaviour
 
         while(beamLight.intensity <= intensity)
         {
-            beamLight.intensity += 0.1f;
+            Debug.Log(Time.deltaTime);
+            beamLight.intensity += Time.deltaTime * 10f;
             yield return null;
         }
 
@@ -117,7 +118,7 @@ public class Beam : MonoBehaviour
 
         while (lineLength <= length)
         {
-            lineLength += 1f;
+            lineLength += Time.deltaTime * 100f;
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
 
             points[1].x = lineLength;
