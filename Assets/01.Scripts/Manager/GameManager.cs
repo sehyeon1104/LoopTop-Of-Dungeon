@@ -32,7 +32,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 300;
 
         if (_player == null)
         {

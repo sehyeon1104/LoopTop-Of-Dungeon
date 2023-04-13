@@ -243,10 +243,14 @@ public class UIManager : MonoSingleton<UIManager>
             Debug.LogWarning("showCurStageNameObj is Null!");
             yield break;
         }
+        if(GameManager.Instance.sceneType == Define.Scene.CenterScene || GameManager.Instance.sceneType == Define.Scene.BossScene)
+        {
+            yield break;
+        }
 
         showCurStageNameObj.SetActive(true);
 
-        curStageName.SetText(string.Format("{0}Stage", GameManager.Instance.mapTypeFlag.ToString()));
+        curStageName.SetText(string.Format("{0}Stage_{1}", GameManager.Instance.mapTypeFlag.ToString(), GameManager.Instance.StageMoveCount));
 
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
@@ -270,15 +274,12 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LoadToCenterScene()
     {
-        // TODO : �߾� �� �� ������ �̵�
-
-        LoadToTitleScene(); // �ӽ�
+        Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
         Managers.Scene.LoadScene(Define.Scene.TitleScene);
-        //SceneManager.LoadScene("TitleScene");
     }
 
     

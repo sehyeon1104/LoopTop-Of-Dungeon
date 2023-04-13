@@ -20,6 +20,7 @@ public class G_Patterns : BossPattern
     [SerializeField] protected GameObject bossAura;
 
     [Space]
+    [SerializeField] protected AnimationClip tpStart;
     [SerializeField] protected AnimationClip absorbEnd;
 
     protected GhostBossJangpanPattern bossRangePattern;
@@ -113,6 +114,8 @@ public class G_Patterns : BossPattern
     {
         Vector2 dir;
 
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
 
         yield return new WaitForSeconds(1f);
@@ -134,6 +137,7 @@ public class G_Patterns : BossPattern
 
         transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
 
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waitTime;
 
