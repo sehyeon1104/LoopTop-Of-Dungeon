@@ -32,8 +32,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        Application.targetFrameRate = 30;
-
         if (_player == null)
         {
             Rito.Debug.Log("Get Player Instance");
