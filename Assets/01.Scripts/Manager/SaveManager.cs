@@ -53,9 +53,15 @@ public static class SaveManager
     /// 세이브한 적이 있는지 체크
     /// </summary>
     /// <returns></returns>
-    public static bool GetCheckBool()
+    public static bool GetCheckPlayerDataBool()
     {
         string SAVE_FILENAME = "PlayerData.json";
+
+        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
+    }
+    public static bool GetCheckGameDataBool()
+    {
+        string SAVE_FILENAME = "GameData.json";
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
     }

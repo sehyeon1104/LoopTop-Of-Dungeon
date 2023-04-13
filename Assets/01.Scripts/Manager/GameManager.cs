@@ -27,6 +27,7 @@ public class GameManager : MonoSingleton<GameManager>
     private Player _player;
 
     private PlayerData playerData = new PlayerData();
+    private GameData gameData = new GameData();
 
     private GameObject hitEffect = null;
 
@@ -52,7 +53,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         #region 플레이어 정보 로딩
-        if (!SaveManager.GetCheckBool())
+        if (!SaveManager.GetCheckPlayerDataBool())
         {
             Debug.Log("[GameManager] 저장파일 없음");
             Player.playerBase.InitPlayerStat();
@@ -69,6 +70,23 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
         Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
+
+        #endregion
+
+        #region 게임 데이터 로딩
+        //if (!SaveManager.GetCheckGameDataBool())
+        //{
+        //    Debug.Log("[GameManager] 저장파일 없음");
+        //    Player.playerBase.InitPlayerStat();
+        //    SetGameData();
+        //    SaveManager.Save<GameData>(ref gameData);
+        //}
+        //else
+        //{
+        //    Debug.Log("[GameManager] 저장파일 있음");
+        //    SaveManager.Load<GameData>(ref gameData);
+        //    GetGameData();
+        //}
 
         #endregion
 
@@ -99,11 +117,6 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.UpdateGoods();
     }
 
-    public void SetStageSceneNum(Define.Scene sceneNum)
-    {
-        sceneType = sceneNum;
-    }
-
     public void PlayHitEffect(Transform objTransform)
     {
         var effect = Managers.Pool.Pop(hitEffect);
@@ -128,6 +141,15 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     /// <summary>
+    /// 게임데이터 저장
+    /// </summary>
+    public void SetGameData()
+    {
+        gameData.mapTypeFlag = mapTypeFlag;
+        gameData.sceneType = sceneType;
+    }
+
+    /// <summary>
     /// 현재 플레이어 정보에 playerData 불러옴
     /// </summary>
     public void GetPlayerStat()
@@ -142,7 +164,15 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
-        mapTypeFlag = playerData.mapTypeFlag;
+    }
+
+    /// <summary>
+    /// 게임 데이터 불러옴
+    /// </summary>
+    public void GetGameData()
+    {
+        mapTypeFlag = gameData.mapTypeFlag;
+        sceneType = gameData.sceneType;
     }
 
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
@@ -157,10 +187,12 @@ public class GameManager : MonoSingleton<GameManager>
     /// <summary>
     /// 플레이어 데이터 저장
     /// </summary>
-    public void SavePlayerStat()
+    public void SaveData()
     {
         SetPlayerStat();
+        SetGameData();
         SaveManager.Save<PlayerData>(ref playerData);
+        SaveManager.Save<GameData>(ref gameData);
     }
 
     public void GameQuit()
