@@ -74,19 +74,18 @@ public class GameManager : MonoSingleton<GameManager>
         #endregion
 
         #region 게임 데이터 로딩
-        //if (!SaveManager.GetCheckGameDataBool())
-        //{
-        //    Debug.Log("[GameManager] 저장파일 없음");
-        //    Player.playerBase.InitPlayerStat();
-        //    SetGameData();
-        //    SaveManager.Save<GameData>(ref gameData);
-        //}
-        //else
-        //{
-        //    Debug.Log("[GameManager] 저장파일 있음");
-        //    SaveManager.Load<GameData>(ref gameData);
-        //    GetGameData();
-        //}
+        if (!SaveManager.GetCheckGameDataBool())
+        {
+            Debug.Log("[GameManager] 저장파일 없음");
+            SetGameData();
+            SaveManager.Save<GameData>(ref gameData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] 저장파일 있음");
+            SaveManager.Load<GameData>(ref gameData);
+            GetGameData();
+        }
 
         #endregion
 
@@ -196,9 +195,9 @@ public class GameManager : MonoSingleton<GameManager>
     public void SaveData()
     {
         SetPlayerStat();
-        //SetGameData();
+        SetGameData();
         SaveManager.Save<PlayerData>(ref playerData);
-        //SaveManager.Save<GameData>(ref gameData);
+        SaveManager.Save<GameData>(ref gameData);
     }
 
     public void GameQuit()
