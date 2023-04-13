@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57456531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6125614359604897047, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 678934955}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &119251785
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,6 +468,14 @@ PlayableDirector:
   - key: {fileID: -6392724218186925998, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
     value: {fileID: 0}
   - key: {fileID: -1182712778425794716, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -611832758960372657, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8318960573107889459, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3902234433800942209, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3467977368847601304, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
@@ -1095,8 +1108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb26c5aa6819a214ca72aa3baccad5f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialoguePanel: {fileID: 0}
-  contentTmp: {fileID: 0}
+  DialoguePanel: {fileID: 57456531}
+  contentTmp: {fileID: 2049891991}
   waitTime: 3
 --- !u!1 &524012580
 GameObject:
@@ -2252,6 +2265,17 @@ MonoBehaviour:
 --- !u!114 &1839593437 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8642156767142455037, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 678934955}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2049891991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6597459286929365460, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
   m_PrefabInstance: {fileID: 678934955}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

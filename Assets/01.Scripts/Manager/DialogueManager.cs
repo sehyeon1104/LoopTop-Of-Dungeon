@@ -30,8 +30,8 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     private void Start()
     {
-        DialoguePanel = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject;
-        contentTmp = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject.GetComponent<TextMeshProUGUI>();
+        //DialoguePanel = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject;
+        //contentTmp = UIManager.Instance.playerUI.transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
 
         DialoguePanel.gameObject.SetActive(false);
     }
