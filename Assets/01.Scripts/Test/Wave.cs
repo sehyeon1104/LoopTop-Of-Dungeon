@@ -11,7 +11,7 @@ public class Wave : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale += new Vector3(Time.deltaTime * 7, Time.deltaTime * 7);
+        transform.localScale += new Vector3(Time.deltaTime * 10, Time.deltaTime * 10);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
