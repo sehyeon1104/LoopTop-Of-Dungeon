@@ -299,10 +299,11 @@ public class GhostPattern : G_Patterns
         {
             case 1:
                 //yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
+                bossRangePattern.FloorPatternCircle();
                 break;
             case 2:
                 //StartCoroutine(bossRangePattern.FloorPatternRectangle());
-                yield return new WaitForSeconds(4f);
+                bossRangePattern.FloorPatternRectangle();
                 break;
         }
 
