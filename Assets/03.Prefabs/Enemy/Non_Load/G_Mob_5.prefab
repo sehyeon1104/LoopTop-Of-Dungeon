@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 75b73ed42062340c1a13fdf450695eb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,7 +99,7 @@ Animator:
   m_GameObject: {fileID: 8108133220231646846}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dc064231b5c37814d9ba4e3b3ae22245, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6407db92b839279479172a14ccf1fb4a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   enemySO: {fileID: 11400000, guid: 62ecc37fda9c034499dc889ab19aaf32, type: 2}
   detectDistance: 10
   minDistance: 1
+  idleClip: {fileID: 0}
   moveClip: {fileID: 7400000, guid: 9e22570e711a2e04cad6c2288bd2f1f8, type: 2}
   attackClip: {fileID: 0}
   anim: {fileID: 0}
