@@ -43,18 +43,23 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         Cashing();
-        janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/PlayerSmoke.prefab").GetComponent<ParticleSystem>();
+        janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab").GetComponent<ParticleSystem>();
         playerAnim = GetComponent<Animator>();
     }
 
-    private void Update()   
+    private void Update()
     {
-       
-        
+
+
         if (Input.GetKeyDown(KeyCode.B))
         {
             BeamPattern(5);
         }
+    }
+    private void Start()
+    {
+        print(Mathf.Sin(-90));
+        print(Mathf.Sin(270));
     }
     protected override void Attack()
     {
@@ -92,7 +97,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void ForuthSkill(int level)
     {
-        StartCoroutine(telpoSkill(level));
+        StartCoroutine(TelpoSkill(level));
     }
     protected override void FifthSkill(int level)
     {
@@ -102,7 +107,7 @@ public class GhostSkill : PlayerSkillBase
     {
         ghostUlt.UltSkillCast();
     }
-    
+
     protected override void DashSkill()
     {
         StartCoroutine(Dash());
@@ -111,12 +116,12 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
-        
-        janpnaPartical.startSize = 2 * level + 2;
+
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
-        Poolable smoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.parent);
+        Poolable smoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform.parent);
+        smoke.GetComponent<ParticleSystem>().startSize = 2 * level + 2;
         ParticleSystem smokeParticle = smoke.GetComponent<ParticleSystem>();
         yield return janpanWait;
         while (timer < janpanDuration)
@@ -141,17 +146,15 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator Jangpan5Skill()
     {
-        janpnaPartical.startSize =10;
         Collider2D[] attachObjs = null;
         Collider2D[] attachObj2 = null;
         List<Poolable> smoke = new List<Poolable>();
         float timer = 0;
         float timerA = 0;
-        float timerB = 0;
-        smoke.Add(Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity));
-        Poolable playerSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform);
+        float timerB = 1;
+        Poolable playerSmoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform);
         ParticleSystem smokeParticle = playerSmoke.GetComponent<ParticleSystem>();
-
+        smokeParticle.startSize = 10;
         yield return janpanWait;
         while (timer < janpanDuration)
         {
@@ -178,13 +181,14 @@ public class GhostSkill : PlayerSkillBase
             }
             if (timerB > 1f)
             {
-                smoke.Add(Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity));
+                Poolable cloneSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity);
+                smoke.Add(cloneSmoke);
+                cloneSmoke.GetComponent<ParticleSystem>().startSize = 10;
                 timerB = 0;
             }
             yield return null;
         }
-
-        for(int i=0; i<smoke.Count; i++)
+        for (int i = 0; i < smoke.Count; i++)
         {
             smoke[i].GetComponent<ParticleSystem>().loop = false;
         }
@@ -197,6 +201,7 @@ public class GhostSkill : PlayerSkillBase
             smoke[i].GetComponent<ParticleSystem>().loop = true;
         }
         smokeParticle.loop = true;
+
     }
     IEnumerator HillaSkill(int level)
     {
@@ -216,7 +221,7 @@ public class GhostSkill : PlayerSkillBase
         }
         else if (2 < level && level <= 4)
         {
-            for (int i = 0; i < level -2; i++)
+            for (int i = 0; i < level - 2; i++)
             {
                 poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostMob2.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
             }
@@ -238,20 +243,18 @@ public class GhostSkill : PlayerSkillBase
         float angle = Mathf.Atan2((transform.up.y - playerMovement.Direction.y), (transform.up.x - playerMovement.Direction.x)) * Mathf.Rad2Deg;
         beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis;
-        Quaternion instancePortal;
+
         switch (level)
         {
             case 1:
-                 angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
+                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
                 break;
             case 2:
-                 if(playerMovement.Direction.y > 0) { }
-                 angleAxis = Quaternion.AngleAxis(beamRot-45, transform.forward);
-                 
-                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Quaternion.AngleAxis(angle-45,transform.forward).eulerAngles, angleAxis);
-                 angleAxis = Quaternion.AngleAxis(beamRot + 45, transform.forward);
-                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Quaternion.AngleAxis(angle + 45, transform.forward).eulerAngles, angleAxis);
+                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
+                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
                 break;
             case 3:
                 break;
@@ -261,11 +264,10 @@ public class GhostSkill : PlayerSkillBase
                 break;
             default:
                 break;
-            
         }
     }
-    
-    IEnumerator telpoSkill(int level)
+
+    IEnumerator TelpoSkill(int level)
     {
         RaycastHit2D[] hit;
         playerMovement.IsMove = false;
@@ -282,14 +284,10 @@ public class GhostSkill : PlayerSkillBase
         {
             effects[i].Play();
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 0, 1<<enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 0, 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
-            print("ss");
-            if (hit[i].transform.CompareTag("Enemy") || hit[i].transform.CompareTag("Boss"))
-            {
                 hit[i].transform.GetComponent<IHittable>().OnDamage(3, 0);
-            }
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;

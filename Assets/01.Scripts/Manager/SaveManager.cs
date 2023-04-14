@@ -37,6 +37,7 @@ public static class SaveManager
 
         if (File.Exists(filePath))
         {
+            Debug.Log(filePath);
             string jsonData = File.ReadAllText(filePath);
             jsonData = Crypto.AESDecrypt128(jsonData);
             T saveData = JsonUtility.FromJson<T>(jsonData);

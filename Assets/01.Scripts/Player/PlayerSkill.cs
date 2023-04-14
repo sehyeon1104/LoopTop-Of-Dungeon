@@ -42,6 +42,10 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            slotLevel[0]++;
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
 
@@ -58,7 +62,7 @@ public class PlayerSkill : MonoBehaviour
 
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
-            skillEvent[0] = () => playerSkill.playerSkills[1](3);
+            skillEvent[0] = () => playerSkill.playerSkills[2](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[2](2);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
