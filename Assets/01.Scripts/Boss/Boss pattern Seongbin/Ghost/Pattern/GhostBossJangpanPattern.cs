@@ -16,8 +16,33 @@ public class GhostBossJangpanPattern : MonoBehaviour
     private WaitForSeconds WaitfiveS = new WaitForSeconds(5f);
     private WaitForSeconds WaitzerodotfiveS = new WaitForSeconds(0.5f);
 
+    Poolable FRPR;
+
     private float ScaleX;
     private float ScaleY;
+
+    private void Awake()
+    {
+        //Poolable FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", new Vector2(1000,1000), Quaternion.identity);
+        //Poolable FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", new Vector2(1000, 1000), Quaternion.identity);
+        //Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", new Vector2(1000,1000), Quaternion.identity);
+        //Poolable FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", new Vector2(1000, 1000), Quaternion.identity);
+        //Managers.Pool.Push(FRP);
+        //Managers.Pool.Push(FRPS);
+        //Managers.Pool.Push(clone);
+        //Managers.Pool.Push(FRPCol);
+
+
+
+        //Poolable FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR", new Vector2(1000, 1000), Quaternion.identity);
+        //Poolable FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR", new Vector2(1000, 1000), Quaternion.identity);
+        //Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", new Vector2(1000, 1000), Quaternion.identity);
+        //Poolable FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", new Vector2(1000, 1000), Quaternion.identity);
+        //Managers.Pool.Push(FRPR);
+        //Managers.Pool.Push(FRPRS);
+        //Managers.Pool.Push(clone1);
+        //Managers.Pool.Push(FRPRCol);
+    }
 
     public IEnumerator FloorPatternRectangle()
     {
@@ -36,8 +61,10 @@ public class GhostBossJangpanPattern : MonoBehaviour
         
         while (ScaleX < 30f)
         {
-            ScaleX += 5f * Time.deltaTime;
-            ScaleY += 5f * Time.deltaTime;
+            
+            ScaleX += 0.5f;
+
+            ScaleY += 0.5f;
 
             FRPR.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -51,8 +78,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         while (ScaleX < 30f)
         {
-            ScaleX += 2f * Time.deltaTime;
-            ScaleY += 2f * Time.deltaTime;
+            ScaleX += 0.2f;
+            ScaleY += 0.2f;
 
             FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -61,7 +88,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         ScaleX = 0;
         ScaleY = 0;
-        
         
 
         FRPRSpriterenderer.enabled = false;
@@ -125,11 +151,12 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FRP.gameObject.SetActive(true);
         FRPS.gameObject.SetActive(true);
-       
+
+
         while(ScaleX < 30f)
         {
-            ScaleX += 5f * Time.deltaTime;
-            ScaleY += 5f * Time.deltaTime;
+            ScaleX += 0.5f * Time.deltaTime;
+            ScaleY += 0.5f * Time.deltaTime;
 
             FRP.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -138,13 +165,14 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         ScaleX = 0;
         ScaleY = 0;
+
         yield return WaitzerodotfiveS;
 
 
         while (ScaleX < 30f)
         {
-            ScaleX += 2f * Time.deltaTime;
-            ScaleY += 2f * Time.deltaTime;
+            ScaleX += 0.2f;
+            ScaleY += 0.2f;
 
             FRPS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -153,7 +181,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
                
         ScaleX = 0;
         ScaleY = 0;
-        
 
         FRPSpriterenderer.enabled = false;
         FRPStartSpriterenderer.enabled = false;
