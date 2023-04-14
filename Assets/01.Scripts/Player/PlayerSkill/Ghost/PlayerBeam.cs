@@ -5,6 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerBeam : MonoBehaviour
 {
+
+    [SerializeField] GameObject beamPos;
+    [SerializeField] float beamDuration =2;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
@@ -63,6 +66,7 @@ public class PlayerBeam : MonoBehaviour
 
     private IEnumerator OnBeam()
     {
+        float timerA = 0;
         float timer = 0;
         yield return waitTime;
 
@@ -82,22 +86,28 @@ public class PlayerBeam : MonoBehaviour
 
         while (lineLength <= length)
         {
+            lineLength += 1f;
+            beam.SetPosition(1, new Vector3(lineLength, 0, 0));
+            yield return null;
+        }
+        print(beamPos.transform.position - transform.position);
+        while(timerA<beamDuration)
+        {
             if(timer >0.1f)
-            {
-                print("ss");
-                RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(beam.transform.position, new Vector2(lineWidth, lineLength), 0, Vector2.up, 0, enemy);
-                for(int i=0; i<attachBeam.Length;i++)
+            {   
+
+                RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
+                for (int i = 0; i < attachBeam.Length; i++)
                 {
                     attachBeam[i].transform.GetComponent<IHittable>().OnDamage(3, 0);
                 }
                 timer = 0;
             }
-            lineLength += 1f;
-            beam.SetPosition(1, new Vector3(lineLength, 0, 0));
             timer += Time.deltaTime;
+            timerA += Time.deltaTime;
             yield return null;
-        }
 
+        }
 
         while (lineWidth >= 0.0f)
         {

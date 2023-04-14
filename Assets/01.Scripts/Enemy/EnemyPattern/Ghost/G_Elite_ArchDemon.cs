@@ -34,9 +34,12 @@ public class G_Elite_ArchDemon : EnemyElite
         anim.SetBool(_move, false);
         rigid.velocity = Vector2.zero;
 
+        dir = (playerTransform.position - transform.position).normalized;
+        sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
+
         anim.SetTrigger(_attack);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
 
         Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(dir.x) * 2 + Vector3.up * 0.5f, new Vector2(2, 4), 0);
         for(int i = 0; i < cols.Length; i++)
@@ -68,7 +71,7 @@ public class G_Elite_ArchDemon : EnemyElite
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
 
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
         }
 
 
@@ -84,6 +87,9 @@ public class G_Elite_ArchDemon : EnemyElite
         sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
 
         anim.SetTrigger(_attack);
+
+        yield return new WaitForSeconds(1f);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Wave.prefab", transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(3f);
     }
