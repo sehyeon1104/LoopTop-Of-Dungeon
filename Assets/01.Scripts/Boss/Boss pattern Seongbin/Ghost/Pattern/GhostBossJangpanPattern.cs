@@ -5,16 +5,11 @@ using UnityEngine;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
-    [SerializeField]  GameObject Effect;
-
     private SpriteRenderer FRPRSpriterenderer;
     private SpriteRenderer FRPRStartSpriterenderer;
 
     private SpriteRenderer FRPSpriterenderer;
     private SpriteRenderer FRPStartSpriterenderer;
-
-    Poolable FRPR;
-
 
     private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
     private WaitForSeconds WaitzerodotzerooneS = new WaitForSeconds(0.01f);
@@ -23,11 +18,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     private float ScaleX;
     private float ScaleY;
-
-    private void Start()
-    {
-       
-    }
 
     public IEnumerator FloorPatternRectangle()
     {
@@ -46,8 +36,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
         
         while (ScaleX < 30f)
         {
-            ScaleX += 0.5f;
-            ScaleY += 0.5f;
+            ScaleX += 5f * Time.deltaTime;
+            ScaleY += 5f * Time.deltaTime;
 
             FRPR.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -61,8 +51,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         while (ScaleX < 30f)
         {
-            ScaleX += 0.2f;
-            ScaleY += 0.2f;
+            ScaleX += 2f * Time.deltaTime;
+            ScaleY += 2f * Time.deltaTime;
 
             FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -138,8 +128,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
        
         while(ScaleX < 30f)
         {
-            ScaleX += 0.5f;
-            ScaleY += 0.5f;
+            ScaleX += 5f * Time.deltaTime;
+            ScaleY += 5f * Time.deltaTime;
 
             FRP.transform.localScale = new Vector2(ScaleX, ScaleY);
 
@@ -153,8 +143,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         while (ScaleX < 30f)
         {
-            ScaleX += 0.2f;
-            ScaleY += 0.2f;
+            ScaleX += 2f * Time.deltaTime;
+            ScaleY += 2f * Time.deltaTime;
 
             FRPS.transform.localScale = new Vector2(ScaleX, ScaleY);
 

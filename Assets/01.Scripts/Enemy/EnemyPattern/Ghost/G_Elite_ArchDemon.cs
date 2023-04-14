@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class G_Elite_ArchDemon : EnemyElite
 {
-    [SerializeField] private GameObject trail;
+    private GameObject trail;
 
-    private void OnEnable()
+    public override void Init()
     {
+        base.Init();
+        trail = GetComponentInChildren<MoveToTrailUV>().gameObject;
         trail?.SetActive(false);
     }
 
@@ -16,23 +18,35 @@ public class G_Elite_ArchDemon : EnemyElite
         trail.SetActive(true);
         anim.SetBool(_move, true);
 
-        while (distanceToPlayer >= 1f)
+        Vector2 dir = Vector2.zero;
+
+        while (distanceToPlayer >= 2f)
         {
             distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
 
-            Vector2 dir = (playerTransform.position - transform.position).normalized;
+            dir = (playerTransform.position - transform.position).normalized;
             sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
-            rigid.velocity = dir * speed * 10f;
+            rigid.velocity = dir * speed * 5f;
 
             yield return null;
         }
 
         anim.SetBool(_move, false);
-        trail.SetActive(false);
         rigid.velocity = Vector2.zero;
+
         anim.SetTrigger(_attack);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.3f);
+
+        Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(dir.x) * 2 + Vector3.up * 0.5f, new Vector2(2, 4), 0);
+        for(int i = 0; i < cols.Length; i++)
+        {
+            if (cols[i].CompareTag("Player"))
+                GameManager.Instance.Player.OnDamage(2, 0);
+        }
+
+        trail.SetActive(false);
+        yield return new WaitForSeconds(2f);
     }
 
     protected override IEnumerator Attack2()
@@ -43,9 +57,24 @@ public class G_Elite_ArchDemon : EnemyElite
         Vector2 dir = (playerTransform.position - transform.position).normalized;
         sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
 
-        anim.SetTrigger(_attack);
+        for(int i = 0; i < 3; i++)
+        {
+            overrideController[$"Attack2"] = attackClips[i % 2];
+            anim.SetTrigger(_attack);
+
+            yield return new WaitForSeconds(0.5f);
+
+            dir = (playerTransform.position - transform.position).normalized;
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
+
+            yield return new WaitForSeconds(0.3f);
+        }
+
+
         yield return new WaitForSeconds(3f);
     }
+
     protected override IEnumerator Attack3()
     {
         distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
@@ -55,6 +84,7 @@ public class G_Elite_ArchDemon : EnemyElite
         sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);
 
         anim.SetTrigger(_attack);
-        yield return null;
+
+        yield return new WaitForSeconds(3f);
     }
 }

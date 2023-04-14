@@ -39,7 +39,6 @@ public class ZoneEntrance : MonoBehaviour
         if (!isLoadScene)
         {
             isLoadScene = true;
-            GameManager.Instance.SaveData();
 
             GameManager.Instance.StageMoveCount++;
 
@@ -56,6 +55,7 @@ public class ZoneEntrance : MonoBehaviour
                 sceneType = Define.Scene.CenterScene;
             }
             GameManager.Instance.SetSceneType(sceneType);
+            GameManager.Instance.SaveData();
 
             Managers.Scene.LoadScene(sceneType);
 

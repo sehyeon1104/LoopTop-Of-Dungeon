@@ -74,19 +74,18 @@ public class GameManager : MonoSingleton<GameManager>
         #endregion
 
         #region 게임 데이터 로딩
-        //if (!SaveManager.GetCheckGameDataBool())
-        //{
-        //    Debug.Log("[GameManager] 저장파일 없음");
-        //    Player.playerBase.InitPlayerStat();
-        //    SetGameData();
-        //    SaveManager.Save<GameData>(ref gameData);
-        //}
-        //else
-        //{
-        //    Debug.Log("[GameManager] 저장파일 있음");
-        //    SaveManager.Load<GameData>(ref gameData);
-        //    GetGameData();
-        //}
+        if (!SaveManager.GetCheckGameDataBool())
+        {
+            Debug.Log("[GameManager] 저장파일 없음");
+            SetGameData();
+            SaveManager.Save<GameData>(ref gameData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] 저장파일 있음");
+            SaveManager.Load<GameData>(ref gameData);
+            GetGameData();
+        }
 
         #endregion
 
@@ -138,6 +137,9 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.exp = Player.playerBase.Exp;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
+
+        playerData.mapTypeFlag = mapTypeFlag;
+        playerData.sceneType = sceneType;
     }
 
     /// <summary>
@@ -164,6 +166,9 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+
+        mapTypeFlag = playerData.mapTypeFlag;
+        sceneType = playerData.sceneType;
     }
 
     /// <summary>

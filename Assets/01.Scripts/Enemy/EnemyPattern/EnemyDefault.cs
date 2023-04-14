@@ -24,6 +24,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
 
+    protected AnimatorOverrideController overrideController;
+
     public Coroutine actCoroutine = null;
     public Animator anim;
 
@@ -49,14 +51,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     void OnEnable()
     {
-        SetStatus();
-        if (actCoroutine != null) actCoroutine = null;
-        isDead = false;
-        isPlayGetHitEffect = false;
-        if(sprite != null)
-        {
-            sprite.material = spriteLitMat;
-        }
+        Init();
     }
     private void Awake()
     {
@@ -80,6 +75,18 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         Act();
     }
 
+    public virtual void Init()
+    {
+        SetStatus();
+        if (actCoroutine != null) actCoroutine = null;
+        isDead = false;
+        isPlayGetHitEffect = false;
+        if (sprite != null)
+        {
+            sprite.material = spriteLitMat;
+        }
+    }
+
     public void SetStatus()
     {
         if (enemySO == null) return;
@@ -91,7 +98,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual void AnimInit()
     {
-        AnimatorOverrideController overrideController = new AnimatorOverrideController();
+        overrideController = new AnimatorOverrideController();
 
         overrideController.runtimeAnimatorController = anim.runtimeAnimatorController;
 
