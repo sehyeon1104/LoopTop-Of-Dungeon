@@ -92,7 +92,7 @@ public class PlayerSkill : MonoBehaviour
 
     void DashSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove)
             skillEvent[4]();        
     }
     #region ½ºÅ³ ¼ÅÇÃ
