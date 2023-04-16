@@ -1,173 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
-//using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using UnityEngine;
+using System;
+using DG.Tweening;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
     private SpriteRenderer FRPRSpriterenderer;
     private SpriteRenderer FRPRStartSpriterenderer;
-
     private SpriteRenderer FRPSpriterenderer;
     private SpriteRenderer FRPStartSpriterenderer;
 
-    private WaitForSeconds WaitzerodoteightS = new WaitForSeconds(0.8f);
-    private WaitForSeconds WaitzerodotzerooneS = new WaitForSeconds(0.01f);
-    private WaitForSeconds WaitfiveS = new WaitForSeconds(5f);
-    private WaitForSeconds WaitzerodotfiveS = new WaitForSeconds(0.5f);
+    Poolable FRP;
+    Poolable FRPS;
+    Poolable circlesmoke;
+    Poolable FRPCol;
+    Poolable FRPR;
+    Poolable FRPRS;
+    Poolable recsmoke;
+    Poolable FRPRCol;
 
-    private float ScaleX;
-    private float ScaleY;
+    float currenttime = 0f;
 
-    public IEnumerator FloorPatternRectangle()
+    private void Awake()
     {
-        Poolable FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
-        Poolable FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR",transform.position, Quaternion.identity);
-
-        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
-        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
-
-        FRPR.transform.position = transform.position;
-        FRPRS.transform.position = transform.position;
-       
-
-        FRPR.gameObject.SetActive(true);
-        FRPRS.gameObject.SetActive(true);
-        
-        while (ScaleX < 30f)
-        {
-            ScaleX += 5f * Time.deltaTime;
-            ScaleY += 5f * Time.deltaTime;
-
-            FRPR.transform.localScale = new Vector2(ScaleX, ScaleY);
-
-            yield return WaitzerodotzerooneS;
-        }
-
-        yield return WaitzerodotfiveS;
-
-        ScaleX = 0;
-        ScaleY = 0;
-
-        while (ScaleX < 30f)
-        {
-            ScaleX += 2f * Time.deltaTime;
-            ScaleY += 2f * Time.deltaTime;
-
-            FRPRS.transform.localScale = new Vector2(ScaleX, ScaleY);
-
-            yield return WaitzerodotzerooneS;
-        }
-
-        ScaleX = 0;
-        ScaleY = 0;
-        
-        
-
-        FRPRSpriterenderer.enabled = false;
-        FRPRStartSpriterenderer.enabled = false;
-        Poolable clone =  Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
-        Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone1.transform.position = new Vector2(transform.position.x + (-23.73f), transform.position.y);
-        Poolable clone2 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone2.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + 12.18f);
-        Poolable clone3 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone3.transform.position = new Vector2(transform.position.x, transform.position.y + 24);
-        Poolable clone4 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone4.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + 12.18f);
-        Poolable clone5 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone5.transform.position = new Vector2(transform.position.x + 23.73f, transform.position.y);
-        Poolable clone6 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone6.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + (-12.18f));
-        Poolable clone7 = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", transform.position, Quaternion.identity);
-        clone7.transform.position = new Vector2(transform.position.x, transform.position.y + (-23.73f));
-
-        yield return WaitzerodoteightS;
-
-        Poolable FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", transform.position, Quaternion.identity);
-        FRPRCol.transform.position = transform.position;
-
-        yield return WaitfiveS;
-
-        ScaleX = 0;
-        ScaleY = 0;
-
-        FRPR.transform.localScale = Vector2.zero;
-        FRPRS.transform.localScale = Vector2.zero;
-
-        FRPRSpriterenderer.enabled = true;
-        FRPRStartSpriterenderer.enabled = true;
-
-        FRPR.gameObject.SetActive(false);
-        FRPRS.gameObject.SetActive(false);
-        FRPRCol.gameObject.SetActive(false);
-
+        FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", new Vector2(1000, 1000), Quaternion.identity);
+        FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", new Vector2(1000, 1000), Quaternion.identity);
+        circlesmoke = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", new Vector2(1000, 1000), Quaternion.identity);
+        FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", new Vector2(1000, 1000), Quaternion.identity);
+        FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR", new Vector2(1000, 1000), Quaternion.identity);
+        FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPRS", new Vector2(1000, 1000), Quaternion.identity);
+        recsmoke = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", new Vector2(1000, 1000), Quaternion.identity);
+        FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", new Vector2(1000, 1000), Quaternion.identity);
+        Managers.Pool.Push(FRP);
+        Managers.Pool.Push(FRPS);
+        Managers.Pool.Push(circlesmoke);
+        Managers.Pool.Push(FRPCol);
         Managers.Pool.Push(FRPR);
         Managers.Pool.Push(FRPRS);
+        Managers.Pool.Push(recsmoke);
         Managers.Pool.Push(FRPRCol);
+
 
     }
 
-    public IEnumerator FloorPatternCircle()
+    public void FloorPatternCircle()
     {
-
-        Poolable FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", transform.position, Quaternion.identity);
-        Poolable FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", transform.position, Quaternion.identity);
-        
+        Managers.Pool.Pop(FRP.gameObject, transform.position);
+        Managers.Pool.Pop(FRPS.gameObject, transform.position);
 
         FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
         FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
 
         FRP.transform.position = transform.position;
         FRPS.transform.position = transform.position;
-        
+
 
         FRP.gameObject.SetActive(true);
         FRPS.gameObject.SetActive(true);
-       
-        while(ScaleX < 30f)
+
+        FRP.transform.DOScale(new Vector2(30f, 30f), 4f);
+
+        while (currenttime < 4f)
         {
-            ScaleX += 5f * Time.deltaTime;
-            ScaleY += 5f * Time.deltaTime;
-
-            FRP.transform.localScale = new Vector2(ScaleX, ScaleY);
-
-            yield return WaitzerodotzerooneS;
+            currenttime += Time.deltaTime;
         }
 
-        ScaleX = 0;
-        ScaleY = 0;
-        yield return WaitzerodotfiveS;
+        currenttime = 0;
 
 
-        while (ScaleX < 30f)
+        while (currenttime < 0.5f)
         {
-            ScaleX += 2f * Time.deltaTime;
-            ScaleY += 2f * Time.deltaTime;
-
-            FRPS.transform.localScale = new Vector2(ScaleX, ScaleY);
-
-            yield return WaitzerodotzerooneS;
+            currenttime += Time.deltaTime;
         }
-               
-        ScaleX = 0;
-        ScaleY = 0;
-        
+
+        currenttime = 0;
+
+        FRPS.transform.DOScale(new Vector2(30f, 30f), 2f);
+
+        while (currenttime < 2f)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        currenttime = 0;
 
         FRPSpriterenderer.enabled = false;
         FRPStartSpriterenderer.enabled = false;
 
-        Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", transform.position, Quaternion.identity);
+        Managers.Pool.Pop(circlesmoke.gameObject, transform.position);
 
-        yield return WaitzerodoteightS;
+        Poolable Col = Managers.Pool.Pop(FRPCol.gameObject, transform.position);
+        Col.transform.position = transform.position;
 
-        Poolable FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", transform.position, Quaternion.identity);
-        FRPCol.transform.position = transform.position;
+        while (currenttime < 5f)
+        {
+            currenttime += Time.deltaTime;
+        }
 
-        yield return WaitfiveS;
+        currenttime = 0;
 
-        FRP.transform.localScale = Vector2.zero; 
+        FRP.transform.localScale = Vector2.zero;
         FRPS.transform.localScale = Vector2.zero;
 
         FRPSpriterenderer.enabled = true;
@@ -181,11 +114,93 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Managers.Pool.Push(FRPS);
         Managers.Pool.Push(FRPCol);
 
-
     }
 
-    
+    public void FloorPatternRectangle()
+    {
+        Managers.Pool.Pop(FRPR.gameObject, transform.position);
+        Managers.Pool.Pop(FRPRS.gameObject, transform.position);
+
+        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
+        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
+
+        FRPR.transform.position = transform.position;
+        FRPRS.transform.position = transform.position;
 
 
+        FRPR.gameObject.SetActive(true);
+        FRPRS.gameObject.SetActive(true);
+
+        //30±îÁö
+        FRPR.transform.DOScale(new Vector2(30f, 30f), 4f);
+
+        while (currenttime < 4f)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        currenttime = 0;
+
+        while (currenttime < 0.5f)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        currenttime = 0;
+
+        FRPRS.transform.DOScale(new Vector2(30f, 30f), 2f);
+
+        while (currenttime < 2f)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        currenttime = 0;
+
+        FRPRS.transform.localScale = Vector2.zero;
+        FRPR.transform.localScale = Vector2.zero;
+
+        FRPRSpriterenderer.enabled = false;
+        FRPRStartSpriterenderer.enabled = false;
+        Poolable clone = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
+        Poolable clone1 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone1.transform.position = new Vector2(transform.position.x + (-23.73f), transform.position.y);
+        Poolable clone2 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone2.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + 12.18f);
+        Poolable clone3 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone3.transform.position = new Vector2(transform.position.x, transform.position.y + 24);
+        Poolable clone4 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone4.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + 12.18f);
+        Poolable clone5 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone5.transform.position = new Vector2(transform.position.x + 23.73f, transform.position.y);
+        Poolable clone6 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone6.transform.position = new Vector2(transform.position.x + 11.26f, transform.position.y + (-12.18f));
+        Poolable clone7 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
+        clone7.transform.position = new Vector2(transform.position.x, transform.position.y + (-23.73f));
+
+        Poolable Col = Managers.Pool.Pop(FRPRCol.gameObject, transform.position);
+        Col.transform.position = transform.position;
+
+        while (currenttime < 5f)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        currenttime = 0f;
+
+        FRPRSpriterenderer.enabled = true;
+        FRPRStartSpriterenderer.enabled = true;
+
+        FRPR.gameObject.SetActive(false);
+        FRPRS.gameObject.SetActive(false);
+        FRPRCol.gameObject.SetActive(false);
+
+        Managers.Pool.Push(FRPR);
+        Managers.Pool.Push(FRPRS);
+        Managers.Pool.Push(FRPRCol);
+
+
+    }
 
 }
