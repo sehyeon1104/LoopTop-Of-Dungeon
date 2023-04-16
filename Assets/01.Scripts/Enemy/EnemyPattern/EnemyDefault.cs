@@ -12,6 +12,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected float hp = 1;
     protected float damage = 1;
     protected float speed = 1;
+    protected float attackSpeed = 1f;
 
     protected Transform playerTransform;
     protected Rigidbody2D rigid;
