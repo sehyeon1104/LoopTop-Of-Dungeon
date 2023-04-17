@@ -973,7 +973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e320d4197fcc46e4d908f89b1cefa3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageSceneNum: 2
 --- !u!114 &520647065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,8 +1050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d7748a8be659f4fa4190acbb01e90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostNormalEnemyPrefabs: []
-  ghostEliteEnemyPrefabs: []
+  normalEnemyPrefabsList: []
+  eliteEnemyPrefabsList: []
   <curEnemies>k__BackingField: []
   spawnTime: 0.8
   assetLabel:
@@ -2106,7 +2105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 993
+      value: 2017
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}

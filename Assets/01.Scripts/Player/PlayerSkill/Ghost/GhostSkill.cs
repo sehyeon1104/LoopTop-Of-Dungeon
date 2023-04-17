@@ -46,12 +46,6 @@ public class GhostSkill : PlayerSkillBase
         janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab").GetComponent<ParticleSystem>();
         playerAnim = GetComponent<Animator>();
     }
-
-    private void Start()
-    {
-        print(Mathf.Sin(-90));
-        print(Mathf.Sin(270));
-    }
     protected override void Attack()
     {
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
@@ -225,7 +219,9 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-
+            Poolable eliteMob = Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostEliteMob.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange , quaternion.identity);
+            yield return hillaDuration;
+            Managers.Pool.Push(eliteMob);
         }
     }
 
@@ -266,7 +262,7 @@ public class GhostSkill : PlayerSkillBase
                 angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
                 beams[3] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.left, Quaternion.Euler(0, 0, 180));
                 PlayerBeam beam = beams[3].GetComponent<PlayerBeam>();
-
+                
                 while (beam.timerA < beam.beamDuration)
                 {
                     if (beam.IsReady)
