@@ -10,6 +10,7 @@ public class PlayerData
     public int level;
     public int maxLevel;
     public float damage;
+    public float attackSpeed;
     public float critChance;
     public float exp;
     public int[] expTable;
