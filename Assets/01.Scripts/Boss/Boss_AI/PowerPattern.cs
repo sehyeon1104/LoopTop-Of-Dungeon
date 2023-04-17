@@ -37,6 +37,17 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DS(int count = 0) //µ¹Áø
     {
+        Vector2 dir = Boss.Instance.player.position - transform.position;
+        transform.LookAt(dir);
+
+        yield return new WaitForSeconds(2f);
+
+        float timer = 0f;
+        while(timer < 3f)
+        {
+            timer += Time.deltaTime;
+        }
+
         yield return null;
     }
     #endregion
@@ -84,7 +95,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_SG());
+                yield return SCoroutine(Pattern_SG(count));
                 break;
             case 2:
                 break;
