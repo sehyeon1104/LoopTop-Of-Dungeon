@@ -16,7 +16,8 @@ public class PlayerBase
     {
         maxHp = 12;
         hp = maxHp;
-        damage = 5f;
+        damage = 13f;
+        attackSpeed = 0.3f;
         critChance = 5f;
         level = 1;
         maxLevel = 100;
@@ -79,6 +80,13 @@ public class PlayerBase
     {
         get => damage;
         set => damage = value;
+    }
+
+    private float attackSpeed;
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+        set => attackSpeed = value;
     }
 
     private float critChance;
