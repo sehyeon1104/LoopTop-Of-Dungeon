@@ -298,12 +298,10 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                //yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
-                bossRangePattern.FloorPatternCircle();
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                //StartCoroutine(bossRangePattern.FloorPatternRectangle());
-                bossRangePattern.FloorPatternRectangle();
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 
