@@ -71,12 +71,10 @@ public class GhostMobAI : MonoBehaviour
 
     public virtual void Act()
     {
-        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) >36)
-              transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x,(transform.position - playerTrans.position).normalized.y , 0);
         
         if (actCoroutine != null) return;
 
-        switch (Mathf.Sqrt(FindEnemies()))
+        switch (FindEnemies())
         {
             case 0:
                 actCoroutine = StartCoroutine(Idle());
@@ -92,8 +90,10 @@ public class GhostMobAI : MonoBehaviour
         }
 
     }
-    IEnumerator Idle()
+   protected virtual IEnumerator Idle()
     {
+        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) > 36)
+            transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x, (transform.position - playerTrans.position).normalized.y, 0);
         Vector2 playerVec = (playerTrans.position - transform.position).normalized;
         if (Vector2.SqrMagnitude(transform.position - playerTrans.position) < 1)
         {
@@ -107,7 +107,9 @@ public class GhostMobAI : MonoBehaviour
     }
     public virtual float FindEnemies()
     {
+
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance, 1 << enemyLayer);
+        print(enemies.Length);
         if (enemies.Length == 0)
         {
             shortestdistance = 0;
@@ -125,7 +127,7 @@ public class GhostMobAI : MonoBehaviour
                 flipVector = playeyToEnemyVec;
             }
         }
-        return shortestdistance;
+        return Mathf.Sqrt(shortestdistance);
     }
     protected virtual IEnumerator MoveToEnemy(Vector2 dir)
     {

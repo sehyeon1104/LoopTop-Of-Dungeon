@@ -7,13 +7,14 @@ public class GhostEliteMob : GhostMobAI
     [SerializeField] GameObject trail;
 
     [SerializeField] AnimationClip[] attackClips;
-    [SerializeField]  AnimationClip idleClip;
+    [SerializeField] AnimationClip idleClip;
     AnimatorOverrideController overrideController;
     bool isFlip;
-     int _count = Animator.StringToHash("Count");
+    int _count = Animator.StringToHash("Count");
     protected override void OnEnable()
     {
         base.OnEnable();
+        trail.SetActive(false);
     }
     protected override void Awake()
     {
@@ -24,7 +25,7 @@ public class GhostEliteMob : GhostMobAI
         base.Start();
     }
     protected override void FixedUpdate()
-    {   
+    {
         base.FixedUpdate();
     }
     protected override void AnimInit()
@@ -66,34 +67,50 @@ public class GhostEliteMob : GhostMobAI
 
         actCoroutine = null;
     }
+    protected override IEnumerator MoveToEnemy(Vector2 dir)
+    {
+        anim.SetBool(_move, true);
+        sprite.flipX = Mathf.Sign(dir.x) < 0 ? true : false;
+        transform.Translate(dir * Time.deltaTime * speed);
+
+        yield return null;
+        actCoroutine = null;
+    }
+    protected override IEnumerator Idle()
+    {
+        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) > 36)
+            transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x, (transform.position - playerTrans.position).normalized.y, 0);
+        Vector2 playerVec = (playerTrans.position - transform.position).normalized;
+        if (Vector2.SqrMagnitude(transform.position - playerTrans.position) < 1)
+        {
+            actCoroutine = null;
+            yield break;
+        }
+        sprite.flipX = playerVec.x <= 0 ? true : false;
+        transform.Translate(playerVec * speed * Time.deltaTime);
+        yield return null;
+        actCoroutine = null;
+    }
     IEnumerator Attack1()
     {
         trail.SetActive(true);
         anim.SetBool(_move, true);
 
-        Vector2 dir = Vector2.zero;
-        
         while (shortestdistance >= 2f)
         {
-  
-            sprite.flipX = (Mathf.Sign(flipVector.x) < 0);
+            shortestdistance = Vector2.Distance(enemy.transform.position, transform.position);
+            sprite.flipX = Mathf.Sign(flipVector.x) < 0;
             transform.Translate(flipVector.normalized * speed * 5f * Time.deltaTime);
-
             yield return null;
         }
 
         anim.SetBool(_move, false);
-        sprite.flipX = (Mathf.Sign(dir.x) < 0);
-
         for (int i = 0; i < 2; i++)
         {
-
             overrideController[$"Attack1"] = attackClips[i];
             anim.SetTrigger(_attack);
-
             yield return new WaitForSeconds(0.4f);
-
-            Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(dir.x) * 2 + Vector3.up * 0.5f, new Vector2(2, 4), 0, 1<<enemyLayer);
+            Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(flipVector.x) * 2 + Vector3.up * 0.5f, new Vector2(2, 4), 0, 1 << enemyLayer);
             for (int j = 0; j < cols.Length; j++)
             {
                 cols[j].GetComponent<IHittable>().OnDamage(5, 0);
@@ -102,14 +119,12 @@ public class GhostEliteMob : GhostMobAI
         trail.SetActive(false);
         yield return new WaitForSeconds(2f);
     }
-   IEnumerator Attack2()
+    IEnumerator Attack2()
     {
-        
-        if (shortestdistance <= 3.5f) yield break;
-
         for (int i = 0; i < 3; i++)
         {
-            sprite.flipX = isFlip != (Mathf.Sign(flipVector.normalized.x) > 0);
+            FindEnemies();              
+            sprite.flipX = Mathf.Sign(flipVector.x) < 0;
 
             overrideController[$"Attack2"] = attackClips[(i + 1) % 2];
             anim.SetTrigger(_attack);
@@ -117,25 +132,18 @@ public class GhostEliteMob : GhostMobAI
             yield return new WaitForSeconds(0.5f);
 
             float rot = Mathf.Atan2(flipVector.y, flipVector.x) * Mathf.Rad2Deg;
-            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
 
             yield return new WaitForSeconds(0.2f);
         }
-
-
         yield return new WaitForSeconds(3f);
     }
-     IEnumerator Attack3()
+    IEnumerator Attack3()
     {
-      
-        if (shortestdistance > 2f) yield break;
-
-        sprite.flipX =  (Mathf.Sign(flipVector.x) < 0);
-
+        sprite.flipX = Mathf.Sign(flipVector.x) < 0;
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
-        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Wave.prefab", transform.position, Quaternion.identity);
-
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Wave.prefab", transform.position, Quaternion.identity);
         yield return new WaitForSeconds(3f);
     }
 }
