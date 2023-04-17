@@ -17,7 +17,7 @@ public class P_Patterns : BossPattern
         {
             //모션 추가
             yield return new WaitForSeconds(1f);
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 5f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 3f);
             foreach(Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
@@ -26,19 +26,18 @@ public class P_Patterns : BossPattern
 
             for(int j = 0; j < count; j++)
             {
-                float xDist = Random.Range(-3f, 3f);
+                float xDist = Random.Range(-5f, 5f);
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging(" ", new Vector2(transform.position.x + xDist, transform.position.y + (3f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Claw.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
             }
 
             yield return new WaitForSeconds(2f);
         }
         yield return null;
     }
-    public IEnumerator Pattern_DS(int count = 0) //돌진
+    public IEnumerator Pattern_DS(int count = 0) //돌진 1페이즈
     {
         Vector2 dir = Boss.Instance.player.position - transform.position;
-        transform.LookAt(dir);
 
         yield return new WaitForSeconds(2f);
 
@@ -46,6 +45,7 @@ public class P_Patterns : BossPattern
         while(timer < 3f)
         {
             timer += Time.deltaTime;
+            transform.Translate(dir * Time.deltaTime * 3f);
         }
 
         yield return null;
