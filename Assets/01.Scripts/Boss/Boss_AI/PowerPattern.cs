@@ -7,7 +7,7 @@ public class P_Patterns : BossPattern
     [Space]
     [Header("파워")]
     #region Initialize
-    [SerializeField] private float test;
+    [SerializeField] private GameObject dashWarning;
     #endregion
 
     #region patterns
@@ -28,24 +28,42 @@ public class P_Patterns : BossPattern
             {
                 float xDist = Random.Range(-5f, 5f);
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Claw.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Soul.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
             }
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
         yield return null;
     }
     public IEnumerator Pattern_DS(int count = 0) //돌진 1페이즈
     {
-        Vector2 dir = Boss.Instance.player.position - transform.position;
-
-        yield return new WaitForSeconds(2f);
-
         float timer = 0f;
-        while(timer < 3f)
+        Vector2 dir = Boss.Instance.player.position - transform.position;
+        float rot = 0;
+
+        dashWarning.SetActive(true);
+
+        while (timer < 2f)
         {
             timer += Time.deltaTime;
-            transform.Translate(dir * Time.deltaTime * 3f);
+            dir = Boss.Instance.player.position - transform.position;
+            rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (rot - 90 + Mathf.Sign(transform.lossyScale.x) * 90));
+
+            yield return null;
+        }
+
+        timer = 0;
+        yield return new WaitForSeconds(0.5f);
+
+        dashWarning.SetActive(false);
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            transform.Translate(dir.normalized * Time.deltaTime * 12f);
+
+            yield return null;
         }
 
         yield return null;
@@ -125,6 +143,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;
@@ -139,6 +158,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;
@@ -152,6 +172,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;
