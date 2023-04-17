@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Slash : MonoBehaviour
+public class playerSlash : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     private float nowSpeed;
@@ -22,10 +22,9 @@ public class Slash : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
-            print("ss");
-            collision.GetComponent<IHittable>().OnDamage(2, 0);
+            collision.GetComponent<IHittable>().OnDamage(10, 0);
         }
     }
 }

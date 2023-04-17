@@ -64,7 +64,6 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         playerTransform = GameManager.Instance.Player.transform;
         anim = GetComponent<Animator>();
-
         sprite = GetComponent<SpriteRenderer>();
         isFlip = sprite.flipX;
         AnimInit();
