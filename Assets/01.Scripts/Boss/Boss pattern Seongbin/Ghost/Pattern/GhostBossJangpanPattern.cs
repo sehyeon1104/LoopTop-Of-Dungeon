@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using UnityEditor.Tilemaps;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
     Poolable FRPRCol;
 
     float currenttime = 0f;
+
+    float patterncurrenttime = 0f;
 
     private void Awake()
     {
@@ -41,88 +44,66 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Managers.Pool.Push(recsmoke);
         Managers.Pool.Push(FRPRCol);
 
+        FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
+        FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
+        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
+        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
+
 
     }
 
-    public void FloorPatternCircle()
+    public IEnumerator FloorPatternCircle()
     {
+        
         Managers.Pool.Pop(FRP.gameObject, transform.position);
         Managers.Pool.Pop(FRPS.gameObject, transform.position);
-
-        FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
-        FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
-
+        
         FRP.transform.position = transform.position;
         FRPS.transform.position = transform.position;
-
-
+        
         FRP.gameObject.SetActive(true);
         FRPS.gameObject.SetActive(true);
+        
+        FRP.transform.DOScale(new Vector2(30f, 30f), 1f).SetEase(Ease.OutCirc);
+        
+        yield return new WaitForSeconds(1f);
+        
+        FRPS.transform.DOScale(new Vector2(30f, 30f), 3f).SetEase(Ease.OutCirc);
 
-        FRP.transform.DOScale(new Vector2(30f, 30f), 4f);
-
-        while (currenttime < 4f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
-
-
-        while (currenttime < 0.5f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
-
-        FRPS.transform.DOScale(new Vector2(30f, 30f), 2f);
-
-        while (currenttime < 2f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
+        yield return new WaitForSeconds(3f);
 
         FRPSpriterenderer.enabled = false;
         FRPStartSpriterenderer.enabled = false;
-
+        
         Managers.Pool.Pop(circlesmoke.gameObject, transform.position);
+
+        yield return new WaitForSeconds(0.7f);
 
         Poolable Col = Managers.Pool.Pop(FRPCol.gameObject, transform.position);
         Col.transform.position = transform.position;
 
-        while (currenttime < 5f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
+        yield return new WaitForSeconds(5f);
 
         FRP.transform.localScale = Vector2.zero;
         FRPS.transform.localScale = Vector2.zero;
-
+        
         FRPSpriterenderer.enabled = true;
         FRPStartSpriterenderer.enabled = true;
-
+        
         FRP.gameObject.SetActive(false);
         FRPS.gameObject.SetActive(false);
-        FRPCol.gameObject.SetActive(false);
-
+        
         Managers.Pool.Push(FRP);
         Managers.Pool.Push(FRPS);
         Managers.Pool.Push(FRPCol);
-
+        
+        yield return null;
     }
 
-    public void FloorPatternRectangle()
+    public IEnumerator FloorPatternRectangle()
     {
         Managers.Pool.Pop(FRPR.gameObject, transform.position);
         Managers.Pool.Pop(FRPRS.gameObject, transform.position);
-
-        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
-        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
 
         FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
@@ -132,30 +113,13 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FRPRS.gameObject.SetActive(true);
 
         //30±îÁö
-        FRPR.transform.DOScale(new Vector2(30f, 30f), 4f);
+        FRPR.transform.DOScale(new Vector2(30f, 30f), 1f).SetEase(Ease.OutCirc);
 
-        while (currenttime < 4f)
-        {
-            currenttime += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(1f);
 
-        currenttime = 0;
+        FRPRS.transform.DOScale(new Vector2(30f, 30f), 3f).SetEase(Ease.OutCirc);
 
-        while (currenttime < 0.5f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
-
-        FRPRS.transform.DOScale(new Vector2(30f, 30f), 2f);
-
-        while (currenttime < 2f)
-        {
-            currenttime += Time.deltaTime;
-        }
-
-        currenttime = 0;
+        yield return new WaitForSeconds(3f);
 
         FRPRS.transform.localScale = Vector2.zero;
         FRPR.transform.localScale = Vector2.zero;
@@ -179,13 +143,12 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Poolable clone7 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
         clone7.transform.position = new Vector2(transform.position.x, transform.position.y + (-23.73f));
 
+        yield return new WaitForSeconds(0.7f);
+
         Poolable Col = Managers.Pool.Pop(FRPRCol.gameObject, transform.position);
         Col.transform.position = transform.position;
 
-        while (currenttime < 5f)
-        {
-            currenttime += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(5f);
 
         currenttime = 0f;
 
@@ -194,7 +157,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FRPR.gameObject.SetActive(false);
         FRPRS.gameObject.SetActive(false);
-        FRPRCol.gameObject.SetActive(false);
 
         Managers.Pool.Push(FRPR);
         Managers.Pool.Push(FRPRS);

@@ -132,6 +132,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.maxLevel = Player.playerBase.MaxLevel;
         playerData.level = Player.playerBase.Level;
         playerData.damage = Player.playerBase.Damage;
+        playerData.attackSpeed = Player.playerBase.AttackSpeed;
         playerData.critChance = Player.playerBase.CritChance;
         playerData.expTable = Player.playerBase.ExpTable;
         playerData.exp = Player.playerBase.Exp;
@@ -161,6 +162,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.MaxLevel = playerData.maxLevel;
         Player.playerBase.Level = playerData.level;
         Player.playerBase.Damage = playerData.damage;
+        Player.playerBase.AttackSpeed = playerData.attackSpeed;
         Player.playerBase.CritChance = playerData.critChance;
         Player.playerBase.ExpTable = playerData.expTable;
         Player.playerBase.Exp = playerData.exp;

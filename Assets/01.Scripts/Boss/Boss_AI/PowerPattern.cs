@@ -7,7 +7,7 @@ public class P_Patterns : BossPattern
     [Space]
     [Header("파워")]
     #region Initialize
-    [SerializeField] private float test;
+    [SerializeField] private GameObject dashWarning;
     #endregion
 
     #region patterns
@@ -17,7 +17,7 @@ public class P_Patterns : BossPattern
         {
             //모션 추가
             yield return new WaitForSeconds(1f);
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 5f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 3f);
             foreach(Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
@@ -26,17 +26,46 @@ public class P_Patterns : BossPattern
 
             for(int j = 0; j < count; j++)
             {
-                float xDist = Random.Range(-3f, 3f);
+                float xDist = Random.Range(-5f, 5f);
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging(" ", new Vector2(transform.position.x + xDist, transform.position.y + (3f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Soul.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
             }
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
         yield return null;
     }
-    public IEnumerator Pattern_DS(int count = 0) //돌진
+    public IEnumerator Pattern_DS(int count = 0) //돌진 1페이즈
     {
+        float timer = 0f;
+        Vector2 dir = Boss.Instance.player.position - transform.position;
+        float rot = 0;
+
+        dashWarning.SetActive(true);
+
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            dir = Boss.Instance.player.position - transform.position;
+            rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (rot - 90 + Mathf.Sign(transform.lossyScale.x) * 90));
+
+            yield return null;
+        }
+
+        timer = 0;
+        yield return new WaitForSeconds(0.5f);
+
+        dashWarning.SetActive(false);
+        while (timer < 2f)
+        {
+            timer += Time.deltaTime;
+            transform.Translate(dir.normalized * Time.deltaTime * 12f);
+
+            yield return null;
+        }
+
         yield return null;
     }
     #endregion
@@ -84,7 +113,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_SG());
+                yield return SCoroutine(Pattern_SG(count));
                 break;
             case 2:
                 break;
@@ -114,6 +143,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;
@@ -128,6 +158,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;
@@ -141,6 +172,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
                 break;

@@ -214,14 +214,14 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {
         bossObject.SetActive(false);
-        bossAura.SetActive(NowPhase == 2);
+        bossAura.SetActive(false);
         Boss.Instance.isBDamaged = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
 
         yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
 
         bossObject.SetActive(true);
-        bossAura.SetActive(false);
+        bossAura.SetActive(NowPhase == 2);
         Boss.Instance.isBDamaged = false;
     }
     #endregion
@@ -298,12 +298,10 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                //yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
-                bossRangePattern.FloorPatternCircle();
+                yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                //StartCoroutine(bossRangePattern.FloorPatternRectangle());
-                bossRangePattern.FloorPatternRectangle();
+                yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }
 
