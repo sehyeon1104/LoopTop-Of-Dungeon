@@ -5,59 +5,55 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ghostMobAI : MonoBehaviour
+public class GhostMobAI : MonoBehaviour
 {
-    [SerializeField] float damage =3;
-    [SerializeField] float speed = 3;
-    [SerializeField] private float detectDistance = 5f;
-    [SerializeField] private float minDistance = 1f;
+
+    [SerializeField] protected float damage =3;
+    [SerializeField] protected float speed = 3;
+    [SerializeField] protected private float detectDistance = 5f;
+    [SerializeField] protected private float minDistance = 1f;
     [SerializeField] protected AnimationClip moveClip;
     [SerializeField] protected AnimationClip attackClip;
 
-    public Coroutine actCoroutine = null;
-    Transform playerTrans = null;
-    Animator anim;
-    Collider2D enemy;
-    Vector2 flipVector = Vector2.zero;
-    float shortestdistance = 0;
+    protected Coroutine actCoroutine = null;
+    protected Transform playerTrans = null;
+    protected Animator anim;
+    protected Collider2D enemy;
+    protected Vector2 flipVector = Vector2.zero;
+    protected float shortestdistance = 0;
     protected SpriteRenderer sprite;
-    int enemyLayer;
-    readonly int _attack = Animator.StringToHash("Attack");
-    readonly int _move = Animator.StringToHash("Move");
-    readonly int _idle = Animator.StringToHash("Idle");
-    Material hitMat;
-    Material spriteLitMat;
-    WaitForSeconds attackTime = new WaitForSeconds(0.5f);
-    public Vector3 hitPoint => Vector3.zero;
+    protected int enemyLayer;
+    readonly protected int _attack = Animator.StringToHash("Attack");
+    readonly protected int _move = Animator.StringToHash("Move");
+    readonly protected int _idle = Animator.StringToHash("Idle");
+    protected WaitForSeconds attackTime = new WaitForSeconds(0.5f);
 
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         if (actCoroutine != null) actCoroutine = null;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         playerTrans = GameManager.Instance.Player.transform;
-        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
-        hitMat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat");
     }
 
-    void Start()
+    protected virtual void Start()
     {
         enemyLayer = LayerMask.NameToLayer("Enemy");
         AnimInit();
     }
 
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Act();
     }
 
 
-    public void AnimInit()
+    protected virtual void AnimInit()
     {
         AnimatorOverrideController overrideController = new AnimatorOverrideController();
             
@@ -73,7 +69,7 @@ public class ghostMobAI : MonoBehaviour
         anim.runtimeAnimatorController = overrideController;
     }
 
-    public void Act()
+    public virtual void Act()
     {
         if (Vector2.SqrMagnitude(transform.position - playerTrans.position) >36)
               transform.position = playerTrans.position + new Vector3((transform.position - playerTrans.position).normalized.x,(transform.position - playerTrans.position).normalized.y , 0);
@@ -109,7 +105,7 @@ public class ghostMobAI : MonoBehaviour
         yield return null;
         actCoroutine = null;
     }
-    public float FindEnemies()
+    public virtual float FindEnemies()
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance, 1 << enemyLayer);
         if (enemies.Length == 0)
@@ -131,10 +127,9 @@ public class ghostMobAI : MonoBehaviour
         }
         return shortestdistance;
     }
-    public virtual IEnumerator MoveToEnemy(Vector2 dir)
+    protected virtual IEnumerator MoveToEnemy(Vector2 dir)
     {
-        if (moveClip != null) anim.SetBool(_move, true);
-
+        anim.SetBool(_move, true);
         sprite.flipX = Mathf.Sign(dir.x) > 0 ? true : false;
         transform.Translate(dir * Time.deltaTime * speed);
 
@@ -143,7 +138,7 @@ public class ghostMobAI : MonoBehaviour
     }
 
 
-    public virtual IEnumerator AttackToEnemy()
+    protected virtual IEnumerator AttackToEnemy()
     {
 
         enemy.GetComponent<IHittable>().OnDamage(damage, 0);

@@ -5,9 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerBeam : MonoBehaviour
 {
-
+    public bool IsReady { get; private set; } = false;
     [SerializeField] GameObject beamPos;
-    [SerializeField] float beamDuration =2;
+    public float beamDuration =2;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
@@ -15,13 +15,13 @@ public class PlayerBeam : MonoBehaviour
 
     //EdgeCollider2D col;
     //Vector2[] points;
-
+    public float timerA { get; private set; } = 0;
     float lineLength = 0.0f;
     float lineWidth = 0.5f;
     Vector3 tempScale;
 
     [SerializeField] float length;
-    [SerializeField] float width;
+    public float width;
     [SerializeField] float intensity = 2f;
 
     WaitForSeconds waitTime = new WaitForSeconds(0.4f);
@@ -66,7 +66,7 @@ public class PlayerBeam : MonoBehaviour
 
     private IEnumerator OnBeam()
     {
-        float timerA = 0;
+        timerA = 0;
         float timer = 0;
         yield return waitTime;
 
@@ -90,7 +90,7 @@ public class PlayerBeam : MonoBehaviour
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
             yield return null;
         }
-        print(beamPos.transform.position - transform.position);
+        IsReady = true;
         while(timerA<beamDuration)
         {
             if(timer >0.1f)
@@ -123,6 +123,7 @@ public class PlayerBeam : MonoBehaviour
         beamLight.intensity = 0;
         beam.startWidth = 0;
         beam.endWidth = 0;
+        IsReady = false;
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 }
