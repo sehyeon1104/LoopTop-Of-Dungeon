@@ -63,7 +63,7 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             skillEvent[0] = () => playerSkill.playerSkills[2](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[2](2);
+            skillEvent[1] = () => playerSkill.playerSkills[1](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;
@@ -92,7 +92,7 @@ public class PlayerSkill : MonoBehaviour
 
     void DashSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove)
             skillEvent[4]();        
     }
     #region ½ºÅ³ ¼ÅÇÃ
