@@ -121,15 +121,9 @@ public class GhostEliteMob : GhostMobAI
     }
     IEnumerator Attack2()
     {
-        if (shortestdistance <= 3.5f) yield break;
-
         for (int i = 0; i < 3; i++)
         {
-            if(!enemy.gameObject.activeSelf)
-            {
-                FindEnemies();
-            }
-                
+            FindEnemies();              
             sprite.flipX = Mathf.Sign(flipVector.x) < 0;
 
             overrideController[$"Attack2"] = attackClips[(i + 1) % 2];
@@ -146,7 +140,6 @@ public class GhostEliteMob : GhostMobAI
     }
     IEnumerator Attack3()
     {
-        if (shortestdistance > 2f) yield break;
         sprite.flipX = Mathf.Sign(flipVector.x) < 0;
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
