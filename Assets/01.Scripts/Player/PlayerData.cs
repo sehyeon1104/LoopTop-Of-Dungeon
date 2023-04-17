@@ -16,6 +16,4 @@ public class PlayerData
     public int[] expTable;
     public int _fragmentAmount;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
-    public Define.MapTypeFlag mapTypeFlag;
-    public Define.Scene sceneType;
 }

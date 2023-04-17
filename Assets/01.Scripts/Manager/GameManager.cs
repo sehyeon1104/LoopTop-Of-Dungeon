@@ -138,9 +138,6 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.exp = Player.playerBase.Exp;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
-
-        playerData.mapTypeFlag = mapTypeFlag;
-        playerData.sceneType = sceneType;
     }
 
     /// <summary>
@@ -168,9 +165,6 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
-
-        mapTypeFlag = playerData.mapTypeFlag;
-        sceneType = playerData.sceneType;
     }
 
     /// <summary>
