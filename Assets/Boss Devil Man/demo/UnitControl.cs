@@ -37,55 +37,54 @@ public class UnitControl : MonoBehaviour {
 			float dis = 0.1f;
 			if (Time.time - walkStartTime > 2.0f) {
 				speed = 0.03f;
-				animator.SetTrigger("run");
+				animator.SetTrigger ("run");
 			} else {
-				animator.SetTrigger("walk");
+				animator.SetTrigger ("walk");
 			}
 			if (isEvade) {
 				speed = 0.01f;
 				dis = 0.2f;
 			}
-			if(horizontal < 0){
-				localScale.x = -Math.Abs(localScale.x);
+			if (horizontal < 0) {
+				localScale.x = -Math.Abs (localScale.x);
 				newPosition = this.transform.position + new	Vector3 (-dis, 0, 0);
-			}else if(horizontal > 0){
-				localScale.x = Math.Abs(localScale.x);
+			} else if (horizontal > 0) {
+				localScale.x = Math.Abs (localScale.x);
 				newPosition = this.transform.position + new	Vector3 (dis, 0, 0);
 			}
 
 			this.transform.localScale = localScale;
-			this.transform.position = Vector3.SmoothDamp(this.transform.position, newPosition, ref velocity, speed);
+			this.transform.position = Vector3.SmoothDamp (this.transform.position, newPosition, ref velocity, speed);
 
 
 		}
 
 
-		if (Input.GetKeyUp (KeyCode.A) || Input.GetKeyUp (KeyCode.D)|| Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.RightArrow)) {
+		if (Input.GetKeyUp (KeyCode.A) || Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.LeftArrow) || Input.GetKeyUp (KeyCode.RightArrow)) {
 			walkStartTime = 0;
 			animator.ResetTrigger ("idle_1");
 			animator.ResetTrigger ("walk");
 			animator.ResetTrigger ("run");
-			animator.SetTrigger("idle_1");
+			animator.SetTrigger ("idle_1");
 		}
 
-		if (Input.anyKeyDown){
-			foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode))){  
-				if (Input.GetKeyDown(keyCode)){  
+		if (Input.anyKeyDown) {
+			foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode))) {  
+				if (Input.GetKeyDown (keyCode)) {  
 					if (keyCode == KeyCode.H) {
-						animator.SetTrigger("skill_1");
+						animator.SetTrigger ("skill_1");
 					} else if (keyCode == KeyCode.J) {
-						animator.SetTrigger("skill_2");
+						animator.SetTrigger ("skill_2");
 					} else if (keyCode == KeyCode.K) {
-						animator.SetTrigger("skill_3");
+						animator.SetTrigger ("hit_1");
 					} else if (keyCode == KeyCode.L) {
-						animator.SetTrigger("idle_2");
+						animator.SetTrigger ("hit_2");
 					} else if (keyCode == KeyCode.Y) {
-					//	animator.SetTrigger("idle_2");
-					} else if (keyCode == KeyCode.W) {
-						animator.SetTrigger("jump");
+						animator.SetTrigger ("hit_2");
+						animator.SetTrigger ("death");
 					} else if (keyCode == KeyCode.Space) {
-						//animator.SetTrigger("evade");
-						//StartCoroutine (Evade ());
+						animator.SetTrigger ("idle_2");
+						StartCoroutine (Evade ());
 					} 
 				}  
 			}  
