@@ -24,6 +24,7 @@ public class PlayerBase
         _expTable = new int[maxLevel];
         exp = 0;
         _fragmentAmount = 0;
+        _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
@@ -183,6 +184,25 @@ public class PlayerBase
             }
 
             UIManager.Instance.UpdateGoods();
+        }
+    }
+
+    private int _bossFragmentAmount;
+    public int BossFragmentAmount
+    {
+        get
+        {
+            return _bossFragmentAmount;
+        }
+        set
+        {
+            _bossFragmentAmount = value;
+            if(_bossFragmentAmount < 0)
+            {
+                _bossFragmentAmount = 0;
+            }
+            // TODO : UI에 현재 남은 보스조각 개수 표기
+
         }
     }
 

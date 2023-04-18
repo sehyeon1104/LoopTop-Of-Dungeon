@@ -218,7 +218,14 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             isDead = true;
 
-            EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+            if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+            {
+                EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+            }
+            else
+            {
+                Managers.Pool.Push(gameObject.GetComponent<Poolable>());
+            }
             FragmentCollectManager.Instance.AddFragment(gameObject);
 
             gameObject.SetActive(false);

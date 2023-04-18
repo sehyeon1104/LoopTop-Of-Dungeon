@@ -1012,6 +1012,7 @@ MonoBehaviour:
   hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
   hpSpace: {fileID: 678934959}
   fragmentAmountTMP: {fileID: 1839593437}
+  bossFragmentAmountTMP: {fileID: 678934960}
   skillSelectObj: {fileID: 0}
   pausePanel: {fileID: 678934958}
   gameOverPanel: {fileID: 678934957}
@@ -1303,6 +1304,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2550326746172520807, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2582974179526257468, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1334,6 +1339,10 @@ PrefabInstance:
     - target: {fileID: 4150000458935326344, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4772658838289463191, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+      propertyPath: m_Name
+      value: BossFragmentAmountTMP
       objectReference: {fileID: 0}
     - target: {fileID: 4912508105988638601, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_Sprite
@@ -1505,6 +1514,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7638766927014733958, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
   m_PrefabInstance: {fileID: 678934955}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &678934960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8605722337509762069, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+  m_PrefabInstance: {fileID: 678934955}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &688839365
 GameObject:
   m_ObjectHideFlags: 0

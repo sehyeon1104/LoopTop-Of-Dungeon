@@ -15,5 +15,6 @@ public class PlayerData
     public float exp;
     public int[] expTable;
     public int _fragmentAmount;
+    public int bossFragmentAmount;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 }
