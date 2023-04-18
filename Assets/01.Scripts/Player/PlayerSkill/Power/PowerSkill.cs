@@ -46,15 +46,12 @@ public class PowerSkill : PlayerSkillBase
     }
 
 
-    protected override void FifthSkill(int level)
-    {
-        
-    }
 
     protected override void FirstSkill(int level)
     {
         
     }
+
     protected override void SecondSkill(int level)
     {
         
@@ -70,6 +67,10 @@ public class PowerSkill : PlayerSkillBase
        
     }
 
+    protected override void FifthSkill(int level)
+    {
+        
+    }
 
     protected override void UltimateSkill()
     {

@@ -21,6 +21,18 @@ public class StageManager : MonoSingleton<StageManager>
 
     public bool isSetting { private set; get; }
 
+    private void Awake()
+    {
+        wallGrids = new GameObject[4];
+        // TODO : WallGrid 및 포탈 어드레서블로 불러오기
+        for(int i = 0; i < 4; ++i)
+        {
+            wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
+        }
+
+        MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
+    }
+
     private IEnumerator Start()
     {
         isSetting = true;
