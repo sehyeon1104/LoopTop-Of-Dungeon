@@ -20,6 +20,8 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject hpSpace;
     [SerializeField]
     private TextMeshProUGUI fragmentAmountTMP = null;
+    [SerializeField]
+    private TextMeshProUGUI bossFragmentAmountTMP = null;
 
     // [Header("LeftDown")]
 
@@ -151,6 +153,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateGoods()
     {
         fragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.FragmentAmount.ToString());
+        bossFragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.BossFragmentAmount.ToString());
     }
 
     #region GameOver
