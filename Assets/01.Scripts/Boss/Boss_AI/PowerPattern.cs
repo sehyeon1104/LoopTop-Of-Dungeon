@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class P_Patterns : BossPattern
 {
@@ -8,6 +9,7 @@ public class P_Patterns : BossPattern
     [Header("파워")]
     #region Initialize
     [SerializeField] private GameObject dashWarning;
+    [SerializeField] private Transform dashBar;
     #endregion
 
     #region patterns
@@ -26,11 +28,13 @@ public class P_Patterns : BossPattern
                     GameManager.Instance.Player.OnDamage(2, 0);
             }
 
+            yield return new WaitForSeconds(0.5f);
+
             for(int j = 0; j < count; j++)
             {
-                float xDist = Random.Range(-5f, 5f);
+                float xDist = Random.Range(-7.5f, 7.5f);
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + xDist, transform.position.y + 2 + (7.5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
             }
 
             yield return new WaitForSeconds(1f);
@@ -45,29 +49,32 @@ public class P_Patterns : BossPattern
 
         dashWarning.SetActive(true);
 
+        dashBar.localScale = new Vector3(0, 1, 1);
+        dashBar.DOScaleX(1, 3f);
+
         while (timer < 1f)
         {
             timer += Time.deltaTime;
-            dir = Boss.Instance.player.position - transform.position;
+            dir = Boss.Instance.player.position - dashWarning.transform.position;
             rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-            dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (rot - 90 + Mathf.Sign(transform.lossyScale.x) * 90));
+            dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (rot - 90 - Mathf.Sign(transform.lossyScale.x) * 90));
 
             yield return null;
         }
 
         timer = 0;
+        dir = Boss.Instance.player.position - transform.position;
         yield return new WaitForSeconds(0.5f);
 
         dashWarning.SetActive(false);
-        while (timer < 2f)
+        while (timer < 1f)
         {
             timer += Time.deltaTime;
-            transform.Translate(dir.normalized * Time.deltaTime * 12f);
+            transform.Translate(dir.normalized * Time.deltaTime * 20f);
 
             yield return null;
         }
-
         yield return null;
     }
     #endregion
