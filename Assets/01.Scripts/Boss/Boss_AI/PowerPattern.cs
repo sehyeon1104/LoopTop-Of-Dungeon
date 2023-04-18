@@ -32,12 +32,13 @@ public class P_Patterns : BossPattern
 
             for(int j = 0; j < count; j++)
             {
-                float xDist = Random.Range(-7.5f, 7.5f);
+                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
+                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 7.5f;
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + xDist, transform.position.y + 2 + (7.5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y),Quaternion.identity);
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
         yield return null;
     }
@@ -58,13 +59,15 @@ public class P_Patterns : BossPattern
             dir = Boss.Instance.player.position - dashWarning.transform.position;
             rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
+            Boss.Instance.bossMove.CheckFlipValue(dir, transform.localScale);
+
             dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (rot - 90 - Mathf.Sign(transform.lossyScale.x) * 90));
 
             yield return null;
         }
 
         timer = 0;
-        dir = Boss.Instance.player.position - transform.position;
+        dir = Boss.Instance.player.position - dashWarning.transform.position;
         yield return new WaitForSeconds(0.5f);
 
         dashWarning.SetActive(false);
