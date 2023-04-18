@@ -17,7 +17,9 @@ public class P_Patterns : BossPattern
         {
             //모션 추가
             yield return new WaitForSeconds(1f);
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 3f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 3.5f);
+            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", transform.position, Quaternion.identity);
+
             foreach(Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
@@ -28,7 +30,7 @@ public class P_Patterns : BossPattern
             {
                 float xDist = Random.Range(-5f, 5f);
                 //아래 스트링에 오브젝트 넣어주기
-                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Soul.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
+                Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", new Vector2(transform.position.x + xDist, transform.position.y + (5f - Mathf.Abs(xDist)) * Mathf.Sign(Random.Range(0,2))),Quaternion.identity);
             }
 
             yield return new WaitForSeconds(1f);
@@ -43,7 +45,7 @@ public class P_Patterns : BossPattern
 
         dashWarning.SetActive(true);
 
-        while (timer < 2f)
+        while (timer < 1f)
         {
             timer += Time.deltaTime;
             dir = Boss.Instance.player.position - transform.position;
