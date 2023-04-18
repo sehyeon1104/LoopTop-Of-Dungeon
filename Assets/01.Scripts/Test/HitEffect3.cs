@@ -22,7 +22,7 @@ public class HitEffect3 : MonoBehaviour
 
         anim.SetTrigger("Hit");
 
-        Invoke("PopEffect", 0.3f);
+        Invoke("PopEffect", 0.5f);
     }
 
     private void PopEffect()

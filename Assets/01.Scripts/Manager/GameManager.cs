@@ -102,7 +102,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         InitPlayerInfo();
-        Managers.Pool.CreatePool(hitEffect, 10);
+        Managers.Pool.CreatePool(hitEffect, 20);
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     

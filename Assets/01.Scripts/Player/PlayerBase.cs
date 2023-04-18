@@ -16,7 +16,7 @@ public class PlayerBase
     {
         maxHp = 12;
         hp = maxHp;
-        damage = 13f;
+        damage = 11f;
         attackSpeed = 0.3f;
         critChance = 5f;
         level = 1;
