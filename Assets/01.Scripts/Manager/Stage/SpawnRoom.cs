@@ -6,7 +6,6 @@ using UnityEngine;
 // MapSpawner Script
 public class SpawnRoom : MonoBehaviour
 {
-    [SerializeField]
     private Define.MapTypeFlag mapTypeFlag;
 
     [SerializeField]
@@ -48,8 +47,7 @@ public class SpawnRoom : MonoBehaviour
 
     public void SetMapTypeFlag()
     {
-        // 이후 현재 들어간 맵에 따라 타입 변경
-        mapTypeFlag = Define.MapTypeFlag.Ghost;
+        mapTypeFlag = GameManager.Instance.mapTypeFlag;
     }
 
     public void SetAndInstantiateRoom()

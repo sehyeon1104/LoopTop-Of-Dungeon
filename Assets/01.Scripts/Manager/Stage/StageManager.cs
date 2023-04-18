@@ -92,14 +92,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void SetWallGrid()
     {
-        GameObject[] map = GameObject.FindGameObjectsWithTag("Map");
-        if(map != null)
-        {
-            for(int i = 0; i < map.Length; ++i)
-            {
-                Destroy(map[i]);
-            }
-        }
+        //GameObject[] map = GameObject.FindGameObjectsWithTag("Map");
+        //if(map != null)
+        //{
+        //    for(int i = 0; i < map.Length; ++i)
+        //    {
+        //        Destroy(map[i]);
+        //    }
+        //}
 
         randWallGrid = Random.Range(0, wallGrids.Length);
         wallGrid = wallGrids[randWallGrid];

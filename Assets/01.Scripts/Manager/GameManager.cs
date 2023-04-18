@@ -95,7 +95,6 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
-        mapTypeFlag = Define.MapTypeFlag.Ghost;
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
 
