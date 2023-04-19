@@ -11,19 +11,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     [Header("Ghost_Field_Enemy")]
     [SerializeField]
     private List<GameObject> normalEnemyPrefabsList = new List<GameObject>();// = new GameObject[10];
-    [SerializeField]
-    private List<GameObject> eliteEnemyPrefabsList = new List<GameObject>();// = new GameObject[10];
 
     private GameObject[] normalEnemyPrefabs;
-    private GameObject[] eliteEnemyPrefabs;
 
     [field: SerializeField]
     public List<Poolable> curEnemies { private set; get; } = new List<Poolable>();
 
     private int wave1NormalEnemyCount = 0;
-    private int wave1EliteEnemyCount = 0;
     private int wave2NormalEnemyCount = 0;
-    private int wave2EliteEnemyCount = 0;
 
     private GameObject enemySpawnEffect = null;
     [SerializeField]
@@ -81,10 +76,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         for (int i = 0; i < _locations.Count; ++i)
         {
             // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
-            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            eliteEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_Elite_0{i + 1}.prefab"));
+            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
             Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
-            Managers.Pool.CreatePool(eliteEnemyPrefabsList[i], 5);
         }
     }
 
@@ -93,8 +86,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public void SetKindOfEnemy()
     {
         normalEnemyPrefabs = normalEnemyPrefabsList.ToArray();
-        // eliteEnemyPrefabs = normalEnemyPrefabsList.ToArray();
-        eliteEnemyPrefabs = eliteEnemyPrefabsList.ToArray();
     }
 
     public void SetRandomEnemyCount()
@@ -105,27 +96,19 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         {
             case 1:
                 wave1NormalEnemyCount = 4;
-                wave1EliteEnemyCount = 0;
                 wave2NormalEnemyCount = 5;
-                wave2EliteEnemyCount = 0;
                 break;
             case 2:
                 wave1NormalEnemyCount = 5;
-                wave1EliteEnemyCount = 0;
-                wave2NormalEnemyCount = 1;
-                wave2EliteEnemyCount = 3;
+                wave2NormalEnemyCount = 4;
                 break;
             case 3:
-                wave1NormalEnemyCount = 1;
-                wave1EliteEnemyCount = 2;
-                wave2NormalEnemyCount = 1;
-                wave2EliteEnemyCount = 2;
+                wave1NormalEnemyCount = 3;
+                wave2NormalEnemyCount = 6;
                 break;
             case 4:
-                wave1NormalEnemyCount = 1;
-                wave1EliteEnemyCount = 3;
-                wave2NormalEnemyCount = 2;
-                wave2EliteEnemyCount = 1;
+                wave1NormalEnemyCount = 5;
+                wave2NormalEnemyCount = 5;
                 break;
         }
     }
@@ -163,20 +146,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
-        for(int i = 0; i < wave1EliteEnemyCount; ++i)
-        {
-            randPos = Random.Range(1, enemySpawnPos.Length);
-            while (enemySpawnPos[randPos].childCount != 0)
-            {
-                randPos = Random.Range(1, enemySpawnPos.Length);
-            }
-
-            var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-            enemy.transform.position = enemySpawnPos[randPos].position;
-            curEnemies.Add(enemy);
-            enemy.gameObject.SetActive(false);
-            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
-        }
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
 
@@ -201,20 +170,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
-        for (int i = 0; i < wave2EliteEnemyCount; ++i)
-        {
-            randPos = Random.Range(1, enemySpawnPos.Length);
-            while (enemySpawnPos[randPos].childCount != 0)
-            {
-                randPos = Random.Range(1, enemySpawnPos.Length);
-            }
-
-            var enemy = Managers.Pool.Pop(eliteEnemyPrefabs[Random.Range(0, eliteEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-            enemy.transform.position = enemySpawnPos[randPos].position;
-            enemy.gameObject.SetActive(false);
-            curEnemies.Add(enemy);
-            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
-        }
+    }
+    
+    public void SpawnEliteMonster()
+    {
+        Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", null);
+        StartCoroutine(ShowEnemySpawnPos(eliteMonster.transform, eliteMonster));
     }
 
     public void StartNextWave()
