@@ -17,7 +17,7 @@ public class PlayerBeam : MonoBehaviour
     //Vector2[] points;
     public float timerA { get; private set; } = 0;
     float lineLength = 0.0f;
-    float lineWidth = 0.5f;
+  [HideInInspector] public float lineWidth = 0.5f;
     Vector3 tempScale;
 
     [SerializeField] float length;
@@ -64,8 +64,9 @@ public class PlayerBeam : MonoBehaviour
     }
 
 
-    private IEnumerator OnBeam()
+    public IEnumerator OnBeam()
     {
+
         timerA = 0;
         float timer = 0;
         yield return waitTime;
@@ -90,7 +91,9 @@ public class PlayerBeam : MonoBehaviour
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
             yield return null;
         }
+
         IsReady = true;
+
         while(timerA<beamDuration)
         {
             if(timer >0.1f)
@@ -124,7 +127,7 @@ public class PlayerBeam : MonoBehaviour
         beam.startWidth = 0;
         beam.endWidth = 0;
         IsReady = false;
-        Managers.Pool.Push(GetComponent<Poolable>());
+        
     }
 }
 
