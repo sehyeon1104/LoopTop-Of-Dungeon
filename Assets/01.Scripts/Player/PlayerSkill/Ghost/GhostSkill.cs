@@ -1,6 +1,8 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
@@ -26,7 +28,7 @@ public class GhostSkill : PlayerSkillBase
     Animator playerAnim;
     SpriteRenderer ghostDash;
 
-    // Beam
+    [Header("ºö ½ºÅ³")]
     [SerializeField]
     private Vector3 beamDir;
     private float beamRot;
@@ -206,10 +208,10 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-           poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostEliteMob.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange , quaternion.identity));
+            poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostEliteMob.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
         }
         yield return hillaDuration;
-        for(int i =0; i<poolMob.Count; i++ )
+        for (int i = 0; i < poolMob.Count; i++)
         {
             Managers.Pool.Push(poolMob[i]);
         }
@@ -218,61 +220,85 @@ public class GhostSkill : PlayerSkillBase
 
     IEnumerator Beam(int level)
     {
-        float angle = Mathf.Atan2((transform.up.y - playerMovement.Direction.y), (transform.up.x - playerMovement.Direction.x)) * Mathf.Rad2Deg;
+
+        PlayerBeam playerBeam = null;
+        List<Poolable> beamList = new List<Poolable>();
+
         beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis;
-        print(playerMovement.Direction);
-        switch (level)
+        Quaternion angleAxis= Quaternion.AngleAxis(beamRot, transform.forward); ;
+
+        if (level == 1)
         {
-            case 1:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                yield break;
-            case 2:
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction), angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction), angleAxis);
-                yield break;
-            case 3:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction * 2f), angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction * 2f), angleAxis);
-                yield break;
-            case 4:
-                Poolable[] beams = new Poolable[4];
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                beams[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.up, Quaternion.Euler(0, 0, 90));
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                beams[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.down, Quaternion.Euler(0, 0, 270));
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                beams[2] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.right, Quaternion.Euler(0, 0, 0));
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                beams[3] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.left, Quaternion.Euler(0, 0, 180));
-                PlayerBeam beam = beams[3].GetComponent<PlayerBeam>();
-                
-                while (beam.timerA < beam.beamDuration)
+            angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis));
+
+        }
+        else if (level == 2)
+        {
+            angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction), angleAxis));
+            angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction), angleAxis));
+        }
+        else if (level == 3)
+        {
+            angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis));
+            angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction * 2f), angleAxis));
+            angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction * 2f), angleAxis));
+        }
+        else if (level == 4)
+        {
+           
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.up, beamRot % 90 ==  0 ? Quaternion.Euler(0,0,90):Quaternion.Euler(0,0,135)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.down, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.right, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 45)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.left, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
+            
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+
+            while (playerBeam.timerA < playerBeam.beamDuration)
+            {
+                if (playerBeam.IsReady)
                 {
-                    if (beam.IsReady)
+                    for (int i = 0; i < beamList.Count; i++)
                     {
-                        for (int i = 0; i < beams.Length; i++)
-                        {
-                           beams[i].transform.Rotate(0, 0, 360 / beam.beamDuration * Time.deltaTime);
-                        }
+                        beamList[i].transform.Rotate(new Vector3(0, 0, 180 / playerBeam.beamDuration * Time.deltaTime));
                     }
- 
-                    yield return null;
                 }
-                yield break;
-            case 5:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                yield break;
-            default:
-                break;
+                yield return null;
+            }
+        }
+        else if (level == 5)
+        {
+            float timer = 0;
+            angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
+            Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", transform.position, angleAxis);
+            beamList.Add(fiveBeam);
+            ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
+            playerBeam = fiveBeam.GetComponent<PlayerBeam>();
+            playerBeam.enabled = false;
+            while (playerBeam.beamDuration > timer)
+            {
+                if (beamParticle.time > 0.99f)
+                {
+                    beamParticle.Pause();
+                    playerBeam.enabled = true;
+                }
+                timer += Time.deltaTime;
+                yield return null;
+
+            }
+        }
+        if(playerBeam == null)
+             playerBeam = beamList[0].GetComponent<PlayerBeam>();
+
+        yield return new WaitUntil(() => !playerBeam.IsReady);
+        for (int i = 0; i < beamList.Count; i++)
+        {
+            Managers.Pool.Push(beamList[i]);
         }
     }
 
