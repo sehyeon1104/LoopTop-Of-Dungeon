@@ -91,6 +91,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         if (enemySO == null) return;
 
+        // TODO : ¸Ê Å¬¸®¾î ÇÑ È½¼ö¸¶´Ù hp »ó½Â
         hp = enemySO.hp;
         damage = enemySO.damage;
         speed = enemySO.speed;

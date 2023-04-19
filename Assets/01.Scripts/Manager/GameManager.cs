@@ -130,6 +130,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.hp = Player.playerBase.Hp;
         playerData.maxLevel = Player.playerBase.MaxLevel;
         playerData.level = Player.playerBase.Level;
+        playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
         playerData.critChance = Player.playerBase.CritChance;
@@ -158,6 +159,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Hp = playerData.hp;
         Player.playerBase.MaxLevel = playerData.maxLevel;
         Player.playerBase.Level = playerData.level;
+        Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
         Player.playerBase.CritChance = playerData.critChance;
