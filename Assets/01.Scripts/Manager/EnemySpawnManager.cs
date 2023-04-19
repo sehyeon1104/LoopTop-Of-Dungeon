@@ -82,9 +82,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         {
             // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
             normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            //eliteEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_Elite_0{i + 1}.prefab"));
+            eliteEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_Elite_0{i + 1}.prefab"));
             Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
-            //Managers.Pool.CreatePool(eliteEnemyPrefabsList[i], 5);
+            Managers.Pool.CreatePool(eliteEnemyPrefabsList[i], 5);
         }
     }
 
@@ -93,8 +93,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public void SetKindOfEnemy()
     {
         normalEnemyPrefabs = normalEnemyPrefabsList.ToArray();
-        eliteEnemyPrefabs = normalEnemyPrefabsList.ToArray();
-        //eliteEnemyPrefabs = eliteEnemyPrefabsList.ToArray();
+        // eliteEnemyPrefabs = normalEnemyPrefabsList.ToArray();
+        eliteEnemyPrefabs = eliteEnemyPrefabsList.ToArray();
     }
 
     public void SetRandomEnemyCount()
