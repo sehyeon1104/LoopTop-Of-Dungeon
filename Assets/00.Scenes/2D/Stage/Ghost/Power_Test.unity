@@ -3025,7 +3025,7 @@ Transform:
   m_GameObject: {fileID: 895991460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 600, y: 600, z: 600}
+  m_LocalScale: {x: 800, y: 800, z: 600}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1263439803}
@@ -3670,7 +3670,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263439802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 200, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4317,8 +4317,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   overrideController: {fileID: 0}
-  idleClip: {fileID: 0}
-  moveClip: {fileID: 0}
+  idleClip: {fileID: 7400000, guid: 65206168439a940488a01271f1c88724, type: 2}
+  moveClip: {fileID: 7400000, guid: acb578fd022583746b7fb1ff6f0b521f, type: 2}
   deathClip: {fileID: 0}
 --- !u!114 &1632173800
 MonoBehaviour:
@@ -4336,8 +4336,8 @@ MonoBehaviour:
   phase_patternCount: 0200000005000000
   Phase_Two_Color: {r: 1, g: 0, b: 0, a: 1}
   Phase_One_AnimArray:
-  - {fileID: 7400000, guid: 04c3014b55f42d5469c8af4b675e9987, type: 2}
-  - {fileID: 7400000, guid: b93c22f8e1bf52e46ae0f9627c26fb46, type: 2}
+  - {fileID: 7400000, guid: c51f52155ccb02a468475bae80d2f237, type: 2}
+  - {fileID: 7400000, guid: 112b5adfa1f706e40b4ecdb0da467b0b, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -5018,8 +5018,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909665571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 333.3333, y: 333.33334, z: 66.66667}
+  m_LocalPosition: {x: 0, y: 200, z: 0}
+  m_LocalScale: {x: 333.3333, y: 400, z: 66.66667}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 360444213}

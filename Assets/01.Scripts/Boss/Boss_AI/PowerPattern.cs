@@ -25,16 +25,16 @@ public class P_Patterns : BossPattern
             yield return new WaitForSeconds(1f);
             shorkWarning.SetActive(false);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 6f);
-            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", transform.position, Quaternion.identity);
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
+            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", shorkWarning.transform.position, Quaternion.identity);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.3f);
 
-            foreach(Collider2D col in cols)
+            foreach (Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
                     GameManager.Instance.Player.OnDamage(2, 0);
             }
-
-            yield return new WaitForSeconds(0.5f);
 
             for(int j = 0; j < count; j++)
             {
@@ -82,6 +82,7 @@ public class P_Patterns : BossPattern
         //대시 모션 추가
 
         dashWarning.SetActive(false);
+        CinemachineCameraShaking.Instance.CameraShake(2, 0.5f);
         while (timer < 0.5f)
         {
             timer += Time.deltaTime;
