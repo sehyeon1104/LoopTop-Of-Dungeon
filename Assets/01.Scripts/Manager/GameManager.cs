@@ -95,14 +95,13 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
 
-        mapTypeFlag = Define.MapTypeFlag.Ghost;
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
 
     private void Start()
     {
         InitPlayerInfo();
-        Managers.Pool.CreatePool(hitEffect, 10);
+        Managers.Pool.CreatePool(hitEffect, 20);
         Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
     }
     
@@ -112,7 +111,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
 
     public void InitPlayerInfo()
-    {
+    {   
         UIManager.Instance.UpdateGoods();
     }
 
@@ -137,10 +136,8 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.expTable = Player.playerBase.ExpTable;
         playerData.exp = Player.playerBase.Exp;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
+        playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
-
-        playerData.mapTypeFlag = mapTypeFlag;
-        playerData.sceneType = sceneType;
     }
 
     /// <summary>
@@ -167,10 +164,8 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.ExpTable = playerData.expTable;
         Player.playerBase.Exp = playerData.exp;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
+        Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
-
-        mapTypeFlag = playerData.mapTypeFlag;
-        sceneType = playerData.sceneType;
     }
 
     /// <summary>
