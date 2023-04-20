@@ -37,7 +37,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected int _move = Animator.StringToHash("Move");
 
     private Material hitMat;
-    private Material spriteLitMat;
+    private Material defaultMat;
 
     private Coroutine getHitCoroutine;
 
@@ -70,6 +70,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         isFlip = sprite.flipX;
+
+        defaultMat = sprite.material;
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+
         AnimInit();
     }
 
@@ -87,7 +91,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         isPlayGetHitEffect = false;
         if (sprite != null)
         {
-            sprite.material = spriteLitMat;
+            sprite.material = defaultMat;
         }
         hpBar.gameObject.SetActive(false);
     }
@@ -96,7 +100,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         if (enemySO == null) return;
 
-        // TODO : ¸Ê Å¬¸®¾î ÇÑ È½¼ö¸¶´Ù hp »ó½Â
+        // TODO : ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hp ï¿½ï¿½ï¿½
         maxHp = enemySO.hp;
         hp = enemySO.hp;
         damage = enemySO.damage;
@@ -222,7 +226,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
             yield return wait;
         }
-        sprite.material = spriteLitMat;
+        sprite.material = defaultMat;
         isPlayGetHitEffect = false;
     }
 
