@@ -9,6 +9,7 @@ public class PlayerData
     public int maxHp;
     public int level;
     public int maxLevel;
+    public float attack;
     public float damage;
     public float attackSpeed;
     public float critChance;
