@@ -15,10 +15,30 @@ public class Portal : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < 1f)
+        if (Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < 1f)
         {
-            MoveNextStage();
+            InteractionPlayer();
+            //MoveNextStage();
         }
+        else
+        {
+            if (UIManager.Instance.IsActiveAttackBtn())
+            {
+                return;
+            }
+            else
+            {
+                UIManager.Instance.RotateAttackButton();
+            }
+        }
+    }
+
+    public void InteractionPlayer()
+    {
+        UIManager.Instance.RotateInteractionButton();
+
+        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(MoveNextStage);
+        UIManager.Instance.GetInteractionButton().onClick.AddListener(MoveNextStage);
     }
 
     public void MoveNextStage()

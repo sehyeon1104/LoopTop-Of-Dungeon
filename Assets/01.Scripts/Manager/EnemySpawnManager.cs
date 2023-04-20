@@ -20,6 +20,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave1NormalEnemyCount = 0;
     private int wave2NormalEnemyCount = 0;
 
+    private Transform eliteMonsterSpawnPos;
+
     private GameObject enemySpawnEffect = null;
     [SerializeField]
     private float spawnTime = 1f;
@@ -29,6 +31,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private Door door = null;
 
     public bool isNextWave { private set; get; } = false;
+    private bool isSpawnEliteEnemy = false;
 
     private WaitForSeconds waitForSpawnTime;
     private WaitForSeconds waitForHalfSpawnTime;
@@ -156,6 +159,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         isNextWave = true;
 
+        if (isSpawnEliteEnemy)
+        {
+            SpawnEliteMonster(eliteMonsterSpawnPos);
+        }
+
+
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
             randPos = Random.Range(1, enemySpawnPos.Length);
@@ -170,11 +179,19 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
         }
+
+        isSpawnEliteEnemy = false;
     }
-    
-    public void SpawnEliteMonster()
+
+    public void SetEliteMonsterSpawnBool(bool isSpawn, Transform spawnPos)
     {
-        Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", null);
+        isSpawnEliteEnemy = isSpawn;
+        eliteMonsterSpawnPos = spawnPos;
+    }
+
+    public void SpawnEliteMonster(Transform spawnPos)
+    {
+        Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", spawnPos.position, Quaternion.identity);
         StartCoroutine(ShowEnemySpawnPos(eliteMonster.transform, eliteMonster));
     }
 

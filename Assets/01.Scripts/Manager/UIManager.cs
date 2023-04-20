@@ -237,6 +237,17 @@ public class UIManager : MonoSingleton<UIManager>
         AttackButton.SetActive(true);
         InteractionButton.SetActive(false);
     }
+    
+    public bool IsActiveAttackBtn()
+    {
+        return AttackButton.activeSelf;
+    }
+
+    public Button GetInteractionButton()
+    {
+        return InteractionButton.GetComponent<Button>();
+    }
+
     public IEnumerator ShowCurrentStageName()
     {
         if(showCurStageNameObj.gameObject == null)
