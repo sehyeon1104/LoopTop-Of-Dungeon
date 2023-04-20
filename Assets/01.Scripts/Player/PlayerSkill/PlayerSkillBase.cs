@@ -19,6 +19,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     public Action dashSkill;
     public Action attack;
     protected List<Poolable> cloneList = new List<Poolable>();
+    public Color dashCloneColor;
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     protected abstract void FirstSkill(int level);
 
@@ -55,9 +56,9 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
-        dashVelocity = 20f;
+        dashVelocity = 30f;
         dashDuration = 0.2f;
-        dashTime = 0.2f;
+        dashTime = 0.1f;
         enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     protected void Cashing()
