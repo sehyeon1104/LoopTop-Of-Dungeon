@@ -9,7 +9,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
     [SerializeField] private EnemySO enemySO;
 
-    protected float hp = 1;
+    public float maxHp { private set; get; } = 1;
+    public float hp { private set; get; } = 1;
     protected float damage = 1;
     protected float speed = 1;
     protected float attackSpeed = 1f;
@@ -46,6 +47,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     
     public Vector3 hitPoint => Vector3.zero;
 
+    private EnemyHpBar hpBar;
+
     protected bool isMove { private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
@@ -57,6 +60,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        hpBar = transform.Find("EnemyHpBarCanvas").GetComponent<EnemyHpBar>();
     }
     void Start()
     {
@@ -87,13 +91,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             sprite.material = defaultMat;
         }
+        hpBar.gameObject.SetActive(false);
     }
 
     public void SetStatus()
     {
         if (enemySO == null) return;
 
-        // TODO : ¸Ê Å¬¸®¾î ÇÑ È½¼ö¸¶´Ù hp »ó½Â
+        // TODO : ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hp ï¿½ï¿½ï¿½
+        maxHp = enemySO.hp;
         hp = enemySO.hp;
         damage = enemySO.damage;
         speed = enemySO.speed;
@@ -166,6 +172,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             return;
         }
 
+        if (!hpBar.gameObject.activeSelf)
+        {
+            hpBar.gameObject.SetActive(true);
+        }
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
@@ -179,6 +190,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         hp -= damage;
 
         GameManager.Instance.PlayHitEffect(transform);
+
+        hpBar.UpdateHpBar();
 
         if (hp <= 0)
             EnemyDead();

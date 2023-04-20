@@ -215,6 +215,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameQuit()
     {
+        SaveData();
         Application.Quit();
     }
 }

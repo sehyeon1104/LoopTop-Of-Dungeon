@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-using UnityEditor.Tilemaps;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
