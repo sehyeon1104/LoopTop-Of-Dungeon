@@ -2,23 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using DG.Tweening;
 
 public class Portal : MonoBehaviour
 {
     private bool isLoadScene = false;
     Define.Scene sceneType;
 
+    private bool isInteraction = false;
+
+    private TextMeshProUGUI moveTmp = null;
+
+    private void Awake()
+    {
+        moveTmp = transform.Find("MoveTMP").GetComponent<TextMeshProUGUI>();
+    }
+
     private void Start()
     {
         isLoadScene = false;
+        isInteraction = false;
     }
 
     private void FixedUpdate()
     {
         if (Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < 1f)
         {
-            InteractionPlayer();
-            //MoveNextStage();
+            if (!isInteraction)
+            {
+                InteractionPlayer();
+            }
         }
         else
         {
@@ -30,15 +44,26 @@ public class Portal : MonoBehaviour
             {
                 UIManager.Instance.RotateAttackButton();
             }
+            isInteraction = false;
+            ToggleMoveTMP();
         }
     }
 
     public void InteractionPlayer()
     {
+        isInteraction = true;
+
         UIManager.Instance.RotateInteractionButton();
+
+        ToggleMoveTMP();
 
         UIManager.Instance.GetInteractionButton().onClick.RemoveListener(MoveNextStage);
         UIManager.Instance.GetInteractionButton().onClick.AddListener(MoveNextStage);
+    }
+
+    public void ToggleMoveTMP()
+    {
+        moveTmp.gameObject.SetActive(isInteraction);
     }
 
     public void MoveNextStage()
