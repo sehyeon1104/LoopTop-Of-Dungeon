@@ -9,7 +9,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
     [SerializeField] private EnemySO enemySO;
 
-    protected float hp = 1;
+    public float maxHp { private set; get; } = 1;
+    public float hp { private set; get; } = 1;
     protected float damage = 1;
     protected float speed = 1;
     protected float attackSpeed = 1f;
@@ -46,6 +47,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     
     public Vector3 hitPoint => Vector3.zero;
 
+    private EnemyHpBar hpBar;
+
     protected bool isMove { private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
@@ -59,6 +62,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         rigid = GetComponent<Rigidbody2D>();
         spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
         hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        hpBar = transform.Find("EnemyHpBarCanvas").GetComponent<EnemyHpBar>();
     }
     void Start()
     {
@@ -85,6 +89,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             sprite.material = spriteLitMat;
         }
+        hpBar.gameObject.SetActive(false);
     }
 
     public void SetStatus()
@@ -92,6 +97,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (enemySO == null) return;
 
         // TODO : ¸Ê Å¬¸®¾î ÇÑ È½¼ö¸¶´Ù hp »ó½Â
+        maxHp = enemySO.hp;
         hp = enemySO.hp;
         damage = enemySO.damage;
         speed = enemySO.speed;
@@ -164,6 +170,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             return;
         }
 
+        if (!hpBar.gameObject.activeSelf)
+        {
+            hpBar.gameObject.SetActive(true);
+        }
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
@@ -177,6 +188,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         hp -= damage;
 
         GameManager.Instance.PlayHitEffect(transform);
+
+        hpBar.UpdateHpBar();
 
         if (hp <= 0)
             EnemyDead();
