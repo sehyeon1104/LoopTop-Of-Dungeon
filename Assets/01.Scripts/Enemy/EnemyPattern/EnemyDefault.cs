@@ -36,7 +36,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected int _move = Animator.StringToHash("Move");
 
     private Material hitMat;
-    private Material spriteLitMat;
+    private Material defaultMat;
 
     private Coroutine getHitCoroutine;
 
@@ -57,8 +57,6 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
-        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
     }
     void Start()
     {
@@ -66,6 +64,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         isFlip = sprite.flipX;
+
+        defaultMat = sprite.material;
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+
         AnimInit();
     }
 
@@ -83,7 +85,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         isPlayGetHitEffect = false;
         if (sprite != null)
         {
-            sprite.material = spriteLitMat;
+            sprite.material = defaultMat;
         }
     }
 
@@ -209,7 +211,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
             yield return wait;
         }
-        sprite.material = spriteLitMat;
+        sprite.material = defaultMat;
         isPlayGetHitEffect = false;
     }
 
