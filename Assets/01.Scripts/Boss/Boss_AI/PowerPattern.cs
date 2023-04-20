@@ -8,9 +8,9 @@ public class P_Patterns : BossPattern
     [Space]
     [Header("파워")]
     #region Initialize
-    [SerializeField] private GameObject shorkWarning;
-    [SerializeField] private GameObject dashWarning;
-    [SerializeField] private Transform dashBar;
+    [SerializeField] protected GameObject shorkWarning;
+    [SerializeField] protected GameObject dashWarning;
+    [SerializeField] protected Transform dashBar;
     #endregion
 
     #region patterns
@@ -22,19 +22,19 @@ public class P_Patterns : BossPattern
             //모션 추가
             shorkWarning.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             shorkWarning.SetActive(false);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, 6f);
-            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", transform.position, Quaternion.identity);
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 6f);
+            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", shorkWarning.transform.position, Quaternion.identity);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.3f);
 
-            foreach(Collider2D col in cols)
+            foreach (Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
                     GameManager.Instance.Player.OnDamage(2, 0);
             }
-
-            yield return new WaitForSeconds(0.5f);
 
             for(int j = 0; j < count; j++)
             {
@@ -58,8 +58,8 @@ public class P_Patterns : BossPattern
 
         dashWarning.SetActive(true);
 
-        dashBar.localScale = new Vector3(0, 1, 1);
-        dashBar.DOScaleX(1, 3f);
+        dashBar.localScale = new Vector3(1, 0, 1);
+        dashBar.DOScaleY(1, 1.5f);
 
         while (timer < 1f)
         {
@@ -77,17 +77,22 @@ public class P_Patterns : BossPattern
         timer = 0;
         dir = Boss.Instance.player.position - dashWarning.transform.position;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
+
+        dashBar.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        dashBar.GetComponentInChildren<SpriteRenderer>().color = new Color32(200,0,0,128);
 
         //대시 모션 추가
 
         dashWarning.SetActive(false);
+        CinemachineCameraShaking.Instance.CameraShake(2, 0.5f);
         while (timer < 0.5f)
         {
             timer += Time.deltaTime;
             transform.Translate(dir.normalized * Time.deltaTime * 40f);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 4.5f);
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 4f);
             for(int i = 0; i < cols.Length; i++)
             {
                 if (cols[i].CompareTag("Player"))
@@ -225,10 +230,5 @@ public class PowerPattern : P_Patterns
 
         yield return null;
         Boss.Instance.actCoroutine = null;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(2.5f, 3.5f), 3.5f);
     }
 }

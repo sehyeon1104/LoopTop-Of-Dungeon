@@ -16,7 +16,8 @@ public class PlayerBase
     {
         maxHp = 12;
         hp = maxHp;
-        damage = 11f;
+        attack = 11f;
+        damage = Mathf.CeilToInt(attack * 0.6f);
         attackSpeed = 0.3f;
         critChance = 5f;
         level = 1;
@@ -74,6 +75,13 @@ public class PlayerBase
         {
             maxHp = value;
         }
+    }
+
+    private float attack;
+    public float Attack
+    {
+        get => attack;
+        set => attack = value;
     }
 
     private float damage;

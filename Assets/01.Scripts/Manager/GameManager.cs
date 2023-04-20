@@ -52,6 +52,33 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
 
+        if (SceneManager.GetActiveScene().name == "TitleScene")
+        {
+            _player = null;
+            return;
+        }
+
+        #region 게임 데이터 로딩
+        if (!SaveManager.GetCheckGameDataBool())
+        {
+            Debug.Log("[GameManager] 저장파일 없음");
+            SetGameData();
+            SaveManager.Save<GameData>(ref gameData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] 저장파일 있음");
+            SaveManager.Load<GameData>(ref gameData);
+            GetGameData();
+        }
+
+        #endregion
+
+        if(_player == null)
+        {
+            Rito.Debug.Log("_player is null");
+            return;
+        }
         #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckPlayerDataBool())
         {
@@ -73,36 +100,19 @@ public class GameManager : MonoSingleton<GameManager>
 
         #endregion
 
-        #region 게임 데이터 로딩
-        if (!SaveManager.GetCheckGameDataBool())
-        {
-            Debug.Log("[GameManager] 저장파일 없음");
-            SetGameData();
-            SaveManager.Save<GameData>(ref gameData);
-        }
-        else
-        {
-            Debug.Log("[GameManager] 저장파일 있음");
-            SaveManager.Load<GameData>(ref gameData);
-            GetGameData();
-        }
 
-        #endregion
-
-        if (SceneManager.GetActiveScene().name == "TitleScene")
-        {
-            _player = null;
-            return;
-        }
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
 
     private void Start()
     {
-        InitPlayerInfo();
-        Managers.Pool.CreatePool(hitEffect, 20);
-        Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
+        if(_player != null)
+        {
+            InitPlayerInfo();
+            Managers.Pool.CreatePool(hitEffect, 20);
+            Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
+        }
     }
     
     public void ResetStageClearCount()
@@ -130,6 +140,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.hp = Player.playerBase.Hp;
         playerData.maxLevel = Player.playerBase.MaxLevel;
         playerData.level = Player.playerBase.Level;
+        playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
         playerData.critChance = Player.playerBase.CritChance;
@@ -158,6 +169,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Hp = playerData.hp;
         Player.playerBase.MaxLevel = playerData.maxLevel;
         Player.playerBase.Level = playerData.level;
+        Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
         Player.playerBase.CritChance = playerData.critChance;
@@ -191,9 +203,13 @@ public class GameManager : MonoSingleton<GameManager>
     /// </summary>
     public void SaveData()
     {
-        SetPlayerStat();
+        if(_player != null)
+        {
+            SetPlayerStat();
+            SaveManager.Save<PlayerData>(ref playerData);
+        }
+
         SetGameData();
-        SaveManager.Save<PlayerData>(ref playerData);
         SaveManager.Save<GameData>(ref gameData);
     }
 
