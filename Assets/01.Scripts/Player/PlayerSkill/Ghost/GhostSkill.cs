@@ -15,10 +15,16 @@ public class GhostSkill : PlayerSkillBase
     [Header("장판스킬")]
     WaitForSeconds jangpanWait2 = new WaitForSeconds(2f);
     WaitForSeconds janpanWait = new WaitForSeconds(0.3f);
-    ParticleSystem janpnaPartical;
-    float cicleRange = 2f;
-    float janpanDuration = 5f;
+    float jangpanDealinterval = 0;
+    float jangpanSize = 0f;
+    float jangpanDuration = 0f;
+    float jangPanDamage = 0f;
+    float jangpanoverlapFloat = 0; 
+    Poolable smokePoolable = null;
+    GameObject smoke = null;
+    ParticleSystem smokeParticle = null;
     [Header("힐라 스킬")]
+    float cicleRange = 2f;
     List<Poolable> poolMob = new List<Poolable>();
     WaitForSeconds hillaDuration = new WaitForSeconds(10f);
     [SerializeField]
@@ -45,8 +51,11 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         Cashing();
-        janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab").GetComponent<ParticleSystem>();
         playerAnim = GetComponent<Animator>();
+        smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
+    }
+    private void Start()
+    {
     }
     protected override void Attack()
     {
@@ -103,24 +112,23 @@ public class GhostSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
-
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
-        Poolable smoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform.parent);
-        smoke.GetComponent<ParticleSystem>().startSize = 2 * level + 2;
-        ParticleSystem smokeParticle = smoke.GetComponent<ParticleSystem>();
+        smokePoolable = Managers.Pool.Pop(smoke, transform);
+        smokeParticle = smokePoolable.GetComponent<ParticleSystem>();
+        smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
-        while (timer < janpanDuration)
+        while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
-            if (timerA > 0.1f)
+            if (timerA > jangpanDealinterval)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, level / 3.5f * 2 + 0.57f, 1 << enemyLayer);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position, jangpanoverlapFloat , 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(1 + level * 2, 0);
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                 }
                 timerA = 0;
             }
@@ -128,68 +136,78 @@ public class GhostSkill : PlayerSkillBase
         }
         smokeParticle.loop = false;
         yield return jangpanWait2;
-        Managers.Pool.Push(smoke);
-        smokeParticle.GetComponent<ParticleSystem>().loop = true;
+        Managers.Pool.Push(smokePoolable);
+        smokeParticle.loop =true;
     }
     IEnumerator Jangpan5Skill()
     {
         Collider2D[] attachObjs = null;
         Collider2D[] attachObj2 = null;
-        List<Poolable> smoke = new List<Poolable>();
+        List<Poolable> smokes = new List<Poolable>();
         float timer = 0;
         float timerA = 0;
         float timerB = 1;
-        Poolable playerSmoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform);
-        ParticleSystem smokeParticle = playerSmoke.GetComponent<ParticleSystem>();
-        smokeParticle.startSize = 10;
+        Poolable playerSmoke = Managers.Pool.Pop(smoke, transform);
+        smokeParticle = playerSmoke.GetComponent<ParticleSystem>();
+        smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
-        while (timer < janpanDuration)
+        while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
             timerB += Time.deltaTime;
-            if (timerA > 0.1f)
+            if (timerA > jangpanDealinterval)
             {
 
-                attachObj2 = Physics2D.OverlapCircleAll(transform.position, 2.9f, 1 << enemyLayer);
-                for (int i = 0; i < smoke.Count; i++)
+                attachObj2 = Physics2D.OverlapCircleAll(transform.position, jangpanoverlapFloat, 1 << enemyLayer);
+                for (int i = 0; i < smokes.Count; i++)
                 {
-                    attachObjs = Physics2D.OverlapCircleAll(smoke[i].transform.position, 2.9f, 1 << enemyLayer);
+                    attachObjs = Physics2D.OverlapCircleAll(smokes[i].transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                     {
-                        attachObjs[j].GetComponent<IHittable>().OnDamage(11, 0);
+                        attachObjs[j].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                     }
                 }
                 for (int i = 0; i < attachObj2.Length; i++)
                 {
-                    attachObj2[i].GetComponent<IHittable>().OnDamage(11, 0);
+                    attachObj2[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                 }
                 timerA = 0;
             }
             if (timerB > 1f)
             {
-                Poolable cloneSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity);
-                smoke.Add(cloneSmoke);
-                cloneSmoke.GetComponent<ParticleSystem>().startSize = 10;
+                Poolable poolSmoke = Managers.Pool.Pop(smoke, transform.position);
+                poolSmoke.GetComponent<ParticleSystem>().startSize = jangpanSize;
+                smokes.Add(poolSmoke);
                 timerB = 0;
             }
             yield return null;
         }
-        for (int i = 0; i < smoke.Count; i++)
+        for (int i = 0; i < smokes.Count; i++)
         {
-            smoke[i].GetComponent<ParticleSystem>().loop = false;
+            smokes[i].GetComponent<ParticleSystem>().loop = false;
         }
         smokeParticle.loop = false;
         yield return jangpanWait2;
         Managers.Pool.Push(playerSmoke);
-        for (int i = 0; i < smoke.Count; i++)
+        for (int i = 0; i < smokes.Count; i++)
         {
-            Managers.Pool.Push(smoke[i]);
-            smoke[i].GetComponent<ParticleSystem>().loop = true;
+            Managers.Pool.Push(smokes[i]);
+            smokes[i].GetComponent<ParticleSystem>().loop = true;
         }
         smokeParticle.loop = true;
 
     }
+    protected override void FirstSkillUpdate(int level)
+    {
+        playerBase.PlayerTransformData.skill[0].skillDelay = 8;
+        jangpanDuration = 4 + (level - 1) / 2;
+        jangpanDealinterval = 0.1f;
+        jangpanSize = 2 * level + 2;
+        jangPanDamage = 1f;
+        jangpanoverlapFloat = level / 3.5f * 2 + 0.57f;
+    }
+
     IEnumerator HillaSkill(int level)
     {
         if (level <= 2)
@@ -273,24 +291,22 @@ public class GhostSkill : PlayerSkillBase
         }
         else if (level == 5)
         {
-            float timer = 0;
             angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", transform.position, angleAxis);
-            beamList.Add(fiveBeam);
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
             playerBeam.enabled = false;
-            while (playerBeam.beamDuration > timer)
+            while (playerBeam.beamDuration > playerBeam.timerA)
             {
                 if (beamParticle.time > 0.99f)
                 {
                     beamParticle.Pause();
                     playerBeam.enabled = true;
                 }
-                timer += Time.deltaTime;
                 yield return null;
-
             }
+            yield return new WaitUntil(() => !playerBeam.IsReady);
+
         }
         if(playerBeam == null)
              playerBeam = beamList[0].GetComponent<PlayerBeam>();
@@ -394,8 +410,29 @@ public class GhostSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(transform.position, new Vector3(18, 10));
         Gizmos.DrawWireSphere(transform.position, 25f);
         Gizmos.DrawWireSphere(transform.position, 1 / 3.5f * 2 + 0.57f);
+    }
+
+    protected override void SecondSkillUpdate(int level)
+    {
+       
+    }
+
+    protected override void ThirdSkillUpdate(int level)
+    {
+        
+    }
+
+    protected override void ForuthSkillUpdate(int level)
+    {
+       
+    }
+
+    protected override void FifthSkillUpdate(int level)
+    {
+        
     }
 }
 #endregion

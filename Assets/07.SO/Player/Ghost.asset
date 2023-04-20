@@ -14,23 +14,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill:
   - skillName: Skill1
-    skillDelay: 5
+    skillIcon: {fileID: 0}
+    skillDelay: 8
+    skillDuration: 4
+    skillDamage: 1
+    skillDamageInterval: 0.1
   - skillName: Skill2
+    skillIcon: {fileID: 0}
     skillDelay: 10
+    skillDuration: 5
+    skillDamage: 0
+    skillDamageInterval: 0
   - skillName: Skill3
+    skillIcon: {fileID: 0}
     skillDelay: 7
+    skillDuration: 1.5
+    skillDamage: 3
+    skillDamageInterval: 0.1
   - skillName: Skill4
-    skillDelay: 7
+    skillIcon: {fileID: 0}
+    skillDelay: 3
+    skillDuration: 0
+    skillDamage: 38
+    skillDamageInterval: 1
   - skillName: Skill5
-    skillDelay: 7
+    skillIcon: {fileID: 0}
+    skillDelay: 3.5
+    skillDuration: 0
+    skillDamage: 30
+    skillDamageInterval: 1
   - skillName: Attack
+    skillIcon: {fileID: 0}
     skillDelay: 7
+    skillDuration: 0
+    skillDamage: 0
+    skillDamageInterval: 0
   - skillName: UltimateSkill
-    skillDelay: 7
+    skillIcon: {fileID: 0}
+    skillDelay: 30
+    skillDuration: 0
+    skillDamage: 0
+    skillDamageInterval: 0
   - skillName: Dash
-    skillDelay: 1.5
+    skillIcon: {fileID: 0}
+    skillDelay: 3
+    skillDuration: 0
+    skillDamage: 0
+    skillDamageInterval: 0
   playerImg: {fileID: 21300000, guid: b363794d0361a8d4997d1657e18c6b07, type: 3}
-  playerAnim: {fileID: 9100000, guid: 1c843050ae410784ba2b59916d968c95, type: 2}
   idlClip: {fileID: 7400000, guid: 13d7097ec8e489b4d921690f680ca190, type: 2}
   atkClip: {fileID: 7400000, guid: aa64ca1c18e771a48ac7da47c2313aee, type: 2}
   dieClip: {fileID: 7400000, guid: 4417f52752504d84cb6636218952095f, type: 2}

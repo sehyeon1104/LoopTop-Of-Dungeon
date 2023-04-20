@@ -123,4 +123,29 @@ public class PowerSkill : PlayerSkillBase
         }
         cloneList.Clear();
     }
+
+    protected override void FirstSkillUpdate(int level)
+    {
+        
+    }
+
+    protected override void SecondSkillUpdate(int level)
+    {
+       
+    }
+
+    protected override void ThirdSkillUpdate(int level)
+    {
+       
+    }
+
+    protected override void ForuthSkillUpdate(int level)
+    {
+        
+    }
+
+    protected override void FifthSkillUpdate(int level)
+    {
+        
+    }
 }

@@ -67,7 +67,9 @@ public class PoolManager
             {
                 poolable.transform.parent = Managers.Scene.CurrentScene.transform;
             }
+            poolable.transform.position = parent.position;
             poolable.transform.parent = parent;
+            
             poolable.IsUsing = true;
 
             return poolable;
@@ -131,7 +133,6 @@ public class PoolManager
         {
             CreatePool(obj);
         }
-
         return _pool[obj.name].Pop(parent);
     }
     public Poolable Pop(GameObject obj, Vector3 pos)

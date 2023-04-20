@@ -109,7 +109,6 @@ public class GhostMobAI : MonoBehaviour
     {
 
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectDistance, 1 << enemyLayer);
-        print(enemies.Length);
         if (enemies.Length == 0)
         {
             shortestdistance = 0;
