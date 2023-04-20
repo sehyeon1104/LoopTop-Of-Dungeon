@@ -60,8 +60,6 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
-        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
         hpBar = transform.Find("EnemyHpBarCanvas").GetComponent<EnemyHpBar>();
     }
     void Start()
