@@ -13,7 +13,7 @@ public class P_Patterns : BossPattern
     [SerializeField] protected Transform dashBar;
     #endregion
 
-    #region patterns
+    #region Phase 1
     public IEnumerator Pattern_SG(int count = 0) //바닥찍기 1페이즈
     {
         for(int i = 0; i < 3; i++)
@@ -107,6 +107,28 @@ public class P_Patterns : BossPattern
         }
         yield return null;
     }
+    public IEnumerator Pattern_JA(int count = 0) //점프어택 1페이즈
+    {
+        Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/Warning.prefab",Boss.Instance.player.position,Quaternion.identity);
+
+        yield return new WaitForSeconds(1f);
+
+        while(Vector2.Distance(clone.transform.position, transform.position) >= 0.5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 10f);
+            yield return null;
+        }
+
+        Collider2D col = Physics2D.OverlapCircle(clone.transform.position, clone.transform.lossyScale.x * 0.5F, 1<<8);
+        if (col != null)
+            GameManager.Instance.Player.OnDamage(2, 0);
+        
+        Managers.Pool.Push(clone);
+        yield return null;
+    }
+    #endregion
+
+    #region Phase 2
     #endregion
 }
 public class PowerPattern : P_Patterns
@@ -177,11 +199,12 @@ public class PowerPattern : P_Patterns
         Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator Pattern3(int count = 0)
+    public override IEnumerator Pattern3(int count = 0) //볼리베어
     {
         switch (NowPhase)
         {
             case 1:
+                yield return StartCoroutine(Pattern_JA());
                 break;
             case 2:
                 break;
