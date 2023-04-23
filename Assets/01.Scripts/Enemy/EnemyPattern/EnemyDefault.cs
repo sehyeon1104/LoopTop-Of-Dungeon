@@ -98,7 +98,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         if (enemySO == null) return;
 
-        // TODO : �� Ŭ���� �� Ƚ������ hp ���
+        // TODO : �� Ŭ���� �� Ƚ������ hp ���?
         maxHp = enemySO.hp;
         hp = enemySO.hp;
         damage = enemySO.damage;
