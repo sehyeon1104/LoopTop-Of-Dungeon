@@ -12,11 +12,11 @@ public class Portal : MonoBehaviour
 
     private bool isInteraction = false;
 
-    private TextMeshProUGUI moveTmp = null;
+    private GameObject moveCanvas = null;
 
     private void Awake()
     {
-        moveTmp = transform.Find("MoveTMP").GetComponent<TextMeshProUGUI>();
+        moveCanvas = transform.Find("MoveCanvas").gameObject;
     }
 
     private void Start()
@@ -63,7 +63,7 @@ public class Portal : MonoBehaviour
 
     public void ToggleMoveTMP()
     {
-        moveTmp.gameObject.SetActive(isInteraction);
+        moveCanvas.gameObject.SetActive(isInteraction);
     }
 
     public void MoveNextStage()
