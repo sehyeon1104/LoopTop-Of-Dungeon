@@ -444,6 +444,7 @@ MonoBehaviour:
   playerRigid: {fileID: 0}
   playerSprite: {fileID: 0}
   dashTime: 0
+  dashCloneColor: {r: 0, g: 0, b: 0, a: 0}
   attackRange: 1
   beamDir: {x: 0, y: 0, z: 0}
   ghostUlt: {fileID: 3594485118525496111}
@@ -463,6 +464,7 @@ MonoBehaviour:
   playerRigid: {fileID: 0}
   playerSprite: {fileID: 0}
   dashTime: 0
+  dashCloneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6609,8 +6611,8 @@ Transform:
   m_GameObject: {fileID: 7442715256025506025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 456885712013416507}
   - {fileID: 7442715255664052375}
