@@ -113,6 +113,9 @@ public class P_Patterns : BossPattern
         {
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", Boss.Instance.player.position, Quaternion.identity);
 
+            if (i == 2) clone.transform.localScale = new Vector3(1.5f, 1.5f);
+            else clone.transform.localScale = Vector3.one;
+
             yield return new WaitForSeconds(1f);
 
             while (Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
@@ -121,8 +124,18 @@ public class P_Patterns : BossPattern
                 yield return null;
             }
 
-            Collider2D col = Physics2D.OverlapCircle(clone.transform.position, 4.5f, 1 << 8);
-            CinemachineCameraShaking.Instance.CameraShake(10, 0.1f);
+            Collider2D col = null;
+            if(i == 2)
+            {
+                col = Physics2D.OverlapCircle(clone.transform.position, 7f, 1 << 8);
+                CinemachineCameraShaking.Instance.CameraShake(10, 0.15f);
+            }
+            else
+            {
+                col = Physics2D.OverlapCircle(clone.transform.position, 4.5f, 1 << 8);
+                CinemachineCameraShaking.Instance.CameraShake(10, 0.1f);
+            }
+
             if (col != null)
                 GameManager.Instance.Player.OnDamage(2, 0);
 
