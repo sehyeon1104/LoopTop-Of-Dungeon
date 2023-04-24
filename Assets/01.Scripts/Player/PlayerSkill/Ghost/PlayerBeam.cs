@@ -16,7 +16,7 @@ public class PlayerBeam : MonoBehaviour
 
     //EdgeCollider2D col;
     //Vector2[] points;
-    public float timerA { get; private set; } = 0;
+    public float timerA { get;  set; } = 0;
     float lineLength = 0.0f;
   [HideInInspector] public float lineWidth = 0.5f;
     Vector3 tempScale;
@@ -98,7 +98,7 @@ public class PlayerBeam : MonoBehaviour
         {
             if(timer >0.1f)
             {
-                CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+                CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
                 RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
                 for (int i = 0; i < attachBeam.Length; i++)
                 {
