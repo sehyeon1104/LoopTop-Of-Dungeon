@@ -22,7 +22,7 @@ public class P_Patterns : BossPattern
             //모션 추가
             shorkWarning.SetActive(true);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.2f);
             shorkWarning.SetActive(false);
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -111,24 +111,24 @@ public class P_Patterns : BossPattern
     {
         for (int i = 0; i < 3; i++)
         {
-            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/Warning.prefab", Boss.Instance.player.position, Quaternion.identity);
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", Boss.Instance.player.position, Quaternion.identity);
 
             yield return new WaitForSeconds(1f);
 
             while (Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
             {
-                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 15f);
+                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 20f);
                 yield return null;
             }
 
-            Collider2D col = Physics2D.OverlapCircle(clone.transform.position, clone.transform.lossyScale.x * 0.5F, 1 << 8);
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
+            Collider2D col = Physics2D.OverlapCircle(clone.transform.position, 4.5f, 1 << 8);
+            CinemachineCameraShaking.Instance.CameraShake(10, 0.1f);
             if (col != null)
                 GameManager.Instance.Player.OnDamage(2, 0);
 
             Managers.Pool.Push(clone);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.75f);
         }
             yield return null;
     }
