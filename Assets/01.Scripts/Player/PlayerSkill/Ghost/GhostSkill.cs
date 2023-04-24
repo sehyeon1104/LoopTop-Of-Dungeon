@@ -41,16 +41,11 @@ public class GhostSkill : PlayerSkillBase
     private Vector3 joystickDir;
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
-    [Header("´ë½¬ ½ºÅ³")]
-    GameObject dashObj;
-    SpriteRenderer dashSprite;
     private void Awake()
     {
         Cashing();
         playerAnim = GetComponent<Animator>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
-        dashObj = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Player/Ghost/DashClone.prefab");
-        dashSprite = dashObj.GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
@@ -355,40 +350,50 @@ public class GhostSkill : PlayerSkillBase
 
     IEnumerator Dash()
     {
+        List<Poolable> dashObjLength = new List<Poolable>();
         float timer = 0;
         float alphaValue = 0;
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
         float distance = 0;
-
+        int dashNum;
         Vector3 firstPosition = transform.position;
         Vector3 changePosition = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        dashSprite.sprite = GetComponent<SpriteRenderer>().sprite;
+        SpriteRenderer currentPlayerSprite = GetComponent<SpriteRenderer>();
         dashCloneColor = dashSprite.color;
         dashCloneColor.a = 0;
         while (timer < dashTime)
         {
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
             alphaValue = timer / dashTime;
-             distance = Vector2.SqrMagnitude(transform.position - changePosition);
-            if(distance > instanceClonePerVelocity * instanceClonePerVelocity)
+            distance = Vector2.SqrMagnitude(transform.position - changePosition);
+            if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
             {
-                  print(alphaValue);
-                  changePosition = transform.position;
-                  dashCloneColor.a = alphaValue;
-                  dashSprite.color = dashCloneColor; 
-                  cloneList.Add(Managers.Pool.Pop(dashObj, transform.position));
+                changePosition = transform.position;
+                Poolable dashPool = Managers.Pool.Pop(dashObj, transform.position);
+                cloneList.Add(dashPool);
+                SpriteRenderer dashPoolSprite = dashPool.GetComponent<SpriteRenderer>();
+                dashPoolSprite.sprite = currentPlayerSprite.sprite;
+                dashPoolSprite.flipX = currentPlayerSprite.flipX;
+                print(dashPoolSprite.sprite.name);
+                dashCloneColor.a = alphaValue;
+                dashPoolSprite.color = dashCloneColor;
+
             }
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
-        print(Vector3.Magnitude(firstPosition - transform.position));
-        //Vector3 playerPoss = transform.position - playerPos;
-        //float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
-        //Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        //Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
+        dashNum = Mathf.RoundToInt(Vector3.Magnitude(firstPosition - transform.position));
+        Vector3 playerPoss = transform.position - firstPosition;
+        float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        for (int i = 0; i < dashNum; i++)
+        {
+            dashObjLength.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", firstPosition + playerPoss.normalized * i, angleAxis));
+            print(Quaternion.Euler(0, 0, angleAxis.eulerAngles.z) * transform.forward);
+        }
         playerMovement.IsMove = true;
-        player.IsInvincibility = false;
+        player.IsInvincibility = false; 
         foreach (var c in cloneList)
         {
             Managers.Pool.Push(c);
