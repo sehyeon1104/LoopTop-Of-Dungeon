@@ -5,7 +5,7 @@ using UnityEngine;
 public class GhostEliteMob : GhostMobAI
 {
     [SerializeField] GameObject trail;
-
+    WaitForSeconds attackDelay = new WaitForSeconds(0.65f);
     [SerializeField] AnimationClip[] attackClips;
     [SerializeField] AnimationClip idleClip;
     AnimatorOverrideController overrideController;
@@ -64,7 +64,7 @@ public class GhostEliteMob : GhostMobAI
                 yield return StartCoroutine(Attack3());
                 break;
         }
-
+        yield return attackDelay;
         actCoroutine = null;
     }
     protected override IEnumerator MoveToEnemy(Vector2 dir)
@@ -117,7 +117,6 @@ public class GhostEliteMob : GhostMobAI
             }
         }
         trail.SetActive(false);
-        yield return new WaitForSeconds(2f);
     }
     IEnumerator Attack2()
     {
@@ -136,7 +135,6 @@ public class GhostEliteMob : GhostMobAI
 
             yield return new WaitForSeconds(0.2f);
         }
-        yield return new WaitForSeconds(3f);
     }
     IEnumerator Attack3()
     {
@@ -144,7 +142,6 @@ public class GhostEliteMob : GhostMobAI
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(3f);
     }
 }
 
