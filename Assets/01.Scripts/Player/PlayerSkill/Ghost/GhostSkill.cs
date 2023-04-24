@@ -31,6 +31,8 @@ public class GhostSkill : PlayerSkillBase
 
     [Header("ºö ½ºÅ³")]
     [SerializeField]
+    PlayerBeam playerBeam = null;
+    private float beamDmg = 0.5f;
     private Vector3 beamDir;
     private float beamRot;
     private Poolable beam;
@@ -44,6 +46,7 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         Cashing();
+        playerBeam = FindObjectOfType<PlayerBeam>();    
         playerAnim = GetComponent<Animator>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
     }
@@ -228,7 +231,14 @@ public class GhostSkill : PlayerSkillBase
         }
         poolMob.Clear();
     }
-
+    protected override void SecondSkillUpdate(int level)
+    {
+        if(level == 5)
+        {
+            hillaDuration = new WaitForSeconds(10f);
+            playerBase.PlayerTransformData.skill[4].skillDelay = 15;
+        }
+    }
     IEnumerator Beam(int level)
     {
 
@@ -293,6 +303,7 @@ public class GhostSkill : PlayerSkillBase
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", transform.position, angleAxis);
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
+            playerBeam.beamDuration = 2f;
             playerBeam.enabled = false;
             while (playerBeam.beamDuration > playerBeam.timerA)
             {
@@ -312,7 +323,11 @@ public class GhostSkill : PlayerSkillBase
             Managers.Pool.Push(beamList[i]);
         }
     }
-
+    
+    protected override void ThirdSkillUpdate(int level)
+    {
+        playerBeam.damage = level + 1;
+    }
     IEnumerator TelpoSkill(int level)
     {
         RaycastHit2D[] hit;
@@ -409,15 +424,8 @@ public class GhostSkill : PlayerSkillBase
         Gizmos.DrawWireSphere(transform.position, 1 / 3.5f * 2 + 0.57f);
     }
 
-    protected override void SecondSkillUpdate(int level)
-    {
+  
 
-    }
-
-    protected override void ThirdSkillUpdate(int level)
-    {
-
-    }
 
     protected override void ForuthSkillUpdate(int level)
     {
