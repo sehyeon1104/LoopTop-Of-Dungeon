@@ -211,6 +211,17 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
+
+        LoadData();
+    }
+
+    public void LoadData()
+    {
+        SaveManager.Load<GameData>(ref gameData);
+        GetGameData();
+
+        SaveManager.Load<PlayerData>(ref playerData);
+        GetPlayerStat();
     }
 
     public void GameQuit()
