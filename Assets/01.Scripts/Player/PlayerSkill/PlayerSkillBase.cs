@@ -10,6 +10,8 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     [HideInInspector] public SpriteRenderer playerSprite;
     [HideInInspector] protected Player player;
     [HideInInspector] public float dashTime;
+    protected GameObject dashObj;
+    protected SpriteRenderer dashSprite;
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
@@ -57,14 +59,15 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
-        dashVelocity = 30f;
+        dashVelocity = 20f;
         dashDuration = 0.2f;
-        dashTime = 0.1f;
+        dashTime = 0.15f;
         enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     protected void Cashing()
     {
-
+        dashObj = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Player/Ghost/DashClone.prefab");
+        dashSprite = dashObj.GetComponent<SpriteRenderer>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerRigid = GetComponentInParent<Rigidbody2D>();

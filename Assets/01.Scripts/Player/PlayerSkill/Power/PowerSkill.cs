@@ -83,38 +83,41 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator Dash()
     {
         float timer = 0;
-        float timerA = 0;
-        float flusA = 0;
+        float alphaValue = 0;
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
-        Vector3 playerPos = transform.position;
-        GameObject dashSprite = new GameObject();
-        dashSprite.AddComponent<SpriteRenderer>();
-        dashSprite.AddComponent<Poolable>();
-        dashSprite.GetComponent<SpriteRenderer>().sprite = playerSprite.sprite;
-        dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
-        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        float distance = 0;
 
-
-
+        Vector3 firstPosition = transform.position;
+        Vector3 changePosition = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
+        SpriteRenderer currentPlayerSprite = GetComponent<SpriteRenderer>();
+        dashCloneColor = dashSprite.color;
+        dashCloneColor.a = 0;
         while (timer < dashTime)
         {
-            if (timerA > 0.02f)
-            {
-                flusA += 0.2f;
-                dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
-                Poolable clone = Managers.Pool.Pop(dashSprite, transform.position);
-                clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
-                cloneList.Add(clone);
-            }
             timer += Time.deltaTime;
-            timerA += Time.deltaTime;
-            yield return null;
+            alphaValue = timer / dashTime;
+            distance = Vector2.SqrMagnitude(transform.position - changePosition);
+            if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
+            {
+                changePosition = transform.position;
+                Poolable dashPool = Managers.Pool.Pop(dashObj, transform.position);
+                cloneList.Add(dashPool);
+                SpriteRenderer dashPoolSprite = dashPool.GetComponent<SpriteRenderer>();
+                dashPoolSprite.sprite = currentPlayerSprite.sprite;
+                dashPoolSprite.flipX = currentPlayerSprite.flipX;
+                dashCloneColor.a = alphaValue;
+                dashPoolSprite.color = dashCloneColor;
+
+            }
+            yield return new WaitForFixedUpdate();
         }
+        print(Vector3.Magnitude(firstPosition - transform.position));
         //Vector3 playerPoss = transform.position - playerPos;
         //float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
         //Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        //Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
         foreach (var c in cloneList)
