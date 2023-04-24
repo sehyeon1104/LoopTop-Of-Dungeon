@@ -28,7 +28,7 @@ public class P_Patterns : BossPattern
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 6f);
             Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", shorkWarning.transform.position, Quaternion.identity);
-            CinemachineCameraShaking.Instance.CameraShake(6, 0.3f);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
             foreach (Collider2D col in cols)
             {
@@ -113,13 +113,14 @@ public class P_Patterns : BossPattern
 
         yield return new WaitForSeconds(1f);
 
-        while(Vector2.Distance(clone.transform.position, transform.position) >= 0.5f)
+        while(Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
         {
             transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 10f);
             yield return null;
         }
 
         Collider2D col = Physics2D.OverlapCircle(clone.transform.position, clone.transform.lossyScale.x * 0.5F, 1<<8);
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
         if (col != null)
             GameManager.Instance.Player.OnDamage(2, 0);
         
