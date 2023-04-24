@@ -39,10 +39,10 @@ public class Player : MonoBehaviour, IHittable
     {
         PlayerVisual.Instance.StartHitMotion(damage);
         yield return new WaitForSeconds(invincibleTime);
+
         isPDamaged = false;
         yield return null;
     }
-
     public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)

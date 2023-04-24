@@ -132,7 +132,7 @@ public class GhostEliteMob : GhostMobAI
             yield return new WaitForSeconds(0.5f);
 
             float rot = Mathf.Atan2(flipVector.y, flipVector.x) * Mathf.Rad2Deg;
-            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSlash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
 
             yield return new WaitForSeconds(0.2f);
         }
@@ -143,7 +143,7 @@ public class GhostEliteMob : GhostMobAI
         sprite.flipX = Mathf.Sign(flipVector.x) < 0;
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Wave.prefab", transform.position, Quaternion.identity);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
         yield return new WaitForSeconds(3f);
     }
 }
