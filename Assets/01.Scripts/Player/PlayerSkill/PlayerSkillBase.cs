@@ -13,6 +13,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
+    protected float instanceClonePerVelocity = 0.5f;
     public PlayerBase playerBase;
     public Dictionary<int,Action<int>> playerSkills = new Dictionary<int,Action<int>>();
     public Action ultimateSkill;

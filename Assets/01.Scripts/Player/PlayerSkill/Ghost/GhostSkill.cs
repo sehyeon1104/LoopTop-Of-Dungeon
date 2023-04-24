@@ -1,13 +1,8 @@
-using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
-using static Cinemachine.DocumentationSortingAttribute;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
@@ -252,7 +247,8 @@ public class GhostSkill : PlayerSkillBase
         {
             angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis));
-
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
         }
         else if (level == 2)
         {
@@ -260,6 +256,8 @@ public class GhostSkill : PlayerSkillBase
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction), angleAxis));
             angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction), angleAxis));
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
         }
         else if (level == 3)
         {
@@ -269,14 +267,16 @@ public class GhostSkill : PlayerSkillBase
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction * 2f), angleAxis));
             angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction * 2f), angleAxis));
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
         }
         else if (level == 4)
         {
 
-            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.up, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 90) : Quaternion.Euler(0, 0, 135)));
-            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.down, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
-            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.right, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 45)));
-            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.left, beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position +( beamRot % 90 == 0 ? Vector3.up : new Vector3(-1,1,0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 90) : Quaternion.Euler(0, 0, 135)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.down : new Vector3(1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.right : new Vector3(1, 1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 45)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.left : new Vector3(-1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 225)));
 
             playerBeam = beamList[0].GetComponent<PlayerBeam>();
 
@@ -308,13 +308,10 @@ public class GhostSkill : PlayerSkillBase
                 }
                 yield return null;
             }
-            yield return new WaitUntil(() => !playerBeam.IsReady);
-
         }
-        if (playerBeam == null)
-            playerBeam = beamList[0].GetComponent<PlayerBeam>();
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
+       
         for (int i = 0; i < beamList.Count; i++)
         {
             Managers.Pool.Push(beamList[i]);
@@ -359,40 +356,37 @@ public class GhostSkill : PlayerSkillBase
     IEnumerator Dash()
     {
         float timer = 0;
-        float timerA = 0;
         float alphaValue = 0;
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
         float distance = 0;
 
         Vector3 firstPosition = transform.position;
+        Vector3 changePosition = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
         dashSprite.sprite = GetComponent<SpriteRenderer>().sprite;
+        dashCloneColor = dashSprite.color;
+        dashCloneColor.a = 0;
         while (timer < dashTime)
         {
-            distance = Vector3.Magnitude(transform.position - firstPosition);
-            if(distance < 0.5f)
-            {
-
-                
-            }
-            dashCloneColor.a = alphaValue;
-            dashSprite.color = dashCloneColor;
-            if (timerA > 0.02f)
-            {
-                cloneList.Add(Managers.Pool.Pop(dashObj, transform.position));
-            }
-            alphaValue += Time.deltaTime;
             timer += Time.deltaTime;
-            timerA += Time.deltaTime;
+            alphaValue = timer / dashTime;
+             distance = Vector2.SqrMagnitude(transform.position - changePosition);
+            if(distance > instanceClonePerVelocity * instanceClonePerVelocity)
+            {
+                  print(alphaValue);
+                  changePosition = transform.position;
+                  dashCloneColor.a = alphaValue;
+                  dashSprite.color = dashCloneColor; 
+                  cloneList.Add(Managers.Pool.Pop(dashObj, transform.position));
+            }
             yield return null;
         }
-        print(Vector3.Magnitude(transform.position - firstPosition));
+        print(Vector3.Magnitude(firstPosition - transform.position));
         //Vector3 playerPoss = transform.position - playerPos;
         //float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
         //Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         //Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
-
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
         foreach (var c in cloneList)

@@ -67,8 +67,8 @@ public class PoolManager
             {
                 poolable.transform.parent = Managers.Scene.CurrentScene.transform;
             }
-            poolable.transform.position = parent.position;
             poolable.transform.parent = parent;
+            poolable.transform.localPosition = Vector3.zero;
             
             poolable.IsUsing = true;
 

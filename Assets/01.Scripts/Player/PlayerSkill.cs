@@ -64,7 +64,7 @@ public class PlayerSkill : MonoBehaviour
         
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
-            skillEvent[0] = () => playerSkill.playerSkills[2](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[1](slotLevel[0]);
             playerSkill.playerSkillUpdate[1](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
