@@ -68,6 +68,7 @@ public class ItemObj : MonoBehaviour
         if(GameManager.Instance.Player.playerBase.FragmentAmount < item.price || isSold)
         {
             Rito.Debug.Log("구매 불가");
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/UnablePurchase.wav");
             return;
         }
 
@@ -75,6 +76,7 @@ public class ItemObj : MonoBehaviour
 
         GameManager.Instance.Player.playerBase.FragmentAmount -= (int)item.price;
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Purchase.wav");
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);

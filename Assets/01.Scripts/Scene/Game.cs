@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Game : Base
 {
-    protected override void Init()
+    public override void Init()
     {
         base.Init();
 
@@ -15,11 +15,6 @@ public class Game : Base
                     Managers.Sound.Play("Assets/05.Sounds/BGM/Field_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
                 else if(SceneType == Define.Scene.BossScene)
                     Managers.Sound.Play("Assets/05.Sounds/BGM/Boss_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
-                else
-                {
-
-                }
-
                 break;
 
             case Define.MapTypeFlag.LavaSlime:
@@ -43,7 +38,6 @@ public class Game : Base
             default:
                 break;
         }
-        SceneType = Define.Scene.CenterScene;
     }
     public override void Clear()
     {
