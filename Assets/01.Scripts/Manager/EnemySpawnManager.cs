@@ -75,10 +75,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // TODO : 특정 폴더 내 파일 개수 가져오기
 
-        //System.IO.DirectoryInfo directoryInfo = new System.IO.DirectoryInfo(Application.dataPath);
-        //enemyCount = directoryInfo.GetFiles($"/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/*.prefab ", System.IO.SearchOption.AllDirectories).Length;
+        DirectoryInfo di = new DirectoryInfo($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal");
 
-        //enemyCount = Directory.GetFiles("*.prefab", $"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/").Length;
+        foreach (FileInfo file in di.GetFiles("*.prefab"))
+        {
+            Debug.Log("파일명 : " + file.Name);
+            enemyCount++;
+        }
+
         Debug.Log(enemyCount);
     }
 
