@@ -180,7 +180,7 @@ public class PoolManager
         return clone?.GetComponent<Poolable>();
     }
 
-    public Poolable PoolManaging(string path, Transform parent)
+    public Poolable PoolManaging(string path, Transform parent = null)
     {
         GameObject clone;
         string name = path;

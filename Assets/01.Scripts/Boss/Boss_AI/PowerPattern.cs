@@ -145,9 +145,46 @@ public class P_Patterns : BossPattern
         }
             yield return null;
     }
+    public IEnumerator Pattern_CM(int count = 0) //기둥
+    {
+        while(!Boss.Instance.isBDead)
+        {
+            if (nowBPhaseChange)
+            {
+                yield return null;
+                continue;
+            }
+
+            Vector2 randPos = new Vector2(Random.Range(-4.5f, 33.5f), Random.Range(-2.5f, 18.5f));
+
+            if (NowPhase == 1)
+            {
+                yield return new WaitForSeconds(5f);
+                Managers.Pool.PoolManaging("", randPos, Quaternion.identity);
+            }
+            else
+            {
+                yield return new WaitForSeconds(3f);
+                Managers.Pool.PoolManaging("", randPos, Quaternion.identity);
+            }
+        }
+    }
     #endregion
 
     #region Phase 2
+    public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
+    {
+        yield return null;
+    }
+    public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
+    {
+        yield return null;
+    }
+    public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
+    {
+        yield return null;
+    }
+
     #endregion
 }
 public class PowerPattern : P_Patterns
@@ -186,6 +223,11 @@ public class PowerPattern : P_Patterns
         }
         return 0;
 
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Pattern_CM());
     }
 
     public override IEnumerator Pattern1(int count = 0) //바닥 찍기
