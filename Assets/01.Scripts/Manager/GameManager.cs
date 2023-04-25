@@ -210,8 +210,6 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
-
-        LoadData();
     }
 
     public void LoadData()
