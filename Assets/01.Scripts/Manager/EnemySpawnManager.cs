@@ -75,33 +75,20 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         // TODO : 특정 폴더 내 파일 개수 가져오기
 
-        DirectoryInfo di = new DirectoryInfo($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal");
-
-        for(int i = 0; i < di.GetFiles("*.prefab").Length; ++i)
-        {
-            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
-        }
-
-        //foreach (FileInfo file in di.GetFiles("*.prefab"))
-        //{
-        //    Debug.Log("파일명 : " + file.Name);
-        //    enemyCount++;
-        //}
-
-        //Debug.Log(enemyCount);
     }
 
     public void SetEnemyInList()
     {
-        //Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
+        Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
 
-        //for (int i = 0; i < enemyCount; ++i)
-        //{
-        //    // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
-        //    normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-        //    Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
-        //}
+        // TODO : 동적으로 몬스터 개수 가져와 리스트 할당
+
+        for (int i = 0; i < 4; ++i)
+        {
+            // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
+            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
+        }
     }
 
     #endregion
