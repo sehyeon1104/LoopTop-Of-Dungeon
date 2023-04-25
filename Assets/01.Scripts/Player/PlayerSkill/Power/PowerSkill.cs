@@ -23,6 +23,8 @@ public class PowerSkill : PlayerSkillBase
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || player.playerBase.IsPDead)
             return;
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
+
         CinemachineCameraShaking.Instance.CameraShake();
         playerAnim.SetTrigger("Attack");
 
