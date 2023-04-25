@@ -129,6 +129,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         int randPos = 0;
         isNextWave = false;
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
+
         for(int i = 0; i < wave1NormalEnemyCount; ++i)
         {
 
@@ -164,6 +166,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             SpawnEliteMonster(eliteMonsterSpawnPos);
         }
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
@@ -191,7 +194,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void SpawnEliteMonster(Transform spawnPos)
     {
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
         Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", spawnPos.position, Quaternion.identity);
+        curEnemies.Add(eliteMonster);
         StartCoroutine(ShowEnemySpawnPos(eliteMonster.transform, eliteMonster));
     }
 

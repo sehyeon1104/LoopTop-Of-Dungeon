@@ -67,7 +67,7 @@ public class PlayerSkill : MonoBehaviour
             skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[1](slotLevel[0]);
             playerSkill.playerSkillUpdate[1](slotLevel[0]);
-            playerSkill.playerSkillUpdate[2](slotLevel[0]);
+            playerSkill.playerSkillUpdate[3](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;

@@ -4,15 +4,12 @@ using UnityEngine;
 
 public abstract class Base : MonoSingleton<Base>
 {
-    public Define.Scene SceneType = Define.Scene.Unknown;
-    public Define.MapTypeFlag MapType = Define.MapTypeFlag.Default;
+    [SerializeField]
+    protected Define.Scene SceneType = Define.Scene.Unknown;
+    [SerializeField]
+    protected Define.MapTypeFlag MapType = Define.MapTypeFlag.Default;
 
-    private void Start()
-    {
-        Init();
-    }
-
-    protected virtual void Init()
+    public virtual void Init()
     {
         SceneType = GameManager.Instance.sceneType;
         MapType = GameManager.Instance.mapTypeFlag;
