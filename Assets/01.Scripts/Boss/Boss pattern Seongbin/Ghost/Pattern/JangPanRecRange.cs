@@ -11,9 +11,6 @@ public class JangPanRecRange : MonoBehaviour
     public Vector2 size1;
     public Vector2 size2;
     public LayerMask Layer;
-
-    WaitForSeconds checkTime = new WaitForSeconds(0.1f);
-
     WaitForSeconds DotTime = new WaitForSeconds(0.8f);
 
     private void OnEnable()
@@ -50,7 +47,7 @@ public class JangPanRecRange : MonoBehaviour
                 StartCoroutine(PlayerDamaged);
                 iscoroutinestart = false;
             }
-            yield return checkTime;
+            yield return null;
         }
     }
 
