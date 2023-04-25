@@ -32,10 +32,10 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     private void FixedUpdate()
     {
        
-       if (isMove)
-         Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
+       //if (isMove)
+         //Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
 
-        //Move(joystick.Direction);
+        Move(joystick.Direction);
     }
     public void Move(Vector2 inputVelocity)
     {
