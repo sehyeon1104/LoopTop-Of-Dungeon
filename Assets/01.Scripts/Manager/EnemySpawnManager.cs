@@ -196,6 +196,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     {
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
         Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", spawnPos.position, Quaternion.identity);
+        curEnemies.Add(eliteMonster);
         StartCoroutine(ShowEnemySpawnPos(eliteMonster.transform, eliteMonster));
     }
 

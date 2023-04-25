@@ -54,7 +54,8 @@ public class GhostSkill : PlayerSkillBase
     private void Awake()
     {
         Cashing();
-        playerBeam = FindObjectOfType<PlayerBeam>();    
+
+        playerBeam = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerBeam.prefab").GetComponent<PlayerBeam>();
         playerAnim = GetComponent<Animator>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
@@ -355,7 +356,8 @@ public class GhostSkill : PlayerSkillBase
     
     protected override void ThirdSkillUpdate(int level)
     {
-        playerBeam.damage = level + 1;
+        playerBeam.damage = level + 2;
+
     }
     IEnumerator TelpoSkill(int level)
     {

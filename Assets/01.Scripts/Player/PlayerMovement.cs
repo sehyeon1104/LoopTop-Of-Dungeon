@@ -33,7 +33,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     {
        
        if (isMove)
-         Move(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized);
+         Move((new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))+ joystick.Direction).normalized);
 
         //Move(joystick.Direction);
     }
