@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -42,6 +43,7 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
     private Material beamFiveMat;
+    WaitForSeconds beamWait = new WaitForSeconds(1f);
     Texture2D eyeEffect;
     Texture2D reverseEffect;
     [Header("솟아오르기 스킬")]
@@ -304,6 +306,8 @@ public class GhostSkill : PlayerSkillBase
             Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
             Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
             PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
+            LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
+            lineRenderer.sortingOrder++;
             PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
             while (timer < beamRotationDuration)
             {
@@ -317,28 +321,32 @@ public class GhostSkill : PlayerSkillBase
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
+            beamParticle.startRotation =(beamRot % 90 == 0 ? beamRot :beamRot -90) * Mathf.Deg2Rad;
+            print(beamRot);
             playerBeam.enabled = false;
-            playerBeam.beamDuration = 2f;
-            yield return null;
             beamParticle.Pause();
-            yield return new WaitForSeconds(1f);
+            yield return beamWait;
+            beamParticle.Play();
+            playerBeam2.beamLight.intensity = 0;
+            playerBeam1.beamLight.intensity = 0;
+            yield return new WaitUntil(() => beamParticle.time > 0.99f);
+
             Managers.Pool.Push(leftBeam);
             Managers.Pool.Push(rightBeam);
-            beamParticle.Play();
-            while (playerBeam.beamDuration > playerBeam.timerA)
-            {
-                if (beamParticle.time > 0.99f)
-                {
-                    beamParticle.Pause();
-                    playerBeam.enabled = true;
-                }
-                yield return null;
-            }
+            beamParticle.Pause();
+            playerBeam.enabled = true;
+            playerBeam.IsReady = true;
+            yield return new WaitUntil(() => !playerBeam.IsReady);
             beamFiveMat.SetTexture("_MainTex", reverseEffect);
+            beamParticle.time = 0;
+            beamParticle.Play();
+            yield return new WaitUntil(() => beamParticle.time > 0.99f);
+            lineRenderer.sortingOrder--;
+            Managers.Pool.Push(fiveBeam);
+            beamFiveMat.SetTexture("_MainTex", eyeEffect);
         }
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
-       
         for (int i = 0; i < beamList.Count; i++)
         {
             Managers.Pool.Push(beamList[i]);

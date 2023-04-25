@@ -6,13 +6,13 @@ using UnityEngine.Rendering.Universal;
 public class PlayerBeam : MonoBehaviour
 {
     public float damage = 3;
-    public bool IsReady { get; private set; } = false;
+    public bool IsReady { get; set; } = false;
     [SerializeField] GameObject beamPos;
     public float beamDuration =1.5f;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
-    [SerializeField] Light2D beamLight;
+    public Light2D beamLight;
 
     //EdgeCollider2D col;
     //Vector2[] points;
@@ -23,7 +23,7 @@ public class PlayerBeam : MonoBehaviour
 
     [SerializeField] float length;
     public float width;
-    [SerializeField] float intensity = 2f;
+    public float intensity = 2f;
 
     WaitForSeconds waitTime = new WaitForSeconds(0.4f);
     List<ParticleSystem> startFXList = new List<ParticleSystem>();
@@ -98,7 +98,7 @@ public class PlayerBeam : MonoBehaviour
         {
             if(timer >0.1f)
             {
-                CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
+                CinemachineCameraShaking.Instance.CameraShake(2, 0.3f);
                 RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
                 for (int i = 0; i < attachBeam.Length; i++)
                 {
