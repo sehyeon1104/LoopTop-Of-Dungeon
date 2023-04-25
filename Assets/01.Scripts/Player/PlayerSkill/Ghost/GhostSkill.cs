@@ -18,6 +18,8 @@ public class GhostSkill : PlayerSkillBase
     float jangpanoverlapFloat = 0;
     Poolable smokePoolable = null;
     GameObject smoke = null;
+    Color janpangFitrstColor = new Color(1,1,1);
+    Color jangpanglastColor = new Color(0.7372551f, 0, 1);
     ParticleSystem smokeParticle = null;
     [Header("Èú¶ó ½ºÅ³")]
     float cicleRange = 2f;
@@ -27,11 +29,10 @@ public class GhostSkill : PlayerSkillBase
     private float attackRange = 1f;
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
     float telpoVelocity = 50f;
-    Animator playerAnim;
     SpriteRenderer ghostDash;
 
     [Header("ºö ½ºÅ³")]
-    float beamRotationDuration = 4;
+    float beamRotationDuration = 2;
     float rotateBeamAngle = 45f;
     float beamMoveSpeed = 3;
     [SerializeField]
@@ -56,7 +57,6 @@ public class GhostSkill : PlayerSkillBase
         Cashing();
 
         playerBeam = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerBeam.prefab").GetComponent<PlayerBeam>();
-        playerAnim = GetComponent<Animator>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/Eyeeffect.png");
@@ -64,21 +64,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
-            return;
-
-
-        playerAnim.SetTrigger("Attack");
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
-        for (int i = 0; i < enemys.Length; i++)
-        {
-            if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
-            {
-                CinemachineCameraShaking.Instance.CameraShake();
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-
-            }
-        }
+        base.Attack();
     }
     protected override void FirstSkill(int level)
     {
@@ -211,6 +197,7 @@ public class GhostSkill : PlayerSkillBase
         jangpanSize = 2 * level + 2;
         jangPanDamage = 1f;
         jangpanoverlapFloat = level / 3.5f * 2 + 0.57f;
+
     }
 
     IEnumerator HillaSkill(int level)
@@ -357,7 +344,6 @@ public class GhostSkill : PlayerSkillBase
     protected override void ThirdSkillUpdate(int level)
     {
         playerBeam.damage = level + 2;
-
     }
     IEnumerator TelpoSkill(int level)
     {
