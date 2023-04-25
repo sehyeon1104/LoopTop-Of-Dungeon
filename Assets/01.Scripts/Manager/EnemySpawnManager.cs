@@ -77,25 +77,31 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         DirectoryInfo di = new DirectoryInfo($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal");
 
-        foreach (FileInfo file in di.GetFiles("*.prefab"))
+        for(int i = 0; i < di.GetFiles("*.prefab").Length; ++i)
         {
-            Debug.Log("ÆÄÀÏ¸í : " + file.Name);
-            enemyCount++;
+            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
         }
 
-        Debug.Log(enemyCount);
+        //foreach (FileInfo file in di.GetFiles("*.prefab"))
+        //{
+        //    Debug.Log("ÆÄÀÏ¸í : " + file.Name);
+        //    enemyCount++;
+        //}
+
+        //Debug.Log(enemyCount);
     }
 
     public void SetEnemyInList()
     {
-        Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
+        //Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
 
-        for (int i = 0; i < enemyCount; ++i)
-        {
-            // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
-            normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
-        }
+        //for (int i = 0; i < enemyCount; ++i)
+        //{
+        //    // ¸Ê Å¸ÀÔ ÇÃ·¡±×¿¡ ¸Â´Â ¸÷ ¸÷ ÇÁ¸®ÆÕ ºÒ·¯¿È
+        //    normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
+        //    Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
+        //}
     }
 
     #endregion
