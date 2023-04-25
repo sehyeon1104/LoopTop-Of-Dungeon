@@ -39,6 +39,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
 
+    private float enemyCount;
+
 
     private void Awake()
     {
@@ -53,6 +55,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
         enemyDeadEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemyDeadEffect.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
+        enemyCount = 0;
         SetEnemyInList();
     }
 
@@ -64,19 +67,30 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     {
         // 빌드타겟의 경로를 가져온다.
         // 경로이기 때문에 메모리에 에셋이 로드되진 않는다.
-        Addressables.LoadResourceLocationsAsync(assetLabel.labelString).Completed +=
-            (handle) =>
-            {
-                _locations = handle.Result;
-            };
+        //Addressables.LoadResourceLocationsAsync(assetLabel.labelString).Completed +=
+        //    (handle) =>
+        //    {
+        //        _locations = handle.Result;
+        //    };
 
+        // TODO : 특정 폴더 내 파일 개수 가져오기
+
+        DirectoryInfo di = new DirectoryInfo($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal");
+
+        foreach (FileInfo file in di.GetFiles("*.prefab"))
+        {
+            Debug.Log("파일명 : " + file.Name);
+            enemyCount++;
+        }
+
+        Debug.Log(enemyCount);
     }
 
     public void SetEnemyInList()
     {
         Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
 
-        for (int i = 0; i < _locations.Count; ++i)
+        for (int i = 0; i < enemyCount; ++i)
         {
             // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
             normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
