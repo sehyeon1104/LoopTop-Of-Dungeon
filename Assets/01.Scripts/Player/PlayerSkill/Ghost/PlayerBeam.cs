@@ -102,6 +102,7 @@ public class PlayerBeam : MonoBehaviour
                 RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
                 for (int i = 0; i < attachBeam.Length; i++)
                 {
+                    print(attachBeam[i].transform.name);
                     attachBeam[i].transform.GetComponent<IHittable>().OnDamage(damage, 0);
                 }
                 timer = 0;
