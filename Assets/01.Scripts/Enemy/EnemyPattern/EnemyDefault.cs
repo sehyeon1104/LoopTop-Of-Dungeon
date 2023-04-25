@@ -234,6 +234,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             isDead = true;
 
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
+
             if(GameManager.Instance.sceneType == Define.Scene.StageScene)
             {
                 EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());

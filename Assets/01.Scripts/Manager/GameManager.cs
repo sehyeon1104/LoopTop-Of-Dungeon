@@ -99,8 +99,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
 
         #endregion
-
-
+        Base.Instance.Init();
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
@@ -226,7 +225,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameQuit()
     {
-        SaveData();
+        if(sceneType == Define.Scene.CenterScene)
+        {
+            SaveData();
+        }
+
         Application.Quit();
     }
 }

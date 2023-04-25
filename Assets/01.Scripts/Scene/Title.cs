@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Title : Base
 {
-    protected override void Init()
+    public override void Init()
     {
         base.Init();
         SceneType = Define.Scene.TitleScene;
