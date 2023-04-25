@@ -27,7 +27,7 @@ public class P_Patterns : BossPattern
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
-            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", shorkWarning.transform.position, Quaternion.identity);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
             foreach (Collider2D col in cols)
