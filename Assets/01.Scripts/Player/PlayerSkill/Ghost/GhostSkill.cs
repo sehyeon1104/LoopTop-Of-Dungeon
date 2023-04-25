@@ -334,7 +334,7 @@ public class GhostSkill : PlayerSkillBase
                 }
                 yield return null;
             }
-            beamFiveMat.SetTexture("_MainTex",)
+            beamFiveMat.SetTexture("_MainTex", reverseEffect);
         }
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
