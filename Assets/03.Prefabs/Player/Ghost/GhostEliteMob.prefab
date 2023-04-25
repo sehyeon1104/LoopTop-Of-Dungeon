@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 237465776}
   - component: {fileID: 237465775}
   - component: {fileID: 237465774}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 237465773}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 933
+  m_shaderPropertyID: 866
   m_materialData:
   - m_trailRenderer: {fileID: 1724425341}
     m_uvTiling: {x: 0.15, y: 1}
@@ -4855,7 +4855,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1724425340}
   - component: {fileID: 1724425341}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4898,7 +4898,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 72c6ba6c8107ae645a26836ccb8b053f, type: 2}
+  - {fileID: 2100000, guid: 6b92d102226eab445b0e35ddcadda38e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5000,7 +5000,7 @@ GameObject:
   - component: {fileID: 9171237707045324159}
   - component: {fileID: 9145453109741047422}
   - component: {fileID: -7510471095355923598}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: GhostEliteMob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5043,7 +5043,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 1566583bfb4833d42ad8f6752fef5f35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5065,7 +5065,7 @@ SpriteRenderer:
   m_SortingLayer: 11
   m_SortingOrder: 5
   m_Sprite: {fileID: 4723107735738678597, guid: 68d94fdec5bc9bf4cbdb0edf4f5f3417, type: 3}
-  m_Color: {r: 0.8156863, g: 0.37254903, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -5160,11 +5160,11 @@ MonoBehaviour:
   minDistance: 5
   moveClip: {fileID: 7400000, guid: cbd4149be9ea17f45988a8ef7eebd43f, type: 2}
   attackClip: {fileID: 0}
-  trail: {fileID: 0}
+  trail: {fileID: 237465772}
   attackClips:
-  - {fileID: 7400000, guid: dc55250d34b986d4c8c916423ca91be0, type: 2}
-  - {fileID: 7400000, guid: 0f4b449c8a9725b498da62ed7d55e59f, type: 2}
-  - {fileID: 7400000, guid: 6d9fe67e159ac2e4a973aff3c6de5b52, type: 2}
+  - {fileID: 7400000, guid: 04c3014b55f42d5469c8af4b675e9987, type: 2}
+  - {fileID: 7400000, guid: b93c22f8e1bf52e46ae0f9627c26fb46, type: 2}
+  - {fileID: 7400000, guid: 212875d2e8fb07941912bc5f398fb0d1, type: 2}
   idleClip: {fileID: 7400000, guid: 4aae372357b59934ebaa8bab80fe972a, type: 2}
 --- !u!114 &-7510471095355923598
 MonoBehaviour:

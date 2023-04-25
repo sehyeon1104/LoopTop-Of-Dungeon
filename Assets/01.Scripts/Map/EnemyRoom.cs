@@ -53,9 +53,14 @@ public class EnemyRoom : RoomBase
     private void SpawnEnemies()
     {
         // Debug.Log("SpawnEnemies");
+        //if (isMoveAnotherStage)
+        //{
+        //    EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
+        //}
 
         EnemySpawnManager.Instance.SetRandomEnemyCount();
         StartCoroutine(EnemySpawnManager.Instance.SpawnEnemy(SetEnemySpawnPos()));
+
 
         StartCoroutine(CheckClear());
     }

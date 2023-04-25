@@ -108,6 +108,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         isBDead = true;
 
+        bossAnim.anim.SetTrigger("Death");
+
         actCoroutine = null;
         StopAllCoroutines();
         //gameObject.SetActive(false);

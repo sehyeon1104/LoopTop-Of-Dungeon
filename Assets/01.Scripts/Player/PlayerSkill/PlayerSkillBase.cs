@@ -10,24 +10,33 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     [HideInInspector] public SpriteRenderer playerSprite;
     [HideInInspector] protected Player player;
     [HideInInspector] public float dashTime;
+    protected GameObject dashObj;
+    protected SpriteRenderer dashSprite;
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
+    protected float instanceClonePerVelocity = 0.5f;
     public PlayerBase playerBase;
-    public List<Action<int>> playerSkills = new List<Action<int>>();
+    public Dictionary<int,Action<int>> playerSkills = new Dictionary<int,Action<int>>();
     public Action ultimateSkill;
     public Action dashSkill;
     public Action attack;
-   protected List<Poolable> cloneList = new List<Poolable>();
-    
+    protected List<Poolable> cloneList = new List<Poolable>();
+    public Color dashCloneColor;
+    public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     protected abstract void FirstSkill(int level);
 
+    protected abstract void FirstSkillUpdate(int level);
     protected abstract void SecondSkill(int level);
+    protected abstract void SecondSkillUpdate(int level);
     protected abstract void ThirdSkill(int level);
+    protected abstract void ThirdSkillUpdate(int level);
 
     protected abstract void ForuthSkill(int level);
+    protected abstract void ForuthSkillUpdate(int level);
 
     protected abstract void FifthSkill(int level);
+    protected abstract void FifthSkillUpdate(int level);
 
     protected abstract void Attack();
     protected abstract void UltimateSkill();
@@ -37,22 +46,28 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     protected void init()
     {
         playerBase = GameManager.Instance.Player.playerBase;
-        playerSkills.Add(FirstSkill);
-        playerSkills.Add(SecondSkill);
-        playerSkills.Add(ThirdSkill);
-        playerSkills.Add(ForuthSkill);
-        playerSkills.Add(FifthSkill);
+        playerSkills.Add(1, FirstSkill);
+        playerSkills.Add(2, SecondSkill);
+        playerSkills.Add(3, ThirdSkill);
+        playerSkills.Add(4, ForuthSkill);
+        playerSkills.Add(5, FirstSkill);
+        playerSkillUpdate.Add(1, FirstSkillUpdate);
+        playerSkillUpdate.Add(2, SecondSkillUpdate);
+        playerSkillUpdate.Add(3, ThirdSkillUpdate);
+        playerSkillUpdate.Add(4, FifthSkillUpdate);
+        playerSkillUpdate.Add(5,FifthSkillUpdate);
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
         dashVelocity = 20f;
         dashDuration = 0.2f;
-        dashTime = 0.2f;
+        dashTime = 0.15f;
         enemyLayer = LayerMask.NameToLayer("Enemy");
     }
     protected void Cashing()
     {
-
+        dashObj = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Player/Ghost/DashClone.prefab");
+        dashSprite = dashObj.GetComponent<SpriteRenderer>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerRigid = GetComponentInParent<Rigidbody2D>();

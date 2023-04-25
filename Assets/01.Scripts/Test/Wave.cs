@@ -20,9 +20,5 @@ public class Wave : MonoBehaviour
         {
             GameManager.Instance.Player.OnDamage(2, 0);
         }
-        if(collision.CompareTag("Enemy")||collision.CompareTag("Boss"))
-        {
-            collision.GetComponent<IHittable>().OnDamage(2, 0);
-        }
     }
 }

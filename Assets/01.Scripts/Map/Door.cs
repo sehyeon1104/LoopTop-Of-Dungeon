@@ -58,22 +58,38 @@ public class Door : MonoBehaviour
 
     public void OpenDoors()
     {
-        isOpenDoor = true;
-        isCloseDoor = false;
-        if(tilemapCollider2D == null)
+        if (!isOpenDoor)
         {
-            Rito.Debug.Log("tilemapCollider2D is null!");
-            return;
+            isOpenDoor = true;
+            isCloseDoor = false;
+            if (tilemapCollider2D == null)
+            {
+                Rito.Debug.Log("tilemapCollider2D is null!");
+                return;
+            }
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Map/Door/Door_Open1.wav");
+            tilemapCollider2D.isTrigger = true;
+            tilemapRenderer.enabled = false;
         }
-        tilemapCollider2D.isTrigger = true;
-        tilemapRenderer.enabled = false;
+
+
     }
     public void CloseDoors()
     {
-        isOpenDoor = false;
-        isCloseDoor = true;
-        tilemapCollider2D.isTrigger = false;
-        tilemapRenderer.enabled = true;
+        if (!isCloseDoor)
+        {
+            isOpenDoor = false;
+            isCloseDoor = true;
+            if (tilemapCollider2D == null)
+            {
+                Rito.Debug.Log("tilemapCollider2D is null!");
+                return;
+            }
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Map/Door/Door_Close.wav");
+            tilemapCollider2D.isTrigger = false;
+            tilemapRenderer.enabled = true;
+        }
+
     }
 
 }

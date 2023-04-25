@@ -21,5 +21,6 @@ public class PlayerSkillData : ScriptableObject
 public class PlayerSkillInfo
 {   
    public string skillName;
+   public Sprite skillIcon;
    public float skillDelay;
 }

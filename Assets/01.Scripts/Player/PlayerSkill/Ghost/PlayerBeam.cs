@@ -5,9 +5,10 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerBeam : MonoBehaviour
 {
+    public float damage = 3;
     public bool IsReady { get; private set; } = false;
     [SerializeField] GameObject beamPos;
-    public float beamDuration =2;
+    public float beamDuration =1.5f;
     [SerializeField] LayerMask enemy;
     [SerializeField] GameObject startFX;
     [SerializeField] LineRenderer beam;
@@ -15,9 +16,9 @@ public class PlayerBeam : MonoBehaviour
 
     //EdgeCollider2D col;
     //Vector2[] points;
-    public float timerA { get; private set; } = 0;
+    public float timerA { get;  set; } = 0;
     float lineLength = 0.0f;
-    float lineWidth = 0.5f;
+  [HideInInspector] public float lineWidth = 0.5f;
     Vector3 tempScale;
 
     [SerializeField] float length;
@@ -64,8 +65,9 @@ public class PlayerBeam : MonoBehaviour
     }
 
 
-    private IEnumerator OnBeam()
+    public IEnumerator OnBeam()
     {
+
         timerA = 0;
         float timer = 0;
         yield return waitTime;
@@ -76,7 +78,6 @@ public class PlayerBeam : MonoBehaviour
             yield return null;
         }
 
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
 
         for (int i = 0; i < startFXList.Count; i++)
         {
@@ -90,16 +91,18 @@ public class PlayerBeam : MonoBehaviour
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
             yield return null;
         }
+
         IsReady = true;
+
         while(timerA<beamDuration)
         {
             if(timer >0.1f)
-            {   
-
+            {
+                CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
                 RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
                 for (int i = 0; i < attachBeam.Length; i++)
                 {
-                    attachBeam[i].transform.GetComponent<IHittable>().OnDamage(3, 0);
+                    attachBeam[i].transform.GetComponent<IHittable>().OnDamage(damage, 0);
                 }
                 timer = 0;
             }
@@ -124,7 +127,7 @@ public class PlayerBeam : MonoBehaviour
         beam.startWidth = 0;
         beam.endWidth = 0;
         IsReady = false;
-        Managers.Pool.Push(GetComponent<Poolable>());
+        
     }
 }
 

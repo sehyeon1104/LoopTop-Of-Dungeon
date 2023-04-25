@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.VFX;
-using static Cinemachine.DocumentationSortingAttribute;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 using Random = UnityEngine.Random;
 
 public class GhostSkill : PlayerSkillBase
@@ -13,10 +10,16 @@ public class GhostSkill : PlayerSkillBase
     [Header("ÀåÆÇ½ºÅ³")]
     WaitForSeconds jangpanWait2 = new WaitForSeconds(2f);
     WaitForSeconds janpanWait = new WaitForSeconds(0.3f);
-    ParticleSystem janpnaPartical;
-    float cicleRange = 2f;
-    float janpanDuration = 5f;
+    float jangpanDealinterval = 0;
+    float jangpanSize = 0f;
+    float jangpanDuration = 0f;
+    float jangPanDamage = 0f;
+    float jangpanoverlapFloat = 0;
+    Poolable smokePoolable = null;
+    GameObject smoke = null;
+    ParticleSystem smokeParticle = null;
     [Header("Èú¶ó ½ºÅ³")]
+    float cicleRange = 2f;
     List<Poolable> poolMob = new List<Poolable>();
     WaitForSeconds hillaDuration = new WaitForSeconds(10f);
     [SerializeField]
@@ -26,8 +29,13 @@ public class GhostSkill : PlayerSkillBase
     Animator playerAnim;
     SpriteRenderer ghostDash;
 
-    // Beam
+    [Header("ºö ½ºÅ³")]
+    float beamRotationDuration = 4;
+    float rotateBeamAngle = 45f;
+    float beamMoveSpeed = 3;
     [SerializeField]
+    PlayerBeam playerBeam = null;
+    private float beamDmg = 0.5f;
     private Vector3 beamDir;
     private float beamRot;
     private Poolable beam;
@@ -38,13 +46,15 @@ public class GhostSkill : PlayerSkillBase
     private Vector3 joystickDir;
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
-
-
     private void Awake()
     {
         Cashing();
-        janpnaPartical = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab").GetComponent<ParticleSystem>();
+        playerBeam = FindObjectOfType<PlayerBeam>();    
         playerAnim = GetComponent<Animator>();
+        smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
+    }
+    private void Start()
+    {
     }
     protected override void Attack()
     {
@@ -101,24 +111,23 @@ public class GhostSkill : PlayerSkillBase
     #region ½ºÅ³ ±¸Çö
     IEnumerator JanpangSkill(int level)
     {
-
         Collider2D[] attachObjs = null;
         float timer = 0;
         float timerA = 0;
-        Poolable smoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform.parent);
-        smoke.GetComponent<ParticleSystem>().startSize = 2 * level + 2;
-        ParticleSystem smokeParticle = smoke.GetComponent<ParticleSystem>();
+        smokePoolable = Managers.Pool.Pop(smoke, transform);
+        smokeParticle = smokePoolable.GetComponent<ParticleSystem>();
+        smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
-        while (timer < janpanDuration)
+        while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
-            if (timerA > 0.1f)
+            if (timerA > jangpanDealinterval)
             {
-                attachObjs = Physics2D.OverlapCircleAll(transform.position, level / 3.5f * 2 + 0.57f, 1 << enemyLayer);
+                attachObjs = Physics2D.OverlapCircleAll(transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(1 + level * 2, 0);
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                 }
                 timerA = 0;
             }
@@ -126,68 +135,78 @@ public class GhostSkill : PlayerSkillBase
         }
         smokeParticle.loop = false;
         yield return jangpanWait2;
-        Managers.Pool.Push(smoke);
-        smokeParticle.GetComponent<ParticleSystem>().loop = true;
+        Managers.Pool.Push(smokePoolable);
+        smokeParticle.loop = true;
     }
     IEnumerator Jangpan5Skill()
     {
         Collider2D[] attachObjs = null;
         Collider2D[] attachObj2 = null;
-        List<Poolable> smoke = new List<Poolable>();
+        List<Poolable> smokes = new List<Poolable>();
         float timer = 0;
         float timerA = 0;
         float timerB = 1;
-        Poolable playerSmoke = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab", transform);
-        ParticleSystem smokeParticle = playerSmoke.GetComponent<ParticleSystem>();
-        smokeParticle.startSize = 10;
+        Poolable playerSmoke = Managers.Pool.Pop(smoke, transform);
+        smokeParticle = playerSmoke.GetComponent<ParticleSystem>();
+        smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
-        while (timer < janpanDuration)
+        while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
             timerA += Time.deltaTime;
             timerB += Time.deltaTime;
-            if (timerA > 0.1f)
+            if (timerA > jangpanDealinterval)
             {
 
-                attachObj2 = Physics2D.OverlapCircleAll(transform.position, 2.9f, 1 << enemyLayer);
-                for (int i = 0; i < smoke.Count; i++)
+                attachObj2 = Physics2D.OverlapCircleAll(transform.position, jangpanoverlapFloat, 1 << enemyLayer);
+                for (int i = 0; i < smokes.Count; i++)
                 {
-                    attachObjs = Physics2D.OverlapCircleAll(smoke[i].transform.position, 2.9f, 1 << enemyLayer);
+                    attachObjs = Physics2D.OverlapCircleAll(smokes[i].transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                     {
-                        attachObjs[j].GetComponent<IHittable>().OnDamage(11, 0);
+                        attachObjs[j].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                     }
                 }
                 for (int i = 0; i < attachObj2.Length; i++)
                 {
-                    attachObj2[i].GetComponent<IHittable>().OnDamage(11, 0);
+                    attachObj2[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                 }
                 timerA = 0;
             }
             if (timerB > 1f)
             {
-                Poolable cloneSmoke = Managers.Pool.PoolManaging("10.Effects/player/PlayerSmoke", transform.position, Quaternion.identity);
-                smoke.Add(cloneSmoke);
-                cloneSmoke.GetComponent<ParticleSystem>().startSize = 10;
+                Poolable poolSmoke = Managers.Pool.Pop(smoke, transform.position);
+                poolSmoke.GetComponent<ParticleSystem>().startSize = jangpanSize;
+                smokes.Add(poolSmoke);
                 timerB = 0;
             }
             yield return null;
         }
-        for (int i = 0; i < smoke.Count; i++)
+        for (int i = 0; i < smokes.Count; i++)
         {
-            smoke[i].GetComponent<ParticleSystem>().loop = false;
+            smokes[i].GetComponent<ParticleSystem>().loop = false;
         }
         smokeParticle.loop = false;
         yield return jangpanWait2;
         Managers.Pool.Push(playerSmoke);
-        for (int i = 0; i < smoke.Count; i++)
+        for (int i = 0; i < smokes.Count; i++)
         {
-            Managers.Pool.Push(smoke[i]);
-            smoke[i].GetComponent<ParticleSystem>().loop = true;
+            Managers.Pool.Push(smokes[i]);
+            smokes[i].GetComponent<ParticleSystem>().loop = true;
         }
         smokeParticle.loop = true;
 
     }
+    protected override void FirstSkillUpdate(int level)
+    {
+        playerBase.PlayerTransformData.skill[0].skillDelay = 8;
+        jangpanDuration = 4 + (level - 1) / 2;
+        jangpanDealinterval = 0.1f;
+        jangpanSize = 2 * level + 2;
+        jangPanDamage = 1f;
+        jangpanoverlapFloat = level / 3.5f * 2 + 0.57f;
+    }
+
     IEnumerator HillaSkill(int level)
     {
         if (level <= 2)
@@ -206,76 +225,126 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-           poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostEliteMob.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange , quaternion.identity));
+            poolMob.Add(Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/GhostEliteMob.prefab", transform.position + new Vector3(Mathf.Cos(Random.Range(0, 360f) * Mathf.Deg2Rad), Mathf.Sin(Random.Range(0, 360f) * Mathf.Deg2Rad), 0) * cicleRange, quaternion.identity));
         }
         yield return hillaDuration;
-        for(int i =0; i<poolMob.Count; i++ )
+        for (int i = 0; i < poolMob.Count; i++)
         {
             Managers.Pool.Push(poolMob[i]);
         }
         poolMob.Clear();
     }
-
-    IEnumerator Beam(int level)
+    protected override void SecondSkillUpdate(int level)
     {
-        float angle = Mathf.Atan2((transform.up.y - playerMovement.Direction.y), (transform.up.x - playerMovement.Direction.x)) * Mathf.Rad2Deg;
-        beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis;
-        print(playerMovement.Direction);
-        switch (level)
+        if(level == 5)
         {
-            case 1:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                yield break;
-            case 2:
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction), angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction), angleAxis);
-                yield break;
-            case 3:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction * 2f), angleAxis);
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction * 2f), angleAxis);
-                yield break;
-            case 4:
-                Poolable[] beams = new Poolable[4];
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                beams[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.up, Quaternion.Euler(0, 0, 90));
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                beams[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.down, Quaternion.Euler(0, 0, 270));
-                angleAxis = Quaternion.AngleAxis(beamRot - 15, transform.forward);
-                beams[2] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.right, Quaternion.Euler(0, 0, 0));
-                angleAxis = Quaternion.AngleAxis(beamRot + 15, transform.forward);
-                beams[3] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + Vector3.left, Quaternion.Euler(0, 0, 180));
-                PlayerBeam beam = beams[3].GetComponent<PlayerBeam>();
-                
-                while (beam.timerA < beam.beamDuration)
-                {
-                    if (beam.IsReady)
-                    {
-                        for (int i = 0; i < beams.Length; i++)
-                        {
-                           beams[i].transform.Rotate(0, 0, 360 / beam.beamDuration * Time.deltaTime);
-                        }
-                    }
- 
-                    yield return null;
-                }
-                yield break;
-            case 5:
-                angleAxis = Quaternion.AngleAxis(beamRot, transform.forward);
-                 Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis);
-                yield break;
-            default:
-                break;
+            hillaDuration = new WaitForSeconds(10f);
+            playerBase.PlayerTransformData.skill[4].skillDelay = 15;
         }
     }
+    IEnumerator Beam(int level)
+    {
 
+        PlayerBeam playerBeam = null;
+        List<Poolable> beamList = new List<Poolable>();
+
+        beamRot = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(beamRot, transform.forward); ;
+
+        if (level == 1)
+        {
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis));
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
+        }
+        else if (level == 2)
+        {
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction), Quaternion.AngleAxis(beamRot - 15, transform.forward)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction), Quaternion.AngleAxis(beamRot + 15, transform.forward)));
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
+        }
+        else if (level == 3)
+        {
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position, angleAxis));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, -90) * playerMovement.Direction * 2f), Quaternion.AngleAxis(beamRot - 15, transform.forward)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (Quaternion.Euler(0, 0, 90) * playerMovement.Direction * 2f), Quaternion.AngleAxis(beamRot + 15, transform.forward)));
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+            yield return new WaitUntil(() => playerBeam.IsReady);
+        }
+        else if (level == 4)
+        {
+
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position +( beamRot % 90 == 0 ? Vector3.up : new Vector3(-1,1,0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 90) : Quaternion.Euler(0, 0, 135)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.down : new Vector3(1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.right : new Vector3(1, 1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 45)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.left : new Vector3(-1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 225)));
+
+            playerBeam = beamList[0].GetComponent<PlayerBeam>();
+
+            while (playerBeam.timerA < playerBeam.beamDuration)
+            {
+                if (playerBeam.IsReady)
+                {
+                    for (int i = 0; i < beamList.Count; i++)
+                    {
+                        beamList[i].transform.Rotate(new Vector3(0, 0, 180 / playerBeam.beamDuration * Time.deltaTime));
+                    }
+                }
+                yield return null;
+            }
+        }
+        else if (level == 5)
+        {
+            Vector3 currentPostion = transform.position;
+            float timer = 0;
+            Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
+            Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
+            PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
+            PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
+            while (timer < beamRotationDuration)
+            {
+                playerBeam1.timerA = 0;
+                playerBeam2.timerA = 0;
+                leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
+                rightBeam.transform.Rotate(new Vector3(0, 0, 45  * Time.deltaTime / beamRotationDuration));
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
+            playerBeam = fiveBeam.GetComponent<PlayerBeam>();
+            ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
+            playerBeam.enabled = false;
+            playerBeam.beamDuration = 2f;
+            yield return null;
+            beamParticle.Pause();
+            yield return new WaitForSeconds(1f);
+            Managers.Pool.Push(leftBeam);
+            Managers.Pool.Push(rightBeam);
+            beamParticle.Play();
+            while (playerBeam.beamDuration > playerBeam.timerA)
+            {
+                if (beamParticle.time > 0.99f)
+                {
+                    beamParticle.Pause();
+                    playerBeam.enabled = true;
+                }
+                yield return null;
+            }
+        }
+
+        yield return new WaitUntil(() => !playerBeam.IsReady);
+       
+        for (int i = 0; i < beamList.Count; i++)
+        {
+            Managers.Pool.Push(beamList[i]);
+        }
+    }
+    
+    protected override void ThirdSkillUpdate(int level)
+    {
+        playerBeam.damage = level + 1;
+    }
     IEnumerator TelpoSkill(int level)
     {
         RaycastHit2D[] hit;
@@ -313,63 +382,76 @@ public class GhostSkill : PlayerSkillBase
 
     IEnumerator Dash()
     {
+        List<Poolable> dashObjLength = new List<Poolable>();
         float timer = 0;
-        float timerA = 0;
-        float flusA = 0;
+        float alphaValue = 0;
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
-        Vector3 playerPos = transform.position;
-        GameObject dashSprite = new GameObject();
-        dashSprite.AddComponent<SpriteRenderer>();
-        dashSprite.AddComponent<Poolable>();
-        dashSprite.GetComponent<SpriteRenderer>().sprite = playerSprite.sprite;
-        dashSprite.GetComponent<SpriteRenderer>().sortingLayerName = "Skill";
-
-        dashSprite.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        float distance = 0;
+        int dashNum;
+        Vector3 firstPosition = transform.position;
+        Vector3 changePosition = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        //SpriteRenderer data = playerSprite;
-
-        //Component tempData = dashSprite.AddComponent(data.GetType());
-
-        //foreach (FieldInfo f in data.GetType().GetFields())
-        //{
-        //    f.SetValue(tempData, f.GetValue(data));
-
-        //}
-
+        SpriteRenderer currentPlayerSprite = GetComponent<SpriteRenderer>();
+        dashCloneColor = dashSprite.color;
+        dashCloneColor.a = 0;
         while (timer < dashTime)
         {
-            if (timerA > 0.02f)
+            timer += Time.fixedDeltaTime;
+            alphaValue = timer / dashTime;
+            distance = Vector2.SqrMagnitude(transform.position - changePosition);
+            if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
             {
-                flusA += 0.2f;
-                dashSprite.GetComponent<SpriteRenderer>().flipX = playerSprite.flipX;
-                Poolable clone = Managers.Pool.Pop(dashSprite, transform.position);
-                clone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, flusA);
-                cloneList.Add(clone);
+                changePosition = transform.position;
+                Poolable dashPool = Managers.Pool.Pop(dashObj, transform.position);
+                cloneList.Add(dashPool);
+                SpriteRenderer dashPoolSprite = dashPool.GetComponent<SpriteRenderer>();
+                dashPoolSprite.sprite = currentPlayerSprite.sprite;
+                dashPoolSprite.flipX = currentPlayerSprite.flipX;
+                print(dashPoolSprite.sprite.name);
+                dashCloneColor.a = alphaValue;
+                dashPoolSprite.color = dashCloneColor;
+
             }
-            timer += Time.deltaTime;
-            timerA += Time.deltaTime;
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
-        Vector3 playerPoss = transform.position - playerPos;
+        dashNum = Mathf.RoundToInt(Vector3.Magnitude(firstPosition - transform.position));
+        Vector3 playerPoss = transform.position - firstPosition;
         float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", playerPos, angleAxis);
+        for (int i = 0; i < dashNum; i++)
+        {
+            dashObjLength.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", firstPosition + playerPoss.normalized * i, angleAxis));
+            print(Quaternion.Euler(0, 0, angleAxis.eulerAngles.z) * transform.forward);
+        }
         playerMovement.IsMove = true;
-        player.IsInvincibility = false;
+        player.IsInvincibility = false; 
         foreach (var c in cloneList)
         {
             Managers.Pool.Push(c);
         }
         cloneList.Clear();
-        dashSprite = null;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(transform.position, new Vector3(18, 10));
         Gizmos.DrawWireSphere(transform.position, 25f);
         Gizmos.DrawWireSphere(transform.position, 1 / 3.5f * 2 + 0.57f);
+    }
+
+  
+
+
+    protected override void ForuthSkillUpdate(int level)
+    {
+
+    }
+
+    protected override void FifthSkillUpdate(int level)
+    {
+
     }
 }
 #endregion

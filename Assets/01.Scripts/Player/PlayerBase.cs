@@ -16,13 +16,16 @@ public class PlayerBase
     {
         maxHp = 12;
         hp = maxHp;
-        damage = 5f;
+        attack = 11f;
+        damage = Mathf.CeilToInt(attack * 0.6f);
+        attackSpeed = 0.3f;
         critChance = 5f;
         level = 1;
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
         _fragmentAmount = 0;
+        _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
@@ -74,11 +77,25 @@ public class PlayerBase
         }
     }
 
+    private float attack;
+    public float Attack
+    {
+        get => attack;
+        set => attack = value;
+    }
+
     private float damage;
     public float Damage
     {
         get => damage;
         set => damage = value;
+    }
+
+    private float attackSpeed;
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+        set => attackSpeed = value;
     }
 
     private float critChance;
@@ -175,6 +192,25 @@ public class PlayerBase
             }
 
             UIManager.Instance.UpdateGoods();
+        }
+    }
+
+    private int _bossFragmentAmount;
+    public int BossFragmentAmount
+    {
+        get
+        {
+            return _bossFragmentAmount;
+        }
+        set
+        {
+            _bossFragmentAmount = value;
+            if(_bossFragmentAmount < 0)
+            {
+                _bossFragmentAmount = 0;
+            }
+            // TODO : UI에 현재 남은 보스조각 개수 표기
+
         }
     }
 

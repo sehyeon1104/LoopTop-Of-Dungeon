@@ -9,7 +9,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 {
     [SerializeField] private EnemySO enemySO;
 
-    protected float hp = 1;
+    public float maxHp { private set; get; } = 1;
+    public float hp { private set; get; } = 1;
     protected float damage = 1;
     protected float speed = 1;
     protected float attackSpeed = 1f;
@@ -36,7 +37,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected int _move = Animator.StringToHash("Move");
 
     private Material hitMat;
-    private Material spriteLitMat;
+    private Material defaultMat;
 
     private Coroutine getHitCoroutine;
 
@@ -45,6 +46,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private bool isPlayGetHitEffect = false;
     
     public Vector3 hitPoint => Vector3.zero;
+
+    private EnemyHpBar hpBar;
 
     protected bool isMove { private set; get; } = false;
     protected bool isDead { private set; get; } = false;
@@ -57,16 +60,18 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spriteLitMat = Managers.Resource.Load<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
-        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        hpBar = transform.Find("EnemyHpBarCanvas").GetComponent<EnemyHpBar>();
     }
     void Start()
     {
         playerTransform = GameManager.Instance.Player.transform;
         anim = GetComponent<Animator>();
-
         sprite = GetComponent<SpriteRenderer>();
         isFlip = sprite.flipX;
+
+        defaultMat = sprite.material;
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+
         AnimInit();
     }
 
@@ -84,14 +89,17 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         isPlayGetHitEffect = false;
         if (sprite != null)
         {
-            sprite.material = spriteLitMat;
+            sprite.material = defaultMat;
         }
+        hpBar.gameObject.SetActive(false);
     }
 
     public void SetStatus()
     {
         if (enemySO == null) return;
 
+        // TODO : �� Ŭ���� �� Ƚ������ hp ���?
+        maxHp = enemySO.hp;
         hp = enemySO.hp;
         damage = enemySO.damage;
         speed = enemySO.speed;
@@ -164,6 +172,11 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             return;
         }
 
+        if (!hpBar.gameObject.activeSelf)
+        {
+            hpBar.gameObject.SetActive(true);
+        }
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
@@ -177,6 +190,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         hp -= damage;
 
         GameManager.Instance.PlayHitEffect(transform);
+
+        hpBar.UpdateHpBar();
 
         if (hp <= 0)
             EnemyDead();
@@ -209,7 +224,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
             yield return wait;
         }
-        sprite.material = spriteLitMat;
+        sprite.material = defaultMat;
         isPlayGetHitEffect = false;
     }
 
@@ -219,7 +234,14 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             isDead = true;
 
-            EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+            if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+            {
+                EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+            }
+            else
+            {
+                Managers.Pool.Push(gameObject.GetComponent<Poolable>());
+            }
             FragmentCollectManager.Instance.AddFragment(gameObject);
 
             gameObject.SetActive(false);

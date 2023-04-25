@@ -15,7 +15,6 @@ public class G_Ghost : EnemyDefault
 
         GameManager.Instance.Player.OnDamage(damage, 0);
 
-        hp -= 1;
         EnemyDead();
 
         actCoroutine = null;

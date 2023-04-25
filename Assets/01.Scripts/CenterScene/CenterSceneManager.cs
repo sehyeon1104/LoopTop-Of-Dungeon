@@ -14,5 +14,6 @@ public class CenterSceneManager : MonoBehaviour
         GameManager.Instance.SetMapTypeFlag(Define.MapTypeFlag.CenterMap);
         GameManager.Instance.SetSceneType(Define.Scene.CenterScene);
         GameManager.Instance.StageMoveCount = 0;
+        GameManager.Instance.SaveData();
     }
 }

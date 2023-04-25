@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1615640237970353146}
   - component: {fileID: 1615640237970353125}
   - component: {fileID: 6559363632625037294}
-  - component: {fileID: 8837944044757572004}
   - component: {fileID: 1039036662218309601}
+  - component: {fileID: -5340084964252965144}
   m_Layer: 0
   m_Name: Wave
   m_TagString: Untagged
@@ -101,18 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsUsing: 0
   PushTime: 3
---- !u!114 &8837944044757572004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615640237970353124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 671e70e70653413429abbe28b999ed50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1039036662218309601
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -129,3 +117,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-5340084964252965144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615640237970353124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 671e70e70653413429abbe28b999ed50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

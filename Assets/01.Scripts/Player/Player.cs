@@ -29,12 +29,7 @@ public class Player : MonoBehaviour, IHittable
     private float invincibleTime = 0.2f;
 
     public Vector3 hitPoint { get; private set; }
-    private void Awake()
-    {
-        playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
-        playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
-        playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[0];
-    }
+
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
@@ -44,10 +39,10 @@ public class Player : MonoBehaviour, IHittable
     {
         PlayerVisual.Instance.StartHitMotion(damage);
         yield return new WaitForSeconds(invincibleTime);
+
         isPDamaged = false;
         yield return null;
     }
-
     public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)

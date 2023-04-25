@@ -20,6 +20,8 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject hpSpace;
     [SerializeField]
     private TextMeshProUGUI fragmentAmountTMP = null;
+    [SerializeField]
+    private TextMeshProUGUI bossFragmentAmountTMP = null;
 
     // [Header("LeftDown")]
 
@@ -151,6 +153,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateGoods()
     {
         fragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.FragmentAmount.ToString());
+        bossFragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.BossFragmentAmount.ToString());
     }
 
     #region GameOver
@@ -220,8 +223,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         for (int i = 0; i < hpbars.Count; i++)
         {
-            if (i + 1 < hpbars.Count)
-                if(hpbars[i + 1].fillAmount > float.Epsilon) continue;
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
 
@@ -236,6 +237,17 @@ public class UIManager : MonoSingleton<UIManager>
         AttackButton.SetActive(true);
         InteractionButton.SetActive(false);
     }
+    
+    public bool IsActiveAttackBtn()
+    {
+        return AttackButton.activeSelf;
+    }
+
+    public Button GetInteractionButton()
+    {
+        return InteractionButton.GetComponent<Button>();
+    }
+
     public IEnumerator ShowCurrentStageName()
     {
         if(showCurStageNameObj.gameObject == null)
@@ -280,6 +292,18 @@ public class UIManager : MonoSingleton<UIManager>
     public void LoadToTitleScene()
     {
         Managers.Scene.LoadScene(Define.Scene.TitleScene);
+    }
+
+    public void LeaveBtn()
+    {
+        if(GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
+        {
+            Managers.Scene.LoadScene(Define.Scene.CenterScene);
+        }
+        else if(GameManager.Instance.sceneType == Define.Scene.CenterScene)
+        {
+            GameManager.Instance.GameQuit();
+        }
     }
 
     
