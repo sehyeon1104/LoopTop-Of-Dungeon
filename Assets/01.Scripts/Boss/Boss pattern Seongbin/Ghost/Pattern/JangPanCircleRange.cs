@@ -13,8 +13,6 @@ public class JangPanCircleRange : MonoBehaviour
     public float range;
     public LayerMask Layer;
 
-    WaitForSeconds checkTime = new WaitForSeconds(0.1f);
-
     WaitForSeconds DotTime = new WaitForSeconds(0.8f);
 
     private void OnEnable()
@@ -51,7 +49,7 @@ public class JangPanCircleRange : MonoBehaviour
                 StopCoroutine(PlayerDamaged);
                 iscoroutinestart = false;
             }
-            yield return checkTime;
+            yield return null;
         }
     }
 

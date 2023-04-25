@@ -41,6 +41,9 @@ public class GhostSkill : PlayerSkillBase
     private Poolable beam;
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
+    private Material beamFiveMat;
+    Texture2D eyeEffect;
+    Texture2D reverseEffect;
     [Header("솟아오르기 스킬")]
     float armSpeed = 10f;
     private Vector3 joystickDir;
@@ -52,9 +55,9 @@ public class GhostSkill : PlayerSkillBase
         playerBeam = FindObjectOfType<PlayerBeam>();    
         playerAnim = GetComponent<Animator>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
-    }
-    private void Start()
-    {
+        beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
+        eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/Eyeeffect.png");
+        reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/ReverseEffect.png");
     }
     protected override void Attack()
     {
@@ -331,6 +334,7 @@ public class GhostSkill : PlayerSkillBase
                 }
                 yield return null;
             }
+            beamFiveMat.SetTexture("_MainTex", reverseEffect);
         }
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
