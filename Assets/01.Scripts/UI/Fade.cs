@@ -11,14 +11,9 @@ public class Fade : MonoSingleton<Fade>
 
     private WaitForEndOfFrame waitFrame;
 
-    private void Awake()
-    {
-        fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
-    }
-
     private void Start()
     {
-        Init();
+        //Init();
     }
 
     private void Init()
