@@ -159,13 +159,13 @@ public class P_Patterns : BossPattern
 
             if (NowPhase == 1)
             {
-                yield return new WaitForSeconds(5f);
-                Managers.Pool.PoolManaging("", randPos, Quaternion.identity);
+                yield return new WaitForSeconds(8f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
             }
             else
             {
-                yield return new WaitForSeconds(3f);
-                Managers.Pool.PoolManaging("", randPos, Quaternion.identity);
+                yield return new WaitForSeconds(5f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity); //추후 2페이즈 기둥으로 바꿀 예정
             }
         }
     }
