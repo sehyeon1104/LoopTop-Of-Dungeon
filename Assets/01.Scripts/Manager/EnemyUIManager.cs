@@ -30,7 +30,7 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
 
         // 오브젝트의 위로 이동
         damageTMP.transform.position = new Vector3(damagedObj.transform.position.x + Random.Range(-damagedObj.transform.localScale.x, damagedObj.transform.localScale.x), damagedObj.transform.position.y, 0);
-        damageTMP.transform.DOMoveY(damagedObj.transform.position.y + Random.Range(1.5f, 2.5f), 1f);
+        damageTMP.transform.DOMoveY(damagedObj.transform.position.y + Random.Range(1.5f, 2.5f), 1f).SetUpdate(true);
         // 1초후 삭제
         //StartCoroutine(PoolDamageTMP(damageTMP));
         yield return null;
@@ -59,7 +59,7 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
 
     public IEnumerator PoolDamageTMP(GameObject damageTMP)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         damageTMP.transform.SetParent(gameObject.transform);
         damageTMP.SetActive(false);
     }

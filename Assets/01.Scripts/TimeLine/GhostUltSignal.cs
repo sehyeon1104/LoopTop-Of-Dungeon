@@ -22,7 +22,7 @@ public class GhostUltSignal : MonoBehaviour
 
     List<string> animArray;
     
-    WaitForSeconds zerodotzeroone = new WaitForSeconds(0.01f);
+    WaitForSecondsRealtime zerodotzeroone = new WaitForSecondsRealtime(0.01f);
 
     internal int index = 0;
 
@@ -47,7 +47,14 @@ public class GhostUltSignal : MonoBehaviour
         isArrayed = true;
     }
 
-
+    public void AttackEnemy()
+    {
+        Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0, 1 << enemyLayer);
+        for (int i = 0; i < attachEnemises.Length; i++)
+        {
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
+        }
+    }
     public void UltSkillAnim()
     {
         
@@ -66,17 +73,12 @@ public class GhostUltSignal : MonoBehaviour
 
     public void ScreenWhite()
     {
-        Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0,1<< enemyLayer);
-        for(int i =0; i<attachEnemises.Length; i++)
-        {
-            attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
-        }
         Color color = panel1.color;
         color.a = 0;
         panel1.color = color;
         panel2.color = color;
         PlayerMovement.Instance.IsMove = true;
-        playerScript.IsInvincibility = false;
+        Time.timeScale = 1;
     }
 
     public IEnumerator ScreenDarkCor()
@@ -112,7 +114,7 @@ public class GhostUltSignal : MonoBehaviour
 
     public void GhostBossTransform()
     {
-        playerScript.IsInvincibility = true;
+        Time.timeScale = 0f;
         PlayerMovement.Instance.IsMove = false;
         GhostBoss.transform.position = player.transform.position;
         GhostBossSkill.transform.position = new Vector3(player.transform.position.x + (-4.77f), player.transform.position.y +(8.54f), 0);

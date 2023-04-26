@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract  class PlayerSkillBase : MonoBehaviour
 {
+    
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Rigidbody2D playerRigid;
     [HideInInspector] public SpriteRenderer playerSprite;
@@ -23,6 +24,8 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     public Action attack;
     protected List<Poolable> cloneList = new List<Poolable>();
     public Color dashCloneColor;
+    Animator playerAnim;
+    protected float attackRange = 0;
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     protected abstract void FirstSkill(int level);
 
@@ -38,10 +41,25 @@ public abstract  class PlayerSkillBase : MonoBehaviour
     protected abstract void FifthSkill(int level);
     protected abstract void FifthSkillUpdate(int level);
 
-    protected abstract void Attack();
+    protected virtual void Attack()
+    {
+        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1"))
+            return;
+
+
+        playerAnim.SetTrigger("Attack");
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
+        for (int i = 0; i < enemys.Length; i++)
+        {
+                CinemachineCameraShaking.Instance.CameraShake();
+                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+        }
+    }
     protected abstract void UltimateSkill();
 
-    protected abstract void DashSkill();
+    protected virtual void DashSkill()
+    {
+    }
 
     protected void init()
     {
@@ -72,6 +90,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         playerMovement = GetComponentInParent<PlayerMovement>();
         playerRigid = GetComponentInParent<Rigidbody2D>();
         player = GameManager.Instance.Player;
+        playerAnim = GetComponent<Animator>();
         init();
     }
 }
