@@ -49,7 +49,6 @@ public class GhostUltSignal : MonoBehaviour
 
     public void AttackEnemy()
     {
-        print("ss");
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0, 1 << enemyLayer);
         for (int i = 0; i < attachEnemises.Length; i++)
         {

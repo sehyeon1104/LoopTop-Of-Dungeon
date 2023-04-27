@@ -21,7 +21,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
     float distance = 0;
-    protected float instanceClonePerVelocity = 0.5f;
+    protected float instanceClonePerVelocity = 0.3f;
     public PlayerBase playerBase;
     public Dictionary<int, Action<int>> playerSkills = new Dictionary<int, Action<int>>();
     public Action ultimateSkill;
