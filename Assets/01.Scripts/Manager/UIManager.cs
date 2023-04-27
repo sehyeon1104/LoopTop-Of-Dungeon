@@ -52,6 +52,7 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject Skill1Button;
     private GameObject Skill2Button;
     private GameObject UltButton;
+    Image[] skillIcons = new Image[2];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -66,6 +67,8 @@ public class UIManager : MonoSingleton<UIManager>
         Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
+        skillIcons[0] = Skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[1] = Skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
     private void Start()
@@ -187,8 +190,8 @@ public class UIManager : MonoSingleton<UIManager>
     public bool SkillCooltime(PlayerSkillData skillData,Define.SkillNum skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-        Image currentImage = touchedObj.GetComponent<Image>();
-        if (currentImage.fillAmount != 1f)
+        Image currentImage = touchedObj.transform.Find("CooltimeImg").GetComponent<Image>();
+        if (currentImage.fillAmount > 0)
             return false;
 
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
@@ -204,16 +207,28 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
-        cooltimeImg.fillAmount = 0f;
-        while (cooltimeImg.fillAmount < 1f)
+        cooltimeImg.fillAmount = 1f;
+        while (cooltimeImg.fillAmount > 0)
         {
-            cooltimeImg.fillAmount += Time.deltaTime / skillCooltime;
-            yield return new WaitForEndOfFrame();
+            cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
+            yield return null;
         }
-
-        yield break;
     }
+    public void ResetSkill()
+    {
+        for(int i=0; i<skillIcons.Length; i++)
+        {
+            skillIcons[i].sprite = null;
+        }
+    }
+    public void SetSkillIcon(PlayerSkillData skilldata,int skillNum,int spriteNum)
+    {
+        if (skillIcons[0].sprite != null)
+            skillIcons[1].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
+        else
+            skillIcons[0].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
 
+    }
     public void TransformUITest()
     {
         pressF.gameObject.SetActive(true);

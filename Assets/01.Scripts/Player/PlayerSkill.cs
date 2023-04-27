@@ -52,25 +52,32 @@ public class PlayerSkill : MonoBehaviour
 
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
-            
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
     }
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
+        ReserProperty();
         PlayerSkillBase playerSkill;
-
-        
+        UIManager.Instance.ResetSkill();
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
+            playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
+            playerSkill.playerSkillUpdate[3](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[1](slotLevel[0]);
             playerSkill.playerSkillUpdate[1](slotLevel[0]);
-            playerSkill.playerSkillUpdate[3](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             skillEvent[4] = playerSkill.dashSkill;
+        }
+    }
+    void ReserProperty()
+    {
+        for(int i =0; i < skillData.Count; i++)
+        {
+            skillData[(Define.PlayerTransformTypeFlag)i].enabled = false;
         }
     }
     void Skill1()

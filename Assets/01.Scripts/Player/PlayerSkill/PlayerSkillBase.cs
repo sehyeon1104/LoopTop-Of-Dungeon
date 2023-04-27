@@ -3,30 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract  class PlayerSkillBase : MonoBehaviour
+public abstract class PlayerSkillBase : MonoBehaviour
 {
-    
+
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Rigidbody2D playerRigid;
     [HideInInspector] public SpriteRenderer playerSprite;
+    SpriteRenderer currentPlayerSprite;
     [HideInInspector] protected Player player;
     [HideInInspector] public float dashTime;
+    Vector3 changePosition;
+    float timer = 0;
+    float alphaValue = 0;
     protected GameObject dashObj;
     protected SpriteRenderer dashSprite;
     protected int enemyLayer;
     protected float dashVelocity = 0;
     protected float dashDuration = 0;
+    float distance = 0;
     protected float instanceClonePerVelocity = 0.5f;
     public PlayerBase playerBase;
-    public Dictionary<int,Action<int>> playerSkills = new Dictionary<int,Action<int>>();
+    public Dictionary<int, Action<int>> playerSkills = new Dictionary<int, Action<int>>();
     public Action ultimateSkill;
     public Action dashSkill;
     public Action attack;
     protected List<Poolable> cloneList = new List<Poolable>();
-    public Color dashCloneColor;
+    protected Color dashCloneColor;
     Animator playerAnim;
-    protected float attackRange = 0;
+    protected float attackRange = 1;
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
+    virtual protected void Update()
+    {
+        Attack();
+    }
     protected abstract void FirstSkill(int level);
 
     protected abstract void FirstSkillUpdate(int level);
@@ -47,20 +56,63 @@ public abstract  class PlayerSkillBase : MonoBehaviour
             return;
 
 
-        playerAnim.SetTrigger("Attack");
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
-        for (int i = 0; i < enemys.Length; i++)
+        if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
         {
+            playerAnim.SetTrigger("Attack");
+            Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
+            for (int i = 0; i < enemys.Length; i++)
+            {
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            }
         }
     }
     protected abstract void UltimateSkill();
 
-    protected virtual void DashSkill()
+    void DashSkill()
     {
+        StartCoroutine(Dash());
     }
 
+    protected virtual IEnumerator Dash()
+    {
+        timer = 0;
+        alphaValue = 0;
+        playerMovement.IsMove = false;
+        player.IsInvincibility = true;
+        distance = 0;
+        changePosition = transform.position;
+        playerRigid.velocity = playerMovement.Direction * dashVelocity;
+        currentPlayerSprite = GetComponent<SpriteRenderer>();
+        dashCloneColor = dashSprite.color;
+        dashCloneColor.a = 0;
+        while (timer < dashTime)
+        {
+            timer += Time.fixedDeltaTime;
+            alphaValue = timer / dashTime;
+            distance = Vector2.SqrMagnitude(transform.position - changePosition);
+            if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
+            {
+                changePosition = transform.position;
+                Poolable dashPool = Managers.Pool.Pop(dashObj, transform.position);
+                cloneList.Add(dashPool);
+                SpriteRenderer dashPoolSprite = dashPool.GetComponent<SpriteRenderer>();
+                dashPoolSprite.sprite = currentPlayerSprite.sprite;
+                dashPoolSprite.flipX = currentPlayerSprite.flipX;
+                dashCloneColor.a = alphaValue;
+                dashPoolSprite.color = dashCloneColor;
+
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        playerMovement.IsMove = true;
+        player.IsInvincibility = false;
+        foreach (var c in cloneList)
+        {
+            Managers.Pool.Push(c);
+        }
+        cloneList.Clear();
+    }
     protected void init()
     {
         playerBase = GameManager.Instance.Player.playerBase;
@@ -73,7 +125,7 @@ public abstract  class PlayerSkillBase : MonoBehaviour
         playerSkillUpdate.Add(2, SecondSkillUpdate);
         playerSkillUpdate.Add(3, ThirdSkillUpdate);
         playerSkillUpdate.Add(4, FifthSkillUpdate);
-        playerSkillUpdate.Add(5,FifthSkillUpdate);
+        playerSkillUpdate.Add(5, FifthSkillUpdate);
         attack = Attack;
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
