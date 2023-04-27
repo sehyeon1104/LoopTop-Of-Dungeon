@@ -49,10 +49,11 @@ public class UIManager : MonoSingleton<UIManager>
     int num = 0;
     //[Header("RightUp")]
     [Header("RightDown")]
-    private GameObject Skill1Button;
-    private GameObject Skill2Button;
-    private GameObject UltButton;
-    Image[] skillIcons = new Image[2];
+    public GameObject skill1Button;
+    public GameObject skill2Button;
+    public GameObject ultButton;
+    public GameObject dashButton;
+    Image[] skillIcons = new Image[4];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -61,14 +62,17 @@ public class UIManager : MonoSingleton<UIManager>
     public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
     private void Awake()
-    {
+    { 
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
-        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
-        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
-        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
-        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
-        skillIcons[0] = Skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[1] = Skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
+        skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
+        ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
+        dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
+        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject; 
+        skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent <Image>();
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
     private void Start()
@@ -109,9 +113,9 @@ public class UIManager : MonoSingleton<UIManager>
     public void TogglePlayerAttackUI()
     {
         AttackButton.SetActive(!AttackButton.activeSelf);
-        Skill1Button.SetActive(!Skill1Button.activeSelf);
-        Skill2Button.SetActive(!Skill2Button.activeSelf);
-        UltButton.SetActive(!UltButton.activeSelf);
+        skill1Button.SetActive(!skill1Button.activeSelf);
+        skill2Button.SetActive(!skill2Button.activeSelf);
+        ultButton.SetActive(!ultButton.activeSelf);
     }
 
 
@@ -221,13 +225,12 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[i].sprite = null;
         }
     }
-    public void SetSkillIcon(PlayerSkillData skilldata,int skillNum,int spriteNum)
+    public void SetSkillIcon(PlayerSkillData skilldata,int iconNum,int skillNum,int spriteNum)
     {
-        if (skillIcons[0].sprite != null)
-            skillIcons[1].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
-        else
-            skillIcons[0].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
+        if (iconNum == 0 && skillIcons[0].sprite != null)
+            iconNum++;
 
+            skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
     }
     public void TransformUITest()
     {
@@ -301,19 +304,22 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LoadToCenterScene()
     {
-        Managers.Scene.LoadScene(Define.Scene.CenterScene);
+        Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+        //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
-        Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
+        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
     }
 
     public void LeaveBtn()
     {
         if(GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
-            Managers.Scene.LoadScene(Define.Scene.CenterScene);
+            Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+            //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if(GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {

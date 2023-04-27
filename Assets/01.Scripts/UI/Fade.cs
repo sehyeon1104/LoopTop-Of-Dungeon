@@ -11,9 +11,14 @@ public class Fade : MonoSingleton<Fade>
 
     private WaitForEndOfFrame waitFrame;
 
+    //private void Awake()
+    //{
+    //    fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
+    //}
+
     private void Start()
     {
-        //Init();
+        Init();
     }
 
     private void Init()
@@ -22,24 +27,26 @@ public class Fade : MonoSingleton<Fade>
         {
             fadeImg.gameObject.SetActive(true);
             fadeImg.fillAmount = 1f;
+            FadeOut();
         }
     }
 
     /// <summary>
     /// 화면 가림
     /// </summary>
-    public void FadeIn(float speed = 1f)
+    public void FadeInAndLoadScene(Define.Scene sceneType, float speed = 2f)
     {
-        StartCoroutine(IEFadeIn(speed));
+        StartCoroutine(IEFadeIn(sceneType, speed));
     }
 
-    public IEnumerator IEFadeIn(float speed)
+    public IEnumerator IEFadeIn(Define.Scene sceneType, float speed)
     {
         fadeImg.gameObject.SetActive(true);
+        fadeImg.fillAmount = 0f;
 
         fadeImg.fillOrigin = (int)Image.OriginHorizontal.Right;
 
-        while (fadeImg.fillAmount >= 1f)
+        while (fadeImg.fillAmount < 1f)
         {
             fadeImg.fillAmount += Time.deltaTime * speed;
 
@@ -51,7 +58,9 @@ public class Fade : MonoSingleton<Fade>
             yield return waitFrame;
         }
 
-        fadeImg.gameObject.SetActive(false);
+        //fadeImg.gameObject.SetActive(false);
+
+        Managers.Scene.LoadScene(sceneType);
 
         yield break;
     }
@@ -67,10 +76,11 @@ public class Fade : MonoSingleton<Fade>
     public IEnumerator IEFadeOut(float speed)
     {
         fadeImg.gameObject.SetActive(true);
+        fadeImg.fillAmount = 1f;
 
         fadeImg.fillOrigin = (int)Image.OriginHorizontal.Left;
 
-        while (fadeImg.fillAmount <= 0f)
+        while (fadeImg.fillAmount > 0f)
         {
             fadeImg.fillAmount -= Time.deltaTime * speed;
 
