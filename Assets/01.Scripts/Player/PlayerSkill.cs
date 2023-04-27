@@ -27,10 +27,10 @@ public class PlayerSkill : MonoBehaviour
     private void Awake()
     {  
         playerBase = GameManager.Instance.Player.playerBase;
-        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill1_Btn").GetComponent<Button>().onClick.AddListener(Skill1);
-        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Skill2_Btn").GetComponent<Button>().onClick.AddListener(Skill2);
-        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Dash_Btn").GetComponent<Button>().onClick.AddListener(DashSkill);
-        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").GetComponent<Button>().onClick.AddListener(UltimateSkill);
+        UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
+        UIManager.Instance.skill2Button.GetComponent<Button>().onClick.AddListener(Skill2);
+        UIManager.Instance.dashButton.GetComponent<Button>().onClick.AddListener(DashSkill);
+        UIManager.Instance.ultButton.GetComponent<Button>().onClick.AddListener(UltimateSkill);
         UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
@@ -70,7 +70,9 @@ public class PlayerSkill : MonoBehaviour
             playerSkill.playerSkillUpdate[1](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,2, 6, 0);
             skillEvent[4] = playerSkill.dashSkill;
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,3, 7, 0);
         }
     }
     void ReserProperty()

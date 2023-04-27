@@ -204,7 +204,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void FirstSkillUpdate(int level)
     {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0,0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0,0);
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
         jangpanDealinterval = 0.1f;
@@ -248,7 +248,7 @@ public class GhostSkill : PlayerSkillBase
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 1 , 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1 , 0);
     }
     IEnumerator Beam(int level)
     {
@@ -358,7 +358,7 @@ public class GhostSkill : PlayerSkillBase
     
     protected override void ThirdSkillUpdate(int level)
     {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0, 2, 0);
         playerBeam.damage = level + 2;
     }
     IEnumerator TelpoSkill(int level)
