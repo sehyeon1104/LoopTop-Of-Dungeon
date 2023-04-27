@@ -34,7 +34,8 @@ public abstract class PlayerSkillBase : MonoBehaviour
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     virtual protected void Update()
     {
-        Attack();
+        if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
+            Attack();
     }
     protected abstract void FirstSkill(int level);
 
@@ -55,9 +56,6 @@ public abstract class PlayerSkillBase : MonoBehaviour
         if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || !playerMovement.IsMove)
             return;
 
-
-        if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
-        {
             playerAnim.SetTrigger("Attack");
             Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
             for (int i = 0; i < enemys.Length; i++)
@@ -67,7 +65,6 @@ public abstract class PlayerSkillBase : MonoBehaviour
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
             }
-        }
     }
     protected abstract void UltimateSkill();
 
