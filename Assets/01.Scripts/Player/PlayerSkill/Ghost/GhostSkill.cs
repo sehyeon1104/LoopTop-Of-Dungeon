@@ -358,7 +358,14 @@ public class GhostSkill : PlayerSkillBase
     
     protected override void ThirdSkillUpdate(int level)
     {
+        if(level ==5)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 1);
+        }
+        else
+        {
         UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0, 2, 0);
+        }
         playerBeam.damage = level + 2;
     }
     IEnumerator TelpoSkill(int level)
