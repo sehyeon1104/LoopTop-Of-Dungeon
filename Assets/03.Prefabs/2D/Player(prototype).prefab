@@ -444,9 +444,7 @@ MonoBehaviour:
   playerRigid: {fileID: 0}
   playerSprite: {fileID: 0}
   dashTime: 0
-  dashCloneColor: {r: 0, g: 0, b: 0, a: 0}
-  attackRange: 1
-  beamDir: {x: 0, y: 0, z: 0}
+  playerBeam: {fileID: 0}
   ghostUlt: {fileID: 3594485118525496111}
 --- !u!114 &7340307882004977393
 MonoBehaviour:
@@ -464,7 +462,6 @@ MonoBehaviour:
   playerRigid: {fileID: 0}
   playerSprite: {fileID: 0}
   dashTime: 0
-  dashCloneColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3195,7 +3192,7 @@ PlayableDirector:
   m_PlayableAsset: {fileID: 11400000, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
-  m_DirectorUpdateMode: 1
+  m_DirectorUpdateMode: 2
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: 6313097015419066949, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
@@ -3272,6 +3269,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2cf9310987118d942af473b4d9fcc031, type: 2}
     - {fileID: 11400000, guid: 97c7c19796b4e2e4a92dd821cc5bffe2, type: 2}
     - {fileID: 11400000, guid: 6dd76f2fc062a164c839fd596f3d72cb, type: 2}
+    - {fileID: 11400000, guid: 2912392d10e309d4683524e3750d1349, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -3384,6 +3382,20 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3594485118525496111}
+          m_TargetAssemblyTypeName: GhostUltSignal, Assembly-CSharp
+          m_MethodName: AttackEnemy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
 --- !u!114 &3594485118525496111
 MonoBehaviour:
@@ -6595,6 +6607,7 @@ GameObject:
   - component: {fileID: 5322660876921446628}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
+  - component: {fileID: 8812445366528427126}
   m_Layer: 8
   m_Name: Player(prototype)
   m_TagString: Player
@@ -6714,3 +6727,29 @@ MonoBehaviour:
   prefix: 
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!61 &8812445366528427126
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5}
+  m_EdgeRadius: 0

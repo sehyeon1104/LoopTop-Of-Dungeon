@@ -49,9 +49,11 @@ public class UIManager : MonoSingleton<UIManager>
     int num = 0;
     //[Header("RightUp")]
     [Header("RightDown")]
-    private GameObject Skill1Button;
-    private GameObject Skill2Button;
-    private GameObject UltButton;
+    public GameObject skill1Button;
+    public GameObject skill2Button;
+    public GameObject ultButton;
+    public GameObject dashButton;
+    Image[] skillIcons = new Image[4];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -60,12 +62,17 @@ public class UIManager : MonoSingleton<UIManager>
     public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
     private void Awake()
-    {
+    { 
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
-        Skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
-        Skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
-        UltButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
-        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
+        skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
+        skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
+        ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
+        dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
+        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject; 
+        skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+        skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent <Image>();
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
     private void Start()
@@ -106,9 +113,9 @@ public class UIManager : MonoSingleton<UIManager>
     public void TogglePlayerAttackUI()
     {
         AttackButton.SetActive(!AttackButton.activeSelf);
-        Skill1Button.SetActive(!Skill1Button.activeSelf);
-        Skill2Button.SetActive(!Skill2Button.activeSelf);
-        UltButton.SetActive(!UltButton.activeSelf);
+        skill1Button.SetActive(!skill1Button.activeSelf);
+        skill2Button.SetActive(!skill2Button.activeSelf);
+        ultButton.SetActive(!ultButton.activeSelf);
     }
 
 
@@ -187,8 +194,8 @@ public class UIManager : MonoSingleton<UIManager>
     public bool SkillCooltime(PlayerSkillData skillData,Define.SkillNum skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-        Image currentImage = touchedObj.GetComponent<Image>();
-        if (currentImage.fillAmount != 1f)
+        Image currentImage = touchedObj.transform.Find("CooltimeImg").GetComponent<Image>();
+        if (currentImage.fillAmount > 0)
             return false;
 
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
@@ -204,16 +211,27 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
-        cooltimeImg.fillAmount = 0f;
-        while (cooltimeImg.fillAmount < 1f)
+        cooltimeImg.fillAmount = 1f;
+        while (cooltimeImg.fillAmount > 0)
         {
-            cooltimeImg.fillAmount += Time.deltaTime / skillCooltime;
-            yield return new WaitForEndOfFrame();
+            cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
+            yield return null;
         }
-
-        yield break;
     }
+    public void ResetSkill()
+    {
+        for(int i=0; i<skillIcons.Length; i++)
+        {
+            skillIcons[i].sprite = null;
+        }
+    }
+    public void SetSkillIcon(PlayerSkillData skilldata,int iconNum,int skillNum,int spriteNum)
+    {
+        if (iconNum == 0 && skillIcons[0].sprite != null)
+            iconNum++;
 
+            skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
+    }
     public void TransformUITest()
     {
         pressF.gameObject.SetActive(true);
