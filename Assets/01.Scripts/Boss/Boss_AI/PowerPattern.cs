@@ -141,7 +141,7 @@ public class P_Patterns : BossPattern
 
             Managers.Pool.Push(clone);
 
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
         }
             yield return null;
     }
@@ -155,16 +155,16 @@ public class P_Patterns : BossPattern
                 continue;
             }
 
-            Vector2 randPos = new Vector2(Random.Range(-4.5f, 33.5f), Random.Range(-2.5f, 18.5f));
+            Vector2 randPos = new Vector2(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
 
             if (NowPhase == 1)
             {
-                yield return new WaitForSeconds(8f);
+                yield return new WaitForSeconds(9f);
                 Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
             }
             else
             {
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(6f);
                 Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity); //추후 2페이즈 기둥으로 바꿀 예정
             }
         }
