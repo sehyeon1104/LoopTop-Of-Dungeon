@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "SO/PlayerSkillData", order = 0)]
 public class PlayerSkillData : ScriptableObject
 {
-    public List<PlayerSkillInfo> skill;
+    public PlayerSkillInfo[] skill;
     public Sprite playerImg = null;
     //public RuntimeAnimatorController playerAnim;
 
@@ -21,6 +21,6 @@ public class PlayerSkillData : ScriptableObject
 public class PlayerSkillInfo
 {   
    public string skillName;
-   public Sprite skillIcon;
+   public Sprite[] skillIcon;
    public float skillDelay;
 }
