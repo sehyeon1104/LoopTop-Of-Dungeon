@@ -304,19 +304,22 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LoadToCenterScene()
     {
-        Managers.Scene.LoadScene(Define.Scene.CenterScene);
+        Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+        //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
-        Managers.Scene.LoadScene(Define.Scene.TitleScene);
+        Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
+        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
     }
 
     public void LeaveBtn()
     {
         if(GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
-            Managers.Scene.LoadScene(Define.Scene.CenterScene);
+            Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+            //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if(GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
