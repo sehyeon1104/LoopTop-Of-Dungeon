@@ -87,7 +87,8 @@ public class ZoneEntrance : MonoBehaviour
             GameManager.Instance.SetSceneType(sceneType);
             GameManager.Instance.SaveData();
 
-            Managers.Scene.LoadScene(sceneType);
+            Fade.Instance.FadeInAndLoadScene(sceneType);
+            //Managers.Scene.LoadScene(sceneType);
 
         }
     }
