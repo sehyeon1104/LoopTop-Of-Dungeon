@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class P_Patterns : BossPattern
 {
@@ -11,6 +12,8 @@ public class P_Patterns : BossPattern
     [SerializeField] protected GameObject shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected Transform dashBar;
+
+    [SerializeField] protected CinemachineVirtualCamera dashVCam;
     #endregion
 
     #region Phase 1
@@ -178,6 +181,9 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
+        dashVCam.Priority = 11;
+        yield return new WaitForSeconds(3f);
+        dashVCam.Priority = 0;
         yield return null;
     }
     public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
@@ -200,6 +206,13 @@ public class PowerPattern : P_Patterns
         StopCoroutine(ActCoroutine);
         ActCoroutine = null;
         yield return null;
+    }
+
+
+    private void Update()
+    {
+        if (nowBPhaseChange && ActCoroutine != null) StartCoroutine(ECoroutine());
+        base.Update();
     }
 
     public override int GetRandomCount(int choisedPattern)
@@ -238,6 +251,7 @@ public class PowerPattern : P_Patterns
                 yield return SCoroutine(Pattern_SG(count));
                 break;
             case 2:
+                yield return SCoroutine(Pattern_SG_2(count));
                 break;
         }
 
@@ -253,6 +267,7 @@ public class PowerPattern : P_Patterns
                 yield return SCoroutine(Pattern_DS());
                 break;
             case 2:
+                yield return SCoroutine(Pattern_DS_2());
                 break;
         }
 
@@ -268,6 +283,7 @@ public class PowerPattern : P_Patterns
                 yield return StartCoroutine(Pattern_JA());
                 break;
             case 2:
+                yield return StartCoroutine(Pattern_JA_2());
                 break;
         }
 
