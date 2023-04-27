@@ -27,7 +27,7 @@ public class P_Patterns : BossPattern
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
-            Managers.Pool.PoolManaging("10.Effects/power/ShockWave.prefab", shorkWarning.transform.position, Quaternion.identity);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
             foreach (Collider2D col in cols)
@@ -145,9 +145,46 @@ public class P_Patterns : BossPattern
         }
             yield return null;
     }
+    public IEnumerator Pattern_CM(int count = 0) //기둥
+    {
+        while(!Boss.Instance.isBDead)
+        {
+            if (nowBPhaseChange)
+            {
+                yield return null;
+                continue;
+            }
+
+            Vector2 randPos = new Vector2(Random.Range(-4.5f, 33.5f), Random.Range(-2.5f, 18.5f));
+
+            if (NowPhase == 1)
+            {
+                yield return new WaitForSeconds(8f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
+            }
+            else
+            {
+                yield return new WaitForSeconds(5f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity); //추후 2페이즈 기둥으로 바꿀 예정
+            }
+        }
+    }
     #endregion
 
     #region Phase 2
+    public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
+    {
+        yield return null;
+    }
+    public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
+    {
+        yield return null;
+    }
+    public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
+    {
+        yield return null;
+    }
+
     #endregion
 }
 public class PowerPattern : P_Patterns
@@ -186,6 +223,11 @@ public class PowerPattern : P_Patterns
         }
         return 0;
 
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Pattern_CM());
     }
 
     public override IEnumerator Pattern1(int count = 0) //바닥 찍기

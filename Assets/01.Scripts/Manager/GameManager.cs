@@ -61,13 +61,13 @@ public class GameManager : MonoSingleton<GameManager>
         #region 게임 데이터 로딩
         if (!SaveManager.GetCheckGameDataBool())
         {
-            Debug.Log("[GameManager] 저장파일 없음");
+            Debug.Log("[GameManager] GameData 저장파일 없음");
             SetGameData();
             SaveManager.Save<GameData>(ref gameData);
         }
         else
         {
-            Debug.Log("[GameManager] 저장파일 있음");
+            Debug.Log("[GameManager] GameData 저장파일 있음");
             SaveManager.Load<GameData>(ref gameData);
             GetGameData();
         }
@@ -82,14 +82,14 @@ public class GameManager : MonoSingleton<GameManager>
         #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckPlayerDataBool())
         {
-            Debug.Log("[GameManager] 저장파일 없음");
+            Debug.Log("[GameManager] PlayerData 저장파일 없음");
             Player.playerBase.InitPlayerStat();
             SetPlayerStat();
             SaveManager.Save<PlayerData>(ref playerData);
         }
         else
         {
-            Debug.Log("[GameManager] 저장파일 있음");
+            Debug.Log("[GameManager] PlayerData 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
             GetPlayerStat();
         }
@@ -99,8 +99,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
 
         #endregion
-
-
+        Base.Instance.Init();
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
     }
@@ -211,8 +210,6 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
-
-        LoadData();
     }
 
     public void LoadData()
@@ -226,7 +223,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameQuit()
     {
-        SaveData();
+        if(sceneType == Define.Scene.CenterScene)
+        {
+            SaveData();
+        }
+
         Application.Quit();
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7690577589284305769}
   - component: {fileID: 7690577589284305774}
   - component: {fileID: 7690577589284305775}
+  - component: {fileID: -5430680260792744941}
   m_Layer: 0
   m_Name: GroundCrack
   m_TagString: Untagged
@@ -25,9 +26,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7690577589284305772}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 230, y: 230, z: 66.66667}
+  m_LocalScale: {x: 3.75, y: 3.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,7 +56,13 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 4.734052, y: 1.2144951, z: 0.42135543, w: 1}
+        m_Name: Color
+        m_Overridden: 1
+      - m_Value: {x: 2.1332831, y: 0.83767664, z: 0.3015636, w: 1}
+        m_Name: AftershocksColor
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -78,7 +85,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7690577589284305772}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -107,6 +114,20 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayerID: 1672594845
+  m_SortingLayer: 5
   m_SortingOrder: 0
+--- !u!114 &-5430680260792744941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7690577589284305772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 5

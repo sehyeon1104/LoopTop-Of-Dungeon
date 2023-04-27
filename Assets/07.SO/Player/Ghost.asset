@@ -14,53 +14,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skill:
   - skillName: Skill1
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 21300000, guid: 12dac5e8a2a52ea45bc5db6eb01db43b, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     skillDelay: 8
-    skillDuration: 4
-    skillDamage: 1
-    skillDamageInterval: 0.1
   - skillName: Skill2
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 0}
     skillDelay: 10
-    skillDuration: 5
-    skillDamage: 0
-    skillDamageInterval: 0
-  - skillName: Skill3
-    skillIcon: {fileID: 0}
+  - skillName: Beam
+    skillIcon:
+    - {fileID: 21300000, guid: 907900513265e1647ab11e3f28af854d, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     skillDelay: 7
-    skillDuration: 1.5
-    skillDamage: 3
-    skillDamageInterval: 0.1
   - skillName: Skill4
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     skillDelay: 3
-    skillDuration: 0
-    skillDamage: 38
-    skillDamageInterval: 1
   - skillName: Skill5
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 0}
     skillDelay: 3.5
-    skillDuration: 0
-    skillDamage: 30
-    skillDamageInterval: 1
   - skillName: Attack
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 0}
     skillDelay: 7
-    skillDuration: 0
-    skillDamage: 0
-    skillDamageInterval: 0
   - skillName: UltimateSkill
-    skillIcon: {fileID: 0}
+    skillIcon:
+    - {fileID: 21300000, guid: e7f6d25f2dd152f43b454f4ef70361e1, type: 3}
     skillDelay: 30
-    skillDuration: 0
-    skillDamage: 0
-    skillDamageInterval: 0
   - skillName: Dash
-    skillIcon: {fileID: 0}
-    skillDelay: 3
-    skillDuration: 0
-    skillDamage: 0
-    skillDamageInterval: 0
+    skillIcon:
+    - {fileID: 21300000, guid: d24fdc5097f0db44aa8e18194784a2df, type: 3}
+    skillDelay: 1.5
   playerImg: {fileID: 21300000, guid: b363794d0361a8d4997d1657e18c6b07, type: 3}
   idlClip: {fileID: 7400000, guid: 13d7097ec8e489b4d921690f680ca190, type: 2}
   atkClip: {fileID: 7400000, guid: aa64ca1c18e771a48ac7da47c2313aee, type: 2}
