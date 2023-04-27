@@ -446,7 +446,7 @@ MonoBehaviour:
   dashTime: 0
   dashCloneColor: {r: 0, g: 0, b: 0, a: 0}
   attackRange: 1
-  beamDir: {x: 0, y: 0, z: 0}
+  playerBeam: {fileID: 0}
   ghostUlt: {fileID: 3594485118525496111}
 --- !u!114 &7340307882004977393
 MonoBehaviour:
@@ -3195,7 +3195,7 @@ PlayableDirector:
   m_PlayableAsset: {fileID: 11400000, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
-  m_DirectorUpdateMode: 1
+  m_DirectorUpdateMode: 2
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: 6313097015419066949, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}

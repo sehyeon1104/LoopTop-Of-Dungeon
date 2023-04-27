@@ -25,8 +25,6 @@ public class GhostSkill : PlayerSkillBase
     float cicleRange = 2f;
     List<Poolable> poolMob = new List<Poolable>();
     WaitForSeconds hillaDuration = new WaitForSeconds(10f);
-    [SerializeField]
-    private float attackRange = 1f;
     WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
     float telpoVelocity = 50f;
     SpriteRenderer ghostDash;
@@ -62,6 +60,10 @@ public class GhostSkill : PlayerSkillBase
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/Eyeeffect.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/ReverseEffect.png");
     }
+    protected override void Update()
+    {
+        base.Update();
+    }
     protected override void Attack()
     {
         base.Attack();
@@ -95,9 +97,20 @@ public class GhostSkill : PlayerSkillBase
         ghostUlt.UltSkillCast();
     }
 
-    protected override void DashSkill()
+    protected override IEnumerator Dash()
     {
-        StartCoroutine(Dash());
+        List<Poolable> dashObjLength = new List<Poolable>();
+        int dashNum;
+        Vector3 firstPosition = transform.position;
+        yield return base.Dash();
+        dashNum = Mathf.RoundToInt(Vector3.Magnitude(firstPosition - transform.position));
+        Vector3 playerPoss = transform.position - firstPosition;
+        float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
+        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        for (int i = 0; i < dashNum; i++)
+        {
+            dashObjLength.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", firstPosition + playerPoss.normalized * i, angleAxis));
+        }
     }
 
     #region 스킬 구현
@@ -191,6 +204,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void FirstSkillUpdate(int level)
     {
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0,0);
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
         jangpanDealinterval = 0.1f;
@@ -234,6 +248,7 @@ public class GhostSkill : PlayerSkillBase
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
         }
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 1 , 0);
     }
     IEnumerator Beam(int level)
     {
@@ -343,6 +358,7 @@ public class GhostSkill : PlayerSkillBase
     
     protected override void ThirdSkillUpdate(int level)
     {
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 0);
         playerBeam.damage = level + 2;
     }
     IEnumerator TelpoSkill(int level)
@@ -378,59 +394,6 @@ public class GhostSkill : PlayerSkillBase
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position, Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
         yield return null;
-    }
-
-    IEnumerator Dash()
-    {
-        List<Poolable> dashObjLength = new List<Poolable>();
-        float timer = 0;
-        float alphaValue = 0;
-        playerMovement.IsMove = false;
-        player.IsInvincibility = true;
-        float distance = 0;
-        int dashNum;
-        Vector3 firstPosition = transform.position;
-        Vector3 changePosition = transform.position;
-        playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        SpriteRenderer currentPlayerSprite = GetComponent<SpriteRenderer>();
-        dashCloneColor = dashSprite.color;
-        dashCloneColor.a = 0;
-        while (timer < dashTime)
-        {
-            timer += Time.fixedDeltaTime;
-            alphaValue = timer / dashTime;
-            distance = Vector2.SqrMagnitude(transform.position - changePosition);
-            if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
-            {
-                changePosition = transform.position;
-                Poolable dashPool = Managers.Pool.Pop(dashObj, transform.position);
-                cloneList.Add(dashPool);
-                SpriteRenderer dashPoolSprite = dashPool.GetComponent<SpriteRenderer>();
-                dashPoolSprite.sprite = currentPlayerSprite.sprite;
-                dashPoolSprite.flipX = currentPlayerSprite.flipX;
-                print(dashPoolSprite.sprite.name);
-                dashCloneColor.a = alphaValue;
-                dashPoolSprite.color = dashCloneColor;
-
-            }
-            yield return new WaitForFixedUpdate();
-        }
-        dashNum = Mathf.RoundToInt(Vector3.Magnitude(firstPosition - transform.position));
-        Vector3 playerPoss = transform.position - firstPosition;
-        float angle = Mathf.Atan2(playerPoss.y, playerPoss.x) * Mathf.Rad2Deg;
-        Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        for (int i = 0; i < dashNum; i++)
-        {
-            dashObjLength.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/DashSmoke.prefab", firstPosition + playerPoss.normalized * i, angleAxis));
-            print(Quaternion.Euler(0, 0, angleAxis.eulerAngles.z) * transform.forward);
-        }
-        playerMovement.IsMove = true;
-        player.IsInvincibility = false; 
-        foreach (var c in cloneList)
-        {
-            Managers.Pool.Push(c);
-        }
-        cloneList.Clear();
     }
 
     private void OnDrawGizmos()
