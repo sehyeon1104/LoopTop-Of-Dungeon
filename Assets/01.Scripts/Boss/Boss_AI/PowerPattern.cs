@@ -211,7 +211,14 @@ public class PowerPattern : P_Patterns
 
     private void Update()
     {
-        if (nowBPhaseChange && ActCoroutine != null) StartCoroutine(ECoroutine());
+        if (nowBPhaseChange && ActCoroutine != null)
+        {
+            dashWarning.SetActive(false);
+            shorkWarning.SetActive(false);
+
+            StartCoroutine(ECoroutine());
+        }
+
         base.Update();
     }
 
