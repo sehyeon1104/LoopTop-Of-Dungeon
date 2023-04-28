@@ -25,8 +25,6 @@ public class GhostSkill : PlayerSkillBase
     float cicleRange = 2f;
     List<Poolable> poolMob = new List<Poolable>();
     WaitForSeconds hillaDuration = new WaitForSeconds(10f);
-    WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
-    float telpoVelocity = 50f;
     SpriteRenderer ghostDash;
 
     [Header("빔 스킬")]
@@ -45,6 +43,10 @@ public class GhostSkill : PlayerSkillBase
     WaitForSeconds beamWait = new WaitForSeconds(1f);
     Texture2D eyeEffect;
     Texture2D reverseEffect;
+    [Header("텔레포트 스킬")]
+    float telpoDamage =37;
+    float telpoVelocity = 50;
+    WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
     [Header("솟아오르기 스킬")]
     float armSpeed = 10f;
     private Vector3 joystickDir;
@@ -57,8 +59,8 @@ public class GhostSkill : PlayerSkillBase
         playerBeam = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerBeam.prefab").GetComponent<PlayerBeam>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
-        eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/NewEffect3.png");
-        reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/ReverseEffect 1.png");
+        eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
+        reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
     }
     protected override void Update()
     {
@@ -393,6 +395,17 @@ public class GhostSkill : PlayerSkillBase
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
     }
+    protected override void ForuthSkillUpdate(int level)
+    {
+        if (level == 5)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+        }
+        else
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+        }
+    }
     IEnumerator ArmSkill(int level)
     {
         Poolable[] arm = new Poolable[2];
@@ -401,6 +414,17 @@ public class GhostSkill : PlayerSkillBase
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position, Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
         yield return null;
+    }
+    protected override void FifthSkillUpdate(int level)
+    {
+        if (level == 5)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
+        }
+        else
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
+        }
     }
 
     private void OnDrawGizmos()
@@ -414,15 +438,7 @@ public class GhostSkill : PlayerSkillBase
   
 
 
-    protected override void ForuthSkillUpdate(int level)
-    {
 
-    }
-
-    protected override void FifthSkillUpdate(int level)
-    {
-
-    }
 }
 #endregion
 

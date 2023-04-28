@@ -123,7 +123,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         playerSkillUpdate.Add(1, FirstSkillUpdate);
         playerSkillUpdate.Add(2, SecondSkillUpdate);
         playerSkillUpdate.Add(3, ThirdSkillUpdate);
-        playerSkillUpdate.Add(4, FifthSkillUpdate);
+        playerSkillUpdate.Add(4, ForuthSkillUpdate);
         playerSkillUpdate.Add(5, FifthSkillUpdate);
         attack = Attack;
         ultimateSkill = UltimateSkill;
