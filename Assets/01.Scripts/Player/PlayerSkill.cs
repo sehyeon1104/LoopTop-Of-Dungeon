@@ -84,28 +84,29 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[1]();
     }
     void Attack()
     {
+        if( PlayerMovement.Instance.IsControl)
         skillEvent[2]();
     }
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[3]();
     }
 
     void DashSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove)
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove && PlayerMovement.Instance.IsControl)
             skillEvent[4]();        
     }
     #region ½ºÅ³ ¼ÅÇÃ
