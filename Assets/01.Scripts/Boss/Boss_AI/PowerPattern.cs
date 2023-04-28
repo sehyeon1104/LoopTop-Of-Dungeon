@@ -43,7 +43,6 @@ public class P_Patterns : BossPattern
             {
                 float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
                 Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
-                //얘네 나오기 전에 경고표시 나오게 수정하기
                 Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y),Quaternion.identity);
             }
 
@@ -177,7 +176,51 @@ public class P_Patterns : BossPattern
     #region Phase 2
     public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
     {
-        yield return null;
+        List<GameObject> bodyList = new List<GameObject>();
+        int bodyCount = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            shorkWarning.SetActive(true);
+            yield return new WaitForSeconds(1.2f);            
+            shorkWarning.SetActive(false);
+
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
+            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+
+            foreach (Collider2D col in cols)
+            {
+                if (col.CompareTag("Player"))
+                    GameManager.Instance.Player.OnDamage(2, 0);
+            }
+
+            for (int j = 0; j < count; j++)
+            { 
+                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
+                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
+                if (bodyCount < 3)
+                {
+                    bodyCount++;
+                    GameObject clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity).gameObject;
+                    bodyList.Add(clone);
+                }
+                else
+                {
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
+                }
+            }
+            bodyCount = 0;
+        }
+        yield return new WaitForSeconds(0.5f);
+        for(int i = 0; i < bodyList.Count; i++)
+        {
+            bodyList[i].transform.DOMove(transform.position, 0.5f);
+        }
+
+        yield return new WaitForSeconds(0.6f);
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
@@ -227,11 +270,11 @@ public class PowerPattern : P_Patterns
         switch (choisedPattern)
         {
             case 0:
-                return Random.Range(5, 8);
+                return Random.Range(6, 9);
             case 1:
-                return NowPhase == 1 ? 3 : 5;
+                break;
             case 2:
-                return NowPhase == 1 ? -4 : 4;
+                return NowPhase == 1 ? 0 : 4;
             case 3:
                 break;
             case 4:
