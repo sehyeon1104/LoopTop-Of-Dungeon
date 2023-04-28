@@ -57,8 +57,8 @@ public class GhostSkill : PlayerSkillBase
         playerBeam = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerBeam.prefab").GetComponent<PlayerBeam>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
-        eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/Eyeeffect.png");
-        reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/ReverseEffect.png");
+        eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/NewEffect3.png");
+        reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/ReverseEffect 1.png");
     }
     protected override void Update()
     {
