@@ -29,7 +29,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
     public Action attack;
     protected List<Poolable> cloneList = new List<Poolable>();
     protected Color dashCloneColor;
-    Animator playerAnim;
+    protected Animator playerAnim;
     protected float attackRange = 1;
     private WaitForFixedUpdate waitforFixedUpdate = new WaitForFixedUpdate();
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
