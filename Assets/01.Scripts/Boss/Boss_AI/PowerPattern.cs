@@ -109,7 +109,7 @@ public class P_Patterns : BossPattern
         }
         yield return null;
     }
-    public IEnumerator Pattern_JA(int count = 0) //점프어택 1페이즈
+    public IEnumerator Pattern_JA(int count = 0) //점프어택
     {
         for (int i = 0; i < 3; i++)
         {
@@ -136,6 +136,13 @@ public class P_Patterns : BossPattern
             {
                 col = Physics2D.OverlapCircle(clone.transform.position, 4.5f, 1 << 8);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.1f);
+            }
+
+            for (int j = 0; j < count; j++)
+            {
+                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
+                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 5f;
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
             }
 
             if (col != null)
@@ -227,10 +234,6 @@ public class P_Patterns : BossPattern
         dashVCam.Priority = 11;
         yield return new WaitForSeconds(3f);
         dashVCam.Priority = 0;
-        yield return null;
-    }
-    public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
-    {
         yield return null;
     }
 
@@ -327,15 +330,7 @@ public class PowerPattern : P_Patterns
 
     public override IEnumerator Pattern3(int count = 0) //볼리베어
     {
-        switch (NowPhase)
-        {
-            case 1:
-                yield return StartCoroutine(Pattern_JA());
-                break;
-            case 2:
-                yield return StartCoroutine(Pattern_JA_2());
-                break;
-        }
+        yield return StartCoroutine(Pattern_JA(count));
 
         yield return null;
         Boss.Instance.actCoroutine = null;
