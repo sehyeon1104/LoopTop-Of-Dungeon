@@ -801,6 +801,10 @@ MonoBehaviour:
   curStageName: {fileID: 1761160587}
   curStageNameLine: {fileID: 904861923}
   showCurStageNameTime: 3
+  skill1Button: {fileID: 0}
+  skill2Button: {fileID: 0}
+  ultButton: {fileID: 0}
+  dashButton: {fileID: 0}
   blurPanel: {fileID: 1223293467}
   pressF: {fileID: 0}
   hpbars: []
@@ -873,36 +877,13 @@ MonoBehaviour:
   itemObjTemplate: {fileID: 4778024336246859236, guid: 3b7dd1b68af3ea04e8304abb1d7800f3, type: 3}
   itemList:
   - itemType: 0
+    itemRating: 0
     itemNumber: 0
     itemName: Default
-    itemDescription: Debug
+    itemDescription: Default
     price: 0
-  - itemType: 2
-    itemNumber: 1
-    itemName: "\uD68C\uBCF5\uD3EC\uC158"
-    itemDescription: "\uCCB4\uB825\uC744 1\uCE78 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
-    price: 213
-  - itemType: 1
-    itemNumber: 2
-    itemName: "\uB370\uBBF8\uC9C0 \uC0C1\uC2B9"
-    itemDescription: "\uB370\uBBF8\uC9C0\uB97C 1 \uC0C1\uC2B9\uC2DC\uCF1C\uC900\uB2E4"
-    price: 321
-  - itemType: 1
-    itemNumber: 3
-    itemName: "\uD06C\uB9AC\uD2F0\uCEEC \uC0C1\uC2B9"
-    itemDescription: "\uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960\uC744 \uC0C1\uC2B9\uC2DC\uCF1C\uC900\uB2E4"
-    price: 123
-  - itemType: 1
-    itemNumber: 4
-    itemName: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD"
-    itemDescription: "\uACBD\uD5D8\uCE58\uB97C \uD68D\uB4DD\uD55C\uB2E4"
-    price: 213
   <itemSprites>k__BackingField:
   - {fileID: 0}
-  - {fileID: 21300000, guid: d05f235672301064a8f1ab0a1b01c1ba, type: 3}
-  - {fileID: 21300000, guid: e6e43c9413aeb224e8795078bc800227, type: 3}
-  - {fileID: 21300000, guid: b50faf71f4b2488498c4e81de3306565, type: 3}
-  - {fileID: 21300000, guid: 434621b57e2e4484fb05be8d8cc40e55, type: 3}
 --- !u!114 &520647070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2029,6 +2010,14 @@ PrefabInstance:
     - target: {fileID: 5575783386755548393, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: orthographic size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_CullingMask.m_Bits

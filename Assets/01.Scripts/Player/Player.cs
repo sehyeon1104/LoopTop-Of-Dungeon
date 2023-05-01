@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, IHittable
         isPDamaged = false;
         yield return null;
     }
+
     public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)

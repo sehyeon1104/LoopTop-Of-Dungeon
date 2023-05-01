@@ -17,8 +17,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
         }
     }
     public Joystick joystick { private set; get; }
-    [SerializeField] float speed = 4.25f;
-
+    public bool IsControl { get; set; } = true;
     Rigidbody2D rb;
     private float x;
     private float y;
@@ -44,7 +43,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
             rb.velocity = Vector3.zero;
             return;
         }
-        rb.velocity = inputVelocity * speed;
+        rb.velocity = inputVelocity * GameManager.Instance.Player.playerBase.MoveSpeed;
         if (inputVelocity.x != 0 || inputVelocity.y != 0)
         {
             PlayerVisual.Instance.VelocityChange(direction.x);
