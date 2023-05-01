@@ -384,11 +384,13 @@ public class GhostSkill : PlayerSkillBase
 
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        while (timer < telpoDuration)
+        while (timer < telpoDuration - 0.0001f)
         {        
             timer += Time.fixedDeltaTime;
+            print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
             if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2 -0.00001f))
             {
+                print("ss");
                 var telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", changePos, angleAxis);
                 VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
                 for (int i = 0; i < effects.Length; i++)
@@ -399,7 +401,6 @@ public class GhostSkill : PlayerSkillBase
             }
             yield return telpWait;
         }
-        print(angleAxis.eulerAngles);
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2,1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         { 
@@ -413,12 +414,23 @@ public class GhostSkill : PlayerSkillBase
         telpoDamage = level + 37;
         if (level == 5)
         {
+            telpoVelocity = 100;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+            return;
+        }
+        else if(level == 4)
+        {
+            telpoVelocity = 85;
+        }
+        else if (level == 3)
+        {
+            telpoVelocity =75;
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+            telpoVelocity = 50;
         }
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
     }
     IEnumerator ArmSkill(int level)
     {
