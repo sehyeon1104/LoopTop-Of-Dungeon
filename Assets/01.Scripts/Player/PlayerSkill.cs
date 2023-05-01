@@ -64,10 +64,10 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
-            playerSkill.playerSkillUpdate[3](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[1](slotLevel[0]);
-            playerSkill.playerSkillUpdate[1](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
+            playerSkill.playerSkillUpdate[4](slotLevel[0]);
+            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
+            playerSkill.playerSkillUpdate[5](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,2, 6, 0);
@@ -84,28 +84,29 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[1]();
     }
     void Attack()
     {
+        if( PlayerMovement.Instance.IsControl)
         skillEvent[2]();
-    }
+    } 
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[3]();
     }
 
     void DashSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove)
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove && PlayerMovement.Instance.IsControl)
             skillEvent[4]();        
     }
     #region ½ºÅ³ ¼ÅÇÃ
