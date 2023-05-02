@@ -28,6 +28,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
+    private ItemData itemData = new ItemData();
 
     private GameObject hitEffect = null;
 
@@ -92,6 +93,17 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] PlayerData 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
             GetPlayerStat();
+        }
+
+        if (!SaveManager.GetCheckDataBool("ItemData"))
+        {
+            Debug.Log("[GameManager] ItemData  저장파일 없음");
+            SaveManager.Save<ItemData>(ref itemData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] ItemData 저장파일 있음");
+            SaveManager.Load<ItemData>(ref itemData);
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -190,6 +202,23 @@ public class GameManager : MonoSingleton<GameManager>
         sceneType = gameData.sceneType;
     }
 
+    public void SetItemData(Item item)
+    {
+        itemData.itemsList.Add(item);
+    }
+
+    // 디버깅
+    public void SetItemData(List<Item> item)
+    {
+        itemData.itemsList = item;
+    }
+
+
+    public List<Item> GetItemList()
+    {
+        return itemData.itemsList;
+    }
+
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
@@ -212,6 +241,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
+        SaveManager.Save<ItemData>(ref itemData);
     }
 
     public void LoadData()

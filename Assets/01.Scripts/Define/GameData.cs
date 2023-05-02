@@ -7,4 +7,4 @@ public class GameData
 {
     public Define.MapTypeFlag mapTypeFlag;
     public Define.Scene sceneType;
-}
+}   

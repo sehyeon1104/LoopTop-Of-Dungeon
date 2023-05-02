@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class Inventory : MonoSingleton<Inventory>
 {
-    public delegate void OnSlotCountChange(int cnt);
-    public OnSlotCountChange onSlotCountChange;
+    [SerializeField]
+    private TextMeshProUGUI itemNameTmp = null;
+    [SerializeField]
+    private TextMeshProUGUI itemDesTmp = null;
 
-    private int inventorySlotCount;
-    public int InventorySlotCount
+    public void ShowItemInfo(Item item)
     {
-        get => inventorySlotCount;
-        set
-        {
-            inventorySlotCount = value;
-            onSlotCountChange(inventorySlotCount);
-        }
+        itemNameTmp.SetText(item.itemName);
+        itemDesTmp.SetText(item.itemDescription);
     }
 
 

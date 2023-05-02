@@ -69,4 +69,11 @@ public static class SaveManager
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
     }
+
+    public static bool GetCheckDataBool(string FILENAME)
+    {
+        string SAVE_FILENAME = FILENAME + ".json";
+
+        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
+    }
 }
