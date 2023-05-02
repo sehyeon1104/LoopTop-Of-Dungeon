@@ -61,6 +61,10 @@ public class PlayerBase
             {
                 hp = maxHp;
             }
+            else if(hp < maxHp)
+            {
+                GameManager.Instance.Player.HPRelatedItemEfects.Invoke();
+            }
             UIManager.Instance.HpUpdate();
         }
     }

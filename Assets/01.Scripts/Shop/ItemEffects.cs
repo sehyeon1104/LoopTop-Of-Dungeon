@@ -40,6 +40,19 @@ public class ItemEffects : MonoBehaviour
             GameManager.Instance.Player.playerBase.MoveSpeed *= 1.1f;
         }
     }
+
+    public class GiantGlove : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.buff;
+        public override Define.ItemRating itemRating => Define.ItemRating.Common;
+
+        public override bool isPersitantItem => false;
+
+        public override void Use()
+        {
+            Debug.Log("공격범위 10% 증가");
+        }
+    }
     
     // 무뎌진 검 ( 공격력 5% 증가 )
     public class DullSword : ItemBase
@@ -67,6 +80,19 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("최대 생명력 15% 증가");
             GameManager.Instance.Player.playerBase.MaxHp *= Mathf.RoundToInt(GameManager.Instance.Player.playerBase.MaxHp * 1.5f);
+        }
+    }
+
+    public class YoumuTail : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.buff;
+        public override Define.ItemRating itemRating => Define.ItemRating.Rare;
+
+        public override bool isPersitantItem => false;
+
+        public override void Use()
+        {
+            Debug.Log("대쉬 쿨타임 0.5초 감소");
         }
     }
 
@@ -104,11 +130,16 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemType itemType => Define.ItemType.buff;
         public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
-        public override bool isPersitantItem => false;
+        public override bool isPersitantItem => true;
 
         public override void Use()
         {
-            Debug.Log("적 처치 시 hp 회복");
+            Debug.Log("적 처치 시 hp 1 회복");
+
+        }
+
+        public void VampireFangsEffect()
+        {
 
         }
     }
@@ -138,11 +169,35 @@ public class ItemEffects : MonoBehaviour
 
         int temp = 0;
         int rise = 0;
+        int lastRiseAmount = 0;
 
         public override void Use()
         {
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
+            GameManager.Instance.Player.HPRelatedItemEfects.RemoveListener(BerserkerSwordEffect);
+            GameManager.Instance.Player.HPRelatedItemEfects.AddListener(BerserkerSwordEffect);
+            BerserkerSwordEffect();
+        }
 
+        public void BerserkerSwordEffect()
+        {
+            GameManager.Instance.Player.playerBase.Attack -= lastRiseAmount;
+            temp = GameManager.Instance.Player.playerBase.Hp;
+            while(temp > 0 || rise < 15)
+            {
+                temp -= 10;
+                if(temp > 0)
+                {
+                    rise++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            GameManager.Instance.Player.playerBase.Attack += rise;
+            lastRiseAmount = rise;
+            Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
         }
     }
 
