@@ -23,7 +23,7 @@ public class G_SkelMag : EnemyDefault
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         for (int i = -1; i <= 1; i++)
         {
-            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot)));
         }
 
         yield return attackWait;
