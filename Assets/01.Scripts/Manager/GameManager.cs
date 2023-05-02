@@ -20,14 +20,15 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public Define.MapTypeFlag mapTypeFlag { private set; get; }
-    public Define.Scene sceneType { private set; get; }
+    public Define.MapTypeFlag mapTypeFlag; //{ private set; get; }
+    public Define.Scene sceneType; //{ private set; get; }
 
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
+    private ItemData itemData = new ItemData();
 
     private GameObject hitEffect = null;
 
@@ -94,6 +95,17 @@ public class GameManager : MonoSingleton<GameManager>
             GetPlayerStat();
         }
 
+        if (!SaveManager.GetCheckDataBool("ItemData"))
+        {
+            Debug.Log("[GameManager] ItemData  저장파일 없음");
+            SaveManager.Save<ItemData>(ref itemData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] ItemData 저장파일 있음");
+            SaveManager.Load<ItemData>(ref itemData);
+        }
+
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
         Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
@@ -113,7 +125,15 @@ public class GameManager : MonoSingleton<GameManager>
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SaveData();
+        }
+    }
+
     public void ResetStageClearCount()
     {
         StageMoveCount = 0;
@@ -142,6 +162,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
+        playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
         playerData.expTable = Player.playerBase.ExpTable;
         playerData.exp = Player.playerBase.Exp;
@@ -171,6 +192,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
+        Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
         Player.playerBase.ExpTable = playerData.expTable;
         Player.playerBase.Exp = playerData.exp;
@@ -186,6 +208,23 @@ public class GameManager : MonoSingleton<GameManager>
     {
         mapTypeFlag = gameData.mapTypeFlag;
         sceneType = gameData.sceneType;
+    }
+
+    public void SetItemData(Item item)
+    {
+        itemData.itemsList.Add(item);
+    }
+
+    // 디버깅
+    public void SetItemData(List<Item> item)
+    {
+        itemData.itemsList = item;
+    }
+
+
+    public List<Item> GetItemList()
+    {
+        return itemData.itemsList;
     }
 
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
@@ -210,6 +249,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
+        SaveManager.Save<ItemData>(ref itemData);
     }
 
     public void LoadData()

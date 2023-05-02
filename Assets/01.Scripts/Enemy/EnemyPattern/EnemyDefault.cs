@@ -188,7 +188,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         }
 
         hp -= damage;
-
+            
         GameManager.Instance.PlayHitEffect(transform);
 
         hpBar.UpdateHpBar();
@@ -220,7 +220,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         sprite.material = hitMat;
         while(changeTime > timer)
         {   
-            timer+= Time.deltaTime;
+            timer+= Time.unscaledDeltaTime;
             hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
             yield return wait;
         }

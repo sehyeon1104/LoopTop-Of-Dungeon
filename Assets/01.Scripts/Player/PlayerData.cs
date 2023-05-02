@@ -12,6 +12,7 @@ public class PlayerData
     public float attack;
     public float damage;
     public float attackSpeed;
+    public float moveSpeed;
     public float critChance;
     public float exp;
     public int[] expTable;

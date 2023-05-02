@@ -6,13 +6,13 @@ using UnityEngine;
 public class PowerSkill : PlayerSkillBase
 {
     
-    Animator playerAnim;
+    // Animator playerAnim;
     ParticleSystem attackPar;
-    float attackRange=1f;
+    // float attackRange=1f;
     private void Awake()
     {
         Cashing();
-        playerAnim = GetComponent<Animator>();
+        // playerAnim = GetComponent<Animator>();
     }
     protected override void Update()
     {

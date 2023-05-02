@@ -7,6 +7,7 @@ using System;
 public class Item
 {
     public Define.ItemType itemType;
+    public Define.ItemRating itemRating;
     public int itemNumber;
     public string itemName;
     public string itemDescription;

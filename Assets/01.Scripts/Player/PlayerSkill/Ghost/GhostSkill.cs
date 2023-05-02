@@ -18,7 +18,7 @@ public class GhostSkill : PlayerSkillBase
     float jangpanoverlapFloat = 0;
     Poolable smokePoolable = null;
     GameObject smoke = null;
-    Color janpangFitrstColor = new Color(1,1,1);
+    Color janpangFitrstColor = new Color(1, 1, 1);
     Color jangpanglastColor = new Color(0.7372551f, 0, 1);
     ParticleSystem smokeParticle = null;
     [Header("힐라 스킬")]
@@ -44,9 +44,10 @@ public class GhostSkill : PlayerSkillBase
     Texture2D eyeEffect;
     Texture2D reverseEffect;
     [Header("텔레포트 스킬")]
-    float telpoDamage =37;
+    float telpoDamage = 37;
     float telpoVelocity = 50;
-    WaitForSeconds telpoDuration = new WaitForSeconds(0.1f);
+    float telpoDuration = 0.099999f;
+    WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     [Header("솟아오르기 스킬")]
     float armSpeed = 10f;
     private Vector3 joystickDir;
@@ -99,6 +100,8 @@ public class GhostSkill : PlayerSkillBase
         ghostUlt.UltSkillCast();
     }
 
+    #region 스킬 구현
+
     protected override IEnumerator Dash()
     {
         List<Poolable> dashObjLength = new List<Poolable>();
@@ -115,7 +118,6 @@ public class GhostSkill : PlayerSkillBase
         }
     }
 
-    #region 스킬 구현
     IEnumerator JanpangSkill(int level)
     {
         Collider2D[] attachObjs = null;
@@ -206,7 +208,7 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void FirstSkillUpdate(int level)
     {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0,0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
         jangpanDealinterval = 0.1f;
@@ -245,12 +247,12 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void SecondSkillUpdate(int level)
     {
-        if(level == 5)
+        if (level == 5)
         {
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1 , 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
     }
     IEnumerator Beam(int level)
     {
@@ -285,7 +287,7 @@ public class GhostSkill : PlayerSkillBase
         else if (level == 4)
         {
 
-            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position +( beamRot % 90 == 0 ? Vector3.up : new Vector3(-1,1,0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 90) : Quaternion.Euler(0, 0, 135)));
+            beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.up : new Vector3(-1, 1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 90) : Quaternion.Euler(0, 0, 135)));
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.down : new Vector3(1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 270) : Quaternion.Euler(0, 0, 315)));
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.right : new Vector3(1, 1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(0, 0, 45)));
             beamList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", transform.position + (beamRot % 90 == 0 ? Vector3.left : new Vector3(-1, -1, 0)), beamRot % 90 == 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 225)));
@@ -319,14 +321,14 @@ public class GhostSkill : PlayerSkillBase
                 playerBeam1.timerA = 0;
                 playerBeam2.timerA = 0;
                 leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
-                rightBeam.transform.Rotate(new Vector3(0, 0, 45  * Time.deltaTime / beamRotationDuration));
+                rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
                 timer += Time.deltaTime;
                 yield return null;
             }
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
-            beamParticle.startRotation =(beamRot % 90 == 0 ? beamRot :beamRot -90) * Mathf.Deg2Rad;
+            beamParticle.startRotation = (beamRot % 90 == 0 ? beamRot : beamRot - 90) * Mathf.Deg2Rad;
             print(beamRot);
             playerBeam.enabled = false;
             beamParticle.Pause();
@@ -357,54 +359,78 @@ public class GhostSkill : PlayerSkillBase
             Managers.Pool.Push(beamList[i]);
         }
     }
-    
+
     protected override void ThirdSkillUpdate(int level)
     {
-        if(level ==5)
+        if (level == 5)
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 1);
         }
         else
         {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0, 2, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
         }
         playerBeam.damage = level + 2;
     }
     IEnumerator TelpoSkill(int level)
     {
+        float timer = 0;
         RaycastHit2D[] hit;
         playerMovement.IsMove = false;
         player.IsInvincibility = true;
         Vector3 playerPos = transform.position;
+        Vector3 changePos = transform.position;
         playerRigid.velocity = telpoVelocity * playerMovement.Direction;
-        yield return telpoDuration;
-        Vector3 currentPlayerPos = transform.position - playerPos;
-        float angle = Mathf.Atan2(currentPlayerPos.y, currentPlayerPos.x) * Mathf.Rad2Deg;
+
+        float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-        var telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", playerPos, angleAxis);
-        VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
-        for (int i = 0; i < effects.Length; i++)
-        {
-            effects[i].Play();
+        while (timer < telpoDuration - 0.0001f)
+        {        
+            timer += Time.fixedDeltaTime;
+            print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
+            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2 -0.00001f))
+            {
+                print("ss");
+                var telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", changePos, angleAxis);
+                VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    effects[i].Play();
+                }
+                changePos = transform.position;
+            }
+            yield return telpWait;
         }
-        hit = Physics2D.BoxCastAll(playerPos, (Vector2)currentPlayerPos, angle, (Vector2)angleAxis.eulerAngles, 0, 1 << enemyLayer);
+        hit = Physics2D.BoxCastAll(playerPos, new Vector2(2,1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
-        {
-            hit[i].transform.GetComponent<IHittable>().OnDamage(3, 0);
+        { 
+            hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0);
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
     }
     protected override void ForuthSkillUpdate(int level)
     {
+        telpoDamage = level + 37;
         if (level == 5)
         {
+            telpoVelocity = 100;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+            return;
+        }
+        else if(level == 4)
+        {
+            telpoVelocity = 85;
+        }
+        else if (level == 3)
+        {
+            telpoVelocity =75;
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+            telpoVelocity = 50;
         }
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
     }
     IEnumerator ArmSkill(int level)
     {
@@ -435,7 +461,7 @@ public class GhostSkill : PlayerSkillBase
         Gizmos.DrawWireSphere(transform.position, 1 / 3.5f * 2 + 0.57f);
     }
 
-  
+
 
 
 

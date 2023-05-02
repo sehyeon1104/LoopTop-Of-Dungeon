@@ -28,10 +28,14 @@ public class Player : MonoBehaviour, IHittable
     [SerializeField]
     private float invincibleTime = 0.2f;
 
+    public UnityEvent HPRelatedItemEfects { get; private set; }
     public Vector3 hitPoint { get; private set; }
 
     private void Start()
     {
+        if (HPRelatedItemEfects == null)
+            HPRelatedItemEfects = new UnityEvent();
+
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
 
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour, IHittable
         isPDamaged = false;
         yield return null;
     }
+
     public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
@@ -64,6 +69,8 @@ public class Player : MonoBehaviour, IHittable
             StartCoroutine(IEDamaged(damage));
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
+
+        HPRelatedItemEfects.Invoke();
     }
     
     public void Dead()
