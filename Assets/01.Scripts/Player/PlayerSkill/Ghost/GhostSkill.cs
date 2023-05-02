@@ -210,14 +210,14 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void FirstSkillUpdate(int level)
     {
-        if(level == 5)
+        if (level == 5)
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 1);
         }
         else
         {
 
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
@@ -425,17 +425,17 @@ public class GhostSkill : PlayerSkillBase
         }
         if (level == 5)
         {
-            
+
             Collider2D[] hitEnemies;
             float timerA = 0;
-            while(timerA < telpoClawDuration)
+            while (timerA < telpoClawDuration)
             {
-                 Poolable clawEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw.prefab", transform.position, angleAxis);
-                clawEffect.transform.localScale = new Vector3(Random.Range(2, 4f), Random.Range(2, 4f), 1);
+                Poolable clawEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw.prefab", transform.position, angleAxis);
+                clawEffect.transform.localScale = new Vector3(Random.Range(2, 6f), Random.Range(2, 6f), 1);
                 clawEffect.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
                 clawEffect.transform.GetComponent<VisualEffect>().Play();
-                hitEnemies = Physics2D.OverlapCircleAll(transform.position,4,1<<enemyLayer);
-                for(int i =0; i<hitEnemies.Length; i++)
+                hitEnemies = Physics2D.OverlapCircleAll(transform.position, 6, 1 << enemyLayer);
+                for (int i = 0; i < hitEnemies.Length; i++)
                 {
                     hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(2, 0);
                 }
