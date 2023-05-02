@@ -13,8 +13,8 @@ public class Inventory : MonoSingleton<Inventory>
 
     public void ShowItemInfo(Item item)
     {
-        itemNameTmp.SetText(item.itemName);
-        itemDesTmp.SetText(item.itemDescription);
+        itemNameTmp.SetText(item.itemName.ToString());
+        itemDesTmp.SetText(item.itemDescription.ToString());
     }
 
 

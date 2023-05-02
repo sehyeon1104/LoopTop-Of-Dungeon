@@ -99,11 +99,13 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Debug.Log("[GameManager] ItemData  저장파일 없음");
             SaveManager.Save<ItemData>(ref itemData);
+            InventoryUI.Instance.LoadItemSlot();
         }
         else
         {
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
+            InventoryUI.Instance.LoadItemSlot();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -259,6 +261,8 @@ public class GameManager : MonoSingleton<GameManager>
 
         SaveManager.Load<PlayerData>(ref playerData);
         GetPlayerStat();
+
+        SaveManager.Load<ItemData>(ref itemData);
     }
 
     public void GameQuit()
