@@ -7,7 +7,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 {
     [SerializeField]
     private GameObject inventoryPanel;
-    bool activeInventory = false;
 
     public List<InventorySlot> slots = new List<InventorySlot>();
     [SerializeField]
@@ -30,6 +29,11 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         Debug.Log("아이템 로딩");
         slots.Clear();
         LoadItemSlot();
+    }
+
+    public void ToggleInventoryUI()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 
     // 아이템 획득시 슬롯에 추가
