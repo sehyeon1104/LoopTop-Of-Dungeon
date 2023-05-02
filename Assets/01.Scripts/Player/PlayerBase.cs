@@ -61,10 +61,8 @@ public class PlayerBase
             {
                 hp = maxHp;
             }
-            else if(hp < maxHp)
-            {
-                GameManager.Instance.Player.HPRelatedItemEfects.Invoke();
-            }
+
+            GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
             UIManager.Instance.HpUpdate();
         }
     }
@@ -90,7 +88,11 @@ public class PlayerBase
     public float Attack
     {
         get => attack;
-        set => attack = value;
+        set
+        {
+            attack = value;
+            Damage = Mathf.CeilToInt(attack * 0.6f);
+        }
     }
     public float InitAttack
     {

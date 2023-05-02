@@ -17,10 +17,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     private void Awake()
     {
         itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
-    }
-
-    private void Start()
-    {
         Init();
     }
 
@@ -28,7 +24,15 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     {
         Debug.Log("아이템 로딩");
         slots.Clear();
-        LoadItemSlot();
+        if(slotHolder.childCount > 0)
+        {
+            for (int i = 0; i < slotHolder.childCount; ++i)
+            {
+                {
+                    Destroy(slotHolder.GetChild(0).gameObject);
+                }
+            }
+        }
     }
 
     public void ToggleInventoryUI()
@@ -52,6 +56,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         newObject.transform.SetParent(slotHolder);
         newObject.SetActive(true);
         slots.Add(newItemObjComponent);
+        ItemEffects.Items[item.itemNumber].Use();
     }
 
     // 현재 획득한 아이템 목록 가져옴
@@ -59,13 +64,14 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     {
         List<Item> itemList = GameManager.Instance.GetItemList();
 
-        Debug.Log(itemList.Count);
-
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
 
         foreach(var items in itemList)
         {
+            if (items.itemNumber == 0)
+                continue;
+
             Item inventoryItem = items;
 
             newObject = Instantiate(itemObjTemplate);

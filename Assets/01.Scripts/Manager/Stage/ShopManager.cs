@@ -35,6 +35,12 @@ public class ShopManager : MonoSingleton<ShopManager>
         itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ItemObj.prefab");
     }
 
+    // µð¹ö±ë
+    private void Start()
+    {
+        GameManager.Instance.SetItemData(itemList);
+    }
+
     public void SetItem()
     {
         if(shopRoom == null)
