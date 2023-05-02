@@ -82,17 +82,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         //StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
-        for(int i =0; i < sprites.Count; i++)
-        {
-            sprites[i].color = Color.black;
-        }
-        yield return new WaitForSeconds(0.01f);
-
-        for (int i = 0; i < sprites.Count; i++)
-        {
-            sprites[i].color = bossPattern.NowPhase == 1? Color.white : bossPattern.Phase_Two_Color;
-        }
-
         yield return new WaitForSeconds(0.05f);
         isBDamaged = false;
 
