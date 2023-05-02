@@ -20,8 +20,8 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public Define.MapTypeFlag mapTypeFlag { private set; get; }
-    public Define.Scene sceneType { private set; get; }
+    public Define.MapTypeFlag mapTypeFlag; //{ private set; get; }
+    public Define.Scene sceneType; //{ private set; get; }
 
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
@@ -125,7 +125,15 @@ public class GameManager : MonoSingleton<GameManager>
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SaveData();
+        }
+    }
+
     public void ResetStageClearCount()
     {
         StageMoveCount = 0;
