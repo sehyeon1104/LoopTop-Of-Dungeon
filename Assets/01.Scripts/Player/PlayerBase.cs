@@ -19,6 +19,7 @@ public class PlayerBase
         attack = 11f;
         damage = Mathf.CeilToInt(attack * 0.6f);
         attackSpeed = 0.3f;
+        moveSpeed = 4.25f;
         critChance = 5f;
         level = 1;
         maxLevel = 100;
@@ -60,6 +61,10 @@ public class PlayerBase
             {
                 hp = maxHp;
             }
+            else if(hp < maxHp)
+            {
+                GameManager.Instance.Player.HPRelatedItemEfects.Invoke();
+            }
             UIManager.Instance.HpUpdate();
         }
     }
@@ -76,12 +81,20 @@ public class PlayerBase
             maxHp = value;
         }
     }
+    public int InitMaxHp
+    {
+        get => 12;
+    }
 
     private float attack;
     public float Attack
     {
         get => attack;
         set => attack = value;
+    }
+    public float InitAttack
+    {
+        get => 11;
     }
 
     private float damage;
@@ -96,6 +109,17 @@ public class PlayerBase
     {
         get => attackSpeed;
         set => attackSpeed = value;
+    }
+
+    private float moveSpeed;
+    public float MoveSpeed
+    {
+        get => moveSpeed;
+        set => moveSpeed = value;
+    }
+    public float InitMoveSpeed
+    {
+        get => 4.25f;
     }
 
     private float critChance;

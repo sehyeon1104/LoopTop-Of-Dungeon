@@ -69,4 +69,13 @@ public static class Define
         heal,
         
     }
+
+    public enum ItemRating
+    {
+        Default = 0,
+        Common,
+        Rare,
+        Epic,
+        Legendary
+    }
 }

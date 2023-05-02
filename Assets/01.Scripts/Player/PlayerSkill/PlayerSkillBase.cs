@@ -29,8 +29,9 @@ public abstract class PlayerSkillBase : MonoBehaviour
     public Action attack;
     protected List<Poolable> cloneList = new List<Poolable>();
     protected Color dashCloneColor;
-    Animator playerAnim;
+    protected Animator playerAnim;
     protected float attackRange = 1;
+    private WaitForFixedUpdate waitforFixedUpdate = new WaitForFixedUpdate();
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     virtual protected void Update()
     {
@@ -60,7 +61,6 @@ public abstract class PlayerSkillBase : MonoBehaviour
             Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
             for (int i = 0; i < enemys.Length; i++)
             {
-                print(enemys[i].transform.position.x - transform.position.x);
                 PlayerVisual.Instance.VelocityChange(enemys[i].transform.position.x - transform.position.x);
                 CinemachineCameraShaking.Instance.CameraShake();
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
@@ -102,7 +102,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
                 dashPoolSprite.color = dashCloneColor;
 
             }
-            yield return new WaitForFixedUpdate();
+            yield return waitforFixedUpdate;
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
