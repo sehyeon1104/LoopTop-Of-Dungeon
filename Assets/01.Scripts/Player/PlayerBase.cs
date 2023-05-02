@@ -62,7 +62,8 @@ public class PlayerBase
                 hp = maxHp;
             }
 
-            ItemEffects.Items[10].Use();
+            GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
+            // ItemEffects.Items[10].Use();
             UIManager.Instance.HpUpdate();
         }
     }
