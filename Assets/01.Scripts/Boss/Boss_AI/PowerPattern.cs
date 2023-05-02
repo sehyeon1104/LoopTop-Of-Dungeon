@@ -11,10 +11,21 @@ public class P_Patterns : BossPattern
     #region Initialize
     [SerializeField] protected GameObject shorkWarning;
     [SerializeField] protected GameObject dashWarning;
+    [SerializeField] protected GameObject dash2Phase;
     [SerializeField] protected Transform dashBar;
 
     [SerializeField] protected CinemachineVirtualCamera dashVCam;
+
+    private List<Transform> partList = new List<Transform>();
     #endregion
+
+    private void Awake()
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+            partList.Add(dash2Phase.transform.Find($"Part{i}"));
+        }
+    }
 
     #region Phase 1
     public IEnumerator Pattern_SG(int count = 0) //바닥찍기 1페이즈
@@ -232,7 +243,12 @@ public class P_Patterns : BossPattern
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
         dashVCam.Priority = 11;
+        int randomInvisible = Random.Range(0, 6);
+        partList[randomInvisible].gameObject.SetActive(false);
+        dash2Phase.SetActive(true);
         yield return new WaitForSeconds(3f);
+        partList[randomInvisible].gameObject.SetActive(true);
+        dash2Phase.SetActive(false);
         dashVCam.Priority = 0;
         yield return null;
     }

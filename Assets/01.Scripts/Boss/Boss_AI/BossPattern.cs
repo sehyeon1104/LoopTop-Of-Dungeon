@@ -15,8 +15,6 @@ public abstract class BossPattern : MonoBehaviour
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] private int[] phase_patternCount;
     private WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
-    [Tooltip("보스 2페이즈 색상")]
-    [SerializeField] public Color Phase_Two_Color;
 
     [Space]
 
@@ -86,11 +84,6 @@ public abstract class BossPattern : MonoBehaviour
         isUsingFinalPattern = false;
         patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
-
-        for (int i = 0; i < Boss.Instance.sprites.Count; i++)
-        {
-            Boss.Instance.sprites[i].color = Phase_Two_Color;
-        }
 
         Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 

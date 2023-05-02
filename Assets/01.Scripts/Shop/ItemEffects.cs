@@ -37,7 +37,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Rito.Debug.Log("이동속도 10% 증가");
-            GameManager.Instance.Player.playerBase.MoveSpeed *= 1.1f;
+            GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 1.1f;
         }
     }
 
@@ -79,7 +79,10 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("최대 생명력 15% 증가");
-            GameManager.Instance.Player.playerBase.MaxHp *= Mathf.RoundToInt(GameManager.Instance.Player.playerBase.MaxHp * 1.5f);
+            int incQuantity = Mathf.RoundToInt(GameManager.Instance.Player.playerBase.InitMaxHp * 0.15f);
+            Debug.Log(incQuantity);
+            GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
+            GameManager.Instance.Player.playerBase.Hp += incQuantity;
         }
     }
 
@@ -174,8 +177,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
-            GameManager.Instance.Player.HPRelatedItemEfects.RemoveListener(BerserkerSwordEffect);
-            GameManager.Instance.Player.HPRelatedItemEfects.AddListener(BerserkerSwordEffect);
+            //GameManager.Instance.Player.HPRelatedItemEfects.RemoveListener(BerserkerSwordEffect);
+            //GameManager.Instance.Player.HPRelatedItemEfects.AddListener(BerserkerSwordEffect);
             BerserkerSwordEffect();
         }
 
@@ -183,10 +186,10 @@ public class ItemEffects : MonoBehaviour
         {
             GameManager.Instance.Player.playerBase.Attack -= lastRiseAmount;
             temp = GameManager.Instance.Player.playerBase.Hp;
-            while(temp > 0 || rise < 15)
+            while(temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
             {
-                temp -= 10;
-                if(temp > 0)
+                temp += 10;
+                if(temp < GameManager.Instance.Player.playerBase.MaxHp)
                 {
                     rise++;
                 }
@@ -201,9 +204,25 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
-    public static ItemBase[] ShopItems = new ItemBase[]
+    public static ItemBase[] Items = new ItemBase[]
     {
+        // common
         new Default(),      // 0번 아이템 ( 메꿈용 )
+        new WingShoes(),
+        new GiantGlove(),
+        new DullSword(),
 
+        // rare
+        new ChampionBelt(),
+        new YoumuTail(),
+        new InquisitorsWatch(),
+        new SharpSword(),
+
+        // epic
+        new VampireFangs(),
+        
+        // legendary
+        new AllRoundHalfGlove(),
+        new BerserkerSword(),
     };
 }

@@ -47,7 +47,7 @@ public class UIManager : MonoSingleton<UIManager>
     TextMeshProUGUI fpsText;
     float timer = 0;
     int num = 0;
-    //[Header("RightUp")]
+    // [Header("RightUp")]
     [Header("RightDown")]
     public GameObject skill1Button;
     public GameObject skill2Button;
@@ -61,6 +61,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
+
     private void Awake()
     { 
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
@@ -68,28 +69,32 @@ public class UIManager : MonoSingleton<UIManager>
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
-        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject; 
+        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
         skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent <Image>();
         fpsText = playerUI.transform.Find("RightUp/FPS").GetComponent<TextMeshProUGUI>();   
     }
+
     private void Start()
     {
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
     }
+
     private void Update()
     {
         FPSUpdate();
     }
+
     public void UpdateUI()
     {
         HpUpdate();
         UpdateGoods();
     }
+
     public void FPSUpdate()
     {
 
@@ -102,6 +107,7 @@ public class UIManager : MonoSingleton<UIManager>
             num = 0;
         }
     }
+
     public void HPInit()
     {
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
@@ -118,7 +124,6 @@ public class UIManager : MonoSingleton<UIManager>
         ultButton.SetActive(!ultButton.activeSelf);
     }
 
-
     #region Panels
     public void DisActiveAllPanels()
     {
@@ -126,6 +131,7 @@ public class UIManager : MonoSingleton<UIManager>
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
         checkOneMorePanel.SetActive(false);
+        InventoryUI.Instance.gameObject.SetActive(false);
     }
 
     public void TogglePausePanel()
@@ -191,7 +197,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public bool SkillCooltime(PlayerSkillData skillData,Define.SkillNum skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
     {
         GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
         Image currentImage = touchedObj.transform.Find("CooltimeImg").GetComponent<Image>();
@@ -250,6 +256,7 @@ public class UIManager : MonoSingleton<UIManager>
         AttackButton.SetActive(false);
         InteractionButton.SetActive(true);
     }
+
     public void RotateAttackButton()
     {
         AttackButton.SetActive(true);
@@ -326,6 +333,4 @@ public class UIManager : MonoSingleton<UIManager>
             GameManager.Instance.GameQuit();
         }
     }
-
-    
 }

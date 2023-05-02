@@ -80,6 +80,7 @@ public class ItemObj : MonoBehaviour
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);  
         soldOutPanel.SetActive(true);
-        ItemEffects.ShopItems[item.itemNumber].Use();
+        ItemEffects.Items[item.itemNumber].Use();
+        InventoryUI.Instance.AddItemSlot(item);
     }
 }
