@@ -59,7 +59,16 @@ public class DashParts : MonoBehaviour
         barRenderer.color = mainColor;
         warning.SetActive(false);
 
-        transform.DOMoveX(transform.position.x + xDir * 50f, 0.5f);
+        transform.DOMoveX(transform.position.x + xDir * 50f, 0.3f);
+
         yield return new WaitForSeconds(1f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 8)
+        {
+            GameManager.Instance.Player.OnDamage(2, 0);
+        }
     }
 }
