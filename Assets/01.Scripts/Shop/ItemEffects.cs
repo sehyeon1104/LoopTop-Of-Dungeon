@@ -53,7 +53,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("공격범위 10% 증가");
         }
     }
-    
+
     // 무뎌진 검 ( 공격력 5% 증가 )
     public class DullSword : ItemBase
     {
@@ -172,7 +172,6 @@ public class ItemEffects : MonoBehaviour
 
         int temp = 0;
         int rise = 0;
-        int lastRiseAmount = 0;
 
         public override void Use()
         {
@@ -182,14 +181,17 @@ public class ItemEffects : MonoBehaviour
             BerserkerSwordEffect();
         }
 
+        private static float lastRise = 0;
+
         public void BerserkerSwordEffect()
         {
-            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.Attack - GameManager.Instance.Player.playerBase.InitAttack;
+            GameManager.Instance.Player.playerBase.Attack -= lastRise;
             temp = GameManager.Instance.Player.playerBase.Hp;
-            while(temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
+            rise = 0;
+            while (temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
             {
                 temp += 10;
-                if(temp < GameManager.Instance.Player.playerBase.MaxHp)
+                if (temp < GameManager.Instance.Player.playerBase.MaxHp)
                 {
                     rise++;
                 }
@@ -198,8 +200,8 @@ public class ItemEffects : MonoBehaviour
                     break;
                 }
             }
+            lastRise = rise;
             GameManager.Instance.Player.playerBase.Attack += rise;
-            lastRiseAmount = rise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
         }
     }
