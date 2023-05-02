@@ -184,7 +184,7 @@ public class ItemEffects : MonoBehaviour
 
         public void BerserkerSwordEffect()
         {
-            GameManager.Instance.Player.playerBase.Attack -= lastRiseAmount;
+            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.Attack - GameManager.Instance.Player.playerBase.InitAttack;
             temp = GameManager.Instance.Player.playerBase.Hp;
             while(temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
             {
