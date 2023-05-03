@@ -281,6 +281,11 @@ public class PowerPattern : P_Patterns
             StartCoroutine(ECoroutine());
         }
 
+        if(Boss.Instance.isBDead)
+        {
+            dashVCam.Priority = 0;
+        }
+
         base.Update();
     }
 
@@ -346,7 +351,7 @@ public class PowerPattern : P_Patterns
 
     public override IEnumerator Pattern3(int count = 0) //볼리베어
     {
-        yield return StartCoroutine(Pattern_JA(count));
+        yield return SCoroutine(Pattern_JA(count));
 
         yield return null;
         Boss.Instance.actCoroutine = null;

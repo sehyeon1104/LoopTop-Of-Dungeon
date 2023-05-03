@@ -17,6 +17,11 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     private void Awake()
     {
         itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
+        inventoryPanel = transform.Find("Background").gameObject;
+    }
+
+    private void Start()
+    {
         Init();
     }
 
@@ -37,7 +42,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     public void ToggleInventoryUI()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
     }
 
     // æ∆¿Ã≈€ »πµÊΩ√ ΩΩ∑‘ø° √ﬂ∞°
@@ -80,6 +85,10 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             newObject.transform.SetParent(slotHolder);
             newObject.SetActive(true);
             slots.Add(newItemObjComponent);
+            if (ItemEffects.Items[items.itemNumber].isPersitantItem)
+            {
+                ItemEffects.Items[items.itemNumber].Use();
+            }
         }
     }
 

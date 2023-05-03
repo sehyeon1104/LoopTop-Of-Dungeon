@@ -53,7 +53,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("공격범위 10% 증가");
         }
     }
-    
+
     // 무뎌진 검 ( 공격력 5% 증가 )
     public class DullSword : ItemBase
     {
@@ -123,8 +123,9 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("치명타 데미지 5% 증가");
-            GameManager.Instance.Player.playerBase.Exp += 5;
+            Debug.Log("스킬 쿨타임 5% 감소");
+            // TODO : 스킬 쿨타임 감소 구현
+            //GameManager.Instance.Player.playerBase. += 5;
         }
     }
 
@@ -172,24 +173,24 @@ public class ItemEffects : MonoBehaviour
 
         int temp = 0;
         int rise = 0;
-        int lastRiseAmount = 0;
 
         public override void Use()
         {
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
-            //GameManager.Instance.Player.HPRelatedItemEfects.RemoveListener(BerserkerSwordEffect);
-            //GameManager.Instance.Player.HPRelatedItemEfects.AddListener(BerserkerSwordEffect);
             BerserkerSwordEffect();
         }
 
+        private static float lastRise = 0;
+
         public void BerserkerSwordEffect()
         {
-            GameManager.Instance.Player.playerBase.Attack -= lastRiseAmount;
+            GameManager.Instance.Player.playerBase.Attack -= lastRise;
             temp = GameManager.Instance.Player.playerBase.Hp;
-            while(temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
+            rise = 0;
+            while (temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
             {
                 temp += 10;
-                if(temp < GameManager.Instance.Player.playerBase.MaxHp)
+                if (temp < GameManager.Instance.Player.playerBase.MaxHp)
                 {
                     rise++;
                 }
@@ -198,8 +199,9 @@ public class ItemEffects : MonoBehaviour
                     break;
                 }
             }
+
+            lastRise = rise;
             GameManager.Instance.Player.playerBase.Attack += rise;
-            lastRiseAmount = rise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
         }
     }

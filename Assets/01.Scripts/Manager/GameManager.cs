@@ -152,6 +152,12 @@ public class GameManager : MonoSingleton<GameManager>
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 
+    public void InitSomeStats()
+    {
+        playerData.maxHp = Player.playerBase.InitMaxHp;
+        playerData.hp = Player.playerBase.InitMaxHp;
+    }
+
     /// <summary>
     /// playerData에 현재 플레이어 정보 저장
     /// </summary>
