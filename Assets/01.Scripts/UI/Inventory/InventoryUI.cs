@@ -85,7 +85,17 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             newObject.transform.SetParent(slotHolder);
             newObject.SetActive(true);
             slots.Add(newItemObjComponent);
+            if (ItemEffects.Items[items.itemNumber].isPersitantItem)
+            {
+                ItemEffects.Items[items.itemNumber].Use();
+            }
         }
+    }
+
+    public void HPRelatedItemEffects()
+    {
+        // ±¤Àü»çÀÇ °Ë
+        ItemEffects.Items[10].Use();
     }
 
 }

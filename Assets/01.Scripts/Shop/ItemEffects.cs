@@ -177,8 +177,6 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
-            GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
-            GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
             BerserkerSwordEffect();
         }
 
@@ -201,6 +199,7 @@ public class ItemEffects : MonoBehaviour
                     break;
                 }
             }
+
             lastRise = rise;
             GameManager.Instance.Player.playerBase.Attack += rise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
