@@ -15,9 +15,18 @@ public class ZoneEntrance : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI mapNameTMP = null;
 
+    private SpriteRenderer spriteRenderer = null;
+
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         isLoadScene = false;
+        Init();
+    }
+
+    private void Init()
+    {
+        spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/{gameObject.name}PortalSprite.png");
         ToggleMapNameTMP();
     }
 
