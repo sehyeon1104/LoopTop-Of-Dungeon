@@ -92,10 +92,4 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         }
     }
 
-    public void HPRelatedItemEffects()
-    {
-        // 광전사의 검
-        ItemEffects.Items[10].Use();
-    }
-
 }
