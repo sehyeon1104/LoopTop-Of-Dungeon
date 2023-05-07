@@ -35,8 +35,9 @@ public class PlayerBase
 
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
+        slotLevel = new int[] { 1, 1 };
     }
-
+    public int[] slotLevel = new int[2];
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 

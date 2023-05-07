@@ -58,7 +58,7 @@ public class G_Patterns : BossPattern
                     break;
                 case 1:
                     for (int j = -1; j <= 1; j += 2)
-                    {
+                    {   
                         Vector3 pos = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ? Vector3.up : Vector3.right;
                         dir = Boss.Instance.player.position - (transform.position + pos * j * 2);
                         rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

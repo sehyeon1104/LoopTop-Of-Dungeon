@@ -109,10 +109,10 @@ public abstract class PlayerSkillBase : MonoBehaviour
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
-        foreach (var c in cloneList)
-        {
-            Managers.Pool.Push(c);
-        }
+        //foreach (var c in cloneList)
+        //{
+        //    Managers.Pool.Push(c);
+        //}
         cloneList.Clear();
     }
     protected void init()
@@ -122,7 +122,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         playerSkills.Add(2, SecondSkill);
         playerSkills.Add(3, ThirdSkill);
         playerSkills.Add(4, ForuthSkill);
-        playerSkills.Add(5, FirstSkill);
+        playerSkills.Add(5, FifthSkill);
         playerSkillUpdate.Add(1, FirstSkillUpdate);
         playerSkillUpdate.Add(2, SecondSkillUpdate);
         playerSkillUpdate.Add(3, ThirdSkillUpdate);
