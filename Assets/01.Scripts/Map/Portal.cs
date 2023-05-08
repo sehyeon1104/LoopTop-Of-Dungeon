@@ -13,16 +13,19 @@ public class Portal : MonoBehaviour
     private bool isInteraction = false;
 
     private GameObject moveCanvas = null;
+    private SpriteRenderer spriteRenderer = null;
 
     private void Awake()
     {
         moveCanvas = transform.Find("MoveCanvas").gameObject;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
         isLoadScene = false;
         isInteraction = false;
+        spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/{GameManager.Instance.mapTypeFlag}PortalSprite.png");
     }
 
     private void FixedUpdate()

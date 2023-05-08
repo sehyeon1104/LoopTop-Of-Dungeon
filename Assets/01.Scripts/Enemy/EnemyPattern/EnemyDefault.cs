@@ -68,10 +68,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         isFlip = sprite.flipX;
-
         defaultMat = sprite.material;
         hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
-
         AnimInit();
     }
 

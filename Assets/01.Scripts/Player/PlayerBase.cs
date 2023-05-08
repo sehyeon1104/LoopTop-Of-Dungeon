@@ -35,8 +35,9 @@ public class PlayerBase
 
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
+        slotLevel = new int[] { 1, 1 };
     }
-
+    public int[] slotLevel = new int[2];
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 
@@ -62,7 +63,9 @@ public class PlayerBase
                 hp = maxHp;
             }
 
-            ItemEffects.Items[10].Use();
+            UseItemEffectManager.Instance?.HPRelatedItemEffects();
+            //GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
+            // ItemEffects.Items[10].Use();
             UIManager.Instance.HpUpdate();
         }
     }

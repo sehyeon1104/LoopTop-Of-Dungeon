@@ -123,8 +123,9 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("치명타 데미지 5% 증가");
-            GameManager.Instance.Player.playerBase.Exp += 5;
+            Debug.Log("스킬 쿨타임 5% 감소");
+            // TODO : 스킬 쿨타임 감소 구현
+            //GameManager.Instance.Player.playerBase. += 5;
         }
     }
 
@@ -176,8 +177,6 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
-            //GameManager.Instance.Player.HPRelatedItemEfects.RemoveListener(BerserkerSwordEffect);
-            //GameManager.Instance.Player.HPRelatedItemEfects.AddListener(BerserkerSwordEffect);
             BerserkerSwordEffect();
         }
 
@@ -200,6 +199,7 @@ public class ItemEffects : MonoBehaviour
                     break;
                 }
             }
+
             lastRise = rise;
             GameManager.Instance.Player.playerBase.Attack += rise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);

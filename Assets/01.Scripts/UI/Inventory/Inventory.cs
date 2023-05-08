@@ -11,6 +11,7 @@ public class Inventory : MonoSingleton<Inventory>
     [SerializeField]
     private TextMeshProUGUI itemDesTmp = null;
 
+
     public void ShowItemInfo(Item item)
     {
         itemNameTmp.SetText(item.itemName.ToString());

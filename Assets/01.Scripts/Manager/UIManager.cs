@@ -131,7 +131,7 @@ public class UIManager : MonoSingleton<UIManager>
         pausePanel.SetActive(false);
         gameOverPanel.SetActive(false);
         checkOneMorePanel.SetActive(false);
-        InventoryUI.Instance.gameObject.SetActive(false);
+        InventoryUI.Instance.transform.Find("Background").gameObject.SetActive(false);
     }
 
     public void TogglePausePanel()
