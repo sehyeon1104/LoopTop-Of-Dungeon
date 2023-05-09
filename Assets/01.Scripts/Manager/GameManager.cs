@@ -26,6 +26,10 @@ public class GameManager : MonoSingleton<GameManager>
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
+    [Tooltip("아이템 추가")]
+    [field: SerializeField]
+    public List<Item> allItemList { get; private set; } = new List<Item>();
+
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
     private ItemData itemData = new ItemData();
@@ -98,6 +102,7 @@ public class GameManager : MonoSingleton<GameManager>
         if (!SaveManager.GetCheckDataBool("ItemData"))
         {
             Debug.Log("[GameManager] ItemData  저장파일 없음");
+            SetItemData();
             SaveManager.Save<ItemData>(ref itemData);
             InventoryUI.Instance.LoadItemSlot();
         }
@@ -105,6 +110,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
+            LoadItemData();
             InventoryUI.Instance.LoadItemSlot();
         }
 
@@ -126,6 +132,9 @@ public class GameManager : MonoSingleton<GameManager>
             Managers.Pool.CreatePool(hitEffect, 20);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
+
+        // 디버깅
+        //SetItemData(allItemList);
     }
 
     private void Update()
@@ -218,22 +227,31 @@ public class GameManager : MonoSingleton<GameManager>
         sceneType = gameData.sceneType;
     }
 
-    public void SetItemData(Item item)
+    public void SetItemData()
     {
-        itemData.itemsList.Add(item);
+        itemData.allItemList = allItemList;
+    }
+
+    public void LoadItemData()
+    {
+        allItemList = itemData.allItemList;
+    }
+
+    public void AddItemData(Item item)
+    {
+        itemData.curItemList.Add(item);
     }
 
     // 디버깅
     public void SetItemData(List<Item> item)
     {
-        itemData.itemsList = item;
+        itemData.curItemList = item;
         SaveManager.Save<ItemData>(ref itemData);
     }
 
-
     public List<Item> GetItemList()
     {
-        return itemData.itemsList;
+        return itemData.curItemList;
     }
 
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
@@ -270,6 +288,7 @@ public class GameManager : MonoSingleton<GameManager>
         GetPlayerStat();
 
         SaveManager.Load<ItemData>(ref itemData);
+        LoadItemData();
     }
 
     public void GameQuit()
