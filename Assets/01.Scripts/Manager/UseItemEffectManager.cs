@@ -9,7 +9,7 @@ public class UseItemEffectManager : MonoSingleton<UseItemEffectManager>
     public void HPRelatedItemEffects()
     {
         // 광전사의 검
-        ItemEffects.Items[10].Use();
+        // ItemEffects.Items[10].Use();
     }
 
 }

@@ -227,6 +227,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SetItemData(List<Item> item)
     {
         itemData.itemsList = item;
+        SaveManager.Save<ItemData>(ref itemData);
     }
 
 

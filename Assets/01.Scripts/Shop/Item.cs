@@ -10,6 +10,7 @@ public class Item
     public Define.ItemRating itemRating;
     public int itemNumber;
     public string itemName;
+    public string itemNameEng;
     public string itemDescription;
     public long price;
 }

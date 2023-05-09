@@ -23,6 +23,7 @@ public class Portal : MonoBehaviour
 
     private void Start()
     {
+        moveCanvas.gameObject.SetActive(false);
         isLoadScene = false;
         isInteraction = false;
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/{GameManager.Instance.mapTypeFlag}PortalSprite.png");
