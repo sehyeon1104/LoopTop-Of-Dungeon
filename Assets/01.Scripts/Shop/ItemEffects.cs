@@ -11,6 +11,7 @@ public class ItemEffects : MonoBehaviour
         public abstract Define.ItemRating itemRating { get; }
         public abstract bool isPersitantItem { get; }
         public abstract void Use();
+        public virtual bool isOneOff { get; } = false;
     }
 
     public class Default : ItemBase
@@ -26,6 +27,7 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    #region Common
     // 날개달린 신발 ( 이동속도 10% 증가 )
     public class WingShoes : ItemBase
     {
@@ -72,6 +74,9 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Rare
     public class ChampionBelt : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.buff;
@@ -136,6 +141,9 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Epic
     public class VampireFangs : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.buff;
@@ -156,7 +164,9 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    #endregion
 
+    #region Legendary
     public class AllRoundHalfGlove : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.buff;
@@ -216,6 +226,81 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region ETC
+
+    public class SmallHpPotion : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.heal;
+
+        public override Define.ItemRating itemRating => Define.ItemRating.ETC;
+
+        public override bool isPersitantItem => false;
+        public override bool isOneOff => true;
+        public override void Use()
+        {
+            Debug.Log("hp포션 (소) 사용");
+            Debug.Log("체력 15 회복");
+            GameManager.Instance.Player.playerBase.Hp += 15;
+        }
+    }
+
+    public class MediumHpPotion : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.heal;
+
+        public override Define.ItemRating itemRating => Define.ItemRating.ETC;
+
+        public override bool isPersitantItem => false;
+        public override bool isOneOff => true;
+        public override void Use()
+        {
+            Debug.Log("hp포션 (중) 사용");
+            Debug.Log("체력 30 회복");
+            GameManager.Instance.Player.playerBase.Hp += 30;
+        }
+    }
+
+    public class LargeHpPotion : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.heal;
+
+        public override Define.ItemRating itemRating => Define.ItemRating.ETC;
+
+        public override bool isPersitantItem => false;
+        public override bool isOneOff => true;
+        public override void Use()
+        {
+            Debug.Log("hp포션 (대) 사용");
+            Debug.Log("체력 50 회복");
+            GameManager.Instance.Player.playerBase.Hp += 50;
+        }
+    }
+
+    public class ExtraLargeHpPotion : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.heal;
+
+        public override Define.ItemRating itemRating => Define.ItemRating.ETC;
+
+        public override bool isPersitantItem => false;
+        public override bool isOneOff => true;
+        public override void Use()
+        {
+            Debug.Log("hp포션 (특대) 사용");
+            Debug.Log("체력 80 회복");
+            GameManager.Instance.Player.playerBase.Hp += 80;
+        }
+    }
+
+    #endregion
+
+    #region Special (BrokenItem)
+
+
+    #endregion
+
     public static ItemBase[] Items = new ItemBase[]
     {
         new Default(),      // 0번 아이템 ( 효과x )
@@ -237,5 +322,13 @@ public class ItemEffects : MonoBehaviour
         // legendary
         new AllRoundHalfGlove(),
         new BerserkerSword(),
+
+        // ETC
+        new SmallHpPotion(),
+        new MediumHpPotion(),
+        new LargeHpPotion(),
+        new ExtraLargeHpPotion(),
+
+        // Special
     };
 }

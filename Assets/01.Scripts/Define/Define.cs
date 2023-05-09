@@ -76,6 +76,8 @@ public static class Define
         Common,
         Rare,
         Epic,
-        Legendary
+        Legendary,
+        ETC,
+        Special,
     }
 }
