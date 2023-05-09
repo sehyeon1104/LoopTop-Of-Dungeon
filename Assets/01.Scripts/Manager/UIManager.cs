@@ -59,7 +59,6 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject blurPanel;
 
-    public TextMeshProUGUI pressF = null;
     public List<Image> hpbars = new List<Image>();
 
     private void Awake()
@@ -186,7 +185,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void CheckOneMorePanelYes()
     {
-        // TODO : ���� �߾� �� �� ���� �� �߾Ӹ����� �̵�
 
         LoadToCenterScene();
     }
@@ -237,10 +235,6 @@ public class UIManager : MonoSingleton<UIManager>
             iconNum++;
 
             skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
-    }
-    public void TransformUITest()
-    {
-        pressF.gameObject.SetActive(true);
     }
 
     public void HpUpdate()
@@ -323,6 +317,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LeaveBtn()
     {
+        Time.timeScale = 1f;
         if(GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
