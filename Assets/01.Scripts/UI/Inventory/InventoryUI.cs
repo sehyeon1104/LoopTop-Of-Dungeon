@@ -48,7 +48,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // æ∆¿Ã≈€ »πµÊΩ√ ΩΩ∑‘ø° √ﬂ∞°
     public void AddItemSlot(Item item)
     {
-        GameManager.Instance.SetItemData(item);
+        GameManager.Instance.AddItemData(item);
 
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;

@@ -6,18 +6,29 @@ public class Column : MonoBehaviour
 {
     private GameObject warning;
     private GameObject shockWave;
+    private Animator columnAnim;
+
     private WaitForSeconds waitTime = new WaitForSeconds(2.5f);
     private WaitForSeconds delay = new WaitForSeconds(1.5f);
+
+    private int hashDisappear = Animator.StringToHash("Disappear");
+    private int hashBoom = Animator.StringToHash("Boom");
+
+    private static int nowBossPhase = 1;
     
     private void Awake()
     {
         warning = transform.Find("Warning").gameObject;
         shockWave = transform.Find("ShockWave").gameObject;
+        columnAnim = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
     {
         StopCoroutine(Attack());
+
+        if(nowBossPhase != 2)
+            nowBossPhase = Boss.Instance.bossPattern.NowPhase;
 
         warning.SetActive(false);
         shockWave.SetActive(false);
@@ -35,14 +46,25 @@ public class Column : MonoBehaviour
 
             yield return delay;
             warning.SetActive(false);
-            //이펙트 나오고
 
             shockWave.SetActive(true);
             Collider2D col = Physics2D.OverlapCircle(transform.position, 4.5f, 1 << 8);
             if (col != null) GameManager.Instance.Player.OnDamage(1, 0);
         }
         yield return waitTime;
-        //땅으로 들어가는 애니메이션 재생하고
+        switch (nowBossPhase)
+        {
+            case 1:
+                columnAnim.SetTrigger(hashDisappear);
+                break;
+            case 2:
+                columnAnim.SetTrigger(hashBoom);
+                yield return delay;
+
+                break;
+        }
+
+        yield return delay;
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 }

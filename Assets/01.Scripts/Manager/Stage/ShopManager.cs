@@ -14,12 +14,6 @@ public class ShopManager : MonoSingleton<ShopManager>
     [Tooltip("복제할 오리지널 오브젝트")]
     [SerializeField]
     private GameObject itemObjTemplate = null;
-    [Tooltip("아이템 추가")]
-    [SerializeField]
-    private List<Item> itemList = new List<Item>();
-
-    [field: SerializeField]
-    public Sprite[] itemSprites { private set; get; } = null;
 
     private List<ItemObj> itemObjList = new List<ItemObj>();
 
@@ -33,12 +27,6 @@ public class ShopManager : MonoSingleton<ShopManager>
     {
         shopRoom = FindObjectOfType<ShopRoom>();
         itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Test/ItemObj.prefab");
-    }
-
-    // 디버깅
-    private void Start()
-    {
-        GameManager.Instance.SetItemData(itemList);
     }
 
     public void SetItem()
@@ -62,9 +50,10 @@ public class ShopManager : MonoSingleton<ShopManager>
 
     public void ShuffleItemSelectNum()
     {
-        if(itemObjSpawnPos.Length - 1 > itemList.Count)
+        if(itemObjSpawnPos.Length - 1 > GameManager.Instance.allItemList.Count)
         {
             Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
+            return;
         }
 
         int index = 0;
@@ -72,7 +61,7 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
         {
-            randNum = Random.Range(1, itemList.Count);
+            randNum = Random.Range(1, GameManager.Instance.allItemList.Count);
 
             itemSelectNum.Add(randNum);
             index++;
@@ -94,7 +83,7 @@ public class ShopManager : MonoSingleton<ShopManager>
         //{
         foreach(var itemSelectNumitem in itemSelectNum)
         {
-            Item shopItem = itemList[itemSelectNumitem];
+            Item shopItem = GameManager.Instance.allItemList[itemSelectNumitem];
 
             newObject = Instantiate(itemObjTemplate);
             newItemObjComponent = newObject.GetComponent<ItemObj>();
