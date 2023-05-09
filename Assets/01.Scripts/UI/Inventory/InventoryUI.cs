@@ -56,6 +56,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         Item inventoryItem = item;
 
         newObject = Instantiate(itemObjTemplate);
+        newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         newItemObjComponent = newObject.GetComponent<InventorySlot>();
         newItemObjComponent.SetValue(inventoryItem);
         newObject.transform.SetParent(slotHolder);
@@ -80,14 +81,15 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             Item inventoryItem = items;
 
             newObject = Instantiate(itemObjTemplate);
+            newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
             newItemObjComponent = newObject.GetComponent<InventorySlot>();
-            newItemObjComponent.SetValue(items);
+            newItemObjComponent.SetValue(inventoryItem);
             newObject.transform.SetParent(slotHolder);
             newObject.SetActive(true);
             slots.Add(newItemObjComponent);
-            if (ItemEffects.Items[items.itemNumber].isPersitantItem)
+            if (ItemEffects.Items[inventoryItem.itemNumber].isPersitantItem)
             {
-                ItemEffects.Items[items.itemNumber].Use();
+                ItemEffects.Items[inventoryItem.itemNumber].Use();
             }
         }
     }

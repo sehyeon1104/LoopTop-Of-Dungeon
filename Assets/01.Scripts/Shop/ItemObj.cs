@@ -54,7 +54,7 @@ public class ItemObj : MonoBehaviour
     public void UpdateValues()
     {
         itemType = item.itemType;
-        itemImage.sprite = ShopManager.Instance.itemSprites[item.itemNumber];
+        itemImage.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         itemNameTMP.SetText(item.itemName);
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
