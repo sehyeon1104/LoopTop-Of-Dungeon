@@ -177,16 +177,9 @@ public class P_Patterns : BossPattern
 
             Vector2 randPos = new Vector2(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
 
-            if (NowPhase == 1)
-            {
-                yield return new WaitForSeconds(9f);
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
-            }
-            else
-            {
-                yield return new WaitForSeconds(6f);
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity); //추후 2페이즈 기둥으로 바꿀 예정
-            }
+            yield return new WaitForSeconds(9f / NowPhase);
+
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
         }
     }
     #endregion
@@ -232,7 +225,7 @@ public class P_Patterns : BossPattern
             }
             bodyCount = 0;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         for(int i = 0; i < bodyList.Count; i++)
         {
             bodyList[i].transform.DOMove(transform.position, 0.5f);

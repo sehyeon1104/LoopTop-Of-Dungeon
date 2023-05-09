@@ -67,7 +67,7 @@ public static class Define
         Default = 0,
         buff,
         heal,
-        
+        broken,
     }
 
     public enum ItemRating
@@ -76,6 +76,8 @@ public static class Define
         Common,
         Rare,
         Epic,
-        Legendary
+        Legendary,
+        ETC,
+        Special,
     }
 }

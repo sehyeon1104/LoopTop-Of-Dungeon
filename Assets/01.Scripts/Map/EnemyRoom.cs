@@ -116,6 +116,8 @@ public class EnemyRoom : RoomBase
 
             if (isMoveAnotherStage)
             {
+                // TODO : 아이템 드랍 상자 구현
+
                 StageManager.Instance.AssignMoveNextMapPortal(this);
             }
         }
