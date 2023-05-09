@@ -82,17 +82,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         //StartCoroutine(CameraShaking.Instance.IECameraShakeOnce());
 
-        for(int i =0; i < sprites.Count; i++)
-        {
-            sprites[i].color = Color.black;
-        }
-        yield return new WaitForSeconds(0.01f);
-
-        for (int i = 0; i < sprites.Count; i++)
-        {
-            sprites[i].color = bossPattern.NowPhase == 1? Color.white : bossPattern.Phase_Two_Color;
-        }
-
         yield return new WaitForSeconds(0.05f);
         isBDamaged = false;
 
@@ -121,10 +110,14 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (isBDamaged) return;
         if (isBInvincible) return;
 
-        if(Random.Range(1, 101) <= critChance)
+        if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
+        }
+        else
+        {
+            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         }
 
         isBDamaged = true;
@@ -138,7 +131,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
             Base.Hp -= (int)damage;
         }
 
-        StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         UpdateBossHP();
         StartCoroutine(IEHitAction());
 

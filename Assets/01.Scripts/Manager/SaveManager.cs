@@ -24,7 +24,7 @@ public static class SaveManager
         }
 
         string jsonData = JsonUtility.ToJson(userSaveData, true);
-        jsonData = Crypto.AESEncrypt128(jsonData);
+        //jsonData = Crypto.AESEncrypt128(jsonData);
         File.WriteAllText(Path.Combine(SAVE_PATH, SAVE_FILENAME), jsonData, System.Text.Encoding.UTF8);
         Debug.Log($"[SaveManager] {typeof(T).ToString()} 저장완료");
     }
@@ -42,7 +42,7 @@ public static class SaveManager
         {
             // Debug.Log(filePath);
             string jsonData = File.ReadAllText(filePath);
-            jsonData = Crypto.AESDecrypt128(jsonData);
+            //jsonData = Crypto.AESDecrypt128(jsonData);
             T saveData = JsonUtility.FromJson<T>(jsonData);
             userSaveData = saveData;
             Debug.Log($"[SaveManager] {typeof(T).ToString()} 로딩완료");
@@ -66,6 +66,13 @@ public static class SaveManager
     public static bool GetCheckGameDataBool()
     {
         string SAVE_FILENAME = "GameData.json";
+
+        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
+    }
+
+    public static bool GetCheckDataBool(string FILENAME)
+    {
+        string SAVE_FILENAME = FILENAME + ".json";
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
     }

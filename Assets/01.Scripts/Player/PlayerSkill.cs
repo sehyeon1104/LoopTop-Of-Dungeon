@@ -22,11 +22,12 @@ public class PlayerSkill : MonoBehaviour
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
-    int[] slotLevel = new int[2] { 1, 1 };
+    int[] slotLevel;
     Action[] skillEvent = new Action[5];
     private void Awake()
     {  
         playerBase = GameManager.Instance.Player.playerBase;
+        slotLevel = playerBase.slotLevel;
         UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
         UIManager.Instance.skill2Button.GetComponent<Button>().onClick.AddListener(Skill2);
         UIManager.Instance.dashButton.GetComponent<Button>().onClick.AddListener(DashSkill);
@@ -64,8 +65,8 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
-            playerSkill.playerSkillUpdate[4](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[1](slotLevel[0]);
+            playerSkill.playerSkillUpdate[1](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
             playerSkill.playerSkillUpdate[5](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
@@ -106,7 +107,10 @@ public class PlayerSkill : MonoBehaviour
 
     void DashSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill) && PlayerMovement.Instance.IsMove && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl || !PlayerMovement.Instance.IsMove)
+            return;
+
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
             skillEvent[4]();        
     }
     #region ½ºÅ³ ¼ÅÇÃ

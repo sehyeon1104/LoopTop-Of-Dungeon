@@ -33,10 +33,13 @@ public abstract class PlayerSkillBase : MonoBehaviour
     protected float attackRange = 1;
     private WaitForFixedUpdate waitforFixedUpdate = new WaitForFixedUpdate();
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
+    float attackTimer = 0;
     virtual protected void Update()
     {
         if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
+        {
             Attack();
+        }
     }
     protected abstract void FirstSkill(int level);
 
@@ -54,7 +57,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
 
     protected virtual void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || !playerMovement.IsMove)
+        if ( !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !playerMovement.IsMove)
             return;
 
             playerAnim.SetTrigger("Attack");
@@ -106,10 +109,10 @@ public abstract class PlayerSkillBase : MonoBehaviour
         }
         playerMovement.IsMove = true;
         player.IsInvincibility = false;
-        foreach (var c in cloneList)
-        {
-            Managers.Pool.Push(c);
-        }
+        //foreach (var c in cloneList)
+        //{
+        //    Managers.Pool.Push(c);
+        //}
         cloneList.Clear();
     }
     protected void init()
@@ -119,7 +122,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         playerSkills.Add(2, SecondSkill);
         playerSkills.Add(3, ThirdSkill);
         playerSkills.Add(4, ForuthSkill);
-        playerSkills.Add(5, FirstSkill);
+        playerSkills.Add(5, FifthSkill);
         playerSkillUpdate.Add(1, FirstSkillUpdate);
         playerSkillUpdate.Add(2, SecondSkillUpdate);
         playerSkillUpdate.Add(3, ThirdSkillUpdate);

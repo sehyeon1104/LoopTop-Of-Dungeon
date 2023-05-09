@@ -20,14 +20,15 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public Define.MapTypeFlag mapTypeFlag { private set; get; }
-    public Define.Scene sceneType { private set; get; }
+    public Define.MapTypeFlag mapTypeFlag; //{ private set; get; }
+    public Define.Scene sceneType; //{ private set; get; }
 
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
+    private ItemData itemData = new ItemData();
 
     private GameObject hitEffect = null;
 
@@ -94,6 +95,19 @@ public class GameManager : MonoSingleton<GameManager>
             GetPlayerStat();
         }
 
+        if (!SaveManager.GetCheckDataBool("ItemData"))
+        {
+            Debug.Log("[GameManager] ItemData  저장파일 없음");
+            SaveManager.Save<ItemData>(ref itemData);
+            InventoryUI.Instance.LoadItemSlot();
+        }
+        else
+        {
+            Debug.Log("[GameManager] ItemData 저장파일 있음");
+            SaveManager.Load<ItemData>(ref itemData);
+            InventoryUI.Instance.LoadItemSlot();
+        }
+
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
         Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)playerData.playerTransformTypeFlag];
@@ -113,7 +127,15 @@ public class GameManager : MonoSingleton<GameManager>
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SaveData();
+        }
+    }
+
     public void ResetStageClearCount()
     {
         StageMoveCount = 0;
@@ -128,6 +150,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         var effect = Managers.Pool.Pop(hitEffect);
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
+    }
+
+    public void InitSomeStats()
+    {
+        playerData.maxHp = Player.playerBase.InitMaxHp;
+        playerData.hp = Player.playerBase.InitMaxHp;
     }
 
     /// <summary>
@@ -190,6 +218,24 @@ public class GameManager : MonoSingleton<GameManager>
         sceneType = gameData.sceneType;
     }
 
+    public void SetItemData(Item item)
+    {
+        itemData.itemsList.Add(item);
+    }
+
+    // 디버깅
+    public void SetItemData(List<Item> item)
+    {
+        itemData.itemsList = item;
+        SaveManager.Save<ItemData>(ref itemData);
+    }
+
+
+    public List<Item> GetItemList()
+    {
+        return itemData.itemsList;
+    }
+
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
@@ -212,6 +258,7 @@ public class GameManager : MonoSingleton<GameManager>
 
         SetGameData();
         SaveManager.Save<GameData>(ref gameData);
+        SaveManager.Save<ItemData>(ref itemData);
     }
 
     public void LoadData()
@@ -221,6 +268,8 @@ public class GameManager : MonoSingleton<GameManager>
 
         SaveManager.Load<PlayerData>(ref playerData);
         GetPlayerStat();
+
+        SaveManager.Load<ItemData>(ref itemData);
     }
 
     public void GameQuit()

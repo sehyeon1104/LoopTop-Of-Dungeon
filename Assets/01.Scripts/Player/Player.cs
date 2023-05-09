@@ -28,13 +28,13 @@ public class Player : MonoBehaviour, IHittable
     [SerializeField]
     private float invincibleTime = 0.2f;
 
-    public UnityEvent HPRelatedItemEfects { get; private set; }
+    public UnityEvent HPRelatedItemEffects { get; private set; }
     public Vector3 hitPoint { get; private set; }
 
     private void Start()
     {
-        if (HPRelatedItemEfects == null)
-            HPRelatedItemEfects = new UnityEvent();
+        if (HPRelatedItemEffects == null)
+            HPRelatedItemEffects = new UnityEvent();
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour, IHittable
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
 
-        HPRelatedItemEfects.Invoke();
+        HPRelatedItemEffects.Invoke();
     }
     
     public void Dead()

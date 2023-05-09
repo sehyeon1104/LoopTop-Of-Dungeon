@@ -35,8 +35,9 @@ public class PlayerBase
 
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
+        slotLevel = new int[] { 1, 1 };
     }
-
+    public int[] slotLevel = new int[2];
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 
@@ -61,10 +62,10 @@ public class PlayerBase
             {
                 hp = maxHp;
             }
-            else if(hp < maxHp)
-            {
-                GameManager.Instance.Player.HPRelatedItemEfects.Invoke();
-            }
+
+            UseItemEffectManager.Instance?.HPRelatedItemEffects();
+            //GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
+            // ItemEffects.Items[10].Use();
             UIManager.Instance.HpUpdate();
         }
     }
@@ -90,7 +91,11 @@ public class PlayerBase
     public float Attack
     {
         get => attack;
-        set => attack = value;
+        set
+        {
+            attack = value;
+            Damage = Mathf.CeilToInt(attack * 0.6f);
+        }
     }
     public float InitAttack
     {
