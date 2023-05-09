@@ -67,7 +67,7 @@ public static class Define
         Default = 0,
         buff,
         heal,
-        
+        broken,
     }
 
     public enum ItemRating
