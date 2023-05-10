@@ -57,23 +57,21 @@ public static class SaveManager
     /// 세이브한 적이 있는지 체크
     /// </summary>
     /// <returns></returns>
-    public static bool GetCheckPlayerDataBool()
-    {
-        string SAVE_FILENAME = "PlayerData.json";
-
-        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
-    }
-    public static bool GetCheckGameDataBool()
-    {
-        string SAVE_FILENAME = "GameData.json";
-
-        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
-    }
-
     public static bool GetCheckDataBool(string FILENAME)
     {
         string SAVE_FILENAME = FILENAME + ".json";
 
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
+    }
+
+    public static void DeleteAllData()
+    {
+        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(SAVE_PATH);
+        foreach (System.IO.FileInfo File in di.GetFiles())
+        {
+            Debug.Log(File.Name + "제거");
+            File.Delete();
+        }
+
     }
 }
