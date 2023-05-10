@@ -73,7 +73,6 @@ public class UIManager : MonoSingleton<UIManager>
         skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        //pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
     }
 

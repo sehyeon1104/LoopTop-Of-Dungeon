@@ -67,6 +67,7 @@ public class PlayerSkill : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.J))
         {
             Attack();
+            UIManager.Instance.GetInteractionButton();
         }
         if(Input.GetKeyDown(KeyCode.K))
         {
