@@ -19,7 +19,7 @@ public class GameManager : MonoSingleton<GameManager>
             stageMoveCount %= 3;
         }
     }
-
+    public Define.PlatForm platForm;
     public Define.MapTypeFlag mapTypeFlag; //{ private set; get; }
     public Define.Scene sceneType; //{ private set; get; }
 

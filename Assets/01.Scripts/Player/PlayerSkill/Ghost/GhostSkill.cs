@@ -229,7 +229,6 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
