@@ -32,7 +32,7 @@ public class TitleSceneManager : MonoBehaviour
 
     private void Init()
     {
-        //TODO : 가독성 UP
+        // TODO : 가독성 UP
 
         gameStartBtn = Options.transform.Find("GameStartBtn").gameObject.GetComponent<Button>();
         dataInitBtn = Options.transform.Find("DataInitBtn").gameObject.GetComponent<Button>();
@@ -104,7 +104,6 @@ public class TitleSceneManager : MonoBehaviour
         {
             isLoading = true;
 
-            isLoading = true;
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
         }
     }

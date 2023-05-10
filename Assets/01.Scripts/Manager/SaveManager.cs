@@ -11,8 +11,6 @@ public static class SaveManager
     // Android
     //private static string SAVE_PATH = Path.Combine(Application.persistentDataPath, "Json/");
 
-    private static Queue<string> filenameQueue = new Queue<string>();
-
     /// <summary>
     /// 유저 데이터 저장
     /// </summary>
@@ -23,7 +21,6 @@ public static class SaveManager
         if (!Directory.Exists(SAVE_PATH))
         {
             Directory.CreateDirectory(SAVE_PATH);
-            filenameQueue.Enqueue(SAVE_FILENAME);
         }
 
         string jsonData = JsonUtility.ToJson(userSaveData, true);
@@ -60,19 +57,6 @@ public static class SaveManager
     /// 세이브한 적이 있는지 체크
     /// </summary>
     /// <returns></returns>
-    public static bool GetCheckPlayerDataBool()
-    {
-        string SAVE_FILENAME = "PlayerData.json";
-
-        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
-    }
-    public static bool GetCheckGameDataBool()
-    {
-        string SAVE_FILENAME = "GameData.json";
-
-        return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
-    }
-
     public static bool GetCheckDataBool(string FILENAME)
     {
         string SAVE_FILENAME = FILENAME + ".json";
@@ -82,13 +66,12 @@ public static class SaveManager
 
     public static void DeleteAllData()
     {
-        string DELETE_FILENAME = "";
-
-        while(filenameQueue.Count > 0)
+        System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(SAVE_PATH);
+        foreach (System.IO.FileInfo File in di.GetFiles())
         {
-            DELETE_FILENAME = filenameQueue.Dequeue();
-            Directory.Delete(DELETE_FILENAME);
-            Debug.Log($"{DELETE_FILENAME} 제거");
+            Debug.Log(File.Name + "제거");
+            File.Delete();
         }
+
     }
 }

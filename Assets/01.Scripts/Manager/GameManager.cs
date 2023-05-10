@@ -64,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         #region 게임 데이터 로딩
-        if (!SaveManager.GetCheckGameDataBool())
+        if (!SaveManager.GetCheckDataBool("GameData"))
         {
             Debug.Log("[GameManager] GameData 저장파일 없음");
             SetGameData();
@@ -85,7 +85,7 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
         #region 플레이어 정보 로딩
-        if (!SaveManager.GetCheckPlayerDataBool())
+        if (!SaveManager.GetCheckDataBool("PlayerData"))
         {
             Debug.Log("[GameManager] PlayerData 저장파일 없음");
             Player.playerBase.InitPlayerStat();
