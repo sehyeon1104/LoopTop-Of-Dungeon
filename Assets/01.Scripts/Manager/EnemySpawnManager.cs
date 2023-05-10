@@ -57,6 +57,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         enemyCount = 0;
         SetEnemyInList();
+        InvokeRepeating("CheckCurEnemyList", 0f, 5f);
     }
 
     #region Addressable
@@ -243,6 +244,20 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
         Managers.Pool.Push(enemy);
+    }
+
+    public void CheckCurEnemyList()
+    {
+        if(curEnemies.Count > 0)
+        {
+            for(int i = 0; i < curEnemies.Count; ++i)
+            {
+                if (!curEnemies[i].gameObject.activeSelf)
+                {
+                    curEnemies.RemoveAt(i);
+                }
+            }
+        }
     }
 
 }
