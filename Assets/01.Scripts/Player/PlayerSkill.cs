@@ -47,10 +47,6 @@ public class PlayerSkill : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
@@ -67,6 +63,7 @@ public class PlayerSkill : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.J))
         {
             Attack();
+            UIManager.Instance.GetInteractionButton();
         }
         if(Input.GetKeyDown(KeyCode.K))
         {
@@ -86,8 +83,8 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
-            playerSkill.playerSkillUpdate[3](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
+            playerSkill.playerSkillUpdate[4](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
             playerSkill.playerSkillUpdate[5](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;

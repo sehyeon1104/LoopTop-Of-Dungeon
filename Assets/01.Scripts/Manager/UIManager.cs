@@ -73,7 +73,6 @@ public class UIManager : MonoSingleton<UIManager>
         skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        //pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
     }
 
@@ -222,9 +221,20 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void ResetSkill()
     {
-        for (int i = 0; i < skillIcons.Length; i++)
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
         {
-            skillIcons[i].sprite = null;
+            for (int i = 0; i < pcSkillIcons.Length; i++)
+            {
+                pcSkillIcons[i].sprite = null;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skillIcons.Length; i++)
+            {
+                skillIcons[i].sprite = null;
+            }
+
         }
     }
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
