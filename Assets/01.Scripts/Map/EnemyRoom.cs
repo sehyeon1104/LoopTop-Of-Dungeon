@@ -99,6 +99,8 @@ public class EnemyRoom : RoomBase
                 Door.Instance.CloseDoors();
                 SetEnemy();
             }
+
+            minimapIconSpriteRenderer.color = Color.white;
         }
     }
 
@@ -132,6 +134,5 @@ public class EnemyRoom : RoomBase
                 StageManager.Instance.AssignMoveNextMapPortal(this);
             }
         }
-        minimapIconSpriteRenderer.color = Color.white;
     }
 }
