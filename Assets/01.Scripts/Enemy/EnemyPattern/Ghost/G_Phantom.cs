@@ -15,6 +15,11 @@ public class G_Phantom : EnemyDefault
     public override IEnumerator AttackToPlayer()
     {
         Vector2 dir;
+        if(sprite == null)
+        {
+            actCoroutine = null;
+            yield break;
+        }
         while (timer >= 0f)
         {
             timer -= Time.deltaTime;

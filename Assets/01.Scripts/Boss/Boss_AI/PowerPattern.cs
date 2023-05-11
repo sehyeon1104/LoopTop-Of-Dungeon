@@ -54,7 +54,7 @@ public class P_Patterns : BossPattern
             {
                 float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
                 Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity) ;
             }
 
             yield return new WaitForSeconds(0.5f);
