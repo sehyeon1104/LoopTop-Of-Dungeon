@@ -45,7 +45,6 @@ public class ShopRoom : RoomBase
             ShopManager.Instance.SetItem();
         }
 
-        minimapIconSpriteRenderer.color = Color.white;
         GameObject shopIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/ShopIcon.prefab");
     }
     public void SpawnNPC()
@@ -86,6 +85,12 @@ public class ShopRoom : RoomBase
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (StageManager.Instance.isSetting)
+        {
+            return;
+        }
+
+        minimapIconSpriteRenderer.color = Color.white;
         StartCoroutine(ToggleItemInfoPanel());
     }
     public IEnumerator ToggleItemInfoPanel()
