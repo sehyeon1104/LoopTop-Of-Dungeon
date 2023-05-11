@@ -25,16 +25,19 @@ public class PlayerSkill : MonoBehaviour
     int[] slotLevel;
     Action[] skillEvent = new Action[5];
     private void Awake()
-    {  
+    {
         playerBase = GameManager.Instance.Player.playerBase;
         slotLevel = playerBase.slotLevel;
-        UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
-        UIManager.Instance.skill2Button.GetComponent<Button>().onClick.AddListener(Skill2);
-        UIManager.Instance.dashButton.GetComponent<Button>().onClick.AddListener(DashSkill);
-        UIManager.Instance.ultButton.GetComponent<Button>().onClick.AddListener(UltimateSkill);
-        UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
+        if (UIManager.Instance.skill1Button != null)
+        {
+            UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
+            UIManager.Instance.skill2Button.GetComponent<Button>().onClick.AddListener(Skill2);
+            UIManager.Instance.dashButton.GetComponent<Button>().onClick.AddListener(DashSkill);
+            UIManager.Instance.ultButton.GetComponent<Button>().onClick.AddListener(UltimateSkill);
+            UIManager.Instance.playerUI.transform.Find("RightDown/Btns/AttackBtn").GetComponent<Button>().onClick.AddListener(Attack);
+        }
     }
     private void Start()
     {
@@ -44,37 +47,40 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-
             playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
             playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             Skill1();
         }
-        if(Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             Skill2();
         }
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            Attack();
+            if (UIManager.Instance.GetInteractionButton().gameObject.activeSelf == true)
+            {
+                UIManager.Instance.GetInteractionButton().onClick.Invoke();
+            }
+            else
+            {
+                Attack();
+            }
         }
-        if(Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             DashSkill();
         }
-        if(Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            UltimateSkill();    
+            UltimateSkill();
         }
     }
 
@@ -86,27 +92,27 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
-            playerSkill.playerSkillUpdate[3](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
+            playerSkill.playerSkillUpdate[4](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
             playerSkill.playerSkillUpdate[5](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,2, 6, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 6, 0);
             skillEvent[4] = playerSkill.dashSkill;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,3, 7, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 7, 0);
         }
     }
     void ReserProperty()
     {
-        for(int i =0; i < skillData.Count; i++)
+        for (int i = 0; i < skillData.Count; i++)
         {
             skillData[(Define.PlayerTransformTypeFlag)i].enabled = false;
         }
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
@@ -114,17 +120,17 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[1]();
     }
     void Attack()
     {
-        if( PlayerMovement.Instance.IsControl)
-        skillEvent[2]();
-    } 
+        if (PlayerMovement.Instance.IsControl)
+            skillEvent[2]();
+    }
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[3]();
     }
 
@@ -134,7 +140,7 @@ public class PlayerSkill : MonoBehaviour
             return;
 
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
-            skillEvent[4]();        
+            skillEvent[4]();
     }
     #region ½ºÅ³ ¼ÅÇÃ
 

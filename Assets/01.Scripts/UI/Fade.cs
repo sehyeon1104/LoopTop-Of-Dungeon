@@ -11,10 +11,10 @@ public class Fade : MonoSingleton<Fade>
 
     private WaitForEndOfFrame waitFrame;
 
-    //private void Awake()
-    //{
-    //    fadeImg = GameObject.Find("FadeImage").GetComponent<Image>();
-    //}
+    private void Awake()
+    {
+        fadeImg = GameManager.Instance.platForm == Define.PlatForm.PC ? UIManager.Instance.playerPCUI.transform.Find("Fade/FadeImage").GetComponent<Image>() : UIManager.Instance.playerUI.transform.Find("Fade/FadeImage").GetComponent<Image>();
+    }
 
     private void Start()
     {

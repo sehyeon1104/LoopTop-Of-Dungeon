@@ -13,8 +13,12 @@ public class EnemyRoom : RoomBase
     public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
+    private SpriteRenderer minimapIconSpriteRenderer = null;
+
     private void Start()
     {
+        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+
         isSpawnMonster = false;
         SetRoomTypeFlag();
         SetEnemySpawnPos();
@@ -34,6 +38,11 @@ public class EnemyRoom : RoomBase
             // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
             EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
+
+            if (isMoveAnotherStage)
+            {
+                Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
+            }
 
             return enemySpawnPos;
         }
@@ -80,6 +89,8 @@ public class EnemyRoom : RoomBase
             return;
         }
 
+        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+
         if (collision.CompareTag("Player"))
         {
             if (!isClear && !isSpawnMonster)
@@ -88,6 +99,8 @@ public class EnemyRoom : RoomBase
                 Door.Instance.CloseDoors();
                 SetEnemy();
             }
+
+            minimapIconSpriteRenderer.color = Color.white;
         }
     }
 

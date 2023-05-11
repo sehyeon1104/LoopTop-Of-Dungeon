@@ -54,7 +54,7 @@ public class P_Patterns : BossPattern
             {
                 float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
                 Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y),Quaternion.identity);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity) ;
             }
 
             yield return new WaitForSeconds(0.5f);
@@ -236,13 +236,18 @@ public class P_Patterns : BossPattern
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
         dashVCam.Priority = 11;
+        Camera.main.orthographic = true;
+
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
         dash2Phase.SetActive(true);
         yield return new WaitForSeconds(3f);
+
         partList[randomInvisible].gameObject.SetActive(true);
         dash2Phase.SetActive(false);
+
         dashVCam.Priority = 0;
+        Camera.main.orthographic = false;
         yield return null;
     }
 

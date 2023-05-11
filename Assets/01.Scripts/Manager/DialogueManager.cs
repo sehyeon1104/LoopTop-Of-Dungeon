@@ -33,7 +33,7 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         //DialoguePanel = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject;
         //contentTmp = UIManager.Instance.playerUI.transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
 
-        DialoguePanel.gameObject.SetActive(false);
+        //DialoguePanel.gameObject.SetActive(false);
     }
 
     public void ToggleDialoguePanel()

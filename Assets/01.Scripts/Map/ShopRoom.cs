@@ -24,6 +24,8 @@ public class ShopRoom : RoomBase
     [SerializeField]
     private GameObject shopNpc;
 
+    private SpriteRenderer minimapIconSpriteRenderer = null;
+
     private void Awake()
     {
 
@@ -31,6 +33,8 @@ public class ShopRoom : RoomBase
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
+
+        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
@@ -40,6 +44,8 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
+
+        GameObject shopIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/ShopIcon.prefab");
     }
     public void SpawnNPC()
     {
@@ -79,6 +85,12 @@ public class ShopRoom : RoomBase
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (StageManager.Instance.isSetting)
+        {
+            return;
+        }
+
+        minimapIconSpriteRenderer.color = Color.white;
         StartCoroutine(ToggleItemInfoPanel());
     }
     public IEnumerator ToggleItemInfoPanel()

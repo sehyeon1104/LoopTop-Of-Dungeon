@@ -51,7 +51,7 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject ultButton;
     public GameObject dashButton;
     Image[] skillIcons = new Image[4];
-    Image[] pcSkillIcons = new Image[3];
+    Image[] pcSkillIcons = new Image[4];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -61,20 +61,50 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
+        playerUI = GameManager.Instance.Player.transform.Find("PlayerUI").gameObject;
+        hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
-        skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        //pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+        if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
+        {
+            hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
+            fragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            pausePanel = playerUI.transform.Find("Middle/PausePanel").gameObject;
+            gameOverPanel = playerUI.transform.Find("All/GameOverPanel").gameObject;
+            checkOneMorePanel = playerUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
+            showCurStageNameObj = playerUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
+            curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
+            blurPanel = playerUI.transform.Find("All/BlurPanel").gameObject;
+            skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+            skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+            skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+            skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+
+        }
+        else
+        {
+            playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
+            hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
+            fragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
+            gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
+            checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
+            showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
+            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
+            curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
+            pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[3] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+        }
     }
 
     private void Start()
@@ -222,9 +252,20 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void ResetSkill()
     {
-        for (int i = 0; i < skillIcons.Length; i++)
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
         {
-            skillIcons[i].sprite = null;
+            for (int i = 0; i < pcSkillIcons.Length; i++)
+            {
+                pcSkillIcons[i].sprite = null;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skillIcons.Length; i++)
+            {
+                skillIcons[i].sprite = null;
+            }
+
         }
     }
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
@@ -234,8 +275,6 @@ public class UIManager : MonoSingleton<UIManager>
             if (iconNum == 0 && pcSkillIcons[0].sprite != null)
                 iconNum++;
 
-            if (iconNum == 3)
-                return;
 
             pcSkillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
         }
