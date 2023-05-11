@@ -9,36 +9,62 @@ using DG.Tweening;
 public class TitleSceneManager : MonoBehaviour
 {
     private bool isLoading = false;
+    private bool isClickScreen = false;
 
-    [SerializeField]
-    private GameObject Options = null;
-    private List<Button> btns = new List<Button>();
+    private Transform titleUI = null;
+    private TextMeshProUGUI titleTmp = null;
+
+    private GameObject blurPanel = null;
+
+    #region Middle
+    // Middle
+    private Transform selectionList = null;
+
+    private GameObject options = null;
     private Button gameStartBtn = null;
     private Button dataInitBtn = null;
     private Button settingBtn = null;
     private Button gameQuitBtn = null;
 
-    [SerializeField]
     private Image backgroundPanel = null;
     [SerializeField]
     private float backgroundPanelSpace = 110;
 
     private int index = 0;
+    #endregion
+
 
     private void Awake()
     {
         Init();
     }
 
+    #region Init
     private void Init()
     {
-        // TODO : 가독성 UP
+        titleUI = GameObject.Find("TitleUI").transform;
+        titleTmp = titleUI.Find("MiddleUp/Title/TitleTMP").GetComponent<TextMeshProUGUI>();
 
-        gameStartBtn = Options.transform.Find("GameStartBtn").gameObject.GetComponent<Button>();
-        dataInitBtn = Options.transform.Find("DataInitBtn").gameObject.GetComponent<Button>();
-        settingBtn = Options.transform.Find("SettingBtn").gameObject.GetComponent<Button>();
-        gameQuitBtn = Options.transform.Find("GameQuitBtn").gameObject.GetComponent<Button>();
+        blurPanel = titleUI.Find("Blur/BlurPanel").gameObject;
 
+        // Middle
+        selectionList = titleUI.Find("MiddleMiddle/SelectionList").transform;
+        options = selectionList.Find("Options").gameObject;
+        backgroundPanel = selectionList.transform.Find("BackgroundPanel").GetComponent<Image>();
+
+        gameStartBtn = options.transform.Find("GameStartBtn").GetComponent<Button>();
+        dataInitBtn = options.transform.Find("DataInitBtn").GetComponent<Button>();
+        settingBtn = options.transform.Find("SettingBtn").GetComponent<Button>();
+        gameQuitBtn = options.transform.Find("GameQuitBtn").GetComponent<Button>();
+
+        InitBtns();
+
+        backgroundPanel.rectTransform.position = options.transform.position;
+    }
+
+    private void InitBtns()
+    {
+        // 리스너 추가
         gameStartBtn.onClick.RemoveListener(GameStart);
         gameStartBtn.onClick.AddListener(GameStart);
         dataInitBtn.onClick.RemoveListener(InitData);
@@ -47,55 +73,87 @@ public class TitleSceneManager : MonoBehaviour
         settingBtn.onClick.AddListener(Setting);
         gameQuitBtn.onClick.RemoveListener(GameQuit);
         gameQuitBtn.onClick.AddListener(GameQuit);
-
-        backgroundPanel.rectTransform.position = Vector3.zero;
     }
+    #endregion
 
+    #region Start
     private void Start()
     {
         isLoading = false;
+        OnStart();
     }
 
+    private void OnStart()
+    {
+        selectionList.gameObject.SetActive(false);
+        blurPanel.SetActive(false);
+    }
+    #endregion
+
+    #region Update
     private void Update()
     {
-        InputKey();
-
-        //if (Input.GetMouseButtonDown(0) && !isLoading)
-        //{
-        //    // Debug.Log("Load");
-        //    LoadToMainScene();
-        //}
+        InputKeyOrButton();
     }
 
-    private void InputKey()
+    private void InputKeyOrButton()
     {
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+        if(!isClickScreen && Input.anyKeyDown)
         {
-            index += 1;
-            index = Mathf.Clamp(index, 0, Options.transform.childCount - 1);
-            MoveBackgroundPanel();
-        }
-        else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            index -= 1;
-            index = Mathf.Clamp(index, 0, Options.transform.childCount - 1);
-            MoveBackgroundPanel();
+            isClickScreen = true;
+
+            StartCoroutine(ShowListOnTouch());
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (isClickScreen)
         {
-            InvokeBtnOnClick();
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                index += 1;
+                if(index <= options.transform.childCount - 1)
+                    Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Title/Select.mp3");
+
+                index = Mathf.Clamp(index, 0, options.transform.childCount - 1);
+                MoveBackgroundPanel();
+            }
+
+            else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                index -= 1;
+                if (index >= 0)
+                    Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Title/Select.mp3");
+
+                index = Mathf.Clamp(index, 0, options.transform.childCount - 1);
+                MoveBackgroundPanel();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                InvokeBtnOnClick();
+            }
         }
+    }
+    #endregion
+
+    private IEnumerator ShowListOnTouch()
+    {
+        blurPanel.SetActive(true);
+        // titleTmp를 위로 올린 후
+        titleTmp.rectTransform.DOMoveY(titleTmp.rectTransform.position.y + 150f, 0.3f);
+        yield return new WaitForSeconds(0.5f);
+
+        // 게임 선택 목록 활성화
+        selectionList.gameObject.SetActive(true);
     }
 
     private void MoveBackgroundPanel()
     {
-        backgroundPanel.transform.DOMoveY(Options.transform.GetChild(index).position.y, 0.15f);
+        backgroundPanel.transform.DOMoveY(options.transform.GetChild(index).position.y, 0.15f);
     }
 
     private void InvokeBtnOnClick()
     {
-        Options.transform.GetChild(index).GetComponent<Button>().onClick.Invoke();
+        options.transform.GetChild(index).GetComponent<Button>().onClick.Invoke();
     }
 
     public void GameStart()
