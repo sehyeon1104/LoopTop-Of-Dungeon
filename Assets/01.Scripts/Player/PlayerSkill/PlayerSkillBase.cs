@@ -36,6 +36,9 @@ public abstract class PlayerSkillBase : MonoBehaviour
     float attackTimer = 0;
     virtual protected void Update()
     {
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
+            return;
+
         if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
         {
             Attack();
