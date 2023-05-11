@@ -17,6 +17,6 @@ public class CenterSceneManager : MonoBehaviour
         GameManager.Instance.StageMoveCount = 0;
         GameManager.Instance.SaveData();
 
-        Base.Instance.Init();
+        Game.Instance.Init();
     }
 }
