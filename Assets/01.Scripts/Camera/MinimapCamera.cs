@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class MinimapCamera : MonoBehaviour
 {
+    private void Awake()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        transform.position = new Vector3(0, 0, -10);
+    }
 
     public void MoveMinimapCamera(Vector3 pos)
     {
