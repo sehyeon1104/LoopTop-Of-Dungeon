@@ -61,7 +61,11 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
+        playerUI = GameManager.Instance.Player.transform.Find("PlayerUI").gameObject;
+        playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
+        hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
+        hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
+        AttackButton =  playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
