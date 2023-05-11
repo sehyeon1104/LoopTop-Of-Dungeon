@@ -61,7 +61,11 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
+        playerUI = GameManager.Instance.Player.transform.Find("PlayerUI").gameObject;
+        playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
+        hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
+        hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
+        AttackButton =  playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
@@ -73,7 +77,6 @@ public class UIManager : MonoSingleton<UIManager>
         skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        //pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
     }
 
@@ -222,9 +225,20 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void ResetSkill()
     {
-        for (int i = 0; i < skillIcons.Length; i++)
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
         {
-            skillIcons[i].sprite = null;
+            for (int i = 0; i < pcSkillIcons.Length; i++)
+            {
+                pcSkillIcons[i].sprite = null;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skillIcons.Length; i++)
+            {
+                skillIcons[i].sprite = null;
+            }
+
         }
     }
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)

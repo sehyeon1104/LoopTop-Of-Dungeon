@@ -107,7 +107,7 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-            StartCoroutine(ArmSkill());
+            StartCoroutine(ArmSkill(level));
         }
     }
     protected override void UltimateSkill()
@@ -470,7 +470,7 @@ public class GhostSkill : PlayerSkillBase
             yield return waitLastClaw;
             for (int i = -1; i < 6; i++)
             {
-                Poolable a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw.prefab", transform.position, Quaternion.Euler(0, 0, 45));
+                Poolable a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw 1.prefab", transform.position, Quaternion.Euler(0, 0, 45));
                 a.transform.localScale = new Vector3(7, 4, 1);
                 a.transform.rotation = Quaternion.Euler(0, 0, 30 * i);
                 a.GetComponent<VisualEffect>().Play();
@@ -508,10 +508,14 @@ public class GhostSkill : PlayerSkillBase
         }
         UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
     }
-    IEnumerator ArmSkill()
+    IEnumerator ArmSkill(int level)
     {
         Collider2D[] hitEnemies;
-        Poolable[] arm = new Poolable[2];
+        List<Poolable> arms = new List<Poolable>();
+        if(level ==1)
+        {
+            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up, Quaternion.Euler(0, 180, 0)));
+        }
         arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up , Quaternion.Euler(0, 180, 0));
         arm[0].transform.localPosition += new Vector3(-3, 0, 0);
         arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.up , Quaternion.identity);
