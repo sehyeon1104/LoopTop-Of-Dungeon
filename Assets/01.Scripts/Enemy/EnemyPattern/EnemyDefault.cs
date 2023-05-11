@@ -238,13 +238,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             {
                 EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
             }
-            else
-            {
-                Managers.Pool.Push(gameObject.GetComponent<Poolable>());
-            }
-            FragmentCollectManager.Instance.AddFragment(gameObject);
 
-            gameObject.SetActive(false);
+            Managers.Pool.Push(gameObject.GetComponent<Poolable>());
+            FragmentCollectManager.Instance.AddFragment(gameObject);
         }
     }
 }

@@ -9,10 +9,9 @@ using DG.Tweening;
 using System.Linq;
 using System;
 
-public class UIManager : MonoSingleton<UIManager>
+public class PCUIManager : MonoSingleton<PCUIManager>
 {
     public GameObject playerUI;
-    public GameObject playerPCUI;
     public GameObject skillSelect;
     [Header("LeftUp")]
     [SerializeField]
@@ -27,7 +26,7 @@ public class UIManager : MonoSingleton<UIManager>
     // [Header("LeftDown")]
 
     [Header("Middle")]
-
+ 
     public GameObject skillSelectObj;
     [SerializeField]
     private GameObject pausePanel;
@@ -44,14 +43,12 @@ public class UIManager : MonoSingleton<UIManager>
     private Image curStageNameLine;
     [SerializeField]
     private float showCurStageNameTime = 3f;
+
+    float timer = 0;
+    int num = 0;
     // [Header("RightUp")]
     [Header("RightDown")]
-    public GameObject skill1Button;
-    public GameObject skill2Button;
-    public GameObject ultButton;
-    public GameObject dashButton;
     Image[] skillIcons = new Image[4];
-    Image[] pcSkillIcons = new Image[3];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -60,21 +57,7 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
 
     private void Awake()
-    {
-        AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
-        skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
-        skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
-        ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
-        dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
-        InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
-        skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        //pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-        pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+    { 
     }
 
     private void Start()
@@ -90,6 +73,8 @@ public class UIManager : MonoSingleton<UIManager>
         UpdateGoods();
     }
 
+
+
     public void HPInit()
     {
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
@@ -100,10 +85,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void TogglePlayerAttackUI()
     {
-        AttackButton.SetActive(!AttackButton.activeSelf);
-        skill1Button.SetActive(!skill1Button.activeSelf);
-        skill2Button.SetActive(!skill2Button.activeSelf);
-        ultButton.SetActive(!ultButton.activeSelf);
     }
 
     #region Panels
@@ -133,7 +114,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     public void ToggleGameOverPanel()
-    {
+    {   
         TogglePlayerAttackUI();
         blurPanel.SetActive(!blurPanel.activeSelf);
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
@@ -180,35 +161,20 @@ public class UIManager : MonoSingleton<UIManager>
 
     public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
     {
-        int num = (int)skillNum;
-        if (skillNum == Define.SkillNum.UltimateSkill)
-            num = 2;
-        else if (skillNum == Define.SkillNum.DashSkill)
-            num = 3;
-        Image currentImage = null;
-        if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
-        {
-            GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
-            currentImage = touchedObj.transform.Find("CooltimeImg").GetComponent<Image>();
-            if (currentImage.fillAmount > 0)
-                return false;
-        }
-        else
-        {
-            currentImage = playerPCUI.transform.Find("LeftDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
+        GameObject touchedObj = EventSystem.current.currentSelectedGameObject;
+        Image currentImage = touchedObj.transform.Find("CooltimeImg").GetComponent<Image>();
+        if (currentImage.fillAmount > 0)
+            return false;
 
-            if (currentImage.fillAmount > 0)
-                return false;
-        }
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
         return true;
     }
     public void SkillNum(List<int> skillList)
     {
-        Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
+         Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+            selectTexts[i] .GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
         }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
@@ -222,31 +188,17 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void ResetSkill()
     {
-        for (int i = 0; i < skillIcons.Length; i++)
+        for(int i=0; i<skillIcons.Length; i++)
         {
             skillIcons[i].sprite = null;
         }
     }
-    public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
+    public void SetSkillIcon(PlayerSkillData skilldata,int iconNum,int skillNum,int spriteNum)
     {
-        if (GameManager.Instance.platForm == Define.PlatForm.PC)
-        {
-            if (iconNum == 0 && pcSkillIcons[0].sprite != null)
-                iconNum++;
-
-            if (iconNum == 3)
-                return;
-
-            pcSkillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
-        }
-        else
-        {
-
-            if (iconNum == 0 && skillIcons[0].sprite != null)
-                iconNum++;
+        if (iconNum == 0 && skillIcons[0].sprite != null)
+            iconNum++;
 
             skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
-        }
     }
 
     public void HpUpdate()
@@ -268,7 +220,7 @@ public class UIManager : MonoSingleton<UIManager>
         AttackButton.SetActive(true);
         InteractionButton.SetActive(false);
     }
-
+    
     public bool IsActiveAttackBtn()
     {
         return AttackButton.activeSelf;
@@ -281,12 +233,12 @@ public class UIManager : MonoSingleton<UIManager>
 
     public IEnumerator ShowCurrentStageName()
     {
-        if (showCurStageNameObj.gameObject == null)
+        if(showCurStageNameObj.gameObject == null)
         {
             Debug.LogWarning("showCurStageNameObj is Null!");
             yield break;
         }
-        if (GameManager.Instance.sceneType == Define.Scene.CenterScene || GameManager.Instance.sceneType == Define.Scene.BossScene)
+        if(GameManager.Instance.sceneType == Define.Scene.CenterScene || GameManager.Instance.sceneType == Define.Scene.BossScene)
         {
             yield break;
         }
@@ -330,12 +282,12 @@ public class UIManager : MonoSingleton<UIManager>
     public void LeaveBtn()
     {
         Time.timeScale = 1f;
-        if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
+        if(GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
-        else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
+        else if(GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
             GameManager.Instance.GameQuit();
         }

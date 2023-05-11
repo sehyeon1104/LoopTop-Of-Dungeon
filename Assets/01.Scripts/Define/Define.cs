@@ -80,4 +80,9 @@ public static class Define
         ETC,
         Special,
     }
+    public enum PlatForm
+    {
+        PC,
+        Mobile
+    }
 }

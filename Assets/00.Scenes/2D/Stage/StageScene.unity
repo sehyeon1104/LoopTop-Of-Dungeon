@@ -775,6 +775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e320d4197fcc46e4d908f89b1cefa3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapTypeFlag: 0
+  sceneType: 0
+  <allItemList>k__BackingField: []
 --- !u!114 &520647065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -806,7 +809,6 @@ MonoBehaviour:
   ultButton: {fileID: 0}
   dashButton: {fileID: 0}
   blurPanel: {fileID: 1223293467}
-  pressF: {fileID: 0}
   hpbars: []
 --- !u!4 &520647066
 Transform:
@@ -875,90 +877,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemObjSpawnPos: []
   itemObjTemplate: {fileID: 4778024336246859236, guid: 3b7dd1b68af3ea04e8304abb1d7800f3, type: 3}
-  itemList:
-  - itemType: 0
-    itemRating: 0
-    itemNumber: 0
-    itemName: Default
-    itemDescription: Default
-    price: 0
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 1
-    itemName: "\uB0A0\uAC1C\uB2EC\uB9B0 \uC2E0\uBC1C"
-    itemDescription: "\uC774\uB3D9\uC18D\uB3C4\uAC00 10% \uC99D\uAC00\uD55C\uB2E4"
-    price: 123
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 2
-    itemName: "\uAC70\uC778\uC758 \uC7A5\uAC11"
-    itemDescription: "\uACF5\uACA9\uBC94\uC704\uAC00 10% \uC99D\uAC00\uD55C\uB2E4"
-    price: 123
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 3
-    itemName: "\uBB34\uB38C\uC9C4 \uAC80"
-    itemDescription: "\uACF5\uACA9\uB825\uC774 5% \uC99D\uAC00\uD55C\uB2E4"
-    price: 125
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 4
-    itemName: "\uD5E4\uBE44\uAE09 \uCC54\uD53C\uC5B8\uC758 \uBCA8\uD2B8"
-    itemDescription: "\uCD5C\uB300\uC0DD\uBA85\uB825 15% \uC99D\uAC00\uD55C\uB2E4"
-    price: 213
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 5
-    itemName: "\uC694\uC6B0\uBB34\uC758 \uAF2C\uB9AC"
-    itemDescription: "\uB300\uC26C \uCFE8\uD0C0\uC784\uC774 0.5\uCD08 \uAC10\uC18C\uD55C\uB2E4"
-    price: 231
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 6
-    itemName: "\uD0D0\uAD6C\uC790\uC758 \uC2DC\uACC4"
-    itemDescription: "\uCE58\uBA85\uD0C0 \uD655\uB960\uC774 6% \uC99D\uAC00\uD55C\uB2E4"
-    price: 235
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 7
-    itemName: "\uB0A0\uCE74\uB85C\uC6B4 \uAC80"
-    itemDescription: "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0\uAC00 5% \uC99D\uAC00\uD55C\uB2E4"
-    price: 250
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 8
-    itemName: "\uBC40\uD30C\uC774\uC5B4\uC758 \uC1A1\uACF3\uB2C8"
-    itemDescription: "\uC801\uC744 \uCC98\uCE58\uD560 \uB54C\uB9C8\uB2E4 hp\uB97C
-      1\uC529 \uD68C\uBCF5\uD55C\uB2E4"
-    price: 333
-  - itemType: 1
-    itemRating: 4
-    itemNumber: 9
-    itemName: "\uB9CC\uB2A5 \uD558\uD504\uAE00\uB7EC\uBE0C"
-    itemDescription: "\uD50C\uB808\uC774\uC5B4\uC758 \uACF5\uACA9\uB825\uC774 15%
-      \uC99D\uAC00\uD558\uBA70, \\n \uD50C\uB808\uC774\uC5B4\uC758 \uC2A4\uD0AC \uCFE8\uD0C0\uC784\uC774
-      15% \uAC10\uC18C\uD55C\uB2E4"
-    price: 512
-  - itemType: 1
-    itemRating: 4
-    itemNumber: 10
-    itemName: "\uAD11\uC804\uC0AC\uC758 \uAC80"
-    itemDescription: "\uD50C\uB808\uC774\uC5B4\uC758 hp\uAC00 \uB0AE\uC744\uC218\uB85D
-      \uD50C\uB808\uC774\uC5B4\uC758 \uACF5\uACA9\uB825\uC774 \uC99D\uAC00\uD55C\uB2E4
-      (\uCD5C\uB300 15)"
-    price: 555
-  <itemSprites>k__BackingField:
-  - {fileID: 0}
-  - {fileID: 6934013284892070054, guid: 1d574ed36f251a94db7e489432b273ba, type: 3}
-  - {fileID: 6934013284892070054, guid: d3d12272ac65d56418ac13eb9f915707, type: 3}
-  - {fileID: 6934013284892070054, guid: 1415446a915bebd4fb78ef633d5221cb, type: 3}
-  - {fileID: 6934013284892070054, guid: 30effb26e7b1a6c4f8e713e64b90894f, type: 3}
-  - {fileID: -7957278214813060823, guid: d3d12272ac65d56418ac13eb9f915707, type: 3}
-  - {fileID: -7957278214813060823, guid: 1415446a915bebd4fb78ef633d5221cb, type: 3}
-  - {fileID: -7957278214813060823, guid: 1d574ed36f251a94db7e489432b273ba, type: 3}
-  - {fileID: -7957278214813060823, guid: 30effb26e7b1a6c4f8e713e64b90894f, type: 3}
-  - {fileID: 1409549213185883415, guid: 1d574ed36f251a94db7e489432b273ba, type: 3}
-  - {fileID: 1409549213185883415, guid: d3d12272ac65d56418ac13eb9f915707, type: 3}
 --- !u!114 &520647070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1256,7 +1174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6125614359604897047, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7638766925684611384, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

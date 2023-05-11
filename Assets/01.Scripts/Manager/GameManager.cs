@@ -19,7 +19,7 @@ public class GameManager : MonoSingleton<GameManager>
             stageMoveCount %= 3;
         }
     }
-
+    public Define.PlatForm platForm;
     public Define.MapTypeFlag mapTypeFlag; //{ private set; get; }
     public Define.Scene sceneType; //{ private set; get; }
 
@@ -64,7 +64,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         #region 게임 데이터 로딩
-        if (!SaveManager.GetCheckGameDataBool())
+        if (!SaveManager.GetCheckDataBool("GameData"))
         {
             Debug.Log("[GameManager] GameData 저장파일 없음");
             SetGameData();
@@ -85,7 +85,7 @@ public class GameManager : MonoSingleton<GameManager>
             return;
         }
         #region 플레이어 정보 로딩
-        if (!SaveManager.GetCheckPlayerDataBool())
+        if (!SaveManager.GetCheckDataBool("PlayerData"))
         {
             Debug.Log("[GameManager] PlayerData 저장파일 없음");
             Player.playerBase.InitPlayerStat();
@@ -176,6 +176,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.hp = Player.playerBase.Hp;
         playerData.maxLevel = Player.playerBase.MaxLevel;
         playerData.level = Player.playerBase.Level;
+        playerData.slotLevel = Player.playerBase.slotLevel;
         playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
@@ -206,6 +207,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Hp = playerData.hp;
         Player.playerBase.MaxLevel = playerData.maxLevel;
         Player.playerBase.Level = playerData.level;
+        Player.playerBase.slotLevel = playerData.slotLevel;
         Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;

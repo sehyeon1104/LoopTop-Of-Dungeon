@@ -57,12 +57,15 @@ public class GhostSkill : PlayerSkillBase
     float armDamage = 30f;
     private Vector3 joystickDir;
     WaitForSeconds waitArm = new WaitForSeconds(0.9f);
+    WaitForSeconds waitFiveArm = new WaitForSeconds(1f);
+    Material mat;
     GameObject boss = null;
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
     private void Awake()
     {
         Cashing();
+        mat = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Shader Graphs_GhostArm.mat");
         boss = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Player/Ghost/boss_devil_man.prefab");
         playerBeam = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerBeam.prefab").GetComponent<PlayerBeam>();
         smoke = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/PlayerSmoke.prefab");
@@ -226,7 +229,6 @@ public class GhostSkill : PlayerSkillBase
         }
         else
         {
-
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
@@ -510,11 +512,12 @@ public class GhostSkill : PlayerSkillBase
     {
         Collider2D[] hitEnemies;
         Poolable[] arm = new Poolable[2];
-        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position, Quaternion.Euler(0, 180, 0));
+        arm[0] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up , Quaternion.Euler(0, 180, 0));
         arm[0].transform.localPosition += new Vector3(-3, 0, 0);
-        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position, Quaternion.identity);
+        arm[1] = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.up , Quaternion.identity);
         arm[1].transform.localPosition += new Vector3(3, 0, 0);
 
+        mat.SetFloat("_StepValue", arm[0].transform.position.y-2);
         hitEnemies = Physics2D.OverlapBoxAll(arm[0].transform.position, new Vector2(1, 2.5f), 0, 1 << enemyLayer);
         for (int i = 0; i < hitEnemies.Length; i++)
         {
@@ -526,14 +529,15 @@ public class GhostSkill : PlayerSkillBase
             hitEnemies[i].GetComponent<IHittable>().OnDamage(armDamage, 0);
         }
         yield return waitArm;
-      Poolable armPos  =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arm[0].transform.position + Vector3.down * 2, Quaternion.identity);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arm[0].transform.position + Vector3.down * 2, Quaternion.identity);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arm[1].transform.position + Vector3.down * 2, Quaternion.identity);
-        armPos.GetComponentInChildren<Renderer>().material.SetFloat("_StepValue",armPos.transform.position.y);
         yield return null;
     }
     IEnumerator ArmFiveSkill()
     {
-        Poolable bossSprite = Managers.Pool.Pop(boss, transform.position + Vector3.up * 2);
+
+        RaycastHit2D[] hitEnemies;
+        Poolable bossSprite = Managers.Pool.Pop(boss, transform.position + Vector3.up * 3);
         Animator animator = bossSprite.GetComponentInChildren<Animator>();
         SpriteRenderer[] bossSprites = bossSprite.transform.GetComponentsInChildren<SpriteRenderer>();
         Color fadeColor = new Color(1, 1,1, 0);
@@ -545,16 +549,38 @@ public class GhostSkill : PlayerSkillBase
                 bossSprites[i].color = fadeColor;
             }
 
-            fadeColor.a += Time.deltaTime/2;
+            fadeColor.a += Time.deltaTime;
             yield return null;
         }
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >0.67);
-       Poolable armPos = Managers.Pool.PoolManaging("Assets/10.Effects/118 sprite effects bundle/25 sprite effects/ef_3_purple.prefab", transform.position + Vector3.left * 3, Quaternion.identity);
-        Managers.Pool.PoolManaging("Assets/10.Effects/118 sprite effects bundle/25 sprite effects/ef_3_purple.prefab", transform.position + Vector3.right * 3, Quaternion.identity);
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", transform.position + Vector3.left * 4 + Vector3.up, Quaternion.Euler(0, 180, 0));
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", transform.position + Vector3.right * 4 + Vector3.up, Quaternion.identity);
-        armPos.GetComponentInChildren<Renderer>().material.SetFloat("_StepValue", armPos.transform.position.y);
-        print(armPos.GetComponentInChildren<Renderer>().material.name);
+        Poolable leftArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", bossSprite.transform.position + Vector3.left * 4 + Vector3.down * 5, Quaternion.Euler(0, 180, 0));
+        Poolable rightArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", bossSprite.transform.position + Vector3.right * 4 + Vector3.down * 5, Quaternion.identity);
+        Poolable leftTopArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", bossSprite.transform.position + Vector3.left * 4 + Vector3.down*3, Quaternion.Euler(0, 0,270));
+        leftTopArm.transform.Find("ArmOutEffect").GetComponent<ParticleSystem>().startRotation = 0;
+        Poolable rightTopArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightFiveArm.prefab", bossSprite.transform.position + Vector3.right * 4 + Vector3.down, Quaternion.Euler(0, 0, 90));
+        rightTopArm.transform.Find("ArmOutEffect").GetComponent<ParticleSystem>().startRotation = -180 * Mathf.Deg2Rad;
+        hitEnemies = Physics2D.BoxCastAll(leftArm.transform.position - Vector3.down, new Vector2(4, 1), 0, Vector2.up,10,1<<enemyLayer);
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+        }
+        hitEnemies = Physics2D.BoxCastAll(rightArm.transform.position - Vector3.down, new Vector2(4,1), 0, Vector2.up,10,1<<enemyLayer);
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+        }
+        hitEnemies = Physics2D.BoxCastAll(rightArm.transform.position - Vector3.left, new Vector2(1, 4), 0, Vector2.right, 10, 1 << enemyLayer);
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+        }
+        hitEnemies = Physics2D.BoxCastAll(rightArm.transform.position - Vector3.right, new Vector2(1, 4), 0, Vector2.left, 10, 1 << enemyLayer);
+        for (int i = 0; i < hitEnemies.Length; i++)
+        {
+            hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+        }
+        mat.SetFloat("_StepValue", leftArm.transform.position.y -1 );
+        yield return waitFiveArm;
         while (fadeColor.a > 0)
         {
             for (int i = 0; i < bossSprites.Length; i++)
@@ -562,9 +588,12 @@ public class GhostSkill : PlayerSkillBase
                 bossSprites[i].color = fadeColor;
             }
 
-            fadeColor.a -= Time.deltaTime / 2;
+            fadeColor.a -= Time.deltaTime;
             yield return null;
         }
+        leftTopArm.transform.Find("ArmOutEffect").GetComponent<ParticleSystem>().startRotation = 270 * Mathf.Deg2Rad ;
+        rightTopArm.transform.Find("ArmOutEffect").GetComponent<ParticleSystem>().startRotation = 270 * Mathf.Deg2Rad;
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Hide.prefab", bossSprite.transform.position + Vector3.up * 2, Quaternion.identity);
         Managers.Pool.Push(bossSprite);
     }
     protected override void FifthSkillUpdate(int level)
