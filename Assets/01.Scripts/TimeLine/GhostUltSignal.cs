@@ -12,8 +12,9 @@ public class GhostUltSignal : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private GameObject GhostBossSkill;
+    //[SerializeField] private Animation GhostUltAnim;
 
-    [SerializeField] private Animation GhostUltAnim;
+    [SerializeField] Animator ghostUltAnim;
 
     [SerializeField] private SpriteRenderer panel1, panel2;
 
@@ -28,6 +29,9 @@ public class GhostUltSignal : MonoBehaviour
 
     bool isArrayed = false;
 
+    int ult1 = Animator.StringToHash("Ult1");
+    int ult2 = Animator.StringToHash("Ult2");
+    int ult3 = Animator.StringToHash("Ult3");
     float alpha = 0;
     int enemyLayer;
     private void Awake()
@@ -35,17 +39,18 @@ public class GhostUltSignal : MonoBehaviour
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<Player>();
-        UltSkillAnim(); 
+        //  UltSkillAnim(); 
     }
-    public void AnimationArray()
-    {
-        foreach (AnimationState states in GhostUltAnim)
-        {
-            animArray.Add(states.name);
-            Debug.Log(states.name);
-        }
-        isArrayed = true;
-    }
+
+    //public void AnimationArray()
+    //{
+    //    foreach (AnimationState states in GhostUltAnim)
+    //    {
+    //        animArray.Add(states.name);
+    //        Debug.Log(states.name);
+    //    }
+    //    isArrayed = true;
+    //}
 
     public void AttackEnemy()
     {
@@ -55,15 +60,14 @@ public class GhostUltSignal : MonoBehaviour
             attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
         }
     }
-    public void UltSkillAnim()
-    {
-        
-        if (isArrayed == false)
-        {
-            animArray = new List<string>();
-            AnimationArray();
-        }
-    }
+    //public void UltSkillAnim()
+    //{
+    //    if (isArrayed == false)
+    //    {
+    //        animArray = new List<string>();
+    //        AnimationArray();
+    //    }
+    //}
 
     
     public void ScreenDark()
@@ -122,17 +126,17 @@ public class GhostUltSignal : MonoBehaviour
 
     public void Ult1()
     {
-        GhostUltAnim.Play(animArray[0]);
+        ghostUltAnim.SetTrigger(ult1);
     }
 
     public void Ult2()
     {
-        GhostUltAnim.Play(animArray[1]);
+        ghostUltAnim.SetTrigger(ult2);
     }
 
     public void Ult3()
     {
-        GhostUltAnim.Play(animArray[2]);
+        ghostUltAnim.SetTrigger(ult3);
     }
 
 

@@ -50,6 +50,8 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject skill2Button;
     public GameObject ultButton;
     public GameObject dashButton;
+    public Button reviveButton;
+    public Button leaveButton;
     Image[] skillIcons = new Image[4];
     Image[] pcSkillIcons = new Image[4];
     GameObject AttackButton;
@@ -81,11 +83,12 @@ public class UIManager : MonoSingleton<UIManager>
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
             blurPanel = playerUI.transform.Find("All/BlurPanel").gameObject;
+            reviveButton = playerUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = playerUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>(); 
             skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-
         }
         else
         {
@@ -100,11 +103,14 @@ public class UIManager : MonoSingleton<UIManager>
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
+            reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
             pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
+        leaveButton.onClick.AddListener(LeaveBtn);
     }
 
     private void Start()
@@ -267,7 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
             }
 
         }
-    }
+    }   
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
     {
         if (GameManager.Instance.platForm == Define.PlatForm.PC)

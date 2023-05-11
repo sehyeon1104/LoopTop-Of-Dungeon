@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IHittable
 {
 
     public PlayerBase playerBase = new PlayerBase();
-
+    private GameObject playerVisual;
     private bool invincibility = false;
     public bool IsInvincibility
     {
@@ -30,7 +30,11 @@ public class Player : MonoBehaviour, IHittable
 
     public UnityEvent HPRelatedItemEffects { get; private set; }
     public Vector3 hitPoint { get; private set; }
-
+    private void Awake()
+    {
+        UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
+        playerVisual = transform.Find("PlayerVisual").gameObject;
+    }
     private void Start()
     {
         if (HPRelatedItemEffects == null)
@@ -85,12 +89,12 @@ public class Player : MonoBehaviour, IHittable
     {
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.ToggleGameOverPanel();
-        gameObject.SetActive(false);
+        playerVisual.SetActive(false);
     }
 
     public void RevivePlayer()
-    {   
-        gameObject.SetActive(true);
+    {
+        playerVisual.SetActive(true);
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));
