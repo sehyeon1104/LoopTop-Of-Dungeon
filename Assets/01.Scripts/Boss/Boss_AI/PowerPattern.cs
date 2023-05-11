@@ -236,13 +236,18 @@ public class P_Patterns : BossPattern
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
         dashVCam.Priority = 11;
+        Camera.main.orthographic = true;
+
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
         dash2Phase.SetActive(true);
         yield return new WaitForSeconds(3f);
+
         partList[randomInvisible].gameObject.SetActive(true);
         dash2Phase.SetActive(false);
+
         dashVCam.Priority = 0;
+        Camera.main.orthographic = false;
         yield return null;
     }
 
