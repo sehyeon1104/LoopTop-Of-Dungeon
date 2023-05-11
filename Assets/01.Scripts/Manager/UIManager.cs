@@ -51,7 +51,7 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject ultButton;
     public GameObject dashButton;
     Image[] skillIcons = new Image[4];
-    Image[] pcSkillIcons = new Image[3];
+    Image[] pcSkillIcons = new Image[4];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -78,6 +78,7 @@ public class UIManager : MonoSingleton<UIManager>
         pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
         pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+        pcSkillIcons[3] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
     }
 
     private void Start()
@@ -248,8 +249,6 @@ public class UIManager : MonoSingleton<UIManager>
             if (iconNum == 0 && pcSkillIcons[0].sprite != null)
                 iconNum++;
 
-            if (iconNum == 3)
-                return;
 
             pcSkillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
         }
