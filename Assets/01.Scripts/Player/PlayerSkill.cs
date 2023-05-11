@@ -56,7 +56,28 @@ public class PlayerSkill : MonoBehaviour
             PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
             SkillSelect(playerBase.PlayerTransformTypeFlag);
         }
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            Skill1();
+        }
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            Skill2();
+        }
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            Attack();
+        }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            DashSkill();
+        }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            UltimateSkill();    
+        }
     }
+
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         ReserProperty();
@@ -65,8 +86,8 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[1](slotLevel[0]);
-            playerSkill.playerSkillUpdate[1](slotLevel[0]);
+            skillEvent[0] = () => playerSkill.playerSkills[3](slotLevel[0]);
+            playerSkill.playerSkillUpdate[3](slotLevel[0]);
             skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
             playerSkill.playerSkillUpdate[5](slotLevel[0]);
             skillEvent[2] = playerSkill.attack;
@@ -88,6 +109,8 @@ public class PlayerSkill : MonoBehaviour
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
+
+
 
     void Skill2()
     {
