@@ -221,9 +221,20 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void ResetSkill()
     {
-        for (int i = 0; i < skillIcons.Length; i++)
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
         {
-            skillIcons[i].sprite = null;
+            for (int i = 0; i < pcSkillIcons.Length; i++)
+            {
+                pcSkillIcons[i].sprite = null;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skillIcons.Length; i++)
+            {
+                skillIcons[i].sprite = null;
+            }
+
         }
     }
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
