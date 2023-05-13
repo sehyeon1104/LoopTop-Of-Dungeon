@@ -21,7 +21,6 @@ public class EnemyRoom : RoomBase
 
         isSpawnMonster = false;
         SetRoomTypeFlag();
-        SetEnemySpawnPos();
     }
 
     protected override void SetRoomTypeFlag()
@@ -37,12 +36,8 @@ public class EnemyRoom : RoomBase
         {
             // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
+            Debug.Log(isMoveAnotherStage);
             EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
-
-            if (isMoveAnotherStage)
-            {
-                Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-            }
 
             return enemySpawnPos;
         }
@@ -78,6 +73,7 @@ public class EnemyRoom : RoomBase
     private IEnumerator CheckClear()
     {
         yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
+        Debug.Log("Clear");
         IsClear();
 
     }

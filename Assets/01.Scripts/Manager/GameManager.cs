@@ -141,14 +141,6 @@ public class GameManager : MonoSingleton<GameManager>
         //SetItemData(allItemList);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SaveData();
-        }
-    }
-
     public void ResetStageClearCount()
     {
         StageMoveCount = 0;

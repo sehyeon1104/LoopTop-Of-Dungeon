@@ -43,8 +43,6 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
-
-        GameObject shopIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/ShopIcon.prefab");
     }
     public void SpawnNPC()
     {
