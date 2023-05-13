@@ -28,7 +28,6 @@ public class ShopRoom : RoomBase
 
     private void Awake()
     {
-
         InteractionBtn = UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Interaction_Btn").GetComponent<Button>();
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
@@ -92,7 +91,9 @@ public class ShopRoom : RoomBase
 
         minimapIconSpriteRenderer.color = Color.white;
         StartCoroutine(ToggleItemInfoPanel());
+        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
     }
+
     public IEnumerator ToggleItemInfoPanel()
     {
         while (true)
