@@ -63,8 +63,6 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
-        // TODO : 재화 부족할 시 구매 불가 적용
-
         if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || isSold)
         {
             Rito.Debug.Log("구매 불가");

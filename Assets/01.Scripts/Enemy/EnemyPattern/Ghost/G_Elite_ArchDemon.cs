@@ -99,4 +99,10 @@ public class G_Elite_ArchDemon : EnemyElite
 
         yield return new WaitForSeconds(3f);
     }
+
+    public override void EnemyDead()
+    {
+        StageManager.Instance.InstantiateDropItem(transform.position);
+        base.EnemyDead();
+    }
 }

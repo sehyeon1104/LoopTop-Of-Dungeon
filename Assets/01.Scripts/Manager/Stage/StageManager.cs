@@ -19,6 +19,8 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField]
     private GameObject MoveNextMapPortal;
 
+    private GameObject dropItemPrefab = null;
+
     public bool isSetting { private set; get; }
 
     private void Awake()
@@ -31,6 +33,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
+        dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
     }
 
     private IEnumerator Start()
@@ -112,5 +115,12 @@ public class StageManager : MonoSingleton<StageManager>
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
     {
         Instantiate(MoveNextMapPortal, enemyRoom.gameObject.transform.position, Quaternion.identity);
+    }
+
+    public void InstantiateDropItem(Vector3 pos)
+    {
+        // TODO : 아이템 드랍 애니메이션 추가
+
+        Managers.Pool.Pop(dropItemPrefab, pos);
     }
 }

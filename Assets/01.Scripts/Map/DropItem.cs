@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class DropItem : MonoBehaviour
 {
     [SerializeField]
+    private float interactionDis = 2f;
+
+    [SerializeField]
     private SpriteRenderer spriteRenderer = null;
 
     private Item item = null;
@@ -13,7 +16,7 @@ public class DropItem : MonoBehaviour
 
     private bool isDuplication = false;
 
-    private void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
@@ -32,7 +35,7 @@ public class DropItem : MonoBehaviour
             Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
             for(int i = 0; i < tempItemList.Count; ++i)
             {
-                if(temp == tempItemList[i])
+                if(temp == tempItemList[i] /*&& item.itemType != Define.ItemType.heal && item.itemType != Define.ItemType.broken*/)
                 {
                     isDuplication = true;
                     break;
@@ -47,11 +50,20 @@ public class DropItem : MonoBehaviour
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
+    private void CheckDistance()
+    {
+        if(Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < interactionDis)
+        {
+            // TODO : »óÈ£ÀÛ¿ë ½Ã ¾ÆÀÌÅÛ È¹µæ
+        }
+    }
+
+    // ¾ÆÀÌÅÛ È¹µæ ÇÔ¼ö
     private void TakeItem()
     {
         // TODO : È¹µæ ½Ã ÀÌÆåÆ® Ãâ·Â
         
         InventoryUI.Instance.AddItemSlot(item);
-        Destroy(gameObject);
+        Managers.Pool.Push(this.GetComponent<Poolable>());
     }
 }
