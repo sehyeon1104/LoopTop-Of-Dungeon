@@ -153,7 +153,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void PlayHitEffect(Transform objTransform)
     {
-        Debug.Log($"히트 이펙트 : {hitEffect != null}");
+        //Debug.Log($"히트 이펙트 : {hitEffect != null}");
         var effect = Managers.Pool.Pop(hitEffect);
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }

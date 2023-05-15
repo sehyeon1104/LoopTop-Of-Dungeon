@@ -13,12 +13,8 @@ public class EnemyRoom : RoomBase
     public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
-    private SpriteRenderer minimapIconSpriteRenderer = null;
-
     private void Start()
     {
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-
         isSpawnMonster = false;
         SetRoomTypeFlag();
     }
@@ -78,14 +74,13 @@ public class EnemyRoom : RoomBase
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (StageManager.Instance.isSetting)
         {
             return;
         }
-
-        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
 
         if (collision.CompareTag("Player"))
         {
@@ -95,8 +90,6 @@ public class EnemyRoom : RoomBase
                 Door.Instance.CloseDoors();
                 SetEnemy();
             }
-
-            minimapIconSpriteRenderer.color = Color.white;
         }
     }
 

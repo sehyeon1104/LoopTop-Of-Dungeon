@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class StartRoom : RoomBase
 {
-    private SpriteRenderer minimapIconSpriteRenderer = null;
-
     private void Start()
     {
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
     }
