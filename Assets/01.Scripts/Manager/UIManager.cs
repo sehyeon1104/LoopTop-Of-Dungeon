@@ -24,7 +24,11 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI bossFragmentAmountTMP = null;
 
-    // [Header("LeftDown")]
+    [Header("LeftDown")]
+    [SerializeField]
+    private Transform playerItemListUI = null;
+    [SerializeField]
+    private GameObject itemUITemplate = null;
 
     [Header("Middle")]
 
@@ -213,6 +217,18 @@ public class UIManager : MonoSingleton<UIManager>
         ToggleCheckOneMorePanel();
     }
     #endregion
+
+    public void AddItemListUI(Item item)
+    {
+        if(item.itemType == Define.ItemType.heal)
+        {
+            return;
+        }
+
+        GameObject itemUI = Instantiate(itemUITemplate);
+        Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
+        itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+    }
 
     public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
     {
