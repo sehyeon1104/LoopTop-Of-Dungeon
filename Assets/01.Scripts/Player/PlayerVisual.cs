@@ -55,8 +55,6 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         {
             timer += Time.unscaledDeltaTime;
 
-            Time.timeScale -= 0.015f;
-
             if(damage >= 2)
                 hitVolume.weight += 0.05f; 
             else

@@ -57,7 +57,7 @@ public class GhostUltSignal : MonoBehaviour
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0, 1 << enemyLayer);
         for (int i = 0; i < attachEnemises.Length; i++)
         {
-            attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(50, 0);
         }
     }
     //public void UltSkillAnim()
