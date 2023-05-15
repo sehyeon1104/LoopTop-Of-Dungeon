@@ -36,17 +36,6 @@ public class ZoneEntrance : MonoBehaviour
         {
             ToggleMapNameTMP();
 
-            mapTypeFlag = gameObject.name switch
-            {
-                "Ghost" => Define.MapTypeFlag.Ghost,
-                "LavaSlime" => Define.MapTypeFlag.LavaSlime,
-                "Electricity" => Define.MapTypeFlag.Electricity,
-                "Werewolf" => Define.MapTypeFlag.Werewolf,
-                "Lizard" => Define.MapTypeFlag.Lizard,
-                "Power" => Define.MapTypeFlag.Power,
-                _ => Define.MapTypeFlag.Default,
-            };
-
             GameManager.Instance.SetMapTypeFlag(mapTypeFlag);
 
             if (!isInteraction)
@@ -105,6 +94,17 @@ public class ZoneEntrance : MonoBehaviour
     public void InteractionPlayer()
     {
         isInteraction = true;
+
+        mapTypeFlag = gameObject.name switch
+        {
+            "Ghost" => Define.MapTypeFlag.Ghost,
+            "LavaSlime" => Define.MapTypeFlag.LavaSlime,
+            "Electricity" => Define.MapTypeFlag.Electricity,
+            "Werewolf" => Define.MapTypeFlag.Werewolf,
+            "Lizard" => Define.MapTypeFlag.Lizard,
+            "Power" => Define.MapTypeFlag.Power,
+            _ => Define.MapTypeFlag.Default,
+        };
 
         UIManager.Instance.RotateInteractionButton();
 

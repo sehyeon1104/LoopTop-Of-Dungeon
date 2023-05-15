@@ -11,6 +11,7 @@ public abstract class RoomBase : MonoBehaviour
     protected Define.RoomTypeFlag roomTypeFlag;
     protected bool isClear = false;
 
+    [SerializeField]
     protected SpriteRenderer minimapIconSpriteRenderer = null;
 
     private void Awake()
@@ -28,12 +29,12 @@ public abstract class RoomBase : MonoBehaviour
             return;
         }
 
-        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
-
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = Color.white;
         }
+
+        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
     }
 
 }
