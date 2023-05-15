@@ -74,7 +74,7 @@ public class Player : MonoBehaviour, IHittable
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
 
-        HPRelatedItemEffects.Invoke();
+        HPRelatedItemEffects?.Invoke();
     }
     
     public void Dead()

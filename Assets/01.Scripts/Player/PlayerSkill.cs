@@ -28,7 +28,6 @@ public class PlayerSkill : MonoBehaviour
     private void Awake()
     {
         playerBase = GameManager.Instance.Player.playerBase;
-        slotLevel = playerBase.slotLevel;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
         if (UIManager.Instance.skill1Button != null)
@@ -42,8 +41,8 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        slotLevel = playerBase.SlotLevel;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
-
         SkillShuffle();
     }
     private void Update()

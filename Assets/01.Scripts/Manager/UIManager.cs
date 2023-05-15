@@ -67,7 +67,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
-        playerUI = GameManager.Instance.Player.transform.Find("PlayerUI").gameObject;
+        playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
@@ -96,7 +96,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
+            playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             fragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
