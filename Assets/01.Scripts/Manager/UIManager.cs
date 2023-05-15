@@ -98,8 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
-            fragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            fragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
@@ -109,10 +109,10 @@ public class UIManager : MonoSingleton<UIManager>
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
             reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
-            pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[3] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
         leaveButton.onClick.AddListener(LeaveBtn);
     }
@@ -247,7 +247,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            currentImage = playerPCUI.transform.Find("LeftDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
+            currentImage = playerPCUI.transform.Find("RightDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
 
             if (currentImage.fillAmount > 0)
                 return false;
