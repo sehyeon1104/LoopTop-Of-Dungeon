@@ -24,6 +24,7 @@ public class PlayerSkill : MonoBehaviour
     Rigidbody2D rb;
     int[] slotLevel;
     Action[] skillEvent = new Action[5];
+    private float interactionDis = 2f;
     private void Awake()
     {
         playerBase = GameManager.Instance.Player.playerBase;
@@ -81,6 +82,11 @@ public class PlayerSkill : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             UltimateSkill();
+        }
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            Collider2D[] itemDis = Physics2D.OverlapCircleAll(transform.position, interactionDis);
+           
         }
     }
 
