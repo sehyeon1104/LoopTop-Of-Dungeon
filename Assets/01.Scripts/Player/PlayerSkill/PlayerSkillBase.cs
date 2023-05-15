@@ -30,12 +30,15 @@ public abstract class PlayerSkillBase : MonoBehaviour
     protected List<Poolable> cloneList = new List<Poolable>();
     protected Color dashCloneColor;
     protected Animator playerAnim;
-    protected float attackRange = 1;
+    protected float attackRange = 1.5f;
     private WaitForFixedUpdate waitforFixedUpdate = new WaitForFixedUpdate();
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     float attackTimer = 0;
     virtual protected void Update()
     {
+        if (GameManager.Instance.platForm == Define.PlatForm.PC)
+            return;
+
         if (Physics2D.OverlapCircle(transform.position, attackRange, 1 << enemyLayer))
         {
             Attack();

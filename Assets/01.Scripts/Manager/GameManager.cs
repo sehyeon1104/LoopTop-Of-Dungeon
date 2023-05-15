@@ -36,6 +36,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private GameObject hitEffect = null;
 
+    public MinimapCamera minimapCamera { get; private set; } = null;
+
     private void Awake()
     {
         Application.targetFrameRate = 300;
@@ -62,6 +64,8 @@ public class GameManager : MonoSingleton<GameManager>
             _player = null;
             return;
         }
+
+        minimapCamera = FindObjectOfType<MinimapCamera>();
 
         #region 게임 데이터 로딩
         if (!SaveManager.GetCheckDataBool("GameData"))
@@ -135,14 +139,6 @@ public class GameManager : MonoSingleton<GameManager>
 
         // 디버깅
         //SetItemData(allItemList);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SaveData();
-        }
     }
 
     public void ResetStageClearCount()

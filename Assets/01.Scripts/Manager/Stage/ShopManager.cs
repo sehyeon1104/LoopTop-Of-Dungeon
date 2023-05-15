@@ -44,7 +44,6 @@ public class ShopManager : MonoSingleton<ShopManager>
         itemObjSpawnPos = shopRoom.GetItemSpawnPos();
 
         ShuffleItemSelectNum();
-        CreateObject();
     }
     
 
@@ -72,6 +71,8 @@ public class ShopManager : MonoSingleton<ShopManager>
                 break;
             }
         }
+
+        CreateObject();
     }
     
     public void CreateObject()
