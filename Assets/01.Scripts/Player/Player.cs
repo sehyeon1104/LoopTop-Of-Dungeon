@@ -28,7 +28,12 @@ public class Player : MonoBehaviour, IHittable
     [SerializeField]
     private float invincibleTime = 0.2f;
 
+    // HP 관련 아이템 효과
     public UnityEvent HPRelatedItemEffects { get; private set; }
+    // 공격 관련 아이템 효과
+    public UnityEvent AttackRelatedItemEffects { get; private set; }
+    // 피격 관련 아이템 효과
+    public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
     public Vector3 hitPoint { get; private set; }
     private void Awake()
     {

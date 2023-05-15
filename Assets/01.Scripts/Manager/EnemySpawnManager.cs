@@ -36,6 +36,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private WaitForSeconds waitForSpawnTime;
     private WaitForSeconds waitForHalfSpawnTime;
 
+
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
 

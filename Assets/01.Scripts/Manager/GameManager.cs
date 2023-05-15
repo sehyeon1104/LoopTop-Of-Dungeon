@@ -141,6 +141,11 @@ public class GameManager : MonoSingleton<GameManager>
         //SetItemData(allItemList);
     }
 
+    private void Update()
+    {
+        Debug.Log($"TimeScale : {Time.timeScale}");
+    }
+
     public void ResetStageClearCount()
     {
         StageMoveCount = 0;
