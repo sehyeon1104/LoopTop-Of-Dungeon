@@ -23,7 +23,7 @@ public class G_Ghost : EnemyDefault
 
     public override void EnemyDead()
     {
-        EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+        EnemySpawnManager.Instance.RemoveEnemyInList(poolable);
 
         gameObject.SetActive(false);
     }

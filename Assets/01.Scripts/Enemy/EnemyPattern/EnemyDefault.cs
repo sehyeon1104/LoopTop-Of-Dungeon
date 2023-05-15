@@ -49,6 +49,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     private EnemyHpBar hpBar;
 
+    protected Poolable poolable = null;
+
     protected bool isMove { private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
@@ -70,6 +72,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         isFlip = sprite.flipX;
         defaultMat = sprite.material;
         hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        poolable = GetComponent<Poolable>();
         AnimInit();
     }
 
@@ -236,10 +239,10 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
             if(GameManager.Instance.sceneType == Define.Scene.StageScene)
             {
-                EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+                EnemySpawnManager.Instance.RemoveEnemyInList(poolable);
             }
 
-            Managers.Pool.Push(gameObject.GetComponent<Poolable>());
+            Managers.Pool.Push(poolable);
             FragmentCollectManager.Instance.AddFragment(gameObject);
         }
     }

@@ -107,10 +107,10 @@ public class EnemyRoom : RoomBase
             return;
         }
 
-        if (collision.CompareTag("Player"))
-        {
-            IsClear();
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    IsClear();
+        //}
     }
 
     protected override void IsClear()

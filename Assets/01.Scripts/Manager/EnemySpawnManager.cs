@@ -240,6 +240,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             }
             return;
         }
+
         var enemyDeadEffectClone = Managers.Pool.Pop(enemyDeadEffect);
         enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
