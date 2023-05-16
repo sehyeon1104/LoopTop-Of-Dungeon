@@ -19,7 +19,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private BossUI bossUI;
 
-
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
