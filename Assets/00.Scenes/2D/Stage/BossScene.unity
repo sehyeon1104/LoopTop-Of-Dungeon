@@ -2249,6 +2249,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2212349274594600943, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 94708762846745765}
+    - target: {fileID: 2212349274594600943, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartBossAct
+      objectReference: {fileID: 0}
     - target: {fileID: 2212349275680131207, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2336,6 +2344,10 @@ PrefabInstance:
     - target: {fileID: 2212349275680131259, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Name
       value: BossUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2291363953974560470, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2602379015390291425, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4690,6 +4702,17 @@ PrefabInstance:
       objectReference: {fileID: 9307520}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
+--- !u!114 &94708762846745765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3681022856023880990, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
+  m_PrefabInstance: {fileID: 94708762846745764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 868268b1b74dcbb4a8d0c129099e847d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3622556385524146612 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3681022856023880976, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
