@@ -1294,7 +1294,7 @@ MonoBehaviour:
     itemNumber: 6
     itemName: "\uD0D0\uAD6C\uC790\uC758 \uBC18\uC9C0"
     itemNameEng: InquisitorsRing
-    itemDescription: "\uCE58\uBA85\uD1BC \uD655\uB960 6% \uC99D\uAC00"
+    itemDescription: "\uCE58\uBA85\uD0C0 \uD655\uB960 6% \uC99D\uAC00"
     price: 200
   - itemType: 1
     itemRating: 2
@@ -1308,7 +1308,8 @@ MonoBehaviour:
     itemNumber: 8
     itemName: "\uBC40\uD30C\uC774\uC5B4\uC758 \uC1A1\uACF3\uB2C8"
     itemNameEng: VampireFangs
-    itemDescription: "\uC801\uC744 \uCC98\uCE58\uD560 \uB54C\uB9C8\uB2E4 hp 1 \uD68C\uBCF5"
+    itemDescription: "\uC801\uC744 \uD0C0\uACA9\uC2DC 1% \uD655\uB960\uB85C hp 1
+      \uD68C\uBCF5"
     price: 300
   - itemType: 1
     itemRating: 4
@@ -1961,13 +1962,17 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4022749607786850465, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5615175732824389790, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5615175734129563822, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5615175734257370674, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_AnchorMax.y
