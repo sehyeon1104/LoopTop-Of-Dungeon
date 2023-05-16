@@ -48,10 +48,6 @@ public abstract class BossPattern : MonoBehaviour
     }
     protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Boss.Instance.OnDamage(20, 0);
-        }
         if (Boss.Instance.isBDead)
         {
             Boss.Instance.actCoroutine = null;
