@@ -40,10 +40,11 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("날개달린 신발 효과 발동");
             Rito.Debug.Log("이동속도 10% 증가");
-            GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 1.1f;
+            GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.1f;
         }
     }
 
+    // 거인의 장갑 ( 공격범위 10% 증가 )
     public class GiantGlove : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.buff;
@@ -70,7 +71,7 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("무뎌진 검 효과 발동");
             Debug.Log("공격력 5% 증가");
-            GameManager.Instance.Player.playerBase.Attack *= 1.05f;
+            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
         }
     }
 
@@ -124,7 +125,7 @@ public class ItemEffects : MonoBehaviour
         }
     }
 
-    // 날카로운 검 (치명타 데미지 5% 상승 )
+    // 날카로운 검 (스킬 쿨타임 5% 감소 )
     public class SharpSword : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.buff;
@@ -135,7 +136,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("날카로운 검 효과 발동");
-            Debug.Log("스킬 쿨타임 5% 감소");
+            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.1f;
+            //Debug.Log("스킬 쿨타임 5% 감소");
             // TODO : 스킬 쿨타임 감소 구현
             //GameManager.Instance.Player.playerBase. += 5;
         }

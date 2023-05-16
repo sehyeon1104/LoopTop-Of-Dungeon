@@ -11,6 +11,7 @@ public abstract class Base : MonoSingleton<Base>
 
     public virtual void Init()
     {
+        Managers.Sound.Clear();
         SceneType = GameManager.Instance.sceneType;
         MapType = GameManager.Instance.mapTypeFlag;
     }
