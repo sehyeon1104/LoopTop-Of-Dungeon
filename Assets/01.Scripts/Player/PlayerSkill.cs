@@ -47,6 +47,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
@@ -88,7 +89,11 @@ public class PlayerSkill : MonoBehaviour
            
         }
     }
-
+    public void SlotUp(int index)
+    {
+        slotLevel[index]++;
+        SkillSelect(playerBase.PlayerTransformTypeFlag);
+    }
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         ReserProperty();
@@ -99,8 +104,8 @@ public class PlayerSkill : MonoBehaviour
             playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
             playerSkill.playerSkillUpdate[4](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
-            playerSkill.playerSkillUpdate[5](slotLevel[0]);
+            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[1]);
+            playerSkill.playerSkillUpdate[5](slotLevel[1]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 6, 0);
