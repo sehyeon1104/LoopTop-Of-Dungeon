@@ -98,6 +98,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
+            playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
@@ -114,7 +115,10 @@ public class UIManager : MonoSingleton<UIManager>
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
+        itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
+
         leaveButton.onClick.AddListener(LeaveBtn);
+
     }
 
     private void Start()
@@ -225,7 +229,7 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
-        GameObject itemUI = Instantiate(itemUITemplate);
+        GameObject itemUI = Instantiate(itemUITemplate, playerItemListUI);
         Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
