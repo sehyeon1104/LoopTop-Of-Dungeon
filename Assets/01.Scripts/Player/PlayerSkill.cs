@@ -19,14 +19,17 @@ public class PlayerSkill : MonoBehaviour
     [Space]
     [Header("��ų")]
     List<PlayerSkillBase> SkillBase;
+    Button interaction;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
+    int itemLayer;
     private void Awake()
     {
+        itemLayer = LayerMask.NameToLayer("Item");
         playerBase = GameManager.Instance.Player.playerBase;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
@@ -41,6 +44,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        interaction = UIManager.Instance.GetInteractionButton();
         slotLevel = playerBase.SlotLevel;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         SkillShuffle();
@@ -66,9 +70,19 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (UIManager.Instance.GetInteractionButton().gameObject.activeSelf == true)
+            Collider2D[] itemDis = Physics2D.OverlapCircleAll(transform.position, interactionDis,1 << itemLayer);
+            if(itemDis.Length >0)
             {
-                UIManager.Instance.GetInteractionButton().onClick.Invoke();
+                for(int i=0; i<itemDis.Length; i++)
+                {
+                    DropItem item = itemDis[i].GetComponent<DropItem>();
+                    interaction.onClick.AddListener(item.TakeItem);
+                }
+            }
+            if (interaction.gameObject.activeSelf == true)
+            {
+                    interaction.onClick.Invoke();
+                    interaction.onClick.RemoveAllListeners();
             }
             else
             {
@@ -79,18 +93,15 @@ public class PlayerSkill : MonoBehaviour
         {
             DashSkill();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             UltimateSkill();
-        }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            Collider2D[] itemDis = Physics2D.OverlapCircleAll(transform.position, interactionDis);
-           
         }
     }
     public void SlotUp(int index)
     {
+        if (slotLevel[index] >= 5)
+            return;
         slotLevel[index]++;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
     }

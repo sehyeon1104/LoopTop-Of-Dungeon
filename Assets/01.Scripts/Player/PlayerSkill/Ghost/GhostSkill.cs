@@ -418,6 +418,7 @@ public class GhostSkill : PlayerSkillBase
 
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
         while (timer < telpoDuration)
         {
             timer += Time.fixedDeltaTime;

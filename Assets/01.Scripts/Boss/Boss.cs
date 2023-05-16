@@ -111,6 +111,17 @@ public class Boss : MonoSingleton<Boss>, IHittable
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
         }
 
+        if(damage >= 15)
+        {
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
+            CinemachineCameraShaking.Instance.CameraShake(7, 0.2f);
+        }
+        else
+        {
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Hit.wav");
+            CinemachineCameraShaking.Instance.CameraShake(4, 0.1f);
+        }
+
         isBDamaged = true;
 
         if(Base.Shield > 0)

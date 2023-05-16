@@ -35,6 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
     private ItemData itemData = new ItemData();
 
     private GameObject hitEffect = null;
+    private GameObject critHitEffect = null;
 
     public MinimapCamera minimapCamera { get; private set; } = null;
 
@@ -126,6 +127,7 @@ public class GameManager : MonoSingleton<GameManager>
         Base.Instance.Init();
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
+        critHitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/DeathHitEffect.prefab");
     }
 
     private void Start()
@@ -134,6 +136,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             InitPlayerInfo();
             Managers.Pool.CreatePool(hitEffect, 20);
+            Managers.Pool.CreatePool(critHitEffect, 20);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
 
@@ -151,10 +154,14 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.UpdateGoods();
     }
 
-    public void PlayHitEffect(Transform objTransform)
+    public void PlayHitEffect(Transform objTransform, bool isCritRate = false)
     {
         //Debug.Log($"È÷Æ® ÀÌÆåÆ® : {hitEffect != null}");
-        var effect = Managers.Pool.Pop(hitEffect);
+        Poolable effect = null;
+        if (isCritRate)
+            effect = Managers.Pool.Pop(critHitEffect);
+        else
+            effect = Managers.Pool.Pop(hitEffect);
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 
