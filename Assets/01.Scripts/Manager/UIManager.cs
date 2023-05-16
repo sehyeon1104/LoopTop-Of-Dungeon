@@ -361,18 +361,22 @@ public class UIManager : MonoSingleton<UIManager>
 
         showCurStageNameObj.SetActive(true);
 
+        // 현재 스테이지 이름 표기
         curStageName.SetText(string.Format("{0}Stage_{1}", GameManager.Instance.mapTypeFlag.ToString(), GameManager.Instance.StageMoveCount));
 
+        // 스크린 사이즈의 끝 + 오브젝트 사이즈의 절반의 위치
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;
         curStageNameLine.transform.position = linePos;
 
+        // 스크린의 중앙으로 이동
         curStageName.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 + 25), 2f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 - 50), 2f).SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(showCurStageNameTime);
 
+        // 초기 있었던 위치의 반대편으로 이동
         curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
@@ -400,11 +404,13 @@ public class UIManager : MonoSingleton<UIManager>
         Time.timeScale = 1f;
         if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
+            SaveManager.DeleteAllData();
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
+            SaveManager.DeleteAllData();
             GameManager.Instance.GameQuit();
         }
     }

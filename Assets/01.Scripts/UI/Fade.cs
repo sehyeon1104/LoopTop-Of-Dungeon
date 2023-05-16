@@ -13,7 +13,8 @@ public class Fade : MonoSingleton<Fade>
 
     private void Awake()
     {
-        fadeImg = GameManager.Instance.platForm == Define.PlatForm.PC ? UIManager.Instance.playerPCUI.transform.Find("Fade/FadeImage").GetComponent<Image>() : UIManager.Instance.playerUI.transform.Find("Fade/FadeImage").GetComponent<Image>();
+        if(fadeImg == null)
+            fadeImg = GameManager.Instance.platForm == Define.PlatForm.PC ? UIManager.Instance.playerPCUI.transform.Find("Fade/FadeImage").GetComponent<Image>() : UIManager.Instance.playerUI.transform.Find("Fade/FadeImage").GetComponent<Image>();
     }
 
     private void Start()
