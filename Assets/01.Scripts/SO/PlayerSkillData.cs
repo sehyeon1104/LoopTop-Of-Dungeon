@@ -10,6 +10,7 @@ public class PlayerSkillData : ScriptableObject
 {
     public PlayerSkillInfo[] skill;
     public Sprite playerImg = null;
+    
     //public RuntimeAnimatorController playerAnim;
 
     public AnimationClip idlClip;
@@ -21,6 +22,7 @@ public class PlayerSkillData : ScriptableObject
 public class PlayerSkillInfo
 {   
    public string skillName;
+   public string skillExplanation;
    public Sprite[] skillIcon;
    public float skillDelay;
 }

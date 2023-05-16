@@ -12,16 +12,23 @@ public class DropItem : MonoBehaviour
     private SpriteRenderer spriteRenderer = null;
 
     private Item item = null;
-    private List<Item> tempItemList= new List<Item>();
-
+    private List<Item> tempItemList = new List<Item>();
+    private bool isCheck = false;
     private bool isDuplication = false;
-
+    Button interactionButton;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
     }
-
+    private void Start()
+    {
+        interactionButton = UIManager.Instance.GetInteractionButton();
+    }
+    private void Update()
+    {
+        CheckDistance();
+    }
     private void Init()
     {
         item = null;
@@ -33,9 +40,9 @@ public class DropItem : MonoBehaviour
         {
             isDuplication = false;
             Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
-            for(int i = 0; i < tempItemList.Count; ++i)
+            for (int i = 0; i < tempItemList.Count; ++i)
             {
-                if(temp == tempItemList[i] /*&& item.itemType != Define.ItemType.heal && item.itemType != Define.ItemType.broken*/)
+                if (temp == tempItemList[i] /*&& item.itemType != Define.ItemType.heal && item.itemType != Define.ItemType.broken*/)
                 {
                     isDuplication = true;
                     break;
@@ -52,17 +59,27 @@ public class DropItem : MonoBehaviour
 
     private void CheckDistance()
     {
-        if(Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < interactionDis)
+        if (Vector2.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) > interactionDis * interactionDis)
         {
-            // TODO : ªÛ»£¿€øÎ Ω√ æ∆¿Ã≈€ »πµÊ
+            if (!isCheck)
+            {
+                interactionButton.onClick.AddListener(TakeItem);
+                isCheck = true;
+            }
         }
+        else
+        {
+            interactionButton.onClick.RemoveListener(TakeItem);
+            isCheck = false;
+        }
+
     }
 
     // æ∆¿Ã≈€ »πµÊ «‘ºˆ
-    private void TakeItem()
+    public void TakeItem()
     {
         // TODO : »πµÊ Ω√ ¿Ã∆Â∆Æ √‚∑¬
-        
+
         InventoryUI.Instance.AddItemSlot(item);
         Managers.Pool.Push(this.GetComponent<Poolable>());
     }

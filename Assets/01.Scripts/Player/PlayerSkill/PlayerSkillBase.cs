@@ -64,7 +64,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
             return;
 
             playerAnim.SetTrigger("Attack");
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
             for (int i = 0; i < enemies.Length; i++)
             {
                 PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
