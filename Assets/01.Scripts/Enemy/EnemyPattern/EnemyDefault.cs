@@ -217,7 +217,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         isPlayGetHitEffect = true;
         float timer = 0;
-        hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Hit.wav");
         sprite.material = hitMat;
         while(changeTime > timer)
         {   
@@ -234,9 +235,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (!isDead)
         {
             isDead = true;
-
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
-            CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
+
+            CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
 
             if (GameManager.Instance.sceneType == Define.Scene.StageScene)
             {
