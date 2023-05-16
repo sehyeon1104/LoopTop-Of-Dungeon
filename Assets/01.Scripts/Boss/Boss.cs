@@ -67,14 +67,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         UpdateBossHP();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Base.Shield += 100;
-        }
-    }
-
     public IEnumerator IEHitAction()
     {
         // TODO : 피격 애니메이션
