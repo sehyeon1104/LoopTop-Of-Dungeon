@@ -182,15 +182,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             damage *= 1.5f;
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
+            GameManager.Instance.PlayHitEffect(transform, true);
         }
         else
         {
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
+            GameManager.Instance.PlayHitEffect(transform);
         }
 
         hp -= damage;
-            
-        GameManager.Instance.PlayHitEffect(transform);
 
         hpBar.UpdateHpBar();
 
