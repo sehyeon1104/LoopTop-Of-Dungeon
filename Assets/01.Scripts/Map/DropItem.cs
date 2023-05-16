@@ -59,18 +59,24 @@ public class DropItem : MonoBehaviour
 
     private void CheckDistance()
     {
-        if (Vector2.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) > interactionDis * interactionDis)
+        if (Vector2.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) < interactionDis * interactionDis)
         {
+            print("ss");
             if (!isCheck)
             {
                 interactionButton.onClick.AddListener(TakeItem);
+                UIManager.Instance.RotateInteractionButton();
                 isCheck = true;
             }
         }
         else
         {
-            interactionButton.onClick.RemoveListener(TakeItem);
-            isCheck = false;
+            if (isCheck)
+            {
+                UIManager.Instance.RotateAttackButton();
+                interactionButton.onClick.RemoveListener(TakeItem);
+                isCheck = false;
+            }
         }
 
     }

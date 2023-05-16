@@ -51,7 +51,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
@@ -70,19 +70,10 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            Collider2D[] itemDis = Physics2D.OverlapCircleAll(transform.position, interactionDis,1 << itemLayer);
-            if(itemDis.Length >0)
+
+            if (interaction.gameObject.activeSelf)
             {
-                for(int i=0; i<itemDis.Length; i++)
-                {
-                    DropItem item = itemDis[i].GetComponent<DropItem>();
-                    interaction.onClick.AddListener(item.TakeItem);
-                }
-            }
-            if (interaction.gameObject.activeSelf == true)
-            {
-                    interaction.onClick.Invoke();
-                    interaction.onClick.RemoveAllListeners();
+                interaction.onClick.Invoke();
             }
             else
             {
@@ -97,6 +88,7 @@ public class PlayerSkill : MonoBehaviour
         {
             UltimateSkill();
         }
+
     }
     public void SlotUp(int index)
     {
@@ -133,7 +125,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
@@ -141,7 +136,10 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
+        //if (!PlayerMovement.Instance.IsControl)
+        //    return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill))
             skillEvent[1]();
     }
     void Attack()
@@ -151,7 +149,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill))
             skillEvent[3]();
     }
 
