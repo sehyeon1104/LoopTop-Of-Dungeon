@@ -19,7 +19,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private BossUI bossUI;
 
-
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
@@ -65,14 +64,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         player = GameManager.Instance.Player.transform;
 
         UpdateBossHP();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Base.Shield += 100;
-        }
     }
 
     public IEnumerator IEHitAction()

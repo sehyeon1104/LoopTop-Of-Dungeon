@@ -421,7 +421,7 @@ public class GhostSkill : PlayerSkillBase
         while (timer < telpoDuration)
         {
             timer += Time.fixedDeltaTime;
-            print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
+            //print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
             if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2) - 0.001f)
             {
                 Poolable telpoEffect;

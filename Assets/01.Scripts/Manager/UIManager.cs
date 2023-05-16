@@ -98,8 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
-            fragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("MiddleDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
