@@ -23,6 +23,8 @@ public class G_Ghost : EnemyDefault
 
     public override void EnemyDead()
     {
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
+
         EnemySpawnManager.Instance.RemoveEnemyInList(poolable);
 
         gameObject.SetActive(false);
