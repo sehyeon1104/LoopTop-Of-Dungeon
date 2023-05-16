@@ -13,11 +13,15 @@ public class SkillShuffle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         UIManager.Instance.RotateInteractionButton();
-        button.onClick.AddListener(() => playerSkill.SlotUp(1));
+        button.onClick.AddListener(SlotShuffle);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         UIManager.Instance.RotateAttackButton();
-        button.onClick.RemoveListener(() => playerSkill.SlotUp(1));
+        button.onClick.RemoveListener(SlotShuffle);
+    }
+    public void SlotShuffle()
+    {
+        playerSkill.SkillShuffle();
     }
 }

@@ -32,11 +32,12 @@ public class PlayerBase
         {
             _expTable[i] = i + 1;
         }
-
+        AttackRange = 1.3f;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
     }
+    public float AttackRange { get; set; }
     public int[] SlotLevel { get; set; }
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
