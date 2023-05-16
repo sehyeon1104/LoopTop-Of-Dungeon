@@ -118,7 +118,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        Debug.Log($"wave1NormalEnemyCount : {wave1NormalEnemyCount}");
         for (int i = 0; i < wave1NormalEnemyCount; ++i)
         {
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
@@ -153,7 +152,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        Debug.Log($"wave2NormalEnemyCount : {wave2NormalEnemyCount}");
         for (int i = 0; i < wave2NormalEnemyCount; ++i)
         {
             randPos = Random.Range(1, enemySpawnPos.Length);
