@@ -57,7 +57,6 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-                interactionButton.onClick.RemoveAllListeners();
                 interactionButton.onClick.AddListener(TakeItem);
                 UIManager.Instance.RotateInteractionButton();
         }
@@ -66,7 +65,7 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-           interactionButton.onClick.RemoveAllListeners();
+           interactionButton.onClick.RemoveListener(TakeItem);
            UIManager.Instance.RotateAttackButton();
         }
         
