@@ -24,6 +24,8 @@ public class ItemObj : MonoBehaviour
     public int Num { get; set; }
     private Item item = null;
 
+    public string itemName { get; private set; } = "";
+
     private bool isSold = false;
     private bool _isPurchaseAble = false;
 
@@ -55,7 +57,8 @@ public class ItemObj : MonoBehaviour
     {
         itemType = item.itemType;
         itemImage.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
-        itemNameTMP.SetText(item.itemName);
+        itemName = item.itemName;
+        itemNameTMP.SetText(itemName);
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
     }

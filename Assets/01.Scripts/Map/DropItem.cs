@@ -11,7 +11,7 @@ public class DropItem : MonoBehaviour
 
     private Item item = null;
     private List<Item> tempItemList = new List<Item>();
-    private bool isCheck = false;
+    private bool isItemSetting = false;
     private bool isDuplication = false;
     Button interactionButton;
     private void Awake()
@@ -31,21 +31,31 @@ public class DropItem : MonoBehaviour
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
 
-        while (item == null)
+        if(tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
+        {
+            return;
+        }
+
+        for(int i = 0; i < tempItemList.Count; ++i)
+        {
+            Debug.Log($"{tempItemList[i].itemName} 소유");
+        }
+
+
+        // TODO : 중복아이템 드랍 안되게끔 수정
+        while (!isItemSetting)
         {
             isDuplication = false;
             Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
-            for (int i = 0; i < tempItemList.Count; ++i)
-            {
-                if (temp == tempItemList[i] /*&& item.itemType != Define.ItemType.heal && item.itemType != Define.ItemType.broken*/)
-                {
-                    isDuplication = true;
-                    break;
-                }
-            }
+
+            isDuplication = tempItemList.Contains(temp);
+            Debug.Log($"{temp.itemName} : {isDuplication}");
+
             if (!isDuplication)
             {
                 item = temp;
+                isItemSetting = true;
+                break;
             }
         }
 
