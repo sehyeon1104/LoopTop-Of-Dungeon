@@ -116,7 +116,6 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
-            InventoryUI.Instance.LoadItemSlot();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -140,6 +139,7 @@ public class GameManager : MonoSingleton<GameManager>
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
 
+        InventoryUI.Instance.LoadItemSlot();
         // 디버깅
         //SetItemData(allItemList);
     }

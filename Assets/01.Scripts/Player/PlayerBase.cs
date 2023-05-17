@@ -25,7 +25,7 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        _fragmentAmount = 100000;
+        _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         for (int i = 0; i < maxLevel; ++i)

@@ -49,7 +49,7 @@ public class DropItem : MonoBehaviour
             Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
 
             isDuplication = tempItemList.Contains(temp);
-            Debug.Log($"{temp.itemName} : {isDuplication}");
+            //Debug.Log($"{temp.itemName} : {isDuplication}");
 
             if (!isDuplication)
             {

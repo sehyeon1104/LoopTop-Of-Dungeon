@@ -371,7 +371,7 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("유리 대포 효과 발동");
+            Debug.Log("저주받은 반지 효과 발동");
             Debug.Log("공격력 60% 증가, 받는 데미지 2배 증가");
             GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
             //TODO : 받는 데미지 2배 증가 구현
