@@ -27,12 +27,14 @@ public class PlayerSkill : MonoBehaviour
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
+    GameObject skillSelect;
     private void Awake()
     {
         itemLayer = LayerMask.NameToLayer("Item");
         playerBase = GameManager.Instance.Player.playerBase;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
+        interaction = UIManager.Instance.GetInteractionButton();
         if (UIManager.Instance.skill1Button != null)
         {
             UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
@@ -44,7 +46,7 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
-        interaction = UIManager.Instance.GetInteractionButton();
+       
         slotLevel = playerBase.SlotLevel;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         SkillShuffle();
@@ -198,8 +200,14 @@ public class PlayerSkill : MonoBehaviour
         randomSkillNum.RemoveRange(3, 2);
 
     }
-    public void SkillShuffle()
+    IEnumerator SkillShuffle()
     {
+        
+        yield return null;
+    }
+    public void IndexShuffle()
+    {
+        
         ListInit();
         ListShuffle();
         ListRemove();
