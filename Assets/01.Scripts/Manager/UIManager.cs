@@ -13,7 +13,6 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject playerUI;
     public GameObject playerPCUI;
-    public GameObject skillSelect;
     [Header("LeftUp")]
     [SerializeField]
     private GameObject hpPrefab;
@@ -32,7 +31,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     [Header("Middle")]
 
-    public GameObject skillSelectObj;
+    public GameObject skillSelect;
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
@@ -62,11 +61,11 @@ public class UIManager : MonoSingleton<UIManager>
     GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
-
     public List<Image> hpbars = new List<Image>();
 
     private void Awake()
     {
+        
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
@@ -97,6 +96,7 @@ public class UIManager : MonoSingleton<UIManager>
         else
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
+            skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
@@ -123,6 +123,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
+        SkillSelectButtonInit();
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
@@ -175,7 +176,15 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePausePanel();
     }
-
+    public void SkillSelectButtonInit()
+    {
+        for(int i=0; i<skillSelect.transform.childCount; i++)
+        {
+            GameObject button = skillSelect.transform.GetChild(i).gameObject;
+            button.GetComponent<Button>().onClick.AddListener(() => button.SetActive(false));
+        }
+    }
+   
     public void ToggleGameOverPanel()
     {
         TogglePlayerAttackUI();
@@ -264,7 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-        Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
+        Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();

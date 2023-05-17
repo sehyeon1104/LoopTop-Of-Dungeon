@@ -152,7 +152,7 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
         //public override bool isPersitantItem => true;
-        public override bool isPersitantItem => false;
+        public override bool isPersitantItem => true;
 
         private float probabilityChance = 1f;
 
@@ -162,6 +162,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("뱀파이어의 송곳니 효과 발동");
             //Debug.Log("적 처치 시 hp 1 회복");
 
+            GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
             GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
         }
 

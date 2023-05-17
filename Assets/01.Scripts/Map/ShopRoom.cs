@@ -14,8 +14,9 @@ public class ShopRoom : RoomBase
     private float playerSensingDis = 1.5f;
     private ItemObj[] itemobjArr;
     int itemobjCount = 0;
-    private WaitForEndOfFrame waitForEndOfFrame;
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
+    IEnumerator toggleItemInfoPanel;
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
@@ -26,7 +27,7 @@ public class ShopRoom : RoomBase
 
     private void Awake()
     {
-        InteractionBtn = UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Interaction_Btn").GetComponent<Button>();
+        InteractionBtn = UIManager.Instance.GetInteractionButton();
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
@@ -34,8 +35,7 @@ public class ShopRoom : RoomBase
     }
     private void Start()
     {
-        InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
-
+        toggleItemInfoPanel = ToggleItemInfoPanel();
         if (!ShopManager.Instance.isItemSetting)
         {
             ShopManager.Instance.SetItem();
@@ -80,8 +80,8 @@ public class ShopRoom : RoomBase
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-
-        StartCoroutine(ToggleItemInfoPanel());
+        InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
+        StartCoroutine(toggleItemInfoPanel);
     }
 
     public IEnumerator ToggleItemInfoPanel()
@@ -94,7 +94,7 @@ public class ShopRoom : RoomBase
                 {
                     itemobjCount++;
 
-                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
+                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf && itemobjArr[i].itemName != "Default")
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;
@@ -126,10 +126,11 @@ public class ShopRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
+            StopCoroutine(toggleItemInfoPanel);
+            InteractionBtn.onClick.RemoveListener(ShopManager.Instance.InteractiveToItem);
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;
-                StopCoroutine(ToggleItemInfoPanel());
             }
         }
     }

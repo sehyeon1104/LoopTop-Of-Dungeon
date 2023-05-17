@@ -1401,14 +1401,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUI: {fileID: 0}
   playerPCUI: {fileID: 0}
-  skillSelect: {fileID: 0}
   hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
   hpSpace: {fileID: 0}
   fragmentAmountTMP: {fileID: 0}
   bossFragmentAmountTMP: {fileID: 0}
   playerItemListUI: {fileID: 0}
   itemUITemplate: {fileID: 0}
-  skillSelectObj: {fileID: 0}
+  skillSelect: {fileID: 0}
   pausePanel: {fileID: 0}
   gameOverPanel: {fileID: 0}
   checkOneMorePanel: {fileID: 0}
@@ -1926,6 +1925,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PCPlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3622556696906593416, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4022749607786850465, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1976,6 +1979,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6318610103550175887, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965047213796848635, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
