@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class DropItem : MonoBehaviour
 {
-    [SerializeField]
-    private float interactionDis = 2f;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
@@ -25,10 +23,7 @@ public class DropItem : MonoBehaviour
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
     }
-    private void Update()
-    {
-        CheckDistance();
-    }
+
     private void Init()
     {
         item = null;
@@ -57,36 +52,33 @@ public class DropItem : MonoBehaviour
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    private void CheckDistance()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Vector2.SqrMagnitude(GameManager.Instance.Player.transform.position - transform.position) < interactionDis * interactionDis)
+        if(collision.CompareTag("Player"))
         {
-            print("ss");
-            if (!isCheck)
-            {
                 interactionButton.onClick.AddListener(TakeItem);
                 UIManager.Instance.RotateInteractionButton();
-                isCheck = true;
-            }
         }
-        else
-        {
-            if (isCheck)
-            {
-                UIManager.Instance.RotateAttackButton();
-                interactionButton.onClick.RemoveListener(TakeItem);
-                isCheck = false;
-            }
-        }
-
     }
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player"))
+        {
+           interactionButton.onClick.RemoveListener(TakeItem);
+           UIManager.Instance.RotateAttackButton();
+        }
+        
+    }
     // ¾ÆÀÌÅÛ È¹µæ ÇÔ¼ö
     public void TakeItem()
     {
         // TODO : È¹µæ ½Ã ÀÌÆåÆ® Ãâ·Â
 
         InventoryUI.Instance.AddItemSlot(item);
+        UIManager.Instance.RotateAttackButton();
+        interactionButton.onClick.RemoveListener(TakeItem);
         Managers.Pool.Push(this.GetComponent<Poolable>());
+        
     }
 }

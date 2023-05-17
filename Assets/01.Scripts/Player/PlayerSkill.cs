@@ -73,7 +73,7 @@ public class PlayerSkill : MonoBehaviour
 
             if (interaction.gameObject.activeSelf)
             {
-                interaction.onClick.Invoke();
+                interaction.onClick?.Invoke();
             }
             else
             {
