@@ -27,7 +27,7 @@ public class PlayerBase
         exp = 0;
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
@@ -46,7 +46,11 @@ public class PlayerBase
     public bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 
-    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag { get; set; }
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    {
+        get => playerTransformTypeFlag;
+        set => playerTransformTypeFlag = value;
+    }
 
     private int hp;
     public int Hp
