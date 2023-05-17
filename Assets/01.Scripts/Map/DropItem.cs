@@ -57,15 +57,16 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+                interactionButton.onClick.RemoveAllListeners();
                 interactionButton.onClick.AddListener(TakeItem);
                 UIManager.Instance.RotateInteractionButton();
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)  
     {
         if(collision.CompareTag("Player"))
         {
-           interactionButton.onClick.RemoveListener(TakeItem);
+           interactionButton.onClick.RemoveAllListeners();
            UIManager.Instance.RotateAttackButton();
         }
         

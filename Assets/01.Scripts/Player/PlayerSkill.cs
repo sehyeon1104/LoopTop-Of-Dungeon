@@ -27,11 +27,13 @@ public class PlayerSkill : MonoBehaviour
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
-    GameObject skillSelect;
+    GameObject skillSelectObj;
     private void Awake()
     {
-        itemLayer = LayerMask.NameToLayer("Item");
         playerBase = GameManager.Instance.Player.playerBase;
+        skillSelectObj = UIManager.Instance.skillSelect;
+        itemLayer = LayerMask.NameToLayer("Item");
+        slotLevel = playerBase.SlotLevel;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
         interaction = UIManager.Instance.GetInteractionButton();
@@ -46,8 +48,6 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
-       
-        slotLevel = playerBase.SlotLevel;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         SkillShuffle();
     }
@@ -200,10 +200,30 @@ public class PlayerSkill : MonoBehaviour
         randomSkillNum.RemoveRange(3, 2);
 
     }
-    IEnumerator SkillShuffle()
+   public IEnumerator SkillShuffle()
     {
-        
+        skillSelectObj.SetActive(true);
+       yield return new WaitUntil(() => WaitButton() == 1);
+        skillSelectObj.SetActive(false);
+        FinishSelect();
         yield return null;
+    }
+    public int WaitButton()
+    {
+        int amount = 0;
+        for(int i =0; i < skillSelectObj.transform.childCount; i++ )
+        {
+            if(skillSelectObj.transform.GetChild(i).gameObject.activeSelf)
+                amount++;
+        }
+        return amount;
+    }
+    public void FinishSelect()
+    {
+        for (int i = 0; i < skillSelectObj.transform.childCount; i++)
+        {
+            skillSelectObj.transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
     public void IndexShuffle()
     {

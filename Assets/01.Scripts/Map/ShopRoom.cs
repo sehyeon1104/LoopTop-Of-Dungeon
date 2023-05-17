@@ -126,10 +126,10 @@ public class ShopRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
+             StopCoroutine(ToggleItemInfoPanel());
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;
-                StopCoroutine(ToggleItemInfoPanel());
             }
         }
     }

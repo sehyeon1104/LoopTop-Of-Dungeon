@@ -22,6 +22,6 @@ public class SkillShuffle : MonoBehaviour
     }
     public void SlotShuffle()
     {
-        
+        StartCoroutine(playerSkill.SkillShuffle());
     }
 }
