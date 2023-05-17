@@ -82,6 +82,7 @@ public class GhostUltSignal : MonoBehaviour
         panel1.color = color;
         panel2.color = color;
         PlayerMovement.Instance.IsMove = true;
+        PlayerMovement.Instance.IsControl = true;
         Time.timeScale = 1;
     }
 
@@ -112,14 +113,16 @@ public class GhostUltSignal : MonoBehaviour
     }
     public void UltSkillCast()
     {
+
         PD = GetComponent<PlayableDirector>();
         PD.Play();
+        Time.timeScale = 0f;
+        PlayerMovement.Instance.IsControl = false;
+        PlayerMovement.Instance.IsMove = false;
     }
 
     public void GhostBossTransform()
     {
-        Time.timeScale = 0f;
-        PlayerMovement.Instance.IsMove = false;
         GhostBoss.transform.position = player.transform.position;
         GhostBossSkill.transform.position = new Vector3(player.transform.position.x + (-4.77f), player.transform.position.y +(8.54f), 0);
     }

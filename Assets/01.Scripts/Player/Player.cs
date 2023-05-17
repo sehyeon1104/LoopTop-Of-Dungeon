@@ -94,12 +94,13 @@ public class Player : MonoBehaviour, IHittable
     {
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.ToggleGameOverPanel();
-        playerVisual.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void RevivePlayer()
     {
-        playerVisual.SetActive(true);
+        gameObject.SetActive(true);
+        UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

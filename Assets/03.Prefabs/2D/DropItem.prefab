@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3793642119810178648}
   - component: {fileID: 3793642119810178649}
   - component: {fileID: 1424619624337960867}
-  m_Layer: 11
+  - component: {fileID: 1258267636836435359}
+  m_Layer: 0
   m_Name: DropItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,3 +100,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionDis: 2
   spriteRenderer: {fileID: 0}
+--- !u!58 &1258267636836435359
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793642119810178650}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2

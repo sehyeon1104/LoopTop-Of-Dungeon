@@ -98,6 +98,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
+            playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
@@ -114,7 +115,10 @@ public class UIManager : MonoSingleton<UIManager>
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
+        itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
+
         leaveButton.onClick.AddListener(LeaveBtn);
+
     }
 
     private void Start()
@@ -175,10 +179,13 @@ public class UIManager : MonoSingleton<UIManager>
     public void ToggleGameOverPanel()
     {
         TogglePlayerAttackUI();
-        blurPanel.SetActive(!blurPanel.activeSelf);
+        //blurPanel.SetActive(!blurPanel.activeSelf);
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
     }
-
+    public void CloseGameOverPanel()
+    {
+        gameOverPanel.SetActive(false);
+    }
     public void ToggleCheckOneMorePanel()
     {
         checkOneMorePanel.SetActive(!checkOneMorePanel.activeSelf);
@@ -225,7 +232,7 @@ public class UIManager : MonoSingleton<UIManager>
             return;
         }
 
-        GameObject itemUI = Instantiate(itemUITemplate);
+        GameObject itemUI = Instantiate(itemUITemplate, playerItemListUI);
         Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
@@ -354,18 +361,22 @@ public class UIManager : MonoSingleton<UIManager>
 
         showCurStageNameObj.SetActive(true);
 
+        // 현재 스테이지 이름 표기
         curStageName.SetText(string.Format("{0}Stage_{1}", GameManager.Instance.mapTypeFlag.ToString(), GameManager.Instance.StageMoveCount));
 
+        // 스크린 사이즈의 끝 + 오브젝트 사이즈의 절반의 위치
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;
         curStageNameLine.transform.position = linePos;
 
+        // 스크린의 중앙으로 이동
         curStageName.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 + 25), 2f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 - 50), 2f).SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(showCurStageNameTime);
 
+        // 초기 있었던 위치의 반대편으로 이동
         curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
@@ -393,11 +404,13 @@ public class UIManager : MonoSingleton<UIManager>
         Time.timeScale = 1f;
         if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
+            SaveManager.DeleteAllData();
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
+            SaveManager.DeleteAllData();
             GameManager.Instance.GameQuit();
         }
     }

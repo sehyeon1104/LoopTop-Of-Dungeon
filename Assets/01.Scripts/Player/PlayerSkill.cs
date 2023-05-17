@@ -27,12 +27,14 @@ public class PlayerSkill : MonoBehaviour
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
+    GameObject skillSelect;
     private void Awake()
     {
         itemLayer = LayerMask.NameToLayer("Item");
         playerBase = GameManager.Instance.Player.playerBase;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
+        interaction = UIManager.Instance.GetInteractionButton();
         if (UIManager.Instance.skill1Button != null)
         {
             UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
@@ -44,14 +46,14 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
-        interaction = UIManager.Instance.GetInteractionButton();
+       
         slotLevel = playerBase.SlotLevel;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         SkillShuffle();
     }
     private void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
@@ -70,19 +72,10 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            Collider2D[] itemDis = Physics2D.OverlapCircleAll(transform.position, interactionDis,1 << itemLayer);
-            if(itemDis.Length >0)
+
+            if (interaction.gameObject.activeSelf)
             {
-                for(int i=0; i<itemDis.Length; i++)
-                {
-                    DropItem item = itemDis[i].GetComponent<DropItem>();
-                    interaction.onClick.AddListener(item.TakeItem);
-                }
-            }
-            if (interaction.gameObject.activeSelf == true)
-            {
-                    interaction.onClick.Invoke();
-                    interaction.onClick.RemoveAllListeners();
+                interaction.onClick?.Invoke();
             }
             else
             {
@@ -97,6 +90,7 @@ public class PlayerSkill : MonoBehaviour
         {
             UltimateSkill();
         }
+
     }
     public void SlotUp(int index)
     {
@@ -133,7 +127,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
@@ -141,7 +138,10 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
+        //if (!PlayerMovement.Instance.IsControl)
+        //    return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill))
             skillEvent[1]();
     }
     void Attack()
@@ -151,7 +151,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill))
             skillEvent[3]();
     }
 
@@ -197,8 +200,14 @@ public class PlayerSkill : MonoBehaviour
         randomSkillNum.RemoveRange(3, 2);
 
     }
-    public void SkillShuffle()
+    IEnumerator SkillShuffle()
     {
+        
+        yield return null;
+    }
+    public void IndexShuffle()
+    {
+        
         ListInit();
         ListShuffle();
         ListRemove();
