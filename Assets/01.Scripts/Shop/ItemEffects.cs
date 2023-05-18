@@ -56,6 +56,7 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("거인의 장갑 효과 발동");
             Debug.Log("공격범위 10% 증가");
+            GameManager.Instance.Player.playerBase.AttackRange = GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
         }
     }
 
@@ -93,6 +94,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log(incQuantity);
             GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
             GameManager.Instance.Player.playerBase.Hp += incQuantity;
+            UIManager.Instance.UpdateUI();
         }
     }
 
@@ -359,7 +361,9 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("거북 모자 효과 발동");
             Debug.Log("하트 1칸 증가, 공격력 15% 감소");
             GameManager.Instance.Player.playerBase.MaxHp += 4; //(int)(GameManager.Instance.Player.playerBase.InitMaxHp * 0.3f);
+            GameManager.Instance.Player.playerBase.Hp += 4;
             GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.15f;
+            UIManager.Instance.MaxHpUpdate();
         }
     }
 
@@ -390,7 +394,7 @@ public class ItemEffects : MonoBehaviour
         
         private void CursedRingEffect()
         {
-
+            GameManager.Instance.Player.DamageMultiples = 2;
         }
     }
 

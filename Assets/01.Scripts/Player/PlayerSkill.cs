@@ -211,8 +211,8 @@ public class PlayerSkill : MonoBehaviour
             obj.name = (randomSkillNum[i]).ToString();
             obj.transform.Find("Image/SkillName").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillName;
             obj.transform.Find("Icon/IconShape/Icon").GetComponent<Image>().sprite = playerskillInfo[randomSkillNum[i]].skillIcon[0];
-            obj.transform.Find("SkillExplanation/SkillExplanatioText").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillExplanation;
-            obj.transform.Find("SkillExplanation/SkillCool").GetComponent<TextMeshProUGUI>().text = $"{(playerskillInfo[randomSkillNum[i]].skillDelay)}√ ";
+            obj.transform.Find("SkillExplanation/Background/SkillExplanatioText").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillExplanation;
+            obj.transform.Find("SkillExplanation/Background/SkillCool").GetComponent<TextMeshProUGUI>().text = $"{(playerskillInfo[randomSkillNum[i]].skillDelay)}√ ";
             rectObjs.Add(obj.GetComponent<RectTransform>());
         }
         currentObj = rectObjs[index];
