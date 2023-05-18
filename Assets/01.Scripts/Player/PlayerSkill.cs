@@ -147,9 +147,6 @@ public class PlayerSkill : MonoBehaviour
     }
     void UltimateSkill()
     {
-        if (!PlayerMovement.Instance.IsControl)
-            return;
-
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,7))
             skillEvent[3]();
     }
