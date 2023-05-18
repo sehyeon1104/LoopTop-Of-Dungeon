@@ -79,7 +79,7 @@ public class UIManager : MonoSingleton<UIManager>
             hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
             fragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerUI.transform.Find("Middle/PausePanel").gameObject;
+            pausePanel = playerUI.transform.Find("All/PausePanel").gameObject;
             gameOverPanel = playerUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerUI.transform.Find("Middle/ShowCurStageName").gameObject;
@@ -101,7 +101,7 @@ public class UIManager : MonoSingleton<UIManager>
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
+            pausePanel = playerPCUI.transform.Find("All/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
@@ -246,12 +246,12 @@ public class UIManager : MonoSingleton<UIManager>
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData, int skillNum)
     {
-        int num = (int)skillNum;
-        if (skillNum == Define.SkillNum.UltimateSkill)
+        int num = skillNum-1;
+        if (skillNum ==7)
             num = 2;
-        else if (skillNum == Define.SkillNum.DashSkill)
+        else if (skillNum == 8)
             num = 3;
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
@@ -268,7 +268,7 @@ public class UIManager : MonoSingleton<UIManager>
             if (currentImage.fillAmount > 0)
                 return false;
         }
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
+        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
         return true;
     }
     public void SkillNum(List<int> skillList)

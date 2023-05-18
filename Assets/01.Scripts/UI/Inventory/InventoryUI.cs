@@ -47,7 +47,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     public void ToggleInventoryUI()
     {
-        inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
+        inventoryPanel.SetActive(!inventoryPanel.gameObject.activeSelf);
     }
 
     // æ∆¿Ã≈€ »πµÊΩ√ ΩΩ∑‘ø° √ﬂ∞°
