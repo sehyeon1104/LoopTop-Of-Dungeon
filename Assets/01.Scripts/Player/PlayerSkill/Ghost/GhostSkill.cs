@@ -225,11 +225,11 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
@@ -274,7 +274,7 @@ public class GhostSkill : PlayerSkillBase
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
     }
     IEnumerator Beam(int level)
     {
@@ -398,11 +398,11 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
         }
         beamDmg = level + 2;
     }
@@ -493,7 +493,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             telpoVelocity = 100;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
             return;
         }
         else if (level == 4)
@@ -508,7 +508,7 @@ public class GhostSkill : PlayerSkillBase
         {
             telpoVelocity = 50;
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
     }
     IEnumerator ArmSkill(int level)
     {
@@ -622,11 +622,11 @@ public class GhostSkill : PlayerSkillBase
         armDamage = 29 + level;
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
         }
 
     }
