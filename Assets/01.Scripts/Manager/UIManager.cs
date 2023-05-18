@@ -62,10 +62,10 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject blurPanel;
     public List<Image> hpbars = new List<Image>();
-
+    PlayerSkill playerSkill;
     private void Awake()
     {
-        
+        playerSkill = FindObjectOfType<PlayerSkill>();
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
@@ -248,11 +248,18 @@ public class UIManager : MonoSingleton<UIManager>
 
     public bool SkillCooltime(PlayerSkillData skillData, int skillNum)
     {
-        int num = skillNum-1;
+        int num;
         if (skillNum ==7)
             num = 2;
         else if (skillNum == 8)
             num = 3;
+        else
+        {
+            if (playerSkill.skillIndex[0] == skillNum)
+                num = 0;
+            else
+                num = 1;
+        }
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
@@ -270,14 +277,6 @@ public class UIManager : MonoSingleton<UIManager>
         }
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
         return true;
-    }
-    public void SkillNum(List<int> skillList)
-    {
-        Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
-        for (int i = 0; i < selectTexts.Length; i++)
-        {
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
-        }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {

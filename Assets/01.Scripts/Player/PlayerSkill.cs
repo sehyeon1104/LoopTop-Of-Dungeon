@@ -24,7 +24,7 @@ public class PlayerSkill : MonoBehaviour
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
-    int[] skillIndex = new int[] { 1,2};
+    public int[] skillIndex = new int[] { 1,2};
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
@@ -121,6 +121,7 @@ public class PlayerSkill : MonoBehaviour
             skillEvent[4] = playerSkill.dashSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 8, 0);
         }
+
     }
     void ReserProperty()
     {
