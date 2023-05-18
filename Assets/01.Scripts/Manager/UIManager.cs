@@ -63,6 +63,8 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject blurPanel;
     public List<Image> hpbars = new List<Image>();
     PlayerSkill playerSkill;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
     private void Awake()
     {
         playerSkill = FindObjectOfType<PlayerSkill>();
@@ -123,6 +125,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
+        waitForEndOfFrame = new WaitForEndOfFrame();
+
         SkillSelectButtonInit();
         HPInit();
         UpdateUI();
@@ -286,8 +290,9 @@ public class UIManager : MonoSingleton<UIManager>
         while (cooltimeImg.fillAmount > 0)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
-            yield return null;
+            yield return waitForEndOfFrame;
         }
+        yield break;
     }
     public void ResetSkill()
     {
