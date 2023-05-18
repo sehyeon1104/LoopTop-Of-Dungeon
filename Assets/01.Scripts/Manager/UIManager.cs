@@ -61,7 +61,10 @@ public class UIManager : MonoSingleton<UIManager>
     GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
+    public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
+
+    private int maxHpCount = 0;
 
     private void Awake()
     {
@@ -131,6 +134,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
+        MaxHpUpdate();
         HpUpdate();
         UpdateGoods();
     }
@@ -139,7 +143,9 @@ public class UIManager : MonoSingleton<UIManager>
     {
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
-            hpbars.Add(avc.GetComponent<Image>());
+            avcList.Add(avc);
+            hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
+            avc.gameObject.SetActive(false);
         }
     }
 
@@ -325,10 +331,17 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
         }
     }
-
+    public void MaxHpUpdate()
+    {
+        maxHpCount = Mathf.CeilToInt(GameManager.Instance.Player.playerBase.MaxHp / 4);
+        for (int i = 0; i < maxHpCount; i++)
+        {
+            avcList[i].gameObject.SetActive(true);
+        }
+    }
     public void HpUpdate()
     {
-        for (int i = 0; i < hpbars.Count; i++)
+        for (int i = 0; i < maxHpCount; i++)
         {
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
