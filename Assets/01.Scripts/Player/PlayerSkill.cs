@@ -19,17 +19,24 @@ public class PlayerSkill : MonoBehaviour
     [Space]
     [Header("��ų")]
     List<PlayerSkillBase> SkillBase;
+    Button interaction;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
     Action[] skillEvent = new Action[5];
+    private float interactionDis = 2f;
+    int itemLayer;
+    GameObject skillSelectObj;
     private void Awake()
     {
         playerBase = GameManager.Instance.Player.playerBase;
-        slotLevel = playerBase.slotLevel;
+        skillSelectObj = UIManager.Instance.skillSelect;
+        itemLayer = LayerMask.NameToLayer("Item");
+        slotLevel = playerBase.SlotLevel;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
+        interaction = UIManager.Instance.GetInteractionButton();
         if (UIManager.Instance.skill1Button != null)
         {
             UIManager.Instance.skill1Button.GetComponent<Button>().onClick.AddListener(Skill1);
@@ -42,11 +49,11 @@ public class PlayerSkill : MonoBehaviour
     private void Start()
     {
         SkillSelect(playerBase.PlayerTransformTypeFlag);
-
         SkillShuffle();
     }
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             slotLevel[0]++;
@@ -65,9 +72,10 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            if (UIManager.Instance.GetInteractionButton().gameObject.activeSelf == true)
+
+            if (interaction.gameObject.activeSelf)
             {
-                UIManager.Instance.GetInteractionButton().onClick.Invoke();
+                interaction.onClick?.Invoke();
             }
             else
             {
@@ -78,12 +86,19 @@ public class PlayerSkill : MonoBehaviour
         {
             DashSkill();
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             UltimateSkill();
         }
-    }
 
+    }
+    public void SlotUp(int index)
+    {
+        if (slotLevel[index] >= 5)
+            return;
+        slotLevel[index]++;
+        SkillSelect(playerBase.PlayerTransformTypeFlag);
+    }
     void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         ReserProperty();
@@ -94,8 +109,8 @@ public class PlayerSkill : MonoBehaviour
             playerSkill.enabled = true;
             skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
             playerSkill.playerSkillUpdate[4](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[0]);
-            playerSkill.playerSkillUpdate[5](slotLevel[0]);
+            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[1]);
+            playerSkill.playerSkillUpdate[5](slotLevel[1]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 6, 0);
@@ -112,7 +127,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
             skillEvent[0]();
     }
 
@@ -120,7 +138,10 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill) && PlayerMovement.Instance.IsControl)
+        //if (!PlayerMovement.Instance.IsControl)
+        //    return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill))
             skillEvent[1]();
     }
     void Attack()
@@ -130,7 +151,10 @@ public class PlayerSkill : MonoBehaviour
     }
     void UltimateSkill()
     {
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill) && PlayerMovement.Instance.IsControl)
+        if (!PlayerMovement.Instance.IsControl)
+            return;
+
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill))
             skillEvent[3]();
     }
 
@@ -176,8 +200,34 @@ public class PlayerSkill : MonoBehaviour
         randomSkillNum.RemoveRange(3, 2);
 
     }
-    public void SkillShuffle()
+   public IEnumerator SkillShuffle()
     {
+        skillSelectObj.SetActive(true);
+       yield return new WaitUntil(() => WaitButton() == 1);
+        skillSelectObj.SetActive(false);
+        FinishSelect();
+        yield return null;
+    }
+    public int WaitButton()
+    {
+        int amount = 0;
+        for(int i =0; i < skillSelectObj.transform.childCount; i++ )
+        {
+            if(skillSelectObj.transform.GetChild(i).gameObject.activeSelf)
+                amount++;
+        }
+        return amount;
+    }
+    public void FinishSelect()
+    {
+        for (int i = 0; i < skillSelectObj.transform.childCount; i++)
+        {
+            skillSelectObj.transform.GetChild(i).gameObject.SetActive(true);
+        }
+    }
+    public void IndexShuffle()
+    {
+        
         ListInit();
         ListShuffle();
         ListRemove();

@@ -30,8 +30,11 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     }
     public void UpdateVisual(PlayerSkillData data)
     {
-        UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        if(data.idlClip != null) overrideController["Idle"] = data.idlClip;
+        if(GameManager.Instance.platForm == Define.PlatForm.Mobile)
+             UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
+        else
+            UIManager.Instance.playerPCUI.transform.Find("LeftDown/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
+        if (data.idlClip != null) overrideController["Idle"] = data.idlClip;
         if (data.atkClip != null) overrideController["Attack1"] = data.atkClip;
         if (data.dieClip != null) overrideController["Death"] = data.dieClip;
                     
@@ -54,8 +57,6 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         while (timer <= 0.25f)
         {
             timer += Time.unscaledDeltaTime;
-
-            Time.timeScale -= 0.015f;
 
             if(damage >= 2)
                 hitVolume.weight += 0.05f; 

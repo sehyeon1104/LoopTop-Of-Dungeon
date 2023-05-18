@@ -12,8 +12,9 @@ public class GhostUltSignal : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private GameObject GhostBossSkill;
+    //[SerializeField] private Animation GhostUltAnim;
 
-    [SerializeField] private Animation GhostUltAnim;
+    [SerializeField] Animator ghostUltAnim;
 
     [SerializeField] private SpriteRenderer panel1, panel2;
 
@@ -28,6 +29,9 @@ public class GhostUltSignal : MonoBehaviour
 
     bool isArrayed = false;
 
+    int ult1 = Animator.StringToHash("Ult1");
+    int ult2 = Animator.StringToHash("Ult2");
+    int ult3 = Animator.StringToHash("Ult3");
     float alpha = 0;
     int enemyLayer;
     private void Awake()
@@ -35,35 +39,35 @@ public class GhostUltSignal : MonoBehaviour
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<Player>();
-        UltSkillAnim(); 
+        //  UltSkillAnim(); 
     }
-    public void AnimationArray()
-    {
-        foreach (AnimationState states in GhostUltAnim)
-        {
-            animArray.Add(states.name);
-            Debug.Log(states.name);
-        }
-        isArrayed = true;
-    }
+
+    //public void AnimationArray()
+    //{
+    //    foreach (AnimationState states in GhostUltAnim)
+    //    {
+    //        animArray.Add(states.name);
+    //        Debug.Log(states.name);
+    //    }
+    //    isArrayed = true;
+    //}
 
     public void AttackEnemy()
     {
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0, 1 << enemyLayer);
         for (int i = 0; i < attachEnemises.Length; i++)
         {
-            attachEnemises[i].GetComponent<IHittable>().OnDamage(30, 0);
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(50, 0);
         }
     }
-    public void UltSkillAnim()
-    {
-        
-        if (isArrayed == false)
-        {
-            animArray = new List<string>();
-            AnimationArray();
-        }
-    }
+    //public void UltSkillAnim()
+    //{
+    //    if (isArrayed == false)
+    //    {
+    //        animArray = new List<string>();
+    //        AnimationArray();
+    //    }
+    //}
 
     
     public void ScreenDark()
@@ -78,6 +82,7 @@ public class GhostUltSignal : MonoBehaviour
         panel1.color = color;
         panel2.color = color;
         PlayerMovement.Instance.IsMove = true;
+        PlayerMovement.Instance.IsControl = true;
         Time.timeScale = 1;
     }
 
@@ -108,31 +113,33 @@ public class GhostUltSignal : MonoBehaviour
     }
     public void UltSkillCast()
     {
+
         PD = GetComponent<PlayableDirector>();
         PD.Play();
+        Time.timeScale = 0f;
+        PlayerMovement.Instance.IsControl = false;
+        PlayerMovement.Instance.IsMove = false;
     }
 
     public void GhostBossTransform()
     {
-        Time.timeScale = 0f;
-        PlayerMovement.Instance.IsMove = false;
         GhostBoss.transform.position = player.transform.position;
         GhostBossSkill.transform.position = new Vector3(player.transform.position.x + (-4.77f), player.transform.position.y +(8.54f), 0);
     }
 
     public void Ult1()
     {
-        GhostUltAnim.Play(animArray[0]);
+        ghostUltAnim.SetTrigger(ult1);
     }
 
     public void Ult2()
     {
-        GhostUltAnim.Play(animArray[1]);
+        ghostUltAnim.SetTrigger(ult2);
     }
 
     public void Ult3()
     {
-        GhostUltAnim.Play(animArray[2]);
+        ghostUltAnim.SetTrigger(ult3);
     }
 
 

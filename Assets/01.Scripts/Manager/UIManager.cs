@@ -13,7 +13,6 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public GameObject playerUI;
     public GameObject playerPCUI;
-    public GameObject skillSelect;
     [Header("LeftUp")]
     [SerializeField]
     private GameObject hpPrefab;
@@ -24,11 +23,15 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private TextMeshProUGUI bossFragmentAmountTMP = null;
 
-    // [Header("LeftDown")]
+    [Header("LeftDown")]
+    [SerializeField]
+    private Transform playerItemListUI = null;
+    [SerializeField]
+    private GameObject itemUITemplate = null;
 
     [Header("Middle")]
 
-    public GameObject skillSelectObj;
+    public GameObject skillSelect;
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
@@ -50,18 +53,20 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject skill2Button;
     public GameObject ultButton;
     public GameObject dashButton;
+    public Button reviveButton;
+    public Button leaveButton;
     Image[] skillIcons = new Image[4];
     Image[] pcSkillIcons = new Image[4];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
-
     public List<Image> hpbars = new List<Image>();
 
     private void Awake()
     {
-        playerUI = GameManager.Instance.Player.transform.Find("PlayerUI").gameObject;
+        
+        playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
@@ -81,18 +86,21 @@ public class UIManager : MonoSingleton<UIManager>
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
             blurPanel = playerUI.transform.Find("All/BlurPanel").gameObject;
+            reviveButton = playerUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = playerUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>(); 
             skillIcons[0] = skill1Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
-
         }
         else
         {
-            playerPCUI = GameManager.Instance.Player.transform.Find("PCPlayerUI").gameObject;
+            playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
+            skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
-            fragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("RightDown/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
+            fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
@@ -100,15 +108,22 @@ public class UIManager : MonoSingleton<UIManager>
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
-            pcSkillIcons[0] = playerPCUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[1] = playerPCUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[2] = playerPCUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[3] = playerPCUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
+            pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
+        itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
+
+        leaveButton.onClick.AddListener(LeaveBtn);
+
     }
 
     private void Start()
     {
+        SkillSelectButtonInit();
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
@@ -161,14 +176,25 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePausePanel();
     }
-
+    public void SkillSelectButtonInit()
+    {
+        for(int i=0; i<skillSelect.transform.childCount; i++)
+        {
+            GameObject button = skillSelect.transform.GetChild(i).gameObject;
+            button.GetComponent<Button>().onClick.AddListener(() => button.SetActive(false));
+        }
+    }
+   
     public void ToggleGameOverPanel()
     {
         TogglePlayerAttackUI();
-        blurPanel.SetActive(!blurPanel.activeSelf);
+        //blurPanel.SetActive(!blurPanel.activeSelf);
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
     }
-
+    public void CloseGameOverPanel()
+    {
+        gameOverPanel.SetActive(false);
+    }
     public void ToggleCheckOneMorePanel()
     {
         checkOneMorePanel.SetActive(!checkOneMorePanel.activeSelf);
@@ -208,6 +234,18 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
+    public void AddItemListUI(Item item)
+    {
+        if(item.itemType == Define.ItemType.heal)
+        {
+            return;
+        }
+
+        GameObject itemUI = Instantiate(itemUITemplate, playerItemListUI);
+        Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
+        itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+    }
+
     public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
     {
         int num = (int)skillNum;
@@ -225,7 +263,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            currentImage = playerPCUI.transform.Find("LeftDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
+            currentImage = playerPCUI.transform.Find("RightDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
 
             if (currentImage.fillAmount > 0)
                 return false;
@@ -235,7 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillNum(List<int> skillList)
     {
-        Button[] selectTexts = skillSelectObj.GetComponentsInChildren<Button>(true);
+        Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
         for (int i = 0; i < selectTexts.Length; i++)
         {
             selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
@@ -267,7 +305,7 @@ public class UIManager : MonoSingleton<UIManager>
             }
 
         }
-    }
+    }   
     public void SetSkillIcon(PlayerSkillData skilldata, int iconNum, int skillNum, int spriteNum)
     {
         if (GameManager.Instance.platForm == Define.PlatForm.PC)
@@ -332,18 +370,22 @@ public class UIManager : MonoSingleton<UIManager>
 
         showCurStageNameObj.SetActive(true);
 
+        // 현재 스테이지 이름 표기
         curStageName.SetText(string.Format("{0}Stage_{1}", GameManager.Instance.mapTypeFlag.ToString(), GameManager.Instance.StageMoveCount));
 
+        // 스크린 사이즈의 끝 + 오브젝트 사이즈의 절반의 위치
         Vector3 tmpPos = new Vector3(Screen.width + curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25);
         Vector3 linePos = new Vector3((-Screen.width / 2) - curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50);
         curStageName.transform.position = tmpPos;
         curStageNameLine.transform.position = linePos;
 
+        // 스크린의 중앙으로 이동
         curStageName.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 + 25), 2f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width / 2, Screen.height / 2 - 50), 2f).SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(showCurStageNameTime);
 
+        // 초기 있었던 위치의 반대편으로 이동
         curStageName.transform.DOMove(new Vector3(-Screen.width / 2 - curStageName.rectTransform.sizeDelta.x, Screen.height / 2 + 25), 1.5f).SetEase(Ease.InOutBack);
         curStageNameLine.transform.DOMove(new Vector3(Screen.width + curStageNameLine.rectTransform.sizeDelta.x, Screen.height / 2 - 50), 1.5f).SetEase(Ease.InOutBack);
 
@@ -371,11 +413,13 @@ public class UIManager : MonoSingleton<UIManager>
         Time.timeScale = 1f;
         if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
+            SaveManager.DeleteAllData();
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
+            SaveManager.DeleteAllData();
             GameManager.Instance.GameQuit();
         }
     }

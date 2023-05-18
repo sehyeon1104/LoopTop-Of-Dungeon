@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IHittable
 {
 
     public PlayerBase playerBase = new PlayerBase();
-
+    private GameObject playerVisual;
     private bool invincibility = false;
     public bool IsInvincibility
     {
@@ -28,9 +28,21 @@ public class Player : MonoBehaviour, IHittable
     [SerializeField]
     private float invincibleTime = 0.2f;
 
+    // HP 관련 아이템 효과
+    [field: SerializeField]
     public UnityEvent HPRelatedItemEffects { get; private set; }
+    // 공격 관련 아이템 효과
+    [field:SerializeField]
+    public UnityEvent AttackRelatedItemEffects { get; private set; }
+    // 피격 관련 아이템 효과
+    [field: SerializeField]
+    public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
     public Vector3 hitPoint { get; private set; }
-
+    private void Awake()
+    {
+        UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
+        playerVisual = transform.Find("PlayerVisual").gameObject;
+    }
     private void Start()
     {
         if (HPRelatedItemEffects == null)
@@ -70,7 +82,7 @@ public class Player : MonoBehaviour, IHittable
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
         }
 
-        HPRelatedItemEffects.Invoke();
+        HPRelatedItemEffects?.Invoke();
     }
     
     public void Dead()
@@ -89,8 +101,9 @@ public class Player : MonoBehaviour, IHittable
     }
 
     public void RevivePlayer()
-    {   
+    {
         gameObject.SetActive(true);
+        UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

@@ -103,6 +103,7 @@ public class TitleSceneManager : MonoBehaviour
             isClickScreen = true;
 
             StartCoroutine(ShowListOnTouch());
+            return;
         }
 
         if (isClickScreen)

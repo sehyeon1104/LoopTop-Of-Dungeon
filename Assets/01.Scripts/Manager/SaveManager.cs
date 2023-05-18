@@ -64,6 +64,7 @@ public static class SaveManager
         return File.Exists(Path.Combine(SAVE_PATH, SAVE_FILENAME));
     }
 
+    // TODO : 추후 보스 조각 등 영구적인 데이터는 따로 두도록 변경
     public static void DeleteAllData()
     {
         System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(SAVE_PATH);

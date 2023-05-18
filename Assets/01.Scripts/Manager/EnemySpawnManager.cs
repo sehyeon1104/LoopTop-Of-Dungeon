@@ -36,16 +36,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private WaitForSeconds waitForSpawnTime;
     private WaitForSeconds waitForHalfSpawnTime;
 
+
     public AssetLabelReference assetLabel;
     private IList<IResourceLocation> _locations;
-
-    private float enemyCount;
-
-
-    private void Awake()
-    {
-        GetLocations();
-    }
 
     private void Start()
     {
@@ -55,28 +48,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
         enemyDeadEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemyDeadEffect.prefab");
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
-        enemyCount = 0;
+        Managers.Pool.CreatePool(enemyDeadEffect, 10);
+
         SetEnemyInList();
-        InvokeRepeating("CheckCurEnemyList", 0f, 5f);
     }
 
     #region Addressable
 
     // 이외 방법 : SO에 몹 배열을 선언, 해당 SO에 잡몹 넣고 어드레서블 적용. 그리고 사용할 때 SO에 있는 몹 불러오기
-
-    public void GetLocations()
-    {
-        // 빌드타겟의 경로를 가져온다.
-        // 경로이기 때문에 메모리에 에셋이 로드되진 않는다.
-        //Addressables.LoadResourceLocationsAsync(assetLabel.labelString).Completed +=
-        //    (handle) =>
-        //    {
-        //        _locations = handle.Result;
-        //    };
-
-        // TODO : 특정 폴더 내 파일 개수 가져오기
-
-    }
 
     public void SetEnemyInList()
     {
@@ -88,7 +67,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         {
             // 맵 타입 플래그에 맞는 몹 몹 프리팹 불러옴
             normalEnemyPrefabsList.Add(Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Enemy/{GameManager.Instance.mapTypeFlag}/Normal/{GameManager.Instance.mapTypeFlag.ToString().Substring(0, 1)}_Mob_0{i + 1}.prefab"));
-            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 5);
+            Managers.Pool.CreatePool(normalEnemyPrefabsList[i], 6);
         }
     }
 
@@ -139,9 +118,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        for(int i = 0; i < wave1NormalEnemyCount; ++i)
+        for (int i = 0; i < wave1NormalEnemyCount; ++i)
         {
-
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드
@@ -153,7 +131,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             // 몹 소환
             // 적 소환 위치를 부모로 설정
             var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-            enemy.transform.position = enemySpawnPos[randPos].position;
             // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
@@ -161,7 +138,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
-
 
         curEnemies.Clear();
 
@@ -185,7 +161,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             }
 
             var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-            enemy.transform.position = enemySpawnPos[randPos].position;
             curEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
@@ -206,11 +181,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Poolable eliteMonster = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Ghost/Elite/G_Mob_Elite_01.prefab", spawnPos.position, Quaternion.identity);
         curEnemies.Add(eliteMonster);
         StartCoroutine(ShowEnemySpawnPos(eliteMonster.transform, eliteMonster));
-    }
-
-    public void StartNextWave()
-    {
-        isNextWave = true;
     }
 
     public IEnumerator ShowEnemySpawnPos(Transform spawnPos, Poolable enemy)
@@ -240,24 +210,10 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             }
             return;
         }
+
         var enemyDeadEffectClone = Managers.Pool.Pop(enemyDeadEffect);
         enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
-        Managers.Pool.Push(enemy);
-    }
-
-    public void CheckCurEnemyList()
-    {
-        if(curEnemies.Count > 0)
-        {
-            for(int i = 0; i < curEnemies.Count; ++i)
-            {
-                if (!curEnemies[i].gameObject.activeSelf)
-                {
-                    curEnemies.RemoveAt(i);
-                }
-            }
-        }
     }
 
 }

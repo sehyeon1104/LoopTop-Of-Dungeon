@@ -49,6 +49,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     private EnemyHpBar hpBar;
 
+    protected Poolable poolable = null;
+
     protected bool isMove { private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
@@ -70,6 +72,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         isFlip = sprite.flipX;
         defaultMat = sprite.material;
         hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        poolable = GetComponent<Poolable>();
         AnimInit();
     }
 
@@ -179,15 +182,15 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             damage *= 1.5f;
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
+            GameManager.Instance.PlayHitEffect(transform, true);
         }
         else
         {
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
+            GameManager.Instance.PlayHitEffect(transform);
         }
 
         hp -= damage;
-            
-        GameManager.Instance.PlayHitEffect(transform);
 
         hpBar.UpdateHpBar();
 
@@ -214,7 +217,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     {
         isPlayGetHitEffect = true;
         float timer = 0;
-        hitMat.SetTexture("_Texture2D",sprite.sprite.texture); 
+        hitMat.SetTexture("_Texture2D",sprite.sprite.texture);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Hit.wav");
         sprite.material = hitMat;
         while(changeTime > timer)
         {   
@@ -231,15 +235,16 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (!isDead)
         {
             isDead = true;
-
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
 
-            if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+            CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
+
+            if (GameManager.Instance.sceneType == Define.Scene.StageScene)
             {
-                EnemySpawnManager.Instance.RemoveEnemyInList(gameObject.GetComponent<Poolable>());
+                EnemySpawnManager.Instance.RemoveEnemyInList(poolable);
             }
 
-            Managers.Pool.Push(gameObject.GetComponent<Poolable>());
+            Managers.Pool.Push(poolable);
             FragmentCollectManager.Instance.AddFragment(gameObject);
         }
     }

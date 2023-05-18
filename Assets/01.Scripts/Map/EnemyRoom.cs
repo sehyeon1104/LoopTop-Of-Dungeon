@@ -13,15 +13,10 @@ public class EnemyRoom : RoomBase
     public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
-    private SpriteRenderer minimapIconSpriteRenderer = null;
-
     private void Start()
     {
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-
         isSpawnMonster = false;
         SetRoomTypeFlag();
-        SetEnemySpawnPos();
     }
 
     protected override void SetRoomTypeFlag()
@@ -37,12 +32,8 @@ public class EnemyRoom : RoomBase
         {
             // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
+            Debug.Log(isMoveAnotherStage);
             EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
-
-            if (isMoveAnotherStage)
-            {
-                Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-            }
 
             return enemySpawnPos;
         }
@@ -78,18 +69,14 @@ public class EnemyRoom : RoomBase
     private IEnumerator CheckClear()
     {
         yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
+        Debug.Log("Clear");
         IsClear();
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (StageManager.Instance.isSetting)
-        {
-            return;
-        }
-
-        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+        base.OnTriggerEnter2D(collision);
 
         if (collision.CompareTag("Player"))
         {
@@ -99,8 +86,6 @@ public class EnemyRoom : RoomBase
                 Door.Instance.CloseDoors();
                 SetEnemy();
             }
-
-            minimapIconSpriteRenderer.color = Color.white;
         }
     }
 
@@ -111,10 +96,10 @@ public class EnemyRoom : RoomBase
             return;
         }
 
-        if (collision.CompareTag("Player"))
-        {
-            IsClear();
-        }
+        //if (collision.CompareTag("Player"))
+        //{
+        //    IsClear();
+        //}
     }
 
     protected override void IsClear()

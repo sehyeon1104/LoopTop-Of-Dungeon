@@ -25,19 +25,20 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        _fragmentAmount = 0;
+        _fragmentAmount = 100000;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
         }
-
+        AttackRange = 1.3f;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
-        slotLevel = new int[] { 1, 1 };
+        SlotLevel = new int[] { 1, 1 };
     }
-    public int[] slotLevel = new int[2];
+    public float AttackRange { get; set; }
+    public int[] SlotLevel { get; set; }
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 
@@ -45,7 +46,11 @@ public class PlayerBase
     public bool IsPDead { get; set; }
     private Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 
-    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag { get; set; }
+    public Define.PlayerTransformTypeFlag PlayerTransformTypeFlag
+    {
+        get => playerTransformTypeFlag;
+        set => playerTransformTypeFlag = value;
+    }
 
     private int hp;
     public int Hp

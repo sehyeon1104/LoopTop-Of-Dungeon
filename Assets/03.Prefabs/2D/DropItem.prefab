@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3793642119810178648}
   - component: {fileID: 3793642119810178649}
   - component: {fileID: 1424619624337960867}
+  - component: {fileID: 1258267636836435359}
   m_Layer: 0
   m_Name: DropItem
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3793642119810178650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.48, y: 10.74, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -97,4 +98,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b3806c02ce8f840bd9be6f09cb8ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDis: 2
   spriteRenderer: {fileID: 0}
+--- !u!58 &1258267636836435359
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793642119810178650}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2

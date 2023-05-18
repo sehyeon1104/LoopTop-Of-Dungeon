@@ -14,8 +14,9 @@ public class ShopRoom : RoomBase
     private float playerSensingDis = 1.5f;
     private ItemObj[] itemobjArr;
     int itemobjCount = 0;
-    private WaitForEndOfFrame waitForEndOfFrame;
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
+    IEnumerator toggleItemInfoPanel;
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.Shop;
@@ -24,28 +25,21 @@ public class ShopRoom : RoomBase
     [SerializeField]
     private GameObject shopNpc;
 
-    private SpriteRenderer minimapIconSpriteRenderer = null;
-
     private void Awake()
     {
-
-        InteractionBtn = UIManager.Instance.playerUI.transform.Find("RightDown/Btns/Interaction_Btn").GetComponent<Button>();
+        InteractionBtn = UIManager.Instance.GetInteractionButton();
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
-
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
-        InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
-
+        toggleItemInfoPanel = ToggleItemInfoPanel();
         if (!ShopManager.Instance.isItemSetting)
         {
             ShopManager.Instance.SetItem();
         }
-
-        GameObject shopIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/ShopIcon.prefab");
     }
     public void SpawnNPC()
     {
@@ -83,16 +77,13 @@ public class ShopRoom : RoomBase
         isClear = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (StageManager.Instance.isSetting)
-        {
-            return;
-        }
-
-        minimapIconSpriteRenderer.color = Color.white;
-        StartCoroutine(ToggleItemInfoPanel());
+        base.OnTriggerEnter2D(collision);
+        InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
+        StartCoroutine(toggleItemInfoPanel);
     }
+
     public IEnumerator ToggleItemInfoPanel()
     {
         while (true)
@@ -103,7 +94,7 @@ public class ShopRoom : RoomBase
                 {
                     itemobjCount++;
 
-                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
+                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf && itemobjArr[i].itemName != "Default")
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;
@@ -135,10 +126,11 @@ public class ShopRoom : RoomBase
     {
         if (collision.CompareTag("Player"))
         {
+            StopCoroutine(toggleItemInfoPanel);
+            InteractionBtn.onClick.RemoveListener(ShopManager.Instance.InteractiveToItem);
             foreach (var itemobj in itemobjArr)
             {
                 itemobj.Num = 0;
-                StopCoroutine(ToggleItemInfoPanel());
             }
         }
     }

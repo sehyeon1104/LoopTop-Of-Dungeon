@@ -30,7 +30,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
     protected List<Poolable> cloneList = new List<Poolable>();
     protected Color dashCloneColor;
     protected Animator playerAnim;
-    protected float attackRange = 1;
+    protected float attackRange = 1.5f;
     private WaitForFixedUpdate waitforFixedUpdate = new WaitForFixedUpdate();
     public Dictionary<int, Action<int>> playerSkillUpdate = new Dictionary<int, Action<int>>();
     float attackTimer = 0;
@@ -64,12 +64,13 @@ public abstract class PlayerSkillBase : MonoBehaviour
             return;
 
             playerAnim.SetTrigger("Attack");
-            Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange, 1 << enemyLayer);
-            for (int i = 0; i < enemys.Length; i++)
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
+            for (int i = 0; i < enemies.Length; i++)
             {
-                PlayerVisual.Instance.VelocityChange(enemys[i].transform.position.x - transform.position.x);
+                PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
                 CinemachineCameraShaking.Instance.CameraShake();
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+                enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+                GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
             }
     }
     protected abstract void UltimateSkill();

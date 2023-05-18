@@ -63,6 +63,8 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         newObject.SetActive(true);
         slots.Add(newItemObjComponent);
         ItemEffects.Items[item.itemNumber].Use();
+
+        UIManager.Instance.AddItemListUI(item);
     }
 
     // «ˆ¿Á »πµÊ«— æ∆¿Ã≈€ ∏Ò∑œ ∞°¡Æø»
@@ -91,6 +93,8 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             {
                 ItemEffects.Items[inventoryItem.itemNumber].Use();
             }
+
+            UIManager.Instance.AddItemListUI(items);
         }
     }
 

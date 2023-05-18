@@ -418,10 +418,11 @@ public class GhostSkill : PlayerSkillBase
 
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
         while (timer < telpoDuration)
         {
             timer += Time.fixedDeltaTime;
-            print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
+            //print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
             if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2) - 0.001f)
             {
                 Poolable telpoEffect;
@@ -510,7 +511,7 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator ArmSkill(int level)
     {
-        Collider2D[] hitEnemies;
+        RaycastHit2D[] hitEnemies;
         List<Poolable> arms = new List<Poolable>();
         if (level == 1)
         {
@@ -522,7 +523,7 @@ public class GhostSkill : PlayerSkillBase
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up * 1.5f, Quaternion.identity));
         }
         if (level == 3)
-        {
+        {   
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 , Quaternion.identity));
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 , Quaternion.Euler(0, 180, 0)));
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3.5f , Quaternion.Euler(0, 180, 0)));
@@ -535,13 +536,13 @@ public class GhostSkill : PlayerSkillBase
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right *2 + Vector3.up *3, Quaternion.identity));
         }
         mat.SetFloat("_StepValue", arms[0].transform.position.y - 2);
-        for (int i = 1; i < arms.Count; i++)
+        for (int i = 0; i < arms.Count; i++)
         {
 
-            hitEnemies = Physics2D.OverlapBoxAll(arms[i].transform.position, new Vector2(1, 2.5f), 0, 1 << enemyLayer);
+            hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0,Vector2.up, 5,1 << enemyLayer);
             for (int j = 0; j < hitEnemies.Length; j++)
             {
-                hitEnemies[j].GetComponent<IHittable>().OnDamage(armDamage, 0);
+                hitEnemies[j].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
             }
         }
         yield return waitArm;

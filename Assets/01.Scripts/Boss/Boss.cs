@@ -19,7 +19,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     private BossUI bossUI;
 
-
     public bool isBDamaged { set; get; } = false;
     public bool isBInvincible { set; get; } = false;
     public bool isBDead { private set; get; } = false;
@@ -67,14 +66,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         UpdateBossHP();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Base.Shield += 100;
-        }
-    }
-
     public IEnumerator IEHitAction()
     {
         // TODO : 피격 애니메이션
@@ -118,6 +109,17 @@ public class Boss : MonoSingleton<Boss>, IHittable
         else
         {
             StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
+        }
+
+        if(damage >= 15)
+        {
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_DeSpawn.wav");
+            CinemachineCameraShaking.Instance.CameraShake(7, 0.2f);
+        }
+        else
+        {
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Hit.wav");
+            CinemachineCameraShaking.Instance.CameraShake(4, 0.1f);
         }
 
         isBDamaged = true;

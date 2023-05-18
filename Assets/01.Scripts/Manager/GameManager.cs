@@ -35,6 +35,7 @@ public class GameManager : MonoSingleton<GameManager>
     private ItemData itemData = new ItemData();
 
     private GameObject hitEffect = null;
+    private GameObject critHitEffect = null;
 
     public MinimapCamera minimapCamera { get; private set; } = null;
 
@@ -126,6 +127,7 @@ public class GameManager : MonoSingleton<GameManager>
         Base.Instance.Init();
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
+        critHitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/DeathHitEffect.prefab");
     }
 
     private void Start()
@@ -134,19 +136,12 @@ public class GameManager : MonoSingleton<GameManager>
         {
             InitPlayerInfo();
             Managers.Pool.CreatePool(hitEffect, 20);
+            Managers.Pool.CreatePool(critHitEffect, 20);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
         }
 
         // µð¹ö±ë
         //SetItemData(allItemList);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SaveData();
-        }
     }
 
     public void ResetStageClearCount()
@@ -159,9 +154,14 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.UpdateGoods();
     }
 
-    public void PlayHitEffect(Transform objTransform)
+    public void PlayHitEffect(Transform objTransform, bool isCritRate = false)
     {
-        var effect = Managers.Pool.Pop(hitEffect);
+        //Debug.Log($"È÷Æ® ÀÌÆåÆ® : {hitEffect != null}");
+        Poolable effect = null;
+        if (isCritRate)
+            effect = Managers.Pool.Pop(critHitEffect);
+        else
+            effect = Managers.Pool.Pop(hitEffect);
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 
@@ -180,7 +180,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.hp = Player.playerBase.Hp;
         playerData.maxLevel = Player.playerBase.MaxLevel;
         playerData.level = Player.playerBase.Level;
-        playerData.slotLevel = Player.playerBase.slotLevel;
+        playerData.slotLevel = Player.playerBase.SlotLevel;
         playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
@@ -211,7 +211,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Hp = playerData.hp;
         Player.playerBase.MaxLevel = playerData.maxLevel;
         Player.playerBase.Level = playerData.level;
-        Player.playerBase.slotLevel = playerData.slotLevel;
+        Player.playerBase.SlotLevel = playerData.slotLevel;
         Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
