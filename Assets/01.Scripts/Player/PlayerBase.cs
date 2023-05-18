@@ -25,7 +25,7 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        playerSkillNum = new int[2] { 0, 1 };
+        PlayerSkillNum = new int[] { 1, 2 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
@@ -210,18 +210,8 @@ public class PlayerBase
         } 
     }
 
-    private int[] playerSkillNum;
-    public int[] PlayerSkillNum
-    {
-        get
-        {
-            return playerSkillNum;
-        }
-        set
-        {
-            playerSkillNum = value;
-        }
-    }
+    public int[] PlayerSkillNum { get; set; }
+ 
 
     private int _fragmentAmount;
     public int FragmentAmount

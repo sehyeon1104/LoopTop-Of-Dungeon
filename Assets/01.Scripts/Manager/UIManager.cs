@@ -64,7 +64,7 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject blurPanel;
     public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
-
+    PlayerSkill playerskill;
     private int maxHpCount = 0;
 
     private void Awake()
@@ -72,6 +72,7 @@ public class UIManager : MonoSingleton<UIManager>
         
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
+        playerskill = FindObjectOfType<PlayerSkill>();  
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
@@ -150,6 +151,7 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
             avcList.Add(avc);
+            Debug.Log(avc);
             hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
             avc.gameObject.SetActive(false);
         }
@@ -258,13 +260,20 @@ public class UIManager : MonoSingleton<UIManager>
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
-        int num = (int)skillNum;
-        if (skillNum == Define.SkillNum.UltimateSkill)
+        int num =skillNum;
+        if (skillNum ==7)
             num = 2;
-        else if (skillNum == Define.SkillNum.DashSkill)
+        else if (skillNum == 8)
             num = 3;
+        else
+        {
+            if (skillNum == playerskill.skillIndex[0])
+                num = 0;
+            else
+                num=1;
+        }
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
@@ -280,7 +289,9 @@ public class UIManager : MonoSingleton<UIManager>
             if (currentImage.fillAmount > 0)
                 return false;
         }
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
+        if(!isCheck)
+        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+
         return true;
     }
     public void SkillNum(List<int> skillList)
