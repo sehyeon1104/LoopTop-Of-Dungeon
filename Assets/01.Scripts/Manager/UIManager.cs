@@ -62,13 +62,14 @@ public class UIManager : MonoSingleton<UIManager>
     GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
+    public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
-    PlayerSkill playerSkill;
 
-    private WaitForEndOfFrame waitForEndOfFrame;
+    private int maxHpCount = 0;
+
     private void Awake()
     {
-        playerSkill = FindObjectOfType<PlayerSkill>();
+        
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
@@ -82,7 +83,7 @@ public class UIManager : MonoSingleton<UIManager>
             hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
             fragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerUI.transform.Find("All/PausePanel").gameObject;
+            pausePanel = playerUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerUI.transform.Find("Middle/ShowCurStageName").gameObject;
@@ -104,7 +105,7 @@ public class UIManager : MonoSingleton<UIManager>
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerPCUI.transform.Find("All/PausePanel").gameObject;
+            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
@@ -127,8 +128,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     private void Start()
     {
-        waitForEndOfFrame = new WaitForEndOfFrame();
-
         SkillSelectButtonInit();
         HPInit();
         UpdateUI();
@@ -141,6 +140,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
+        MaxHpUpdate();
         HpUpdate();
         UpdateGoods();
     }
@@ -149,7 +149,9 @@ public class UIManager : MonoSingleton<UIManager>
     {
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
-            hpbars.Add(avc.GetComponent<Image>());
+            avcList.Add(avc);
+            hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
+            avc.gameObject.SetActive(false);
         }
     }
 
@@ -256,20 +258,13 @@ public class UIManager : MonoSingleton<UIManager>
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    public bool SkillCooltime(PlayerSkillData skillData, int skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
     {
-        int num;
-        if (skillNum ==7)
+        int num = (int)skillNum;
+        if (skillNum == Define.SkillNum.UltimateSkill)
             num = 2;
-        else if (skillNum == 8)
+        else if (skillNum == Define.SkillNum.DashSkill)
             num = 3;
-        else
-        {
-            if (playerSkill.skillIndex[0] == skillNum)
-                num = 0;
-            else
-                num = 1;
-        }
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
@@ -285,8 +280,16 @@ public class UIManager : MonoSingleton<UIManager>
             if (currentImage.fillAmount > 0)
                 return false;
         }
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
         return true;
+    }
+    public void SkillNum(List<int> skillList)
+    {
+        Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
+        for (int i = 0; i < selectTexts.Length; i++)
+        {
+            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+        }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {
@@ -294,9 +297,8 @@ public class UIManager : MonoSingleton<UIManager>
         while (cooltimeImg.fillAmount > 0)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
-            yield return waitForEndOfFrame;
+            yield return null;
         }
-        yield break;
     }
     public void ResetSkill()
     {
@@ -335,10 +337,17 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
         }
     }
-
+    public void MaxHpUpdate()
+    {
+        maxHpCount = Mathf.CeilToInt(GameManager.Instance.Player.playerBase.MaxHp / 4);
+        for (int i = 0; i < maxHpCount; i++)
+        {
+            avcList[i].gameObject.SetActive(true);
+        }
+    }
     public void HpUpdate()
     {
-        for (int i = 0; i < hpbars.Count; i++)
+        for (int i = 0; i < maxHpCount; i++)
         {
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
