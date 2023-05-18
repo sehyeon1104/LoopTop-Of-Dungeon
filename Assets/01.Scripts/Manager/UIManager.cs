@@ -285,8 +285,9 @@ public class UIManager : MonoSingleton<UIManager>
         while (cooltimeImg.fillAmount > 0)
         {
             cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
+        yield break;
     }
     public void ResetSkill()
     {
