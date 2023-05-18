@@ -12,11 +12,16 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     [SerializeField]
     private Transform slotHolder;
 
-    private GameObject itemObjTemplate;
+    [SerializeField]
+    private GameObject itemObjTemplate = null;
 
     private void Awake()
     {
-        itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
+        if(itemObjTemplate == null)
+        {
+            Debug.Log("itemObjTemplate is null!");
+            itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
+        }
         inventoryPanel = transform.Find("Background").gameObject;
     }
 
@@ -82,7 +87,8 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
             Item inventoryItem = items;
 
-            newObject = Instantiate(itemObjTemplate);
+            newObject = Instantiate(itemObjTemplate);   // 여기서 오류남. 아마 템플릿이 로딩이 안된듯?
+
             newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
             newItemObjComponent = newObject.GetComponent<InventorySlot>();
             newItemObjComponent.SetValue(inventoryItem);

@@ -456,6 +456,7 @@ public class GhostSkill : PlayerSkillBase
             float timerA = 0;
             while (timerA < telpoClawDuration)
             {
+                Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
                 Poolable clawEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw.prefab", transform.position, angleAxis);
                 clawEffect.transform.localScale = new Vector3(Random.Range(2, 5f), Random.Range(2, 5f), 1);
                 clawEffect.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));

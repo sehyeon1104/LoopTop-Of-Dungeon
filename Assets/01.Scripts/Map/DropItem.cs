@@ -8,12 +8,13 @@ public class DropItem : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
-
-    private Item item = null;
     private List<Item> tempItemList = new List<Item>();
-    private bool isCheck = false;
+    private Item item = null;
+    private bool isItemSetting = false;
     private bool isDuplication = false;
     Button interactionButton;
+
+    private HashSet<int> itemSelectNum = new HashSet<int>();
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -28,25 +29,35 @@ public class DropItem : MonoBehaviour
     {
         item = null;
         spriteRenderer.sprite = null;
+        itemSelectNum.Clear();
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
 
+        if(tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
+        {
+            return;
+        }
+
+        for (int i = 0; i < tempItemList.Count; ++i)
+        {
+            itemSelectNum.Add(tempItemList[i].itemNumber);
+        }
+
+        int rand = 0;
+
+        List<Item> allItemList = new List<Item>();
+        allItemList = GameManager.Instance.allItemList;
+
         while (item == null)
         {
-            isDuplication = false;
-            Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
-            for (int i = 0; i < tempItemList.Count; ++i)
-            {
-                if (temp == tempItemList[i] /*&& item.itemType != Define.ItemType.heal && item.itemType != Define.ItemType.broken*/)
-                {
-                    isDuplication = true;
-                    break;
-                }
-            }
-            if (!isDuplication)
-            {
-                item = temp;
-            }
+            rand = Random.Range(1, GameManager.Instance.allItemList.Count);
+
+            if (itemSelectNum.Contains(rand))
+                continue;
+
+            itemSelectNum.Add(rand);
+
+            item = GameManager.Instance.allItemList[rand];
         }
 
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
@@ -57,8 +68,8 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-                interactionButton.onClick.AddListener(TakeItem);
-                UIManager.Instance.RotateInteractionButton();
+            interactionButton.onClick.AddListener(TakeItem);
+            UIManager.Instance.RotateInteractionButton();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)  
@@ -68,12 +79,18 @@ public class DropItem : MonoBehaviour
            interactionButton.onClick.RemoveListener(TakeItem);
            UIManager.Instance.RotateAttackButton();
         }
-        
     }
+
     // æ∆¿Ã≈€ »πµÊ «‘ºˆ
     public void TakeItem()
     {
         // TODO : »πµÊ Ω√ ¿Ã∆Â∆Æ √‚∑¬
+
+        if (GameManager.Instance.GetItemList().Contains(item))
+        {
+            Debug.Log("¿ÃπÃ ∞°¡ˆ∞Ì¿÷¥¬ æ∆¿Ã≈€");
+            return;
+        }
 
         InventoryUI.Instance.AddItemSlot(item);
         UIManager.Instance.RotateAttackButton();

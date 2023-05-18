@@ -130,23 +130,22 @@ public class Beam : MonoBehaviour
 
         //yield return new WaitForSeconds(0.2f);
         //CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
-        
+
         //lineWidth *= 2;
+
+        points[1] = Vector2.zero;
+        col.points = points;
 
         while (lineWidth >= 0.0f)
         {
             lineWidth -= Time.deltaTime * 2f;
 
-            col.edgeRadius = lineWidth * 0.5f;
             beamLight.intensity -= 0.01f;
             beam.startWidth = lineWidth;
             beam.endWidth = lineWidth;
 
             yield return null;
         }
-
-        points[1] = Vector2.zero;
-        col.points = points;
 
         beamLight.intensity = 0;
         beam.startWidth = 0;

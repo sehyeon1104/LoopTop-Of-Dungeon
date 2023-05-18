@@ -94,7 +94,7 @@ public class ShopRoom : RoomBase
                 {
                     itemobjCount++;
 
-                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf)
+                    if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf && itemobjArr[i].itemName != "Default")
                     {
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;

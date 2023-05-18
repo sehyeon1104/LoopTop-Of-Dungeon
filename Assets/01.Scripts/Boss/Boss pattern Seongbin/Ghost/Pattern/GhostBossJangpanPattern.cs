@@ -75,6 +75,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FRPStartSpriterenderer.enabled = false;
         
         Managers.Pool.Pop(circlesmoke.gameObject, transform.position);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Hilla1.wav");
 
         yield return new WaitForSeconds(0.7f);
 
@@ -125,6 +126,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
         FRPRSpriterenderer.enabled = false;
         FRPRStartSpriterenderer.enabled = false;
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Hilla1.wav");
+
         Poolable clone = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
         clone.transform.position = new Vector2(transform.position.x + (-11.26f), transform.position.y + (-12.18f));
         Poolable clone1 = Managers.Pool.Pop(recsmoke.gameObject, transform.position);

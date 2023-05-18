@@ -32,7 +32,6 @@ public class EnemyRoom : RoomBase
         {
             // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
-            Debug.Log(isMoveAnotherStage);
             EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
 
             return enemySpawnPos;

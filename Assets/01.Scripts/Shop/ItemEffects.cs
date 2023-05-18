@@ -152,7 +152,7 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
         //public override bool isPersitantItem => true;
-        public override bool isPersitantItem => false;
+        public override bool isPersitantItem => true;
 
         private float probabilityChance = 1f;
 
@@ -162,6 +162,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("뱀파이어의 송곳니 효과 발동");
             //Debug.Log("적 처치 시 hp 1 회복");
 
+            GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
             GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
         }
 
@@ -370,7 +371,7 @@ public class ItemEffects : MonoBehaviour
 
         public override void Use()
         {
-            Debug.Log("유리 대포 효과 발동");
+            Debug.Log("저주받은 반지 효과 발동");
             Debug.Log("공격력 60% 증가, 받는 데미지 2배 증가");
             GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
             //TODO : 받는 데미지 2배 증가 구현
