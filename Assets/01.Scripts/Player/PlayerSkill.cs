@@ -24,7 +24,7 @@ public class PlayerSkill : MonoBehaviour
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
-    public int[] skillIndex = new int[] { 1,2};
+    public int[] skillIndex;
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
@@ -37,6 +37,7 @@ public class PlayerSkill : MonoBehaviour
         skillSelectObj = UIManager.Instance.skillSelect;
         itemLayer = LayerMask.NameToLayer("Item");
         slotLevel = playerBase.SlotLevel;
+       skillIndex = playerBase.PlayerSkillNum;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
         interaction = UIManager.Instance.GetInteractionButton();
@@ -238,9 +239,7 @@ public class PlayerSkill : MonoBehaviour
                 currentObj.GetComponent<Button>().onClick.Invoke();
             }
             yield return null;
-        }
-        print(skillIndex[0]);
-        print(skillIndex[1]);   
+        }   
         Time.timeScale = 1;
         PlayerMovement.Instance.IsControl = true;
         skillSelectObj.SetActive(false);
