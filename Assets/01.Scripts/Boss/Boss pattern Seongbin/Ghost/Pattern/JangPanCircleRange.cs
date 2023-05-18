@@ -32,6 +32,7 @@ public class JangPanCircleRange : MonoBehaviour
 
     IEnumerator CheckPlayer()
     {
+        yield return null;
 
         while (true)
         {
