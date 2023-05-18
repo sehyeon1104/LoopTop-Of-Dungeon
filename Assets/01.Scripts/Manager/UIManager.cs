@@ -246,7 +246,7 @@ public class UIManager : MonoSingleton<UIManager>
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    public bool SkillCooltime(PlayerSkillData skillData, int skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData, int skillNum,bool isCheck =false)
     {
         int num;
         if (skillNum ==7)
@@ -275,7 +275,9 @@ public class UIManager : MonoSingleton<UIManager>
             if (currentImage.fillAmount > 0)
                 return false;
         }
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+        if (!isCheck)
+           StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+ 
         return true;
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)

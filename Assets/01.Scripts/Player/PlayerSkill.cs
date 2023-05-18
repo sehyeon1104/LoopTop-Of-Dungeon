@@ -59,14 +59,6 @@ public class PlayerSkill : MonoBehaviour
         if (playerBase.IsPDead)
             return;
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            slotLevel[0]++;
-            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-            SkillSelect(playerBase.PlayerTransformTypeFlag);
-        }
         if (Input.GetKeyDown(KeyCode.U))
         {
             Skill1();
@@ -205,6 +197,9 @@ public class PlayerSkill : MonoBehaviour
     }
    public IEnumerator SkillShuffle()
     {
+        if (!UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0],true) || !UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1],true))
+            yield break;    
+
         PlayerMovement.Instance.IsControl = false;
         int index = 1;
         List<RectTransform> rectObjs = new List<RectTransform>();
