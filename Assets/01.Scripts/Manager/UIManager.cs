@@ -47,7 +47,8 @@ public class UIManager : MonoSingleton<UIManager>
     private Image curStageNameLine;
     [SerializeField]
     private float showCurStageNameTime = 3f;
-    // [Header("RightUp")]
+    [Header("RightUp")]
+    private Transform minimap;
     [Header("RightDown")]
     public GameObject skill1Button;
     public GameObject skill2Button;
@@ -107,6 +108,7 @@ public class UIManager : MonoSingleton<UIManager>
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            minimap = playerPCUI.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
@@ -131,6 +133,10 @@ public class UIManager : MonoSingleton<UIManager>
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
+        if(SceneManager.GetActiveScene().name == "CenterScene")
+        {
+            minimap.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateUI()
