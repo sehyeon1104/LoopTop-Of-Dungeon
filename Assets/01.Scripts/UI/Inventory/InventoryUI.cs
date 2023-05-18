@@ -87,12 +87,9 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
             Item inventoryItem = items;
 
-            Debug.Log("Test1");
             newObject = Instantiate(itemObjTemplate);   // 여기서 오류남. 아마 템플릿이 로딩이 안된듯?
-            Debug.Log("Test2");
 
             newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
-            Debug.Log("Test3");
             newItemObjComponent = newObject.GetComponent<InventorySlot>();
             newItemObjComponent.SetValue(inventoryItem);
             newObject.transform.SetParent(slotHolder);
