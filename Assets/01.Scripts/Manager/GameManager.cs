@@ -187,6 +187,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.critChance = Player.playerBase.CritChance;
         playerData.expTable = Player.playerBase.ExpTable;
         playerData.exp = Player.playerBase.Exp;
+        playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
@@ -218,6 +219,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.CritChance = playerData.critChance;
         Player.playerBase.ExpTable = playerData.expTable;
         Player.playerBase.Exp = playerData.exp;
+        Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;

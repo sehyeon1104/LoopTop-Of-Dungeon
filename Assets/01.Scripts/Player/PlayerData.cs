@@ -17,6 +17,7 @@ public class PlayerData
     public float critChance;
     public float exp;
     public int[] expTable;
+    public int[] playerSkillNum;
     public int _fragmentAmount;
     public int bossFragmentAmount;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
