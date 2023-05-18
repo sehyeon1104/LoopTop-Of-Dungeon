@@ -145,6 +145,7 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
             avcList.Add(avc);
+            Debug.Log(avc);
             hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
             avc.gameObject.SetActive(false);
         }
