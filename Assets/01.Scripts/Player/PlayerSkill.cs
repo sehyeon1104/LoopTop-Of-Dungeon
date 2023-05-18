@@ -24,7 +24,7 @@ public class PlayerSkill : MonoBehaviour
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
-    int[] skillIndex = new int[] { 1,2};
+    public int[] skillIndex = new int[] { 1,2};
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
@@ -77,6 +77,8 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
+            if (!PlayerMovement.Instance.IsControl)
+                return;
 
             if (interaction.gameObject.activeSelf)
                 interaction.onClick?.Invoke();
@@ -121,6 +123,7 @@ public class PlayerSkill : MonoBehaviour
             skillEvent[4] = playerSkill.dashSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 8, 0);
         }
+
     }
     void ReserProperty()
     {
@@ -202,6 +205,7 @@ public class PlayerSkill : MonoBehaviour
     }
    public IEnumerator SkillShuffle()
     {
+        PlayerMovement.Instance.IsControl = false;
         int index = 1;
         List<RectTransform> rectObjs = new List<RectTransform>();
         RectTransform currentObj;
@@ -215,7 +219,7 @@ public class PlayerSkill : MonoBehaviour
             obj.transform.Find("Image/SkillName").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillName;
             obj.transform.Find("Icon/IconShape/Icon").GetComponent<Image>().sprite = playerskillInfo[randomSkillNum[i]].skillIcon[0];
             obj.transform.Find("SkillExplanation/SkillExplanatioText").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillExplanation;
-            obj.transform.Find("SkillExplanation/SkillCool").GetComponent<TextMeshProUGUI>().text = (playerskillInfo[randomSkillNum[i]].skillDelay).ToString();
+            obj.transform.Find("SkillExplanation/SkillCool").GetComponent<TextMeshProUGUI>().text = $"{(playerskillInfo[randomSkillNum[i]].skillDelay)}√ ";
             rectObjs.Add(obj.GetComponent<RectTransform>());
         }
         currentObj = rectObjs[index];
@@ -243,6 +247,7 @@ public class PlayerSkill : MonoBehaviour
         print(skillIndex[0]);
         print(skillIndex[1]);   
         Time.timeScale = 1;
+        PlayerMovement.Instance.IsControl = true;
         skillSelectObj.SetActive(false);
         SkillSelect(playerBase.PlayerTransformTypeFlag);
         FinishSelect();

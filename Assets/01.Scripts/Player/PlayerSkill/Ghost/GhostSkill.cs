@@ -269,12 +269,22 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void SecondSkillUpdate(int level)
     {
-        if (level == 5)
+        if (level <= 2)
         {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+        }
+        else if( level ==3 || level ==4)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0,2,1);
+        }
+        else if(level ==5)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 2);
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
+
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+      
     }
     IEnumerator Beam(int level)
     {
