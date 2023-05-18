@@ -56,6 +56,8 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Update()
     {
+        if (playerBase.IsPDead)
+            return;
 
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -129,7 +131,6 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0]))
             skillEvent[0]();
     }
@@ -138,7 +139,9 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1]))
+        if (playerBase.IsPDead)
+            return;
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1]) )
             skillEvent[1]();
     }
     void Attack()
