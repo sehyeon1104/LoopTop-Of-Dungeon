@@ -128,10 +128,6 @@ public class ShopRoom : RoomBase
         {
             StopCoroutine(toggleItemInfoPanel);
             InteractionBtn.onClick.RemoveListener(ShopManager.Instance.InteractiveToItem);
-            foreach (var itemobj in itemobjArr)
-            {
-                itemobj.Num = 0;
-            }
         }
     }
 
