@@ -24,10 +24,13 @@ public class PlayerSkill : MonoBehaviour
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
+    public int[] skillIndex = new int[] { 1,2};
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
     int itemLayer;
     GameObject skillSelectObj;
+    Vector2 usuallySize = new Vector2(600, 1000);
+    Vector2 enlargementSize;
     private void Awake()
     {
         playerBase = GameManager.Instance.Player.playerBase;
@@ -48,20 +51,14 @@ public class PlayerSkill : MonoBehaviour
     }
     private void Start()
     {
+        enlargementSize = usuallySize * 1.1f;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
-        SkillShuffle();
     }
     private void Update()
     {
+        if (playerBase.IsPDead)
+            return;
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            slotLevel[0]++;
-            playerBase.PlayerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-            playerBase.PlayerTransformData = playerBase.PlayerTransformDataSOList[(int)playerBase.PlayerTransformTypeFlag];
-            PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-            SkillSelect(playerBase.PlayerTransformTypeFlag);
-        }
         if (Input.GetKeyDown(KeyCode.U))
         {
             Skill1();
@@ -72,24 +69,25 @@ public class PlayerSkill : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
+            if (!PlayerMovement.Instance.IsControl)
+                return;
 
             if (interaction.gameObject.activeSelf)
-            {
                 interaction.onClick?.Invoke();
-            }
-            else
-            {
+            else   
                 Attack();
-            }
         }
         if (Input.GetKeyDown(KeyCode.K))
-        {
             DashSkill();
-        }
         if (Input.GetKeyDown(KeyCode.O))
-        {
             UltimateSkill();
-        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+            UIManager.Instance.TogglePausePanel();
+
+        if(Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
+            InventoryUI.Instance.ToggleInventoryUI();
+        
+      
 
     }
     public void SlotUp(int index)
@@ -107,16 +105,17 @@ public class PlayerSkill : MonoBehaviour
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[4](slotLevel[0]);
-            playerSkill.playerSkillUpdate[4](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[5](slotLevel[1]);
-            playerSkill.playerSkillUpdate[5](slotLevel[1]);
+            skillEvent[0] = () => playerSkill.playerSkills[skillIndex[0]](slotLevel[0]);
+            playerSkill.playerSkillUpdate[skillIndex[0]](slotLevel[0]);
+            skillEvent[1] = () => playerSkill.playerSkills[skillIndex[1]](slotLevel[1]);
+            playerSkill.playerSkillUpdate[skillIndex[1]](slotLevel[1]);
             skillEvent[2] = playerSkill.attack;
             skillEvent[3] = playerSkill.ultimateSkill;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 6, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 7, 0);
             skillEvent[4] = playerSkill.dashSkill;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 7, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 8, 0);
         }
+
     }
     void ReserProperty()
     {
@@ -127,10 +126,7 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
-        if (!PlayerMovement.Instance.IsControl)
-            return;
-
-        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.FirstSkill) && PlayerMovement.Instance.IsControl)
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0]))
             skillEvent[0]();
     }
 
@@ -138,10 +134,9 @@ public class PlayerSkill : MonoBehaviour
 
     void Skill2()
     {
-        //if (!PlayerMovement.Instance.IsControl)
-        //    return;
-
-        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.SecondSkill))
+        if (playerBase.IsPDead)
+            return;
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1]) )
             skillEvent[1]();
     }
     void Attack()
@@ -154,7 +149,7 @@ public class PlayerSkill : MonoBehaviour
         if (!PlayerMovement.Instance.IsControl)
             return;
 
-        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.UltimateSkill))
+        if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,7))
             skillEvent[3]();
     }
 
@@ -163,7 +158,7 @@ public class PlayerSkill : MonoBehaviour
         if (!PlayerMovement.Instance.IsControl || !PlayerMovement.Instance.IsMove)
             return;
 
-        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, Define.SkillNum.DashSkill))
+        if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 8))
             skillEvent[4]();
     }
     #region Ω∫≈≥ º≈«√
@@ -181,11 +176,11 @@ public class PlayerSkill : MonoBehaviour
 
         for (int i = 0; i < randomSkillNum.Count; i++)
         {
-            int randomAt = Random.Range(1, randomSkillNum.Count + 1);
-            int randomAt2 = Random.Range(1, randomSkillNum.Count + 1);
+            int randomAt = Random.Range(1, randomSkillNum.Count +1);
+            int randomAt2 = Random.Range(1, randomSkillNum.Count +1);
             while (randomAt == randomAt2)
             {
-                randomAt2 = Random.Range(1, randomSkillNum.Count + 1);
+                randomAt2 = Random.Range(1, randomSkillNum.Count +1);
             }
             int randomAtIndex = randomSkillNum.IndexOf(randomAt);
             int randomAt2Index = randomSkillNum.IndexOf(randomAt2);
@@ -202,11 +197,55 @@ public class PlayerSkill : MonoBehaviour
     }
    public IEnumerator SkillShuffle()
     {
+        if (!UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0],true) || !UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1],true))
+            yield break;    
+
+        PlayerMovement.Instance.IsControl = false;
+        int index = 1;
+        List<RectTransform> rectObjs = new List<RectTransform>();
+        RectTransform currentObj;
         skillSelectObj.SetActive(true);
-       yield return new WaitUntil(() => WaitButton() == 1);
+        IndexShuffle();
+        PlayerSkillInfo[] playerskillInfo = playerBase.PlayerTransformData.skill;
+        for (int i = 0; i < randomSkillNum.Count; i++)
+        {
+            Transform obj = skillSelectObj.transform.GetChild(i);
+            obj.name = (randomSkillNum[i]).ToString();
+            obj.transform.Find("Image/SkillName").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillName;
+            obj.transform.Find("Icon/IconShape/Icon").GetComponent<Image>().sprite = playerskillInfo[randomSkillNum[i]].skillIcon[0];
+            obj.transform.Find("SkillExplanation/SkillExplanatioText").GetComponent<TextMeshProUGUI>().text = playerskillInfo[randomSkillNum[i]].skillExplanation;
+            obj.transform.Find("SkillExplanation/SkillCool").GetComponent<TextMeshProUGUI>().text = $"{(playerskillInfo[randomSkillNum[i]].skillDelay)}√ ";
+            rectObjs.Add(obj.GetComponent<RectTransform>());
+        }
+        currentObj = rectObjs[index];
+        currentObj.sizeDelta = enlargementSize;
+        Time.timeScale = 0;
+        while(WaitButton() != 1)
+        {
+            if(Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.D))
+            {
+                currentObj.sizeDelta = usuallySize;
+                index += (int)Input.GetAxisRaw("Horizontal");
+                index = Mathf.Clamp(index, 0, rectObjs.Count-1);
+                currentObj = rectObjs[index];
+                currentObj.sizeDelta = enlargementSize;
+            }
+            if(Input.GetKeyDown(KeyCode.Return))
+            {
+                skillIndex[3 - rectObjs.Count] = int.Parse(currentObj.name);
+                
+                rectObjs.Remove(currentObj);
+                currentObj.GetComponent<Button>().onClick.Invoke();
+            }
+            yield return null;
+        }
+        print(skillIndex[0]);
+        print(skillIndex[1]);   
+        Time.timeScale = 1;
+        PlayerMovement.Instance.IsControl = true;
         skillSelectObj.SetActive(false);
+        SkillSelect(playerBase.PlayerTransformTypeFlag);
         FinishSelect();
-        yield return null;
     }
     public int WaitButton()
     {

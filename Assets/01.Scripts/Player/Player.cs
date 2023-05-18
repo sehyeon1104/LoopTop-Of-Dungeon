@@ -70,6 +70,7 @@ public class Player : MonoBehaviour, IHittable
             damage *= 1.5f;
         }
 
+        OnDamagedRelatedItemEffects?.Invoke();
         playerBase.Hp -= (int)damage;
 
         isPDamaged = true;
