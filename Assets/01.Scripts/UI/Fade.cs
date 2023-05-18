@@ -47,19 +47,20 @@ public class Fade : MonoSingleton<Fade>
 
         fadeImg.fillOrigin = (int)Image.OriginHorizontal.Right;
 
-        while (fadeImg.fillAmount < 1f)
-        {
-            fadeImg.fillAmount += Time.deltaTime * speed;
+        //while (fadeImg.fillAmount < 1f)
+        //{
+        //    fadeImg.fillAmount += Time.deltaTime * speed;
 
-            if(fadeImg.fillAmount > 1f)
-            {
-                fadeImg.fillAmount = 1f;
-            }
+        //    if(fadeImg.fillAmount > 1f)
+        //    {
+        //        fadeImg.fillAmount = 1f;
+        //    }
 
-            yield return waitFrame;
-        }
+        //    yield return waitFrame;
+        //}
 
-        //fadeImg.gameObject.SetActive(false);
+        fadeImg.DOFillAmount(1f, 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         Managers.Scene.LoadScene(sceneType);
 
@@ -79,19 +80,23 @@ public class Fade : MonoSingleton<Fade>
         fadeImg.gameObject.SetActive(true);
         fadeImg.fillAmount = 1f;
 
-        fadeImg.fillOrigin = (int)Image.OriginHorizontal.Left;
+        //fadeImg.fillOrigin = (int)Image.OriginHorizontal.Left;
 
-        while (fadeImg.fillAmount > 0f)
-        {
-            fadeImg.fillAmount -= Time.deltaTime * speed;
+        //while (fadeImg.fillAmount > 0f)
+        //{
+        //    fadeImg.fillAmount -= Time.deltaTime * speed;
 
-            if (fadeImg.fillAmount < 0f)
-            {
-                fadeImg.fillAmount = 0f;
-            }
+        //    if (fadeImg.fillAmount < 0f)
+        //    {
+        //        fadeImg.fillAmount = 0f;
+        //    }
 
-            yield return waitFrame;
-        }
+        //    yield return waitFrame;
+        //}
+
+
+        fadeImg.DOFillAmount(0f, 0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         fadeImg.gameObject.SetActive(false);
 

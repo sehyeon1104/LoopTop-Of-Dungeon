@@ -137,9 +137,8 @@ public class GameManager : MonoSingleton<GameManager>
             Managers.Pool.CreatePool(hitEffect, 20);
             Managers.Pool.CreatePool(critHitEffect, 20);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
+            InventoryUI.Instance.LoadItemSlot();
         }
-
-        InventoryUI.Instance.LoadItemSlot();
         // µð¹ö±ë
         //SetItemData(allItemList);
     }
