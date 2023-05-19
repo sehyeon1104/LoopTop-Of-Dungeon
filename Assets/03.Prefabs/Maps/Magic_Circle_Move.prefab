@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 5731706546575025825}
   - component: {fileID: 5731706546575025824}
   - component: {fileID: 1601286392644608608}
+  - component: {fileID: 4442191664344712403}
   m_Layer: 0
   m_Name: Magic_Circle_Move
   m_TagString: Untagged
@@ -174,7 +175,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1955462685
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1a043498a91a14046ab1e06c4a671e3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -199,6 +200,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8037ff1610e57094e83a8eb45c4fcc5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4442191664344712403
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5731706546575025831}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &8922647850131522326
 GameObject:
   m_ObjectHideFlags: 0

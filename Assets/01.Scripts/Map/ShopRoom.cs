@@ -81,6 +81,7 @@ public class ShopRoom : RoomBase
     {
         base.OnTriggerEnter2D(collision);
         InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
+
         StartCoroutine(toggleItemInfoPanel);
     }
 
@@ -88,6 +89,7 @@ public class ShopRoom : RoomBase
     {
         while (true)
         {
+            print("Ss");
             for (int i = 0; i < itemobjArr.Length; ++i)
             {
                 if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - itemobjArr[i].transform.position) < playerSensingDis * playerSensingDis)
