@@ -169,6 +169,7 @@ public class ItemEffects : MonoBehaviour
 
         public void VampireFangsEffect()
         {
+            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             // 적 공격시 1% 확률로 hp 1 회복
             if(Random.Range(0, 100) < probabilityChance)
             {

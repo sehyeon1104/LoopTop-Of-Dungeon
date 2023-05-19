@@ -29,7 +29,7 @@ public class PlayerSkill : MonoBehaviour
     private float interactionDis = 2f;
     int itemLayer;
     GameObject skillSelectObj;
-    Vector2 usuallySize = new Vector2(600, 1000);
+    Vector2 usuallySize = new Vector2(800, 1100);
     Vector2 enlargementSize;
     private void Awake()
     {
