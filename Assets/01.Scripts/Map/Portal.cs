@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Portal : MonoBehaviour
 {
@@ -11,12 +12,13 @@ public class Portal : MonoBehaviour
     Define.Scene sceneType;
 
     private bool isInteraction = false;
-
+    Button interactionButton;
     private GameObject moveCanvas = null;
     private SpriteRenderer spriteRenderer = null;
 
     private void Awake()
     {
+        interactionButton = UIManager.Instance.GetInteractionButton();
         moveCanvas = transform.Find("MoveCanvas").gameObject;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -29,30 +31,17 @@ public class Portal : MonoBehaviour
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/{GameManager.Instance.mapTypeFlag}PortalSprite.png");
     }
 
-    private void FixedUpdate()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < 1f)
-        {
-            if (!isInteraction)
-            {
-                InteractionPlayer();
-            }
-        }
-        else
-        {
-            if (UIManager.Instance.IsActiveAttackBtn())
-            {
-                return;
-            }
-            else
-            {
-                UIManager.Instance.RotateAttackButton();
-            }
-            isInteraction = false;
-            ToggleMoveTMP();
-        }
+        InteractionPlayer();
     }
-
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isInteraction = false;
+        UIManager.Instance.RotateAttackButton();
+        ToggleMoveTMP();
+        interactionButton.onClick.RemoveListener(MoveNextStage);
+    }
     public void InteractionPlayer()
     {
         isInteraction = true;
@@ -60,9 +49,7 @@ public class Portal : MonoBehaviour
         UIManager.Instance.RotateInteractionButton();
 
         ToggleMoveTMP();
-
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(MoveNextStage);
-        UIManager.Instance.GetInteractionButton().onClick.AddListener(MoveNextStage);
+        interactionButton.onClick.AddListener(MoveNextStage);
     }
 
     public void ToggleMoveTMP()
