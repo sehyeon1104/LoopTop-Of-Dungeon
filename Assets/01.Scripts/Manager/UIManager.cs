@@ -191,9 +191,17 @@ public class UIManager : MonoSingleton<UIManager>
         pausePanel.SetActive(!pausePanel.activeSelf);
 
         if (pausePanel.activeSelf)
+        {
             Time.timeScale = 0f;
+            MouseManager.Lock(false);
+            MouseManager.Show(true);
+        }
         else
+        {
             Time.timeScale = 1f;
+            MouseManager.Lock(true);
+            MouseManager.Show(false);
+        }
     }
 
     public void Resume()
