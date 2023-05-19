@@ -183,6 +183,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
+        playerData.attackRange = Player.playerBase.AttackRange;
         playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
         playerData.expTable = Player.playerBase.ExpTable;
@@ -215,6 +216,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
+        Player.playerBase.AttackRange = playerData.attackRange;
         Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
         Player.playerBase.ExpTable = playerData.expTable;
