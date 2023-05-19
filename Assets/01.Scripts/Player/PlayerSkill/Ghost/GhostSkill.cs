@@ -142,6 +142,7 @@ public class GhostSkill : PlayerSkillBase
         smokeParticle = smokePoolable.GetComponent<ParticleSystem>();
         smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/Jangpan.wav");
         while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
@@ -546,6 +547,7 @@ public class GhostSkill : PlayerSkillBase
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left*2, Quaternion.Euler(0, 180, 0)));
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right *2 + Vector3.up *3, Quaternion.identity));
         }
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_RaiseUpArm.wav");
         mat.SetFloat("_StepValue", arms[0].transform.position.y - 2);
         for (int i = 0; i < arms.Count; i++)
         {
