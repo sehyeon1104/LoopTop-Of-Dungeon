@@ -81,7 +81,6 @@ public class ItemObj : MonoBehaviour
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
         soldOutPanel.SetActive(true);
-        ItemEffects.Items[item.itemNumber].Use();
         if (!ItemEffects.Items[item.itemNumber].isOneOff)
         {
             InventoryUI.Instance.AddItemSlot(item);

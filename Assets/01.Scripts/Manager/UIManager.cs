@@ -350,7 +350,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void MaxHpUpdate()
     {
-        maxHpCount = Mathf.CeilToInt(GameManager.Instance.Player.playerBase.MaxHp / 4);
+        maxHpCount = Mathf.CeilToInt((float)GameManager.Instance.Player.playerBase.MaxHp / 4);
         for (int i = 0; i < maxHpCount; i++)
         {
             avcList[i].gameObject.SetActive(true);

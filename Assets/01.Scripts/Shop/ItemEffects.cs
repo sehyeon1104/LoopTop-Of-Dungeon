@@ -91,7 +91,6 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("헤비급 챔피언의 벨트 효과 발동");
             Debug.Log("하트 1/4칸 증가");
             int incQuantity = 1; //Mathf.RoundToInt(GameManager.Instance.Player.playerBase.InitMaxHp * 0.15f);
-            Debug.Log(incQuantity);
             GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
             GameManager.Instance.Player.playerBase.Hp += incQuantity;
             UIManager.Instance.UpdateUI();
