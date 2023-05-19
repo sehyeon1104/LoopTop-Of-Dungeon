@@ -365,6 +365,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             avcList[i].gameObject.SetActive(true);
         }
+        HpUpdate();
     }
     public void HpUpdate()
     {
