@@ -38,6 +38,10 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject gameOverPanel;
     [SerializeField]
     private GameObject checkOneMorePanel;
+    [SerializeField]
+    private Button resumeBtn;
+    [SerializeField]
+    private Button quitBtn;
 
     [SerializeField]
     private GameObject showCurStageNameObj;
@@ -108,6 +112,8 @@ public class UIManager : MonoSingleton<UIManager>
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
+            resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
+            quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
             minimap = playerPCUI.transform.Find("Minimap");
@@ -124,6 +130,10 @@ public class UIManager : MonoSingleton<UIManager>
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
 
         leaveButton.onClick.AddListener(LeaveBtn);
+        resumeBtn.onClick.RemoveListener(Resume);
+        resumeBtn.onClick.AddListener(Resume);
+        quitBtn.onClick.RemoveListener(LeaveBtn);
+        quitBtn.onClick.AddListener(LeaveBtn);
 
     }
 
@@ -443,12 +453,14 @@ public class UIManager : MonoSingleton<UIManager>
         Time.timeScale = 1f;
         if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
+            // 전시용
             SaveManager.DeleteAllData();
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
+            // 전시용
             SaveManager.DeleteAllData();
             GameManager.Instance.GameQuit();
         }
