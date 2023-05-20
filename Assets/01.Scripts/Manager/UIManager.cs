@@ -221,6 +221,9 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePlayerAttackUI();
         //blurPanel.SetActive(!blurPanel.activeSelf);
+        MouseManager.Show(gameOverPanel.activeSelf);
+        MouseManager.Lock(!gameOverPanel.activeSelf);
+       
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
     }
     public void CloseGameOverPanel()
