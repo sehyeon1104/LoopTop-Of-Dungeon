@@ -17,9 +17,9 @@ public class G_SkelMag : EnemyDefault
     {
         yield return base.AttackToPlayer();
 
+        Vector3 dir = playerTransform.position - transform.position;
         yield return attackWait;
 
-        Vector3 dir = playerTransform.position - transform.position;
         float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         for (int i = -1; i <= 1; i++)
         {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class G_Phantom : EnemyDefault
 {
     WaitForSeconds attackWait = new WaitForSeconds(1.5f);
+    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
     float timer = 2.5f;
 
     public override IEnumerator MoveToPlayer()
@@ -44,11 +45,12 @@ public class G_Phantom : EnemyDefault
 
         yield return base.AttackToPlayer();
 
-        yield return attackWait;
+        yield return waitTime;
 
         if (distanceToPlayer <= 1.5f)
             GameManager.Instance.Player.OnDamage(damage, 0);
 
+        yield return attackWait;
         actCoroutine = null;
     }
 }

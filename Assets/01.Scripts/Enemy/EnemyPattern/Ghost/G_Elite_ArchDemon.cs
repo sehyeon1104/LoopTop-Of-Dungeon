@@ -77,7 +77,7 @@ public class G_Elite_ArchDemon : EnemyElite
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Slash.prefab", transform.position, Quaternion.Euler(Vector3.forward * rot));
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
         }
 
 
