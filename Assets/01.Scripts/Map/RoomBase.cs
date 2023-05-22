@@ -13,10 +13,13 @@ public abstract class RoomBase : MonoBehaviour
 
     [SerializeField]
     protected SpriteRenderer minimapIconSpriteRenderer = null;
+    [SerializeField]
+    protected GameObject curLocatedMapIcon = null;
 
     private void Awake()
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
     protected abstract void SetRoomTypeFlag();
@@ -32,9 +35,17 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = Color.white;
+            curLocatedMapIcon.SetActive(true);
         }
 
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
     }
 
+    protected virtual void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
+        }
+    }
 }

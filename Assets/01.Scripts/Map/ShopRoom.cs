@@ -32,6 +32,7 @@ public class ShopRoom : RoomBase
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
     private void Start()
     {
@@ -89,7 +90,6 @@ public class ShopRoom : RoomBase
     {
         while (true)
         {
-            print("Ss");
             for (int i = 0; i < itemobjArr.Length; ++i)
             {
                 if (Vector3.SqrMagnitude(GameManager.Instance.Player.transform.position - itemobjArr[i].transform.position) < playerSensingDis * playerSensingDis)
@@ -124,12 +124,14 @@ public class ShopRoom : RoomBase
         }
 
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             StopCoroutine(toggleItemInfoPanel);
             InteractionBtn.onClick.RemoveListener(ShopManager.Instance.InteractiveToItem);
+            base.OnTriggerExit2D(collision);
         }
     }
 

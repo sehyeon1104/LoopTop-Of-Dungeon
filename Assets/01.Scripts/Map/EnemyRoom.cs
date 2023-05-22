@@ -88,11 +88,19 @@ public class EnemyRoom : RoomBase
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
-        if (StageManager.Instance.isSetting)
+        if (collision.CompareTag("Player"))
         {
-            return;
+            if (isClear)
+            {
+                base.OnTriggerExit2D(collision);
+            }
+
+            if (StageManager.Instance.isSetting)
+            {
+                return;
+            }
         }
 
         //if (collision.CompareTag("Player"))
