@@ -4,6 +4,12 @@ using UnityEngine;
 
 public static class MapInfo
 {
+    public static float xDir = 26f;
+    public static float yDir = 26f;
+
+    public static float firstPosX = -8f;
+    public static float firstPosY = -2.25f;
+
     public static int[,] WallGrid1 { get; private set; } =new int[7, 7]
     {
         {1, 0, 0, 0, 0, 0, 0},

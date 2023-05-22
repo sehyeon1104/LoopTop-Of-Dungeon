@@ -34,11 +34,15 @@ public abstract class RoomBase : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            minimapIconSpriteRenderer.color = Color.white;
             curLocatedMapIcon.SetActive(true);
         }
 
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+    }
+
+    protected virtual void ShowInMinimap()
+    {
+        minimapIconSpriteRenderer.color = Color.white;
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
