@@ -142,6 +142,7 @@ public class GhostSkill : PlayerSkillBase
         smokeParticle = smokePoolable.GetComponent<ParticleSystem>();
         smokeParticle.startSize = jangpanSize;
         yield return janpanWait;
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/Jangpan.wav");
         while (timer < jangpanDuration)
         {
             timer += Time.deltaTime;
@@ -225,11 +226,11 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 0, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
@@ -269,12 +270,22 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void SecondSkillUpdate(int level)
     {
-        if (level == 5)
+        if (level <= 2)
         {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+        }
+        else if( level ==3 || level ==4)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0,2,1);
+        }
+        else if(level ==5)
+        {
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 2);
             hillaDuration = new WaitForSeconds(10f);
             playerBase.PlayerTransformData.skill[4].skillDelay = 15;
+
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+      
     }
     IEnumerator Beam(int level)
     {
@@ -398,11 +409,11 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
         }
         beamDmg = level + 2;
     }
@@ -456,6 +467,7 @@ public class GhostSkill : PlayerSkillBase
             float timerA = 0;
             while (timerA < telpoClawDuration)
             {
+                Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
                 Poolable clawEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw.prefab", transform.position, angleAxis);
                 clawEffect.transform.localScale = new Vector3(Random.Range(2, 5f), Random.Range(2, 5f), 1);
                 clawEffect.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
@@ -492,7 +504,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             telpoVelocity = 100;
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
             return;
         }
         else if (level == 4)
@@ -507,7 +519,7 @@ public class GhostSkill : PlayerSkillBase
         {
             telpoVelocity = 50;
         }
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
     }
     IEnumerator ArmSkill(int level)
     {
@@ -535,6 +547,7 @@ public class GhostSkill : PlayerSkillBase
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left*2, Quaternion.Euler(0, 180, 0)));
             arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right *2 + Vector3.up *3, Quaternion.identity));
         }
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_RaiseUpArm.wav");
         mat.SetFloat("_StepValue", arms[0].transform.position.y - 2);
         for (int i = 0; i < arms.Count; i++)
         {
@@ -621,11 +634,11 @@ public class GhostSkill : PlayerSkillBase
         armDamage = 29 + level;
         if (level == 5)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 1);
         }
         else
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
         }
 
     }

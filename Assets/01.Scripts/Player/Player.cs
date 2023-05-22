@@ -60,6 +60,13 @@ public class Player : MonoBehaviour, IHittable
         yield return null;
     }
 
+    private float damageMultiples = 1;
+    public float DamageMultiples
+    {
+        get => damageMultiples;
+        set => damageMultiples = value;
+    }
+
     public void OnDamage(float damage, float critChance)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
@@ -70,7 +77,8 @@ public class Player : MonoBehaviour, IHittable
             damage *= 1.5f;
         }
 
-        playerBase.Hp -= (int)damage;
+        OnDamagedRelatedItemEffects?.Invoke();
+        playerBase.Hp -= (int)(damage * damageMultiples);
 
         isPDamaged = true;
         

@@ -116,7 +116,6 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
-            InventoryUI.Instance.LoadItemSlot();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -138,8 +137,11 @@ public class GameManager : MonoSingleton<GameManager>
             Managers.Pool.CreatePool(hitEffect, 20);
             Managers.Pool.CreatePool(critHitEffect, 20);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
-        }
+            InventoryUI.Instance.LoadItemSlot();
 
+            MouseManager.Lock(true);
+            MouseManager.Show(false);
+        }
         // 디버깅
         //SetItemData(allItemList);
     }
@@ -184,10 +186,12 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attack = Player.playerBase.Attack;
         playerData.damage = Player.playerBase.Damage;
         playerData.attackSpeed = Player.playerBase.AttackSpeed;
+        playerData.attackRange = Player.playerBase.AttackRange;
         playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
         playerData.expTable = Player.playerBase.ExpTable;
         playerData.exp = Player.playerBase.Exp;
+        playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
@@ -215,10 +219,12 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.Attack = playerData.attack;
         Player.playerBase.Damage = playerData.damage;
         Player.playerBase.AttackSpeed = playerData.attackSpeed;
+        Player.playerBase.AttackRange = playerData.attackRange;
         Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
         Player.playerBase.ExpTable = playerData.expTable;
         Player.playerBase.Exp = playerData.exp;
+        Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;

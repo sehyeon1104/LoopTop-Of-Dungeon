@@ -66,7 +66,7 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
-        if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || isSold)
+        if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || isSold || !IsPurchaseAble)
         {
             Rito.Debug.Log("구매 불가");
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/UnablePurchase.wav");
@@ -81,7 +81,6 @@ public class ItemObj : MonoBehaviour
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
         soldOutPanel.SetActive(true);
-        ItemEffects.Items[item.itemNumber].Use();
         if (!ItemEffects.Items[item.itemNumber].isOneOff)
         {
             InventoryUI.Instance.AddItemSlot(item);

@@ -29,6 +29,7 @@ public class JangPanRecRange : MonoBehaviour
 
     IEnumerator CheckPlayer()
     {
+        yield return null;
 
         while (true)
         {

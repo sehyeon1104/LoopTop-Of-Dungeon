@@ -56,6 +56,7 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("거인의 장갑 효과 발동");
             Debug.Log("공격범위 10% 증가");
+            GameManager.Instance.Player.playerBase.AttackRange = GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
         }
     }
 
@@ -88,11 +89,11 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("헤비급 챔피언의 벨트 효과 발동");
-            Debug.Log("최대 생명력 15% 증가");
-            int incQuantity = Mathf.RoundToInt(GameManager.Instance.Player.playerBase.InitMaxHp * 0.15f);
-            Debug.Log(incQuantity);
+            Debug.Log("하트 1/4칸 증가");
+            int incQuantity = 1; //Mathf.RoundToInt(GameManager.Instance.Player.playerBase.InitMaxHp * 0.15f);
             GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
             GameManager.Instance.Player.playerBase.Hp += incQuantity;
+            UIManager.Instance.UpdateUI();
         }
     }
 
@@ -168,6 +169,7 @@ public class ItemEffects : MonoBehaviour
 
         public void VampireFangsEffect()
         {
+            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             // 적 공격시 1% 확률로 hp 1 회복
             if(Random.Range(0, 100) < probabilityChance)
             {
@@ -210,6 +212,8 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("광전사의 검 효과 발동");
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
             BerserkerSwordEffect();
+            GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
+            GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
         }
 
         private static float lastRise = 0;
@@ -355,13 +359,15 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("거북 모자 효과 발동");
-            Debug.Log("최대생명력 30% 증가, 공격력 15% 감소");
-            GameManager.Instance.Player.playerBase.MaxHp += (int)(GameManager.Instance.Player.playerBase.InitMaxHp * 0.3f);
+            Debug.Log("하트 1칸 증가, 공격력 15% 감소");
+            GameManager.Instance.Player.playerBase.MaxHp += 4; //(int)(GameManager.Instance.Player.playerBase.InitMaxHp * 0.3f);
+            GameManager.Instance.Player.playerBase.Hp += 4;
             GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.15f;
+            UIManager.Instance.MaxHpUpdate();
         }
     }
 
-    public class GlassCannon : ItemBase
+    public class CursedRing : ItemBase
     {
         public override Define.ItemType itemType => Define.ItemType.broken;
 
@@ -369,13 +375,26 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
 
+        private static bool isFirst = false;
+
         public override void Use()
         {
-            Debug.Log("유리 대포 효과 발동");
+            Debug.Log("저주받은 반지 효과 발동");
             Debug.Log("공격력 60% 증가, 받는 데미지 2배 증가");
-            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
+            if (!isFirst)
+            {
+                isFirst = true;
+                GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
+            }
             //TODO : 받는 데미지 2배 증가 구현
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(CursedRingEffect);
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(CursedRingEffect);
 
+        }
+        
+        private void CursedRingEffect()
+        {
+            GameManager.Instance.Player.DamageMultiples = 2;
         }
     }
 
@@ -413,6 +432,6 @@ public class ItemEffects : MonoBehaviour
         new NailedShoes(),
         new CloudyGlasses(),
         new TurtleHat(),
-        new GlassCannon(),
+        new CursedRing(),
     };
 }

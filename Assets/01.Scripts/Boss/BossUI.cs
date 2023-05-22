@@ -15,8 +15,8 @@ public class BossUI : MonoBehaviour
     [SerializeField]
     private GameObject shieldBar = null;
 
-
-    private Image[] bossUltGageImages = null;
+    [SerializeField]
+    private Image bossUltGageImages = null;
 
     private Slider hpBarSlider = null;
     private Slider shieldBarSlider = null;
@@ -24,13 +24,9 @@ public class BossUI : MonoBehaviour
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
     public static float fillTime { get; set; } = 20f;
-    float firstFill = 0f;
-    float secondFill = 0f;
-    float thirdFill = 0f;
 
     private void Awake()
     {
-        bossUltGageImages = bossUltGage.GetComponentsInChildren<Image>();
         hpBarSlider = hpBar.GetComponentInChildren<Slider>();
         shieldBarSlider = shieldBar.GetComponentInChildren<Slider>();
     }
@@ -43,10 +39,7 @@ public class BossUI : MonoBehaviour
     }
     public void InitUltGage()
     {
-        for(int i = 0; i < bossUltGageImages.Length; ++i)
-        {
-            bossUltGageImages[i].fillAmount = 0;
-        }
+        bossUltGageImages.fillAmount = 0;
         // bossUltGage.SetActive(false);
     }
 
@@ -60,26 +53,9 @@ public class BossUI : MonoBehaviour
     {
         // bossUltGage.SetActive(true);
 
-        firstFill = time * 0.3f;
-        secondFill = time - (2 * firstFill);
-        thirdFill = time * 0.7f;
-
         while (true)
         {
-            if(fillTime <= firstFill)
-            {
-                bossUltGageImages[0].fillAmount = 1 * (fillTime / firstFill);
-            }
-            else if(fillTime > firstFill && fillTime <= thirdFill)
-            {
-                bossUltGageImages[0].fillAmount = 1;
-                bossUltGageImages[1].fillAmount = 1 * ((fillTime - firstFill) / secondFill);
-            }
-            else if(fillTime > thirdFill)
-            {
-                bossUltGageImages[1].fillAmount = 1;
-                bossUltGageImages[2].fillAmount = 1 * ((fillTime - (firstFill + secondFill)) / firstFill);
-            }
+            bossUltGageImages.fillAmount = fillTime / time;
 
             if (fillTime > 0)
             {

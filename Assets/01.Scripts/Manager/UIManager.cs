@@ -38,6 +38,10 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject gameOverPanel;
     [SerializeField]
     private GameObject checkOneMorePanel;
+    [SerializeField]
+    private Button resumeBtn;
+    [SerializeField]
+    private Button quitBtn;
 
     [SerializeField]
     private GameObject showCurStageNameObj;
@@ -47,7 +51,8 @@ public class UIManager : MonoSingleton<UIManager>
     private Image curStageNameLine;
     [SerializeField]
     private float showCurStageNameTime = 3f;
-    // [Header("RightUp")]
+    [Header("RightUp")]
+    private Transform minimap;
     [Header("RightDown")]
     public GameObject skill1Button;
     public GameObject skill2Button;
@@ -61,13 +66,17 @@ public class UIManager : MonoSingleton<UIManager>
     GameObject InteractionButton;
     [SerializeField]
     private GameObject blurPanel;
+    public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
+    PlayerSkill playerskill;
+    private int maxHpCount = 0;
 
     private void Awake()
     {
         
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
+        playerskill = FindObjectOfType<PlayerSkill>();  
         AttackButton = playerUI.transform.Find("RightDown/Btns/AttackBtn").gameObject;
         skill1Button = playerUI.transform.Find("RightDown/Btns/Skill1_Btn").gameObject;
         skill2Button = playerUI.transform.Find("RightDown/Btns/Skill2_Btn").gameObject;
@@ -103,8 +112,11 @@ public class UIManager : MonoSingleton<UIManager>
             bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
+            resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
+            quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            minimap = playerPCUI.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
@@ -118,6 +130,10 @@ public class UIManager : MonoSingleton<UIManager>
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
 
         leaveButton.onClick.AddListener(LeaveBtn);
+        resumeBtn.onClick.RemoveListener(Resume);
+        resumeBtn.onClick.AddListener(Resume);
+        quitBtn.onClick.RemoveListener(LeaveBtn);
+        quitBtn.onClick.AddListener(LeaveBtn);
 
     }
 
@@ -127,10 +143,15 @@ public class UIManager : MonoSingleton<UIManager>
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
+        if(SceneManager.GetActiveScene().name == "CenterScene")
+        {
+            minimap.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateUI()
     {
+        MaxHpUpdate();
         HpUpdate();
         UpdateGoods();
     }
@@ -139,7 +160,10 @@ public class UIManager : MonoSingleton<UIManager>
     {
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
-            hpbars.Add(avc.GetComponent<Image>());
+            avcList.Add(avc);
+            Debug.Log(avc);
+            hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
+            avc.gameObject.SetActive(false);
         }
     }
 
@@ -167,9 +191,17 @@ public class UIManager : MonoSingleton<UIManager>
         pausePanel.SetActive(!pausePanel.activeSelf);
 
         if (pausePanel.activeSelf)
+        {
             Time.timeScale = 0f;
+            MouseManager.Lock(false);
+            MouseManager.Show(true);
+        }
         else
+        {
             Time.timeScale = 1f;
+            MouseManager.Lock(true);
+            MouseManager.Show(false);
+        }
     }
 
     public void Resume()
@@ -189,7 +221,11 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePlayerAttackUI();
         //blurPanel.SetActive(!blurPanel.activeSelf);
+       
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
+
+        MouseManager.Show(gameOverPanel.activeSelf);
+        MouseManager.Lock(!gameOverPanel.activeSelf);
     }
     public void CloseGameOverPanel()
     {
@@ -246,13 +282,20 @@ public class UIManager : MonoSingleton<UIManager>
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
-    public bool SkillCooltime(PlayerSkillData skillData, Define.SkillNum skillNum)
+    public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
-        int num = (int)skillNum;
-        if (skillNum == Define.SkillNum.UltimateSkill)
+        int num =skillNum;
+        if (skillNum ==7)
             num = 2;
-        else if (skillNum == Define.SkillNum.DashSkill)
+        else if (skillNum == 8)
             num = 3;
+        else
+        {
+            if (skillNum == playerskill.skillIndex[0])
+                num = 0;
+            else
+                num=1;
+        }
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
@@ -268,7 +311,9 @@ public class UIManager : MonoSingleton<UIManager>
             if (currentImage.fillAmount > 0)
                 return false;
         }
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[(int)skillNum].skillDelay));
+        if(!isCheck)
+        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+
         return true;
     }
     public void SkillNum(List<int> skillList)
@@ -325,10 +370,18 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[iconNum].sprite = skilldata.skill[skillNum].skillIcon[spriteNum];
         }
     }
-
+    public void MaxHpUpdate()
+    {
+        maxHpCount = Mathf.CeilToInt((float)GameManager.Instance.Player.playerBase.MaxHp / 4);
+        for (int i = 0; i < maxHpCount; i++)
+        {
+            avcList[i].gameObject.SetActive(true);
+        }
+        HpUpdate();
+    }
     public void HpUpdate()
     {
-        for (int i = 0; i < hpbars.Count; i++)
+        for (int i = 0; i < maxHpCount; i++)
         {
             hpbars[i].fillAmount = (GameManager.Instance.Player.playerBase.Hp * 0.25f) - i;
         }
@@ -413,12 +466,14 @@ public class UIManager : MonoSingleton<UIManager>
         Time.timeScale = 1f;
         if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
         {
+            // 전시용
             SaveManager.DeleteAllData();
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
         {
+            // 전시용
             SaveManager.DeleteAllData();
             GameManager.Instance.GameQuit();
         }

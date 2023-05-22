@@ -8,12 +8,13 @@ public class DropItem : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
-
-    private Item item = null;
     private List<Item> tempItemList = new List<Item>();
+    private Item item = null;
     private bool isItemSetting = false;
     private bool isDuplication = false;
     Button interactionButton;
+
+    private HashSet<int> itemSelectNum = new HashSet<int>();
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -28,6 +29,7 @@ public class DropItem : MonoBehaviour
     {
         item = null;
         spriteRenderer.sprite = null;
+        itemSelectNum.Clear();
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
 
@@ -36,27 +38,26 @@ public class DropItem : MonoBehaviour
             return;
         }
 
-        for(int i = 0; i < tempItemList.Count; ++i)
+        for (int i = 0; i < tempItemList.Count; ++i)
         {
-            Debug.Log($"{tempItemList[i].itemName} 소유");
+            itemSelectNum.Add(tempItemList[i].itemNumber);
         }
 
+        int rand = 0;
 
-        // TODO : 중복아이템 드랍 안되게끔 수정
-        while (!isItemSetting)
+        List<Item> allItemList = new List<Item>();
+        allItemList = GameManager.Instance.allItemList;
+
+        while (item == null)
         {
-            isDuplication = false;
-            Item temp = GameManager.Instance.allItemList[Random.Range(1, GameManager.Instance.allItemList.Count)];
+            rand = Random.Range(1, GameManager.Instance.allItemList.Count);
 
-            isDuplication = tempItemList.Contains(temp);
-            Debug.Log($"{temp.itemName} : {isDuplication}");
+            if (itemSelectNum.Contains(rand))
+                continue;
 
-            if (!isDuplication)
-            {
-                item = temp;
-                isItemSetting = true;
-                break;
-            }
+            itemSelectNum.Add(rand);
+
+            item = GameManager.Instance.allItemList[rand];
         }
 
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
@@ -67,8 +68,8 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-                interactionButton.onClick.AddListener(TakeItem);
-                UIManager.Instance.RotateInteractionButton();
+            interactionButton.onClick.AddListener(TakeItem);
+            UIManager.Instance.RotateInteractionButton();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)  
@@ -78,12 +79,18 @@ public class DropItem : MonoBehaviour
            interactionButton.onClick.RemoveListener(TakeItem);
            UIManager.Instance.RotateAttackButton();
         }
-        
     }
+
     // 아이템 획득 함수
     public void TakeItem()
     {
         // TODO : 획득 시 이펙트 출력
+
+        if (GameManager.Instance.GetItemList().Contains(item))
+        {
+            Debug.Log("이미 가지고있는 아이템");
+            return;
+        }
 
         InventoryUI.Instance.AddItemSlot(item);
         UIManager.Instance.RotateAttackButton();

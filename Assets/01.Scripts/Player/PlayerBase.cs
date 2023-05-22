@@ -25,7 +25,8 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        _fragmentAmount = 100000;
+        PlayerSkillNum = new int[] { 1, 2 };
+        _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         for (int i = 0; i < maxLevel; ++i)
@@ -33,11 +34,13 @@ public class PlayerBase
             _expTable[i] = i + 1;
         }
         AttackRange = 1.3f;
+        InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
     }
     public float AttackRange { get; set; }
+    public float InitAttackRange { get; set; }
     public int[] SlotLevel { get; set; }
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
@@ -68,9 +71,7 @@ public class PlayerBase
                 hp = maxHp;
             }
 
-            UseItemEffectManager.Instance?.HPRelatedItemEffects();
-            //GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
-            // ItemEffects.Items[10].Use();
+            GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
             UIManager.Instance.HpUpdate();
         }
     }
@@ -209,6 +210,9 @@ public class PlayerBase
             maxLevel = value; 
         } 
     }
+
+    public int[] PlayerSkillNum { get; set; }
+ 
 
     private int _fragmentAmount;
     public int FragmentAmount
