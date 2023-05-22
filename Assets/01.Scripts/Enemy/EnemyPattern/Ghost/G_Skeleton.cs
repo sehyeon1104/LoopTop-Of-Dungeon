@@ -6,6 +6,7 @@ public class G_Skeleton : EnemyDefault
 {
     [SerializeField] private GameObject ghostPrefab;
     WaitForSeconds attackWait = new WaitForSeconds(2f);
+    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
 
     public override IEnumerator MoveToPlayer()
     {
@@ -16,7 +17,11 @@ public class G_Skeleton : EnemyDefault
     {
         yield return base.AttackToPlayer();
 
-        GameManager.Instance.Player.OnDamage(damage, 0);
+        yield return waitTime;
+
+        Collider2D col = Physics2D.OverlapCircle(transform.position, 1, 1 << 8);
+        if(col != null)
+            GameManager.Instance.Player.OnDamage(damage, 0);
 
         yield return attackWait;
 

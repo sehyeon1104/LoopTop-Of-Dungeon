@@ -23,9 +23,12 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.layer != 9)
         {
-            collision.GetComponent<IHittable>().OnDamage(1, 0);
+            if (collision.gameObject.layer == 8)
+            {
+                collision.GetComponent<IHittable>().OnDamage(1, 0);
+            }
             Managers.Sound.Play("SoundEffects/Ghost/G_Bullet.wav");
             Managers.Pool.PoolManaging("10.Effects/ghost/Boom", transform.position, Quaternion.Euler(Vector2.zero));
             Managers.Pool.Push(GetComponent<Poolable>());
