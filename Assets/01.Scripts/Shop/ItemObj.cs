@@ -85,5 +85,9 @@ public class ItemObj : MonoBehaviour
         {
             InventoryUI.Instance.AddItemSlot(item);
         }
+        else
+        {
+            ItemEffects.Items[item.itemNumber].Use();
+        }
     }
 }

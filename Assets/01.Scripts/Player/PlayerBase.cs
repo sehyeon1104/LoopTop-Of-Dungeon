@@ -62,7 +62,7 @@ public class PlayerBase
         set
         {
             hp = value;
-            if (hp <= 0)
+            if (hp < 0)
             {
                 hp = 0;
             }

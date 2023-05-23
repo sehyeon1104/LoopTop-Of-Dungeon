@@ -8,6 +8,7 @@ public class StartRoom : RoomBase
     {
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+        curLocatedMapIcon.SetActive(true);
     }
 
     protected override void IsClear()
@@ -18,5 +19,10 @@ public class StartRoom : RoomBase
     protected override void SetRoomTypeFlag()
     {
         roomTypeFlag = Define.RoomTypeFlag.StartRoom;
+    }
+
+    protected override void OnTriggerExit2D(Collider2D collision)
+    {
+        base.OnTriggerExit2D(collision);
     }
 }
