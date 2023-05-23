@@ -204,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835319771}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 1846992365}
   - component: {fileID: 1846992367}
   - component: {fileID: 1846992366}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 419785201662390019}
   - component: {fileID: 419785201662390016}
   - component: {fileID: 8159704444789921137}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FPRS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,9 +419,6 @@ GameObject:
   - component: {fileID: 2341362703312234675}
   - component: {fileID: 4086107390685430464}
   - component: {fileID: 6605350721465296871}
-  - component: {fileID: 1587560799495554440}
-  - component: {fileID: 7073810304199504610}
-  - component: {fileID: 7340307882004977393}
   - component: {fileID: 1617654965204469657}
   m_Layer: 8
   m_Name: PlayerVisual
@@ -530,52 +527,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e572008a680c4447a5024d98843cc70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1587560799495554440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7073810304199504610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
-  playerRigid: {fileID: 0}
-  playerSprite: {fileID: 0}
-  dashTime: 0
-  playerBeam: {fileID: 0}
-  ghostUlt: {fileID: 3594485118525496111}
---- !u!114 &7340307882004977393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739109838891585982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c64930a9182f744697b429b39afc1b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
-  playerRigid: {fileID: 0}
-  playerSprite: {fileID: 0}
-  dashTime: 0
 --- !u!82 &1617654965204469657
 AudioSource:
   m_ObjectHideFlags: 0
@@ -715,7 +666,7 @@ GameObject:
   - component: {fileID: 2085720525796626158}
   - component: {fileID: 2085720525796626153}
   - component: {fileID: 2599246701403128787}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FPR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +765,7 @@ GameObject:
   - component: {fileID: 2584051981129948031}
   - component: {fileID: 2584051981129948030}
   - component: {fileID: 2584051981129948017}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -924,7 +875,7 @@ GameObject:
   - component: {fileID: 2584051981253989754}
   - component: {fileID: 2584051981253989755}
   - component: {fileID: 2584051981253989748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +985,7 @@ GameObject:
   - component: {fileID: 2584051981469224308}
   - component: {fileID: 2584051981469224309}
   - component: {fileID: 2584051981469224314}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,7 +1095,7 @@ GameObject:
   - component: {fileID: 2584051981510983726}
   - component: {fileID: 2584051981510983727}
   - component: {fileID: 2584051981510983712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1254,7 +1205,7 @@ GameObject:
   - component: {fileID: 2584051981556897877}
   - component: {fileID: 2584051981556897876}
   - component: {fileID: 2584051981556897883}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,7 +1315,7 @@ GameObject:
   - component: {fileID: 2584051981809776656}
   - component: {fileID: 2584051981809776657}
   - component: {fileID: 2584051981809776670}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1474,7 +1425,7 @@ GameObject:
   - component: {fileID: 2584051981816010940}
   - component: {fileID: 2584051981816010941}
   - component: {fileID: 2584051981816010930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,7 +1535,7 @@ GameObject:
   - component: {fileID: 2584051982238679733}
   - component: {fileID: 2584051982238679732}
   - component: {fileID: 2584051982238679739}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1645,7 @@ GameObject:
   - component: {fileID: 2584051982303870180}
   - component: {fileID: 2584051982303870181}
   - component: {fileID: 2584051982303870186}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1804,7 +1755,7 @@ GameObject:
   - component: {fileID: 2584051982334294879}
   - component: {fileID: 2584051982334294878}
   - component: {fileID: 2584051982334294865}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1914,7 +1865,7 @@ GameObject:
   - component: {fileID: 2584051982382517382}
   - component: {fileID: 2584051982382517383}
   - component: {fileID: 2584051982382517384}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2024,7 +1975,7 @@ GameObject:
   - component: {fileID: 2584051982465182843}
   - component: {fileID: 2584051982465182842}
   - component: {fileID: 2584051982465182837}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2134,7 +2085,7 @@ GameObject:
   - component: {fileID: 2584051982773911875}
   - component: {fileID: 2584051982773911874}
   - component: {fileID: 2584051982773911885}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2244,7 +2195,7 @@ GameObject:
   - component: {fileID: 2584051983218893222}
   - component: {fileID: 2584051983218893223}
   - component: {fileID: 2584051983218893224}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Claw_Final (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2354,7 +2305,7 @@ GameObject:
   - component: {fileID: 2776179908644095423}
   - component: {fileID: 3972301583764358628}
   - component: {fileID: 7909484563878262901}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RacCol
   m_TagString: BossSkill
   m_Icon: {fileID: 0}
@@ -2418,7 +2369,7 @@ GameObject:
   - component: {fileID: 3302175243569801066}
   - component: {fileID: 3972301584733779830}
   - component: {fileID: 6431721797930335208}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CircleCol
   m_TagString: BossSkill
   m_Icon: {fileID: 0}
@@ -2481,7 +2432,7 @@ GameObject:
   - component: {fileID: 3559620172841032302}
   - component: {fileID: 3559620172841032303}
   - component: {fileID: 3559620172841032296}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2586,7 +2537,7 @@ GameObject:
   - component: {fileID: 3559620173172684186}
   - component: {fileID: 3559620173172684180}
   - component: {fileID: 3559620173172684187}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fog1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2691,7 +2642,7 @@ GameObject:
   - component: {fileID: 3559620173491357717}
   - component: {fileID: 3559620173491357719}
   - component: {fileID: 3559620173491357718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fog4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2794,7 +2745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3559620173514718080}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2838,7 +2789,7 @@ GameObject:
   - component: {fileID: 3559620173733630519}
   - component: {fileID: 3559620173733630513}
   - component: {fileID: 3559620173733630512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fog3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2943,7 +2894,7 @@ GameObject:
   - component: {fileID: 3559620173906048549}
   - component: {fileID: 3559620173906048550}
   - component: {fileID: 3559620173906048551}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3048,7 +2999,7 @@ GameObject:
   - component: {fileID: 3559620174598955581}
   - component: {fileID: 3559620174598955583}
   - component: {fileID: 3559620174598955582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fog2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3152,7 +3103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3559620174825690873}
   - component: {fileID: 3559620174825690874}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GhostUltPattern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3222,7 +3173,7 @@ GameObject:
   - component: {fileID: 3594485118525496109}
   - component: {fileID: 3594485118525496110}
   - component: {fileID: 3594485118525496111}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GhostUlt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3492,7 +3443,7 @@ GameObject:
   - component: {fileID: 4172064388722651925}
   - component: {fileID: 4172064388722651924}
   - component: {fileID: 3351488046361582938}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRPR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6528,7 +6479,7 @@ GameObject:
   - component: {fileID: 6224644575059440817}
   - component: {fileID: 6224644575059440816}
   - component: {fileID: 5456099038804727098}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FRPRS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6675,6 +6626,9 @@ GameObject:
   - component: {fileID: 5322660876921446628}
   - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
+  - component: {fileID: 878560112}
+  - component: {fileID: 878560113}
+  - component: {fileID: 878560114}
   m_Layer: 8
   m_Name: Player(prototype)
   m_TagString: Player
@@ -6753,6 +6707,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reviveInvincibleTime: 2
   invincibleTime: 0.5
+  <HPRelatedItemEffects>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <AttackRelatedItemEffects>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnDamagedRelatedItemEffects>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5322660876921446628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6792,3 +6755,50 @@ MonoBehaviour:
   prefix: 
   backColor: {r: 0, g: 1, b: 0.083200455, a: 1}
   fontColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &878560112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c64930a9182f744697b429b39afc1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  playerRigid: {fileID: 0}
+  playerSprite: {fileID: 0}
+  dashTime: 0
+--- !u!114 &878560113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440a8e2c8a8890642a43dd1dded33cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
+  playerRigid: {fileID: 0}
+  playerSprite: {fileID: 0}
+  dashTime: 0
+  playerBeam: {fileID: 0}
+  ghostUlt: {fileID: 3594485118525496111}
+--- !u!114 &878560114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442715256025506025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddba2831f66cdf248b96f57ee17f9880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillIndex: 
