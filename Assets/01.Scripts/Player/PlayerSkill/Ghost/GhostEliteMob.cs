@@ -110,10 +110,10 @@ public class GhostEliteMob : GhostMobAI
             overrideController[$"Attack1"] = attackClips[i];
             anim.SetTrigger(_attack);
             yield return new WaitForSeconds(0.4f);
-            Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(flipVector.x) * 2 + Vector3.up * 0.5f, new Vector2(2, 4), 0, 1 << enemyLayer);
+            Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position + Vector3.right * Mathf.Sign(flipVector.x) * 2 + Vector3.up * 0.5f, new Vector2(4, 4), 0, 1 << enemyLayer);
             for (int j = 0; j < cols.Length; j++)
             {
-                cols[j].GetComponent<IHittable>().OnDamage(5, 0);
+                cols[j].GetComponent<IHittable>().OnDamage(20, 0);
             }
         }
         trail.SetActive(false);
@@ -140,6 +140,8 @@ public class GhostEliteMob : GhostMobAI
     {
         sprite.flipX = Mathf.Sign(flipVector.x) < 0;
         anim.SetTrigger(_attack);
+        yield return new WaitForSeconds(1f);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
         yield return new WaitForSeconds(1f);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
     }

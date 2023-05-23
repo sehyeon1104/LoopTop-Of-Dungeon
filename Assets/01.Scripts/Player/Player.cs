@@ -105,12 +105,12 @@ public class Player : MonoBehaviour, IHittable
     {
         yield return new WaitForSeconds(2.5f);
         UIManager.Instance.ToggleGameOverPanel();
-        gameObject.SetActive(false);
+        playerVisual.SetActive(false);
     }
 
     public void RevivePlayer()
     {
-        gameObject.SetActive(true);
+        playerVisual.SetActive(true);
         UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;

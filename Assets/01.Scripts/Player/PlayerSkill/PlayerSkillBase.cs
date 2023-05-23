@@ -16,6 +16,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
     float timer = 0;
     float alphaValue = 0;
     protected GameObject dashObj;
+    GameObject playerVisual;
     protected SpriteRenderer dashSprite;
     protected int enemyLayer;
     protected float dashVelocity = 0;
@@ -65,13 +66,16 @@ public abstract class PlayerSkillBase : MonoBehaviour
 
             playerAnim.SetTrigger("Attack");
             Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
-                CinemachineCameraShaking.Instance.CameraShake();
-                enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-                GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
-            }
+        
+        if (enemies == null) return;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
+            CinemachineCameraShaking.Instance.CameraShake();
+            enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
+        }
     }
     protected abstract void UltimateSkill();
 
@@ -89,7 +93,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         distance = 0;
         changePosition = transform.position;
         playerRigid.velocity = playerMovement.Direction * dashVelocity;
-        currentPlayerSprite = GetComponent<SpriteRenderer>();
+        currentPlayerSprite = playerSprite;
         dashCloneColor = dashSprite.color;
         dashCloneColor.a = 0;
         while (timer < dashTime)
@@ -142,13 +146,14 @@ public abstract class PlayerSkillBase : MonoBehaviour
     }
     protected void Cashing()
     {
+        playerVisual = transform.Find("PlayerVisual").gameObject;
         dashObj = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Player/Ghost/DashClone.prefab");
         dashSprite = dashObj.GetComponent<SpriteRenderer>();
-        playerSprite = GetComponent<SpriteRenderer>();
-        playerMovement = GetComponentInParent<PlayerMovement>();
-        playerRigid = GetComponentInParent<Rigidbody2D>();
+        playerSprite = playerVisual.GetComponent<SpriteRenderer>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerRigid = GetComponent<Rigidbody2D>();
         player = GameManager.Instance.Player;
-        playerAnim = GetComponent<Animator>();
+        playerAnim = playerVisual.GetComponent<Animator>();
         init();
     }
 }

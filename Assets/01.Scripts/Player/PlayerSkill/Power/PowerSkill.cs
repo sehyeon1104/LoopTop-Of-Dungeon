@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class PowerSkill : PlayerSkillBase
 {
-    
-    // Animator playerAnim;
+
+    float choppingDmg = 10;
     ParticleSystem attackPar;
-    // float attackRange=1f;
     private void Awake()
     {
         Cashing();
-        // playerAnim = GetComponent<Animator>();
     }
     protected override void Update()
     {
@@ -46,7 +44,6 @@ public class PowerSkill : PlayerSkillBase
             {
                 CinemachineCameraShaking.Instance.CameraShake(5,0.3f);
                 enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-
             }
         }
     }
@@ -55,7 +52,7 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void FirstSkill(int level)
     {
-        
+        StartCoroutine(BottomingOut());
     }
 
     protected override void SecondSkill(int level)
@@ -110,5 +107,21 @@ public class PowerSkill : PlayerSkillBase
     protected override void FifthSkillUpdate(int level)
     {
         
+    }
+    #region 스킬 구현
+    IEnumerator BottomingOut()
+    {
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, 2,1<<enemyLayer);
+        for(int i =0;  i<enemys.Length; i++)
+        {
+            enemys[i].GetComponent<IHittable>().OnDamage(choppingDmg, 0);
+        }
+        yield return null;
+    }
+    #endregion
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 2);
     }
 }
