@@ -34,8 +34,10 @@ public class ShopRoom : RoomBase
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         toggleItemInfoPanel = ToggleItemInfoPanel();
         if (!ShopManager.Instance.isItemSetting)
         {

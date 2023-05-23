@@ -22,6 +22,11 @@ public abstract class RoomBase : MonoBehaviour
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
+    protected virtual void Start()
+    {
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
+    }
+
     protected abstract void SetRoomTypeFlag();
     protected abstract void IsClear();
 
@@ -35,14 +40,27 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             curLocatedMapIcon.SetActive(true);
-        }
 
-        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+            ChangeMinimapIconColor();
+            ShowInMinimap();
+            CheckLinkedRoom();
+            GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+        }
     }
 
-    protected virtual void ShowInMinimap()
+    public void ChangeMinimapIconColor()
     {
         minimapIconSpriteRenderer.color = Color.white;
+    }
+
+    public void ShowInMinimap()
+    {
+        minimapIconSpriteRenderer.gameObject.SetActive(true);
+    }
+
+    public void CheckLinkedRoom()
+    {
+        StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
@@ -50,6 +68,7 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
+            curLocatedMapIcon.SetActive(false);
         }
     }
 }

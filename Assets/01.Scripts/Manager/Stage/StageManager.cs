@@ -16,6 +16,8 @@ public class StageManager : MonoSingleton<StageManager>
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
+    private int[,] wallGridInfo;
+
     [SerializeField]
     private GameObject MoveNextMapPortal;
 
@@ -122,5 +124,71 @@ public class StageManager : MonoSingleton<StageManager>
         // TODO : 아이템 드랍 애니메이션 추가
 
         Managers.Pool.Pop(dropItemPrefab, pos);
+    }
+
+    public void ShowLinkedMapInMinimap(Vector3 pos)
+    {
+        Debug.Log("ShowLinkedMapInMinimap");
+        // wallGrid의 정보를 가져옴
+        wallGridInfo = randWallGrid switch
+        {
+            0 => MapInfo.WallGrid1,
+            1 => MapInfo.WallGrid2,
+            2 => MapInfo.WallGrid3,
+            3 => MapInfo.WallGrid4,
+
+            _ => null
+        };
+
+        if (wallGridInfo == null)
+        {
+            Debug.Log("wallGridInfo is null");
+            return;
+        }
+
+        //Debug.Log($"wallGrid{randWallGrid}");
+
+        //for(int i = 0; i < 7; ++i)
+        //{
+        //    for(int j = 0; j < 7; ++j)
+        //    {
+        //        Debug.Log($"({i}, {j}) : {wallGridInfo[i, j]}");
+        //    }
+        //    Debug.Log(",");
+        //}
+
+        // x값과 y값이 최대 3까지만 나오게끔 세팅
+        int y = ( (int)(pos.x + 8) / 26 ) * 2;
+        int x = ( (int)(pos.y + 2.25) / 26) * 2;
+        Debug.Log($"x : {x}");
+        Debug.Log($"y : {y}");
+
+        int[] dx = new int[4]{ 1, 0, -1, 0 };
+        int[] dy = new int[4]{ 0, -1, 0, 1 };
+
+        // 배열의 상(x + 1), 하(x - 1), 좌(y - 1), 우(y + 1) 중 길이 있는지 체크
+        for(int i = 0; i < 4; ++i)
+        {
+            Debug.Log($"{i}번째 : ({x + dx[i]}, {y + dy[i]})");
+            if ((x + dx[i]) < 0 || y + dy[i] < 0 || x + dx[i] > 6 || y + dy[i] > 6)
+            {
+                Debug.Log("배열 범위 초과");
+                continue;
+            }
+
+            Debug.Log($"{wallGridInfo[x + dx[i], y + dy[i]]}");
+            if (wallGridInfo[x + dx[i], y + dy[i]] == 2)
+            {
+                // TODO : 연결된 방 불러오기
+                Debug.Log("길");
+                // spawnRooms[((x / 2) * 4) + (y / 2)].GetSummonedRoom().ShowInMinimap();
+            }
+            else if(wallGridInfo[(x / 2) + dx[i], (y / 2) + dy[i]] == 0)
+            {
+                Debug.Log("길 없음");
+            }
+
+            Debug.Log($"{i}번째 끝");
+        }
     }
 }

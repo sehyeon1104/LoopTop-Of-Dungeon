@@ -13,8 +13,10 @@ public class EnemyRoom : RoomBase
     public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
-    private void Start()
+
+    protected override void Start()
     {
+        base.Start();
         isSpawnMonster = false;
         SetRoomTypeFlag();
     }

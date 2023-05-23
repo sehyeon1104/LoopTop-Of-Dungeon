@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class StartRoom : RoomBase
 {
-    private void Start()
+    protected override void Start()
     {
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
         curLocatedMapIcon.SetActive(true);
+        CheckLinkedRoom();
     }
 
     protected override void IsClear()
