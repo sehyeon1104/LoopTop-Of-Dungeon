@@ -24,6 +24,7 @@ public class PlayerSkill : MonoBehaviour
     List<int> randomSkillNum = new List<int>();
     Rigidbody2D rb;
     int[] slotLevel;
+    [HideInInspector]
     public int[] skillIndex;
     Action[] skillEvent = new Action[5];
     private float interactionDis = 2f;
@@ -74,7 +75,7 @@ public class PlayerSkill : MonoBehaviour
                 return;
 
             if (interaction.gameObject.activeSelf)
-                interaction.onClick?.Invoke();
+                interaction.onClick.Invoke();
             else   
                 Attack();
         }

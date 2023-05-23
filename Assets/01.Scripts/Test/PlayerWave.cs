@@ -17,7 +17,7 @@ public class PlayerWave : MonoBehaviour
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("Boss"))
         {
-            collision.GetComponent<IHittable>().OnDamage(2, 0);
+            collision.GetComponent<IHittable>().OnDamage(15);
         }
     }
 }
