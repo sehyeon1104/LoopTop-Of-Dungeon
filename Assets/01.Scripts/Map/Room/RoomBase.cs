@@ -57,6 +57,7 @@ public abstract class RoomBase : MonoBehaviour
     {
         if (!minimapIconSpriteRenderer.gameObject.activeSelf)
         {
+            Debug.Log("ShowInMinimap");
             minimapIconSpriteRenderer.gameObject.SetActive(true);
         }
         else

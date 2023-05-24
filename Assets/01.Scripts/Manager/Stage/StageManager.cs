@@ -19,21 +19,22 @@ public class StageManager : MonoSingleton<StageManager>
     private EnemyRoom[] enemyRooms;
 
     [SerializeField]
-    private GameObject[] roadMinimapIcon;
+    private List<GameObject> wayMinimapIconList = new List<GameObject>();
 
     #region LinkedRoom
-    // ¹è¿­ÀÇ »ó, ÇÏ, ÁÂ, ¿ì¸¦ È®ÀÎÇÒ ¹è¿­
+    // ë°°ì—´ì˜ ìƒ, í•˜, ì¢Œ, ìš°ë¥¼ í™•ì¸í•  ë°°ì—´
     int[] dx = new int[4] { 1, 0, -1, 0 };
     int[] dy = new int[4] { 0, -1, 0, 1 };
 
-    // ÇöÀç ¹æÀÇ x, yÁÂÇ¥°ªÀ» °¡Á®¿Ã º¯¼ö
+    // í˜„ì¬ ë°©ì˜ x, yì¢Œí‘œê°’ì„ ê°€ì ¸ì˜¬ ë³€ìˆ˜
     int posX = 0;
     int posY = 0;
 
     Vector3 roomPos;
 
-    // ¿¬°áµÈ ¹æÀÇ ÁÂÇ¥°ªÀ» ´ãÀ» º¤ÅÍ
-    Vector3 initRoomPos;
+    // ì—°ê²°ëœ ë°©ì˜ ì¢Œí‘œê°’ì„ ë‹´ì„ ë²¡í„°
+    Vector3 originRoomPos;
+    Vector3 originWayPos;
     #endregion
 
     [SerializeField]
@@ -46,7 +47,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Awake()
     {
         wallGrids = new GameObject[4];
-        // TODO : WallGrid ¹× Æ÷Å» ¾îµå·¹¼­ºí·Î ºÒ·¯¿À±â
+        // TODO : WallGrid ë° í¬íƒˆ ì–´ë“œë ˆì„œë¸”ë¡œ ë¶ˆëŸ¬ì˜¤ê¸°
         for(int i = 0; i < 4; ++i)
         {
             wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
@@ -61,13 +62,15 @@ public class StageManager : MonoSingleton<StageManager>
         isSetting = true;
         StartCoroutine(SetStage());
 
-        // º® »ı¼º
+        // ë²½ ìƒì„±
         SetWallGrid();
-        // ¹æ ½ºÆ÷³Ê ¹Ş¾Æ¿È
+        // ê¸¸ ì´ˆê¸°í™”
+        InitWay();
+        // ë°© ìŠ¤í¬ë„ˆ ë°›ì•„ì˜´
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // ½ÃÀÛ ¹æ ¼³Á¤
+        // ì‹œì‘ ë°© ì„¤ì •
         SetStartRoomNShopRoom();
-        // ¹æ »ı¼º
+        // ë°© ìƒì„±
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
@@ -81,6 +84,25 @@ public class StageManager : MonoSingleton<StageManager>
     {
         yield return new WaitForSeconds(1.5f);
         isSetting = false;
+    }
+    public void SetWallGrid()
+    {
+        randWallGrid = Random.Range(0, wallGrids.Length);
+        wallGrid = wallGrids[randWallGrid];
+        var wallGridObj = Instantiate(wallGrid);
+        var wayMinimapIcon = wallGridObj.transform.Find("WayMinimapIcons");
+        for(int i = 0; i < wayMinimapIcon.childCount; ++i)
+        {
+            wayMinimapIconList.Add(wayMinimapIcon.GetChild(i).gameObject);
+        }
+    }
+
+    public void InitWay()
+    {
+        for(int i = 0; i < wayMinimapIconList.Count; ++i)
+        {
+            wayMinimapIconList[i].SetActive(false);
+        }
     }
 
     private int randRoom = 0;
@@ -115,12 +137,6 @@ public class StageManager : MonoSingleton<StageManager>
         portalMapIcon.transform.position = enemyRooms[rand].transform.position;
     }
 
-    public void SetWallGrid()
-    {
-        randWallGrid = Random.Range(0, wallGrids.Length);
-        wallGrid = wallGrids[randWallGrid];
-        Instantiate(wallGrid);
-    }
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
     {
@@ -129,14 +145,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : ¾ÆÀÌÅÛ µå¶ø ¾Ö´Ï¸ŞÀÌ¼Ç Ãß°¡
+        // TODO : ì•„ì´í…œ ë“œë ì• ë‹ˆë©”ì´ì…˜ ì¶”ê°€
 
         Managers.Pool.Pop(dropItemPrefab, pos);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        // wallGridÀÇ Á¤º¸¸¦ °¡Á®¿È
+        // wallGridì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
         wallGridInfo = randWallGrid switch
         {
             0 => MapInfo.WallGrid1,
@@ -153,33 +169,35 @@ public class StageManager : MonoSingleton<StageManager>
             return;
         }
 
-        // x°ª°ú y°ªÀÌ ÃÖ´ë 3±îÁö¸¸ ³ª¿À°Ô²û ¼¼ÆÃ
+        // xê°’ê³¼ yê°’ì´ ìµœëŒ€ 3ê¹Œì§€ë§Œ ë‚˜ì˜¤ê²Œë” ì„¸íŒ…
         posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
         posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
 
-        // ¹è¿­ÀÇ »ó(x + 1), ÇÏ(x - 1), ÁÂ(y - 1), ¿ì(y + 1) Áß ±æÀÌ ÀÖ´ÂÁö Ã¼Å©
-        // ¼ø¼­ : »ó, ÁÂ, ÇÏ, ¿ì (¹İ½Ã°è)
+        // ë°°ì—´ì˜ ìƒ(x + 1), í•˜(x - 1), ì¢Œ(y - 1), ìš°(y + 1) ì¤‘ ê¸¸ì´ ìˆëŠ”ì§€ ì²´í¬
+        // ìˆœì„œ : ìƒ, ì¢Œ, í•˜, ìš° (ë°˜ì‹œê³„)
         for(int i = 0; i < 4; ++i)
         {
-            // ¹è¿­ÀÇ ÀüÃ¼ Å©±âº¸´Ù Å©°Å³ª ÀÛÀ»°æ¿ì ¹è¿­ ¹üÀ§ ÀÌÅ»
+            // ë°°ì—´ì˜ ì „ì²´ í¬ê¸°ë³´ë‹¤ í¬ê±°ë‚˜ ì‘ì„ê²½ìš° ë°°ì—´ ë²”ìœ„ ì´íƒˆ
             if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
             {
                 continue;
             }
 
-            // wallGridÀÇ x, yÁÂÇ¥°¡ ±æÀÏ°æ¿ì
+            // wallGridì˜ x, yì¢Œí‘œê°€ ê¸¸ì¼ê²½ìš°
             if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
             {
-                initRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
+                originRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
+                originWayPos = new Vector3((posY + dy[i]) * MapInfo.xDirWay + MapInfo.firstPosXWay, (posX + dx[i]) * MapInfo.yDirWay + MapInfo.firstPosYWay);
 
                 for (int j = 0; j < spawnRooms.Length; ++j)
                 {
                     roomPos = spawnRooms[j].transform.position;
-                    // x, y°ªÀ» ¿ø·¡´ë·Î µ¹·Á³õÀº °ªÀÌ spawnRooms[j]ÀÇ ÁÂÇ¥°ª°ú °°À»°æ¿ì
-                    if (roomPos == initRoomPos)
+                    // x, yê°’ì„ ì›ë˜ëŒ€ë¡œ ëŒë ¤ë†“ì€ ê°’ì´ spawnRooms[j]ì˜ ì¢Œí‘œê°’ê³¼ ê°™ì„ê²½ìš°
+                    if (roomPos == originRoomPos)
                     {
-                        // ¹Ì´Ï¸Ê¿¡ ¾ÆÀÌÄÜ Ç¥±â
+                        // ë¯¸ë‹ˆë§µì— ì•„ì´ì½˜ í‘œê¸°
                         spawnRooms[j].GetSummonedRoom().ShowInMinimap();
+                        ShowWayMinimapIcon();
                         break;
                     }
                 }
@@ -187,8 +205,21 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    public void ShowRoadMinimapIcon()
+    public void ShowWayMinimapIcon()
     {
-
+        for(int i = 0; i < wayMinimapIconList.Count; ++i)
+        {
+            if(wayMinimapIconList[i].transform.position == originWayPos)
+            {
+                if(!wayMinimapIconList[i].activeSelf)
+                {
+                    wayMinimapIconList[i].SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("already wayIcon is active!");
+                }
+            }
+        }
     }
 }

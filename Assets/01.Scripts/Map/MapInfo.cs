@@ -4,11 +4,17 @@ using UnityEngine;
 
 public static class MapInfo
 {
-    public static float xDir = 26f;
-    public static float yDir = 26f;
+    public static float xDir { get; private set; } = 26f;
+    public static float yDir { get; private set; } = 26f;
 
-    public static float firstPosX = -8f;
-    public static float firstPosY = -2.25f;
+    public static float firstPosX { get; private set; } = -8f;
+    public static float firstPosY { get; private set; } = -2.25f;
+
+    public static float xDirWay { get; private set; } = 13f;
+    public static float yDirWay { get; private set; } = 13f;
+
+    public static float firstPosXWay { get; private set; } = -7.5f;
+    public static float firstPosYWay { get; private set; } = -2.75f;
 
     public static int[,] WallGrid1 { get; private set; } =new int[7, 7]
     {
