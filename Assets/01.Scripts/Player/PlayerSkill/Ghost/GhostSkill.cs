@@ -87,21 +87,22 @@ public class GhostSkill : PlayerSkillBase
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
 
-        if (enemies == null) return;
+        if (enemies.Length <= 0) return;
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_Mob_Hit.wav");
         for (int i = 0; i < enemies.Length; i++)
         {
             PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
             CinemachineCameraShaking.Instance.CameraShake();
-            
+
+            Vector3 eTransform = enemies[i].transform.position;
             enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-            if(!enemies[i].gameObject.activeSelf || enemies[i].GetComponent<EnemyDefault>().hp <= 0)
+            if(!enemies[i].gameObject.activeSelf)
             {
                 int passiveOn = Random.Range(0, 10);
-                if(passiveOn > 6)
+                if(passiveOn >= 0)
                 {
-                    Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", enemies[i].transform.position, quaternion.identity);
+                    Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", eTransform, quaternion.identity);
                 }
             }
 

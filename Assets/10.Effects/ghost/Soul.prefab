@@ -114,7 +114,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1636186537
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
 --- !u!1 &5537046976488807115
 GameObject:
@@ -191,7 +191,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1be6ecb2a70ab274ebdf20057e7983a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -302,7 +302,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1636186537
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Time: 0.65
   m_Parameters:
@@ -419,11 +419,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 3804693347302003688}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 1012
+  m_shaderPropertyID: 872
   m_materialData:
   - m_trailRenderer: {fileID: 2001337679733832938}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0.13812679
+    m_move: 0
 --- !u!199 &7837310273987056862
 ParticleSystemRenderer:
   serializedVersion: 6
