@@ -24,7 +24,8 @@ public class ShopRoom : RoomBase
 
     [SerializeField]
     private GameObject shopNpc;
-    private GameObject shopNpcIcon;
+    [SerializeField]
+    private GameObject shopNpcIcon = null;
 
     private void Awake()
     {

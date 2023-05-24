@@ -1106,6 +1106,7 @@ MonoBehaviour:
   - {fileID: 4426551915172731430, guid: 000b1177245079642950b640d58ddfaa, type: 3}
   - {fileID: 5883231942822065183, guid: fcb5da90e791e06499306c3a428b97ab, type: 3}
   spawnRooms: []
+  wayMinimapIconList: []
   MoveNextMapPortal: {fileID: 5731706546575025831, guid: b48358b74488be24896b90372a798e39, type: 3}
 --- !u!114 &520647068
 MonoBehaviour:
@@ -2197,6 +2198,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1835319771, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1835319771, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 702665078250892426, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
