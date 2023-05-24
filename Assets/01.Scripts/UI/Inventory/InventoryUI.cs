@@ -87,8 +87,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
 
-        Debug.Log(itemList.Count);
-
         foreach(var items in itemList)
         {
             if (items.itemNumber == 0)

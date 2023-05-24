@@ -76,6 +76,7 @@ public class EnemyRoom : RoomBase
 
     public void InstantiateMoveMapIcon()
     {
+        Debug.Log("아이콘 생성");
         if (isMoveAnotherStage)
         {
             portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
@@ -86,9 +87,9 @@ public class EnemyRoom : RoomBase
 
     protected override void ShowIcon()
     {
+        Debug.Log("ShowIcon");
         if (isMoveAnotherStage)
         {
-            Debug.Log("ShowIcon");
             portalMapIcon.SetActive(true);
         }
     }

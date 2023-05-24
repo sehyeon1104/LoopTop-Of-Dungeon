@@ -34,6 +34,7 @@ public class ShopRoom : RoomBase
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
         shopNpcIcon = transform.Find("ShopIcon").gameObject;
+        shopNpcIcon.SetActive(false);
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         minimapIconSpriteRenderer.gameObject.SetActive(false);
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
@@ -45,7 +46,6 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
-        shopNpcIcon.SetActive(false);
     }
     public void SpawnNPC()
     {
