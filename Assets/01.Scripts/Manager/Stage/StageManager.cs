@@ -133,10 +133,8 @@ public class StageManager : MonoSingleton<StageManager>
     {
         int rand = Random.Range(0, enemyRooms.Length);
         enemyRooms[rand].isMoveAnotherStage = true;
-        GameObject portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-        portalMapIcon.transform.position = enemyRooms[rand].transform.position;
+        enemyRooms[rand].InstantiateMoveMapIcon();
     }
-
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
     {

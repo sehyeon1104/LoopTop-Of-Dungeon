@@ -24,6 +24,8 @@ public class ShopRoom : RoomBase
 
     [SerializeField]
     private GameObject shopNpc;
+    [SerializeField]
+    private GameObject shopNpcIcon = null;
 
     private void Awake()
     {
@@ -31,10 +33,11 @@ public class ShopRoom : RoomBase
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
+        shopNpcIcon = transform.Find("ShopIcon").gameObject;
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         minimapIconSpriteRenderer.gameObject.SetActive(false);
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
-    }
+    }   
     private void Start()
     {
         toggleItemInfoPanel = ToggleItemInfoPanel();
@@ -42,6 +45,7 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
+        shopNpcIcon.SetActive(false);
     }
     public void SpawnNPC()
     {
@@ -72,7 +76,11 @@ public class ShopRoom : RoomBase
         return itemSpawnPosArr;
     }
 
-
+    protected override void ShowIcon()
+    {
+        Debug.Log("ShowIcon");
+        shopNpcIcon.SetActive(true);
+    }
 
     protected override void IsClear()
     {
@@ -82,6 +90,7 @@ public class ShopRoom : RoomBase
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+        isClear = true;
         InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
 
         StartCoroutine(toggleItemInfoPanel);

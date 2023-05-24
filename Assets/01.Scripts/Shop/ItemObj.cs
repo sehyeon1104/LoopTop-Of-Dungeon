@@ -41,10 +41,23 @@ public class ItemObj : MonoBehaviour
         }
     }
 
+    private Vector3 pos;
+    private Vector3 movePos;
+    [SerializeField]
+    private float delta = 0.05f;
+    [SerializeField]
+    private float speed = 1f;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
+
     private void Start()
     {
         soldOutPanel.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
+        pos = itemImage.transform.position;
+        waitForEndOfFrame = new WaitForEndOfFrame();
+
+        StartCoroutine(MoveUpDown());
     }
 
     public void SetValue(Item item)
@@ -58,11 +71,22 @@ public class ItemObj : MonoBehaviour
         itemType = item.itemType;
         itemImage.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         itemName = item.itemName;
-        itemNameTMP.SetText(itemName);
+        itemNameTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{itemName}</color>";
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
     }
 
+    private IEnumerator MoveUpDown()
+    {
+        while (true)
+        {
+            movePos = pos;
+            movePos.y += delta * Mathf.Sin(Time.time * speed);
+            itemImage.transform.position = movePos;
+
+            yield return waitForEndOfFrame;
+        }
+    }
 
     public void PurchaseShopItem()
     {

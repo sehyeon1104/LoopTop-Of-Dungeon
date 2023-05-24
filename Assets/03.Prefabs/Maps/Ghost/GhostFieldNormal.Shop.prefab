@@ -3125,9 +3125,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapTypeFlag: 2
   roomTypeFlag: 0
+  minimapIconSpriteRenderer: {fileID: 0}
+  curLocatedMapIcon: {fileID: 0}
   itemPosObj: {fileID: 8342745054608463637}
   itemSpawnPosArr: []
   shopNpc: {fileID: 0}
+  shopNpcIcon: {fileID: 6736684382434054333}
 --- !u!61 &7608934678055247652
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3402,6 +3405,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c92dac818b3cbae49997b7a9e9aca635, type: 3}
+--- !u!1 &6736684382434054333 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 288977650193698802, guid: c92dac818b3cbae49997b7a9e9aca635, type: 3}
+  m_PrefabInstance: {fileID: 6448914305281023823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6736684382434054335 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 288977650193698800, guid: c92dac818b3cbae49997b7a9e9aca635, type: 3}

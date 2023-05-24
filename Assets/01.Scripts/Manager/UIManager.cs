@@ -42,6 +42,15 @@ public class UIManager : MonoSingleton<UIManager>
     private Button resumeBtn;
     [SerializeField]
     private Button quitBtn;
+    [SerializeField]
+    private GameObject obtainItemInfo = null;
+    [SerializeField]
+    private Image obtainItemInfoImg = null;
+    [SerializeField]
+    private TextMeshProUGUI obtainItemInfoTMP = null;
+    private Vector3 obtainItemInfoScale;
+    private bool isShowObtainItemInfo = false;
+    private Queue<Item> obtainItemQueue = new Queue<Item>();
 
     [SerializeField]
     private GameObject showCurStageNameObj;
@@ -70,6 +79,8 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     PlayerSkill playerskill;
     private int maxHpCount = 0;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
 
     private void Awake()
     {
@@ -106,22 +117,32 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
+
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
-            fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
+
+            fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
+
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
             showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            obtainItemInfo = playerPCUI.transform.Find("Middle/ObtainItemInfo").gameObject;
+            obtainItemInfoImg = obtainItemInfo.transform.Find("ItemImg").GetComponent<Image>();
+            obtainItemInfoTMP = obtainItemInfo.transform.Find("ItemNameTMP").GetComponent<TextMeshProUGUI>();
+
             minimap = playerPCUI.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
-            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
+
+            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
+            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
+
             pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
@@ -135,10 +156,12 @@ public class UIManager : MonoSingleton<UIManager>
         quitBtn.onClick.RemoveListener(LeaveBtn);
         quitBtn.onClick.AddListener(LeaveBtn);
 
+        waitForEndOfFrame = new WaitForEndOfFrame();
     }
 
     private void Start()
     {
+        obtainItemInfoScale = obtainItemInfo.transform.localScale;
         SkillSelectButtonInit();
         HPInit();
         UpdateUI();
@@ -270,6 +293,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
+    #region Item
     public void AddItemListUI(Item item)
     {
         if(item.itemType == Define.ItemType.heal)
@@ -281,6 +305,43 @@ public class UIManager : MonoSingleton<UIManager>
         Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
+
+    public IEnumerator ShowObtainItemInfo(Item item)
+    {
+        if (!isShowObtainItemInfo)
+        {
+            isShowObtainItemInfo = true;
+
+            obtainItemInfo.SetActive(true);
+            obtainItemInfo.transform.localScale = new Vector3(obtainItemInfoScale.x * 0.25f, obtainItemInfoScale.y * 0.25f, 0);
+            obtainItemInfoImg.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+            obtainItemInfoTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";
+            obtainItemInfo.transform.DOScale(obtainItemInfoScale, 0.4f).SetEase(Ease.OutBack);
+            yield return new WaitForSeconds(1f);
+            obtainItemInfo.transform.DOScale(new Vector3(obtainItemInfoScale.x * 0.2f, obtainItemInfoScale.y * 0.2f, 0), 0.3f).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(0.3f);
+            obtainItemInfo.SetActive(false);
+            obtainItemInfo.transform.localScale = obtainItemInfoScale;
+
+            isShowObtainItemInfo = false;
+        }
+        else if (isShowObtainItemInfo)
+        {
+            obtainItemQueue.Enqueue(item);
+            while(obtainItemQueue.Count != 0)
+            {
+                yield return new WaitUntil(() => !isShowObtainItemInfo);
+                if(obtainItemQueue.Count == 0)
+                {
+                    break;
+                }
+                StartCoroutine(ShowObtainItemInfo(obtainItemQueue.Dequeue()));
+
+                yield return waitForEndOfFrame;
+            }
+        }
+    }
+    #endregion
 
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {

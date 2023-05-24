@@ -170,7 +170,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual void OnDamage(float damage, float critChance)
     {
-        if (isDead)
+        if (isDead || !gameObject.activeSelf)
         {
             return;
         }
