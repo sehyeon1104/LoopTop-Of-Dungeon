@@ -21,6 +21,21 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField]
     private GameObject[] roadMinimapIcon;
 
+    #region LinkedRoom
+    // 배열의 상, 하, 좌, 우를 확인할 배열
+    int[] dx = new int[4] { 1, 0, -1, 0 };
+    int[] dy = new int[4] { 0, -1, 0, 1 };
+
+    // 현재 방의 x, y좌표값을 가져올 변수
+    int posX = 0;
+    int posY = 0;
+
+    Vector3 roomPos;
+
+    // 연결된 방의 좌표값을 담을 벡터
+    Vector3 initRoomPos;
+    #endregion
+
     [SerializeField]
     private GameObject MoveNextMapPortal;
 
@@ -102,19 +117,9 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void SetWallGrid()
     {
-        //GameObject[] map = GameObject.FindGameObjectsWithTag("Map");
-        //if(map != null)
-        //{
-        //    for(int i = 0; i < map.Length; ++i)
-        //    {
-        //        Destroy(map[i]);
-        //    }
-        //}
-
         randWallGrid = Random.Range(0, wallGrids.Length);
         wallGrid = wallGrids[randWallGrid];
         Instantiate(wallGrid);
-
     }
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
@@ -131,7 +136,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        Debug.Log("ShowLinkedMapInMinimap");
         // wallGrid의 정보를 가져옴
         wallGridInfo = randWallGrid switch
         {
@@ -145,61 +149,41 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (wallGridInfo == null)
         {
-            Debug.Log("wallGridInfo is null");
+            Rito.Debug.Log("wallGridInfo is null");
             return;
         }
 
-        //Debug.Log($"wallGrid{randWallGrid}");
-
-        //for(int i = 0; i < 7; ++i)
-        //{
-        //    for(int j = 0; j < 7; ++j)
-        //    {
-        //        Debug.Log($"({i}, {j}) : {wallGridInfo[i, j]}");
-        //    }
-        //    Debug.Log(",");
-        //}
-
         // x값과 y값이 최대 3까지만 나오게끔 세팅
-        int y = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
-        int x = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
-        Debug.Log($"x : {x}");
-        Debug.Log($"y : {y}");
-
-        int[] dx = new int[4]{ 1, 0, -1, 0 };
-        int[] dy = new int[4]{ 0, -1, 0, 1 };
+        posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
+        posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
 
         // 배열의 상(x + 1), 하(x - 1), 좌(y - 1), 우(y + 1) 중 길이 있는지 체크
+        // 순서 : 상, 좌, 하, 우 (반시계)
         for(int i = 0; i < 4; ++i)
         {
-            Debug.Log($"{i}번째 : ({x + dx[i]}, {y + dy[i]})");
-            if ((x + dx[i]) < 0 || y + dy[i] < 0 || x + dx[i] > 6 || y + dy[i] > 6)
+            // 배열의 전체 크기보다 크거나 작을경우 배열 범위 이탈
+            if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
             {
-                Debug.Log("배열 범위 초과");
                 continue;
             }
 
-            if (wallGridInfo[x + dx[i], y + dy[i]] == 2)
+            // wallGrid의 x, y좌표가 길일경우
+            if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
             {
-                // TODO : 연결된 방 불러오기
-                Debug.Log("길");
-                for(int j = 0; j < spawnRooms.Length; ++j)
+                initRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
+
+                for (int j = 0; j < spawnRooms.Length; ++j)
                 {
-                    Vector3 roomPos = spawnRooms[j].transform.position;
-                    if (roomPos == new Vector3(((y / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX,  ((x / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY))
+                    roomPos = spawnRooms[j].transform.position;
+                    // x, y값을 원래대로 돌려놓은 값이 spawnRooms[j]의 좌표값과 같을경우
+                    if (roomPos == initRoomPos)
                     {
+                        // 미니맵에 아이콘 표기
                         spawnRooms[j].GetSummonedRoom().ShowInMinimap();
                         break;
                     }
                 }
-                // spawnRooms[((x / 2) * 4) + (y / 2)].GetSummonedRoom().ShowInMinimap();
             }
-            else if(wallGridInfo[(x / 2) + dx[i], (y / 2) + dy[i]] == 0)
-            {
-                Debug.Log("길 없음");
-            }
-
-            Debug.Log($"{i}번째 끝");
         }
     }
 

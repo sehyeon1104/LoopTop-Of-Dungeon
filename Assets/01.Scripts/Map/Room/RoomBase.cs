@@ -57,12 +57,11 @@ public abstract class RoomBase : MonoBehaviour
     {
         if (!minimapIconSpriteRenderer.gameObject.activeSelf)
         {
-            Debug.Log("ShowInMinimap");
             minimapIconSpriteRenderer.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("minimapIconSpriteRenderer is already active!");
+            Rito.Debug.Log("minimapIconSpriteRenderer is already active!");
         }
     }
 
