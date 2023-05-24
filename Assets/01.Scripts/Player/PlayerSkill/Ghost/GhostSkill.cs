@@ -62,6 +62,9 @@ public class GhostSkill : PlayerSkillBase
     GameObject boss = null;
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
+    private Action passiveAction;
+    private Vector3 eTransform;
+
     private void Awake()
     {
         Cashing();
@@ -73,6 +76,8 @@ public class GhostSkill : PlayerSkillBase
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
+
+        passiveAction += () => OnDiePassive(eTransform);
     }
     protected override void Update()
     {
@@ -95,18 +100,24 @@ public class GhostSkill : PlayerSkillBase
             PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
             CinemachineCameraShaking.Instance.CameraShake();
 
-            Vector3 eTransform = enemies[i].transform.position;
+            eTransform = enemies[i].transform.position;
             enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-            if(!enemies[i].gameObject.activeSelf)
+
+            if (!enemies[i].gameObject.activeSelf)
             {
-                int passiveOn = Random.Range(0, 10);
-                if(passiveOn >= 0)
-                {
-                    Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", eTransform, quaternion.identity);
-                }
+                passiveAction();
             }
 
             GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
+        }
+    }
+
+    private void OnDiePassive(Vector3 tf)
+    {
+        int passiveOn = Random.Range(0, 10);
+        if (passiveOn >= 0)
+        {
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", tf, quaternion.identity);
         }
     }
 
@@ -184,6 +195,10 @@ public class GhostSkill : PlayerSkillBase
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
                     attachObjs[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                    if (!attachObjs[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA = 0;
             }
@@ -220,12 +235,22 @@ public class GhostSkill : PlayerSkillBase
                     attachObjs = Physics2D.OverlapCircleAll(smokes[i].transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                     {
+                        eTransform = attachObjs[j].transform.position;
                         attachObjs[j].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                        if (!attachObjs[j].gameObject.activeSelf)
+                        {
+                            passiveAction();
+                        }
                     }
                 }
                 for (int i = 0; i < attachObj2.Length; i++)
                 {
+                    eTransform = attachObj2[i].transform.position;
                     attachObj2[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                    if (!attachObj2[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA = 0;
             }
@@ -489,7 +514,12 @@ public class GhostSkill : PlayerSkillBase
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2, 1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
+            eTransform = hit[i].transform.position;
             hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0);
+            if (!hit[i].transform.gameObject.activeSelf)
+            {
+                passiveAction();
+            }
         }
         if (level == 5)
         {
@@ -506,7 +536,12 @@ public class GhostSkill : PlayerSkillBase
                 hitEnemies = Physics2D.OverlapCircleAll(transform.position, 5, 1 << enemyLayer);
                 for (int i = 0; i < hitEnemies.Length; i++)
                 {
+                    eTransform = hitEnemies[i].transform.position;
                     hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(2, 0);
+                    if (!hitEnemies[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA += 0.025f;
                 yield return waitClaw;
@@ -523,7 +558,12 @@ public class GhostSkill : PlayerSkillBase
             hitEnemies = Physics2D.OverlapCircleAll(transform.position, 7, 1 << enemyLayer);
             for (int i = 0; i < hitEnemies.Length; i++)
             {
+                eTransform = hitEnemies[i].transform.position;
                 hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(30, 0);
+                if (!hitEnemies[i].gameObject.activeSelf)
+                {
+                    passiveAction();
+                }
             }
         }
         playerMovement.IsMove = true;
@@ -586,7 +626,12 @@ public class GhostSkill : PlayerSkillBase
             hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0,Vector2.up, 5,1 << enemyLayer);
             for (int j = 0; j < hitEnemies.Length; j++)
             {
+                eTransform = hitEnemies[j].transform.position;
                 hitEnemies[j].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+                if (!hitEnemies[j].transform.gameObject.activeSelf)
+                {
+                    passiveAction();
+                }
             }
         }
         yield return waitArm;

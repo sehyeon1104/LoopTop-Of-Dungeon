@@ -36,9 +36,7 @@ public class GhostPassive : MonoBehaviour
             if ((enemies[i].gameObject.activeSelf) || i == 0)
             {
                 enemy = enemies[i];
-                Debug.Log(enemy);
                 flipVector = playeyToEnemyVec;
-                Debug.Log(flipVector);
             }
         }
     }
@@ -47,6 +45,11 @@ public class GhostPassive : MonoBehaviour
     {
         while (true)
         {
+            if (!enemy.gameObject.activeSelf)
+            {
+                enemy = null;
+                break;
+            }
             transform.Translate(flipVector.normalized * Time.deltaTime * speed);
             yield return null;
         }
