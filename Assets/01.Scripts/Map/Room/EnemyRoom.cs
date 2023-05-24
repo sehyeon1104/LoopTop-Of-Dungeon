@@ -14,9 +14,8 @@ public class EnemyRoom : RoomBase
     public bool isSpawnMonster { private set; get; } = false;
 
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         isSpawnMonster = false;
         SetRoomTypeFlag();
     }

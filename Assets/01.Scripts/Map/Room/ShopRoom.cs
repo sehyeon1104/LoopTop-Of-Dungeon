@@ -32,12 +32,11 @@ public class ShopRoom : RoomBase
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         toggleItemInfoPanel = ToggleItemInfoPanel();
         if (!ShopManager.Instance.isItemSetting)
         {

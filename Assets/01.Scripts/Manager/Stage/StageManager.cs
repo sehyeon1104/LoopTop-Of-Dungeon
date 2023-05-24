@@ -10,13 +10,16 @@ public class StageManager : MonoSingleton<StageManager>
 
     private GameObject wallGrid;
 
+    private int[,] wallGridInfo;
+
     private int randWallGrid;
 
     [SerializeField]
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
-    private int[,] wallGridInfo;
+    [SerializeField]
+    private GameObject[] roadMinimapIcon;
 
     [SerializeField]
     private GameObject MoveNextMapPortal;
@@ -158,8 +161,8 @@ public class StageManager : MonoSingleton<StageManager>
         //}
 
         // x값과 y값이 최대 3까지만 나오게끔 세팅
-        int y = ( (int)(pos.x + 8) / 26 ) * 2;
-        int x = ( (int)(pos.y + 2.25) / 26) * 2;
+        int y = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
+        int x = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
         Debug.Log($"x : {x}");
         Debug.Log($"y : {y}");
 
@@ -176,11 +179,19 @@ public class StageManager : MonoSingleton<StageManager>
                 continue;
             }
 
-            Debug.Log($"{wallGridInfo[x + dx[i], y + dy[i]]}");
             if (wallGridInfo[x + dx[i], y + dy[i]] == 2)
             {
                 // TODO : 연결된 방 불러오기
                 Debug.Log("길");
+                for(int j = 0; j < spawnRooms.Length; ++j)
+                {
+                    Vector3 roomPos = spawnRooms[j].transform.position;
+                    if (roomPos == new Vector3(((y / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX,  ((x / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY))
+                    {
+                        spawnRooms[j].GetSummonedRoom().ShowInMinimap();
+                        break;
+                    }
+                }
                 // spawnRooms[((x / 2) * 4) + (y / 2)].GetSummonedRoom().ShowInMinimap();
             }
             else if(wallGridInfo[(x / 2) + dx[i], (y / 2) + dy[i]] == 0)
@@ -190,5 +201,10 @@ public class StageManager : MonoSingleton<StageManager>
 
             Debug.Log($"{i}번째 끝");
         }
+    }
+
+    public void ShowRoadMinimapIcon()
+    {
+
     }
 }

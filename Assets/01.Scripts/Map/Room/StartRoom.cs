@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class StartRoom : RoomBase
 {
-    protected override void Start()
+    private void Start()
     {
+        minimapIconSpriteRenderer.gameObject.SetActive(true);
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
         curLocatedMapIcon.SetActive(true);
