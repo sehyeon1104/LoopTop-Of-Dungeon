@@ -49,7 +49,7 @@ public class G_Patterns : BossPattern
             float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Warning.wav");
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Warning.wav");
 
             switch (i)
             {
@@ -116,7 +116,7 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Teleport3.wav");
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Teleport3.wav");
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
 
         yield return new WaitForSeconds(1f);

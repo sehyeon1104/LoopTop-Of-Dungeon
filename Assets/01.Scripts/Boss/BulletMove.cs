@@ -29,7 +29,7 @@ public class BulletMove : MonoBehaviour
             {
                 collision.GetComponent<IHittable>().OnDamage(1, 0);
             }
-            Managers.Sound.Play("SoundEffects/Ghost/G_Bullet.wav");
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Bullet.wav");
             Managers.Pool.PoolManaging("10.Effects/ghost/Boom", transform.position, Quaternion.Euler(Vector2.zero));
             Managers.Pool.Push(GetComponent<Poolable>());
         }
