@@ -14,7 +14,7 @@ public class Inventory : MonoSingleton<Inventory>
 
     public void ShowItemInfo(Item item)
     {
-        itemNameTmp.SetText(item.itemName.ToString());
+        itemNameTmp.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";
         itemDesTmp.SetText(item.itemDescription.ToString());
     }
 

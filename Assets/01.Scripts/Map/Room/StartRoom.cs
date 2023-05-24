@@ -26,5 +26,6 @@ public class StartRoom : RoomBase
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
+        isClear = true;
     }
 }

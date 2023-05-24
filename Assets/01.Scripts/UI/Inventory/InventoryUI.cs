@@ -80,6 +80,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         ItemEffects.Items[item.itemNumber].Use();
 
         UIManager.Instance.AddItemListUI(item);
+        StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
 
     // 현재 획득한 아이템 목록 가져옴

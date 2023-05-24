@@ -89,6 +89,7 @@ public class ShopRoom : RoomBase
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
+        isClear = true;
         InteractionBtn.onClick.AddListener(ShopManager.Instance.InteractiveToItem);
 
         StartCoroutine(toggleItemInfoPanel);

@@ -39,6 +39,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public MinimapCamera minimapCamera { get; private set; } = null;
 
+    public Dictionary<int, string> itemRateColor { get; private set; } = new Dictionary<int, string>();
+
     private void Awake()
     {
         Application.targetFrameRate = 300;
@@ -127,6 +129,19 @@ public class GameManager : MonoSingleton<GameManager>
 
         hitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/HitEffect3.prefab");
         critHitEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/DeathHitEffect.prefab");
+
+        InitItemColorDic();
+    }
+
+    private void InitItemColorDic()
+    {
+        itemRateColor.Clear();
+        itemRateColor[(int)Define.ItemRating.Common] = "#D3D3D3";
+        itemRateColor[(int)Define.ItemRating.Rare] = "#00FFFF";
+        itemRateColor[(int)Define.ItemRating.Epic] = "#9932CC";
+        itemRateColor[(int)Define.ItemRating.Legendary] = "#FFA500";
+        itemRateColor[(int)Define.ItemRating.Special] = "#DC143C";
+        itemRateColor[(int)Define.ItemRating.ETC] = "#FFFFFF";
     }
 
     private void Start()
