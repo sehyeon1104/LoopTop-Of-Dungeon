@@ -79,6 +79,37 @@ public class GhostSkill : PlayerSkillBase
         base.Update();
     }
 
+    protected override void Attack()
+    {
+        if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !playerMovement.IsMove)
+            return;
+
+        playerAnim.SetTrigger("Attack");
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
+
+        if (enemies.Length <= 0) return;
+
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_Mob_Hit.wav");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
+            CinemachineCameraShaking.Instance.CameraShake();
+
+            Vector3 eTransform = enemies[i].transform.position;
+            enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            if(!enemies[i].gameObject.activeSelf)
+            {
+                int passiveOn = Random.Range(0, 10);
+                if(passiveOn >= 0)
+                {
+                    Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", eTransform, quaternion.identity);
+                }
+            }
+
+            GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
+        }
+    }
+
     protected override void FirstSkill(int level)
     {
         if (level == 5)

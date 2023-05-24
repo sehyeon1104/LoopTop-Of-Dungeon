@@ -66,13 +66,16 @@ public abstract class PlayerSkillBase : MonoBehaviour
 
             playerAnim.SetTrigger("Attack");
             Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
-                CinemachineCameraShaking.Instance.CameraShake();
-                enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-                GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
-            }
+        
+        if (enemies == null) return;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
+            CinemachineCameraShaking.Instance.CameraShake();
+            enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
+        }
     }
     protected abstract void UltimateSkill();
 

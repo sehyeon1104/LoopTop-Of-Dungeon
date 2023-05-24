@@ -19,6 +19,7 @@ public abstract class RoomBase : MonoBehaviour
     private void Awake()
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -34,11 +35,40 @@ public abstract class RoomBase : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            minimapIconSpriteRenderer.color = Color.white;
             curLocatedMapIcon.SetActive(true);
-        }
 
-        GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+            if (!isClear)
+            {
+                ShowInMinimap();
+                CheckLinkedRoom();
+            }
+
+            ChangeMinimapIconColor();
+            GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
+        }
+    }
+
+    public void ChangeMinimapIconColor()
+    {
+        minimapIconSpriteRenderer.color = Color.white;
+    }
+
+    public void ShowInMinimap()
+    {
+        if (!minimapIconSpriteRenderer.gameObject.activeSelf)
+        {
+            Debug.Log("ShowInMinimap");
+            minimapIconSpriteRenderer.gameObject.SetActive(true);
+        }
+        else
+        {
+            Rito.Debug.Log("minimapIconSpriteRenderer is already active!");
+        }
+    }
+
+    public void CheckLinkedRoom()
+    {
+        StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
@@ -46,6 +76,7 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
+            curLocatedMapIcon.SetActive(false);
         }
     }
 }

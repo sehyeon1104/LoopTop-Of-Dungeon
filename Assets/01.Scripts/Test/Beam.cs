@@ -101,7 +101,6 @@ public class Beam : MonoBehaviour
 
         while(beamLight.intensity <= intensity)
         {
-            Debug.Log(Time.deltaTime);
             beamLight.intensity += Time.deltaTime * 10f;
             yield return null;
         }
@@ -112,7 +111,7 @@ public class Beam : MonoBehaviour
         {
             startFXList[i].Play();
         }
-        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Beam.wav",Define.Sound.Effect,1,0.5f);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Beam.wav", Define.Sound.Effect,1,0.5f);
 
         ShowRange.SetActive(false);
 
