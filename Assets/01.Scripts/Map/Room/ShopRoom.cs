@@ -78,6 +78,7 @@ public class ShopRoom : RoomBase
 
     protected override void ShowIcon()
     {
+        Debug.Log("ShowIcon");
         shopNpcIcon.SetActive(true);
     }
 

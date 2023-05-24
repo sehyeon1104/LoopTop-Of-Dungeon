@@ -88,6 +88,7 @@ public class EnemyRoom : RoomBase
     {
         if (isMoveAnotherStage)
         {
+            Debug.Log("ShowIcon");
             portalMapIcon.SetActive(true);
         }
     }
