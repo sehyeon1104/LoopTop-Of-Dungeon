@@ -11,8 +11,6 @@ public class SpawnRoom : MonoBehaviour
     [SerializeField]
     private GameObject[] mapPrefabs;
 
-    // private bool isSetPlayerPos = false;
-
     private bool isStartRoom = false;
     public bool IsStartRoom
     {
@@ -79,6 +77,12 @@ public class SpawnRoom : MonoBehaviour
             GameManager.Instance.Player.transform.position = this.transform.position;
             // isSetPlayerPos = true;
         }
+    }
+
+    public RoomBase GetSummonedRoom()
+    {
+        RoomBase room = GetComponentInChildren<RoomBase>();
+        return room;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
