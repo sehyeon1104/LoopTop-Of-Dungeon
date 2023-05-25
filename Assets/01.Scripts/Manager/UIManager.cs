@@ -8,9 +8,17 @@ using TMPro;
 using DG.Tweening;
 using System.Linq;
 using System;
+using UnityEngine.Playables;
+using UnityEngine.VFX;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    Transform player;
+    Animator animator;
+    PlayableDirector[] ults;
+    VisualEffect[] clawEffect;
+    float currentSpeed;
     public GameObject playerUI;
     public GameObject playerPCUI;
     [Header("LeftUp")]
@@ -94,6 +102,7 @@ public class UIManager : MonoSingleton<UIManager>
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
+        player = GameManager.Instance.Player.transform;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
             hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
@@ -138,7 +147,7 @@ public class UIManager : MonoSingleton<UIManager>
             reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
             Debug.Log("PCPlayerUI/All 로드");
-
+          
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
@@ -155,7 +164,9 @@ public class UIManager : MonoSingleton<UIManager>
             Debug.Log("PCPlayerUI/Minimap 로드");
         }
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
-
+        ults = player.GetComponentsInChildren<PlayableDirector>();
+         clawEffect = player.GetComponentsInChildren<VisualEffect>(true);
+        animator = player.Find("Skill/GhostUlt/GhostBossUlt/GhostBoss").GetComponent<Animator>();
         leaveButton.onClick.AddListener(LeaveBtn);
         resumeBtn.onClick.RemoveListener(Resume);
         resumeBtn.onClick.AddListener(Resume);
@@ -176,6 +187,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             minimap.gameObject.SetActive(false);
         }
+        RotateAttackButton();
     }
 
     public void UpdateUI()
@@ -218,16 +230,35 @@ public class UIManager : MonoSingleton<UIManager>
     {
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
-
         if (pausePanel.activeSelf)
         {
+       for(int i = 0; i<ults.Length; i++)
+            {
+                ults[i].timeUpdateMode = DirectorUpdateMode.GameTime;
+            }
+            currentSpeed = clawEffect[0].playRate;
+           for (int i=0; i <clawEffect.Length; i++)
+            {
+                clawEffect[i].playRate = 0;
+            }
+            animator.updateMode = AnimatorUpdateMode.Normal;
             Time.timeScale = 0f;
             MouseManager.Lock(false);
             MouseManager.Show(true);
         }
         else
         {
+            for (int i = 0; i < ults.Length; i++)
+            {
+                ults[i].timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
+            }
+            for (int i = 0; i < clawEffect.Length; i++)
+            {
+                clawEffect[i].playRate = currentSpeed;
+            }
+
             Time.timeScale = 1f;
+            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             MouseManager.Lock(true);
             MouseManager.Show(false);
         }
@@ -250,7 +281,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePlayerAttackUI();
         //blurPanel.SetActive(!blurPanel.activeSelf);
-       
+      
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
 
         MouseManager.Show(gameOverPanel.activeSelf);
