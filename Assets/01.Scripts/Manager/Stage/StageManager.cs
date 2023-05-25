@@ -18,6 +18,8 @@ public class StageManager : MonoSingleton<StageManager>
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
+    private int startRoomNum = 0;
+
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
 
@@ -75,9 +77,11 @@ public class StageManager : MonoSingleton<StageManager>
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 9);
+        // 포탈방 지정
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+        spawnRooms[startRoomNum].GetSummonedRoom().CheckLinkedRoom();
     }
 
     public IEnumerator SetStage()
@@ -109,7 +113,8 @@ public class StageManager : MonoSingleton<StageManager>
     public void SetStartRoomNShopRoom()
     {
         // Debug.Log("SpawnRooms : " + spawnRooms.Length);
-        spawnRooms[Random.Range(0, spawnRooms.Length)].IsStartRoom = true;
+        startRoomNum = Random.Range(0, spawnRooms.Length);
+        spawnRooms[startRoomNum].IsStartRoom = true;
         randRoom = Random.Range(0, spawnRooms.Length);
         if (spawnRooms[randRoom].IsStartRoom)
         {
@@ -131,12 +136,11 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void SetMoveNextMapRoom()
     {
+        Debug.Log("포탈방 지정");
         int rand = Random.Range(0, enemyRooms.Length);
         enemyRooms[rand].isMoveAnotherStage = true;
-        GameObject portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-        portalMapIcon.transform.position = enemyRooms[rand].transform.position;
+        enemyRooms[rand].InstantiateMoveMapIcon();
     }
-
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
     {

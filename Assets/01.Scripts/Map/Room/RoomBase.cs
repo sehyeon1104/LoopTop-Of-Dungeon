@@ -57,8 +57,8 @@ public abstract class RoomBase : MonoBehaviour
     {
         if (!minimapIconSpriteRenderer.gameObject.activeSelf)
         {
-            Debug.Log("ShowInMinimap");
             minimapIconSpriteRenderer.gameObject.SetActive(true);
+            ShowIcon();
         }
         else
         {
@@ -69,6 +69,11 @@ public abstract class RoomBase : MonoBehaviour
     public void CheckLinkedRoom()
     {
         StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
+    }
+
+    protected virtual void ShowIcon()
+    {
+
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision)

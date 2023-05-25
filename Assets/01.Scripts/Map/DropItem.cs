@@ -96,6 +96,5 @@ public class DropItem : MonoBehaviour
         UIManager.Instance.RotateAttackButton();
         interactionButton.onClick.RemoveListener(TakeItem);
         Managers.Pool.Push(this.GetComponent<Poolable>());
-        
     }
 }
