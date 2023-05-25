@@ -14,6 +14,8 @@ public class BossAnim : MonoBehaviour
     public void Init()
     {
         anim = GetComponent<Animator>();
+        if (anim == null)
+            anim = GetComponentInChildren<Animator>();
         overrideController = new AnimatorOverrideController();
     }
 

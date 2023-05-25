@@ -14,11 +14,16 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
     private float ShakeElapsedTime = 0f;
 
     // Cinemachine Shake
+    public Camera mainCam;
     public CinemachineVirtualCamera VirtualCamera;
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
 
     void Start()
     {
+        mainCam = Camera.main;
+
+        if (VirtualCamera == null)
+            VirtualCamera = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
         // Get Virtual Camera Noise Profile
         if (VirtualCamera != null)
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
@@ -112,7 +117,12 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
 
     //    yield break;
     //}
-
+    public void ChangeCam()
+    {
+        VirtualCamera = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        if (VirtualCamera != null)
+            virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
+    }
     public void CameraShake(float amplitude = 2f, float duration = 0.1f)
     {
         StopCoroutine(IECameraShake(amplitude, duration));
