@@ -10,13 +10,34 @@ public class StageManager : MonoSingleton<StageManager>
 
     private GameObject wallGrid;
 
+    private int[,] wallGridInfo;
+
     private int randWallGrid;
 
     [SerializeField]
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
-    private int[,] wallGridInfo;
+    private int startRoomNum = 0;
+
+    [SerializeField]
+    private List<GameObject> wayMinimapIconList = new List<GameObject>();
+
+    #region LinkedRoom
+    // ë°°ì—´ì˜ ìƒ, í•˜, ì¢Œ, ìš°ë¥¼ í™•ì¸í•  ë°°ì—´
+    int[] dx = new int[4] { 1, 0, -1, 0 };
+    int[] dy = new int[4] { 0, -1, 0, 1 };
+
+    // í˜„ì¬ ë°©ì˜ x, yì¢Œí‘œê°’ì„ ê°€ì ¸ì˜¬ ë³€ìˆ˜
+    int posX = 0;
+    int posY = 0;
+
+    Vector3 roomPos;
+
+    // ì—°ê²°ëœ ë°©ì˜ ì¢Œí‘œê°’ì„ ë‹´ì„ ë²¡í„°
+    Vector3 originRoomPos;
+    Vector3 originWayPos;
+    #endregion
 
     [SerializeField]
     private GameObject MoveNextMapPortal;
@@ -28,7 +49,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Awake()
     {
         wallGrids = new GameObject[4];
-        // TODO : WallGrid ¹× Æ÷Å» ¾îµå·¹¼­ºí·Î ºÒ·¯¿À±â
+        // TODO : WallGrid ë° í¬íƒˆ ì–´ë“œë ˆì„œë¸”ë¡œ ë¶ˆëŸ¬ì˜¤ê¸°
         for(int i = 0; i < 4; ++i)
         {
             wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
@@ -43,20 +64,24 @@ public class StageManager : MonoSingleton<StageManager>
         isSetting = true;
         StartCoroutine(SetStage());
 
-        // º® »ı¼º
+        // ë²½ ìƒì„±
         SetWallGrid();
-        // ¹æ ½ºÆ÷³Ê ¹Ş¾Æ¿È
+        // ê¸¸ ì´ˆê¸°í™”
+        InitWay();
+        // ë°© ìŠ¤í¬ë„ˆ ë°›ì•„ì˜´
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // ½ÃÀÛ ¹æ ¼³Á¤
+        // ì‹œì‘ ë°© ì„¤ì •
         SetStartRoomNShopRoom();
-        // ¹æ »ı¼º
+        // ë°© ìƒì„±
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 9);
+        // í¬íƒˆë°© ì§€ì •
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+        spawnRooms[startRoomNum].GetSummonedRoom().CheckLinkedRoom();
     }
 
     public IEnumerator SetStage()
@@ -64,12 +89,32 @@ public class StageManager : MonoSingleton<StageManager>
         yield return new WaitForSeconds(1.5f);
         isSetting = false;
     }
+    public void SetWallGrid()
+    {
+        randWallGrid = Random.Range(0, wallGrids.Length);
+        wallGrid = wallGrids[randWallGrid];
+        var wallGridObj = Instantiate(wallGrid);
+        var wayMinimapIcon = wallGridObj.transform.Find("WayMinimapIcons");
+        for(int i = 0; i < wayMinimapIcon.childCount; ++i)
+        {
+            wayMinimapIconList.Add(wayMinimapIcon.GetChild(i).gameObject);
+        }
+    }
+
+    public void InitWay()
+    {
+        for(int i = 0; i < wayMinimapIconList.Count; ++i)
+        {
+            wayMinimapIconList[i].SetActive(false);
+        }
+    }
 
     private int randRoom = 0;
     public void SetStartRoomNShopRoom()
     {
         // Debug.Log("SpawnRooms : " + spawnRooms.Length);
-        spawnRooms[Random.Range(0, spawnRooms.Length)].IsStartRoom = true;
+        startRoomNum = Random.Range(0, spawnRooms.Length);
+        spawnRooms[startRoomNum].IsStartRoom = true;
         randRoom = Random.Range(0, spawnRooms.Length);
         if (spawnRooms[randRoom].IsStartRoom)
         {
@@ -91,27 +136,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void SetMoveNextMapRoom()
     {
+        Debug.Log("í¬íƒˆë°© ì§€ì •");
         int rand = Random.Range(0, enemyRooms.Length);
         enemyRooms[rand].isMoveAnotherStage = true;
-        GameObject portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-        portalMapIcon.transform.position = enemyRooms[rand].transform.position;
-    }
-
-    public void SetWallGrid()
-    {
-        //GameObject[] map = GameObject.FindGameObjectsWithTag("Map");
-        //if(map != null)
-        //{
-        //    for(int i = 0; i < map.Length; ++i)
-        //    {
-        //        Destroy(map[i]);
-        //    }
-        //}
-
-        randWallGrid = Random.Range(0, wallGrids.Length);
-        wallGrid = wallGrids[randWallGrid];
-        Instantiate(wallGrid);
-
+        enemyRooms[rand].InstantiateMoveMapIcon();
     }
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
@@ -121,15 +149,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : ¾ÆÀÌÅÛ µå¶ø ¾Ö´Ï¸ŞÀÌ¼Ç Ãß°¡
+        // TODO : ì•„ì´í…œ ë“œë ì• ë‹ˆë©”ì´ì…˜ ì¶”ê°€
 
         Managers.Pool.Pop(dropItemPrefab, pos);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        Debug.Log("ShowLinkedMapInMinimap");
-        // wallGridÀÇ Á¤º¸¸¦ °¡Á®¿È
+        // wallGridì˜ ì •ë³´ë¥¼ ê°€ì ¸ì˜´
         wallGridInfo = randWallGrid switch
         {
             0 => MapInfo.WallGrid1,
@@ -142,53 +169,61 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (wallGridInfo == null)
         {
-            Debug.Log("wallGridInfo is null");
+            Rito.Debug.Log("wallGridInfo is null");
             return;
         }
 
-        //Debug.Log($"wallGrid{randWallGrid}");
+        // xê°’ê³¼ yê°’ì´ ìµœëŒ€ 3ê¹Œì§€ë§Œ ë‚˜ì˜¤ê²Œë” ì„¸íŒ…
+        posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
+        posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
 
-        //for(int i = 0; i < 7; ++i)
-        //{
-        //    for(int j = 0; j < 7; ++j)
-        //    {
-        //        Debug.Log($"({i}, {j}) : {wallGridInfo[i, j]}");
-        //    }
-        //    Debug.Log(",");
-        //}
-
-        // x°ª°ú y°ªÀÌ ÃÖ´ë 3±îÁö¸¸ ³ª¿À°Ô²û ¼¼ÆÃ
-        int y = ( (int)(pos.x + 8) / 26 ) * 2;
-        int x = ( (int)(pos.y + 2.25) / 26) * 2;
-        Debug.Log($"x : {x}");
-        Debug.Log($"y : {y}");
-
-        int[] dx = new int[4]{ 1, 0, -1, 0 };
-        int[] dy = new int[4]{ 0, -1, 0, 1 };
-
-        // ¹è¿­ÀÇ »ó(x + 1), ÇÏ(x - 1), ÁÂ(y - 1), ¿ì(y + 1) Áß ±æÀÌ ÀÖ´ÂÁö Ã¼Å©
+        // ë°°ì—´ì˜ ìƒ(x + 1), í•˜(x - 1), ì¢Œ(y - 1), ìš°(y + 1) ì¤‘ ê¸¸ì´ ìˆëŠ”ì§€ ì²´í¬
+        // ìˆœì„œ : ìƒ, ì¢Œ, í•˜, ìš° (ë°˜ì‹œê³„)
         for(int i = 0; i < 4; ++i)
         {
-            Debug.Log($"{i}¹øÂ° : ({x + dx[i]}, {y + dy[i]})");
-            if ((x + dx[i]) < 0 || y + dy[i] < 0 || x + dx[i] > 6 || y + dy[i] > 6)
+            // ë°°ì—´ì˜ ì „ì²´ í¬ê¸°ë³´ë‹¤ í¬ê±°ë‚˜ ì‘ì„ê²½ìš° ë°°ì—´ ë²”ìœ„ ì´íƒˆ
+            if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
             {
-                Debug.Log("¹è¿­ ¹üÀ§ ÃÊ°ú");
                 continue;
             }
 
-            Debug.Log($"{wallGridInfo[x + dx[i], y + dy[i]]}");
-            if (wallGridInfo[x + dx[i], y + dy[i]] == 2)
+            // wallGridì˜ x, yì¢Œí‘œê°€ ê¸¸ì¼ê²½ìš°
+            if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
             {
-                // TODO : ¿¬°áµÈ ¹æ ºÒ·¯¿À±â
-                Debug.Log("±æ");
-                // spawnRooms[((x / 2) * 4) + (y / 2)].GetSummonedRoom().ShowInMinimap();
-            }
-            else if(wallGridInfo[(x / 2) + dx[i], (y / 2) + dy[i]] == 0)
-            {
-                Debug.Log("±æ ¾øÀ½");
-            }
+                originRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
+                originWayPos = new Vector3((posY + dy[i]) * MapInfo.xDirWay + MapInfo.firstPosXWay, (posX + dx[i]) * MapInfo.yDirWay + MapInfo.firstPosYWay);
 
-            Debug.Log($"{i}¹øÂ° ³¡");
+                for (int j = 0; j < spawnRooms.Length; ++j)
+                {
+                    roomPos = spawnRooms[j].transform.position;
+                    // x, yê°’ì„ ì›ë˜ëŒ€ë¡œ ëŒë ¤ë†“ì€ ê°’ì´ spawnRooms[j]ì˜ ì¢Œí‘œê°’ê³¼ ê°™ì„ê²½ìš°
+                    if (roomPos == originRoomPos)
+                    {
+                        // ë¯¸ë‹ˆë§µì— ì•„ì´ì½˜ í‘œê¸°
+                        spawnRooms[j].GetSummonedRoom().ShowInMinimap();
+                        ShowWayMinimapIcon();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void ShowWayMinimapIcon()
+    {
+        for(int i = 0; i < wayMinimapIconList.Count; ++i)
+        {
+            if(wayMinimapIconList[i].transform.position == originWayPos)
+            {
+                if(!wayMinimapIconList[i].activeSelf)
+                {
+                    wayMinimapIconList[i].SetActive(true);
+                }
+                else
+                {
+                    Debug.Log("already wayIcon is active!");
+                }
+            }
         }
     }
 }

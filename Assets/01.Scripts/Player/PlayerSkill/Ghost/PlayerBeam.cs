@@ -83,7 +83,7 @@ public class PlayerBeam : MonoBehaviour
         {
             startFXList[i].Play();
         }
-        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Beam.wav", Define.Sound.Effect, 1, 0.5f);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Beam.wav", Define.Sound.Effect, 1, 0.5f);
 
         IsReady = true;
         while (lineLength <= length)

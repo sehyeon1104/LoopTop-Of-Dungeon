@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.AccessControl;
 using Unity.Mathematics;
 using UnityEngine;
@@ -62,6 +63,9 @@ public class GhostSkill : PlayerSkillBase
     GameObject boss = null;
     [Header("±Ã±Ø±â")]
     [SerializeField] GhostUltSignal ghostUlt;
+    private Action passiveAction;
+    private Vector3 eTransform;
+
     private void Awake()
     {
         Cashing();
@@ -73,6 +77,8 @@ public class GhostSkill : PlayerSkillBase
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
+
+        passiveAction += () => OnDiePassive(eTransform);
     }
     protected override void Update()
     {
@@ -87,25 +93,32 @@ public class GhostSkill : PlayerSkillBase
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
 
-        if (enemies == null) return;
+        if (enemies.Length <= 0) return;
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_Mob_Hit.wav");
         for (int i = 0; i < enemies.Length; i++)
         {
             PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
             CinemachineCameraShaking.Instance.CameraShake();
-            
+
+            eTransform = enemies[i].transform.position;
             enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-            if(!enemies[i].gameObject.activeSelf || enemies[i].GetComponent<EnemyDefault>().hp <= 0)
+
+            if (!enemies[i].gameObject.activeSelf)
             {
-                int passiveOn = Random.Range(0, 10);
-                if(passiveOn > 6)
-                {
-                    Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", enemies[i].transform.position, quaternion.identity);
-                }
+                passiveAction();
             }
 
             GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
+        }
+    }
+
+    private void OnDiePassive(Vector3 tf)
+    {
+        int passiveOn = Random.Range(0, 10);
+        if (passiveOn >= 0)
+        {
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PBullet.prefab", tf, quaternion.identity);
         }
     }
 
@@ -183,6 +196,10 @@ public class GhostSkill : PlayerSkillBase
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
                     attachObjs[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                    if (!attachObjs[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA = 0;
             }
@@ -219,12 +236,22 @@ public class GhostSkill : PlayerSkillBase
                     attachObjs = Physics2D.OverlapCircleAll(smokes[i].transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                     {
+                        eTransform = attachObjs[j].transform.position;
                         attachObjs[j].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                        if (!attachObjs[j].gameObject.activeSelf)
+                        {
+                            passiveAction();
+                        }
                     }
                 }
                 for (int i = 0; i < attachObj2.Length; i++)
                 {
+                    eTransform = attachObj2[i].transform.position;
                     attachObj2[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                    if (!attachObj2[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA = 0;
             }
@@ -488,7 +515,12 @@ public class GhostSkill : PlayerSkillBase
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2, 1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
         {
+            eTransform = hit[i].transform.position;
             hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0);
+            if (!hit[i].transform.gameObject.activeSelf)
+            {
+                passiveAction();
+            }
         }
         if (level == 5)
         {
@@ -505,7 +537,12 @@ public class GhostSkill : PlayerSkillBase
                 hitEnemies = Physics2D.OverlapCircleAll(transform.position, 5, 1 << enemyLayer);
                 for (int i = 0; i < hitEnemies.Length; i++)
                 {
+                    eTransform = hitEnemies[i].transform.position;
                     hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(2, 0);
+                    if (!hitEnemies[i].gameObject.activeSelf)
+                    {
+                        passiveAction();
+                    }
                 }
                 timerA += 0.025f;
                 yield return waitClaw;
@@ -522,7 +559,12 @@ public class GhostSkill : PlayerSkillBase
             hitEnemies = Physics2D.OverlapCircleAll(transform.position, 7, 1 << enemyLayer);
             for (int i = 0; i < hitEnemies.Length; i++)
             {
+                eTransform = hitEnemies[i].transform.position;
                 hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(30, 0);
+                if (!hitEnemies[i].gameObject.activeSelf)
+                {
+                    passiveAction();
+                }
             }
         }
         playerMovement.IsMove = true;
@@ -553,46 +595,82 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator ArmSkill(int level)
     {
+        float minY;
         RaycastHit2D[] hitEnemies;
         List<Poolable> arms = new List<Poolable>();
-        if (level == 1)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + (Vector3)playerMovement.Direction * 3 + Vector3.up * 1.5f, Quaternion.identity));
-        }
-        if (level == 2)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.left * 3 + Vector3.up * 1.5f, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up * 1.5f, Quaternion.identity));
-        }
-        if (level == 3)
-        {   
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 , Quaternion.identity));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 , Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3.5f , Quaternion.Euler(0, 180, 0)));
-        }
-        if(level == 4)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up, Quaternion.identity));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 + Vector3.up, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left*2, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right *2 + Vector3.up *3, Quaternion.identity));
-        }
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_RaiseUpArm.wav");
-        mat.SetFloat("_StepValue", arms[0].transform.position.y - 2);
+
+
+        if (Physics2D.OverlapCircle(transform.position, detectiveDistance, 1 << enemyLayer))
+        {
+            float minDistance;
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectiveDistance, 1 << enemyLayer);
+            List<Collider2D> enemiesList = enemies.ToList();
+            int index = 0;
+            minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            if (level > enemiesList.Count)
+            {
+                level = enemiesList.Count;
+            }
+            for (int i = 0; i < level; i++)
+            {
+                for (int j = 0; j < enemiesList.Count; j++)
+                {
+                    if (minDistance * minDistance > Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position))
+                    {
+                        minDistance = Mathf.Sqrt(Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position));
+                        index = j;
+                    }
+                }
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", enemiesList[index].transform.position, 0 < Mathf.Sign(enemiesList[index].transform.position.x - transform.position.x) ? Quaternion.identity : Quaternion.Euler(0, 180, 0)));
+                enemiesList.RemoveAt(index);
+                minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            }
+        }
+        else
+        {
+            if (level == 1)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + (Vector3)playerMovement.Direction * 3 + Vector3.up * 1.5f, Quaternion.identity));
+            }
+            if (level == 2)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.left * 3 + Vector3.up * 1.5f, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up * 1.5f, Quaternion.identity));
+            }
+            if (level == 3)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3, Quaternion.identity));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, 180, 0)));
+            }
+            if (level == 4)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up, Quaternion.identity));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 + Vector3.up, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left * 2, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 2 + Vector3.up * 3, Quaternion.identity));
+            }
+        }
+        minY = arms[0].transform.position.y;
         for (int i = 0; i < arms.Count; i++)
         {
-
-            hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0,Vector2.up, 5,1 << enemyLayer);
+            if (arms[i].transform.position.y < minY)
+            {
+                minY = arms[i].transform.position.y;
+            }
+            hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0, Vector2.up, 5, 1 << enemyLayer);
             for (int j = 0; j < hitEnemies.Length; j++)
             {
                 hitEnemies[j].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
             }
         }
+        mat.SetFloat("_StepValue", minY - 2);
         yield return waitArm;
-        for(int i = 0; i < arms.Count; i++)
+        for (int i = 0; i < arms.Count; i++)
         {
 
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arms[i].transform.position + Vector3.down * 2, Quaternion.identity);
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arms[i].transform.position + Vector3.down * 2, Quaternion.identity);
         }
         yield return null;
     }

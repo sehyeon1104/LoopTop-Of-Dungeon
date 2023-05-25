@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class PlayerSkillBase : MonoBehaviour
 {
-
+    protected float detectiveDistance;
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public Rigidbody2D playerRigid;
     [HideInInspector] public SpriteRenderer playerSprite;
@@ -140,6 +140,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         ultimateSkill = UltimateSkill;
         dashSkill = DashSkill;
         dashVelocity = 20f;
+        detectiveDistance = 10;
         dashDuration = 0.2f;
         dashTime = 0.15f;
         enemyLayer = LayerMask.NameToLayer("Enemy");

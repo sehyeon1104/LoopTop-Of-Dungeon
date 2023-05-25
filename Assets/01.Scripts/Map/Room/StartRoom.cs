@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class StartRoom : RoomBase
 {
-    protected override void Start()
+    private void Start()
     {
+        minimapIconSpriteRenderer.gameObject.SetActive(true);
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
         curLocatedMapIcon.SetActive(true);
-        CheckLinkedRoom();
     }
 
     protected override void IsClear()
@@ -25,5 +25,6 @@ public class StartRoom : RoomBase
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
+        isClear = true;
     }
 }

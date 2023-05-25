@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2793cec8e9475d142af0d39ed357eb5b
+guid: 06929bb3dc8a64a4fad7d4749c7e1be9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -102,6 +102,18 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -117,127 +129,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_0"
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 363
-        width: 257
-        height: 150
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 1, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: da8938d6377c1034595a93337a0b34cf
-      internalID: -1298321380
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_1"
-      rect:
-        serializedVersion: 2
-        x: 333
-        y: 375
-        width: 253
-        height: 122
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ad92498d09453e34ea8d7625fd0ca304
-      internalID: -1683920773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_2"
-      rect:
-        serializedVersion: 2
-        x: 663
-        y: 345
-        width: 255
-        height: 167
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 985e1cea535883642b34e9f454c61270
-      internalID: 1942285071
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_3"
+      name: GhostBullet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 258
-        height: 200
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89233602511f28049a941f00ba60c977
-      internalID: -644426037
+      spriteID: 9f19f0b9e4bde1a4aa25d794ddc1b94c
+      internalID: 479553244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_4"
+      name: GhostBullet_1
       rect:
         serializedVersion: 2
-        x: 351
-        y: 33
-        width: 229
-        height: 125
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d4e97715de771b48bb664d43aab2e84
-      internalID: -78853511
+      spriteID: 857a2e7446b953942883ca5201f91bdc
+      internalID: -1874194682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uB0B4\uB824\uCC0D\uAE30 png_5"
+      name: GhostBullet_2
       rect:
         serializedVersion: 2
-        x: 666
-        y: 9
-        width: 253
-        height: 169
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bde355b2553f384c8cafee974f6414d
-      internalID: -406654835
+      spriteID: f6594b2b63d617b46a9aa28256f8bf6a
+      internalID: 907449646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GhostBullet_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445be455e65976d4e86ef0093018cdd0
+      internalID: 753663791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GhostBullet_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbe6bdaef71ca0d4e926361a5c3765b9
+      internalID: -2041747147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GhostBullet_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b2179ac77e24741a039e6dc3e5d4c7
+      internalID: 1037403460
       vertices: []
       indices: 
       edges: []
@@ -253,12 +265,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uB0B4\uB824\uCC0D\uAE30 png_5": -406654835
-      "\uB0B4\uB824\uCC0D\uAE30 png_2": 1942285071
-      "\uB0B4\uB824\uCC0D\uAE30 png_0": -1298321380
-      "\uB0B4\uB824\uCC0D\uAE30 png_1": -1683920773
-      "\uB0B4\uB824\uCC0D\uAE30 png_3": -644426037
-      "\uB0B4\uB824\uCC0D\uAE30 png_4": -78853511
+      GhostBullet_3: 753663791
+      GhostBullet_1: -1874194682
+      GhostBullet_2: 907449646
+      GhostBullet_5: 1037403460
+      GhostBullet_4: -2041747147
+      GhostBullet_0: 479553244
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

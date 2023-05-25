@@ -38,7 +38,7 @@ public class PlayerSkill : MonoBehaviour
         skillSelectObj = UIManager.Instance.skillSelect;
         itemLayer = LayerMask.NameToLayer("Item");
         slotLevel = playerBase.SlotLevel;
-       skillIndex = playerBase.PlayerSkillNum;
+        skillIndex = playerBase.PlayerSkillNum;
         skillData.Add(Define.PlayerTransformTypeFlag.Power, GetComponent<PowerSkill>());
         skillData.Add(Define.PlayerTransformTypeFlag.Ghost, GetComponent<GhostSkill>());
         interaction = UIManager.Instance.GetInteractionButton();

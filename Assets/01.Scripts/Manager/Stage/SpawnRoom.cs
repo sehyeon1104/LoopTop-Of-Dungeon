@@ -81,9 +81,7 @@ public class SpawnRoom : MonoBehaviour
 
     public RoomBase GetSummonedRoom()
     {
-        Debug.Log("GetSummonedRoom");
         RoomBase room = GetComponentInChildren<RoomBase>();
-        Debug.Log($"return {room}");
         return room;
     }
 

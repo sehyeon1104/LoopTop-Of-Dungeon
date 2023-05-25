@@ -23,10 +23,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
         }
         inventoryPanel = transform.Find("Background").gameObject;
-    }
-
-    private void Start()
-    {
         Init();
     }
 
@@ -80,6 +76,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         ItemEffects.Items[item.itemNumber].Use();
 
         UIManager.Instance.AddItemListUI(item);
+        StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
 
     // 현재 획득한 아이템 목록 가져옴
@@ -97,7 +94,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
             Item inventoryItem = items;
 
-            newObject = Instantiate(itemObjTemplate);   // 여기서 오류남. 아마 템플릿이 로딩이 안된듯?
+            newObject = Instantiate(itemObjTemplate);
 
             newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
             newItemObjComponent = newObject.GetComponent<InventorySlot>();

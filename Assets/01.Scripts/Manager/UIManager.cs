@@ -42,6 +42,15 @@ public class UIManager : MonoSingleton<UIManager>
     private Button resumeBtn;
     [SerializeField]
     private Button quitBtn;
+    [SerializeField]
+    private GameObject obtainItemInfo = null;
+    [SerializeField]
+    private Image obtainItemInfoImg = null;
+    [SerializeField]
+    private TextMeshProUGUI obtainItemInfoTMP = null;
+    private Vector3 obtainItemInfoScale;
+    private bool isShowObtainItemInfo = false;
+    private Queue<Item> obtainItemQueue = new Queue<Item>();
 
     [SerializeField]
     private GameObject showCurStageNameObj;
@@ -70,6 +79,8 @@ public class UIManager : MonoSingleton<UIManager>
     public List<Image> hpbars = new List<Image>();
     PlayerSkill playerskill;
     private int maxHpCount = 0;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
 
     private void Awake()
     {
@@ -106,26 +117,35 @@ public class UIManager : MonoSingleton<UIManager>
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
+
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
-            fragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("RightUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
-            gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
-            resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
-            quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
-            checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
-            showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
-            minimap = playerPCUI.transform.Find("Minimap");
-            curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
-            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
-            curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
-            reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
-            leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
+
+            fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+
             pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+
+            gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
+            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
+            reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
+
+            resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
+            pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
+            quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
+            checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
+            showCurStageNameObj = playerPCUI.transform.Find("Middle/ShowCurStageName").gameObject;
+            obtainItemInfo = playerPCUI.transform.Find("Middle/ObtainItemInfo").gameObject;
+            obtainItemInfoImg = obtainItemInfo.transform.Find("ItemImg").GetComponent<Image>();
+            obtainItemInfoTMP = obtainItemInfo.transform.Find("ItemNameTMP").GetComponent<TextMeshProUGUI>();
+
+            minimap = playerPCUI.transform.Find("Minimap");
+            curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
+            curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
         }
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
 
@@ -135,10 +155,12 @@ public class UIManager : MonoSingleton<UIManager>
         quitBtn.onClick.RemoveListener(LeaveBtn);
         quitBtn.onClick.AddListener(LeaveBtn);
 
+        waitForEndOfFrame = new WaitForEndOfFrame();
     }
 
     private void Start()
     {
+        obtainItemInfoScale = obtainItemInfo.transform.localScale;
         SkillSelectButtonInit();
         HPInit();
         UpdateUI();
@@ -270,6 +292,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
+    #region Item
     public void AddItemListUI(Item item)
     {
         if(item.itemType == Define.ItemType.heal)
@@ -281,6 +304,53 @@ public class UIManager : MonoSingleton<UIManager>
         Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
         itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
+
+    public IEnumerator ShowObtainItemInfo(Item item)
+    {
+        // 만약 정보 출력중이 아니라면
+        if (!isShowObtainItemInfo)
+        {
+            isShowObtainItemInfo = true;
+
+            obtainItemInfo.SetActive(true);
+            // 아이템 정보 오브젝트 크기 줄임
+            obtainItemInfo.transform.localScale = new Vector3(obtainItemInfoScale.x * 0.25f, obtainItemInfoScale.y * 0.25f, 0);
+            // 아이템 정보 받아오고
+            obtainItemInfoImg.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+            obtainItemInfoTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";
+            // Ease.OutBack을 이용하여 원래대로 돌려놓음. 자세한건 아래 링크를 통해 확인
+            // https://blog.naver.com/PostView.nhn?blogId=dooya-log&logNo=221320177107&parentCategoryNo=&categoryNo=9&viewDate=&isShowPopularPosts=true&from=search
+            obtainItemInfo.transform.DOScale(obtainItemInfoScale, 0.4f).SetEase(Ease.OutBack);
+            yield return new WaitForSeconds(1f);
+            // 크기 줄임
+            obtainItemInfo.transform.DOScale(new Vector3(obtainItemInfoScale.x * 0.2f, obtainItemInfoScale.y * 0.2f, 0), 0.3f).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(0.3f);
+            obtainItemInfo.SetActive(false);
+            obtainItemInfo.transform.localScale = obtainItemInfoScale;
+
+            isShowObtainItemInfo = false;
+        }
+        // 정보 출력중이라면
+        else if (isShowObtainItemInfo)
+        {
+            // 큐에 받아온 아이템 정보 넣어둠
+            obtainItemQueue.Enqueue(item);
+            while(obtainItemQueue.Count != 0)
+            {
+                // 정보 출력이 끝날때까지 대기..
+                yield return new WaitUntil(() => !isShowObtainItemInfo);
+                if(obtainItemQueue.Count == 0)
+                {
+                    break;
+                }
+                // 정보 출력이 끝났다면 큐에 있던 아이템 Dequeue
+                StartCoroutine(ShowObtainItemInfo(obtainItemQueue.Dequeue()));
+
+                yield return waitForEndOfFrame;
+            }
+        }
+    }
+    #endregion
 
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
@@ -452,13 +522,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void LoadToCenterScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
-        //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
-        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
     }
 
     public void LeaveBtn()

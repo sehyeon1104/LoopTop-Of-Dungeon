@@ -13,10 +13,11 @@ public class EnemyRoom : RoomBase
     public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
+    GameObject portalMapIcon;
 
-    protected override void Start()
+
+    private void Start()
     {
-        base.Start();
         isSpawnMonster = false;
         SetRoomTypeFlag();
     }
@@ -70,9 +71,27 @@ public class EnemyRoom : RoomBase
     private IEnumerator CheckClear()
     {
         yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
-        Debug.Log("Clear");
         IsClear();
+    }
 
+    public void InstantiateMoveMapIcon()
+    {
+        Debug.Log("아이콘 생성");
+        if (isMoveAnotherStage)
+        {
+            portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
+            portalMapIcon.transform.position = transform.position;
+            portalMapIcon.SetActive(false);
+        }
+    }
+
+    protected override void ShowIcon()
+    {
+        Debug.Log("ShowIcon");
+        if (isMoveAnotherStage)
+        {
+            portalMapIcon.SetActive(true);
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
