@@ -8,12 +8,14 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoSingleton<DialogueManager>
 {
+    private GameObject dialogueUI = null;
+
     [SerializeField]
-    private GameObject DialoguePanel = null;
+    private GameObject dialoguePanel = null;
     [SerializeField]
     private TextMeshProUGUI contentTmp = null;
     [SerializeField]
-    private float waitTime = 3f;
+    private float waitTime = 2f;
 
     private Vector3 dialoguePos;
 
@@ -23,26 +25,69 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     private BoxCollider2D col = null;
 
+    public bool isDialogue { get; private set; } = false;
+
     private void Awake()
     {
+        Init();
         waitForSeconds = new WaitForSeconds(waitTime);
+    }
+
+    private void Init()
+    {
+        if(!transform.Find("DialogueUI"))
+        {
+            dialogueUI = Managers.Resource.Instantiate("Assets/03.Prefabs/UI/DialogueUI.prefab");
+        }
+        else
+        {
+            dialogueUI = transform.Find("DialogueUI").gameObject;
+        }
+
     }
 
     private void Start()
     {
+        dialoguePanel = dialogueUI.transform.Find("DialoguePanel").gameObject;
+        contentTmp = dialogueUI.transform.Find("DialoguePanel/Content").GetComponent<TextMeshProUGUI>();
         //DialoguePanel = UIManager.Instance.playerUI.transform.Find("DialoguePanel").gameObject;
         //contentTmp = UIManager.Instance.playerUI.transform.Find("Content").gameObject.GetComponent<TextMeshProUGUI>();
 
-        //DialoguePanel.gameObject.SetActive(false);
+        dialoguePanel.gameObject.SetActive(false);
     }
 
     public void ToggleDialoguePanel()
     {
-        DialoguePanel.gameObject.SetActive(!DialoguePanel.gameObject.activeSelf);
+        dialoguePanel.gameObject.SetActive(!dialoguePanel.gameObject.activeSelf);
+    }
+
+    public void SetContentNPos(string contents, GameObject obj)
+    {
+        isDialogue = true;
+        col = obj.GetComponent<BoxCollider2D>();
+
+        if (col == null)
+        {
+            Debug.LogWarning("BoxCollider is null");
+            return;
+        }
+        contentArr = new string[contents.Length];
+        for (int i = 0; i < contents.Length; ++i)
+        {
+            contentArr[i] += contents[i];
+        }
+
+        ToggleDialoguePanel();
+        dialoguePos = Camera.main.WorldToScreenPoint(new Vector3(obj.transform.position.x, obj.transform.position.y + col.size.y / 2));
+
+        dialoguePanel.transform.position = dialoguePos;
+
+        StartCoroutine(IEStartDialogue());
     }
 
     public void SetContentNPos(string[] contents, GameObject obj)
     {
+        isDialogue = true;
         col = obj.GetComponent<BoxCollider2D>();
 
         if(col == null)
@@ -57,9 +102,10 @@ public class DialogueManager : MonoSingleton<DialogueManager>
             contentArr[i] += contents[i];
         }
 
+        ToggleDialoguePanel();
         dialoguePos = Camera.main.WorldToScreenPoint(new Vector3(obj.transform.position.x, obj.transform.position.y + col.size.y / 2));
 
-        DialoguePanel.transform.position = dialoguePos;
+        dialoguePanel.transform.position = dialoguePos;
 
         StartCoroutine(IEStartDialogue());
     }
@@ -70,13 +116,14 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
         for(int i = 0; i < contentArr.Length; ++i)
         {
-            contentTmp.DOText($"{contentArr[i]}", 2f);
+            contentTmp.DOText($"{contentArr[i]}", 1.5f);
             yield return waitForSeconds;
+            yield return new WaitUntil(() => Input.anyKeyDown);
             contentTmp.SetText("");
         }
 
         ToggleDialoguePanel();
-
+        isDialogue = false;
         yield break;
     }
 }
