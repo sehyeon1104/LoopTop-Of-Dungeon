@@ -352,6 +352,11 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
+    public void ToggleSlotLevelUpPanel()
+    {
+
+    }
+
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
         int num =skillNum;
