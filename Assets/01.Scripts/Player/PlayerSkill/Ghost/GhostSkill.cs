@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.AccessControl;
 using Unity.Mathematics;
 using UnityEngine;
@@ -594,51 +595,82 @@ public class GhostSkill : PlayerSkillBase
     }
     IEnumerator ArmSkill(int level)
     {
+        float minY;
         RaycastHit2D[] hitEnemies;
         List<Poolable> arms = new List<Poolable>();
-        if (level == 1)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + (Vector3)playerMovement.Direction * 3 + Vector3.up * 1.5f, Quaternion.identity));
-        }
-        if (level == 2)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.left * 3 + Vector3.up * 1.5f, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up * 1.5f, Quaternion.identity));
-        }
-        if (level == 3)
-        {   
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 , Quaternion.identity));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 , Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3.5f , Quaternion.Euler(0, 180, 0)));
-        }
-        if(level == 4)
-        {
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up, Quaternion.identity));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 + Vector3.up, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left*2, Quaternion.Euler(0, 180, 0)));
-            arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right *2 + Vector3.up *3, Quaternion.identity));
-        }
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Ghost/P_G_RaiseUpArm.wav");
-        mat.SetFloat("_StepValue", arms[0].transform.position.y - 2);
+
+
+        if (Physics2D.OverlapCircle(transform.position, detectiveDistance, 1 << enemyLayer))
+        {
+            float minDistance;
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectiveDistance, 1 << enemyLayer);
+            List<Collider2D> enemiesList = enemies.ToList();
+            int index = 0;
+            minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            if (level > enemiesList.Count)
+            {
+                level = enemiesList.Count;
+            }
+            for (int i = 0; i < level; i++)
+            {
+                for (int j = 0; j < enemiesList.Count; j++)
+                {
+                    if (minDistance * minDistance > Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position))
+                    {
+                        minDistance = Mathf.Sqrt(Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position));
+                        index = j;
+                    }
+                }
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", enemiesList[index].transform.position, 0 < Mathf.Sign(enemiesList[index].transform.position.x - transform.position.x) ? Quaternion.identity : Quaternion.Euler(0, 180, 0)));
+                enemiesList.RemoveAt(index);
+                minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            }
+        }
+        else
+        {
+            if (level == 1)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + (Vector3)playerMovement.Direction * 3 + Vector3.up * 1.5f, Quaternion.identity));
+            }
+            if (level == 2)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.left * 3 + Vector3.up * 1.5f, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up * 1.5f, Quaternion.identity));
+            }
+            if (level == 3)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3, Quaternion.identity));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3.5f, Quaternion.Euler(0, 180, 0)));
+            }
+            if (level == 4)
+            {
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 3 + Vector3.up, Quaternion.identity));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.left * 3 + Vector3.up, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/LeftArm.prefab", transform.position + Vector3.up * 3 + Vector3.left * 2, Quaternion.Euler(0, 180, 0)));
+                arms.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/RightArm.prefab", transform.position + Vector3.right * 2 + Vector3.up * 3, Quaternion.identity));
+            }
+        }
+        minY = arms[0].transform.position.y;
+        for (int i = 0; i < arms.Count; i++)
+        {
+            if (arms[i].transform.position.y < minY)
+            {
+                minY = arms[i].transform.position.y;
+            }
+            hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0, Vector2.up, 5, 1 << enemyLayer);
+            for (int j = 0; j < hitEnemies.Length; j++)
+            {
+                hitEnemies[j].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
+            }
+        }
+        mat.SetFloat("_StepValue", minY - 2);
+        yield return waitArm;
         for (int i = 0; i < arms.Count; i++)
         {
 
-            hitEnemies = Physics2D.BoxCastAll(arms[i].transform.position + Vector3.down * 2, new Vector2(2, 1f), 0,Vector2.up, 5,1 << enemyLayer);
-            for (int j = 0; j < hitEnemies.Length; j++)
-            {
-                eTransform = hitEnemies[j].transform.position;
-                hitEnemies[j].transform.GetComponent<IHittable>().OnDamage(armDamage, 0);
-                if (!hitEnemies[j].transform.gameObject.activeSelf)
-                {
-                    passiveAction();
-                }
-            }
-        }
-        yield return waitArm;
-        for(int i = 0; i < arms.Count; i++)
-        {
-
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arms[i].transform.position + Vector3.down * 2, Quaternion.identity);
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArnFinishEffect.prefab", arms[i].transform.position + Vector3.down * 2, Quaternion.identity);
         }
         yield return null;
     }
