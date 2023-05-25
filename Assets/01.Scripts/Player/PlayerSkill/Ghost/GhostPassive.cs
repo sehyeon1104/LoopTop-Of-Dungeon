@@ -53,6 +53,8 @@ public class GhostPassive : MonoBehaviour
             transform.Translate(flipVector.normalized * Time.deltaTime * speed);
             yield return null;
         }
+        yield return null;
+        actCoroutine = null;
     }
 
 
