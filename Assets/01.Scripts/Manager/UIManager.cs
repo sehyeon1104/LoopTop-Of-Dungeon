@@ -307,16 +307,22 @@ public class UIManager : MonoSingleton<UIManager>
 
     public IEnumerator ShowObtainItemInfo(Item item)
     {
+        // 만약 정보 출력중이 아니라면
         if (!isShowObtainItemInfo)
         {
             isShowObtainItemInfo = true;
 
             obtainItemInfo.SetActive(true);
+            // 아이템 정보 오브젝트 크기 줄임
             obtainItemInfo.transform.localScale = new Vector3(obtainItemInfoScale.x * 0.25f, obtainItemInfoScale.y * 0.25f, 0);
+            // 아이템 정보 받아오고
             obtainItemInfoImg.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
             obtainItemInfoTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";
+            // Ease.OutBack을 이용하여 원래대로 돌려놓음. 자세한건 아래 링크를 통해 확인
+            // https://blog.naver.com/PostView.nhn?blogId=dooya-log&logNo=221320177107&parentCategoryNo=&categoryNo=9&viewDate=&isShowPopularPosts=true&from=search
             obtainItemInfo.transform.DOScale(obtainItemInfoScale, 0.4f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(1f);
+            // 크기 줄임
             obtainItemInfo.transform.DOScale(new Vector3(obtainItemInfoScale.x * 0.2f, obtainItemInfoScale.y * 0.2f, 0), 0.3f).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(0.3f);
             obtainItemInfo.SetActive(false);
@@ -324,16 +330,20 @@ public class UIManager : MonoSingleton<UIManager>
 
             isShowObtainItemInfo = false;
         }
+        // 정보 출력중이라면
         else if (isShowObtainItemInfo)
         {
+            // 큐에 받아온 아이템 정보 넣어둠
             obtainItemQueue.Enqueue(item);
             while(obtainItemQueue.Count != 0)
             {
+                // 정보 출력이 끝날때까지 대기..
                 yield return new WaitUntil(() => !isShowObtainItemInfo);
                 if(obtainItemQueue.Count == 0)
                 {
                     break;
                 }
+                // 정보 출력이 끝났다면 큐에 있던 아이템 Dequeue
                 StartCoroutine(ShowObtainItemInfo(obtainItemQueue.Dequeue()));
 
                 yield return waitForEndOfFrame;
@@ -512,13 +522,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void LoadToCenterScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
-        //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
-        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
     }
 
     public void LeaveBtn()

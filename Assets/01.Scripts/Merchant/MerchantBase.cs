@@ -9,4 +9,5 @@ public abstract class MerchantBase : MonoBehaviour
 
     protected abstract void SetDialogueText();
     protected abstract void InteractiveWithPlayer();
+    protected abstract void MerchantFunc();
 }

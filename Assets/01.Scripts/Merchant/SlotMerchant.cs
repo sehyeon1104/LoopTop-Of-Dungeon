@@ -18,4 +18,9 @@ public class SlotMerchant : MerchantBase
             // TODO : 상인 기능 수행
         }
     }
+
+    protected override void MerchantFunc()
+    {
+
+    }
 }

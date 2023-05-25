@@ -14,4 +14,9 @@ public class ShopMerchant : MerchantBase
     {
         DialogueManager.Instance.SetContentNPos(dialogueText.ToString(), gameObject);
     }
+
+    protected override void MerchantFunc()
+    {
+
+    }
 }
