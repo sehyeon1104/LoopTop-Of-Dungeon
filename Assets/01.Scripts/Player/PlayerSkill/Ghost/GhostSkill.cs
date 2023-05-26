@@ -460,6 +460,7 @@ public class GhostSkill : PlayerSkillBase
         {
             Managers.Pool.Push(beamList[i]);
         }
+
     }
 
     protected override void ThirdSkillUpdate(int level)

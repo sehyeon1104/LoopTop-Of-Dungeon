@@ -32,7 +32,7 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             //모션 추가
             shorkWarning.SetActive(true);
 
@@ -97,6 +97,7 @@ public class P_Patterns : BossPattern
         dashBar.GetComponentInChildren<SpriteRenderer>().color = new Color32(200,0,0,128);
 
         //대시 모션 추가
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         dashWarning.SetActive(false);
         CinemachineCameraShaking.Instance.CameraShake(2, 0.5f);
@@ -125,15 +126,16 @@ public class P_Patterns : BossPattern
         for (int i = 0; i < 3; i++)
         {
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", Boss.Instance.player.position, Quaternion.identity);
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
             if (i == 2) clone.transform.localScale = new Vector3(1.5f, 1.5f);
             else clone.transform.localScale = Vector3.one;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
 
             while (Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
             {
-                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 20f);
+                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 5f);
                 yield return null;
             }
 

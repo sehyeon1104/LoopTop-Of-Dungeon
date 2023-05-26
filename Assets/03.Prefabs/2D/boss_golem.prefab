@@ -149,7 +149,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 34
+    FieldOfView: 100
     OrthographicSize: 11.5
     NearClipPlane: 0.3
     FarClipPlane: 50
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8768845030863187041}
   - component: {fileID: 8768845030863187040}
-  - component: {fileID: 83228056}
+  - component: {fileID: 1420197064}
   m_Layer: 9
   m_Name: PowerVisual
   m_TagString: Untagged
@@ -214,10 +214,10 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8768845030863187046}
   m_Enabled: 1
-  m_SortingLayerID: -1636186537
-  m_SortingLayer: 13
-  m_SortingOrder: 0
---- !u!95 &83228056
+  m_SortingLayerID: -726151
+  m_SortingLayer: 8
+  m_SortingOrder: 4
+--- !u!95 &1420197064
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ Animator:
   m_GameObject: {fileID: 8768845030863187046}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 733dc101b5920f643908d9b7c780346a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 017765b7b7d953a42b4daca20261232e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -260,7 +260,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8768845030871979283}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -514,7 +514,6 @@ GameObject:
   - component: {fileID: 8768845031835754249}
   - component: {fileID: 8768845031835754244}
   - component: {fileID: 8768845031835754245}
-  - component: {fileID: 8768845031835754248}
   - component: {fileID: 8768845031835754250}
   - component: {fileID: 8768845031835754251}
   - component: {fileID: 8768845031835754247}
@@ -571,9 +570,9 @@ MonoBehaviour:
   NowPhase: 1
   phase_patternCount: 0300000005000000
   Phase_One_AnimArray:
-  - {fileID: 7400000, guid: c51f52155ccb02a468475bae80d2f237, type: 2}
-  - {fileID: 7400000, guid: 112b5adfa1f706e40b4ecdb0da467b0b, type: 2}
-  - {fileID: 0}
+  - {fileID: 7400000, guid: c82af907a9ede184db0bb05fecf9ff52, type: 2}
+  - {fileID: 7400000, guid: fdca95bf9d0b3184b8145314e2ffbc2f, type: 2}
+  - {fileID: 7400000, guid: 27a476b6d1f8075468dbb60916725a90, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -589,26 +588,6 @@ MonoBehaviour:
   dash2Phase: {fileID: 6142178941564638791}
   dashBar: {fileID: 8768845031798734658}
   dashVCam: {fileID: 671402108}
---- !u!95 &8768845031835754248
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8768845031835754254}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 733dc101b5920f643908d9b7c780346a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8768845031835754250
 MonoBehaviour:
   m_ObjectHideFlags: 0
