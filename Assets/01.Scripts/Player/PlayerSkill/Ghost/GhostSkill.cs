@@ -43,7 +43,7 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
     private Material beamFiveMat;
-    WaitForSeconds beamWait = new WaitForSeconds(1f);
+    WaitForSeconds beamWait = new WaitForSeconds(0.5f);
     Texture2D eyeEffect;
     Texture2D reverseEffect;
     [Header("텔레포트 스킬")]
@@ -408,51 +408,47 @@ public class GhostSkill : PlayerSkillBase
         else if (level == 5)
         {
             Vector3 currentPostion = transform.position;
-            float timer = 0;
-            Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
-            Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
-            PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
-            LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
-            lineRenderer.sortingOrder++;
-            PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
-            leftBeam.GetComponent<PlayerBeam>().damage = beamDmg;
-            rightBeam.GetComponent<PlayerBeam>().damage = beamDmg;
-            while (timer < beamRotationDuration)
-            {
-                playerBeam1.timerA = 0;
-                playerBeam2.timerA = 0;
-                leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
-                rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
-                timer += Time.deltaTime;
-                yield return null;
-            }
+            //float timer = 0;
+            //Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
+            //Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
+            //PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
+            //LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
+            //lineRenderer.sortingOrder++;
+            //PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
+            //leftBeam.GetComponent<PlayerBeam>().damage = beamDmg;
+            //rightBeam.GetComponent<PlayerBeam>().damage = beamDmg;
+            //while (timer < beamRotationDuration)
+            //{
+            //    playerBeam1.timerA = 0; 
+            //    playerBeam2.timerA = 0;
+            //    leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
+            //    rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
+            //    timer += Time.deltaTime;
+            //    yield return null;
+            //}
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
             beamParticle.startRotation = -beamRot * Mathf.Deg2Rad;
 
             playerBeam.enabled = false;
-            beamParticle.Pause();
             yield return beamWait;
+            beamFiveMat.SetTexture("_MainTex", eyeEffect);
+            //Managers.Pool.Push(leftBeam);
+            //Managers.Pool.Push(rightBeam);
             beamParticle.Play();
-            playerBeam2.beamLight.intensity = 0;
-            playerBeam1.beamLight.intensity = 0;
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
-
-            Managers.Pool.Push(leftBeam);
-            Managers.Pool.Push(rightBeam);
-            beamParticle.Pause();
             playerBeam.enabled = true;
-            yield return new WaitUntil(() => playerBeam.timerA > 0);
-            CinemachineCameraShaking.Instance.CameraShake(1, 0.25f);
+            beamParticle.Pause();
+            yield return new WaitUntil(() => playerBeam.IsReady);
+            CinemachineCameraShaking.Instance.CameraShake(3, 0.25f);
             yield return new WaitUntil(() => !playerBeam.IsReady);
             beamFiveMat.SetTexture("_MainTex", reverseEffect);
             beamParticle.time = 0;
             beamParticle.Play();
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
-            lineRenderer.sortingOrder--;
+      
             Managers.Pool.Push(fiveBeam);
-            beamFiveMat.SetTexture("_MainTex", eyeEffect);
         }
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
@@ -679,7 +675,8 @@ public class GhostSkill : PlayerSkillBase
     {
 
         RaycastHit2D[] hitEnemies;
-        Poolable bossSprite = Managers.Pool.Pop(boss, transform.position + Vector3.up * 3);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmFiveEffect.prefab", transform.position + Vector3.up * 3, Quaternion.identity);
+        Poolable bossSprite = Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/boss_devil_man.prefab", transform.position + Vector3.up * 3,Quaternion.identity);
         Animator animator = bossSprite.GetComponentInChildren<Animator>();
         SpriteRenderer[] bossSprites = bossSprite.transform.GetComponentsInChildren<SpriteRenderer>();
         Color fadeColor = new Color(1, 1, 1, 0);

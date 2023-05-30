@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerBeam : MonoBehaviour
 {
+    Transform square;
+    float ySize;
     public float damage = 3;
     public bool IsReady { get; set; } = false;
     [SerializeField] GameObject beamPos;
@@ -31,7 +33,6 @@ public class PlayerBeam : MonoBehaviour
 
     private void Awake()
     {
-        
         foreach (ParticleSystem fx in startFX.GetComponentsInChildren<ParticleSystem>())
             startFXList.Add(fx);
         tempScale = transform.localScale;
@@ -53,10 +54,10 @@ public class PlayerBeam : MonoBehaviour
     private void Init()
     {
         StopCoroutine(OnBeam());
-
+        square = transform.Find("Beam/Square");
         lineLength = 0;
         lineWidth = width;
-
+        ySize = width * 0.37f;
         beam.startWidth = lineWidth;
         beam.endWidth = lineWidth;
 
@@ -86,6 +87,7 @@ public class PlayerBeam : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Beam.wav", Define.Sound.Effect, 1, 0.5f);
 
         IsReady = true;
+        square.localScale = new Vector2(square.localScale.x, ySize);
         while (lineLength <= length)
         {
             lineLength += 1f;
@@ -99,7 +101,7 @@ public class PlayerBeam : MonoBehaviour
             if(timer >0.1f)
             {
                 CinemachineCameraShaking.Instance.CameraShake(2, 0.3f);
-                RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(width, 1), 0 , beamPos.transform.position - transform.position , length, enemy);
+                RaycastHit2D[] attachBeam = Physics2D.BoxCastAll(transform.position, new Vector2(1, width), 0 , beamPos.transform.position - transform.position , length, enemy);
                 for (int i = 0; i < attachBeam.Length; i++)
                 {
                     attachBeam[i].transform.GetComponent<IHittable>().OnDamage(damage, 0);
@@ -118,7 +120,8 @@ public class PlayerBeam : MonoBehaviour
             beamLight.intensity -= 0.01f;
             beam.startWidth = lineWidth;
             beam.endWidth = lineWidth;
-
+            ySize -= Time.deltaTime * 0.74f;
+            square.localScale = new Vector2(square.localScale.x, ySize);
             yield return null;
         }
 
@@ -127,6 +130,7 @@ public class PlayerBeam : MonoBehaviour
         beam.startWidth = 0;
         beam.endWidth = 0;
         IsReady = false;
+        timerA = 0;
         
     }
 }
