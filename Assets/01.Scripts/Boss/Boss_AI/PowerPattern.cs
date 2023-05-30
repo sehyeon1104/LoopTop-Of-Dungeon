@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
+using UnityEditor;
 
 public class P_Patterns : BossPattern
 {
@@ -19,6 +20,8 @@ public class P_Patterns : BossPattern
     private List<Transform> partList = new List<Transform>();
     #endregion
 
+    protected Vector2 dirToPlayerOld = Vector2.zero;
+
     private void Awake()
     {
         for (int i = 1; i <= 6; i++)
@@ -28,7 +31,7 @@ public class P_Patterns : BossPattern
     }
 
     #region Phase 1
-    public IEnumerator Pattern_SG(int count = 0) //바닥찍기 1페이즈
+    public IEnumerator Pattern_SHOTGUN(int count = 0) //바닥찍기 1페이즈
     {
         for(int i = 0; i < 3; i++)
         {
@@ -39,7 +42,6 @@ public class P_Patterns : BossPattern
             yield return new WaitForSeconds(1.2f);
             shorkWarning.SetActive(false);
 
-            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
@@ -61,7 +63,7 @@ public class P_Patterns : BossPattern
         }
         yield return null;
     }
-    public IEnumerator Pattern_DS(int count = 0) //돌진 1페이즈
+    public IEnumerator Pattern_DASHATTACK(int count = 0) //돌진 1페이즈
     {
         float timer = 0f;
         Vector3 dir = Boss.Instance.player.position - transform.position;
@@ -101,10 +103,10 @@ public class P_Patterns : BossPattern
 
         dashWarning.SetActive(false);
         CinemachineCameraShaking.Instance.CameraShake(2, 0.5f);
-        while (timer < 0.5f)
+        while (timer < 1f)
         {
             timer += Time.deltaTime;
-            transform.Translate(dir.normalized * Time.deltaTime * 40f);
+            transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
             Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f);
             for(int i = 0; i < cols.Length; i++)
@@ -121,7 +123,7 @@ public class P_Patterns : BossPattern
         }
         yield return null;
     }
-    public IEnumerator Pattern_JA(int count = 0) //점프어택
+    public IEnumerator Pattern_JUMPATTACK(int count = 0) //점프어택
     {
         for (int i = 0; i < 3; i++)
         {
@@ -143,7 +145,7 @@ public class P_Patterns : BossPattern
             if(i == 2)
             {
                 col = Physics2D.OverlapCircle(clone.transform.position, 7f, 1 << 8);
-                CinemachineCameraShaking.Instance.CameraShake(10, 0.15f);
+                CinemachineCameraShaking.Instance.CameraShake(12, 0.2f);
             }
             else
             {
@@ -167,7 +169,7 @@ public class P_Patterns : BossPattern
         }
             yield return null;
     }
-    public IEnumerator Pattern_CM(int count = 0) //기둥
+    public IEnumerator Pattern_COLUMN(int count = 0) //기둥
     {
         while(!Boss.Instance.isBDead)
         {
@@ -182,6 +184,27 @@ public class P_Patterns : BossPattern
             yield return new WaitForSeconds(9f / NowPhase);
 
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
+        }
+    }
+    public IEnumerator Pattern_CATCHANDTHROW(int count = 0) //잡고 던지기
+    {
+        if(Vector2.Distance(Boss.Instance.player.position, transform.position) > 3f)
+        {
+            yield return null;
+            yield break;
+        }
+        Vector2 dirToPlayerOld = (Boss.Instance.player.position - transform.position).normalized;
+        yield return new WaitForSeconds(1f);
+        Vector2 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
+        
+        float dot = Vector2.Dot(dirToPlayer, dirToPlayerOld);
+        float theta = Mathf.Acos(dot);
+        float deg = Mathf.Rad2Deg * theta;
+
+        Debug.Log($"dot : {dot} the : {theta} deg : {deg}");
+        if(deg <= 30 && Vector2.Distance(Boss.Instance.player.position, transform.position) <= 3f)
+        {
+            GameManager.Instance.Player.OnDamage(2, 0);
         }
     }
     #endregion
@@ -314,7 +337,7 @@ public class PowerPattern : P_Patterns
 
     private void Start()
     {
-        StartCoroutine(Pattern_CM());
+        StartCoroutine(Pattern_COLUMN());
     }
 
     public override IEnumerator Pattern1(int count = 0) //바닥 찍기
@@ -322,7 +345,8 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_SG(count));
+                //yield return SCoroutine(Pattern_SHOTGUN(count));
+                yield return SCoroutine(Pattern_CATCHANDTHROW());
                 break;
             case 2:
                 yield return SCoroutine(Pattern_SG_2(count));
@@ -338,7 +362,8 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_DS());
+                //yield return SCoroutine(Pattern_DASHATTACK());
+                yield return SCoroutine(Pattern_CATCHANDTHROW());
                 break;
             case 2:
                 yield return SCoroutine(Pattern_DS_2());
@@ -351,17 +376,19 @@ public class PowerPattern : P_Patterns
 
     public override IEnumerator Pattern3(int count = 0) //볼리베어
     {
-        yield return SCoroutine(Pattern_JA(count));
+        // yield return SCoroutine(Pattern_JUMPATTACK(count));
+        yield return SCoroutine(Pattern_CATCHANDTHROW());
 
         yield return null;
         Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0)
+    public override IEnumerator Pattern4(int count = 0) //잡&던
     {
         switch (NowPhase)
         {
             case 1:
+                yield return SCoroutine(Pattern_CATCHANDTHROW());
                 break;
             case 2:
                 break;
@@ -396,5 +423,12 @@ public class PowerPattern : P_Patterns
 
         yield return null;
         Boss.Instance.actCoroutine = null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.red;
+        Handles.DrawSolidArc(transform.position, Vector3.up, dirToPlayerOld, 30, 5);
+        Handles.DrawSolidArc(transform.position, Vector3.up, dirToPlayerOld, -30, 5);
     }
 }
