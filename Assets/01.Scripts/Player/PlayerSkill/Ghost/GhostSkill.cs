@@ -546,7 +546,7 @@ public class GhostSkill : PlayerSkillBase
                 for (int i = 0; i < hitEnemies.Length; i++)
                 {
                     eTransform = hitEnemies[i].transform.position;
-                    hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(player.playerBase.Attack * 0.1f, 0));
+                    hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(player.playerBase.Attack * 0.1f), 0);
                     if (!hitEnemies[i].gameObject.activeSelf)
                     {
                         passiveAction();
