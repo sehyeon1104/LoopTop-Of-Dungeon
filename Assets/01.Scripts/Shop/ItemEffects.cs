@@ -257,8 +257,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp포션 (소) 사용");
-            Debug.Log("체력 15 회복");
-            GameManager.Instance.Player.playerBase.Hp += 15;
+            Debug.Log("체력 1/2칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 2;
         }
     }
 
@@ -273,8 +273,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp포션 (중) 사용");
-            Debug.Log("체력 30 회복");
-            GameManager.Instance.Player.playerBase.Hp += 30;
+            Debug.Log("체력 1칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 4;
         }
     }
 
@@ -289,8 +289,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp포션 (대) 사용");
-            Debug.Log("체력 50 회복");
-            GameManager.Instance.Player.playerBase.Hp += 50;
+            Debug.Log("체력 2칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 8;
         }
     }
 
@@ -305,8 +305,8 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("hp포션 (특대) 사용");
-            Debug.Log("체력 80 회복");
-            GameManager.Instance.Player.playerBase.Hp += 80;
+            Debug.Log("체력 3칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 12;
         }
     }
 
