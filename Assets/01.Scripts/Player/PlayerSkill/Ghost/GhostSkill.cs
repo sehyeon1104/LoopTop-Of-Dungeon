@@ -284,6 +284,7 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
+            playerBase.PlayerTransformData.skill[1].skillDelay = 7;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
             // 장판 5렙 데미지 공식 반올림(1 + 플레이어 공격력 * 0.1f)
             jangPanDamage = Mathf.RoundToInt(1 + player.playerBase.Attack * 0.1f);
@@ -341,9 +342,10 @@ public class GhostSkill : PlayerSkillBase
         }
         else if(level ==5)
         {
+            playerBase.PlayerTransformData.skill[4].skillDelay = 22;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 2);
             hillaDuration = new WaitForSeconds(10f);
-            playerBase.PlayerTransformData.skill[4].skillDelay = 15;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 22;
 
         }
       
@@ -469,6 +471,7 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
+            playerBase.PlayerTransformData.skill[4].skillDelay = 11;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
             // 5레벨 데미지 공식
             beamDmg = Mathf.RoundToInt(level + (player.playerBase.Attack * 0.1f));
@@ -587,6 +590,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             telpoVelocity = 100;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 5;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
             return;
         }
@@ -756,6 +760,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             // 5레벨 : 반올림 (60 + (레벨 + 플레이어 공격력 * 0.8) + 플레이어 공격력 * 2 )
+            playerBase.PlayerTransformData.skill[4].skillDelay = 4.5f;
             armDamage = Mathf.RoundToInt(60 + (level + player.playerBase.Attack * 0.8f) + (player.playerBase.Attack * 2));
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 1);
         }
