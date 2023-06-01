@@ -199,21 +199,29 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void RemoveEnemyInList(Poolable enemy)
     {
-        if(enemy == null)
-        {
-            for(int i = 0; i < curEnemies.Count; ++i)
-            {
-                if(curEnemies[i] == null)
-                {
-                    curEnemies.RemoveAt(i);
-                }
-            }
-            return;
-        }
+        //if(enemy == null)
+        //{
+        //    for(int i = 0; i < curEnemies.Count; ++i)
+        //    {
+        //        if(curEnemies[i] == null)
+        //        {
+        //            curEnemies.RemoveAt(i);
+        //        }
+        //    }
+        //    return;
+        //}
 
         var enemyDeadEffectClone = Managers.Pool.Pop(enemyDeadEffect);
         enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
+
+        for (int i = 0; i < curEnemies.Count; ++i)
+        {
+            if (!curEnemies[i].gameObject.activeSelf)
+            {
+                curEnemies.Remove(enemy);
+            }
+        }
     }
 
 }

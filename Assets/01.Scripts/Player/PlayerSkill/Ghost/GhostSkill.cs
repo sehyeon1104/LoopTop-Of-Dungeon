@@ -293,7 +293,7 @@ public class GhostSkill : PlayerSkillBase
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
             // 장판 1 ~ 4렙 데미지 공식 반올림(레벨 - 1 + 플레이어 공격력 * 0.1f)
-            jangPanDamage = Mathf.RoundToInt(level - player.playerBase.Attack * 0.1f);
+            jangPanDamage = Mathf.RoundToInt((level - 1) + (player.playerBase.Attack * 0.1f));
         }
         playerBase.PlayerTransformData.skill[0].skillDelay = 8;
         jangpanDuration = 4 + (level - 1) / 2;
