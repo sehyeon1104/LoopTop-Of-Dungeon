@@ -107,7 +107,7 @@ public class ItemEffects : MonoBehaviour
         public override void Use()
         {
             Debug.Log("찢어진 종이 효과 발동");
-            Debug.Log("대쉬 쿨타임 0.5초 감소");
+            Debug.Log("대쉬 쿨타임 10% 감소");
         }
     }
 
@@ -161,6 +161,7 @@ public class ItemEffects : MonoBehaviour
         {
             // TODO : 적 처치시 hp 1 회복 구현
             Debug.Log("뱀파이어의 송곳니 효과 발동");
+            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             //Debug.Log("적 처치 시 hp 1 회복");
 
             GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
@@ -169,11 +170,16 @@ public class ItemEffects : MonoBehaviour
 
         public void VampireFangsEffect()
         {
-            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             // 적 공격시 1% 확률로 hp 1 회복
+            Debug.Log("VampireFangsEffect");
             if(Random.Range(0, 100) < probabilityChance)
             {
+                Debug.Log("흡혈");
                 GameManager.Instance.Player.playerBase.Hp += 1;
+            }
+            else
+            {
+                Debug.Log("흡혈 실패");
             }
         }
     }
@@ -204,8 +210,11 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => true;
 
-        int temp = 0;
+        float temp = 0;
         int rise = 0;
+        int totalRise = 0;
+
+        int maxIncrease = 15;
 
         public override void Use()
         {
@@ -222,22 +231,24 @@ public class ItemEffects : MonoBehaviour
         {
             GameManager.Instance.Player.playerBase.Attack -= lastRise;
             temp = GameManager.Instance.Player.playerBase.Hp;
-            rise = 0;
-            while (temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
+            rise = maxIncrease / GameManager.Instance.Player.playerBase.MaxHp;
+            totalRise = 0;
+
+            while (temp < GameManager.Instance.Player.playerBase.MaxHp && rise < 15)
             {
-                temp += 10;
                 if (temp < GameManager.Instance.Player.playerBase.MaxHp)
                 {
-                    rise++;
+                    totalRise += rise;
                 }
                 else
                 {
                     break;
                 }
+                temp++;
             }
 
-            lastRise = rise;
-            GameManager.Instance.Player.playerBase.Attack += rise;
+            lastRise = totalRise;
+            GameManager.Instance.Player.playerBase.Attack += totalRise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
         }
     }

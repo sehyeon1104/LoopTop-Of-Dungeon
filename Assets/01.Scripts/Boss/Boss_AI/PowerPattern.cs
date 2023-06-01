@@ -286,6 +286,7 @@ public class PowerPattern : P_Patterns
     {
         return ActCoroutine = StartCoroutine(act);
     }
+
     private IEnumerator ECoroutine()
     {
         StopCoroutine(ActCoroutine);
@@ -425,10 +426,12 @@ public class PowerPattern : P_Patterns
         Boss.Instance.actCoroutine = null;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.red;
         Handles.DrawSolidArc(transform.position, Vector3.up, dirToPlayerOld, 30, 5);
         Handles.DrawSolidArc(transform.position, Vector3.up, dirToPlayerOld, -30, 5);
     }
+#endif
 }

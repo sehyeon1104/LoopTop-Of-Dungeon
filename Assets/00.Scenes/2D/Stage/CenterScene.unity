@@ -1276,7 +1276,7 @@ MonoBehaviour:
     itemNumber: 5
     itemName: "\uCC22\uC5B4\uC9C4 \uC885\uC774"
     itemNameEng: TornPaper
-    itemDescription: "\uB300\uC26C \uCFE8\uD0C0\uC784 0.5\uCD08 \uAC10\uC18C"
+    itemDescription: "\uB300\uC26C \uCFE8\uD0C0\uC784 10% \uAC10\uC18C"
     price: 200
   - itemType: 1
     itemRating: 2
@@ -1321,28 +1321,28 @@ MonoBehaviour:
     itemNumber: 11
     itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC18C)"
     itemNameEng: SmallHpPotion
-    itemDescription: "\uCCB4\uB825\uC744 15 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
+    itemDescription: "\uCCB4\uB825\uC744  0.5\uCE78 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
     price: 100
   - itemType: 2
     itemRating: 5
     itemNumber: 12
     itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC911)"
     itemNameEng: MediumHpPotion
-    itemDescription: "\uCCB4\uB825\uC744 30 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
+    itemDescription: "\uCCB4\uB825\uC744  1\uCE78 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
     price: 200
   - itemType: 2
     itemRating: 5
     itemNumber: 13
     itemName: "\uCCB4\uB825\uBB3C\uC57D (\uB300)"
     itemNameEng: LargeHpPotion
-    itemDescription: "\uCCB4\uB825\uC744 50 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
+    itemDescription: "\uCCB4\uB825\uC744  2\uCE78 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
     price: 300
   - itemType: 2
     itemRating: 5
     itemNumber: 14
     itemName: "\uCCB4\uB825\uBB3C\uC57D (\uD2B9\uB300)"
     itemNameEng: ExtraLargeHpPotion
-    itemDescription: "\uCCB4\uB825\uC744 80 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
+    itemDescription: "\uCCB4\uB825\uC744  3\uCE78 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4"
     price: 400
   - itemType: 3
     itemRating: 6
@@ -7310,7 +7310,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913719781}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -7349,7 +7349,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913719781}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 5a58b4fd832f42b418d6e0704f4919d0, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

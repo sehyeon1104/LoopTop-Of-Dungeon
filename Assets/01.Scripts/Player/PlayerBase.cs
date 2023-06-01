@@ -17,7 +17,7 @@ public class PlayerBase
         maxHp = 12;
         hp = maxHp;
         attack = 11f;
-        damage = Mathf.CeilToInt(attack * 0.6f);
+        damage = Mathf.RoundToInt(attack * 0.6f);
         attackSpeed = 0.3f;
         moveSpeed = 4.25f;
         critChance = 5f;
