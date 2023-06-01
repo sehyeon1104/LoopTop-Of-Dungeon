@@ -281,6 +281,7 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("광전사의 검 효과 발동");
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
+            lastRise = 0;
             BerserkerSwordEffect();
             GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
             GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);

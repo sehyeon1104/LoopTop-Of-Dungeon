@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
 
     // HP 관련 아이템 효과
     [field: SerializeField]
-    public UnityEvent HPRelatedItemEffects { get; private set; }
+    public UnityEvent HPRelatedItemEffects;
     // 공격 관련 아이템 효과
     [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }
@@ -45,8 +45,8 @@ public class Player : MonoBehaviour, IHittable
     }
     private void Start()
     {
-        if (HPRelatedItemEffects == null)
-            HPRelatedItemEffects = new UnityEvent();
+        //if (HPRelatedItemEffects == null)
+        //    HPRelatedItemEffects = new Action();
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }

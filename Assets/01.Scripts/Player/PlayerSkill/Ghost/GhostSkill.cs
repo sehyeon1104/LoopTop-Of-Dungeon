@@ -86,6 +86,10 @@ public class GhostSkill : PlayerSkillBase
         base.Update();
     }
 
+    public void UpdateSkillDamage()
+    { 
+    }
+
     protected override void Attack()
     {
         if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !playerMovement.IsMove)
