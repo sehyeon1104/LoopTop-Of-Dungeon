@@ -119,7 +119,6 @@ public class GameManager : MonoSingleton<GameManager>
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
         }
-        InitItem();
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Ghost.asset"));
@@ -143,14 +142,6 @@ public class GameManager : MonoSingleton<GameManager>
         itemRateColor[(int)Define.ItemRating.Legendary] = "#FFA500";
         itemRateColor[(int)Define.ItemRating.Special] = "#DC143C";
         itemRateColor[(int)Define.ItemRating.ETC] = "#FFFFFF";
-    }
-
-    private void InitItem()
-    {
-        for(int i = 1; i <= allItemList.Count; ++i)
-        {
-            ItemEffects.Items[i].Init();
-        }
     }
 
     private void Start()

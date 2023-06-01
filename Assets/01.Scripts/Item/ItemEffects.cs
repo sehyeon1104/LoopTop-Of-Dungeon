@@ -491,6 +491,7 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("공격력 60% 증가, 받는 데미지 2배 증가");
             if (!isFirst)
             {
+                Debug.Log("공격력 증가");
                 isFirst = true;
                 GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
             }
