@@ -99,6 +99,7 @@ public class PlayerBase
         get => attack;
         set
         {
+            PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
             attack = value;
             Damage = Mathf.CeilToInt(attack * 0.6f);
         }
