@@ -85,27 +85,26 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         switch (rand)
         {
             case 1:
-                wave1NormalEnemyCount = 4;
-                wave2NormalEnemyCount = 5;
+                wave1NormalEnemyCount = 5;
+                wave2NormalEnemyCount = 7;
                 break;
             case 2:
-                wave1NormalEnemyCount = 5;
-                wave2NormalEnemyCount = 4;
+                wave1NormalEnemyCount = 7;
+                wave2NormalEnemyCount = 5;
                 break;
             case 3:
-                wave1NormalEnemyCount = 3;
-                wave2NormalEnemyCount = 6;
+                wave1NormalEnemyCount = 4;
+                wave2NormalEnemyCount = 8;
                 break;
             case 4:
-                wave1NormalEnemyCount = 5;
-                wave2NormalEnemyCount = 5;
+                wave1NormalEnemyCount = 6;
+                wave2NormalEnemyCount = 6;
                 break;
         }
     }
 
     public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
     {
-        // TODO : 적 소환시 이펙트 추가
         if (door.IsFirst)
         {
             door.IsFirst = false;

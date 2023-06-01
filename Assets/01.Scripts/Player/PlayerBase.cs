@@ -19,13 +19,13 @@ public class PlayerBase
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
         attackSpeed = 0.3f;
-        moveSpeed = 4.25f;
+        moveSpeed = 5.3f;
         critChance = 5f;
         level = 1;
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        PlayerSkillNum = new int[] { 1, 2 };
+        PlayerSkillNum = new int[] { 4, 5 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;

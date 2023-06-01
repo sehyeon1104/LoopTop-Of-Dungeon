@@ -299,7 +299,7 @@ public class GhostSkill : PlayerSkillBase
             // 장판 1 ~ 4렙 데미지 공식 반올림(레벨 - 1 + 플레이어 공격력 * 0.1f)
             jangPanDamage = Mathf.RoundToInt((level - 1) + (player.playerBase.Attack * 0.1f));
         }
-        playerBase.PlayerTransformData.skill[0].skillDelay = 8;
+        playerBase.PlayerTransformData.skill[0].skillDelay = 7f;
         jangpanDuration = 4 + (level - 1) / 2;
         jangpanDealinterval = 0.1f;
         jangpanSize = 2 * level + 2;
@@ -594,7 +594,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             telpoVelocity = 100;
-            playerBase.PlayerTransformData.skill[4].skillDelay = 5;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 4;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
             return;
         }
@@ -764,7 +764,7 @@ public class GhostSkill : PlayerSkillBase
         if (level == 5)
         {
             // 5레벨 : 반올림 (60 + (레벨 + 플레이어 공격력 * 0.8) + 플레이어 공격력 * 2 )
-            playerBase.PlayerTransformData.skill[4].skillDelay = 4.5f;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 3.5f;
             armDamage = Mathf.RoundToInt(60 + (level + player.playerBase.Attack * 0.8f) + (player.playerBase.Attack * 2));
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 1);
         }
