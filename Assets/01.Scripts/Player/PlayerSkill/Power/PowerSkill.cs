@@ -111,7 +111,7 @@ public class PowerSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator BottomingOut()
     {
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
+        CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
         Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position,Quaternion.identity);
         Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 2,1<<enemyLayer);
         for(int i =0;  i<enemys.Length; i++)

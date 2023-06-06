@@ -28,7 +28,7 @@ public class PlayerBase
         PlayerSkillNum = new int[] { 1, 2 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
