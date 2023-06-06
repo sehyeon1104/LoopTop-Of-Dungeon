@@ -104,7 +104,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             slots.Add(newItemObjComponent);
             if (ItemEffects.Items[inventoryItem.itemNumber].isPersitantItem)
             {
-                ItemEffects.Items[inventoryItem.itemNumber].Use();
+                ItemEffects.Items[inventoryItem.itemNumber].LastingEffect();
             }
 
             UIManager.Instance.AddItemListUI(items);

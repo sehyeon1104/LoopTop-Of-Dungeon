@@ -12,6 +12,10 @@ public class ItemEffects : MonoBehaviour
         public abstract bool isPersitantItem { get; }
         public abstract void Init();
         public abstract void Use();
+        public virtual void LastingEffect()
+        {
+
+        }
         public virtual bool isOneOff { get; } = false;
     }
 
@@ -194,7 +198,6 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemType itemType => Define.ItemType.buff;
         public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
-        //public override bool isPersitantItem => true;
         public override bool isPersitantItem => true;
 
         private float probabilityChance = 1f;
@@ -211,6 +214,12 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             //Debug.Log("적 처치 시 hp 1 회복");
 
+            GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
+            GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
+        }
+
+        public override void LastingEffect()
+        {
             GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
             GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
         }
@@ -272,11 +281,19 @@ public class ItemEffects : MonoBehaviour
         {
             Debug.Log("광전사의 검 효과 발동");
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
+            lastRise = 0;
             BerserkerSwordEffect();
             GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
             GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
         }
 
+        public override void LastingEffect()
+        {
+            GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
+            GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
+        }
+
+        // 오류가 유발될 수 있음. 예의주시할것
         private static float lastRise = 0;
 
         public void BerserkerSwordEffect()
@@ -499,7 +516,13 @@ public class ItemEffects : MonoBehaviour
             GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(CursedRingEffect);
 
         }
-        
+
+        public override void LastingEffect()
+        {
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(CursedRingEffect);
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(CursedRingEffect);
+        }
+
         private void CursedRingEffect()
         {
             GameManager.Instance.Player.DamageMultiples = 2;
