@@ -84,6 +84,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         switch (rand)
         {
+            // TODO : 강화 스켈레톤, 팬텀, 매지션 수 조정 ( 노션 몹 수치 테이블에 있음 )
             case 1:
                 wave1NormalEnemyCount = 5;
                 wave2NormalEnemyCount = 7;
