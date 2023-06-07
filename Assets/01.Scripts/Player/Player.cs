@@ -111,7 +111,8 @@ public class Player : MonoBehaviour, IHittable
     public void RevivePlayer()
     {
         playerVisual.SetActive(true);
-        UIManager.Instance.CloseGameOverPanel();
+        UIManager.Instance.ToggleGameOverPanel();
+        //UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

@@ -293,7 +293,6 @@ public class ItemEffects : MonoBehaviour
             GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
         }
 
-        // 오류가 유발될 수 있음. 예의주시할것
         private static float lastRise = 0;
 
         public void BerserkerSwordEffect()

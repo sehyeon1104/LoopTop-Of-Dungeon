@@ -91,7 +91,7 @@ namespace Rito
 
         [Conditional("UNITY_EDITOR")]
         public static void Log(object message)
-            => UnityEngine.Debug.Log(message);
+            => UnityEngine.Debug.Log(message); 
 
         [Conditional("UNITY_EDITOR")]
         public static void Log(object message, Object context)

@@ -283,7 +283,7 @@ public class UIManager : MonoSingleton<UIManager>
         //blurPanel.SetActive(!blurPanel.activeSelf);
       
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
-
+        Debug.Log("Active : " + gameOverPanel.activeSelf);
         MouseManager.Show(gameOverPanel.activeSelf);
         MouseManager.Lock(!gameOverPanel.activeSelf);
     }
