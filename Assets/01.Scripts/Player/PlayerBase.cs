@@ -19,7 +19,7 @@ public class PlayerBase
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
         attackSpeed = 0.3f;
-        moveSpeed = 5.3f;
+        moveSpeed = 4.8f;
         critChance = 5f;
         level = 1;
         maxLevel = 100;
