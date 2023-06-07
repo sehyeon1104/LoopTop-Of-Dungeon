@@ -10,7 +10,12 @@ public class ItemEffects : MonoBehaviour
         public abstract Define.ItemType itemType { get; }
         public abstract Define.ItemRating itemRating { get; }
         public abstract bool isPersitantItem { get; }
+        public abstract void Init();
         public abstract void Use();
+        public virtual void LastingEffect()
+        {
+
+        }
         public virtual bool isOneOff { get; } = false;
     }
 
@@ -21,6 +26,11 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
 
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
 
@@ -28,6 +38,28 @@ public class ItemEffects : MonoBehaviour
     }
 
     #region Common
+
+    // 무뎌진 검 (공격력 5% 증가)
+    public class DullSword : ItemBase
+    {
+        public override Define.ItemType itemType => Define.ItemType.buff;
+        public override Define.ItemRating itemRating => Define.ItemRating.Common;
+
+        public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
+
+        public override void Use()
+        {
+            Debug.Log("무뎌진 검 효과 발동");
+            Debug.Log("공격력 5% 증가");
+            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
+        }
+    }
+
     // 날개달린 신발 ( 이동속도 10% 증가 )
     public class WingShoes : ItemBase
     {
@@ -35,6 +67,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Common;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -52,27 +89,16 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
 
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("거인의 장갑 효과 발동");
             Debug.Log("공격범위 10% 증가");
             GameManager.Instance.Player.playerBase.AttackRange = GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
-        }
-    }
-
-    // 무뎌진 검 ( 공격력 5% 증가 )
-    public class DullSword : ItemBase
-    {
-        public override Define.ItemType itemType => Define.ItemType.buff;
-        public override Define.ItemRating itemRating => Define.ItemRating.Common;
-
-        public override bool isPersitantItem => false;
-
-        public override void Use()
-        {
-            Debug.Log("무뎌진 검 효과 발동");
-            Debug.Log("공격력 5% 증가");
-            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
         }
     }
 
@@ -85,6 +111,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -104,10 +135,15 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
 
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("찢어진 종이 효과 발동");
-            Debug.Log("대쉬 쿨타임 0.5초 감소");
+            Debug.Log("대쉬 쿨타임 10% 감소");
         }
     }
 
@@ -117,6 +153,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -133,6 +174,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -152,29 +198,40 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemType itemType => Define.ItemType.buff;
         public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
-        //public override bool isPersitantItem => true;
         public override bool isPersitantItem => true;
 
         private float probabilityChance = 1f;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
             // TODO : 적 처치시 hp 1 회복 구현
             Debug.Log("뱀파이어의 송곳니 효과 발동");
+            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             //Debug.Log("적 처치 시 hp 1 회복");
 
             GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
             GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
         }
 
+        public override void LastingEffect()
+        {
+            GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
+            GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
+        }
+
         public void VampireFangsEffect()
         {
-            Debug.Log("적 공격시 1% 확률로 hp 1 회복");
             // 적 공격시 1% 확률로 hp 1 회복
             if(Random.Range(0, 100) < probabilityChance)
             {
                 GameManager.Instance.Player.playerBase.Hp += 1;
             }
+
         }
     }
 
@@ -187,6 +244,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Legendary;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -204,14 +266,29 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => true;
 
-        int temp = 0;
+        float temp = 0;
         int rise = 0;
+        int totalRise = 0;
+
+        int maxIncrease = 15;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
             Debug.Log("광전사의 검 효과 발동");
             Debug.Log("hp에 반비례하여 공격력 상승 (최대 15)");
+            lastRise = 0;
             BerserkerSwordEffect();
+            GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
+            GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
+        }
+
+        public override void LastingEffect()
+        {
             GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
             GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
         }
@@ -222,24 +299,27 @@ public class ItemEffects : MonoBehaviour
         {
             GameManager.Instance.Player.playerBase.Attack -= lastRise;
             temp = GameManager.Instance.Player.playerBase.Hp;
-            rise = 0;
-            while (temp < GameManager.Instance.Player.playerBase.MaxHp || rise < 15)
+            rise = maxIncrease / GameManager.Instance.Player.playerBase.MaxHp;
+            totalRise = 0;
+
+            while (temp < GameManager.Instance.Player.playerBase.MaxHp && rise < 15)
             {
-                temp += 10;
                 if (temp < GameManager.Instance.Player.playerBase.MaxHp)
                 {
-                    rise++;
+                    totalRise += rise;
                 }
                 else
                 {
                     break;
                 }
+                temp++;
             }
 
-            lastRise = rise;
-            GameManager.Instance.Player.playerBase.Attack += rise;
+            lastRise = totalRise;
+            GameManager.Instance.Player.playerBase.Attack += totalRise;
             Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
         }
+
     }
 
     #endregion
@@ -254,11 +334,17 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
         public override bool isOneOff => true;
+
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("hp포션 (소) 사용");
-            Debug.Log("체력 15 회복");
-            GameManager.Instance.Player.playerBase.Hp += 15;
+            Debug.Log("체력 1/2칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 2;
         }
     }
 
@@ -270,11 +356,17 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
         public override bool isOneOff => true;
+
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("hp포션 (중) 사용");
-            Debug.Log("체력 30 회복");
-            GameManager.Instance.Player.playerBase.Hp += 30;
+            Debug.Log("체력 1칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 4;
         }
     }
 
@@ -286,11 +378,17 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
         public override bool isOneOff => true;
+
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("hp포션 (대) 사용");
-            Debug.Log("체력 50 회복");
-            GameManager.Instance.Player.playerBase.Hp += 50;
+            Debug.Log("체력 2칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 8;
         }
     }
 
@@ -302,11 +400,17 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
         public override bool isOneOff => true;
+
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("hp포션 (특대) 사용");
-            Debug.Log("체력 80 회복");
-            GameManager.Instance.Player.playerBase.Hp += 80;
+            Debug.Log("체력 3칸 회복");
+            GameManager.Instance.Player.playerBase.Hp += 12;
         }
     }
 
@@ -321,6 +425,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -339,6 +448,11 @@ public class ItemEffects : MonoBehaviour
 
         public override bool isPersitantItem => false;
 
+        public override void Init()
+        {
+
+        }
+
         public override void Use()
         {
             Debug.Log("흐린 안경 효과 발동");
@@ -355,6 +469,11 @@ public class ItemEffects : MonoBehaviour
         public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
         public override bool isPersitantItem => false;
+
+        public override void Init()
+        {
+
+        }
 
         public override void Use()
         {
@@ -373,9 +492,14 @@ public class ItemEffects : MonoBehaviour
 
         public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
-        public override bool isPersitantItem => false;
+        public override bool isPersitantItem => true;
 
         private static bool isFirst = false;
+
+        public override void Init()
+        {
+            isFirst = false;
+        }
 
         public override void Use()
         {
@@ -383,19 +507,26 @@ public class ItemEffects : MonoBehaviour
             Debug.Log("공격력 60% 증가, 받는 데미지 2배 증가");
             if (!isFirst)
             {
+                Debug.Log("공격력 증가");
                 isFirst = true;
                 GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
             }
-            //TODO : 받는 데미지 2배 증가 구현
             GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(CursedRingEffect);
             GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(CursedRingEffect);
 
         }
-        
+
+        public override void LastingEffect()
+        {
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(CursedRingEffect);
+            GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(CursedRingEffect);
+        }
+
         private void CursedRingEffect()
         {
             GameManager.Instance.Player.DamageMultiples = 2;
         }
+
     }
 
     #endregion

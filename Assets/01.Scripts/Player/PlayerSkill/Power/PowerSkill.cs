@@ -22,9 +22,9 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || player.playerBase.IsPDead)
+        print("ss");
+        if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || player.playerBase.IsPDead)
             return;
-
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
 
         CinemachineCameraShaking.Instance.CameraShake();
@@ -86,32 +86,33 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void FirstSkillUpdate(int level)
     {
-        
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
     }
 
     protected override void SecondSkillUpdate(int level)
     {
-       
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
     }
 
     protected override void ThirdSkillUpdate(int level)
     {
-       
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
     }
 
     protected override void ForuthSkillUpdate(int level)
     {
-        
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
     }
 
     protected override void FifthSkillUpdate(int level)
     {
-        
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
     }
     #region 스킬 구현
     IEnumerator BottomingOut()
     {
-        Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position + (Vector3)playerMovement.Direction,Quaternion.identity);
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
+        Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position,Quaternion.identity);
         Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 2,1<<enemyLayer);
         for(int i =0;  i<enemys.Length; i++)
         {
@@ -123,6 +124,6 @@ public class PowerSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 10);
+        Gizmos.DrawWireSphere(transform.position, 2);
     }
 }

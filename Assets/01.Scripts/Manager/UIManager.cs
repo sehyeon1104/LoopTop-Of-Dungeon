@@ -10,7 +10,7 @@ using System.Linq;
 using System;
 using UnityEngine.Playables;
 using UnityEngine.VFX;
-using static UnityEditor.Experimental.GraphView.GraphView;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -283,7 +283,7 @@ public class UIManager : MonoSingleton<UIManager>
         //blurPanel.SetActive(!blurPanel.activeSelf);
       
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
-
+        Debug.Log("Active : " + gameOverPanel.activeSelf);
         MouseManager.Show(gameOverPanel.activeSelf);
         MouseManager.Lock(!gameOverPanel.activeSelf);
     }

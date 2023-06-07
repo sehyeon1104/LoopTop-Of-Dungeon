@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 // Player Skill Class
-public class PlayerSkill : MonoBehaviour
+public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     PlayerBase playerBase;
     [Space]
@@ -98,8 +98,9 @@ public class PlayerSkill : MonoBehaviour
             return;
         slotLevel[index]++;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
+       
     }
-    void SkillSelect(Define.PlayerTransformTypeFlag playerType)
+   public void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
         ReserProperty();
         PlayerSkillBase playerSkill;
@@ -128,6 +129,8 @@ public class PlayerSkill : MonoBehaviour
     }
     void Skill1()
     {
+        if (playerBase.IsPDead)
+            return;
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0]))
             skillEvent[0]();
     }
@@ -145,6 +148,7 @@ public class PlayerSkill : MonoBehaviour
     {
         if (PlayerMovement.Instance.IsControl)
             skillEvent[2]();
+
     }
     void UltimateSkill()
     {
