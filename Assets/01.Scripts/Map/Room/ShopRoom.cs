@@ -110,6 +110,7 @@ public class ShopRoom : RoomBase
                         && itemobjArr[i].itemName != "Default"
                         && !itemobjArr[i].isSold)
                     {
+                        Debug.Log(itemobjArr[i].isSold);
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;
                     }
