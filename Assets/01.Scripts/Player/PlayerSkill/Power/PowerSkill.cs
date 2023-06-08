@@ -32,22 +32,16 @@ public class PowerSkill : PlayerSkillBase
 
         CinemachineCameraShaking.Instance.CameraShake();
         playerAnim.SetTrigger("Attack");
-
         attackPar.transform.SetParent(transform);
-
         attackPar.transform.localPosition = playerSprite.flipX ? Vector3.right : Vector3.left;
         attackPar.Play();
-
         attackPar.transform.SetParent(null);
 
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one,0, attackPar.transform.localPosition, attackRange,1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
         {
-            if (enemys[i].gameObject.CompareTag("Enemy") || enemys[i].gameObject.CompareTag("Boss"))
-            {
-                CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);
-                enemys[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-            }
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);
+            enemys[i].transform.GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
         }
     }
 
@@ -114,7 +108,7 @@ public class PowerSkill : PlayerSkillBase
     #region 스킬 구현
     IEnumerator BottomingOut()
     {
-        CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
+        CinemachineCameraShaking.Instance.CameraShake(15, 0.2f);
         Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position, Quaternion.identity);
         Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 2, 1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
