@@ -50,11 +50,13 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         float timer = 0f;
 
+        Time.timeScale = 0.001f;
+
         playerSprite.color = Color.red;
         Managers.Pool.PoolManaging("10.Effects/player/Hit_main", transform.position, Quaternion.identity);
         Managers.Pool.PoolManaging("10.Effects/player/Hit_sub", transform.position, Quaternion.identity);
         Managers.Sound.Play("SoundEffects/Player/Damaged.wav");
-        while (timer <= 0.25f)
+        while (timer <= 0.15f)
         {
             timer += Time.unscaledDeltaTime;
 
