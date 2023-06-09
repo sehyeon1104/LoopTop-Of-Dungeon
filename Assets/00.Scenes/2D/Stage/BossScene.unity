@@ -519,6 +519,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4022749607786850465, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174469006390886605, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1676,6 +1680,9 @@ MonoBehaviour:
   checkOneMorePanel: {fileID: 0}
   resumeBtn: {fileID: 0}
   quitBtn: {fileID: 0}
+  obtainItemInfo: {fileID: 0}
+  obtainItemInfoImg: {fileID: 0}
+  obtainItemInfoTMP: {fileID: 0}
   showCurStageNameObj: {fileID: 0}
   curStageName: {fileID: 0}
   curStageNameLine: {fileID: 0}
@@ -2992,6 +2999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShakeFrequency: 50
+  mainCam: {fileID: 0}
   VirtualCamera: {fileID: 1200786702}
 --- !u!1 &1099245693
 GameObject:
