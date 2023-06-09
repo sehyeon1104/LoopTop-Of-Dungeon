@@ -40,7 +40,7 @@ public class PowerSkill : PlayerSkillBase
         attackPar.Play();
         attackPar.transform.SetParent(null);
 
-        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one,0, attackPar.transform.localPosition, attackRange,1 << enemyLayer);
+        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one,0, attackPar.transform.localPosition, attackRange/2,1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
         {
             CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);

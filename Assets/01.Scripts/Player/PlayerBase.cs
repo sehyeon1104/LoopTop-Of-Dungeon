@@ -14,11 +14,12 @@ public class PlayerBase
 
     public void InitPlayerStat()
     {
+        
         maxHp = 12;
         hp = maxHp;
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
-        attackSpeed = 0.3f;
+        attackSpeed = 1;
         moveSpeed = 5.3f;
         critChance = 5f;
         level = 1;
@@ -28,7 +29,7 @@ public class PlayerBase
         PlayerSkillNum = new int[] { 4, 5 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;
@@ -54,7 +55,6 @@ public class PlayerBase
         get => playerTransformTypeFlag;
         set => playerTransformTypeFlag = value;
     }
-
     private int hp;
     public int Hp
     {
@@ -120,7 +120,11 @@ public class PlayerBase
     public float AttackSpeed
     {
         get => attackSpeed;
-        set => attackSpeed = value;
+        set { 
+            attackSpeed = value;
+            PlayerVisual.Instance.UpdateAttackSpeed(attackSpeed);
+        }
+        
     }
 
     private float moveSpeed;
