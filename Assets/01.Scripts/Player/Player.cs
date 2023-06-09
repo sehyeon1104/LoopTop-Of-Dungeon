@@ -87,7 +87,7 @@ public class Player : MonoBehaviour, IHittable
         else
         {
             StartCoroutine(IEDamaged(damage));
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
         }
 
         HPRelatedItemEffects?.Invoke();

@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class P_SmallSlime : MonoBehaviour
+public class P_SmallSlime : P_Slime
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnemyDead()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.EnemyDead();
     }
 }
