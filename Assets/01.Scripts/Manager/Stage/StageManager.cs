@@ -24,17 +24,17 @@ public class StageManager : MonoSingleton<StageManager>
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
 
     #region LinkedRoom
-    // 배열의 상, 하, 좌, 우를 확인할 배열
+    // 배열???? ?? �? ?��? ?�인??배열
     int[] dx = new int[4] { 1, 0, -1, 0 };
     int[] dy = new int[4] { 0, -1, 0, 1 };
 
-    // 현재 방의 x, y좌표값을 가져올 변수
+    // ?�재 방의 x, y좌표값을 가?�올 변??
     int posX = 0;
     int posY = 0;
 
     Vector3 roomPos;
 
-    // 연결된 방의 좌표값을 담을 벡터
+    // ?�결??방의 좌표값을 ?�을 벡터
     Vector3 originRoomPos;
     Vector3 originWayPos;
     #endregion
@@ -49,7 +49,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Awake()
     {
         wallGrids = new GameObject[4];
-        // TODO : WallGrid 및 포탈 어드레서블로 불러오기
+        // TODO : WallGrid �??�탈 ?�드?�서블로 불러?�기
         for(int i = 0; i < 4; ++i)
         {
             wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
@@ -64,20 +64,20 @@ public class StageManager : MonoSingleton<StageManager>
         isSetting = true;
         StartCoroutine(SetStage());
 
-        // 벽 생성
+        // �??�성
         SetWallGrid();
-        // 길 초기화
+        // �?초기??
         InitWay();
-        // 방 스포너 받아옴
+        // �??�포??받아??
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // 시작 방 설정
+        // ?�작 �??�정
         SetStartRoomNShopRoom();
-        // 방 생성
+        // �??�성
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 9);
-        // 포탈방 지정
+        // ?�탈�?지??
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
@@ -136,7 +136,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void SetMoveNextMapRoom()
     {
-        Debug.Log("포탈방 지정");
         int rand = Random.Range(0, enemyRooms.Length);
         enemyRooms[rand].isMoveAnotherStage = true;
         enemyRooms[rand].InstantiateMoveMapIcon();
@@ -149,14 +148,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : 아이템 드랍 애니메이션 추가
+        // TODO : ?�이???�랍 ?�니메이??추�?
 
         Managers.Pool.Pop(dropItemPrefab, pos);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        // wallGrid의 정보를 가져옴
+        // wallGrid???�보�?가?�옴
         wallGridInfo = randWallGrid switch
         {
             0 => MapInfo.WallGrid1,
@@ -173,21 +172,21 @@ public class StageManager : MonoSingleton<StageManager>
             return;
         }
 
-        // x값과 y값이 최대 3까지만 나오게끔 세팅
+        // x값과 y값이 최�? 3까�?�??�오게끔 ?�팅
         posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
         posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
 
-        // 배열의 상(x + 1), 하(x - 1), 좌(y - 1), 우(y + 1) 중 길이 있는지 체크
-        // 순서 : 상, 좌, 하, 우 (반시계)
+        // 배열????x + 1), ??x - 1), �?y - 1), ??y + 1) �?길이 ?�는지 체크
+        // ?�서 : ?? �? ?? ??(반시�?
         for(int i = 0; i < 4; ++i)
         {
-            // 배열의 전체 크기보다 크거나 작을경우 배열 범위 이탈
+            // 배열???�체 ?�기보다 ?�거???�을경우 배열 범위 ?�탈
             if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
             {
                 continue;
             }
 
-            // wallGrid의 x, y좌표가 길일경우
+            // wallGrid??x, y좌표가 길일경우
             if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
             {
                 originRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
@@ -196,10 +195,10 @@ public class StageManager : MonoSingleton<StageManager>
                 for (int j = 0; j < spawnRooms.Length; ++j)
                 {
                     roomPos = spawnRooms[j].transform.position;
-                    // x, y값을 원래대로 돌려놓은 값이 spawnRooms[j]의 좌표값과 같을경우
+                    // x, y값을 ?�래?��??�려?��? 값이 spawnRooms[j]??좌표값과 같을경우
                     if (roomPos == originRoomPos)
                     {
-                        // 미니맵에 아이콘 표기
+                        // 미니맵에 ?�이�??�기
                         spawnRooms[j].GetSummonedRoom().ShowInMinimap();
                         ShowWayMinimapIcon();
                         break;

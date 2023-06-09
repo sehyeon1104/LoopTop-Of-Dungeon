@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class PowerSkill : PlayerSkillBase
 {
-
     float choppingDmg = 20;
+    float chopSize = 1;
     float rushDmg = 13;
     float rushVelocity = 2;
     float rushDuration = 2f;
+    bool isColumn;
+    float ColumnDuration = 5f;
     WaitForFixedUpdate rushWait = new WaitForFixedUpdate();
+    WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     ParticleSystem attackPar;
     private void Awake()
     {
@@ -50,6 +53,7 @@ public class PowerSkill : PlayerSkillBase
     protected override void FirstSkill(int level)
     {
         StartCoroutine(BottomingOut());
+        chopSize = 1 + 0.125f * (level -1);
     }
 
     protected override void SecondSkill(int level)
@@ -110,7 +114,8 @@ public class PowerSkill : PlayerSkillBase
     {
         CinemachineCameraShaking.Instance.CameraShake(15, 0.2f);
         Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position, Quaternion.identity);
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 2, 1 << enemyLayer);
+        choppingObj.GetComponent<Transform>().localScale = Vector2.one *chopSize;
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, chopSize* 2, 1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
         {
             enemys[i].GetComponent<IHittable>().OnDamage(choppingDmg, 0);
@@ -122,7 +127,7 @@ public class PowerSkill : PlayerSkillBase
         float timer = 0;
         float tickTimer = 0;
         float dmgTickTime = rushDuration / 5;
-        playerMovement.IsMove = false;
+        playerMovement.IsControl = false;
         player.IsInvincibility = true;
         playerRigid.velocity = playerMovement.Direction * rushVelocity;
         do
@@ -143,7 +148,7 @@ public class PowerSkill : PlayerSkillBase
             yield return rushWait;
         }
         while (timer < rushDuration);
-        playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         player.IsInvincibility = false;
         playerRigid.velocity = Vector3.zero;
         yield return null;
@@ -151,6 +156,12 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator Jump()
     {
         yield return null;
+    }
+    IEnumerator Column()
+    {
+        isColumn = true;
+        yield return ColumnWait;
+        isColumn = false;   
     }
     #endregion
     private void OnDrawGizmos()
