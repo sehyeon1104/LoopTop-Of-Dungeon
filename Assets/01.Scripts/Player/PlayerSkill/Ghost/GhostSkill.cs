@@ -542,6 +542,7 @@ public class GhostSkill : PlayerSkillBase
             Collider2D[] hitEnemies;
             float timerA = 0;
             // 연속베기
+            playerMovement.IsControl = false;
             while (timerA < telpoClawDuration)
             {
                 Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
@@ -585,6 +586,7 @@ public class GhostSkill : PlayerSkillBase
             }
         }
         playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         player.IsInvincibility = false;
     }
     protected override void ForuthSkillUpdate(int level)
