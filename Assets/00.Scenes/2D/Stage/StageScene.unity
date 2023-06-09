@@ -1154,8 +1154,6 @@ MonoBehaviour:
   normalEnemyPrefabsList: []
   <curEnemies>k__BackingField: []
   spawnTime: 0.8
-  assetLabel:
-    m_LabelString: Enemy
 --- !u!114 &520647069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1650,7 +1648,7 @@ MonoBehaviour:
   m_Follow: {fileID: 878560105}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 5
+    OrthographicSize: 8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2065,7 +2063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_CullingMask.m_Bits

@@ -20,10 +20,22 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave1NormalEnemyCount = 0;
     private int wave2NormalEnemyCount = 0;
 
-    private int highHpEnemyCount = 0;       // 뚱땡이
-    private int highSpeedEnemyCount = 0;    // 이속빠름 ( ex)팬텀 )
-    private int longDisEnemyCount = 0;      // 원거리
-    private int normalEnemyCount = 0;       // 기본
+    // 몹 소환 비율
+    private float[] enemySpawnRatioArr = new float[5];
+
+    private float normalEnemyRatio = 0.5f;       // 기본
+    private float highHpEnemyRatio = 0.3f;       // 뚱땡이
+    private float highSpeedEnemyRatio = 0.15f;    // 이속빠름 ( ex)팬텀 )
+    private float longDisEnemyRatio = 0.05f;      // 원거리
+
+    // 현재 몹 소환 수
+    private int spawnCount = 0;
+    // 몹 유형
+    private int mobType = 0;
+    // 소환 비율
+    private float spawnRatio = 0f;
+    // 필요 소환 수
+    private int requireSpawnCount = 0;
 
     private Transform eliteMonsterSpawnPos;
 
@@ -41,10 +53,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private WaitForSeconds waitForSpawnTime;
     private WaitForSeconds waitForHalfSpawnTime;
 
-
-    public AssetLabelReference assetLabel;
-    private IList<IResourceLocation> _locations;
-
     private void Start()
     {
         door = FindObjectOfType<Door>();
@@ -55,6 +63,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         Managers.Pool.CreatePool(enemyDeadEffect, 10);
 
+        enemySpawnRatioArr[0] = normalEnemyRatio;
+        enemySpawnRatioArr[1] = highHpEnemyRatio;
+        enemySpawnRatioArr[2] = longDisEnemyRatio;
+        enemySpawnRatioArr[3] = highSpeedEnemyRatio;
+        enemySpawnRatioArr[4] = 0;
         SetEnemyInList();
     }
 
@@ -91,56 +104,22 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         {
             // TODO : 강화 스켈레톤, 팬텀, 매지션 수 조정 ( 노션 몹 수치 테이블에 있음 )
             case 1:
-                wave1NormalEnemyCount = 5;
-                wave2NormalEnemyCount = 7;
+                wave1NormalEnemyCount = 8;
+                wave2NormalEnemyCount = 12;
                 break;
             case 2:
-                wave1NormalEnemyCount = 7;
-                wave2NormalEnemyCount = 5;
-                break;
-            case 3:
-                wave1NormalEnemyCount = 4;
+                wave1NormalEnemyCount = 12;
                 wave2NormalEnemyCount = 8;
                 break;
+            case 3:
+                wave1NormalEnemyCount = 10;
+                wave2NormalEnemyCount = 10;
+                break;
             case 4:
-                wave1NormalEnemyCount = 6;
-                wave2NormalEnemyCount = 6;
+                wave1NormalEnemyCount = 10;
+                wave2NormalEnemyCount = 10;
                 break;
         }
-    }
-
-    int randEnemyCount = 0;
-    public void SetEnemyCount(int totalEnemySpawnCount)
-    {
-        if(totalEnemySpawnCount < 6)
-        {
-            highHpEnemyCount = 1;
-            highSpeedEnemyCount = Random.Range(0, 2);
-            longDisEnemyCount = 1;
-        }
-        else if(totalEnemySpawnCount >= 6)
-        {
-            randEnemyCount = Random.Range(0, 3);
-            switch (randEnemyCount)
-            {
-                case 0:
-                    highHpEnemyCount = 2;
-                    highSpeedEnemyCount = 1;
-                    longDisEnemyCount = 1;
-                    break;
-                case 1:
-                    highHpEnemyCount = 1;
-                    highSpeedEnemyCount = Random.Range(0, 2);
-                    longDisEnemyCount = 1;
-                    break;
-                case 2:
-                    highHpEnemyCount = 1;
-                    highSpeedEnemyCount = 1;
-                    longDisEnemyCount = 2;
-                    break;
-            }
-        }
-        normalEnemyCount = totalEnemySpawnCount - highHpEnemyCount - highSpeedEnemyCount - longDisEnemyCount;
     }
 
     public IEnumerator ManagingEnemy(Transform[] enemySpawnPos)
@@ -157,12 +136,8 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
         // TODO : 이후 코드 가독성 올리기. 지금 보기 너무 더럽다 
-        SetEnemyCount(wave1NormalEnemyCount);
 
-        SpawnEnemy(enemySpawnPos, normalEnemyCount, Define.MobTypeFlag.Normal);
-        SpawnEnemy(enemySpawnPos, highHpEnemyCount, Define.MobTypeFlag.HighHp);
-        SpawnEnemy(enemySpawnPos, longDisEnemyCount, Define.MobTypeFlag.LongDis);
-        SpawnEnemy(enemySpawnPos, highSpeedEnemyCount, Define.MobTypeFlag.HighSpeed);
+        SpawnEnemy(enemySpawnPos, wave1NormalEnemyCount);
 
         //for (int i = 0; i < wave1NormalEnemyCount; ++i)
         //{
@@ -198,21 +173,25 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        SetEnemyCount(wave2NormalEnemyCount);
-
-        SpawnEnemy(enemySpawnPos, normalEnemyCount, Define.MobTypeFlag.Normal);
-        SpawnEnemy(enemySpawnPos, highHpEnemyCount, Define.MobTypeFlag.HighHp);
-        SpawnEnemy(enemySpawnPos, longDisEnemyCount, Define.MobTypeFlag.LongDis);
-        SpawnEnemy(enemySpawnPos, highSpeedEnemyCount, Define.MobTypeFlag.HighSpeed);
+        SpawnEnemy(enemySpawnPos, wave2NormalEnemyCount);
 
         isSpawnEliteEnemy = false;
     }
 
-    public void SpawnEnemy(Transform[] enemySpawnPos, int enemyCount, Define.MobTypeFlag mobTypeFlag)
+    public void SpawnEnemy(Transform[] enemySpawnPos, int enemyCount)
     {
         int randPos = 0;
+        Define.MobTypeFlag mobTypeFlag;
+        spawnRatio = normalEnemyRatio;
+
+        mobType = 0;
+        spawnCount = 0;
+        requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
+
         for (int i = 0; i < enemyCount; ++i)
         {
+            mobTypeFlag = (Define.MobTypeFlag)mobType;
+
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드
@@ -228,6 +207,16 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             curEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
+            spawnCount++;
+
+            if (spawnCount == requireSpawnCount)
+            {
+                mobType++;
+                spawnCount = 0;
+                spawnRatio = enemySpawnRatioArr[mobType];
+                Debug.Log(enemySpawnRatioArr[mobType]);
+                requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
+            }
         }
     }
 
