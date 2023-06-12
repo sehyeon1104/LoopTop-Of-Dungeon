@@ -10,7 +10,6 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
     [SerializeField]
     private GameObject displayDamageTMP = null;
 
-    private WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
     private WaitForSeconds waitForHalfSeconds = new WaitForSeconds(0.5f);
 
     public IEnumerator showDamage(float damage, GameObject damagedObj, bool isCrit = false)
@@ -28,8 +27,10 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         {
             damageText.color = Color.white;
         }
-
-        damageTMP.transform.DOScale(0.01f, 0f);
+        
+        // 초기화
+        damageTMP.transform.position = damagedObj.transform.position;
+        damageTMP.transform.DOScale(0.01f, 0.1f);
 
         // 오브젝트의 위로 이동
         damageTMP.transform.position = new Vector3(damagedObj.transform.position.x + Random.Range(-damagedObj.transform.localScale.x, damagedObj.transform.localScale.x), damagedObj.transform.position.y, 0);
