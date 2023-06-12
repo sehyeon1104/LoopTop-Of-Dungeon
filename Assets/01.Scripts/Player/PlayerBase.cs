@@ -26,7 +26,7 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        PlayerSkillNum = new int[] { 4, 5 };
+        PlayerSkillNum = new int[] { 3, 4 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
@@ -99,9 +99,10 @@ public class PlayerBase
         get => attack;
         set
         {
-            PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
             attack = value;
             Damage = Mathf.CeilToInt(attack * 0.6f);
+
+            PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
         }
     }
     public float InitAttack

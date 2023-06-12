@@ -77,8 +77,8 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject dashButton;
     public Button reviveButton;
     public Button leaveButton;
-    Image[] skillIcons = new Image[4];
-    Image[] pcSkillIcons = new Image[4];
+    Image[] skillIcons = new Image[5];
+    Image[] pcSkillIcons = new Image[5];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -121,33 +121,25 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+            skillIcons[4] = playerUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
         else
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
-            Debug.Log("PCPlayerUI 로드");
-
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
-            Debug.Log("PCPlayerUI/LeftDown 로드");
-
             fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            Debug.Log("PCPlayerUI/LeftUp 로드");
-
             pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            Debug.Log("PCPlayerUI/RightDown 로드");
-
+            pcSkillIcons[4] = playerPCUI.transform.Find("RightDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
-            Debug.Log("PCPlayerUI/All 로드");
-          
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
@@ -156,12 +148,9 @@ public class UIManager : MonoSingleton<UIManager>
             obtainItemInfo = playerPCUI.transform.Find("Middle/ObtainItemInfo").gameObject;
             obtainItemInfoImg = obtainItemInfo.transform.Find("ItemImg").GetComponent<Image>();
             obtainItemInfoTMP = obtainItemInfo.transform.Find("ItemNameTMP").GetComponent<TextMeshProUGUI>();
-            Debug.Log("PCPlayerUI/Middle 로드");
-
             minimap = playerPCUI.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
-            Debug.Log("PCPlayerUI/Minimap 로드");
         }
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
         ults = player.GetComponentsInChildren<PlayableDirector>();

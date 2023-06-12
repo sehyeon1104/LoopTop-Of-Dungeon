@@ -113,10 +113,12 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
             skillEvent[1] = () => playerSkill.playerSkills[skillIndex[1]](slotLevel[1]);
             playerSkill.playerSkillUpdate[skillIndex[1]](slotLevel[1]);
             skillEvent[2] = playerSkill.attack;
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 4, 6, 0);
             skillEvent[3] = playerSkill.ultimateSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 7, 0);
             skillEvent[4] = playerSkill.dashSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 8, 0);
+            
         }
 
     }

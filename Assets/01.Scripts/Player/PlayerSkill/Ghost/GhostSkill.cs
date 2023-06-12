@@ -50,7 +50,7 @@ public class GhostSkill : PlayerSkillBase
     [Header("텔레포트 스킬")]
     float telpoDamage = 37;
     float telpoVelocity = 50;
-    float telpoDuration = 1f;
+    float telpoDuration = 0.1f;
     float telpoClawDuration = 1f;
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
@@ -504,8 +504,7 @@ public class GhostSkill : PlayerSkillBase
         while (timer < telpoDuration)
         {
             timer += Time.fixedDeltaTime;
-            //print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
-            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2) - 0.001f)
+            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2))
             {
                 Poolable telpoEffect;
                 if (level == 5)
