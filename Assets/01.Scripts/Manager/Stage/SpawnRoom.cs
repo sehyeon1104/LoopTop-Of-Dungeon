@@ -65,7 +65,9 @@ public class SpawnRoom : MonoBehaviour
         }
         else
         {
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(1, 8)}", transform);
+            // Å×½ºÆ®
+            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0", transform);
+            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(1, 8)}", transform);
             //Instantiate(mapPrefabs[Random.Range(0, mapPrefabs.Length)], transform);
         }
     }

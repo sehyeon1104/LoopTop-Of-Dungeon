@@ -41,7 +41,10 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         playerAnimator.runtimeAnimatorController = overrideController;
         //playerAnimator.runtimeAnimatorController = data.playerAnim;
     }
-
+    public void UpdateAttackSpeed(float SpeedValue)
+    {
+        playerAnimator.SetFloat("AttackSpeed", SpeedValue);
+    }
     public void StartHitMotion(float damage = 0)
     {
         StartCoroutine(IEHitMotion(damage));

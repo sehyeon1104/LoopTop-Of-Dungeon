@@ -1154,8 +1154,6 @@ MonoBehaviour:
   normalEnemyPrefabsList: []
   <curEnemies>k__BackingField: []
   spawnTime: 0.8
-  assetLabel:
-    m_LabelString: Enemy
 --- !u!114 &520647069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1194,7 +1192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb26c5aa6819a214ca72aa3baccad5f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialoguePanel: {fileID: 0}
+  dialoguePanel: {fileID: 0}
   contentTmp: {fileID: 0}
   waitTime: 3
 --- !u!1 &524012580
@@ -1559,6 +1557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShakeFrequency: 50
+  mainCam: {fileID: 0}
   VirtualCamera: {fileID: 1200786702}
 --- !u!1 &1099245693
 GameObject:
@@ -1649,7 +1648,7 @@ MonoBehaviour:
   m_Follow: {fileID: 878560105}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 5
+    OrthographicSize: 8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2064,7 +2063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: orthographic size
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_CullingMask.m_Bits
@@ -2180,7 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: 09304816bea70fd4ea18dfde2fe33b6e, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 50

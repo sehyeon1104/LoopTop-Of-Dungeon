@@ -56,6 +56,8 @@ public class ItemObj : MonoBehaviour
         itemInfoPanel.gameObject.SetActive(false);
         pos = itemImage.transform.position;
         waitForEndOfFrame = new WaitForEndOfFrame();
+        _isPurchaseAble = false;
+        isSold = false;
 
         StartCoroutine(MoveUpDown());
     }
@@ -90,7 +92,8 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
-        if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || !IsPurchaseAble)
+        Debug.Log("isSold : " + isSold);
+        if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || !_isPurchaseAble)
         {
             Rito.Debug.Log("구매 불가");
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/UnablePurchase.wav");

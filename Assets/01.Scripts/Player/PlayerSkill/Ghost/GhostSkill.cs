@@ -50,7 +50,7 @@ public class GhostSkill : PlayerSkillBase
     [Header("텔레포트 스킬")]
     float telpoDamage = 37;
     float telpoVelocity = 50;
-    float telpoDuration = 0.099999f;
+    float telpoDuration = 1f;
     float telpoClawDuration = 1f;
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
@@ -542,6 +542,7 @@ public class GhostSkill : PlayerSkillBase
             Collider2D[] hitEnemies;
             float timerA = 0;
             // 연속베기
+            playerMovement.IsControl = false;
             while (timerA < telpoClawDuration)
             {
                 Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
@@ -585,6 +586,7 @@ public class GhostSkill : PlayerSkillBase
             }
         }
         playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         player.IsInvincibility = false;
     }
     protected override void ForuthSkillUpdate(int level)
