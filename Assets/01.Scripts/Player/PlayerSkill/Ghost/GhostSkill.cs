@@ -514,7 +514,7 @@ public class GhostSkill : PlayerSkillBase
                 }
                 else
                 {
-                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", changePos, angleAxis);
+                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpEffect.prefab", changePos, angleAxis);
                 }
                 VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
                 for (int i = 0; i < effects.Length; i++)
