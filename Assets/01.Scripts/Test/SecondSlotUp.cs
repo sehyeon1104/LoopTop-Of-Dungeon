@@ -13,13 +13,21 @@ public class SecondSlotUp : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.CompareTag("Player"))
+        {
+
         UIManager.Instance.RotateInteractionButton();
         button.onClick.AddListener(SecondSlotUpdate);
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if(collision.CompareTag("Player"))
+        {
+
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(SecondSlotUpdate);
+        }
     }
     public void SecondSlotUpdate()
     {
