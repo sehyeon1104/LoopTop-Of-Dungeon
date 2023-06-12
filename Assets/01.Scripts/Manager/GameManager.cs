@@ -136,11 +136,17 @@ public class GameManager : MonoSingleton<GameManager>
     private void InitItemColorDic()
     {
         itemRateColor.Clear();
+        // È¸»ö
         itemRateColor[(int)Define.ItemRating.Common] = "#D3D3D3";
+        // ÇÏ´Ã»ö
         itemRateColor[(int)Define.ItemRating.Rare] = "#00FFFF";
+        // º¸¶ó»ö
         itemRateColor[(int)Define.ItemRating.Epic] = "#9932CC";
+        // »¡°£»ö
         itemRateColor[(int)Define.ItemRating.Legendary] = "#FFA500";
+        // Å©¸²½¼
         itemRateColor[(int)Define.ItemRating.Special] = "#DC143C";
+        // Èò»ö
         itemRateColor[(int)Define.ItemRating.ETC] = "#FFFFFF";
     }
 
