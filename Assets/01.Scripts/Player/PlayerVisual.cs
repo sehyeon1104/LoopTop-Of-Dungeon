@@ -27,6 +27,8 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         overrideController.runtimeAnimatorController = playerAnimator.runtimeAnimatorController;
         playerAnimator.runtimeAnimatorController = overrideController;
+
+        UpdateAttackSpeed(GameManager.Instance.Player.playerBase.AttackSpeed);
     }
     public void UpdateVisual(PlayerSkillData data)
     {
@@ -43,7 +45,7 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     }
     public void UpdateAttackSpeed(float SpeedValue)
     {
-        playerAnimator.SetFloat("AttackSpeed", SpeedValue);
+        playerAnimator?.SetFloat("AttackSpeed", SpeedValue);
     }
     public void StartHitMotion(float damage = 0)
     {

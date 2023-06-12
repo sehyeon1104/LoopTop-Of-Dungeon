@@ -122,7 +122,7 @@ public class PlayerBase
         get => attackSpeed;
         set { 
             attackSpeed = value;
-            PlayerVisual.Instance.UpdateAttackSpeed(attackSpeed);
+            PlayerVisual.Instance?.UpdateAttackSpeed(attackSpeed);
         }
         
     }
