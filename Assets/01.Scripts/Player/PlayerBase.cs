@@ -26,10 +26,10 @@ public class PlayerBase
         maxLevel = 100;
         _expTable = new int[maxLevel];
         exp = 0;
-        PlayerSkillNum = new int[] { 3, 4 };
+        PlayerSkillNum = new int[] { 1, 2 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         for (int i = 0; i < maxLevel; ++i)
         {
             _expTable[i] = i + 1;

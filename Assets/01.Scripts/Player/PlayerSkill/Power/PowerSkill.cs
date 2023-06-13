@@ -52,8 +52,11 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void FirstSkill(int level)
     {
-        StartCoroutine(BottomingOut());
-        chopSize = 1 + 0.125f * (level -1);
+        if(level ==5)
+            StartCoroutine(FiveBottomingOut());
+        else
+            StartCoroutine(BottomingOut());
+
     }
 
     protected override void SecondSkill(int level)
@@ -87,7 +90,11 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void FirstSkillUpdate(int level)
     {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+        if(level == 5)
+           UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
+        else
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+        chopSize = 1 + 0.125f * (level - 1);
     }
 
     protected override void SecondSkillUpdate(int level)
