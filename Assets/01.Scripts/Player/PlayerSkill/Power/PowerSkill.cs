@@ -122,6 +122,18 @@ public class PowerSkill : PlayerSkillBase
         }
         yield return null;
     }
+    IEnumerator FiveBottomingOut()
+    {
+        CinemachineCameraShaking.Instance.CameraShake(15, 0.2f);
+        Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position, Quaternion.identity);
+        choppingObj.GetComponent<Transform>().localScale = Vector2.one * chopSize;
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, chopSize * 2, 1 << enemyLayer);
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            enemys[i].GetComponent<IHittable>().OnDamage(choppingDmg, 0);
+        }
+        yield return null;
+    }
     IEnumerator Rush()
     {
         float timer = 0;

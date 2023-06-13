@@ -87,7 +87,7 @@ public class GhostSkill : PlayerSkillBase
     }
 
     public void UpdateSkillDamage()
-    { 
+    {
     }
 
     protected override void Attack()
@@ -340,11 +340,11 @@ public class GhostSkill : PlayerSkillBase
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
         }
-        else if( level ==3 || level ==4)
+        else if (level == 3 || level == 4)
         {
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData,0,2,1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 1);
         }
-        else if(level ==5)
+        else if (level == 5)
         {
             playerBase.PlayerTransformData.skill[4].skillDelay = 22;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 2);
@@ -352,7 +352,7 @@ public class GhostSkill : PlayerSkillBase
             playerBase.PlayerTransformData.skill[4].skillDelay = 22;
 
         }
-      
+
     }
     IEnumerator Beam(int level)
     {
@@ -459,7 +459,7 @@ public class GhostSkill : PlayerSkillBase
             beamParticle.time = 0;
             beamParticle.Play();
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
-      
+
             Managers.Pool.Push(fiveBeam);
         }
 
@@ -501,29 +501,23 @@ public class GhostSkill : PlayerSkillBase
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
-        while (timer < telpoDuration)
+
+        Poolable telpoEffect;
+        if (level == 5)
         {
-            timer += Time.fixedDeltaTime;
-            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2))
-            {
-                Poolable telpoEffect;
-                if (level == 5)
-                {
-                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoFiveEffect.prefab", changePos, angleAxis);
-                }
-                else
-                {
-                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpEffect.prefab", changePos, angleAxis);
-                }
-                VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
-                for (int i = 0; i < effects.Length; i++)
-                {
-                    effects[i].Play();
-                }
-                changePos = transform.position;
-            }
-            yield return telpWait;
+            telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoFiveEffect.prefab", changePos, angleAxis);
         }
+        else
+        {
+            telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpEffect.prefab", changePos, angleAxis);
+        }
+        VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
+        for (int i = 0; i < effects.Length; i++)
+        {
+            effects[i].Play();
+        }
+        yield return telpoDuration;
+
         playerRigid.velocity = Vector3.zero;
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2, 1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
         for (int i = 0; i < hit.Length; i++)
@@ -699,7 +693,7 @@ public class GhostSkill : PlayerSkillBase
 
         RaycastHit2D[] hitEnemies;
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmFiveEffect.prefab", transform.position + Vector3.up * 3, Quaternion.identity);
-        Poolable bossSprite = Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/boss_devil_man.prefab", transform.position + Vector3.up * 3,Quaternion.identity);
+        Poolable bossSprite = Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/boss_devil_man.prefab", transform.position + Vector3.up * 3, Quaternion.identity);
         Animator animator = bossSprite.GetComponentInChildren<Animator>();
         SpriteRenderer[] bossSprites = bossSprite.transform.GetComponentsInChildren<SpriteRenderer>();
         Color fadeColor = new Color(1, 1, 1, 0);
