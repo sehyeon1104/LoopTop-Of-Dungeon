@@ -5,7 +5,7 @@ using UnityEngine;
 public class G_Phantom : EnemyDefault
 {
     WaitForSeconds attackWait = new WaitForSeconds(1.5f);
-    WaitForSeconds waitTime = new WaitForSeconds(0.5f);
+    WaitForSeconds waitTime = new WaitForSeconds(1f);
     float timer = 2.5f;
 
     public override IEnumerator MoveToPlayer()

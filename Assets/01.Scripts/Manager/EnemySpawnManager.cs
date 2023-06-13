@@ -214,7 +214,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 mobType++;
                 spawnCount = 0;
                 spawnRatio = enemySpawnRatioArr[mobType];
-                Debug.Log(enemySpawnRatioArr[mobType]);
                 requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
             }
         }

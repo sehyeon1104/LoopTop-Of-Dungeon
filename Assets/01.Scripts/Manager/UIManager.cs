@@ -90,6 +90,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     private WaitForEndOfFrame waitForEndOfFrame;
 
+    public ShopUI shopUI { private set; get; } = null;
+
     private void Awake()
     {
         
@@ -161,6 +163,8 @@ public class UIManager : MonoSingleton<UIManager>
         resumeBtn.onClick.AddListener(Resume);
         quitBtn.onClick.RemoveListener(LeaveBtn);
         quitBtn.onClick.AddListener(LeaveBtn);
+
+        shopUI = FindObjectOfType<ShopUI>();
 
         waitForEndOfFrame = new WaitForEndOfFrame();
     }
@@ -269,10 +273,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void ToggleGameOverPanel()
     {
         TogglePlayerAttackUI();
-        //blurPanel.SetActive(!blurPanel.activeSelf);
-      
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
-        Debug.Log("Active : " + gameOverPanel.activeSelf);
         MouseManager.Show(gameOverPanel.activeSelf);
         MouseManager.Lock(!gameOverPanel.activeSelf);
     }

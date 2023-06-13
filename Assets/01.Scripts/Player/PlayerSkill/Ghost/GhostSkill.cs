@@ -505,11 +505,13 @@ public class GhostSkill : PlayerSkillBase
         Poolable telpoEffect;
         if (level == 5)
         {
-            telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoFiveEffect.prefab", changePos, angleAxis);
+            telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpFiveEffect.prefab", changePos, angleAxis);
         }
         else
         {
             telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpEffect.prefab", changePos, angleAxis);
+            telpoEffect.transform.Find("pTpLeft").localScale = new Vector3(1, telpoVelocity / 50, 1);
+            telpoEffect.transform.Find("pTpRight").localScale = new Vector3(1, telpoVelocity / 50, 1);
         }
         VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
         for (int i = 0; i < effects.Length; i++)
