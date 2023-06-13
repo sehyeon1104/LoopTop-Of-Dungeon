@@ -159,8 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6495270159525157368}
-  - component: {fileID: 7288129405169116409}
-  - component: {fileID: 7121937480243723876}
+  - component: {fileID: -752685142144194254}
   m_Layer: 5
   m_Name: ShowDamage
   m_TagString: Untagged
@@ -184,7 +183,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7288129405169116409
+--- !u!114 &-752685142144194254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,23 +192,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6362310668652392891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2851dca45805e44a9bccbac87daaf85, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d5aebbb79d7df449a690c9820ab6088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7121937480243723876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6362310668652392891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsUsing: 0
-  PushTime: 0
 --- !u!1 &7323818285615959463
 GameObject:
   m_ObjectHideFlags: 0

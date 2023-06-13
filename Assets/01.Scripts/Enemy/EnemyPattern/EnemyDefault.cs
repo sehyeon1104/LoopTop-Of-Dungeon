@@ -183,12 +183,12 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
-            EnemyUIManager.Instance.showDamage(damage, gameObject, true);
+            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
             GameManager.Instance.PlayHitEffect(transform, true);
         }
         else
         {
-            EnemyUIManager.Instance.showDamage(damage, gameObject);
+            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
             GameManager.Instance.PlayHitEffect(transform);
         }
 
