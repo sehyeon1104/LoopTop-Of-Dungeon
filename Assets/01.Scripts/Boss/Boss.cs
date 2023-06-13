@@ -104,11 +104,11 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;
-            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject, true));
+            EnemyUIManager.Instance.showDamage(damage, gameObject, true);
         }
         else
         {
-            StartCoroutine(EnemyUIManager.Instance.showDamage(damage, gameObject));
+            EnemyUIManager.Instance.showDamage(damage, gameObject);
         }
 
         if(damage >= 15)

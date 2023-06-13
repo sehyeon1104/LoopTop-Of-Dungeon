@@ -14,12 +14,11 @@ public class PlayerBase
 
     public void InitPlayerStat()
     {
-        
         maxHp = 12;
         hp = maxHp;
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
-        attackSpeed = 1;
+        attackSpeed = 1.4f;
         moveSpeed = 5.3f;
         critChance = 5f;
         level = 1;
