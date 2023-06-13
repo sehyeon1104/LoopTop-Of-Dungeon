@@ -50,7 +50,7 @@ public class GhostSkill : PlayerSkillBase
     [Header("텔레포트 스킬")]
     float telpoDamage = 37;
     float telpoVelocity = 50;
-    float telpoDuration = 0.1f;
+    WaitForSeconds  telpoDuration = new WaitForSeconds(0.1f);
     float telpoClawDuration = 1f;
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
