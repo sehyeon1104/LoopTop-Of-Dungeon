@@ -503,9 +503,7 @@ public class GhostSkill : PlayerSkillBase
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
         while (timer < telpoDuration)
         {
-            timer += Time.fixedDeltaTime;
-            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2))
-            {
+                timer += Time.fixedDeltaTime;
                 Poolable telpoEffect;
                 if (level == 5)
                 {
@@ -520,8 +518,6 @@ public class GhostSkill : PlayerSkillBase
                 {
                     effects[i].Play();
                 }
-                changePos = transform.position;
-            }
             yield return telpWait;
         }
         playerRigid.velocity = Vector3.zero;
