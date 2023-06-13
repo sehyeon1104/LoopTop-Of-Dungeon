@@ -63,7 +63,7 @@ public class BossBase
 
     private void SetBossStat()
     {
-        _maxHp = 400;
+        _maxHp = 700;
         _hp = _maxHp;
         _maxShield = 100f;
     }

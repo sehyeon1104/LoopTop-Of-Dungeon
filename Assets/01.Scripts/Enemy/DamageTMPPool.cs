@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DamageTMPPool : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        StartCoroutine(EnemyUIManager.Instance.PoolDamageTMP(this.gameObject));
-    }
+    //private void OnEnable()
+    //{
+    //    StartCoroutine(EnemyUIManager.Instance.PoolDamageTMP(this.gameObject));
+    //}
 }

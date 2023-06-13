@@ -80,6 +80,8 @@ public class TitleSceneManager : MonoBehaviour
     private void Start()
     {
         isLoading = false;
+        MouseManager.Show(false);
+        MouseManager.Lock(true);
         OnStart();
     }
 

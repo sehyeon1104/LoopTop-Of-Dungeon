@@ -8,9 +8,17 @@ using TMPro;
 using DG.Tweening;
 using System.Linq;
 using System;
+using UnityEngine.Playables;
+using UnityEngine.VFX;
+//using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIManager : MonoSingleton<UIManager>
 {
+    Transform player;
+    Animator animator;
+    PlayableDirector[] ults;
+    VisualEffect[] clawEffect;
+    float currentSpeed;
     public GameObject playerUI;
     public GameObject playerPCUI;
     [Header("LeftUp")]
@@ -69,8 +77,8 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject dashButton;
     public Button reviveButton;
     public Button leaveButton;
-    Image[] skillIcons = new Image[4];
-    Image[] pcSkillIcons = new Image[4];
+    Image[] skillIcons = new Image[5];
+    Image[] pcSkillIcons = new Image[5];
     GameObject AttackButton;
     GameObject InteractionButton;
     [SerializeField]
@@ -94,6 +102,7 @@ public class UIManager : MonoSingleton<UIManager>
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
+        player = GameManager.Instance.Player.transform;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
             hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
@@ -112,28 +121,25 @@ public class UIManager : MonoSingleton<UIManager>
             skillIcons[1] = skill2Button.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[2] = ultButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
             skillIcons[3] = dashButton.transform.Find("ShapeFrame/Icon").GetComponent<Image>();
+            skillIcons[4] = playerUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
         }
         else
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
-
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
-
             fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-
             pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-
+            pcSkillIcons[4] = playerPCUI.transform.Find("RightDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
             gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
             blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
             reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
-
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
@@ -142,13 +148,14 @@ public class UIManager : MonoSingleton<UIManager>
             obtainItemInfo = playerPCUI.transform.Find("Middle/ObtainItemInfo").gameObject;
             obtainItemInfoImg = obtainItemInfo.transform.Find("ItemImg").GetComponent<Image>();
             obtainItemInfoTMP = obtainItemInfo.transform.Find("ItemNameTMP").GetComponent<TextMeshProUGUI>();
-
             minimap = playerPCUI.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
         }
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
-
+        ults = player.GetComponentsInChildren<PlayableDirector>();
+         clawEffect = player.GetComponentsInChildren<VisualEffect>(true);
+        animator = player.Find("Skill/GhostUlt/GhostBossUlt/GhostBoss").GetComponent<Animator>();
         leaveButton.onClick.AddListener(LeaveBtn);
         resumeBtn.onClick.RemoveListener(Resume);
         resumeBtn.onClick.AddListener(Resume);
@@ -169,6 +176,7 @@ public class UIManager : MonoSingleton<UIManager>
         {
             minimap.gameObject.SetActive(false);
         }
+        RotateAttackButton();
     }
 
     public void UpdateUI()
@@ -211,16 +219,35 @@ public class UIManager : MonoSingleton<UIManager>
     {
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
-
         if (pausePanel.activeSelf)
         {
+       for(int i = 0; i<ults.Length; i++)
+            {
+                ults[i].timeUpdateMode = DirectorUpdateMode.GameTime;
+            }
+            currentSpeed = clawEffect[0].playRate;
+           for (int i=0; i <clawEffect.Length; i++)
+            {
+                clawEffect[i].playRate = 0;
+            }
+            animator.updateMode = AnimatorUpdateMode.Normal;
             Time.timeScale = 0f;
             MouseManager.Lock(false);
             MouseManager.Show(true);
         }
         else
         {
+            for (int i = 0; i < ults.Length; i++)
+            {
+                ults[i].timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
+            }
+            for (int i = 0; i < clawEffect.Length; i++)
+            {
+                clawEffect[i].playRate = currentSpeed;
+            }
+
             Time.timeScale = 1f;
+            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             MouseManager.Lock(true);
             MouseManager.Show(false);
         }
@@ -243,9 +270,9 @@ public class UIManager : MonoSingleton<UIManager>
     {
         TogglePlayerAttackUI();
         //blurPanel.SetActive(!blurPanel.activeSelf);
-       
+      
         gameOverPanel.SetActive(!gameOverPanel.activeSelf);
-
+        Debug.Log("Active : " + gameOverPanel.activeSelf);
         MouseManager.Show(gameOverPanel.activeSelf);
         MouseManager.Lock(!gameOverPanel.activeSelf);
     }
@@ -307,22 +334,16 @@ public class UIManager : MonoSingleton<UIManager>
 
     public IEnumerator ShowObtainItemInfo(Item item)
     {
-        // 만약 정보 출력중이 아니라면
         if (!isShowObtainItemInfo)
         {
             isShowObtainItemInfo = true;
 
             obtainItemInfo.SetActive(true);
-            // 아이템 정보 오브젝트 크기 줄임
             obtainItemInfo.transform.localScale = new Vector3(obtainItemInfoScale.x * 0.25f, obtainItemInfoScale.y * 0.25f, 0);
-            // 아이템 정보 받아오고
             obtainItemInfoImg.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
             obtainItemInfoTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";
-            // Ease.OutBack을 이용하여 원래대로 돌려놓음. 자세한건 아래 링크를 통해 확인
-            // https://blog.naver.com/PostView.nhn?blogId=dooya-log&logNo=221320177107&parentCategoryNo=&categoryNo=9&viewDate=&isShowPopularPosts=true&from=search
             obtainItemInfo.transform.DOScale(obtainItemInfoScale, 0.4f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(1f);
-            // 크기 줄임
             obtainItemInfo.transform.DOScale(new Vector3(obtainItemInfoScale.x * 0.2f, obtainItemInfoScale.y * 0.2f, 0), 0.3f).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(0.3f);
             obtainItemInfo.SetActive(false);
@@ -330,20 +351,16 @@ public class UIManager : MonoSingleton<UIManager>
 
             isShowObtainItemInfo = false;
         }
-        // 정보 출력중이라면
         else if (isShowObtainItemInfo)
         {
-            // 큐에 받아온 아이템 정보 넣어둠
             obtainItemQueue.Enqueue(item);
             while(obtainItemQueue.Count != 0)
             {
-                // 정보 출력이 끝날때까지 대기..
                 yield return new WaitUntil(() => !isShowObtainItemInfo);
                 if(obtainItemQueue.Count == 0)
                 {
                     break;
                 }
-                // 정보 출력이 끝났다면 큐에 있던 아이템 Dequeue
                 StartCoroutine(ShowObtainItemInfo(obtainItemQueue.Dequeue()));
 
                 yield return waitForEndOfFrame;
@@ -351,6 +368,11 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
     #endregion
+
+    public void ToggleSlotLevelUpPanel()
+    {
+
+    }
 
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
@@ -522,11 +544,13 @@ public class UIManager : MonoSingleton<UIManager>
     public void LoadToCenterScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+        //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
     public void LoadToTitleScene()
     {
         Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
+        //Managers.Scene.LoadScene(Define.Scene.TitleScene);
     }
 
     public void LeaveBtn()

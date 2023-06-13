@@ -27,6 +27,8 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         overrideController.runtimeAnimatorController = playerAnimator.runtimeAnimatorController;
         playerAnimator.runtimeAnimatorController = overrideController;
+
+        UpdateAttackSpeed(GameManager.Instance.Player.playerBase.AttackSpeed);
     }
     public void UpdateVisual(PlayerSkillData data)
     {
@@ -41,7 +43,10 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
         playerAnimator.runtimeAnimatorController = overrideController;
         //playerAnimator.runtimeAnimatorController = data.playerAnim;
     }
-
+    public void UpdateAttackSpeed(float SpeedValue)
+    {
+        playerAnimator?.SetFloat("AttackSpeed", SpeedValue);
+    }
     public void StartHitMotion(float damage = 0)
     {
         StartCoroutine(IEHitMotion(damage));
@@ -50,11 +55,13 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         float timer = 0f;
 
+        Time.timeScale = 0.001f;
+
         playerSprite.color = Color.red;
         Managers.Pool.PoolManaging("10.Effects/player/Hit_main", transform.position, Quaternion.identity);
         Managers.Pool.PoolManaging("10.Effects/player/Hit_sub", transform.position, Quaternion.identity);
         Managers.Sound.Play("SoundEffects/Player/Damaged.wav");
-        while (timer <= 0.25f)
+        while (timer <= 0.15f)
         {
             timer += Time.unscaledDeltaTime;
 

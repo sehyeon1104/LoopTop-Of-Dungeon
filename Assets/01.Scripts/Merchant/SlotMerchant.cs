@@ -15,12 +15,12 @@ public class SlotMerchant : MerchantBase
         DialogueManager.Instance.SetContentNPos(dialogueText.ToString(), gameObject);
         if (!DialogueManager.Instance.isDialogue)
         {
-            // TODO : 상인 기능 수행
+            MerchantFunc();
         }
     }
 
     protected override void MerchantFunc()
     {
-
+        
     }
 }

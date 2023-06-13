@@ -36,6 +36,7 @@ public class GhostSkill : PlayerSkillBase
     float beamMoveSpeed = 3;
     [SerializeField]
     PlayerBeam playerBeam = null;
+    private float subBeamDmg = 0f;
     private float beamDmg = 0.5f;
     private Vector3 beamDir;
     private float beamRot;
@@ -43,13 +44,13 @@ public class GhostSkill : PlayerSkillBase
     private Poolable subBeamLeft;
     private Poolable subBeamRight;
     private Material beamFiveMat;
-    WaitForSeconds beamWait = new WaitForSeconds(1f);
+    WaitForSeconds beamWait = new WaitForSeconds(0.5f);
     Texture2D eyeEffect;
     Texture2D reverseEffect;
     [Header("텔레포트 스킬")]
     float telpoDamage = 37;
     float telpoVelocity = 50;
-    float telpoDuration = 0.099999f;
+    float telpoDuration = 0.1f;
     float telpoClawDuration = 1f;
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
@@ -83,6 +84,10 @@ public class GhostSkill : PlayerSkillBase
     protected override void Update()
     {
         base.Update();
+    }
+
+    public void UpdateSkillDamage()
+    { 
     }
 
     protected override void Attack()
@@ -283,17 +288,21 @@ public class GhostSkill : PlayerSkillBase
     {
         if (level == 5)
         {
+            playerBase.PlayerTransformData.skill[1].skillDelay = 7;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
+            // 장판 5렙 데미지 공식 반올림(1 + 플레이어 공격력 * 0.1f)
+            jangPanDamage = Mathf.RoundToInt(1 + player.playerBase.Attack * 0.1f);
         }
         else
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+            // 장판 1 ~ 4렙 데미지 공식 반올림(레벨 - 1 + 플레이어 공격력 * 0.1f)
+            jangPanDamage = Mathf.RoundToInt((level - 1) + (player.playerBase.Attack * 0.1f));
         }
-        playerBase.PlayerTransformData.skill[0].skillDelay = 8;
+        playerBase.PlayerTransformData.skill[0].skillDelay = 7f;
         jangpanDuration = 4 + (level - 1) / 2;
         jangpanDealinterval = 0.1f;
         jangpanSize = 2 * level + 2;
-        jangPanDamage = 1f;
         jangpanoverlapFloat = level / 3.5f * 2 + 0.57f;
 
     }
@@ -337,9 +346,10 @@ public class GhostSkill : PlayerSkillBase
         }
         else if(level ==5)
         {
+            playerBase.PlayerTransformData.skill[4].skillDelay = 22;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 2);
             hillaDuration = new WaitForSeconds(10f);
-            playerBase.PlayerTransformData.skill[4].skillDelay = 15;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 22;
 
         }
       
@@ -408,51 +418,49 @@ public class GhostSkill : PlayerSkillBase
         else if (level == 5)
         {
             Vector3 currentPostion = transform.position;
-            float timer = 0;
-            Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
-            Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
-            PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
-            LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
-            lineRenderer.sortingOrder++;
-            PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
-            leftBeam.GetComponent<PlayerBeam>().damage = beamDmg;
-            rightBeam.GetComponent<PlayerBeam>().damage = beamDmg;
-            while (timer < beamRotationDuration)
-            {
-                playerBeam1.timerA = 0;
-                playerBeam2.timerA = 0;
-                leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
-                rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
-                timer += Time.deltaTime;
-                yield return null;
-            }
+
+            //float timer = 0;
+            //Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
+            //Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
+            //PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
+            //LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
+            //lineRenderer.sortingOrder++;
+            //PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
+            //leftBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
+            //rightBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
+            //while (timer < beamRotationDuration)
+            //{
+            //    playerBeam1.timerA = 0;
+            //    playerBeam2.timerA = 0;
+            //    leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
+            //    rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
+            //    timer += Time.deltaTime;
+            //    yield return new WaitForEndOfFrame();
+            //}
+
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();
             ParticleSystem beamParticle = fiveBeam.GetComponent<ParticleSystem>();
             beamParticle.startRotation = -beamRot * Mathf.Deg2Rad;
 
             playerBeam.enabled = false;
-            beamParticle.Pause();
             yield return beamWait;
+            beamFiveMat.SetTexture("_MainTex", eyeEffect);
+            //Managers.Pool.Push(leftBeam);
+            //Managers.Pool.Push(rightBeam);
             beamParticle.Play();
-            playerBeam2.beamLight.intensity = 0;
-            playerBeam1.beamLight.intensity = 0;
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
-
-            Managers.Pool.Push(leftBeam);
-            Managers.Pool.Push(rightBeam);
-            beamParticle.Pause();
             playerBeam.enabled = true;
-            yield return new WaitUntil(() => playerBeam.timerA > 0);
-            CinemachineCameraShaking.Instance.CameraShake(1, 0.25f);
+            beamParticle.Pause();
+            yield return new WaitUntil(() => playerBeam.IsReady);
+            CinemachineCameraShaking.Instance.CameraShake(3, 0.25f);
             yield return new WaitUntil(() => !playerBeam.IsReady);
             beamFiveMat.SetTexture("_MainTex", reverseEffect);
             beamParticle.time = 0;
             beamParticle.Play();
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
-            lineRenderer.sortingOrder--;
+      
             Managers.Pool.Push(fiveBeam);
-            beamFiveMat.SetTexture("_MainTex", eyeEffect);
         }
 
         yield return new WaitUntil(() => !playerBeam.IsReady);
@@ -460,19 +468,25 @@ public class GhostSkill : PlayerSkillBase
         {
             Managers.Pool.Push(beamList[i]);
         }
+
     }
 
     protected override void ThirdSkillUpdate(int level)
     {
         if (level == 5)
         {
+            playerBase.PlayerTransformData.skill[4].skillDelay = 11;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+            // 5레벨 데미지 공식
+            beamDmg = Mathf.RoundToInt(level + (player.playerBase.Attack * 0.1f));
+            subBeamDmg = Mathf.RoundToInt(player.playerBase.Attack * 0.1f * level * 0.1f);
         }
         else
         {
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+            // 1 ~ 4레벨 데미지 공식
+            beamDmg = Mathf.RoundToInt(1 + level + (player.playerBase.Attack * 0.1f));
         }
-        beamDmg = level + 2;
     }
     IEnumerator TelpoSkill(int level)
     {
@@ -490,8 +504,7 @@ public class GhostSkill : PlayerSkillBase
         while (timer < telpoDuration)
         {
             timer += Time.fixedDeltaTime;
-            //print(MathF.Sqrt(Vector2.SqrMagnitude(transform.position - changePos)));
-            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2) - 0.001f)
+            if (Vector2.SqrMagnitude(transform.position - changePos) > (2 * 2))
             {
                 Poolable telpoEffect;
                 if (level == 5)
@@ -500,7 +513,7 @@ public class GhostSkill : PlayerSkillBase
                 }
                 else
                 {
-                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TelpoEffect.prefab", changePos, angleAxis);
+                    telpoEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/TpEffect.prefab", changePos, angleAxis);
                 }
                 VisualEffect[] effects = telpoEffect.GetComponentsInChildren<VisualEffect>();
                 for (int i = 0; i < effects.Length; i++)
@@ -527,6 +540,8 @@ public class GhostSkill : PlayerSkillBase
 
             Collider2D[] hitEnemies;
             float timerA = 0;
+            // 연속베기
+            playerMovement.IsControl = false;
             while (timerA < telpoClawDuration)
             {
                 Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
@@ -538,7 +553,7 @@ public class GhostSkill : PlayerSkillBase
                 for (int i = 0; i < hitEnemies.Length; i++)
                 {
                     eTransform = hitEnemies[i].transform.position;
-                    hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(2, 0);
+                    hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(player.playerBase.Attack * 0.1f), 0);
                     if (!hitEnemies[i].gameObject.activeSelf)
                     {
                         passiveAction();
@@ -548,6 +563,7 @@ public class GhostSkill : PlayerSkillBase
                 yield return waitClaw;
             }
             yield return waitLastClaw;
+            // 막타
             for (int i = -1; i < 6; i++)
             {
                 Poolable a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerClaw 1.prefab", transform.position, Quaternion.Euler(0, 0, 45));
@@ -560,7 +576,8 @@ public class GhostSkill : PlayerSkillBase
             for (int i = 0; i < hitEnemies.Length; i++)
             {
                 eTransform = hitEnemies[i].transform.position;
-                hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(30, 0);
+                // 반올림(15 + 플레이어 공격력 * 2 + 플레이어 공격력 * (레벨 * 0.1))
+                hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(15 + player.playerBase.Attack * 2 + player.playerBase.Attack * (level * 0.1f)));
                 if (!hitEnemies[i].gameObject.activeSelf)
                 {
                     passiveAction();
@@ -568,14 +585,17 @@ public class GhostSkill : PlayerSkillBase
             }
         }
         playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         player.IsInvincibility = false;
     }
     protected override void ForuthSkillUpdate(int level)
     {
-        telpoDamage = level + 37;
+        // 텔레포트 딜 공식 : 반올림(15 + 플레이어 공격력 * 2 + 플레이어 공격력 * (레벨 * 0.1))
+        telpoDamage = Mathf.RoundToInt(15 + player.playerBase.Attack * 2 + player.playerBase.Attack * (level * 0.1f));
         if (level == 5)
         {
             telpoVelocity = 100;
+            playerBase.PlayerTransformData.skill[4].skillDelay = 4;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 1);
             return;
         }
@@ -678,7 +698,8 @@ public class GhostSkill : PlayerSkillBase
     {
 
         RaycastHit2D[] hitEnemies;
-        Poolable bossSprite = Managers.Pool.Pop(boss, transform.position + Vector3.up * 3);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/ArmFiveEffect.prefab", transform.position + Vector3.up * 3, Quaternion.identity);
+        Poolable bossSprite = Managers.Pool.PoolManaging("Assets/03.Prefabs/Player/Ghost/boss_devil_man.prefab", transform.position + Vector3.up * 3,Quaternion.identity);
         Animator animator = bossSprite.GetComponentInChildren<Animator>();
         SpriteRenderer[] bossSprites = bossSprite.transform.GetComponentsInChildren<SpriteRenderer>();
         Color fadeColor = new Color(1, 1, 1, 0);
@@ -739,9 +760,13 @@ public class GhostSkill : PlayerSkillBase
     }
     protected override void FifthSkillUpdate(int level)
     {
-        armDamage = 29 + level;
+        //팔 솟아오르기 딜 공식 : 반올림( 10 + (레벨 + 플레이어 공격력 * 0.8) + 플레이어 공격력 * 2) )
+        armDamage = Mathf.RoundToInt(10 + (level + player.playerBase.Attack * 0.8f) + (player.playerBase.Attack * 2));
         if (level == 5)
         {
+            // 5레벨 : 반올림 (60 + (레벨 + 플레이어 공격력 * 0.8) + 플레이어 공격력 * 2 )
+            playerBase.PlayerTransformData.skill[4].skillDelay = 3.5f;
+            armDamage = Mathf.RoundToInt(60 + (level + player.playerBase.Attack * 0.8f) + (player.playerBase.Attack * 2));
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 1);
         }
         else

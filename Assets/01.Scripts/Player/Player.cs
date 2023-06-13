@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
 
     // HP 관련 아이템 효과
     [field: SerializeField]
-    public UnityEvent HPRelatedItemEffects { get; private set; }
+    public UnityEvent HPRelatedItemEffects;
     // 공격 관련 아이템 효과
     [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }
@@ -45,12 +45,16 @@ public class Player : MonoBehaviour, IHittable
     }
     private void Start()
     {
-        if (HPRelatedItemEffects == null)
-            HPRelatedItemEffects = new UnityEvent();
+        //if (HPRelatedItemEffects == null)
+        //    HPRelatedItemEffects = new Action();
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            playerBase.AttackSpeed = 2;
+    }
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);
@@ -87,7 +91,7 @@ public class Player : MonoBehaviour, IHittable
         else
         {
             StartCoroutine(IEDamaged(damage));
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
         }
 
         HPRelatedItemEffects?.Invoke();
@@ -111,7 +115,8 @@ public class Player : MonoBehaviour, IHittable
     public void RevivePlayer()
     {
         playerVisual.SetActive(true);
-        UIManager.Instance.CloseGameOverPanel();
+        UIManager.Instance.ToggleGameOverPanel();
+        //UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

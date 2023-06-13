@@ -29,7 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773307704802124637}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 5a58b4fd832f42b418d6e0704f4919d0, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: e9c00863bc86861418dda1070d505b6f, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -57,10 +57,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 1.5443151, y: 0.66896033, z: 0.06556051, w: 1}
+      - m_Value: {x: 0.9221513, y: 0.4393496, z: 0, w: 1}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 27.53272, y: 12.68523, z: 2.306406, w: 1}
+      - m_Value: {x: 5.992157, y: 3.0117648, z: 0.09411765, w: 1}
         m_Name: AftershocksColor
         m_Overridden: 1
     m_Uint:
@@ -114,8 +114,8 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1672594845
+  m_SortingLayer: 6
   m_SortingOrder: 0
 --- !u!114 &-8546430333153095092
 MonoBehaviour:
@@ -130,4 +130,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
-  PushTime: 0
+  PushTime: 3

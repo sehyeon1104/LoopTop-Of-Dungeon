@@ -20,6 +20,23 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private int wave1NormalEnemyCount = 0;
     private int wave2NormalEnemyCount = 0;
 
+    // 몹 소환 비율
+    private float[] enemySpawnRatioArr = new float[5];
+
+    private float normalEnemyRatio = 0.5f;       // 기본
+    private float highHpEnemyRatio = 0.3f;       // 뚱땡이
+    private float highSpeedEnemyRatio = 0.15f;    // 이속빠름 ( ex)팬텀 )
+    private float longDisEnemyRatio = 0.05f;      // 원거리
+
+    // 현재 몹 소환 수
+    private int spawnCount = 0;
+    // 몹 유형
+    private int mobType = 0;
+    // 소환 비율
+    private float spawnRatio = 0f;
+    // 필요 소환 수
+    private int requireSpawnCount = 0;
+
     private Transform eliteMonsterSpawnPos;
 
     private GameObject enemySpawnEffect = null;
@@ -36,10 +53,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
     private WaitForSeconds waitForSpawnTime;
     private WaitForSeconds waitForHalfSpawnTime;
 
-
-    public AssetLabelReference assetLabel;
-    private IList<IResourceLocation> _locations;
-
     private void Start()
     {
         door = FindObjectOfType<Door>();
@@ -50,6 +63,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         Managers.Pool.CreatePool(enemySpawnEffect, 10);
         Managers.Pool.CreatePool(enemyDeadEffect, 10);
 
+        enemySpawnRatioArr[0] = normalEnemyRatio;
+        enemySpawnRatioArr[1] = highHpEnemyRatio;
+        enemySpawnRatioArr[2] = longDisEnemyRatio;
+        enemySpawnRatioArr[3] = highSpeedEnemyRatio;
+        enemySpawnRatioArr[4] = 0;
         SetEnemyInList();
     }
 
@@ -78,34 +96,34 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         normalEnemyPrefabs = normalEnemyPrefabsList.ToArray();
     }
 
-    public void SetRandomEnemyCount()
+    public void SetEnemyWaveCount()
     {
         int rand = Random.Range(1, 5);
 
         switch (rand)
         {
+            // TODO : 강화 스켈레톤, 팬텀, 매지션 수 조정 ( 노션 몹 수치 테이블에 있음 )
             case 1:
-                wave1NormalEnemyCount = 4;
-                wave2NormalEnemyCount = 5;
+                wave1NormalEnemyCount = 8;
+                wave2NormalEnemyCount = 12;
                 break;
             case 2:
-                wave1NormalEnemyCount = 5;
-                wave2NormalEnemyCount = 4;
+                wave1NormalEnemyCount = 12;
+                wave2NormalEnemyCount = 8;
                 break;
             case 3:
-                wave1NormalEnemyCount = 3;
-                wave2NormalEnemyCount = 6;
+                wave1NormalEnemyCount = 10;
+                wave2NormalEnemyCount = 10;
                 break;
             case 4:
-                wave1NormalEnemyCount = 5;
-                wave2NormalEnemyCount = 5;
+                wave1NormalEnemyCount = 10;
+                wave2NormalEnemyCount = 10;
                 break;
         }
     }
 
-    public IEnumerator SpawnEnemy(Transform[] enemySpawnPos)
+    public IEnumerator ManagingEnemy(Transform[] enemySpawnPos)
     {
-        // TODO : 적 소환시 이펙트 추가
         if (door.IsFirst)
         {
             door.IsFirst = false;
@@ -113,29 +131,32 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         door.CloseDoors();
         
-        int randPos = 0;
         isNextWave = false;
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        for (int i = 0; i < wave1NormalEnemyCount; ++i)
-        {
-            // 적 소환 위치를 담은 배열의 끝까지 범위지정
-            randPos = Random.Range(1, enemySpawnPos.Length);
-            // 자식(몹)이 있다면 다시 랜드
-            while (enemySpawnPos[randPos].childCount != 0)
-            {
-                randPos = Random.Range(1, enemySpawnPos.Length);
-            }
+        // TODO : 이후 코드 가독성 올리기. 지금 보기 너무 더럽다 
 
-            // 몹 소환
-            // 적 소환 위치를 부모로 설정
-            var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-            // 현재 적들 리스트에 추가
-            curEnemies.Add(enemy);
-            enemy.gameObject.SetActive(false);
-            StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
-        }
+        SpawnEnemy(enemySpawnPos, wave1NormalEnemyCount);
+
+        //for (int i = 0; i < wave1NormalEnemyCount; ++i)
+        //{
+        //    // 적 소환 위치를 담은 배열의 끝까지 범위지정
+        //    randPos = Random.Range(1, enemySpawnPos.Length);
+        //    // 자식(몹)이 있다면 다시 랜드
+        //    while (enemySpawnPos[randPos].childCount != 0)
+        //    {
+        //        randPos = Random.Range(1, enemySpawnPos.Length);
+        //    }
+
+        //    // 몹 소환
+        //    // 적 소환 위치를 부모로 설정
+        //    var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
+        //    // 현재 적들 리스트에 추가
+        //    curEnemies.Add(enemy);
+        //    enemy.gameObject.SetActive(false);
+        //    StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
+        //}
 
         yield return new WaitUntil(() => curEnemies.Count <= 0);
 
@@ -152,21 +173,51 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
-        for (int i = 0; i < wave2NormalEnemyCount; ++i)
+        SpawnEnemy(enemySpawnPos, wave2NormalEnemyCount);
+
+        isSpawnEliteEnemy = false;
+    }
+
+    public void SpawnEnemy(Transform[] enemySpawnPos, int enemyCount)
+    {
+        int randPos = 0;
+        Define.MobTypeFlag mobTypeFlag;
+        spawnRatio = normalEnemyRatio;
+
+        mobType = 0;
+        spawnCount = 0;
+        requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
+
+        for (int i = 0; i < enemyCount; ++i)
         {
+            mobTypeFlag = (Define.MobTypeFlag)mobType;
+
+            // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
+            // 자식(몹)이 있다면 다시 랜드
             while (enemySpawnPos[randPos].childCount != 0)
             {
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 
-            var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
+            // 몹 소환
+            // 적 소환 위치를 부모로 설정
+            var enemy = Managers.Pool.Pop(normalEnemyPrefabs[(int)mobTypeFlag], enemySpawnPos[randPos]);
+            // 현재 적들 리스트에 추가
             curEnemies.Add(enemy);
             enemy.gameObject.SetActive(false);
             StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
-        }
+            spawnCount++;
 
-        isSpawnEliteEnemy = false;
+            if (spawnCount == requireSpawnCount)
+            {
+                mobType++;
+                spawnCount = 0;
+                spawnRatio = enemySpawnRatioArr[mobType];
+                Debug.Log(enemySpawnRatioArr[mobType]);
+                requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
+            }
+        }
     }
 
     public void SetEliteMonsterSpawnBool(bool isSpawn, Transform spawnPos)
@@ -199,11 +250,11 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void RemoveEnemyInList(Poolable enemy)
     {
-        if(enemy == null)
+        if (enemy == null)
         {
-            for(int i = 0; i < curEnemies.Count; ++i)
+            for (int i = 0; i < curEnemies.Count; ++i)
             {
-                if(curEnemies[i] == null)
+                if (curEnemies[i] == null)
                 {
                     curEnemies.RemoveAt(i);
                 }
@@ -214,6 +265,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         var enemyDeadEffectClone = Managers.Pool.Pop(enemyDeadEffect);
         enemyDeadEffectClone.transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y - 0.5f);
         curEnemies.Remove(enemy);
+
+        for (int i = 0; i < curEnemies.Count; ++i)
+        {
+            if (!curEnemies[i].gameObject.activeSelf)
+            {
+                curEnemies.Remove(enemy);
+            }
+        }
     }
 
 }

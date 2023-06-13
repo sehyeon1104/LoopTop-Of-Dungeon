@@ -7,7 +7,7 @@ public class ShopMerchant : MerchantBase
     protected override void SetDialogueText()
     {
         dialogueText.Clear();
-        dialogueText.Append("어서오세요! 슬롯을 강화하고 싶으신가요?");
+        dialogueText.Append("어서오세요! 스킬 슬롯을 강화하고 싶으신가요?");
     }
 
     protected override void InteractiveWithPlayer()
@@ -17,6 +17,6 @@ public class ShopMerchant : MerchantBase
 
     protected override void MerchantFunc()
     {
-
+        UIManager.Instance.ToggleSlotLevelUpPanel();
     }
 }

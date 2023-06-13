@@ -85,4 +85,12 @@ public static class Define
         PC,
         Mobile
     }
+
+    public enum MobTypeFlag
+    {
+        Normal = 0,
+        HighHp,
+        LongDis,
+        HighSpeed,
+    }
 }
