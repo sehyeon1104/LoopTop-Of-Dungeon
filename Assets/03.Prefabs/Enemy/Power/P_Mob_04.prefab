@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888976221370603744}
   - component: {fileID: 4282415775607091832}
+  - component: {fileID: -1061970683064862709}
   m_Layer: 0
   m_Name: P_Mob_04
   m_TagString: Untagged
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 434a7633efddb4c6bb6db3687f6f2bb6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,6 +86,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1061970683064862709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5692685003161739529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0d208788cce114db61416ebec06e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySO: {fileID: 0}
+  detectDistance: 5
+  minDistance: 1
+  idleClip: {fileID: 0}
+  moveClip: {fileID: 0}
+  attackClip: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1001 &4281926472935040280
 PrefabInstance:
   m_ObjectHideFlags: 0
