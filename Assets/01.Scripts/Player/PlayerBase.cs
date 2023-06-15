@@ -22,18 +22,10 @@ public class PlayerBase
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;
-        level = 1;
-        maxLevel = 100;
-        _expTable = new int[maxLevel];
-        exp = 0;
         PlayerSkillNum = new int[] { 3, 4 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
-        for (int i = 0; i < maxLevel; ++i)
-        {
-            _expTable[i] = i + 1;
-        }
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
@@ -132,7 +124,12 @@ public class PlayerBase
     public float MoveSpeed
     {
         get => moveSpeed;
-        set => moveSpeed = value;
+        set
+        {
+            moveSpeed = value;
+            if (moveSpeed < 1f)
+                moveSpeed = 1f;
+        }
     }
     public float InitMoveSpeed
     {
@@ -157,64 +154,6 @@ public class PlayerBase
             }
 
         }
-    }
-
-    private int[] _expTable;
-
-    public int[] ExpTable
-    {
-        get
-        {
-            return _expTable;
-        }
-        set
-        {
-            _expTable = value;
-        }
-    }
-
-    private float exp;
-    public float Exp
-    {
-        get => exp;
-        set
-        {
-            exp = value;
-
-            if (level >= MaxLevel || exp < 0)
-            {
-                return;
-            }
-
-            if (_expTable[level] <= exp)
-            {
-                Debug.Log("Level : " + Level);
-                Debug.Log($"Current Exp : {exp}");
-                Exp = exp - _expTable[level++];
-            }
-
-            // UIManager.Instance.UpdateUI();
-        }
-    }
-
-    private int level;
-    public int Level
-    {
-        get => level;
-        set => level = value;
-    }
-
-    private int maxLevel;
-    public int MaxLevel 
-    {  
-        get 
-        { 
-            return maxLevel; 
-        } 
-        set 
-        { 
-            maxLevel = value; 
-        } 
     }
 
     public int[] PlayerSkillNum { get; set; }
