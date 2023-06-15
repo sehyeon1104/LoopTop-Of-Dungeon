@@ -26,7 +26,7 @@ public class ItemObj : MonoBehaviour
 
     public string itemName { get; private set; } = "";
 
-    public bool isSold { get;  private set; } = false;
+    public bool isSold { get; private set; } = false;
     private bool _isPurchaseAble = false;
 
     public bool IsPurchaseAble
@@ -92,7 +92,6 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
-        Debug.Log("isSold : " + isSold);
         if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || !_isPurchaseAble)
         {
             Rito.Debug.Log("구매 불가");
@@ -101,14 +100,11 @@ public class ItemObj : MonoBehaviour
         }
 
         if (isSold)
-        {
-            Rito.Debug.Log("판매 완료된 상품");
             return;
-        }
-
-        isSold = true;
 
         GameManager.Instance.Player.playerBase.FragmentAmount -= (int)item.price;
+
+        isSold = true;
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Purchase.wav");
         itemImage.gameObject.SetActive(false);

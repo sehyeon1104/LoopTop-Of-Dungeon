@@ -7,8 +7,6 @@ public class PlayerData
 {
     public int hp;
     public int maxHp;
-    public int level;
-    public int maxLevel;
     public int[] slotLevel;
     public float attack;
     public float damage;
@@ -16,8 +14,6 @@ public class PlayerData
     public float attackRange;
     public float moveSpeed;
     public float critChance;
-    public float exp;
-    public int[] expTable;
     public int[] playerSkillNum;
     public int _fragmentAmount;
     public int bossFragmentAmount;
