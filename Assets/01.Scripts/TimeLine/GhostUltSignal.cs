@@ -54,11 +54,16 @@ public class GhostUltSignal : MonoBehaviour
 
     public void AttackEnemy()
     {
-        Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, new Vector2(18, 10), 0, 1 << enemyLayer);
+        float ySize = Camera.main.orthographicSize * 2;
+        Vector2 CamSize = new Vector2(ySize * Camera.main.aspect, ySize);
+        Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, CamSize, 0, 1 << enemyLayer);
         for (int i = 0; i < attachEnemises.Length; i++)
         {
             attachEnemises[i].GetComponent<IHittable>().OnDamage(50, 0);
         }
+        PlayerMovement.Instance.IsMove = true;
+        PlayerMovement.Instance.IsControl = true;
+        Time.timeScale = 1;
     }
     //public void UltSkillAnim()
     //{
@@ -81,9 +86,7 @@ public class GhostUltSignal : MonoBehaviour
         color.a = 0;
         panel1.color = color;
         panel2.color = color;
-        PlayerMovement.Instance.IsMove = true;
-        PlayerMovement.Instance.IsControl = true;
-        Time.timeScale = 1;
+   
     }
 
     public IEnumerator ScreenDarkCor()
@@ -142,5 +145,9 @@ public class GhostUltSignal : MonoBehaviour
         ghostUltAnim.SetTrigger(ult3);
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireCube(transform.position,new Vector2( Camera.main.rect.size.x + 10, Camera.main.rect.size.y + 10));
+    }
 }
