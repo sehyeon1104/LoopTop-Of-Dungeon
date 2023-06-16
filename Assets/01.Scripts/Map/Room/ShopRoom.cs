@@ -110,7 +110,6 @@ public class ShopRoom : RoomBase
                         && itemobjArr[i].itemName != "Default"
                         && !itemobjArr[i].isSold)
                     {
-                        Debug.Log(itemobjArr[i].isSold);
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;
                     }
@@ -152,7 +151,7 @@ public class ShopRoom : RoomBase
     {
         for (int i = 0; i < itemobjArr.Length; ++i)
         {
-            if (itemobjArr[i].IsPurchaseAble)
+            if (itemobjArr[i].IsPurchaseAble && !itemobjArr[i].isSold)
             {
                 return itemobjArr[i];
             }
