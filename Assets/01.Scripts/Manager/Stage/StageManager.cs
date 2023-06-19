@@ -7,11 +7,8 @@ public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField]
     private GameObject[] wallGrids;
-
     private GameObject wallGrid;
-
     private int[,] wallGridInfo;
-
     private int randWallGrid;
 
     [SerializeField]
@@ -19,6 +16,9 @@ public class StageManager : MonoSingleton<StageManager>
     private EnemyRoom[] enemyRooms;
 
     private int startRoomNum = 0;
+    private int eliteMobRoomNum = 1;
+    private int enemyRoomNum = 7;
+    private int eventRoomNum = 4;
 
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
@@ -64,20 +64,14 @@ public class StageManager : MonoSingleton<StageManager>
         isSetting = true;
         StartCoroutine(SetStage());
 
-        // Î≤??ùÏÑ±
         SetWallGrid();
-        // Í∏?Ï¥àÍ∏∞??
         InitWay();
-        // Î∞??§Ìè¨??Î∞õÏïÑ??
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // ?úÏûë Î∞??§Ï†ï
         SetStartRoomNShopRoom();
-        // Î∞??ùÏÑ±
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 9);
-        // ?¨ÌÉàÎ∞?ÏßÄ??
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
@@ -148,14 +142,14 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : ?ÑÏù¥???úÎûç ?†ÎãàÎ©îÏù¥??Ï∂îÍ?
+        // TODO : ªÛ¿⁄∏¶ ≈Î«ÿ æ∆¿Ã≈€ µÂ∂¯
 
         Managers.Pool.Pop(dropItemPrefab, pos);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        // wallGrid???ïÎ≥¥Î•?Í∞Ä?∏Ïò¥
+        // wallGridInfo
         wallGridInfo = randWallGrid switch
         {
             0 => MapInfo.WallGrid1,

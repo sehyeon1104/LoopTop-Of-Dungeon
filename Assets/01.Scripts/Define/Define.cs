@@ -35,6 +35,7 @@ public static class Define
         EnemyRoom,
         BossRoom,
         Shop,
+        ChestRoom,
     }
 
     public enum PlayerTransformTypeFlag
