@@ -44,7 +44,7 @@ public class ShowDamagePopUp : MonoBehaviour
 
     public IEnumerator PoolDamageTMP(Poolable damageTMP, TextMeshProUGUI damageText)
     {
-        damageTMP.transform.DOMoveY(damageTMP.transform.position.y - Random.Range(1.5f, 2.5f), 1f).SetEase(Ease.InBack).SetUpdate(true);
+        damageTMP.transform.DOMoveY(damageTMP.transform.position.y - Random.Range(1.5f, 2.5f), 0.5f).SetEase(Ease.InBack).SetUpdate(true);
         damageTMP.transform.DOScale(0.005f, 0.5f);
         damageText.DOFade(0f, 0.5f);
         yield return waitForHalfSeconds;
