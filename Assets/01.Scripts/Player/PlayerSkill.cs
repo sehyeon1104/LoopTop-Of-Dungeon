@@ -94,7 +94,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     public void SlotUp(int index)
     {
-        if (slotLevel[index] > 5)
+        if (slotLevel[index] >= 5)
             return;
         slotLevel[index]++;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
