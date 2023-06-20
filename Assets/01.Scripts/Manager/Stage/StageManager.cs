@@ -41,9 +41,6 @@ public class StageManager : MonoSingleton<StageManager>
     Vector3 originWayPos;
     #endregion
 
-    [SerializeField]
-    private GameObject MoveNextMapPortal;
-
     private GameObject dropItemPrefab = null;
 
     public bool isSetting { private set; get; }
@@ -57,7 +54,6 @@ public class StageManager : MonoSingleton<StageManager>
             wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
         }
 
-        MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
 
         roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
@@ -78,7 +74,7 @@ public class StageManager : MonoSingleton<StageManager>
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
-        yield return new WaitUntil(() => enemyRooms.Length > 9);
+        yield return new WaitUntil(() => enemyRooms.Length > 3);
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
@@ -134,11 +130,6 @@ public class StageManager : MonoSingleton<StageManager>
         {
             room.SetAndInstantiateRoom();
         }
-    }
-
-    public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
-    {
-        Instantiate(MoveNextMapPortal, enemyRoom.gameObject.transform.position, Quaternion.identity);
     }
 
     public void InstantiateDropItem(Vector3 pos)
