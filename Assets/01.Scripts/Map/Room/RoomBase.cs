@@ -27,6 +27,7 @@ public abstract class RoomBase : MonoBehaviour
     {
 
     }
+
     protected abstract void IsClear();
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
