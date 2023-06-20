@@ -10,8 +10,8 @@ public class SpawnRoom : MonoBehaviour
     private Define.RoomTypeFlag _roomTypeFlag = Define.RoomTypeFlag.Default;
     public Define.RoomTypeFlag RoomTypeFlag
     {
-        get { return _roomTypeFlag; }
-        set { _roomTypeFlag = value; }
+        get => _roomTypeFlag;
+        set => _roomTypeFlag = value;
     }
 
     private bool isStartRoom = false;

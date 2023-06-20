@@ -15,7 +15,8 @@ public class StageManager : MonoSingleton<StageManager>
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
-    private int startRoomNum = 0;
+    
+    private int startRoomCount = 1;
     private int enemyRoomCount = 6;
     private int eliteMobRoomCount = 1;
     private int eventRoomCount = 4;
@@ -60,10 +61,10 @@ public class StageManager : MonoSingleton<StageManager>
         MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
 
-        roomCountDic.Add(Define.RoomTypeFlag.StartRoom, 1);
-        roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, 6);
-        roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, 1);
-        roomCountDic.Add(Define.RoomTypeFlag.EventRoom, 4);
+        roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, enemyRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, eliteMobRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EventRoom, eventRoomCount);
     }
 
     private IEnumerator Start()
@@ -82,7 +83,6 @@ public class StageManager : MonoSingleton<StageManager>
         SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
-        spawnRooms[startRoomNum].GetSummonedRoom().CheckLinkedRoom();
     }
 
     public IEnumerator SetStage()
