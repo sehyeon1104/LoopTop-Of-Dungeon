@@ -35,5 +35,6 @@ public class SkillShuffleStatue : StatueBase
     protected override void StatueFunc()
     {
         // TODO : ½ºÅ³ ·£´ý¼ÅÇÃ ¹× Àû¿ë
+        base.StatueFunc();
     }
 }

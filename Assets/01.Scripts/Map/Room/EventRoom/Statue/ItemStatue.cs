@@ -35,5 +35,6 @@ public class ItemStatue : StatueBase
     protected override void StatueFunc()
     {
         // TODO : 인벤토리 내 아이템 하나를 선택하면, 해당 아이템을 파괴하고 랜덤으로 아이템 지급
+        base.StatueFunc();
     }
 }
