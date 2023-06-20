@@ -23,7 +23,10 @@ public abstract class RoomBase : MonoBehaviour
         curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
-    protected abstract void SetRoomTypeFlag();
+    protected virtual void SetRoomTypeFlag()
+    {
+
+    }
     protected abstract void IsClear();
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

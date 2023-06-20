@@ -15,11 +15,10 @@ public class StageManager : MonoSingleton<StageManager>
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
-    
     private int startRoomCount = 1;
-    private int enemyRoomCount = 6;
+    private int enemyRoomCount = 7;
     private int eliteMobRoomCount = 1;
-    private int eventRoomCount = 4;
+    private int eventRoomCount = 3;
 
     private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
 
@@ -80,7 +79,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 9);
-        SetMoveNextMapRoom();
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
     }
@@ -136,13 +134,6 @@ public class StageManager : MonoSingleton<StageManager>
         {
             room.SetAndInstantiateRoom();
         }
-    }
-
-    public void SetMoveNextMapRoom()
-    {
-        int rand = Random.Range(0, enemyRooms.Length);
-        enemyRooms[rand].isMoveAnotherStage = true;
-        enemyRooms[rand].InstantiateMoveMapIcon();
     }
 
     public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
