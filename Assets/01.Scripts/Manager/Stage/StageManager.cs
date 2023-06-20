@@ -16,9 +16,11 @@ public class StageManager : MonoSingleton<StageManager>
     private EnemyRoom[] enemyRooms;
 
     private int startRoomNum = 0;
-    private int eliteMobRoomNum = 1;
-    private int enemyRoomNum = 7;
-    private int eventRoomNum = 4;
+    private int enemyRoomCount = 6;
+    private int eliteMobRoomCount = 1;
+    private int eventRoomCount = 4;
+
+    private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
 
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
@@ -57,6 +59,11 @@ public class StageManager : MonoSingleton<StageManager>
 
         MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
+
+        roomCountDic.Add(Define.RoomTypeFlag.StartRoom, 1);
+        roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, 6);
+        roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, 1);
+        roomCountDic.Add(Define.RoomTypeFlag.EventRoom, 4);
     }
 
     private IEnumerator Start()
@@ -67,7 +74,7 @@ public class StageManager : MonoSingleton<StageManager>
         SetWallGrid();
         InitWay();
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        SetStartRoomNShopRoom();
+        SetRoom();
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
@@ -104,20 +111,23 @@ public class StageManager : MonoSingleton<StageManager>
     }
 
     private int randRoom = 0;
-    public void SetStartRoomNShopRoom()
+    public void SetRoom()
     {
-        // Debug.Log("SpawnRooms : " + spawnRooms.Length);
-        startRoomNum = Random.Range(0, spawnRooms.Length);
-        spawnRooms[startRoomNum].IsStartRoom = true;
-        randRoom = Random.Range(0, spawnRooms.Length);
-        if (spawnRooms[randRoom].IsStartRoom)
+        for(int i = 0; i < spawnRooms.Length; ++i)
         {
-            while (spawnRooms[randRoom].IsStartRoom)
-            {
-                randRoom = Random.Range(0, spawnRooms.Length);
+            // 시작 방부터 이벤트 방까지 랜덤으로 굴림
+            randRoom = Random.Range(1, 5);
+
+            // 남은 방의 개수가 0이라면 ReRoll
+            if (roomCountDic[(Define.RoomTypeFlag)randRoom] == 0){
+                --i;
+                continue;
             }
+            
+            // 방 타입 지정
+            spawnRooms[i].RoomTypeFlag = (Define.RoomTypeFlag)randRoom;
+            roomCountDic[(Define.RoomTypeFlag)randRoom]--;
         }
-        spawnRooms[randRoom].IsShopRoom = true;
     }
 
     public void InstantiateRooms()

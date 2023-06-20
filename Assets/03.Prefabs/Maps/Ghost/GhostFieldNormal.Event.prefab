@@ -3072,10 +3072,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7608934678055247656}
   - component: {fileID: 7608934678055247655}
-  - component: {fileID: 7608934678055247653}
   - component: {fileID: 7608934678055247652}
+  - component: {fileID: 3455482528909161511}
   m_Layer: 0
-  m_Name: GhostFieldNormal.Shop
+  m_Name: GhostFieldNormal.Event
   m_TagString: Map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3109,26 +3109,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &7608934678055247653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7608934678055247654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347ff1e00dd5f5c4bb0654798d3cf6e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapTypeFlag: 2
-  roomTypeFlag: 0
-  minimapIconSpriteRenderer: {fileID: 0}
-  curLocatedMapIcon: {fileID: 0}
-  itemPosObj: {fileID: 0}
-  itemSpawnPosArr: []
-  shopNpc: {fileID: 0}
-  shopNpcIcon: {fileID: 0}
 --- !u!61 &7608934678055247652
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3155,6 +3135,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 14, y: 14}
   m_EdgeRadius: 0
+--- !u!114 &3455482528909161511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608934678055247654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482bbdd82ddfafd4989733a2cd4d015a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapTypeFlag: 0
+  roomTypeFlag: 0
+  minimapIconSpriteRenderer: {fileID: 0}
+  curLocatedMapIcon: {fileID: 0}
 --- !u!1 &8342745054573718487
 GameObject:
   m_ObjectHideFlags: 0

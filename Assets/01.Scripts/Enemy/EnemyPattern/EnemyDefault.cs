@@ -21,7 +21,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     protected Rigidbody2D rigid;
     protected float distanceToPlayer;
 
-    [SerializeField] private float detectDistance = 5f;
+    //[SerializeField] private float detectDistance = 5f;
     [SerializeField] private float minDistance = 1f;
 
     [SerializeField] protected AnimationClip idleClip;
@@ -126,7 +126,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         
         switch (distanceToPlayer)
         {
-            case var a when a <= detectDistance && a > minDistance:
+            case var a when /*a <= detectDistance &&*/ a > minDistance:
                 isMove = true;
                 if(actCoroutine == null) actCoroutine = StartCoroutine(MoveToPlayer());
                 break;

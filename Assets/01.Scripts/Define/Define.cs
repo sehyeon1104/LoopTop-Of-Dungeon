@@ -33,7 +33,10 @@ public static class Define
         Default = 0,
         StartRoom,
         EnemyRoom,
-        BossRoom,
+        EliteMobRoom,
+        EventRoom,
+
+        // Å×½ºÆ®
         Shop,
         ChestRoom,
     }
