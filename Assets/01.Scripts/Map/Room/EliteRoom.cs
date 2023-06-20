@@ -19,7 +19,6 @@ public class EliteRoom : RoomBase
 
     protected override void IsClear()
     {
-        // TODO : 엘리트 몬스터 사망 시 클리어 처리
         if(isEliteMonsterSpawn && EnemySpawnManager.Instance.curEnemies.Count == 0)
         {
             isClear = true;
