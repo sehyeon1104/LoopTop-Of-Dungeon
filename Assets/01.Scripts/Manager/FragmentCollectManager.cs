@@ -17,9 +17,9 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
         Managers.Pool.CreatePool(fragmentCollect, 100);
     }
 
-    public void AddFragment(GameObject obj)
+    public void AddFragment(GameObject obj, int count = 3)
     {
-        for(int i = 0; i < 3; ++i)
+        for(int i = 0; i < count; ++i)
         {
             fragmentObj = Managers.Pool.Pop(fragmentCollect);
             fragmentObj.transform.position = obj.transform.position;

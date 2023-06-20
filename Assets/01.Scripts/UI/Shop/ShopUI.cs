@@ -100,7 +100,6 @@ public class ShopUI : MonoBehaviour
     {
         // TODO : 강화 가격 인상
         // TODO : 선택한 슬롯의 스킬 레벨 증가
-        // TODO : 가격이 부족할 경우 구매 불가
 
         if (GameManager.Instance.Player.playerBase.FragmentAmount < price
             || GameManager.Instance.Player.playerBase.SlotLevel[1] == 5)
