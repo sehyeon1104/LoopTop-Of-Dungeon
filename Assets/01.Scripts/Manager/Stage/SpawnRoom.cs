@@ -28,6 +28,8 @@ public class SpawnRoom : MonoBehaviour
         set => isShopRoom = value;
     }
 
+    int randEventRoom = 0;
+
     private void Start()
     {
         SetMapTypeFlag();
@@ -89,6 +91,31 @@ public class SpawnRoom : MonoBehaviour
     private void SetEventRoom()
     {
         // TODO : 이벤트룸 지정
+        // 상점 배치가 안되어있다면 확정배치
+        if (StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom] == 1)
+        {
+            Debug.Log("상점 배치");
+            StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom]--;
+            return;
+        }
+
+        // ENUM의 끝까지 rand
+        randEventRoom = Random.Range(0, System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length);
+
+        // 만약 중복이라면
+        if(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
+        {
+            // 중복이 아닐 때까지 rand
+            while(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
+                randEventRoom = Random.Range(0, System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length);
+        }
+
+        // 이벤트방 배치
+        if(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
+        {
+            Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} 배치");
+            StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom]--;
+        }
     }
 
 }

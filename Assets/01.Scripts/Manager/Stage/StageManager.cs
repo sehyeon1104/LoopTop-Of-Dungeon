@@ -21,6 +21,7 @@ public class StageManager : MonoSingleton<StageManager>
     private int eventRoomCount = 3;
 
     private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
+    public Dictionary<Define.EventRoomTypeFlag, int> eventRoomCountDic = new Dictionary<Define.EventRoomTypeFlag, int>();
 
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
@@ -56,10 +57,24 @@ public class StageManager : MonoSingleton<StageManager>
 
         dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
 
+        SetRoomCountDic();
+        SetEventRoomCountDic();
+    }
+
+    private void SetRoomCountDic()
+    {
         roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
         roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, enemyRoomCount);
         roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, eliteMobRoomCount);
         roomCountDic.Add(Define.RoomTypeFlag.EventRoom, eventRoomCount);
+    }
+
+    private void SetEventRoomCountDic()
+    {
+        for(int i = 0; i < System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length; ++i)
+        {
+            eventRoomCountDic.Add((Define.EventRoomTypeFlag)i, 1);
+        }
     }
 
     private IEnumerator Start()
