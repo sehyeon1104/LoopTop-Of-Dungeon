@@ -111,4 +111,9 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         }
     }
 
+    public void RemoveItemSlot(Item item)
+    {
+
+    }
+
 }

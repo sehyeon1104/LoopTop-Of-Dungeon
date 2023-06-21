@@ -39,7 +39,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     [Header("Middle")]
 
-    public GameObject skillSelect;
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
@@ -128,7 +127,6 @@ public class UIManager : MonoSingleton<UIManager>
         else
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
-            skillSelect = playerPCUI.transform.Find("SkillSelect").gameObject;
             hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
             playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
             fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
@@ -172,7 +170,6 @@ public class UIManager : MonoSingleton<UIManager>
     private void Start()
     {
         obtainItemInfoScale = obtainItemInfo.transform.localScale;
-        SkillSelectButtonInit();
         HPInit();
         UpdateUI();
         DisActiveAllPanels();
@@ -260,14 +257,6 @@ public class UIManager : MonoSingleton<UIManager>
     public void Resume()
     {
         TogglePausePanel();
-    }
-    public void SkillSelectButtonInit()
-    {
-        for(int i=0; i<skillSelect.transform.childCount; i++)
-        {
-            GameObject button = skillSelect.transform.GetChild(i).gameObject;
-            button.GetComponent<Button>().onClick.AddListener(() => button.SetActive(false));
-        }
     }
    
     public void ToggleGameOverPanel()
@@ -370,10 +359,6 @@ public class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    public void ToggleSlotLevelUpPanel()
-    {
-
-    }
 
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
@@ -408,14 +393,6 @@ public class UIManager : MonoSingleton<UIManager>
         StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
 
         return true;
-    }
-    public void SkillNum(List<int> skillList)
-    {
-        Button[] selectTexts = skillSelect.GetComponentsInChildren<Button>(true);
-        for (int i = 0; i < selectTexts.Length; i++)
-        {
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
-        }
     }
     public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
     {

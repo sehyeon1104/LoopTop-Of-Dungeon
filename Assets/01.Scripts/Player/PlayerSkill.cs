@@ -35,7 +35,6 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     private void Awake()
     {
         playerBase = GameManager.Instance.Player.playerBase;
-        skillSelectObj = UIManager.Instance.skillSelect;
         itemLayer = LayerMask.NameToLayer("Item");
         slotLevel = playerBase.SlotLevel;
         skillIndex = playerBase.PlayerSkillNum;
@@ -53,6 +52,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     private void Start()
     {
+        skillSelectObj = UIManager.Instance.shopUI.skillSelect;
         enlargementSize = usuallySize * 1.1f;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
     }

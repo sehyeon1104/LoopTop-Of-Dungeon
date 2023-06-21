@@ -10,7 +10,6 @@ public class EnemyRoom : RoomBase
     [SerializeField]
     private Transform[] enemySpawnPos;
 
-    public bool isMoveAnotherStage = false;
     public bool isSpawnMonster { private set; get; } = false;
 
     GameObject portalMapIcon;
@@ -35,7 +34,6 @@ public class EnemyRoom : RoomBase
         {
             // Debug.Log("SetEnemySpawnPos");
             enemySpawnPos = enemySpawnPosObj.GetComponentsInChildren<Transform>();
-            EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
 
             return enemySpawnPos;
         }
@@ -55,15 +53,8 @@ public class EnemyRoom : RoomBase
 
     private void SpawnEnemies()
     {
-        // Debug.Log("SpawnEnemies");
-        //if (isMoveAnotherStage)
-        //{
-        //    EnemySpawnManager.Instance.SetEliteMonsterSpawnBool(isMoveAnotherStage, transform);
-        //}
-
         EnemySpawnManager.Instance.SetEnemyWaveCount();
         StartCoroutine(EnemySpawnManager.Instance.ManagingEnemy(SetEnemySpawnPos()));
-
 
         StartCoroutine(CheckClear());
     }
@@ -72,26 +63,6 @@ public class EnemyRoom : RoomBase
     {
         yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave);
         IsClear();
-    }
-
-    public void InstantiateMoveMapIcon()
-    {
-        Debug.Log("아이콘 생성");
-        if (isMoveAnotherStage)
-        {
-            portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-            portalMapIcon.transform.position = transform.position;
-            portalMapIcon.SetActive(false);
-        }
-    }
-
-    protected override void ShowIcon()
-    {
-        Debug.Log("ShowIcon");
-        if (isMoveAnotherStage)
-        {
-            portalMapIcon.SetActive(true);
-        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -139,13 +110,6 @@ public class EnemyRoom : RoomBase
         if (isClear)
         {
             Door.Instance.OpenDoors();
-
-            if (isMoveAnotherStage)
-            {
-                // TODO : 아이템 드랍 상자 구현
-
-                StageManager.Instance.AssignMoveNextMapPortal(this);
-            }
         }
     }
 }

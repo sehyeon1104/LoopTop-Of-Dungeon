@@ -7,18 +7,20 @@ public class StageManager : MonoSingleton<StageManager>
 {
     [SerializeField]
     private GameObject[] wallGrids;
-
     private GameObject wallGrid;
-
     private int[,] wallGridInfo;
-
     private int randWallGrid;
 
     [SerializeField]
     private SpawnRoom[] spawnRooms;
     private EnemyRoom[] enemyRooms;
 
-    private int startRoomNum = 0;
+    private int startRoomCount = 1;
+    private int enemyRoomCount = 7;
+    private int eliteMobRoomCount = 1;
+    private int eventRoomCount = 3;
+
+    private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
 
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
@@ -39,9 +41,6 @@ public class StageManager : MonoSingleton<StageManager>
     Vector3 originWayPos;
     #endregion
 
-    [SerializeField]
-    private GameObject MoveNextMapPortal;
-
     private GameObject dropItemPrefab = null;
 
     public bool isSetting { private set; get; }
@@ -55,8 +54,12 @@ public class StageManager : MonoSingleton<StageManager>
             wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
         }
 
-        MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
+
+        roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, enemyRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, eliteMobRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EventRoom, eventRoomCount);
     }
 
     private IEnumerator Start()
@@ -64,24 +67,16 @@ public class StageManager : MonoSingleton<StageManager>
         isSetting = true;
         StartCoroutine(SetStage());
 
-        // Î≤??ùÏÑ±
         SetWallGrid();
-        // Í∏?Ï¥àÍ∏∞??
         InitWay();
-        // Î∞??§Ìè¨??Î∞õÏïÑ??
         spawnRooms = FindObjectsOfType<SpawnRoom>();
-        // ?úÏûë Î∞??§Ï†ï
-        SetStartRoomNShopRoom();
-        // Î∞??ùÏÑ±
+        SetRoom();
         InstantiateRooms();
 
         enemyRooms = FindObjectsOfType<EnemyRoom>();
-        yield return new WaitUntil(() => enemyRooms.Length > 9);
-        // ?¨ÌÉàÎ∞?ÏßÄ??
-        SetMoveNextMapRoom();
+        yield return new WaitUntil(() => enemyRooms.Length > 3);
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
-        spawnRooms[startRoomNum].GetSummonedRoom().CheckLinkedRoom();
     }
 
     public IEnumerator SetStage()
@@ -110,20 +105,23 @@ public class StageManager : MonoSingleton<StageManager>
     }
 
     private int randRoom = 0;
-    public void SetStartRoomNShopRoom()
+    public void SetRoom()
     {
-        // Debug.Log("SpawnRooms : " + spawnRooms.Length);
-        startRoomNum = Random.Range(0, spawnRooms.Length);
-        spawnRooms[startRoomNum].IsStartRoom = true;
-        randRoom = Random.Range(0, spawnRooms.Length);
-        if (spawnRooms[randRoom].IsStartRoom)
+        for(int i = 0; i < spawnRooms.Length; ++i)
         {
-            while (spawnRooms[randRoom].IsStartRoom)
-            {
-                randRoom = Random.Range(0, spawnRooms.Length);
+            // Ω√¿€ πÊ∫Œ≈Õ ¿Ã∫•∆Æ πÊ±Ó¡ˆ ∑£¥˝¿∏∑Œ ±º∏≤
+            randRoom = Random.Range(1, 5);
+
+            // ≥≤¿∫ πÊ¿« ∞≥ºˆ∞° 0¿Ã∂Û∏È ReRoll
+            if (roomCountDic[(Define.RoomTypeFlag)randRoom] == 0){
+                --i;
+                continue;
             }
+            
+            // πÊ ≈∏¿‘ ¡ˆ¡§
+            spawnRooms[i].RoomTypeFlag = (Define.RoomTypeFlag)randRoom;
+            roomCountDic[(Define.RoomTypeFlag)randRoom]--;
         }
-        spawnRooms[randRoom].IsShopRoom = true;
     }
 
     public void InstantiateRooms()
@@ -134,28 +132,16 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    public void SetMoveNextMapRoom()
-    {
-        int rand = Random.Range(0, enemyRooms.Length);
-        enemyRooms[rand].isMoveAnotherStage = true;
-        enemyRooms[rand].InstantiateMoveMapIcon();
-    }
-
-    public void AssignMoveNextMapPortal(EnemyRoom enemyRoom)
-    {
-        Instantiate(MoveNextMapPortal, enemyRoom.gameObject.transform.position, Quaternion.identity);
-    }
-
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : ?ÑÏù¥???úÎûç ?†ÎãàÎ©îÏù¥??Ï∂îÍ?
+        // TODO : ªÛ¿⁄∏¶ ≈Î«ÿ æ∆¿Ã≈€ µÂ∂¯
 
         Managers.Pool.Pop(dropItemPrefab, pos);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
     {
-        // wallGrid???ïÎ≥¥Î•?Í∞Ä?∏Ïò¥
+        // wallGridInfo
         wallGridInfo = randWallGrid switch
         {
             0 => MapInfo.WallGrid1,

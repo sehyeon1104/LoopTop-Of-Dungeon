@@ -139,25 +139,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
         SpawnEnemy(enemySpawnPos, wave1NormalEnemyCount);
 
-        //for (int i = 0; i < wave1NormalEnemyCount; ++i)
-        //{
-        //    // 적 소환 위치를 담은 배열의 끝까지 범위지정
-        //    randPos = Random.Range(1, enemySpawnPos.Length);
-        //    // 자식(몹)이 있다면 다시 랜드
-        //    while (enemySpawnPos[randPos].childCount != 0)
-        //    {
-        //        randPos = Random.Range(1, enemySpawnPos.Length);
-        //    }
-
-        //    // 몹 소환
-        //    // 적 소환 위치를 부모로 설정
-        //    var enemy = Managers.Pool.Pop(normalEnemyPrefabs[Random.Range(0, normalEnemyPrefabs.Length)], enemySpawnPos[randPos]);
-        //    // 현재 적들 리스트에 추가
-        //    curEnemies.Add(enemy);
-        //    enemy.gameObject.SetActive(false);
-        //    StartCoroutine(ShowEnemySpawnPos(enemySpawnPos[randPos], enemy));
-        //}
-
         yield return new WaitUntil(() => curEnemies.Count <= 0);
 
         curEnemies.Clear();
@@ -165,11 +146,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         yield return waitForSpawnTime;
 
         isNextWave = true;
-
-        if (isSpawnEliteEnemy)
-        {
-            SpawnEliteMonster(eliteMonsterSpawnPos);
-        }
 
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Mob/Mob_Spawn.wav");
 
@@ -217,12 +193,6 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
                 requireSpawnCount = Mathf.RoundToInt(enemyCount * spawnRatio);
             }
         }
-    }
-
-    public void SetEliteMonsterSpawnBool(bool isSpawn, Transform spawnPos)
-    {
-        isSpawnEliteEnemy = isSpawn;
-        eliteMonsterSpawnPos = spawnPos;
     }
 
     public void SpawnEliteMonster(Transform spawnPos)
