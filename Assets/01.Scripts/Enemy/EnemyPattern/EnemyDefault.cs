@@ -247,7 +247,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             }
 
             Managers.Pool.Push(poolable);
-            FragmentCollectManager.Instance.AddFragment(gameObject);
+            FragmentCollectManager.Instance.DropFragment(gameObject, Random.Range(3, 5));
         }
     }
 }

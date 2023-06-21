@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SkillShuffleStatue : StatueBase
 {
+    private int randSkillNum1 = 0;
+    private int randSkillNum2 = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -34,7 +37,20 @@ public class SkillShuffleStatue : StatueBase
 
     protected override void StatueFunc()
     {
-        // TODO : 스킬 랜덤셔플 및 적용
+        // TODO : 랜덤선택된 스킬 UI로 표기
         base.StatueFunc();
+
+        randSkillNum1 = Random.Range(0, 5);
+        randSkillNum2 = Random.Range(0, 5);
+
+        if(randSkillNum1 == randSkillNum2)
+        {
+            while (randSkillNum1 == randSkillNum2)
+                randSkillNum2 = Random.Range(0, 5);
+        }
+
+        GameManager.Instance.Player.playerBase.PlayerSkillNum[0] = randSkillNum1;
+        GameManager.Instance.Player.playerBase.PlayerSkillNum[1] = randSkillNum2;
+        PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
     }
 }

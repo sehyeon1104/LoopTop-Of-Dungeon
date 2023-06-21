@@ -49,7 +49,7 @@ public class GachaStatue : StatueBase
         // 재화 획득
         if(rand == 0)
         {
-            FragmentCollectManager.Instance.AddFragment(gameObject, 8);
+            FragmentCollectManager.Instance.DropFragmentByCircle(gameObject, 8);
         }
         // 아이템 상자 드랍
         else if(rand == 1)

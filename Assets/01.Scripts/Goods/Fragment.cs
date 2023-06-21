@@ -38,8 +38,8 @@ public class Fragment : MonoBehaviour
 
     public void FallToGround()
     {
-        Vector3 dir = transform.position - playerTransform.position;
-        transform.DOJump(transform.position + dir * moveAmount, jumpPower, 2, 0.4f);
+        Vector3 dir = (transform.position - playerTransform.position).normalized;
+        transform.DOJump(transform.position + dir * moveAmount, jumpPower, 1, 0.4f);
 
         //transform.DOMove( (Random.insideUnitCircle * 0.75f) + (Vector2)transform.position , 0.4f);
         StartCoroutine(MoveToPlayer());
@@ -49,7 +49,7 @@ public class Fragment : MonoBehaviour
     {
         yield return new WaitForSeconds(collectionTime);
 
-        transform.DOMove(playerTransform.position, moveToPlayerTime).SetEase(Ease.InCirc);
+        transform.DOMove(playerTransform.position, moveToPlayerTime).SetEase(Ease.InQuad);
         yield return new WaitForSeconds(moveToPlayerTime);
 
         Managers.Pool.Push(fragmentPoolable);
