@@ -22,10 +22,10 @@ public class PlayerBase
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;
-        PlayerSkillNum = new int[] { 3, 4 };
+        PlayerSkillNum = new int[] { 1, 2 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
