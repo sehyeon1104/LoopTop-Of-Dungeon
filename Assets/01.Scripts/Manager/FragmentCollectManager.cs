@@ -24,6 +24,7 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj = Managers.Pool.Pop(fragmentCollect);
             fragmentObj.transform.position = obj.transform.position;
         }
+        // TODO : ¿Á»≠ »πµÊ √≥∏Æ
 
     }
 

@@ -16,7 +16,7 @@ public abstract class RoomBase : MonoBehaviour
     [SerializeField]
     protected GameObject curLocatedMapIcon = null;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         minimapIconSpriteRenderer.gameObject.SetActive(false);
