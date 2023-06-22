@@ -15,14 +15,28 @@ public class EventRoom : RoomBase
 
     protected override void IsClear()
     {
-        throw new System.NotImplementedException();
+
     }
 
     protected void SetEvent()
     {
-        if(_eventRoomTypeFlag == EventRoomTypeFlag.ChestRoom)
+        switch (_eventRoomTypeFlag)
         {
-            gameObject.AddComponent<ChestRoom>();
+            // TODO : 미니맵 아이콘 생성
+            case EventRoomTypeFlag.StatueRoom:
+                gameObject.AddComponent<StatueRoom>();
+                break;
+            case EventRoomTypeFlag.ChestRoom:
+                gameObject.AddComponent<ChestRoom>();
+                break;
+            case EventRoomTypeFlag.BrokenItemRoom:
+                gameObject.AddComponent<BrokenItemRoom>();
+                break;
+            case EventRoomTypeFlag.BattleRoom:
+                break;
+            case EventRoomTypeFlag.SurvivalRoom:
+                break;
         }
+
     }
 }

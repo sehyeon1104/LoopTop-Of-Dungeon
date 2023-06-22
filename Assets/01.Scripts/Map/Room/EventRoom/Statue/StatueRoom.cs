@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestRoom : EventRoom
+public class StatueRoom : EventRoom
 {
     private void Start()
     {
-        SpawnChest();
+        SpawnStatue();
     }
 
     protected override void IsClear()
@@ -19,10 +19,10 @@ public class ChestRoom : EventRoom
         roomTypeFlag = Define.RoomTypeFlag.EventRoom;
     }
 
-    public void SpawnChest()
+    public void SpawnStatue()
     {
-        // TODO : 랜덤한 확률로 상자 소환
-        Debug.Log($"상자 소환. 좌표 : {transform.position}");
+        // TODO : 랜덤한 확률로 신상 소환
+
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -34,5 +34,4 @@ public class ChestRoom : EventRoom
     {
         base.OnTriggerExit2D(collision);
     }
-
 }

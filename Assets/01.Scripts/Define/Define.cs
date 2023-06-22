@@ -35,10 +35,6 @@ public static class Define
         EnemyRoom,
         EliteMobRoom,
         EventRoom,
-
-        // Å×½ºÆ®
-        Shop,
-        ChestRoom,
     }
 
     public enum EventRoomTypeFlag

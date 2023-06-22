@@ -19,7 +19,7 @@ public class ShopRoom : RoomBase
     IEnumerator toggleItemInfoPanel;
     protected override void SetRoomTypeFlag()
     {
-        roomTypeFlag = Define.RoomTypeFlag.Shop;
+        roomTypeFlag = Define.RoomTypeFlag.EventRoom;
     }
 
     [SerializeField]
