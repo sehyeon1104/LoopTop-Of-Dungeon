@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.VFX;
 
 public class PowerSkill : PlayerSkillBase
@@ -10,8 +11,10 @@ public class PowerSkill : PlayerSkillBase
     float chopSize = 1;
     float meteorDmg = 10;
     float rushDmg = 13;
-    float rockFallDuration = 4f;
+    float rockFallDuration = 2f;
     float rushVelocity = 2;
+    int rushMax = 5;
+    int rushNum = 1;
     float rushDuration = 2f;
     bool isColumn;
     float ColumnDuration = 5f;
@@ -46,7 +49,7 @@ public class PowerSkill : PlayerSkillBase
         attackPar.Play();
         attackPar.transform.SetParent(null);
 
-        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one,0, attackPar.transform.localPosition, attackRange/2,1 << enemyLayer);
+        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one, 0, attackPar.transform.localPosition, attackRange / 2, 1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
         {
             CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);
@@ -58,7 +61,7 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void FirstSkill(int level)
     {
-        if(level ==5)
+        if (level == 5)
             StartCoroutine(FiveBottomingOut());
         else
             StartCoroutine(BottomingOut());
@@ -67,7 +70,7 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void SecondSkill(int level)
     {
-        StartCoroutine(Rush());
+        StartCoroutine(Rush(level));
     }
 
     protected override void ThirdSkill(int level)
@@ -118,8 +121,8 @@ public class PowerSkill : PlayerSkillBase
     {
         CinemachineCameraShaking.Instance.CameraShake(15, 0.2f);
         Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BottomingOutEffect.prefab", transform.position, Quaternion.identity);
-        choppingObj.GetComponent<Transform>().localScale = Vector2.one *chopSize;
-        Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, chopSize* 2, 1 << enemyLayer);
+        choppingObj.GetComponent<Transform>().localScale = Vector2.one * chopSize;
+        Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, chopSize * 2, 1 << enemyLayer);
         for (int i = 0; i < enemys.Length; i++)
         {
             enemys[i].GetComponent<IHittable>().OnDamage(choppingDmg, 0);
@@ -142,10 +145,10 @@ public class PowerSkill : PlayerSkillBase
             enemies[i].GetComponent<IHittable>().OnDamage(choppingDmg, 0);
         }
         yield return rockFallWait;
-        while(timer < rockFallDuration)
+        while (timer < rockFallDuration)
         {
             enemies = Physics2D.OverlapBoxAll(rockFallPos, Vector2.one * 40, 0, 1 << enemyLayer);
-            for(int i = 0; i< enemies.Length; i++)
+            for (int i = 0; i < enemies.Length; i++)
             {
                 enemies[i].GetComponent<IHittable>().OnDamage(meteorDmg);
             }
@@ -158,20 +161,20 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void FirstSkillUpdate(int level)
     {
-        if(level == 5)
+        if (level == 5)
         {
-            chopSize = 3;
-           UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
+            chopSize = 2.5f;
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 1);
         }
         else
         {
 
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
-        chopSize = 1 + 0.25f * (level - 1);
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 1, 0);
+            chopSize = 1 + 0.25f * (level - 1);
         }
     }
 
-    IEnumerator Rush()
+    IEnumerator Rush(int level)
     {
         float timer = 0;
         float tickTimer = 0;
@@ -179,6 +182,19 @@ public class PowerSkill : PlayerSkillBase
         playerMovement.IsControl = false;
         player.IsInvincibility = true;
         playerRigid.velocity = playerMovement.Direction * rushVelocity;
+
+        if (level >= 2)
+        {
+            if (GameManager.Instance.platForm == Define.PlatForm.PC)
+            {
+               KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.I : KeyCode.O;
+            }
+            else
+            {
+
+            }
+
+        }
         do
         {
             timer += Time.fixedDeltaTime;
@@ -197,6 +213,7 @@ public class PowerSkill : PlayerSkillBase
             yield return rushWait;
         }
         while (timer < rushDuration);
+
         playerMovement.IsControl = true;
         player.IsInvincibility = false;
         playerRigid.velocity = Vector3.zero;
@@ -210,7 +227,7 @@ public class PowerSkill : PlayerSkillBase
     {
         isColumn = true;
         yield return ColumnWait;
-        isColumn = false;   
+        isColumn = false;
     }
     #endregion
     private void OnDrawGizmos()
