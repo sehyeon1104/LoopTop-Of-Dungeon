@@ -38,7 +38,9 @@ public class SkillShuffleStatue : StatueBase
     protected override void StatueFunc()
     {
         // TODO : 랜덤선택된 스킬 UI로 표기
-        base.StatueFunc();
+        if (!isUseable)
+            return;
+        isUseable = false;
 
         randSkillNum1 = Random.Range(0, 5);
         randSkillNum2 = Random.Range(0, 5);

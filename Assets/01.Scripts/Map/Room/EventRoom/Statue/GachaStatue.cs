@@ -36,12 +36,14 @@ public class GachaStatue : StatueBase
     protected override void StatueFunc()
     {
         // TODO : 33% 확률로 각각 재화획득, 아이템 획득, 데미지 입음
-        base.StatueFunc();
+        if (!isUseable)
+            return;
+        isUseable = false;
 
-        if(GameManager.Instance.Player.playerBase.Hp <= 2)
+        if (GameManager.Instance.Player.playerBase.Hp <= 2)
         {
             Debug.Log("체력 부족");
-            // TODO : 체력 부족 UI 띄우기
+            // TODO : 체력 부족 UI 표시 및 사운드 실행
         }
 
         rand = Random.Range(0, 3);

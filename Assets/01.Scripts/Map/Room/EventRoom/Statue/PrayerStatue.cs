@@ -35,6 +35,8 @@ public class PrayerStatue : StatueBase
     protected override void StatueFunc()
     {
         // TODO : hp를 소모하면 소모할 수록 상자의 등급 상승
-        base.StatueFunc();
+        if (!isUseable)
+            return;
+        isUseable = false;
     }
 }

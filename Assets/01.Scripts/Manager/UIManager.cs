@@ -459,14 +459,12 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void RotateInteractionButton()
     {
-        Debug.Log("상호작용 버튼 활성화");
         AttackButton.SetActive(false);
         InteractionButton.SetActive(true);
     }
 
     public void RotateAttackButton()
     {
-        Debug.Log("공격버튼 활성화");
         AttackButton.SetActive(true);
         InteractionButton.SetActive(false);
     }

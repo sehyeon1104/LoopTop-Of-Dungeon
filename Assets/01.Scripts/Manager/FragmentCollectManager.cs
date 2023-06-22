@@ -35,14 +35,6 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
         Managers.Pool.CreatePool(fragmentCollect, 200);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DropFragmentByCircle(GameManager.Instance.Player.gameObject, 100, 10);
-        }
-    }
-
     public void DropFragment(GameObject obj, int amount, int count = 3)
     {
         for(int i = 0; i < count; ++i)
@@ -51,12 +43,7 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj.transform.position = obj.transform.position;
         }
 
-        // TODO : ¿Á»≠ »πµÊ √≥∏Æ
         fragmentAmountQueue.Enqueue(amount);
-        if(coroutine == null)
-        {
-            coroutine = StartCoroutine(IncreaseGoods());
-        }
     }
 
     public void DropFragmentByCircle(GameObject obj, int amount, int count = 3)
@@ -67,15 +54,18 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj.transform.position = (Random.insideUnitCircle * 0.75f) + (Vector2)obj.transform.position;
         }
 
-        // TODO : ¿Á»≠ »πµÊ √≥∏Æ
         fragmentAmountQueue.Enqueue(amount);
+    }
+
+    public void IncreaseGoods()
+    {
         if (coroutine == null)
         {
-            coroutine = StartCoroutine(IncreaseGoods());
+            coroutine = StartCoroutine(IEIncreaseGoods());
         }
     }
 
-    public IEnumerator IncreaseGoods()
+    public IEnumerator IEIncreaseGoods()
     {
         yield return waitIncreaseFragment;
 
@@ -91,13 +81,27 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
             offset = (target - current) / duration;
 
-            while (current < target)
+            if(offset > 0)
             {
-                current += offset * Time.deltaTime;
+                while (current < target)
+                {
+                    current += offset * Time.deltaTime;
 
-                GameManager.Instance.Player.playerBase.FragmentAmount = (int)current;
+                    GameManager.Instance.Player.playerBase.FragmentAmount = (int)current;
 
-                yield return waitForEndOfFrame;
+                    yield return waitForEndOfFrame;
+                }
+            }
+            else if(offset < 0)
+            {
+                while (target < current)
+                {
+                    current += offset * Time.deltaTime;
+
+                    GameManager.Instance.Player.playerBase.FragmentAmount = (int)current;
+
+                    yield return waitForEndOfFrame;
+                }
             }
 
             current = target;
