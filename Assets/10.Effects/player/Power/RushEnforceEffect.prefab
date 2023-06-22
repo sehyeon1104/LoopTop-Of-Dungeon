@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &529738795071218426
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3549675702395298750}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3549675702395298750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529738795071218426}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 556084502248535889}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &773307704802124637
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,7 +13,7 @@ GameObject:
   - component: {fileID: 9159713683750002208}
   - component: {fileID: -8546430333153095092}
   m_Layer: 0
-  m_Name: BottomingOutEffectFive
+  m_Name: RushEnforceEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,10 +28,10 @@ Transform:
   m_GameObject: {fileID: 773307704802124637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 556084502248535889}
+  - {fileID: 1074098898405054258}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,7 +43,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773307704802124637}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: af24fa3a035699e4f9af3f18075d77d1, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: d26981f3caa23ad40ada09b0a05572f5, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -82,54 +51,18 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array:
-      - m_Value: 3
-        m_Name: LifeTime
-        m_Overridden: 1
+      m_Array: []
     m_Vector2f:
-      m_Array:
-      - m_Value: {x: 4.3, y: 4.6}
-        m_Name: AuraSize
-        m_Overridden: 1
-      - m_Value: {x: 4.3, y: 4.6}
-        m_Name: AuraSize 1
-        m_Overridden: 1
+      m_Array: []
     m_Vector3f:
-      m_Array:
-      - m_Value: {x: -0.1, y: 0.2, z: -0.1}
-        m_Name: VelocityMin
-        m_Overridden: 1
-      - m_Value: {x: 0.1, y: 2, z: 0.1}
-        m_Name: VelocityMax
-        m_Overridden: 1
-      - m_Value: {x: -0.1, y: 0.2, z: -0.1}
-        m_Name: VelocityMin 1
-        m_Overridden: 1
-      - m_Value: {x: 0.1, y: 2, z: 0.1}
-        m_Name: VelocityMax 1
-        m_Overridden: 1
-      - m_Value: {x: -0.1, y: 0.2, z: -0.1}
-        m_Name: VelocityMin 2
-        m_Overridden: 1
-      - m_Value: {x: 0.1, y: 2, z: 0.1}
-        m_Name: VelocityMax 2
-        m_Overridden: 1
+      m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 1.0592737, y: 0.5102261, z: 0, w: 1}
+      - m_Value: {x: 8, y: 1.9685864, z: 0, w: 1}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 2.9960785, y: 1.4901961, z: 0, w: 1}
+      - m_Value: {x: 4.237095, y: 2.1296391, z: 0.06655122, w: 1}
         m_Name: AftershocksColor
-        m_Overridden: 1
-      - m_Value: {x: 1.563824, y: 0.5153511, z: 3.3942091, w: 1}
-        m_Name: Color 1
-        m_Overridden: 1
-      - m_Value: {x: 1.563824, y: 0.5153511, z: 3.3942091, w: 1}
-        m_Name: Color 2
-        m_Overridden: 1
-      - m_Value: {x: 0.35493988, y: 0.06655122, z: 0, w: 1}
-        m_Name: Color 3
         m_Overridden: 1
     m_Uint:
       m_Array: []
@@ -142,16 +75,7 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array:
-      - m_Value: {fileID: 2800000, guid: 89e2e94c73cea15469377b44ff3e734a, type: 3}
-        m_Name: Texture
-        m_Overridden: 1
-      - m_Value: {fileID: 2800000, guid: 89e2e94c73cea15469377b44ff3e734a, type: 3}
-        m_Name: Texture 1
-        m_Overridden: 1
-      - m_Value: {fileID: 2800000, guid: 89e2e94c73cea15469377b44ff3e734a, type: 3}
-        m_Name: Texture 2
-        m_Overridden: 1
+      m_Array: []
     m_Bool:
       m_Array: []
 --- !u!73398921 &9159713683750002208
@@ -193,7 +117,7 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1672594845
   m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!114 &-8546430333153095092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
-  PushTime: 0
---- !u!1 &2258342974237740634
+  PushTime: 3
+--- !u!1 &6107624311164930393
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,41 +140,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 556084502248535889}
-  - component: {fileID: 621303187840627172}
-  - component: {fileID: 269203933337302162}
+  - component: {fileID: 1074098898405054258}
+  - component: {fileID: 5072445593470552783}
+  - component: {fileID: 6065820900793162689}
   m_Layer: 0
-  m_Name: RockFall
+  m_Name: Shock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &556084502248535889
+--- !u!4 &1074098898405054258
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2258342974237740634}
+  m_GameObject: {fileID: 6107624311164930393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3549675702395298750}
+  m_Children: []
   m_Father: {fileID: 2057088414500082815}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!2083052967 &621303187840627172
+--- !u!2083052967 &5072445593470552783
 VisualEffect:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2258342974237740634}
+  m_GameObject: {fileID: 6107624311164930393}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 349312b55b82fb34c96c1c6d73ff9589, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 542bad7582a343b45b8d6eaeb7606f14, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -258,31 +181,16 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array:
-      - m_Value: 0.4
-        m_Name: TrailLifeTime
-        m_Overridden: 1
-      - m_Value: 5
-        m_Name: Radius
-        m_Overridden: 1
-      - m_Value: 30
-        m_Name: Rate
-        m_Overridden: 1
-      - m_Value: 3
-        m_Name: MeteorLifeTime
-        m_Overridden: 1
-      - m_Value: 0.8
-        m_Name: TrailSize
-        m_Overridden: 1
+      m_Array: []
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array:
-      - m_Value: {x: 0, y: -20, z: 0}
-        m_Name: Dirction
-        m_Overridden: 1
-    m_Vector4f:
       m_Array: []
+    m_Vector4f:
+      m_Array:
+      - m_Value: {x: 11.984314, y: 5.521569, z: 1.0666667, w: 1}
+        m_Name: AftershocksColor
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -295,19 +203,19 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 2800000, guid: 38e3f878927c97946b754ed40ee89089, type: 3}
-        m_Name: TrailTexture
+      - m_Value: {fileID: 2800000, guid: bd7761a051a428343b362b9b787a10b7, type: 3}
+        m_Name: Texture
         m_Overridden: 1
     m_Bool:
       m_Array: []
---- !u!73398921 &269203933337302162
+--- !u!73398921 &6065820900793162689
 VFXRenderer:
   serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2258342974237740634}
+  m_GameObject: {fileID: 6107624311164930393}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
