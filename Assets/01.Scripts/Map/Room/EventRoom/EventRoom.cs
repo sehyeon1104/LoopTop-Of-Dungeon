@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class EventRoom : MonoBehaviour
+public class EventRoom : RoomBase
 {
     protected Define.EventRoomTypeFlag _eventRoomTypeFlag;
 
@@ -11,6 +11,11 @@ public class EventRoom : MonoBehaviour
     {
         _eventRoomTypeFlag = eventRoomTypeFlag;
         SetEvent();
+    }
+
+    protected override void IsClear()
+    {
+        throw new System.NotImplementedException();
     }
 
     protected void SetEvent()
