@@ -27,7 +27,7 @@ public class ShopRoom : RoomBase
     [SerializeField]
     private GameObject shopNpcIcon = null;
 
-    private void Awake()
+    protected override void Awake()
     {
         InteractionBtn = UIManager.Instance.GetInteractionButton();
 

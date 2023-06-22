@@ -22,6 +22,7 @@ public class ChestRoom : RoomBase
     public void SpawnChest()
     {
         // TODO : 랜덤한 확률로 상자 소환
+        Debug.Log($"상자 소환. 좌표 : {transform.position}");
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

@@ -29,6 +29,7 @@ public class SpawnRoom : MonoBehaviour
     }
 
     int randEventRoom = 0;
+    string eventRoomName = "";
 
     private void Start()
     {
@@ -63,9 +64,9 @@ public class SpawnRoom : MonoBehaviour
         }
         else if(_roomTypeFlag == Define.RoomTypeFlag.EventRoom)
         {
-            SetEventRoom();
+            SetAndInstantiateEventRoom();
             // 임시
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform);
+            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform);
         }
 
         //    // 테스트
@@ -88,13 +89,13 @@ public class SpawnRoom : MonoBehaviour
         return room;
     }
 
-    private void SetEventRoom()
+    private void SetAndInstantiateEventRoom()
     {
-        // TODO : 이벤트룸 지정
         // 상점 배치가 안되어있다면 확정배치
         if (StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom] == 1)
         {
             Debug.Log("상점 배치");
+            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Shop", transform);
             StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom]--;
             return;
         }
@@ -114,6 +115,11 @@ public class SpawnRoom : MonoBehaviour
         if(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
         {
             Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} 배치");
+            //eventRoomName = randEventRoom.ToString();
+            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{randEventRoom.ToString().Substring(eventRoomName.Length - 4, eventRoomName.Length)}", transform);
+            GameObject eventRoom = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform);
+            eventRoom.GetComponent<EventRoom>().SetEventRoomType((Define.EventRoomTypeFlag)randEventRoom);
+
             StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom]--;
         }
     }
