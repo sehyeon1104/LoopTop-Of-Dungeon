@@ -41,6 +41,16 @@ public static class Define
         ChestRoom,
     }
 
+    public enum EventRoomTypeFlag
+    {
+        ShopRoom,
+        StatueRoom,
+        ChestRoom,
+        BrokenItemRoom,
+        BattleRoom,
+        SurvivalRoom,
+    }
+
     public enum PlayerTransformTypeFlag
     {
         Power = 0,

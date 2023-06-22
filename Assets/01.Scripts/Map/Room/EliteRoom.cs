@@ -11,20 +11,11 @@ public class EliteRoom : RoomBase
     [SerializeField]
     private GameObject MoveNextMapPortal;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
         InstantiateMoveMapIcon();
         MoveNextMapPortal = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
-    }
-
-    protected override void IsClear()
-    {
-        if(isEliteMonsterSpawn && EnemySpawnManager.Instance.curEnemies.Count == 0)
-        {
-            isClear = true;
-            AssignMoveNextMapPortal();
-            Door.Instance.OpenDoors();
-        }
     }
 
     public void InstantiateMoveMapIcon()
@@ -51,6 +42,23 @@ public class EliteRoom : RoomBase
 
             Door.Instance.CloseDoors();
             EnemySpawnManager.Instance.SpawnEliteMonster(transform);
+            StartCoroutine(CheckClear());
+        }
+    }
+
+    private IEnumerator CheckClear()
+    {
+        yield return new WaitUntil(() => EnemySpawnManager.Instance.curEnemies.Count == 0 && isEliteMonsterSpawn);
+        IsClear();
+    }
+
+    protected override void IsClear()
+    {
+        if (isEliteMonsterSpawn && EnemySpawnManager.Instance.curEnemies.Count == 0)
+        {
+            isClear = true;
+            AssignMoveNextMapPortal();
+            Door.Instance.OpenDoors();
         }
     }
 
