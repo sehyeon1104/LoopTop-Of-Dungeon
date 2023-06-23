@@ -21,8 +21,8 @@ public class DropItem : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
-        for (int i = 0; i < StageManager.Instance.shop.itemobjArr.Length; ++i)
-            itemObjList.Add(StageManager.Instance.shop.itemobjArr[i].Num);
+        //for (int i = 0; i < StageManager.Instance.shop.itemobjArr.Length; ++i)
+        //    itemObjList.Add(StageManager.Instance.shop.itemobjArr[i].Num);
     }
     private void Start()
     {

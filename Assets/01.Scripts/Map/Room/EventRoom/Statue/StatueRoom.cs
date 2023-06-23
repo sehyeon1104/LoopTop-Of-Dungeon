@@ -2,24 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatueRoom : EventRoom
+public class StatueRoom : RoomBase
 {
     private int randStatue = 0;
     private GameObject statue = null;
     private GameObject minimapIcon = null;
 
-    private void Start()
+    protected override void Awake()
     {
         SpawnStatue();
         // юс╫ц
         minimapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/StatueRoomIcon.prefab", transform);
         minimapIcon.transform.position = transform.position;
         minimapIcon.SetActive(false);
+
+        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
+        curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
     protected override void IsClear()
     {
         isClear = true;
+    }
+
+    protected override void ShowIcon()
+    {
+        Debug.Log("ShowIcon");
+        minimapIcon.SetActive(true);
     }
 
     protected override void SetRoomTypeFlag()
@@ -48,11 +58,6 @@ public class StatueRoom : EventRoom
                 break;
         }
 
-    }
-
-    protected override void ShowIcon()
-    {
-        minimapIcon.SetActive(true);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

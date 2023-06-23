@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class EventRoom : RoomBase
+public class EventRoom : MonoBehaviour
 {
     protected Define.EventRoomTypeFlag _eventRoomTypeFlag;
+    protected GameObject minimapIcon = null;
 
     public void SetEventRoomType(Define.EventRoomTypeFlag eventRoomTypeFlag)
     {
         _eventRoomTypeFlag = eventRoomTypeFlag;
         SetEvent();
-    }
-
-    protected override void IsClear()
-    {
-
     }
 
     protected void SetEvent()

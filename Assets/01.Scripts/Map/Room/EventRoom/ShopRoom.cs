@@ -109,12 +109,11 @@ public class ShopRoom : RoomBase
                 {
                     itemobjCount++;
 
-                    isInteractive = true;
-
                     if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf 
                         && itemobjArr[i].itemName != "Default"
                         && !itemobjArr[i].isSold)
                     {
+                        isInteractive = false;
                         itemobjArr[i].ItemInfoPanel.gameObject.SetActive(true);
                         itemobjArr[i].IsPurchaseAble = true;
                     }
