@@ -14,14 +14,14 @@ public class PowerSkill : PlayerSkillBase
     float rockFallDuration = 2f;
     float rushVelocity = 2;
     int rushMax = 5;
-    int rushNum = 1;
+    int rushMin = 1;
     float rushDuration = 2f;
     bool isColumn;
     float ColumnDuration = 5f;
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
     WaitForSeconds waitRockPush = new WaitForSeconds(2f);
-    WaitForSeconds rockFallWait = new WaitForSeconds(1f);
-    WaitForFixedUpdate rushWait = new WaitForFixedUpdate();
+    WaitForSeconds rockFallWait = new WaitForSeconds(0.5f);
+    WaitForSeconds rushWait = new WaitForSeconds(0.5f);
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     ParticleSystem attackPar;
     private void Awake()
@@ -176,44 +176,55 @@ public class PowerSkill : PlayerSkillBase
 
     IEnumerator Rush(int level)
     {
-        float timer = 0;
-        float tickTimer = 0;
-        float dmgTickTime = rushDuration / 5;
+        int rushNum = 1;
+        int rushCheckNum = 0;
+        int num =1;
+        playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
         player.IsInvincibility = true;
-        playerRigid.velocity = playerMovement.Direction * rushVelocity;
-
-        if (level >= 2)
+        if (level >= 2) 
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
             {
-               KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.I : KeyCode.O;
+                float chargingTime = 0;
+                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.U : KeyCode.I;
+                while (Input.GetKey(keyBoardButton))
+                {
+                    chargingTime += Time.deltaTime * 2;
+                    if(chargingTime > num)
+                    {
+                        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ChargingEffect.prefab", transform.position, Quaternion.identity);
+                        num++;
+                    }
+                    yield return null;
+                }
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/emitEffect.prefab",transform.position, Quaternion.identity);
+                rushNum += Mathf.FloorToInt(chargingTime);
+                rushNum = Mathf.Clamp(rushNum, rushMin, rushMax);
+            }
+        }
+        playerRigid.velocity = playerMovement.Direction * rushVelocity;
+        while (rushCheckNum < rushNum)
+        {
+            yield return rushWait;
+            rushCheckNum++;
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
+            Poolable choppingObj;
+            if (level >= 3)
+            {
+                 choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEnforceEffect.prefab", transform.position, Quaternion.identity);
             }
             else
             {
-
+                 choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect.prefab", transform.position, Quaternion.identity);
             }
-
-        }
-        do
-        {
-            timer += Time.fixedDeltaTime;
-            tickTimer += Time.fixedDeltaTime;
-            if (tickTimer > dmgTickTime)
+            Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f, 1 << enemyLayer);
+            for (int i = 0; i < enemys.Length; i++)
             {
-                CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
-                Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect.prefab", transform.position, Quaternion.identity);
-                Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f, 1 << enemyLayer);
-                for (int i = 0; i < enemys.Length; i++)
-                {
-                    enemys[i].GetComponent<IHittable>().OnDamage(rushDmg, 0);
-                }
-                tickTimer = 0;
+                enemys[i].GetComponent<IHittable>().OnDamage(rushDmg, 0);
             }
-            yield return rushWait;
+            
         }
-        while (timer < rushDuration);
-
         playerMovement.IsControl = true;
         player.IsInvincibility = false;
         playerRigid.velocity = Vector3.zero;

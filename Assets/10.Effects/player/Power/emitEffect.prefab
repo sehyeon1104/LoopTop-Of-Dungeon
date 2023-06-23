@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &773307704802124637
+--- !u!1 &4682336468144679228
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2057088414500082815}
-  - component: {fileID: 5298486340329178214}
-  - component: {fileID: 9159713683750002208}
-  - component: {fileID: -8546430333153095092}
+  - component: {fileID: 4256591680726399500}
+  - component: {fileID: 6050078000621872552}
+  - component: {fileID: 2476620945342788605}
   m_Layer: 0
-  m_Name: BottomingOutEffect
+  m_Name: emitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2057088414500082815
+--- !u!4 &4256591680726399500
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773307704802124637}
+  m_GameObject: {fileID: 4682336468144679228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!2083052967 &5298486340329178214
+--- !u!2083052967 &6050078000621872552
 VisualEffect:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773307704802124637}
+  m_GameObject: {fileID: 4682336468144679228}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: e9c00863bc86861418dda1070d505b6f, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: eb44669c90cd51a4ca349bf442e0fcf1, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -57,11 +56,8 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.7490196, y: 0.36078432, z: 0, w: 1}
-        m_Name: Color
-        m_Overridden: 1
-      - m_Value: {x: 6.159708, y: 3.1282287, z: 0, w: 1}
-        m_Name: AftershocksColor
+      - m_Value: {x: 5.4339623, y: 2.9872568, z: 0, w: 1}
+        m_Name: ChargeColor
         m_Overridden: 1
     m_Uint:
       m_Array: []
@@ -77,14 +73,14 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!73398921 &9159713683750002208
+--- !u!73398921 &2476620945342788605
 VFXRenderer:
   serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773307704802124637}
+  m_GameObject: {fileID: 4682336468144679228}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -114,20 +110,6 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1672594845
-  m_SortingLayer: 6
+  m_SortingLayerID: -406324367
+  m_SortingLayer: 12
   m_SortingOrder: 0
---- !u!114 &-8546430333153095092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 773307704802124637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsUsing: 0
-  PushTime: 3

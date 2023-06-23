@@ -13,8 +13,7 @@ public class PlayerBase
     }
 
     public void InitPlayerStat()
-    {
-        
+    {       
         maxHp = 12;
         hp = maxHp;
         attack = 11f;
