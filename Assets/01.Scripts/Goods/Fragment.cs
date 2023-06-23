@@ -53,6 +53,7 @@ public class Fragment : MonoBehaviour
         yield return new WaitForSeconds(moveToPlayerTime);
 
         Managers.Pool.Push(fragmentPoolable);
+        FragmentCollectManager.Instance.IncreaseGoods();
     }
 
 

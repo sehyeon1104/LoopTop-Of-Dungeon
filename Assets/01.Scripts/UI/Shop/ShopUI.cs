@@ -25,7 +25,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField]
     private Button cancleBtn = null;
 
-    private int slotNum = 0;
+    public int slotNum { get; private set; } = 0;
     private int price = 0;
 
     #endregion
@@ -102,8 +102,9 @@ public class ShopUI : MonoBehaviour
         // TODO : 선택한 슬롯의 스킬 레벨 증가
 
         if (GameManager.Instance.Player.playerBase.FragmentAmount < price
-            || GameManager.Instance.Player.playerBase.SlotLevel[1] == 5)
+            || GameManager.Instance.Player.playerBase.SlotLevel[UIManager.Instance.shopUI.slotNum] == 5)
         {
+            Debug.Log("최대 강화");
             return;
         }
 

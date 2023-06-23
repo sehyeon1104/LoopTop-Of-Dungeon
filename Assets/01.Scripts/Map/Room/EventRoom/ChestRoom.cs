@@ -16,7 +16,7 @@ public class ChestRoom : RoomBase
 
     protected override void SetRoomTypeFlag()
     {
-        roomTypeFlag = Define.RoomTypeFlag.ChestRoom;
+        roomTypeFlag = Define.RoomTypeFlag.EventRoom;
     }
 
     public void SpawnChest()

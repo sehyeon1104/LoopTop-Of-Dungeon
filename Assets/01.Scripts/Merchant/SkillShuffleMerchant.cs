@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 // 스킬 셔플 상인
-public class SkillShufflMerchant : MerchantBase
+public class SkillShuffleMerchant : MerchantBase
 {
     Button button;
     private void Start()
@@ -23,6 +23,7 @@ public class SkillShufflMerchant : MerchantBase
     {
         isInteractive = true;
 
+        StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateInteractionButton();
         button.onClick.RemoveListener(MerchantFunc);
         button.onClick.AddListener(MerchantFunc);
@@ -50,6 +51,7 @@ public class SkillShufflMerchant : MerchantBase
             return;
 
         isInteractive = false;
+        StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);
     }

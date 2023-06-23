@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SlotStatue : StatueBase
 {
+
+    PlayerSkillInfo[] playerskillInfo;
     protected override void Start()
     {
         base.Start();
@@ -37,7 +39,9 @@ public class SlotStatue : StatueBase
     int randSlot = 0;
     protected override void StatueFunc()
     {
-        base.StatueFunc();
+        if (!isUseable)
+            return;
+        isUseable = false;
 
         rand = Random.Range(0, 100);
 
@@ -54,9 +58,13 @@ public class SlotStatue : StatueBase
 
         randSlot = Random.Range(0, 1);
 
+        Debug.Log($"스킬 레벨 변동 : {GameManager.Instance.Player.playerBase.SlotLevel[randSlot]} -> {randLevel}");
         GameManager.Instance.Player.playerBase.SlotLevel[randSlot] = randLevel;
         PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
 
         // TODO : 스킬 레벨업 알림
+        playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
+        effectTmp.SetText($"스킬 : {playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[randSlot]].skillName}\n레벨 변동 : {GameManager.Instance.Player.playerBase.SlotLevel[randSlot]} -> {randLevel}");
+        StartCoroutine(IETextAnim());
     }
 }

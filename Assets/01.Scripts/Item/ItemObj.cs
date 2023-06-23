@@ -92,6 +92,8 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
+        StageManager.Instance.shop.isInteractive = false;
+
         if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || !_isPurchaseAble)
         {
             Rito.Debug.Log("구매 불가");
