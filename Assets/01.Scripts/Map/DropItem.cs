@@ -15,10 +15,14 @@ public class DropItem : MonoBehaviour
     Button interactionButton;
 
     private HashSet<int> itemSelectNum = new HashSet<int>();
+
+    private List<int> itemObjList = null;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
+        for (int i = 0; i < StageManager.Instance.shop.itemobjArr.Length; ++i)
+            itemObjList.Add(StageManager.Instance.shop.itemobjArr[i].Num);
     }
     private void Start()
     {
@@ -52,7 +56,7 @@ public class DropItem : MonoBehaviour
         {
             rand = Random.Range(1, GameManager.Instance.allItemList.Count);
 
-            if (itemSelectNum.Contains(rand))
+            if (itemSelectNum.Contains(rand) /*|| itemObjList.Contains(rand)*/)
                 continue;
 
             itemSelectNum.Add(rand);

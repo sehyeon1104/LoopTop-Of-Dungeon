@@ -26,16 +26,16 @@ public class EventRoom : RoomBase
             case EventRoomTypeFlag.StatueRoom:
                 gameObject.AddComponent<StatueRoom>();
                 break;
-            case EventRoomTypeFlag.ChestRoom:
-                gameObject.AddComponent<ChestRoom>();
-                break;
+            //case EventRoomTypeFlag.ChestRoom:
+                //gameObject.AddComponent<ChestRoom>();
+                //break;
             case EventRoomTypeFlag.BrokenItemRoom:
                 gameObject.AddComponent<BrokenItemRoom>();
                 break;
-            case EventRoomTypeFlag.BattleRoom:
-                break;
-            case EventRoomTypeFlag.SurvivalRoom:
-                break;
+            //case EventRoomTypeFlag.BattleRoom:
+                //break;
+            //case EventRoomTypeFlag.SurvivalRoom:
+                //break;
         }
 
     }

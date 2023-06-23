@@ -12,9 +12,11 @@ public class ShopRoom : RoomBase
     private Button InteractionBtn;
     private List<ItemObj> itemList = new List<ItemObj>();
     private float playerSensingDis = 1.5f;
-    private ItemObj[] itemobjArr;
+    public ItemObj[] itemobjArr { get; private set; }
     int itemobjCount = 0;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
+    public bool isInteractive = false;
 
     IEnumerator toggleItemInfoPanel;
     protected override void SetRoomTypeFlag()
@@ -46,6 +48,7 @@ public class ShopRoom : RoomBase
         {
             ShopManager.Instance.SetItem();
         }
+
     }
     public void SpawnNPC()
     {
@@ -106,6 +109,8 @@ public class ShopRoom : RoomBase
                 {
                     itemobjCount++;
 
+                    isInteractive = true;
+
                     if (!itemobjArr[i].ItemInfoPanel.gameObject.activeSelf 
                         && itemobjArr[i].itemName != "Default"
                         && !itemobjArr[i].isSold)
@@ -124,13 +129,13 @@ public class ShopRoom : RoomBase
                 }
             }
 
-            if (itemobjCount > 0)
+            if (itemobjCount > 0 || isInteractive)
                 UIManager.Instance.RotateInteractionButton();
             else
                 UIManager.Instance.RotateAttackButton();
 
-
             itemobjCount = 0;
+
             yield return waitForEndOfFrame;
 
         }

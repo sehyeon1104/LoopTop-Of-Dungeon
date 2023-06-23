@@ -27,6 +27,7 @@ public class SlotMerchant : MerchantBase
     {
         isInteractive = true;
 
+        StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateInteractionButton();
         button.onClick.RemoveListener(MerchantFunc);
         button.onClick.AddListener(MerchantFunc);
@@ -48,6 +49,7 @@ public class SlotMerchant : MerchantBase
             return;
 
         isInteractive = false;
+        StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);
         UIManager.Instance.shopUI.ToggleSkillBookPanel(slotNum, false);
