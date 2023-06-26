@@ -1137,7 +1137,6 @@ MonoBehaviour:
   - {fileID: 5883231942822065183, guid: fcb5da90e791e06499306c3a428b97ab, type: 3}
   spawnRooms: []
   wayMinimapIconList: []
-  MoveNextMapPortal: {fileID: 5731706546575025831, guid: b48358b74488be24896b90372a798e39, type: 3}
 --- !u!114 &520647068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,6 +1178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e942c0a790d3d4da6b46e9b66afa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 0.5
 --- !u!114 &520647071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2095,22 +2095,6 @@ PrefabInstance:
     - target: {fileID: 5575783386755548393, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 5575783386755548393, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
-      propertyPath: far clip plane
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
-      propertyPath: orthographic size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 993
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
