@@ -56,7 +56,7 @@ public class SpawnRoom : MonoBehaviour
         }
         else if(_roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
         {
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0", transform);
+            Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0.prefab", transform);
         }
         else if(_roomTypeFlag == Define.RoomTypeFlag.EliteMobRoom)
         {

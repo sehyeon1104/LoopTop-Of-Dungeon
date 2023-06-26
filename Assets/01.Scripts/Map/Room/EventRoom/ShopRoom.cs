@@ -52,7 +52,7 @@ public class ShopRoom : RoomBase
     }
     public void SpawnNPC()
     {
-        Instantiate(shopNpc, transform.position + Vector3.up * 3, Quaternion.identity);
+        Instantiate(shopNpc, transform.position + Vector3.up * 3, Quaternion.identity, transform);
     }
 
     public void SetItemObjList(List<ItemObj> lists)
