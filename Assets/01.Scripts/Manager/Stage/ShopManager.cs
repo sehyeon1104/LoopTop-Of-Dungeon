@@ -50,7 +50,7 @@ public class ShopManager : MonoSingleton<ShopManager>
 
     public void ShuffleItemSelectNum()
     {
-        if(itemObjSpawnPos.Length - 1 > GameManager.Instance.allItemList.Count)
+        if(itemObjSpawnPos.Length - 1 > GameManager.Instance.allItemList.Count - GameManager.Instance.brokenItemCount)
         {
             Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
             return;
@@ -64,7 +64,7 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
         {
-            randNum = Random.Range(1, allItemList.Count);
+            randNum = Random.Range(1, allItemList.Count - GameManager.Instance.brokenItemCount);
 
             if (allItemList.Contains(allItemList[randNum])) 
                 continue;
@@ -105,7 +105,7 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         while (index < 4)
         {
-            rand = Random.Range(1, allItemList.Count);
+            rand = Random.Range(1, allItemList.Count - GameManager.Instance.brokenItemCount);
 
             if (itemSelectNum.Contains(rand))
                 continue;
@@ -115,7 +115,7 @@ public class ShopManager : MonoSingleton<ShopManager>
             // 아이템 오브젝트 생성
             Item shopItem = GameManager.Instance.allItemList[rand];
 
-            newObject = Instantiate(itemObjTemplate);
+            newObject = Instantiate(itemObjTemplate, shopRoom.transform);
             newItemObjComponent = newObject.GetComponent<ItemObj>();
             newItemObjComponent.SetValue(shopItem);
             newObject.SetActive(true);
