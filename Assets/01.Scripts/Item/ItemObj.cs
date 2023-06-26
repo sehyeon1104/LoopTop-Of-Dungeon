@@ -121,13 +121,13 @@ public class ItemObj : MonoBehaviour
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
         soldOutPanel.SetActive(true);
-        if (!ItemEffects.Items[item.itemNumber].isOneOff)
+        if (!ItemBase.Items[item.itemNumber].isOneOff)
         {
             InventoryUI.Instance.AddItemSlot(item);
         }
         else
         {
-            ItemEffects.Items[item.itemNumber].Use();
+            ItemBase.Items[item.itemNumber].Use();
         }
     }
 
@@ -142,7 +142,7 @@ public class ItemObj : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Purchase.wav");
         itemImage.gameObject.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
-        if (!ItemEffects.Items[item.itemNumber].isOneOff)
+        if (!ItemBase.Items[item.itemNumber].isOneOff)
         {
             InventoryUI.Instance.AddItemSlot(item);
         }
