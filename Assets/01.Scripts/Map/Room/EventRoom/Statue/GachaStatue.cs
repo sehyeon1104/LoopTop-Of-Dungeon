@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GachaStatue : StatueBase
 {
@@ -39,6 +40,7 @@ public class GachaStatue : StatueBase
         if (!isUseable)
             return;
         isUseable = false;
+        UIManager.Instance.RotateAttackButton();
 
         if (GameManager.Instance.Player.playerBase.Hp <= 2)
         {
@@ -46,21 +48,47 @@ public class GachaStatue : StatueBase
             // TODO : 체력 부족 UI 표시 및 사운드 실행
         }
 
-        rand = Random.Range(0, 3);
+        rand = 1;//Random.Range(0, 3);
 
         // 재화 획득
         if(rand == 0)
         {
-            FragmentCollectManager.Instance.DropFragmentByCircle(gameObject, 8);
+            Debug.Log("재화 획득");
+            FragmentCollectManager.Instance.DropFragmentByCircle(GameManager.Instance.Player.gameObject, 8);
         }
         // 아이템 상자 드랍
         else if(rand == 1)
         {
+            Debug.Log("상자 드랍");
             // TODO : 아이템 드롭 상자 드랍
+            GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
+            chestObj.transform.position = new Vector3(transform.position.x, transform.position.y);
+            chestObj.transform.DOMoveY(transform.position.y - 5f, 1f).SetEase(Ease.OutCirc);
+            //chestObj.transform.DOJump(new Vector3(transform.position.x, transform.position.y - 6f), 5f, 1, 1f).SetEase(Ease.OutCirc);
+            //chestObj.transform.position = new Vector3(transform.position.x, transform.position.y - 7f);
+            Chest chest = chestObj.GetComponent<Chest>();
+
+            int chestRand = Random.Range(0, 10);
+
+            // common : 40%
+            if (chestRand < 4)
+                chest.SetChestRating(Define.ChestRating.Common);
+            // rare : 30%
+            else if (chestRand >= 4 && chestRand < 7)
+                chest.SetChestRating(Define.ChestRating.Rare);
+            // epic : 20%
+            else if (chestRand >= 7 && chestRand < 9)
+                chest.SetChestRating(Define.ChestRating.Epic);
+            // legendary : 10%
+            else if (chestRand == 9)
+                chest.SetChestRating(Define.ChestRating.Legendary);
+
+            ;
         }
         // 데미지 입음
         else if(rand == 2)
         {
+            Debug.Log("2 데미지");
             GameManager.Instance.Player.OnDamage(2, 0);
         }
     }

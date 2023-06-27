@@ -37,6 +37,17 @@ public class PrayerStatue : StatueBase
         // TODO : hp를 소모하면 소모할 수록 상자의 등급 상승
         if (!isUseable)
             return;
+
+        if (GameManager.Instance.Player.playerBase.Hp < 2)
+            return;
+
+        // TODO : 상자의 등급이 Legendary일 경우 return
+
+        GameManager.Instance.Player.OnDamage(1, 0);
+    }
+
+    public void TakeChest()
+    {
         isUseable = false;
     }
 }

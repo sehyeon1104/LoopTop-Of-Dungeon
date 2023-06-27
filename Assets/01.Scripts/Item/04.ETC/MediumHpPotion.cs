@@ -20,4 +20,9 @@ public class MediumHpPotion : ItemBase
         Debug.Log("체력 1칸 회복");
         GameManager.Instance.Player.playerBase.Hp += 4;
     }
+
+    public override void Disabling()
+    {
+
+    }
 }
