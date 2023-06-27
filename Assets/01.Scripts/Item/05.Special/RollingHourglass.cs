@@ -19,4 +19,9 @@ public class RollingHourglass : ItemBase
     {
         // 스킬쿨타임 50% ~ 150 랜덤 적용
     }
+
+    public override void Disabling()
+    {
+
+    }
 }

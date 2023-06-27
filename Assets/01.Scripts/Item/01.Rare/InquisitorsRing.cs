@@ -18,4 +18,9 @@ public class InquisitorsRing : ItemBase
         Debug.Log("치명타 확률 6% 증가");
         GameManager.Instance.Player.playerBase.CritChance += 6;
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.CritChance -= 6;
+    }
 }

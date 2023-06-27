@@ -21,4 +21,9 @@ public class DullSword : ItemBase
         Debug.Log("공격력 5% 증가");
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
+    }
 }

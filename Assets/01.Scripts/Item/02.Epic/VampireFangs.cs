@@ -26,6 +26,11 @@ public class VampireFangs : ItemBase
         GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
     }
 
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
+    }
+
     public override void LastingEffect()
     {
         GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);

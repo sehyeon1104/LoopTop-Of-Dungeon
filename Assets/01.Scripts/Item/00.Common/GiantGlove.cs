@@ -19,6 +19,11 @@ public class GiantGlove : ItemBase
     {
         Debug.Log("거인의 장갑 효과 발동");
         Debug.Log("공격범위 10% 증가");
-        GameManager.Instance.Player.playerBase.AttackRange = GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
+        GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
+    }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
     }
 }

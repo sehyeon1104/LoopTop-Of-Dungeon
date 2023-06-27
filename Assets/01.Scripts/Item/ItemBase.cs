@@ -9,6 +9,7 @@ public abstract partial class ItemBase : MonoBehaviour
     public abstract bool isPersitantItem { get; }
     public abstract void Init();
     public abstract void Use();
+    public abstract void Disabling();
     public virtual void LastingEffect()
     {
 
@@ -28,6 +29,11 @@ public abstract partial class ItemBase : MonoBehaviour
         }
 
         public override void Use()
+        {
+
+        }
+
+        public override void Disabling()
         {
 
         }

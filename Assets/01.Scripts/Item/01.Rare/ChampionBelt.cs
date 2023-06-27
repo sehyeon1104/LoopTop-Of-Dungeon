@@ -7,6 +7,8 @@ public class ChampionBelt : ItemBase
 
     public override bool isPersitantItem => false;
 
+    int incQuantity = 1;
+
     public override void Init()
     {
 
@@ -16,9 +18,15 @@ public class ChampionBelt : ItemBase
     {
         Debug.Log("헤비급 챔피언의 벨트 효과 발동");
         Debug.Log("하트 1/4칸 증가");
-        int incQuantity = 1; //Mathf.RoundToInt(GameManager.Instance.Player.playerBase.InitMaxHp * 0.15f);
         GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
         GameManager.Instance.Player.playerBase.Hp += incQuantity;
+        UIManager.Instance.UpdateUI();
+    }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.MaxHp -= incQuantity;
+        GameManager.Instance.Player.playerBase.Hp -= incQuantity;
         UIManager.Instance.UpdateUI();
     }
 }

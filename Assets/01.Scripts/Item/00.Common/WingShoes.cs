@@ -21,4 +21,9 @@ public class WingShoes : ItemBase
         Rito.Debug.Log("이동속도 10% 증가");
         GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.1f;
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.MoveSpeed -= GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.1f;
+    }
 }

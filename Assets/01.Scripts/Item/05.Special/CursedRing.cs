@@ -30,6 +30,13 @@ public class CursedRing : ItemBase
 
     }
 
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.6f;
+        GameManager.Instance.Player.DamageMultiples = GameManager.Instance.Player.DamageMultiples / 2;
+        isFirst = false;
+    }
+
     public override void LastingEffect()
     {
         GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(CursedRingEffect);

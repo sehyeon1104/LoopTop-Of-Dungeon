@@ -28,6 +28,12 @@ public class BerserkerSword : ItemBase
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
     }
 
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
+        GameManager.Instance.Player.playerBase.Attack -= lastRise;
+    }
+
     public override void LastingEffect()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
@@ -60,5 +66,4 @@ public class BerserkerSword : ItemBase
         GameManager.Instance.Player.playerBase.Attack += totalRise;
         Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
     }
-
 }

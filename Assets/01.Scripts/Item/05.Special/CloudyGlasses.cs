@@ -20,4 +20,10 @@ public class CloudyGlasses : ItemBase
         GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.2f;
         GameManager.Instance.Player.playerBase.CritChance -= 8f;
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.MoveSpeed -= GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.2f;
+        GameManager.Instance.Player.playerBase.CritChance += 8f;
+    }
 }

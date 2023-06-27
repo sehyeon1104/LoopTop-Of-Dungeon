@@ -21,4 +21,11 @@ public class SharpSword : ItemBase
         // TODO : 스킬 쿨타임 감소 구현
         //GameManager.Instance.Player.playerBase. += 5;
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.1f;
+        // TODO : 스킬 쿨타임 증가 구현
+        //GameManager.Instance.Player.playerBase. -= 5;
+    }
 }

@@ -17,4 +17,8 @@ public class TornPaper : ItemBase
         Debug.Log("찢어진 종이 효과 발동");
         Debug.Log("대쉬 쿨타임 10% 감소");
     }
+    public override void Disabling()
+    {
+        
+    }
 }

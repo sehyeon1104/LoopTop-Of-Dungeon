@@ -19,4 +19,10 @@ public class AllRoundHalfGlove : ItemBase
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.15f;
         // TODO : 스킬쿨타임 감소
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.15f;
+
+    }
 }
