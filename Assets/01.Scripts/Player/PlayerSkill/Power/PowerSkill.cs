@@ -12,16 +12,17 @@ public class PowerSkill : PlayerSkillBase
     float meteorDmg = 10;
     float rushDmg = 13;
     float rockFallDuration = 2f;
-    float rushVelocity = 2;
+    float rushVelocity = 5;
     int rushMax = 5;
-    int rushNum = 1;
+    int rushMin = 1;
+    float rushSize = 1;
     float rushDuration = 2f;
     bool isColumn;
     float ColumnDuration = 5f;
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
     WaitForSeconds waitRockPush = new WaitForSeconds(2f);
-    WaitForSeconds rockFallWait = new WaitForSeconds(1f);
-    WaitForFixedUpdate rushWait = new WaitForFixedUpdate();
+    WaitForSeconds rockFallWait = new WaitForSeconds(0.5f);
+    WaitForSeconds rushWait = new WaitForSeconds(0.5f);
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     ParticleSystem attackPar;
     private void Awake()
@@ -70,7 +71,10 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void SecondSkill(int level)
     {
-        StartCoroutine(Rush(level));
+        if (level == 5)
+            StartCoroutine(FiveRush());
+        else
+           StartCoroutine(Rush(level));
     }
 
     protected override void ThirdSkill(int level)
@@ -97,10 +101,6 @@ public class PowerSkill : PlayerSkillBase
         return base.Dash();
     }
 
-    protected override void SecondSkillUpdate(int level)
-    {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
-    }
 
     protected override void ThirdSkillUpdate(int level)
     {
@@ -176,49 +176,79 @@ public class PowerSkill : PlayerSkillBase
 
     IEnumerator Rush(int level)
     {
-        float timer = 0;
-        float tickTimer = 0;
-        float dmgTickTime = rushDuration / 5;
+        int rushNum = 1;
+        int rushCheckNum = 0;
+        int num =1;
+        playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
         player.IsInvincibility = true;
-        playerRigid.velocity = playerMovement.Direction * rushVelocity;
-
-        if (level >= 2)
+        if (level >= 2) 
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
             {
-               KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.I : KeyCode.O;
+                float chargingTime = 0;
+                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.U : KeyCode.I;
+                while (Input.GetKey(keyBoardButton))
+                {
+                    chargingTime += Time.deltaTime * 2;
+                    if(chargingTime > num)
+                    {
+                        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ChargingEffect.prefab", transform.position, Quaternion.identity);
+                        num++;
+                    }
+                    yield return null;
+                }
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/emitEffect.prefab",transform.position, Quaternion.identity);
+                rushNum += Mathf.FloorToInt(chargingTime);
+                rushNum = Mathf.Clamp(rushNum, rushMin, rushMax);
+            }
+        }
+        playerRigid.velocity = playerMovement.Direction * rushVelocity;
+        while (rushCheckNum < rushNum)
+        {
+            yield return rushWait;
+            rushCheckNum++;
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
+            Poolable choppingObj;
+            if (level >= 3)
+            {
+                 choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEnforceEffect.prefab", transform.position, Quaternion.identity);
             }
             else
             {
-
+                 choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect.prefab", transform.position, Quaternion.identity);
             }
-
-        }
-        do
-        {
-            timer += Time.fixedDeltaTime;
-            tickTimer += Time.fixedDeltaTime;
-            if (tickTimer > dmgTickTime)
+            choppingObj.GetComponent<Transform>().localScale = Vector3.one * rushSize;
+            Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f * rushSize, 1 << enemyLayer);
+            
+            for (int i = 0; i < enemys.Length; i++)
             {
-                CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
-                Poolable choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect.prefab", transform.position, Quaternion.identity);
-                Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f, 1 << enemyLayer);
-                for (int i = 0; i < enemys.Length; i++)
-                {
-                    enemys[i].GetComponent<IHittable>().OnDamage(rushDmg, 0);
-                }
-                tickTimer = 0;
+                enemys[i].GetComponent<IHittable>().OnDamage(rushDmg, 0);
             }
-            yield return rushWait;
+            
         }
-        while (timer < rushDuration);
-
         playerMovement.IsControl = true;
         player.IsInvincibility = false;
         playerRigid.velocity = Vector3.zero;
         yield return null;
     }
+    IEnumerator FiveRush()
+    {
+        while (player.transform.localScale.x < 2)
+        {
+
+            player.transform.localScale += Vector3.one * 0.1f;
+            yield return null;
+        }
+    }
+    protected override void SecondSkillUpdate(int level)
+    {
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+        if (level == 4)
+            rushSize *= 1.5f;
+
+    }
+
     IEnumerator Jump()
     {
         yield return null;

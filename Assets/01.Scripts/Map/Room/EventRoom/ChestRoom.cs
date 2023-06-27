@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChestRoom : EventRoom
+public class ChestRoom : RoomBase
 {
     private void Start()
     {

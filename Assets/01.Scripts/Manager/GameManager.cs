@@ -29,6 +29,8 @@ public class GameManager : MonoSingleton<GameManager>
     [Tooltip("아이템 추가")]
     [field: SerializeField]
     public List<Item> allItemList { get; private set; } = new List<Item>();
+    [field: SerializeField]
+    public int brokenItemCount { get; private set; } = 0;
 
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();

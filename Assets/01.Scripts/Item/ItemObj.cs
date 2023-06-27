@@ -52,6 +52,14 @@ public class ItemObj : MonoBehaviour
 
     private void Start()
     {
+
+        Init();
+
+        StartCoroutine(MoveUpDown());
+    }
+
+    private void Init()
+    {
         soldOutPanel.SetActive(false);
         itemInfoPanel.gameObject.SetActive(false);
         pos = itemImage.transform.position;
@@ -59,7 +67,8 @@ public class ItemObj : MonoBehaviour
         _isPurchaseAble = false;
         isSold = false;
 
-        StartCoroutine(MoveUpDown());
+        if (item.itemType == Define.ItemType.broken)
+            priceTMP.transform.parent.gameObject.SetActive(false);
     }
 
     public void SetValue(Item item)
@@ -92,6 +101,8 @@ public class ItemObj : MonoBehaviour
 
     public void PurchaseShopItem()
     {
+        StageManager.Instance.shop.isInteractive = false;
+
         if (GameManager.Instance.Player.playerBase.FragmentAmount < item.price || !_isPurchaseAble)
         {
             Rito.Debug.Log("구매 불가");
@@ -117,6 +128,23 @@ public class ItemObj : MonoBehaviour
         else
         {
             ItemEffects.Items[item.itemNumber].Use();
+        }
+    }
+
+    // BrokenItemRoom 전용
+    public void TakeBrokenItem()
+    {
+        if (isSold)
+            return;
+
+        isSold = true;
+
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Purchase.wav");
+        itemImage.gameObject.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);
+        if (!ItemEffects.Items[item.itemNumber].isOneOff)
+        {
+            InventoryUI.Instance.AddItemSlot(item);
         }
     }
 }

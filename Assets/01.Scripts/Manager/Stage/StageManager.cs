@@ -23,6 +23,8 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
     public Dictionary<Define.EventRoomTypeFlag, int> eventRoomCountDic = new Dictionary<Define.EventRoomTypeFlag, int>();
 
+    public ShopRoom shop { get; private set; } = null;
+
     [SerializeField]
     private List<GameObject> wayMinimapIconList = new List<GameObject>();
 
@@ -88,6 +90,7 @@ public class StageManager : MonoSingleton<StageManager>
         SetRoom();
         InstantiateRooms();
 
+        shop = FindObjectOfType<ShopRoom>();
         enemyRooms = FindObjectsOfType<EnemyRoom>();
         yield return new WaitUntil(() => enemyRooms.Length > 3);
 
@@ -99,6 +102,7 @@ public class StageManager : MonoSingleton<StageManager>
         yield return new WaitForSeconds(1.5f);
         isSetting = false;
     }
+
     public void SetWallGrid()
     {
         randWallGrid = Random.Range(0, wallGrids.Length);
