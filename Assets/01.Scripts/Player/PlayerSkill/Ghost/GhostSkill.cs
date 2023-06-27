@@ -55,6 +55,7 @@ public class GhostSkill : PlayerSkillBase
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
     WaitForSeconds waitLastClaw = new WaitForSeconds(0.5f);
+    GameObject telpoHitEffect = null;
     [Header("솟아오르기 스킬")]
     float armDamage = 30f;
     private Vector3 joystickDir;
@@ -78,6 +79,7 @@ public class GhostSkill : PlayerSkillBase
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
+        telpoHitEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/TpHitEffect.prefab");
 
         passiveAction += () => OnDiePassive(eTransform);
     }
@@ -525,7 +527,8 @@ public class GhostSkill : PlayerSkillBase
         for (int i = 0; i < hit.Length; i++)
         {
             eTransform = hit[i].transform.position;
-            hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0);
+            Poolable clone = Managers.Pool.Pop(telpoHitEffect);
+            hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
             if (!hit[i].transform.gameObject.activeSelf)
             {
                 passiveAction();

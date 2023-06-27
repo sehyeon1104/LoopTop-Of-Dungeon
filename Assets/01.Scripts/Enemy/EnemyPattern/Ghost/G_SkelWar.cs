@@ -28,9 +28,9 @@ public class G_SkelWar : EnemyDefault
 
     }
 
-    public override void OnDamage(float damage, float critChance)
+    public override void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
-        base.OnDamage(damage, critChance);
+        base.OnDamage(damage, critChance , hitEffect);
     }
 
     public override void EnemyDead()

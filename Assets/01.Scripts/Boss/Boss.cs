@@ -95,7 +95,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         //gameObject.SetActive(false);
     }
 
-    public void OnDamage(float damage, float critChance)
+    public void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
         if (isBDead) return;
         if (isBDamaged) return;

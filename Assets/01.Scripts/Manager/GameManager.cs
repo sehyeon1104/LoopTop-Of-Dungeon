@@ -179,14 +179,17 @@ public class GameManager : MonoSingleton<GameManager>
         UIManager.Instance.UpdateGoods();
     }
 
-    public void PlayHitEffect(Transform objTransform, bool isCritRate = false)
+    public void PlayHitEffect(Transform objTransform, bool isCritRate = false , Poolable effect = null)
     {
         //Debug.Log($"È÷Æ® ÀÌÆåÆ® : {hitEffect != null}");
-        Poolable effect = null;
-        if (isCritRate)
-            effect = Managers.Pool.Pop(critHitEffect);
-        else
-            effect = Managers.Pool.Pop(hitEffect);
+        if (effect == null)
+        {
+            if (isCritRate)
+                effect = Managers.Pool.Pop(critHitEffect);
+            else
+                effect = Managers.Pool.Pop(hitEffect);
+        }
+        
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
     }
 

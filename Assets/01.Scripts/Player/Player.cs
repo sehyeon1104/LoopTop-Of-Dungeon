@@ -71,7 +71,7 @@ public class Player : MonoBehaviour, IHittable
         set => damageMultiples = value;
     }
 
-    public void OnDamage(float damage, float critChance)
+    public void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
             return;

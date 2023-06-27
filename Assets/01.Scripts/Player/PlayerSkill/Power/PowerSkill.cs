@@ -12,9 +12,10 @@ public class PowerSkill : PlayerSkillBase
     float meteorDmg = 10;
     float rushDmg = 13;
     float rockFallDuration = 2f;
-    float rushVelocity = 2;
+    float rushVelocity = 5;
     int rushMax = 5;
     int rushMin = 1;
+    float rushSize = 1;
     float rushDuration = 2f;
     bool isColumn;
     float ColumnDuration = 5f;
@@ -70,7 +71,10 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void SecondSkill(int level)
     {
-        StartCoroutine(Rush(level));
+        if (level == 5)
+            StartCoroutine(FiveRush());
+        else
+           StartCoroutine(Rush(level));
     }
 
     protected override void ThirdSkill(int level)
@@ -97,10 +101,6 @@ public class PowerSkill : PlayerSkillBase
         return base.Dash();
     }
 
-    protected override void SecondSkillUpdate(int level)
-    {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
-    }
 
     protected override void ThirdSkillUpdate(int level)
     {
@@ -218,7 +218,9 @@ public class PowerSkill : PlayerSkillBase
             {
                  choppingObj = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect.prefab", transform.position, Quaternion.identity);
             }
-            Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f, 1 << enemyLayer);
+            choppingObj.GetComponent<Transform>().localScale = Vector3.one * rushSize;
+            Collider2D[] enemys = Physics2D.OverlapCircleAll(choppingObj.transform.position, 1.5f * rushSize, 1 << enemyLayer);
+            
             for (int i = 0; i < enemys.Length; i++)
             {
                 enemys[i].GetComponent<IHittable>().OnDamage(rushDmg, 0);
@@ -230,6 +232,23 @@ public class PowerSkill : PlayerSkillBase
         playerRigid.velocity = Vector3.zero;
         yield return null;
     }
+    IEnumerator FiveRush()
+    {
+        while (player.transform.localScale.x < 2)
+        {
+
+            player.transform.localScale += Vector3.one * 0.1f;
+            yield return null;
+        }
+    }
+    protected override void SecondSkillUpdate(int level)
+    {
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
+        if (level == 4)
+            rushSize *= 1.5f;
+
+    }
+
     IEnumerator Jump()
     {
         yield return null;

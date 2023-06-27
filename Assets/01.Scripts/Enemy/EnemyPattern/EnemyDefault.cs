@@ -168,7 +168,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         if (attackClip != null) anim.SetTrigger(_attack);
     }
 
-    public virtual void OnDamage(float damage, float critChance)
+    public virtual void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
         if (isDead || !gameObject.activeSelf)
         {
@@ -184,12 +184,12 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         {
             damage *= 1.5f;
             EnemyUIManager.Instance.ShowDamage(damage, gameObject, true);
-            GameManager.Instance.PlayHitEffect(transform, true);
+            GameManager.Instance.PlayHitEffect(transform, true, hitEffect);
         }
         else
         {
             EnemyUIManager.Instance.ShowDamage(damage, gameObject);
-            GameManager.Instance.PlayHitEffect(transform);
+            GameManager.Instance.PlayHitEffect(transform, false, hitEffect);
         }
 
         hp -= damage;
