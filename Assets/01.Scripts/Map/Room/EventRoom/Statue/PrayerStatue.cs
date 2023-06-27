@@ -15,6 +15,8 @@ public class PrayerStatue : StatueBase
 
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
+    private Coroutine textCoroutine = null;
+
     protected override void Start()
     {
         base.Start();
@@ -64,6 +66,13 @@ public class PrayerStatue : StatueBase
         isCool = true;
 
         effectTmp.text = "신께 기도합니다..";
+        if (textCoroutine != null)
+        {
+            StopCoroutine(textCoroutine);
+            textCoroutine = null;
+        }
+
+        textCoroutine = StartCoroutine(IETextAnim());
 
         GameManager.Instance.Player.OnDamage(1, 0);
         chestSpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/chests.png[chests_{prayCount - 1}]");
