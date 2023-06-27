@@ -20,10 +20,14 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
     // 현재 보유량
     private float current;
 
+    private int prevQueueFront = 0;
+
     private Coroutine coroutine = null;
 
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
     private WaitForSeconds waitIncreaseFragment = new WaitForSeconds(1.5f);
+
+    private bool isAddAll = false;
 
     private void Awake()
     {
@@ -59,6 +63,8 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
     public void IncreaseGoods()
     {
+        Debug.Log(coroutine);
+
         if (coroutine == null)
         {
             coroutine = StartCoroutine(IEIncreaseGoods());
@@ -67,17 +73,26 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
     public IEnumerator IEIncreaseGoods()
     {
-        yield return waitIncreaseFragment;
-
         current = GameManager.Instance.Player.playerBase.FragmentAmount;
         target = current;
 
         while (fragmentAmountQueue.Count != 0)
         {
-            while(fragmentAmountQueue.Count != 0)
+            if (fragmentAmountQueue.Count >= 10)
+                isAddAll = true;
+
+            while (fragmentAmountQueue.Count != 0)
             {
+                if (fragmentAmountQueue.Peek() == 0 && !isAddAll)
+                {
+                    target += fragmentAmountQueue.Dequeue();
+                    break;
+                }
+
                 target += fragmentAmountQueue.Dequeue();
             }
+
+            isAddAll = false;
 
             offset = (target - current) / duration;
 

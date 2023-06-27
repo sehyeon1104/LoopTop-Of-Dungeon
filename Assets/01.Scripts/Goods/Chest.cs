@@ -14,6 +14,8 @@ public class Chest : MonoBehaviour
 
     private GameObject chestSpawnEffect = null;
 
+    private bool isOpen = false;
+
     [SerializeField]
     private Sprite[] chestSprite;
 
@@ -60,8 +62,8 @@ public class Chest : MonoBehaviour
     private void SetReward()
     {
         // (경험의조각 획득량 * 상자 등급( 1 ~ 4 ) ) / 2
-        minFragmentAmount *= (int)((float)_chestRating * 0.5f);
-        maxFragmentAmount *= (int)((float)_chestRating * 0.5f);
+        minFragmentAmount *= Mathf.RoundToInt((float)_chestRating * 0.5f);
+        maxFragmentAmount *= Mathf.RoundToInt((float)_chestRating * 0.5f);
 
         // hp 회복 구슬 = 반올림(상자등급 / 2)
         hpRegenAmount = Mathf.RoundToInt((float)_chestRating * 0.5f);
@@ -74,6 +76,11 @@ public class Chest : MonoBehaviour
             StopCoroutine(_coroutine);
             _coroutine = null;
         }
+
+        if (isOpen)
+            return;
+
+        isOpen = true;
 
         _coroutine = StartCoroutine(IEOpen());
     }

@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class PrayerStatue : StatueBase
 {
+    private GameObject chestPreview = null;
+    private SpriteRenderer chestSpriteRenderer = null;
+
+    private int prayCount = 0;
+
+    private bool isCool = false;
+    private float curDelay = 0f;
+    private float prayDelay = 0.5f;
+
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
     protected override void Start()
     {
         base.Start();
+        chestPreview = transform.Find("ChestPreview").gameObject;
+        chestSpriteRenderer = chestPreview.GetComponent<SpriteRenderer>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -18,6 +31,7 @@ public class PrayerStatue : StatueBase
     {
         base.OnTriggerExit2D(collision);
         button.onClick.RemoveListener(StatueFunc);
+        TakeChest();
     }
 
     protected override void InteractiveWithPlayer()
@@ -34,20 +48,52 @@ public class PrayerStatue : StatueBase
 
     protected override void StatueFunc()
     {
-        // TODO : hp를 소모하면 소모할 수록 상자의 등급 상승
         if (!isUseable)
             return;
 
         if (GameManager.Instance.Player.playerBase.Hp < 2)
             return;
 
-        // TODO : 상자의 등급이 Legendary일 경우 return
+        if (prayCount >= 4)
+            return;
+
+        if (isCool)
+            return;
+
+        prayCount++;
+        isCool = true;
+
+        effectTmp.text = "신께 기도합니다..";
 
         GameManager.Instance.Player.OnDamage(1, 0);
+        chestSpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/chests.png[chests_{prayCount - 1}]");
+        StartCoroutine(IECooltime());
+    }
+
+    private IEnumerator IECooltime()
+    {
+        curDelay = 0f;
+
+        while (curDelay < prayDelay)
+        {
+            curDelay += Time.deltaTime;
+
+            yield return waitForEndOfFrame;
+        }
+
+        isCool = false;
     }
 
     public void TakeChest()
     {
+        if (prayCount == 0 || !isUseable)
+            return;
+
         isUseable = false;
+        GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
+        Chest chest = chestObj.GetComponent<Chest>();
+        chest.SetChestRating((Define.ChestRating)prayCount);
+        chest.transform.position = chestPreview.transform.position;
+        chestPreview.gameObject.SetActive(false);
     }
 }
