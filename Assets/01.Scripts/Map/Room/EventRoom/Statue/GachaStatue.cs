@@ -62,10 +62,8 @@ public class GachaStatue : StatueBase
             Debug.Log("상자 드랍");
             // TODO : 아이템 드롭 상자 드랍
             GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
-            chestObj.transform.position = new Vector3(transform.position.x, transform.position.y);
-            chestObj.transform.DOMoveY(transform.position.y - 5f, 1f).SetEase(Ease.OutCirc);
-            //chestObj.transform.DOJump(new Vector3(transform.position.x, transform.position.y - 6f), 5f, 1, 1f).SetEase(Ease.OutCirc);
-            //chestObj.transform.position = new Vector3(transform.position.x, transform.position.y - 7f);
+            chestObj.transform.position = new Vector3(transform.position.x, transform.position.y - 5f);
+            CinemachineCameraShaking.Instance.CameraShake(3, 0.1f);
             Chest chest = chestObj.GetComponent<Chest>();
 
             int chestRand = Random.Range(0, 10);
@@ -82,8 +80,6 @@ public class GachaStatue : StatueBase
             // legendary : 10%
             else if (chestRand == 9)
                 chest.SetChestRating(Define.ChestRating.Legendary);
-
-            ;
         }
         // 데미지 입음
         else if(rand == 2)
