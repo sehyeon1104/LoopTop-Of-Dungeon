@@ -22,15 +22,18 @@ public class EventRoom : MonoBehaviour
             case EventRoomTypeFlag.StatueRoom:
                 gameObject.AddComponent<StatueRoom>();
                 break;
-            //case EventRoomTypeFlag.ChestRoom:
-                //gameObject.AddComponent<ChestRoom>();
-                //break;
+            case EventRoomTypeFlag.ChestRoom:
+                gameObject.AddComponent<ChestRoom>();
+                break;
             case EventRoomTypeFlag.BrokenItemRoom:
-                gameObject.AddComponent<BrokenItemRoom>();
+                gameObject.AddComponent<ChestRoom>();
+                //gameObject.AddComponent<BrokenItemRoom>();
                 break;
             //case EventRoomTypeFlag.BattleRoom:
+                //gameObject.AddComponent<BattleRoom>();
                 //break;
             //case EventRoomTypeFlag.SurvivalRoom:
+                //gameObject.AddComponent<SurvivalRoom>();
                 //break;
         }
 

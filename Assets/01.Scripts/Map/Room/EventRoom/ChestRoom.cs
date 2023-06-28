@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ChestRoom : RoomBase
 {
+    private int spawnChestCount = 3;
+    private GameObject chestObj = null;
+
     private void Start()
     {
+        chestObj = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Chest.prefab");
         SpawnChest();
     }
 
@@ -21,7 +25,15 @@ public class ChestRoom : RoomBase
 
     public void SpawnChest()
     {
-        // TODO : 랜덤한 확률로 상자 소환
+        for(int i = 0; i < spawnChestCount; ++i)
+        {
+            Vector3 chestPos = new Vector3(transform.position.x - 5 + (4.5f * i), transform.position.y);
+            GameObject spawnChest = Instantiate(chestObj, transform);
+            spawnChest.transform.position = chestPos;
+            Chest chest = spawnChest.GetComponent<Chest>();
+            // 임시
+            chest.SetChestRating(Define.ChestRating.Epic);
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

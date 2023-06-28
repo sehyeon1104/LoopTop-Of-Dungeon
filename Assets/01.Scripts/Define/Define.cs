@@ -41,7 +41,7 @@ public static class Define
     {
         ShopRoom,
         StatueRoom,
-        //ChestRoom,
+        ChestRoom,
         BrokenItemRoom,
         //BattleRoom,
         //SurvivalRoom,
