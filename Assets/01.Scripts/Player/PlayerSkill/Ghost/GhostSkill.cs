@@ -524,14 +524,21 @@ public class GhostSkill : PlayerSkillBase
 
         playerRigid.velocity = Vector3.zero;
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2, 1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
-        for (int i = 0; i < hit.Length; i++)
+        if (hit.Length > 0)
         {
-            eTransform = hit[i].transform.position;
-            Poolable clone = Managers.Pool.Pop(telpoHitEffect);
-            hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
-            if (!hit[i].transform.gameObject.activeSelf)
+            Time.timeScale = 0.2f;
+            yield return new WaitForSecondsRealtime(0.3f);
+            if(Time.timeScale == 0.2f)
+                Time.timeScale = 1f;
+            for (int i = 0; i < hit.Length; i++)
             {
-                passiveAction();
+                eTransform = hit[i].transform.position;
+                Poolable clone = Managers.Pool.Pop(telpoHitEffect);
+                hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
+                if (!hit[i].transform.gameObject.activeSelf)
+                {
+                    passiveAction();
+                }
             }
         }
         if (level == 5)
