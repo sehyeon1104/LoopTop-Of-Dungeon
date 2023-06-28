@@ -537,6 +537,7 @@ public class GhostSkill : PlayerSkillBase
                 hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
                 if (!hit[i].transform.gameObject.activeSelf)
                 {
+                    UIManager.Instance.currentFillAmount[UIManager.Instance.playerskill.skillIndex[0] == 4 ? 0 : 1] -= 3/playerBase.PlayerTransformData.skill[4].skillDelay;
                     passiveAction();
                 }
             }
