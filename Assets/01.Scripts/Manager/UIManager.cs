@@ -403,6 +403,7 @@ public class UIManager : MonoSingleton<UIManager>
             yield return null;
         }
     }
+
     public void ResetSkill()
     {
         if (GameManager.Instance.platForm == Define.PlatForm.PC)
