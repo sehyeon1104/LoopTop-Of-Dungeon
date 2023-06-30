@@ -368,12 +368,8 @@ public class UIManager : MonoSingleton<UIManager>
         else if (skillNum == 8)
             num = 3;
         else
-        {
-            if (skillNum == playerskill.skillIndex[0])
-                num = 0;
-            else
-                num=1;
-        }
+            num = skillNum == playerskill.skillIndex[0] ? 0 : 1;
+
         Image currentImage = null;
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
