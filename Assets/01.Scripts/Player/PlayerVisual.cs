@@ -73,7 +73,8 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
             yield return null;
         }
 
-        Time.timeScale = 1f;
+        if(Time.timeScale == 0.001f)
+            Time.timeScale = 1f;
         hitVolume.weight = 0;
         weakHitVolume.weight = 0;
         playerSprite.color = Color.white;

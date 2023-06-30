@@ -84,16 +84,18 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject blurPanel;
     public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
-    PlayerSkill playerskill;
+    public PlayerSkill playerskill;
     private int maxHpCount = 0;
 
     private WaitForEndOfFrame waitForEndOfFrame;
 
     public ShopUI shopUI { private set; get; } = null;
+    public float[] currentFillAmount;
 
     private void Awake()
     {
-        
+        currentFillAmount = new float[10];
+
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         playerskill = FindObjectOfType<PlayerSkill>();  
@@ -386,19 +388,22 @@ public class UIManager : MonoSingleton<UIManager>
                 return false;
         }
         if(!isCheck)
-        StartCoroutine(IESkillCooltime(currentImage, skillData.skill[skillNum].skillDelay));
+        StartCoroutine(IESkillCooltime(num, currentImage, skillData.skill[skillNum].skillDelay));
 
         return true;
     }
-    public IEnumerator IESkillCooltime(Image cooltimeImg, float skillCooltime)
+    public IEnumerator IESkillCooltime(int num, Image cooltimeImg, float skillCooltime)
     {
+        currentFillAmount[num] = 1f;
         cooltimeImg.fillAmount = 1f;
         while (cooltimeImg.fillAmount > 0)
         {
-            cooltimeImg.fillAmount -= Time.deltaTime / skillCooltime;
+            currentFillAmount[num] -= Time.deltaTime / skillCooltime;
+            cooltimeImg.fillAmount = currentFillAmount[num];
             yield return null;
         }
     }
+
     public void ResetSkill()
     {
         if (GameManager.Instance.platForm == Define.PlatForm.PC)

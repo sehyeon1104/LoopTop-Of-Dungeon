@@ -55,6 +55,7 @@ public class GhostSkill : PlayerSkillBase
     WaitForFixedUpdate telpWait = new WaitForFixedUpdate();
     WaitForSeconds waitClaw = new WaitForSeconds(0.025f);
     WaitForSeconds waitLastClaw = new WaitForSeconds(0.5f);
+    GameObject telpoHitEffect = null;
     [Header("솟아오르기 스킬")]
     float armDamage = 30f;
     private Vector3 joystickDir;
@@ -78,6 +79,7 @@ public class GhostSkill : PlayerSkillBase
         beamFiveMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Ghost/EyeEffectMat.mat");
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
+        telpoHitEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/TpHitEffect.prefab");
 
         passiveAction += () => OnDiePassive(eTransform);
     }
@@ -522,13 +524,22 @@ public class GhostSkill : PlayerSkillBase
 
         playerRigid.velocity = Vector3.zero;
         hit = Physics2D.BoxCastAll(playerPos, new Vector2(2, 1), 0, transform.position - playerPos, Vector2.Distance(transform.position, playerPos), 1 << enemyLayer);
-        for (int i = 0; i < hit.Length; i++)
+        if (hit.Length > 0)
         {
-            eTransform = hit[i].transform.position;
-            hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0);
-            if (!hit[i].transform.gameObject.activeSelf)
+            Time.timeScale = 0.2f;
+            yield return new WaitForSecondsRealtime(0.3f);
+            if(Time.timeScale == 0.2f)
+                Time.timeScale = 1f;
+            for (int i = 0; i < hit.Length; i++)
             {
-                passiveAction();
+                eTransform = hit[i].transform.position;
+                Poolable clone = Managers.Pool.Pop(telpoHitEffect);
+                hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
+                if (!hit[i].transform.gameObject.activeSelf)
+                {
+                    UIManager.Instance.currentFillAmount[UIManager.Instance.playerskill.skillIndex[0] == 4 ? 0 : 1] -= 3/playerBase.PlayerTransformData.skill[4].skillDelay;
+                    passiveAction();
+                }
             }
         }
         if (level == 5)

@@ -41,7 +41,7 @@ public static class Define
     {
         ShopRoom,
         StatueRoom,
-        //ChestRoom,
+        ChestRoom,
         BrokenItemRoom,
         //BattleRoom,
         //SurvivalRoom,
@@ -57,6 +57,7 @@ public static class Define
         Lizard,
 
     }
+
     public enum Scene
     {
         Unknown,
@@ -65,6 +66,7 @@ public static class Define
         StageScene,
         BossScene,
     }
+
     public enum Sound
     {
         Bgm,
@@ -90,6 +92,16 @@ public static class Define
         ETC,
         Special,
     }
+
+    public enum ChestRating
+    {
+        Default = 0,
+        Common,
+        Rare,
+        Epic,
+        Legendary,
+    }
+
     public enum PlatForm
     {
         PC,

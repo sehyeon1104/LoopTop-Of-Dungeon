@@ -73,7 +73,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         newObject.transform.SetParent(slotHolder);
         newObject.SetActive(true);
         slots.Add(newItemObjComponent);
-        ItemEffects.Items[item.itemNumber].Use();
+        ItemBase.Items[item.itemNumber].Use();
 
         UIManager.Instance.AddItemListUI(item);
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
@@ -102,9 +102,9 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             newObject.transform.SetParent(slotHolder);
             newObject.SetActive(true);
             slots.Add(newItemObjComponent);
-            if (ItemEffects.Items[inventoryItem.itemNumber].isPersitantItem)
+            if (ItemBase.Items[inventoryItem.itemNumber].isPersitantItem)
             {
-                ItemEffects.Items[inventoryItem.itemNumber].LastingEffect();
+                ItemBase.Items[inventoryItem.itemNumber].LastingEffect();
             }
 
             UIManager.Instance.AddItemListUI(items);

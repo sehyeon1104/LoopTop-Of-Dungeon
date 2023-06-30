@@ -29,7 +29,7 @@ public class G_Skeleton : EnemyDefault
 
     }
 
-    public override void OnDamage(float damage, float critChance)
+    public override void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
         base.OnDamage(damage ,critChance);
     }
