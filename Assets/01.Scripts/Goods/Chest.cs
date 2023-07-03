@@ -37,7 +37,6 @@ public class Chest : MonoBehaviour
         Poolable spawnEffect = Managers.Pool.Pop(chestSpawnEffect);
         spawnEffect.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f);
         spawnEffect.transform.localScale = new Vector3(2, 2, 2);
-        UpdateChest();
     }
 
     // 상자 등급 설정
@@ -62,8 +61,8 @@ public class Chest : MonoBehaviour
     private void SetReward()
     {
         // (경험의조각 획득량 * 상자 등급( 1 ~ 4 ) ) / 2
-        minFragmentAmount *= Mathf.RoundToInt((float)_chestRating * 0.5f);
-        maxFragmentAmount *= Mathf.RoundToInt((float)_chestRating * 0.5f);
+        minFragmentAmount *= (int)_chestRating;//Mathf.RoundToInt((float)_chestRating * 0.5f + 0.5f);
+        maxFragmentAmount *= (int)_chestRating;//Mathf.RoundToInt((float)_chestRating * 0.5f + 0.5f);
 
         // hp 회복 구슬 = 반올림(상자등급 / 2)
         hpRegenAmount = Mathf.RoundToInt((float)_chestRating * 0.5f);
@@ -91,6 +90,7 @@ public class Chest : MonoBehaviour
 
         FragmentCollectManager.Instance.DropFragmentByCircle(GameManager.Instance.Player.gameObject, Random.Range(minFragmentAmount, maxFragmentAmount), 10);
         // TODO : hp회복구슬 구현
+        // TODO : 아이템 드롭
 
         yield return null;
     }

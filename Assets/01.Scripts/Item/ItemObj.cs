@@ -85,6 +85,7 @@ public class ItemObj : MonoBehaviour
         itemNameTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{itemName}</color>";
         itemDesTMP.SetText(item.itemDescription);
         priceTMP.SetText(string.Format("{0}", item.price));
+        Num = item.itemNumber;
     }
 
     private IEnumerator MoveUpDown()

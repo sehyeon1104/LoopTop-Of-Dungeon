@@ -24,6 +24,7 @@ public class PlayerBase
         PlayerSkillNum = new int[] { 1, 2 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
+        _fragmentAddAcq = 1f;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
@@ -193,6 +194,16 @@ public class PlayerBase
             }
             // TODO : UI에 현재 남은 보스조각 개수 표기
 
+        }
+    }
+
+    private float _fragmentAddAcq;
+    public float FragmentAddAcq
+    {
+        get { return _fragmentAddAcq; }
+        set
+        {
+            _fragmentAddAcq = value;
         }
     }
 
