@@ -98,7 +98,6 @@ public class Chest : MonoBehaviour
 
         // TODO : hp회복구슬 구현
 
-        // TODO : 아이템 드롭
         SpawnItem();
 
         StartCoroutine(IEDestroyChest());
