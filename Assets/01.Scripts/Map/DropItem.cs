@@ -18,22 +18,23 @@ public class DropItem : MonoBehaviour
     private HashSet<int> itemSelectNum = new HashSet<int>();
     // 상점에 나온 아이템
     private List<ItemObj> itemObjList = null;
-    private List<int> itemObjListNum = null;
+    private List<int> itemObjListNum = new List<int>();
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
-
     }
+
     private void Start()
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
-        itemObjList = FindObjectOfType<ShopRoom>().itemList;
-        for(int i = 0; i < itemObjList.Count; ++i)
+        for (int i = 0; i < itemObjList.Count; ++i)
         {
             itemObjListNum.Add(itemObjList[i].Num);
         }
+
+        SetItem(Define.ChestRating.Common);
     }
 
     private void Init()
@@ -43,6 +44,7 @@ public class DropItem : MonoBehaviour
         itemSelectNum.Clear();
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
+        itemObjList = FindObjectOfType<ShopRoom>().itemList;
     }
 
     public void SetItem(Define.ChestRating chestRate)
@@ -52,6 +54,7 @@ public class DropItem : MonoBehaviour
             Debug.LogError("아이템 부족. 빨리 기획 더 해.");
             return;
         }
+
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {

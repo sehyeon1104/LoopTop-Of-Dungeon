@@ -22,7 +22,7 @@ public class EliteRoom : RoomBase
     {
         Debug.Log("아이콘 생성");
         portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
-        portalMapIcon.transform.position = new Vector3(transform.position.x - 3f, transform.position.y + 1.5f);
+        portalMapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);
         portalMapIcon.SetActive(false);
     }
 

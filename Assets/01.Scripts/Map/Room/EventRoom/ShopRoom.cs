@@ -10,6 +10,7 @@ public class ShopRoom : RoomBase
     [SerializeField]
     private Transform[] itemSpawnPosArr;
     private Button InteractionBtn;
+    [field:SerializeField]
     public List<ItemObj> itemList { get; private set; } = new List<ItemObj>();
     private float playerSensingDis = 1.5f;
     public ItemObj[] itemobjArr { get; private set; }
