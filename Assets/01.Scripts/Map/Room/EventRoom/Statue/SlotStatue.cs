@@ -59,12 +59,13 @@ public class SlotStatue : StatueBase
         randSlot = Random.Range(0, 1);
 
         Debug.Log($"스킬 레벨 변동 : {GameManager.Instance.Player.playerBase.SlotLevel[randSlot]} -> {randLevel}");
-        GameManager.Instance.Player.playerBase.SlotLevel[randSlot] = randLevel;
-        PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
-
         // TODO : 스킬 레벨업 알림
         playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
         effectTmp.SetText($"스킬 : {playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[randSlot]].skillName}\n레벨 변동 : {GameManager.Instance.Player.playerBase.SlotLevel[randSlot]} -> {randLevel}");
+
+        GameManager.Instance.Player.playerBase.SlotLevel[randSlot] = randLevel;
+        PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
+
         StartCoroutine(IETextAnim());
     }
 }

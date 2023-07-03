@@ -26,8 +26,7 @@ public class EventRoom : MonoBehaviour
                 gameObject.AddComponent<ChestRoom>();
                 break;
             case EventRoomTypeFlag.BrokenItemRoom:
-                gameObject.AddComponent<ChestRoom>();
-                //gameObject.AddComponent<BrokenItemRoom>();
+                gameObject.AddComponent<BrokenItemRoom>();
                 break;
             //case EventRoomTypeFlag.BattleRoom:
                 //gameObject.AddComponent<BattleRoom>();
