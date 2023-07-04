@@ -22,7 +22,7 @@ public class DropItem : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         Init();
     }
 
@@ -89,6 +89,7 @@ public class DropItem : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            interactionButton.onClick.RemoveListener(TakeItem);
             interactionButton.onClick.AddListener(TakeItem);
             UIManager.Instance.RotateInteractionButton();
         }
