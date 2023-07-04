@@ -69,7 +69,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         {
             Skill2();
         }
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKey(KeyCode.J))
         {
             if (!PlayerMovement.Instance.IsControl)
                 return;
