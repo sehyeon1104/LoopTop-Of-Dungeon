@@ -16,15 +16,20 @@ public class PowerSkill : PlayerSkillBase
     float chopSize = 1;
     float meteorDmg = 10;
     float rushAttackDmg = 13;
-    float rushDmg = 1;
+    float rushDmg = 3;
     float rockFallDuration = 2f;
     float rushVelocity = 15f;
     int rushMax = 5;
     int rushMin = 1;
-    float rushSize = 1;
     float rushDuration = 1f;
-    bool isColumn;
+    float rushSize = 1;
     float rushWait = 0.2f;
+    float jumpHeight = 5f;
+    float jumpWidth = 10f;
+    float jumpSpeed = 2f;
+    float jumpAttackRange = 2f;
+    float jumpAttackDmg = 20f;
+    bool isColumn; 
     float ColumnDuration = 5f;
     WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
@@ -86,7 +91,7 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void ThirdSkill(int level)
     {
-
+        StartCoroutine(Jumpdown());
     }
 
     protected override void ForuthSkill(int level)
@@ -280,6 +285,7 @@ public class PowerSkill : PlayerSkillBase
         Dictionary<Poolable,float> tonados = new Dictionary<Poolable,float>();  
         Collider2D[] playerCollider;
         float timer = 0;
+        float checkTime = 0;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
         player.IsInvincibility = true;
@@ -293,11 +299,10 @@ public class PowerSkill : PlayerSkillBase
         Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 1.prefab", transform);
         rushEffect.transform.localScale *= 2;
         rushEffect.transform.rotation = rotationValue;
-        playerRigid.velocity = playerMovement.Direction * rushVelocity;
 
         while (num <= 3)
         {
-
+            playerRigid.velocity = playerMovement.Direction * rushVelocity;
             if (timer >= 0.5f)
             {
                 tonados.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RuehFiveEffect.prefab", transform.position, Quaternion.identity),5);
@@ -307,13 +312,16 @@ public class PowerSkill : PlayerSkillBase
                 StartCoroutine(FireTotenedo(keyValue.Key, keyValue.Value));
                 tonados.Remove(keyValue.Key);
                 timer = 0;
+                checkTime = 0;
                 num++;
             }
-
-            playerCollider = Physics2D.OverlapBoxAll(transform.position, Vector2.one * 4, 0, 1 << enemyLayer);
+            if(checkTime<timer)
+            {
+                playerCollider = Physics2D.OverlapBoxAll(transform.position, Vector2.one * 4, 0, 1 << enemyLayer);
                 for (int i = 0; i < playerCollider.Length; i++)
                     playerCollider[i].GetComponent<IHittable>().OnDamage(rushDmg);
-           
+                checkTime += fireCheckDuration;
+            }
             timer += Time.fixedDeltaTime;
             yield return fixedWait;
         }
@@ -338,7 +346,7 @@ public class PowerSkill : PlayerSkillBase
         {
             if(checkTime < timer)
             {   
-                radius += fireCheckDuration / fireDuration * 2;
+                radius += fireCheckDuration / fireDuration  * 2;
                 attachObjs = Physics2D.OverlapCircleAll(tonados.transform.position, radius , 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                         attachObjs[j].GetComponent<IHittable>().OnDamage(rushAttackDmg);
@@ -355,9 +363,39 @@ public class PowerSkill : PlayerSkillBase
             rushSize *= 1.5f;
 
     }
-
-    IEnumerator Jump()
+        
+    IEnumerator Jumpdown()
     {
+        Collider2D[] enemies;
+        Vector2[] dots = new Vector2[4];
+        Vector2 currentPos = transform.position;
+        float lerpValue = 0;
+        //µÚÀÏ¶© + ¾Õ¿¤¶© -
+        Vector2 playerDirection = new Vector2(playerMovement.Direction.y,Mathf.Abs(playerMovement.Direction.x));
+        if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
+            playerDirection = new Vector2(playerMovement.Direction.y * -1, Mathf.Abs(playerMovement.Direction.x));
+        dots[0] = currentPos;
+        dots[1] = currentPos + playerDirection * jumpHeight;    
+        dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
+        dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
+        playerMovement.IsMove = false;
+        playerMovement.IsControl = false;
+        while(lerpValue < 1)
+        {
+            Vector2 FSegment = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
+                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
+            playerRigid.MovePosition(FSegment);
+            lerpValue += Time.fixedDeltaTime * jumpSpeed;
+            yield return fixedWait;
+        }
+        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
+        for(int i =0; i<enemies.Length; i++) {
+            enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
+        }
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position,Quaternion.identity);
+        CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
+        playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         yield return null;
     }
     IEnumerator Column()
@@ -370,6 +408,6 @@ public class PowerSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 5);
+        Gizmos.DrawWireSphere(transform.position, 2);
     }
 }
