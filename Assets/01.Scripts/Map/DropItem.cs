@@ -8,25 +8,33 @@ public class DropItem : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
+    // 현재 지닌 아이템 리스트
     private List<Item> tempItemList = new List<Item>();
     private Item item = null;
-    private bool isItemSetting = false;
-    private bool isDuplication = false;
+    //private bool isItemSetting = false;
+    //private bool isDuplication = false;
     Button interactionButton;
 
     private HashSet<int> itemSelectNum = new HashSet<int>();
+    // 상점에 나온 아이템
+    private List<ItemObj> itemObjList = null;
+    private List<int> itemObjListNum = new List<int>();
 
-    private List<int> itemObjList = null;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Init();
-        //for (int i = 0; i < StageManager.Instance.shop.itemobjArr.Length; ++i)
-        //    itemObjList.Add(StageManager.Instance.shop.itemobjArr[i].Num);
     }
+
     private void Start()
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
+        for (int i = 0; i < itemObjList.Count; ++i)
+        {
+            itemObjListNum.Add(itemObjList[i].Num);
+        }
+
+        SetItem(Define.ChestRating.Common);
     }
 
     private void Init()
@@ -36,14 +44,21 @@ public class DropItem : MonoBehaviour
         itemSelectNum.Clear();
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
+        itemObjList = FindObjectOfType<ShopRoom>().itemList;
+    }
 
-        if(tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
+    public void SetItem(Define.ChestRating chestRate)
+    {
+        if (tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
         {
+            Debug.LogError("아이템 부족. 빨리 기획 더 해.");
             return;
         }
 
+
         for (int i = 0; i < tempItemList.Count; ++i)
         {
+            // 현재 지닌 아이템 리스트 복사
             itemSelectNum.Add(tempItemList[i].itemNumber);
         }
 
@@ -54,9 +69,11 @@ public class DropItem : MonoBehaviour
 
         while (item == null)
         {
-            rand = Random.Range(1, GameManager.Instance.allItemList.Count);
+            // 저주아이템을 제외한 모든 아이템 rand
+            rand = Random.Range(1, GameManager.Instance.allItemList.Count - GameManager.Instance.brokenItemCount);
 
-            if (itemSelectNum.Contains(rand) /*|| itemObjList.Contains(rand)*/)
+            // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
+            if (itemSelectNum.Contains(rand) || itemObjListNum.Contains(rand))
                 continue;
 
             itemSelectNum.Add(rand);
