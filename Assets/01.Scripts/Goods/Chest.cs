@@ -15,6 +15,11 @@ public class Chest : MonoBehaviour
     private GameObject chestSpawnEffect = null;
 
     private bool isOpen = false;
+    public bool IsOpen
+    {
+        get => isOpen;
+        set => isOpen = value;
+    }
 
     [SerializeField]
     private Sprite[] chestSprite;
