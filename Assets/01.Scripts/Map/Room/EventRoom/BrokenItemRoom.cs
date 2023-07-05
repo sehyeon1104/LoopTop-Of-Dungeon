@@ -34,6 +34,9 @@ public class BrokenItemRoom : RoomBase
         if (coroutine != null)
             StopCoroutine(coroutine);
 
+        if (isTakeItem)
+            return;
+
         UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
         UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
 

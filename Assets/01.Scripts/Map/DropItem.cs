@@ -20,6 +20,15 @@ public class DropItem : MonoBehaviour
     private List<ItemObj> itemObjList = null;
     private List<int> itemObjListNum = new List<int>();
 
+    private Vector3 pos;
+    private Vector3 movePos;
+    [SerializeField]
+    private float delta = 0.05f;
+    [SerializeField]
+    private float speed = 1f;
+
+    private WaitForEndOfFrame waitForEndOfFrame;
+
     private void Awake()
     {
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -84,6 +93,17 @@ public class DropItem : MonoBehaviour
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
     }
 
+    private IEnumerator MoveUpDown()
+    {
+        while (true)
+        {
+            movePos = pos;
+            movePos.y += delta * Mathf.Sin(Time.time * speed);
+            transform.position = movePos;
+
+            yield return waitForEndOfFrame;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
