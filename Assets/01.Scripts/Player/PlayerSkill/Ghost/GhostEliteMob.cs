@@ -142,6 +142,7 @@ public class GhostEliteMob : GhostMobAI
         anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
+        anim.SetTrigger(_attack);
         yield return new WaitForSeconds(1f);
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerWave.prefab", transform.position, Quaternion.identity);
     }
