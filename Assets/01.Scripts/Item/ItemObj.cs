@@ -52,7 +52,6 @@ public class ItemObj : MonoBehaviour
 
     private void Start()
     {
-
         Init();
 
         StartCoroutine(MoveUpDown());

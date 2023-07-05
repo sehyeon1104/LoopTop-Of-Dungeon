@@ -20,12 +20,13 @@ public class DropItem : MonoBehaviour
     private List<ItemObj> itemObjList = null;
     private List<int> itemObjListNum = new List<int>();
 
-    private Vector3 pos;
     private Vector3 movePos;
     [SerializeField]
     private float delta = 0.05f;
     [SerializeField]
     private float speed = 1f;
+
+    private Poolable poolable = null;
 
     private WaitForEndOfFrame waitForEndOfFrame;
 
@@ -54,6 +55,7 @@ public class DropItem : MonoBehaviour
         tempItemList.Clear();
         tempItemList = GameManager.Instance.GetItemList();
         itemObjList = FindObjectOfType<ShopRoom>().itemList;
+        poolable = GetComponent<Poolable>();
     }
 
     public void SetItem(Define.ChestRating chestRate)
@@ -97,7 +99,7 @@ public class DropItem : MonoBehaviour
     {
         while (true)
         {
-            movePos = pos;
+            movePos = transform.position;
             movePos.y += delta * Mathf.Sin(Time.time * speed);
             transform.position = movePos;
 
@@ -134,9 +136,17 @@ public class DropItem : MonoBehaviour
             return;
         }
 
-        InventoryUI.Instance.AddItemSlot(item);
+        if (!ItemBase.Items[item.itemNumber].isOneOff)
+        {
+            InventoryUI.Instance.AddItemSlot(item);
+        }
+        else
+        {
+            ItemBase.Items[item.itemNumber].Use();
+        }
+
         UIManager.Instance.RotateAttackButton();
         interactionButton.onClick.RemoveListener(TakeItem);
-        Managers.Pool.Push(this.GetComponent<Poolable>());
+        Managers.Pool.Push(poolable);
     }
 }

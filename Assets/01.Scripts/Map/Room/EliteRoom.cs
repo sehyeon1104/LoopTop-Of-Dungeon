@@ -65,5 +65,6 @@ public class EliteRoom : RoomBase
     public void AssignMoveNextMapPortal()
     {
         Instantiate(MoveNextMapPortal, transform.position, Quaternion.identity);
+        StageManager.Instance.InstantiateChest(transform.position + Vector3.down * 3.5f, Define.ChestRating.Epic);
     }
 }
