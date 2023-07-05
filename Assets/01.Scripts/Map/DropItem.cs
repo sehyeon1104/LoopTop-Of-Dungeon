@@ -53,7 +53,6 @@ public class DropItem : MonoBehaviour
         spriteRenderer.sprite = null;
         itemSelectNum.Clear();
         tempItemList.Clear();
-        tempItemList = GameManager.Instance.GetItemList();
         itemObjList = FindObjectOfType<ShopRoom>().itemList;
         poolable = GetComponent<Poolable>();
     }
@@ -66,6 +65,8 @@ public class DropItem : MonoBehaviour
             return;
         }
 
+        // 현재 지닌 아이템 리스트
+        tempItemList = GameManager.Instance.GetItemList();
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {

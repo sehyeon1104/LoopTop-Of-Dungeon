@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+// 코드 최적화 필요. 너무 길다
 public class BrokenItemRoom : RoomBase
 {
     [Tooltip("복제할 오리지널 오브젝트")]
@@ -16,9 +17,19 @@ public class BrokenItemRoom : RoomBase
 
     private bool isTakeItem = false;
 
+    private GameObject minimapIcon = null;
+
     private Coroutine coroutine = null;
 
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        minimapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/BrokenItemRoomIcon.prefab", transform);
+        minimapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);
+        minimapIcon.SetActive(false);
+    }
 
     private void Start()
     {
@@ -56,6 +67,12 @@ public class BrokenItemRoom : RoomBase
 
     protected override void IsClear()
     {
+    }
+
+    protected override void ShowIcon()
+    {
+        Debug.Log("ShowIcon");
+        minimapIcon.SetActive(true);
     }
 
     public void InitItemPos()
