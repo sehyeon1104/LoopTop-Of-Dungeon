@@ -151,9 +151,14 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    public void InstantiateDropItem(Vector3 pos)
+    public void InstantiateChest(Vector3 pos, Define.ChestRating chestRating)
     {
         // TODO : 雌切 社発
+        Debug.Log("雌切 社発");
+        GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
+        chestObj.transform.position = pos;
+        Chest chest = chestObj.GetComponent<Chest>();
+        chest.SetChestRating(chestRating);
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)
