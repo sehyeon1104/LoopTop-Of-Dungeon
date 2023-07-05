@@ -66,7 +66,7 @@ public abstract class RoomBase : MonoBehaviour
         }
         else
         {
-            Rito.Debug.Log("minimapIconSpriteRenderer is already active!");
+            //Rito.Debug.Log("minimapIconSpriteRenderer is already active!");
         }
     }
 

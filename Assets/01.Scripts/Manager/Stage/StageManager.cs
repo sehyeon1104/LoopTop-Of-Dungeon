@@ -228,7 +228,7 @@ public class StageManager : MonoSingleton<StageManager>
                 }
                 else
                 {
-                    Debug.Log("already wayIcon is active!");
+                    // Debug.Log("already wayIcon is active!");
                 }
             }
         }

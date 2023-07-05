@@ -70,6 +70,7 @@ public class DropItem : MonoBehaviour
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {
+            Debug.Log(tempItemList[i].itemName);
             // 현재 지닌 아이템 리스트 복사
             itemSelectNum.Add(tempItemList[i].itemNumber);
         }
@@ -129,8 +130,6 @@ public class DropItem : MonoBehaviour
     // 아이템 획득 함수
     public void TakeItem()
     {
-        // TODO : 획득 시 이펙트 출력
-
         if (GameManager.Instance.GetItemList().Contains(item))
         {
             Debug.Log("이미 가지고있는 아이템");
