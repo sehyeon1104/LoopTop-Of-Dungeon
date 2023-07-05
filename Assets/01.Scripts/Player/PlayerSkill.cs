@@ -58,7 +58,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     private void Update()
     {
-        if (playerBase.IsPDead)
+        if (playerBase.IsPDead && !PlayerMovement.Instance.IsControl)
             return;
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -71,13 +71,13 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         }
         if (Input.GetKey(KeyCode.J))
         {
-            if (!PlayerMovement.Instance.IsControl)
-                return;
-
-            if (interaction.gameObject.activeSelf)
-                interaction.onClick.Invoke();
-            else   
-                Attack();
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                if (interaction.gameObject.activeSelf)
+                    interaction.onClick.Invoke();
+            } 
+            else
+              Attack();
         }
         if (Input.GetKeyDown(KeyCode.K))
             DashSkill();
