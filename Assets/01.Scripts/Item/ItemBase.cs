@@ -72,5 +72,6 @@ public abstract partial class ItemBase : MonoBehaviour
         new CloudyGlasses(),
         new TurtleHat(),
         new CursedRing(),
+        new RollingHourglass(),
     };
 }

@@ -216,6 +216,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
+        playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
     }
 
@@ -245,6 +246,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
+        Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
     }
 

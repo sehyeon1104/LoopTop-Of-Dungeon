@@ -17,5 +17,6 @@ public class PlayerData
     public int[] playerSkillNum;
     public int _fragmentAmount;
     public int bossFragmentAmount;
+    public float fragmentAddAcq;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
 }

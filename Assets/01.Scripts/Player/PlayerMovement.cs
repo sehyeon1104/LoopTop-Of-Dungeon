@@ -9,12 +9,8 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     public bool IsMove
     {
         get => isMove;
-        set
-        {
-            if (value == false)
-                rb.velocity = Vector2.zero;
-            isMove = value;
-        }
+        set => isMove = value;
+
     }
     public Joystick joystick { private set; get; }
     public bool IsControl { get; set; } = true;
@@ -35,7 +31,7 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     public void Move(Vector2 inputVelocity)
     {
-        if(!IsMove || GameManager.Instance.Player.playerBase.IsPDead)
+        if(GameManager.Instance.Player.playerBase.IsPDead)
         {
             rb.velocity = Vector3.zero;
             return;

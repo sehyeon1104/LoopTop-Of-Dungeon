@@ -111,7 +111,6 @@ public class BrokenItemRoom : RoomBase
 
             itemSelectNum.Add(rand);
 
-            Debug.Log(rand);
             // 아이템 오브젝트 생성
             Item shopItem = GameManager.Instance.allItemList[rand];
 

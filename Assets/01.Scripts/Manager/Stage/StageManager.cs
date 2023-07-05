@@ -153,9 +153,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateDropItem(Vector3 pos)
     {
-        // TODO : 상자를 통해 아이템 드랍
-
-        Managers.Pool.Pop(dropItemPrefab, pos);
+        // TODO : 상자 소환
     }
 
     public void ShowLinkedMapInMinimap(Vector3 pos)

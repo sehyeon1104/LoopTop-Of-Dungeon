@@ -20,8 +20,6 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
     // 현재 보유량
     private float current;
 
-    private int prevQueueFront = 0;
-
     private Coroutine coroutine = null;
 
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -47,7 +45,7 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj.transform.position = obj.transform.position;
         }
 
-        fragmentAmountQueue.Enqueue(amount);
+        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq));
     }
 
     public void DropFragmentByCircle(GameObject obj, int amount, int count = 3)
@@ -58,13 +56,11 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj.transform.position = (Random.insideUnitCircle * 0.75f) + (Vector2)obj.transform.position;
         }
 
-        fragmentAmountQueue.Enqueue(amount);
+        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq));
     }
 
     public void IncreaseGoods()
     {
-        Debug.Log(coroutine);
-
         if (coroutine == null)
         {
             coroutine = StartCoroutine(IEIncreaseGoods());
