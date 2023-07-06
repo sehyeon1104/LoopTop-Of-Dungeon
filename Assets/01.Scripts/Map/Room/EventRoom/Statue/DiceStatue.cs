@@ -131,7 +131,7 @@ public class DiceStatue : StatueBase
     {
         Debug.Log("재화 감소");
         dice2 = 100 + (dice2 * 10);
-        FragmentCollectManager.Instance.DropFragmentByCircle(GameManager.Instance.Player.gameObject, dice2, 10);
+        FragmentCollectManager.Instance.DropFragmentByCircle(GameManager.Instance.Player.gameObject, -dice2, 10);
     }
 
     private void SetDiceEffectTmp(int diceScale1, int diceScale2)
