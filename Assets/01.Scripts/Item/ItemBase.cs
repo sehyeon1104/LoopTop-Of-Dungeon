@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class ItemBase : MonoBehaviour
+public abstract class ItemBase : MonoBehaviour
 {
     public abstract Define.ItemType itemType { get; }
     public abstract Define.ItemRating itemRating { get; }

@@ -324,6 +324,7 @@ MonoBehaviour:
     itemDescription: "\uACF5\uACA9\uB825 60% \uC99D\uAC00, \uBC1B\uB294 \uB370\uBBF8\uC9C0
       2\uBC30 \uC99D\uAC00"
     price: 500
+  <brokenItemCount>k__BackingField: 0
 --- !u!1001 &503330704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,6 +332,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 665027824963862186, guid: c3c88a6fbad25954a874e841fe9f387e, type: 3}
+      propertyPath: m_text
+      value: LoopTop Of Dungeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 665027824963862186, guid: c3c88a6fbad25954a874e841fe9f387e, type: 3}
+      propertyPath: m_fontSize
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 665027824963862186, guid: c3c88a6fbad25954a874e841fe9f387e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 665027826622400819, guid: c3c88a6fbad25954a874e841fe9f387e, type: 3}
       propertyPath: m_Pivot.x
       value: 0

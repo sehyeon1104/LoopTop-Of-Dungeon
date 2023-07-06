@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
 
     // HP 관련 아이템 효과
     [field: SerializeField]
-    public UnityEvent HPRelatedItemEffects;
+    public UnityEvent HPRelatedItemEffects = null;
     // 공격 관련 아이템 효과
     [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }

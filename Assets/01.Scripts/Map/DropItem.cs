@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DropItem : MonoBehaviour
+public class DropItem : MonoBehaviour, IPoolable
 {
 
     [SerializeField]
@@ -47,14 +47,28 @@ public class DropItem : MonoBehaviour
         SetItem(Define.ChestRating.Common);
     }
 
+    private void OnEnable()
+    {
+        Init();
+    }
+
     private void Init()
     {
         item = null;
         spriteRenderer.sprite = null;
         itemSelectNum.Clear();
         tempItemList.Clear();
-        itemObjList = FindObjectOfType<ShopRoom>().itemList;
+        itemObjList = StageManager.Instance.shop.itemList;
         poolable = GetComponent<Poolable>();
+    }
+
+    public void PoolInit()
+    {
+        item = null;
+        spriteRenderer.sprite = null;
+        itemSelectNum.Clear();
+        tempItemList.Clear();
+        itemObjList = StageManager.Instance.shop.itemList;
     }
 
     public void SetItem(Define.ChestRating chestRate)
@@ -70,7 +84,8 @@ public class DropItem : MonoBehaviour
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {
-            Debug.Log(tempItemList[i].itemName);
+            Debug.Log("ItemName : " + tempItemList[i].itemName);
+            Debug.Log("ItemName : " + tempItemList[i].itemNumber);
             // 현재 지닌 아이템 리스트 복사
             itemSelectNum.Add(tempItemList[i].itemNumber);
         }
