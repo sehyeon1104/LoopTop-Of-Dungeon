@@ -45,8 +45,8 @@ public class Player : MonoBehaviour, IHittable
     }
     private void Start()
     {
-        //if (HPRelatedItemEffects == null)
-        //    HPRelatedItemEffects = new Action();
+        HPRelatedItemEffects.RemoveListener(Test);
+        HPRelatedItemEffects.AddListener(Test);
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
@@ -69,6 +69,11 @@ public class Player : MonoBehaviour, IHittable
     {
         get => damageMultiples;
         set => damageMultiples = value;
+    }
+
+    public void Test()
+    {
+        Debug.Log("Test1");
     }
 
     public void OnDamage(float damage, float critChance, Poolable hitEffect = null)
@@ -94,7 +99,7 @@ public class Player : MonoBehaviour, IHittable
             CinemachineCameraShaking.Instance.CameraShake(5, 0.2f);
         }
 
-        HPRelatedItemEffects?.Invoke();
+        // HPRelatedItemEffects?.Invoke();
     }
     
     public void Dead()

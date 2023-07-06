@@ -36,6 +36,7 @@ public class BerserkerSword : ItemBase
 
     public override void LastingEffect()
     {
+        Debug.Log("아이템 효과 Listener 추가");
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
     }

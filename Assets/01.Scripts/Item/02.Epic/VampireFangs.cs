@@ -40,8 +40,10 @@ public class VampireFangs : ItemBase
     public void VampireFangsEffect()
     {
         // 적 공격시 1% 확률로 hp 1 회복
+        Debug.Log("doing VampireFangsEffect");
         if(Random.Range(0, 100) < probabilityChance)
         {
+            Debug.Log("뱀파이어 효과 터짐");
             GameManager.Instance.Player.playerBase.Hp += 1;
         }
 

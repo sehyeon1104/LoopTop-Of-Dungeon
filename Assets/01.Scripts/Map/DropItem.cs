@@ -89,6 +89,8 @@ public class DropItem : MonoBehaviour
             if (itemSelectNum.Contains(rand) || itemObjListNum.Contains(rand))
                 continue;
 
+            Debug.Log("rand : " + rand);
+
             itemSelectNum.Add(rand);
 
             item = GameManager.Instance.allItemList[rand];
