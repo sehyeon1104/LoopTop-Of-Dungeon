@@ -94,6 +94,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public ShopUI shopUI { private set; get; } = null;
     public float[] currentFillAmount;
+    private float nowTimeScale;
 
     private void Awake()
     {
@@ -228,16 +229,19 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void TogglePausePanel()
     {
+
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
         if (pausePanel.activeSelf)
         {
-       for(int i = 0; i<ults.Length; i++)
+            nowTimeScale = Time.timeScale;
+
+            for(int i = 0; i < ults.Length; i++)
             {
                 ults[i].timeUpdateMode = DirectorUpdateMode.GameTime;
             }
             currentSpeed = clawEffect[0].playRate;
-           for (int i=0; i <clawEffect.Length; i++)
+            for (int i=0; i <clawEffect.Length; i++)
             {
                 clawEffect[i].playRate = 0;
             }
@@ -248,6 +252,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
+
             for (int i = 0; i < ults.Length; i++)
             {
                 ults[i].timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
@@ -257,7 +262,7 @@ public class UIManager : MonoSingleton<UIManager>
                 clawEffect[i].playRate = currentSpeed;
             }
 
-            Time.timeScale = 1f;
+            Time.timeScale = nowTimeScale;
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             MouseManager.Lock(true);
             MouseManager.Show(false);
