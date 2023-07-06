@@ -21,6 +21,9 @@ public class UIManager : MonoSingleton<UIManager>
     float currentSpeed;
     public GameObject playerUI;
     public GameObject playerPCUI;
+    public GameObject playerPPUI;
+
+    public GameObject ultFade;
     [Header("LeftUp")]
     [SerializeField]
     private GameObject hpPrefab;
@@ -91,6 +94,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public ShopUI shopUI { private set; get; } = null;
     public float[] currentFillAmount;
+    private float nowTimeScale;
 
     private void Awake()
     {
@@ -129,19 +133,24 @@ public class UIManager : MonoSingleton<UIManager>
         else
         {
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
-            hpSpace = playerPCUI.transform.Find("LeftDown/PlayerHP").gameObject;
-            playerItemListUI = playerPCUI.transform.Find("LeftDown/PlayerItemList");
-            fragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            bossFragmentAmountTMP = playerPCUI.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
-            pcSkillIcons[0] = playerPCUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[1] = playerPCUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[2] = playerPCUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[3] = playerPCUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[4] = playerPCUI.transform.Find("RightDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            gameOverPanel = playerPCUI.transform.Find("All/GameOverPanel").gameObject;
-            blurPanel = playerPCUI.transform.Find("All/BlurPanel").gameObject;
-            reviveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
-            leaveButton = playerPCUI.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
+            playerPPUI = GameObject.Find("PPPlayerUI").gameObject;
+            ultFade = playerPCUI.transform.Find("UltFade").gameObject;
+            hpSpace = ultFade.transform.Find("LeftDown/PlayerHP").gameObject;
+            playerItemListUI = ultFade.transform.Find("LeftDown/PlayerItemList");
+
+            fragmentAmountTMP = ultFade.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+            bossFragmentAmountTMP = ultFade.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
+
+            pcSkillIcons[0] = playerPPUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[1] = playerPPUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[2] = playerPPUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[3] = playerPPUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[4] = playerPPUI.transform.Find("RightDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
+
+            gameOverPanel = ultFade.transform.Find("All/GameOverPanel").gameObject;
+            blurPanel = ultFade.transform.Find("All/BlurPanel").gameObject;
+            reviveButton = ultFade.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
+            leaveButton = ultFade.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
@@ -150,7 +159,7 @@ public class UIManager : MonoSingleton<UIManager>
             obtainItemInfo = playerPCUI.transform.Find("Middle/ObtainItemInfo").gameObject;
             obtainItemInfoImg = obtainItemInfo.transform.Find("ItemImg").GetComponent<Image>();
             obtainItemInfoTMP = obtainItemInfo.transform.Find("ItemNameTMP").GetComponent<TextMeshProUGUI>();
-            minimap = playerPCUI.transform.Find("Minimap");
+            minimap = ultFade.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
         }
@@ -220,16 +229,19 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void TogglePausePanel()
     {
+
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
         if (pausePanel.activeSelf)
         {
-       for(int i = 0; i<ults.Length; i++)
+            nowTimeScale = Time.timeScale;
+
+            for(int i = 0; i < ults.Length; i++)
             {
                 ults[i].timeUpdateMode = DirectorUpdateMode.GameTime;
             }
             currentSpeed = clawEffect[0].playRate;
-           for (int i=0; i <clawEffect.Length; i++)
+            for (int i=0; i <clawEffect.Length; i++)
             {
                 clawEffect[i].playRate = 0;
             }
@@ -240,6 +252,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
+
             for (int i = 0; i < ults.Length; i++)
             {
                 ults[i].timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
@@ -249,7 +262,7 @@ public class UIManager : MonoSingleton<UIManager>
                 clawEffect[i].playRate = currentSpeed;
             }
 
-            Time.timeScale = 1f;
+            Time.timeScale = nowTimeScale;
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             MouseManager.Lock(true);
             MouseManager.Show(false);
@@ -382,7 +395,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            currentImage = playerPCUI.transform.Find("RightDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
+            currentImage = playerPPUI.transform.Find("RightDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
 
             if (currentImage.fillAmount > 0)
                 return false;

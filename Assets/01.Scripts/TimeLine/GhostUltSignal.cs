@@ -20,6 +20,8 @@ public class GhostUltSignal : MonoBehaviour
 
     Player playerScript;
     PlayableDirector PD;
+    CanvasGroup playerPCUI;
+    CanvasGroup playerPPUI;
 
     List<string> animArray;
     
@@ -38,6 +40,8 @@ public class GhostUltSignal : MonoBehaviour
     {
         enemyLayer = LayerMask.NameToLayer("Enemy");
         player = GameObject.FindGameObjectWithTag("Player");
+        playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
+        playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
         playerScript = player.GetComponent<Player>();
         //  UltSkillAnim(); 
     }
@@ -61,6 +65,8 @@ public class GhostUltSignal : MonoBehaviour
         {
             attachEnemises[i].GetComponent<IHittable>().OnDamage(50, 0);
         }
+        playerPCUI.alpha = 1;
+        playerPPUI.alpha = 1;
         PlayerMovement.Instance.IsMove = true;
         PlayerMovement.Instance.IsControl = true;
         Time.timeScale = 1;
@@ -94,7 +100,6 @@ public class GhostUltSignal : MonoBehaviour
         alpha = 0f;
         Color color = panel1.color;
 
-       
         while(alpha <= 1.1f)
         {
             color.a = alpha;
@@ -110,7 +115,6 @@ public class GhostUltSignal : MonoBehaviour
                 alpha += 0.01f;
             }
 
-
         }
 
     }
@@ -120,6 +124,8 @@ public class GhostUltSignal : MonoBehaviour
         PD = GetComponent<PlayableDirector>();
         PD.Play();
         Time.timeScale = 0f;
+        playerPCUI.alpha = 0f;
+        playerPPUI.alpha = 0f;
         PlayerMovement.Instance.IsControl = false;
         PlayerMovement.Instance.IsMove = false;
     }
