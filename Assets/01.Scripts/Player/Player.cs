@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
 
     // HP 관련 아이템 효과
     [field: SerializeField]
-    public UnityEvent HPRelatedItemEffects = null;
+    public UnityEvent HPRelatedItemEffects;
     // 공격 관련 아이템 효과
     [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }
@@ -40,20 +40,21 @@ public class Player : MonoBehaviour, IHittable
     public Vector3 hitPoint { get; private set; }
     private void Awake()
     {
+        HPRelatedItemEffects.RemoveListener(Test);
+        HPRelatedItemEffects.AddListener(Test);
+
         UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
         playerVisual = transform.Find("PlayerVisual").gameObject;
     }
     private void Start()
     {
-        HPRelatedItemEffects.RemoveListener(Test);
-        HPRelatedItemEffects.AddListener(Test);
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            playerBase.AttackSpeed = 2;
+            ItemBase.Items[10].Use();
     }
     public IEnumerator IEDamaged(float damage = 0)
     {

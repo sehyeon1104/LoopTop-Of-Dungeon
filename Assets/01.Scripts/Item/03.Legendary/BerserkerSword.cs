@@ -25,7 +25,7 @@ public class BerserkerSword : ItemBase
         lastRise = 0;
         BerserkerSwordEffect();
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
-        GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect); 
+        GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
     }
 
     public override void Disabling()
@@ -40,7 +40,6 @@ public class BerserkerSword : ItemBase
         Debug.Log("아이템 효과 Listener 추가");
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
-        GameManager.Instance.Player.HPRelatedItemEffects.Invoke();
     }
 
     private static float lastRise = 0;
