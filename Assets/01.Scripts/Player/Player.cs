@@ -54,7 +54,7 @@ public class Player : MonoBehaviour, IHittable
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            ItemBase.Items[10].Use();
+            ItemAbility.Items[10].Use();
     }
     public IEnumerator IEDamaged(float damage = 0)
     {

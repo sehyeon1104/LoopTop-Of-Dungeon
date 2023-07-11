@@ -153,13 +153,13 @@ public class DropItem : MonoBehaviour, IPoolable
             return;
         }
 
-        if (!ItemBase.Items[item.itemNumber].isOneOff)
+        if (!ItemAbility.Items[item.itemNumber].isOneOff)
         {
             InventoryUI.Instance.AddItemSlot(item);
         }
         else
         {
-            ItemBase.Items[item.itemNumber].Use();
+            ItemAbility.Items[item.itemNumber].Use();
         }
 
         UIManager.Instance.RotateAttackButton();
