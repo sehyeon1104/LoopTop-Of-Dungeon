@@ -40,7 +40,7 @@ public class StatueRoom : RoomBase
     {
         // TODO : 랜덤한 확률로 신상 소환
         // 임시
-        randStatue = Random.Range(0, 2);
+        randStatue = Random.Range(0, 3);
         switch (randStatue)
         {
             case 0:
@@ -53,6 +53,10 @@ public class StatueRoom : RoomBase
                 break;
             case 2:
                 statue = Managers.Resource.Instantiate("Assets/03.Prefabs/Statue/SkillShuffleStatue.prefab", transform);
+                statue.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 3f);
+                break;
+            case 3:
+                statue = Managers.Resource.Instantiate("Assets/03.Prefabs/Statue/PrayerStatue.prefab", transform);
                 statue.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 3f);
                 break;
         }
