@@ -124,6 +124,10 @@ public class PoolManager
             return;
         }
 
+        var poolInit = poolable as IPoolable;
+        if (poolInit != null)
+            poolInit.PoolInit();
+
         _pool[name].Push(poolable);
     }
 

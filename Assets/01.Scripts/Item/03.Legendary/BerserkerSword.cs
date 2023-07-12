@@ -30,6 +30,7 @@ public class BerserkerSword : ItemBase
 
     public override void Disabling()
     {
+        Debug.Log("Disabling");
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
         GameManager.Instance.Player.playerBase.Attack -= lastRise;
     }

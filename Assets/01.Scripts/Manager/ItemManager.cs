@@ -6,9 +6,9 @@ public class ItemManager : MonoSingleton<ItemManager>
 {
     public void InitItems()
     {
-        for(int i = 1; i < ItemBase.Items.Length; ++i)
+        for(int i = 1; i < ItemAbility.Items.Length; ++i)
         {
-            ItemBase.Items[i].Init();
+            ItemAbility.Items[i].Init();
         }
     }
 }
