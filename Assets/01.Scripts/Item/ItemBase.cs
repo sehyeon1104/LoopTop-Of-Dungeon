@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public abstract class ItemBase : MonoBehaviour
 {
-    public abstract Define.ItemType itemType { get; }
-    public abstract Define.ItemRating itemRating { get; }
+    public abstract ItemType itemType { get; }
+    public abstract ItemRating itemRating { get; }
     public abstract bool isPersitantItem { get; }
     public abstract void Init();
     public abstract void Use();
