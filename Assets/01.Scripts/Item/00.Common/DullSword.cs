@@ -7,7 +7,6 @@ public class DullSword : ItemBase
 {
     public override Define.ItemType itemType => Define.ItemType.buff;
     public override Define.ItemRating itemRating => Define.ItemRating.Common;
-
     public override bool isPersitantItem => false;
 
     public override void Init()

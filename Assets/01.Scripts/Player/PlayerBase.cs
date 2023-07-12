@@ -119,6 +119,10 @@ public class PlayerBase
         }
         
     }
+    public float InitAttackSpeed
+    {
+        get => 1.5f;
+    }
 
     private float moveSpeed;
     public float MoveSpeed
@@ -197,6 +201,7 @@ public class PlayerBase
         }
     }
 
+    // ÀçÈ­ Ãß°¡ È¹µæ·®
     private float _fragmentAddAcq;
     public float FragmentAddAcq
     {
@@ -207,4 +212,8 @@ public class PlayerBase
         }
     }
 
+    public float InitFragmentAddAcq
+    {
+        get => 1f;
+    }
 }

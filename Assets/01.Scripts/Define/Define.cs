@@ -80,6 +80,7 @@ public static class Define
         buff,
         heal,
         broken,
+        set,
     }
 
     public enum ItemRating
