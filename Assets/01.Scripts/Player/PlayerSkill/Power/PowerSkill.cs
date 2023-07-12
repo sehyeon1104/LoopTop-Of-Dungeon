@@ -197,7 +197,7 @@ public class PowerSkill : PlayerSkillBase
         }
     }
 
-    IEnumerator Rush(int level)
+    IEnumerator Rush(int level) 
     {
         float checkTime = 0;
         float timer = 0;
@@ -237,9 +237,9 @@ public class PowerSkill : PlayerSkillBase
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
         Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 1.prefab", transform);
         rushEffect.transform.rotation = angleAxis;
-        playerRigid.velocity = playerMovement.Direction * rushVelocity;
         while (rushCheckNum < rushNum)
         {
+            playerRigid.velocity = playerMovement.Direction * rushVelocity;
             if (timer > rushWait)
             {
 
@@ -317,6 +317,7 @@ public class PowerSkill : PlayerSkillBase
             }
             if(checkTime<timer)
             {
+                print("dd");
                 playerCollider = Physics2D.OverlapBoxAll(transform.position, Vector2.one * 4, 0, 1 << enemyLayer);
                 for (int i = 0; i < playerCollider.Length; i++)
                     playerCollider[i].GetComponent<IHittable>().OnDamage(rushDmg);
@@ -360,7 +361,7 @@ public class PowerSkill : PlayerSkillBase
     {
         UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 2, 0);
         if (level == 4)
-            rushSize *= 1.5f;
+            rushSize = 1.5f;
 
     }
         
@@ -382,6 +383,7 @@ public class PowerSkill : PlayerSkillBase
         playerMovement.IsControl = false;
         while(lerpValue < 1)
         {
+            transform.localScale *= Mathf.Sin(lerpValue * Mathf.Deg2Rad) + 1;
             Vector2 FSegment = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                             Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
             playerRigid.MovePosition(FSegment);
