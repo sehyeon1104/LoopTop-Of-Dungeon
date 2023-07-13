@@ -14,7 +14,7 @@ public class ProjectileObj : MonoBehaviour
         poolable = GetComponent<Poolable>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         Invoke("Pool", moveTime);
     }
