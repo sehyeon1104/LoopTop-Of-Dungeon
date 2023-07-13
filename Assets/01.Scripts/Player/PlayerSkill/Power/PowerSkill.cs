@@ -317,7 +317,6 @@ public class PowerSkill : PlayerSkillBase
             }
             if(checkTime<timer)
             {
-                print("dd");
                 playerCollider = Physics2D.OverlapBoxAll(transform.position, Vector2.one * 4, 0, 1 << enemyLayer);
                 for (int i = 0; i < playerCollider.Length; i++)
                     playerCollider[i].GetComponent<IHittable>().OnDamage(rushDmg);
@@ -381,13 +380,25 @@ public class PowerSkill : PlayerSkillBase
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
         playerMovement.IsMove = false;
         playerMovement.IsControl = false;
+        float currentJumpSpeed = jumpSpeed;
+        Vector3 currentPlayerScale = transform.localScale;
+        float multiPlyValue = 1;
         while(lerpValue < 1)
         {
-            transform.localScale *= Mathf.Sin(lerpValue * Mathf.Deg2Rad) + 1;
+            if(lerpValue > 0.5)
+            {
+                multiPlyValue = 1.3f;
+            }
+            if (lerpValue < 0.5)
+            {
+                multiPlyValue = 0.7f;   
+            }
+            lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
+            lerpValue = Mathf.Clamp(lerpValue, 0, 1);
+            transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
             Vector2 FSegment = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                             Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
             playerRigid.MovePosition(FSegment);
-            lerpValue += Time.fixedDeltaTime * jumpSpeed;
             yield return fixedWait;
         }
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
