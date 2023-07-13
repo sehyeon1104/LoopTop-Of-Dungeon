@@ -14,8 +14,8 @@ public class TornPaper : ItemBase
 
     public override void Use()
     {
-        Debug.Log("찢어진 종이 효과 발동");
-        Debug.Log("대쉬 쿨타임 10% 감소");
+        Debug.Log("찢어진 주문서 효과 발동");
+        Debug.Log("10% 확률로 대시 사용시 쿨타임 초기화");
     }
     public override void Disabling()
     {
