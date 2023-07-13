@@ -32,6 +32,7 @@ public class PlayerBase
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
     }
+
     public float AttackRange { get; set; }
     public float InitAttackRange { get; set; }
     public int[] SlotLevel { get; set; }
@@ -108,6 +109,20 @@ public class PlayerBase
         get => damage;
         set => damage = value;
     }
+
+    // 최종 데미지에 곱해지는 계수
+    private float finalDamageMul;
+    public float FinalDamageMul 
+    {
+        get
+        {
+            float temp = finalDamageMul;
+            finalDamageMul = InitFinalDamageMul;
+            return temp;
+        } 
+        set => finalDamageMul = value; 
+    }
+    public float InitFinalDamageMul { get => 1f; }
 
     private float attackSpeed;
     public float AttackSpeed

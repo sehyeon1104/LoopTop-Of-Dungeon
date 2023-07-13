@@ -45,7 +45,7 @@ public class CursedRing : ItemBase
 
     private void CursedRingEffect()
     {
-        GameManager.Instance.Player.DamageMultiples = 2;
+        GameManager.Instance.Player.DamageMultiples += 1;
     }
 
 }

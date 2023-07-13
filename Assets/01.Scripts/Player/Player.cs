@@ -34,6 +34,9 @@ public class Player : MonoBehaviour, IHittable
     // 공격 관련 아이템 효과
     [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }
+    // 스킬 관련 아이템 효과
+    [field:SerializeField]
+    public UnityEvent SkillRelatedItemEffects { get; private set; }
     // 피격 관련 아이템 효과
     [field: SerializeField]
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
@@ -51,11 +54,7 @@ public class Player : MonoBehaviour, IHittable
 
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            ItemAbility.Items[10].Use();
-    }
+
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);
