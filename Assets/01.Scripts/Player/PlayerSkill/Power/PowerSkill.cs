@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.VFX;
 
 public class PowerSkill : PlayerSkillBase
 {
+    TrailRenderer trailRenderer;
     float fireCheckDuration = 0.1f;
     float fireDuration = 0;
     float choppingDmg = 20;
@@ -39,6 +41,7 @@ public class PowerSkill : PlayerSkillBase
     ParticleSystem attackPar;
     private void Awake()
     {
+        trailRenderer =GetComponent<TrailRenderer>();
         Cashing();
     }
     protected override void Update()
@@ -380,11 +383,13 @@ public class PowerSkill : PlayerSkillBase
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
         playerMovement.IsMove = false;
         playerMovement.IsControl = false;
-        float currentJumpSpeed = jumpSpeed;
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
+        trailRenderer.enabled = true;
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, quaternion.identity);
         while(lerpValue < 1)
         {
+            trailRenderer.widthMultiplier = multiPlyValue;
             if(lerpValue > 0.5)
             {
                 multiPlyValue = 1.3f;
@@ -401,6 +406,7 @@ public class PowerSkill : PlayerSkillBase
             playerRigid.MovePosition(FSegment);
             yield return fixedWait;
         }
+        trailRenderer.enabled = false;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
         for(int i =0; i<enemies.Length; i++) {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2100052149249771331}
   - component: {fileID: 8480562673785047507}
   - component: {fileID: 6406838142031778585}
+  - component: {fileID: -533893754749510571}
   m_Layer: 0
   m_Name: JumpDown
   m_TagString: Untagged
@@ -110,3 +111,17 @@ VFXRenderer:
   m_SortingLayerID: -726151
   m_SortingLayer: 8
   m_SortingOrder: 0
+--- !u!114 &-533893754749510571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534526244762998514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 3
