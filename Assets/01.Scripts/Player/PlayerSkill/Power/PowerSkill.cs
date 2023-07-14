@@ -11,6 +11,7 @@ using UnityEngine.VFX;
 
 public class PowerSkill : PlayerSkillBase
 {
+    public Gradient trailColor;
     TrailRenderer trailRenderer;
     float fireCheckDuration = 0.1f;
     float fireDuration = 0;
@@ -41,7 +42,7 @@ public class PowerSkill : PlayerSkillBase
     ParticleSystem attackPar;
     private void Awake()
     {
-        trailRenderer =GetComponent<TrailRenderer>();
+        trailRenderer =GetComponentInChildren<TrailRenderer>();
         Cashing();
     }
     protected override void Update()
@@ -369,6 +370,7 @@ public class PowerSkill : PlayerSkillBase
         
     IEnumerator Jumpdown()
     {
+        float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
@@ -386,10 +388,11 @@ public class PowerSkill : PlayerSkillBase
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
         trailRenderer.enabled = true;
+        trailRenderer.colorGradient = trailColor;
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, quaternion.identity);
-        while(lerpValue < 1)
+        trailWith = trailRenderer.startWidth;
+        while (lerpValue < 1)
         {
-            trailRenderer.widthMultiplier = multiPlyValue;
             if(lerpValue > 0.5)
             {
                 multiPlyValue = 1.3f;
@@ -398,6 +401,8 @@ public class PowerSkill : PlayerSkillBase
             {
                 multiPlyValue = 0.7f;   
             }
+            trailRenderer.widthMultiplier = multiPlyValue * trailWith;
+            trailRenderer.startWidth = trailWith; 
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
