@@ -13,6 +13,7 @@ public class PowerSkill : PlayerSkillBase
 {
     public Gradient trailColor;
     TrailRenderer trailRenderer;
+    float trailWidth = 5;
     float fireCheckDuration = 0.1f;
     float fireDuration = 0;
     float choppingDmg = 20;
@@ -390,7 +391,7 @@ public class PowerSkill : PlayerSkillBase
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
         Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, quaternion.identity);
-        trailWith = trailRenderer.startWidth;
+        trailRenderer.startWidth = trailWidth;
         while (lerpValue < 1)
         {
             if(lerpValue > 0.5)
@@ -401,8 +402,7 @@ public class PowerSkill : PlayerSkillBase
             {
                 multiPlyValue = 0.7f;   
             }
-            trailRenderer.widthMultiplier = multiPlyValue * trailWith;
-            trailRenderer.startWidth = trailWith; 
+            trailRenderer.widthMultiplier = multiPlyValue * trailWidth; 
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
