@@ -159,6 +159,7 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_SM(int count) //Èú¶ó
     {
         int finalCount = 0;
+        bool isCanceled = false;
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -174,9 +175,23 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = true;
 
+        int nowCount = mobList.Count;
         for (int i = 1; i < 13; i++)
         {
             yield return waitTime;
+            for(int j = 0; j < nowCount; j++)
+            {
+                if (!mobList[j].isActiveAndEnabled)
+                {
+                    nowCount--;
+                    mobList.RemoveAt(j);
+                }
+            }
+            if(nowCount == 0)
+            {
+                isCanceled = true;
+                break;
+            }
             SummonClock.fillAmount = (float)i / 12;
         }
 
@@ -185,32 +200,40 @@ public class G_Patterns : BossPattern
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
 
-        foreach (Poolable mob in mobList)
+        if (isCanceled)
         {
-            if (mob.isActiveAndEnabled)
+            yield return new WaitForSeconds(5f);
+        }
+
+        else
+        {
+            foreach (Poolable mob in mobList)
             {
-                finalCount++;
-                Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
-                Managers.Pool.Push(mob);
+                if (mob.isActiveAndEnabled)
+                {
+                    finalCount++;
+                    Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
+                    Managers.Pool.Push(mob);
+                }
+
             }
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
 
+
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
+            int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
+            while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+            {
+                Boss.Instance.Base.Hp += 1;
+                yield return null;
+            }
+            mobList.Clear();
+
+            yield return new WaitForSeconds(2f);
         }
-        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
-
-
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
-        Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-
-        int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
-        while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
-        {
-            Boss.Instance.Base.Hp += 1;
-            yield return null;
-        }
-        mobList.Clear();
-
-        yield return new WaitForSeconds(2f);
     }
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {

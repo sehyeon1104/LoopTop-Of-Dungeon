@@ -11,8 +11,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
     private SpriteRenderer FRPSpriterenderer;
     private SpriteRenderer FRPStartSpriterenderer;
 
-    Poolable FRP;
-    Poolable FRPS;
     Poolable circlesmoke;
     Poolable FRPCol;
     Poolable FRPR;
@@ -20,16 +18,12 @@ public class GhostBossJangpanPattern : MonoBehaviour
     Poolable recsmoke;
     Poolable FRPRCol;
 
-    Poolable CircleWarning;
-
     float currenttime = 0f;
 
     float patterncurrenttime = 0f;
 
     private void Awake()
     {
-        FRP = Managers.Pool.PoolManaging("10.Effects/ghost/FPR", new Vector2(1000, 1000), Quaternion.identity);
-        FRPS = Managers.Pool.PoolManaging("10.Effects/ghost/FPRS", new Vector2(1000, 1000), Quaternion.identity);
         circlesmoke = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", new Vector2(1000, 1000), Quaternion.identity);
         FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", new Vector2(1000, 1000), Quaternion.identity);
         FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR", new Vector2(1000, 1000), Quaternion.identity);
@@ -37,8 +31,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
         recsmoke = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", new Vector2(1000, 1000), Quaternion.identity);
         FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", new Vector2(1000, 1000), Quaternion.identity);
 
-        Managers.Pool.Push(FRP);
-        Managers.Pool.Push(FRPS);
         Managers.Pool.Push(circlesmoke);
         Managers.Pool.Push(FRPCol);
         Managers.Pool.Push(FRPR);
@@ -46,8 +38,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Managers.Pool.Push(recsmoke);
         Managers.Pool.Push(FRPRCol);
 
-        FRPSpriterenderer = FRP.GetComponent<SpriteRenderer>();
-        FRPStartSpriterenderer = FRPS.GetComponent<SpriteRenderer>();
         FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
         FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
 
