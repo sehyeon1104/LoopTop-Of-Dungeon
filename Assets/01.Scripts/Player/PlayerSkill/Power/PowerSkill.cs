@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -212,7 +213,6 @@ public class PowerSkill : PlayerSkillBase
         Collider2D[] playerCollider;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
-        player.IsInvincibility = true;
         if (level >= 2)
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
@@ -238,6 +238,8 @@ public class PowerSkill : PlayerSkillBase
                 rushNum = Mathf.Clamp(rushNum, rushMin, rushMax);
             }
         }
+        
+        player.IsInvincibility = true;
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
         Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 1.prefab", transform);
@@ -390,7 +392,16 @@ public class PowerSkill : PlayerSkillBase
         float multiPlyValue = 1;
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, quaternion.identity);
+        ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+        
+        float value = 0;
+        if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
+                value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) -90 * Mathf.Deg2Rad;
+        else
+           value = playerMovement.Direction.y < 0 ? 180 *Mathf.Deg2Rad : 0 ; 
+        
+        a.startRotation = value;
+
         trailRenderer.startWidth = trailWidth;
         while (lerpValue < 1)
         {
@@ -420,6 +431,11 @@ public class PowerSkill : PlayerSkillBase
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
+        yield return null;
+    }
+
+    IEnumerator FiveJumpDown()
+    {
         yield return null;
     }
     IEnumerator Column()

@@ -21,7 +21,7 @@ public class PlayerBase
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;
-        PlayerSkillNum = new int[] { 2, 3 };
+        PlayerSkillNum = new int[] { 1, 3 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         _fragmentAddAcq = 1f;
