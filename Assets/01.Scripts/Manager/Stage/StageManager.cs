@@ -145,7 +145,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void InstantiateRooms()
     {
-        foreach(var room in spawnRooms)
+        foreach (var room in spawnRooms)
         {
             room.SetAndInstantiateRoom();
         }

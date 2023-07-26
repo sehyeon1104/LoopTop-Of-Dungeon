@@ -30,4 +30,9 @@ public class ItemManager : MonoSingleton<ItemManager>
             ItemAbility.Items[i].Init();
         }
     }
+
+    public void CheckSetItem()
+    {
+        List<Item> items = GameManager.Instance.GetItemList();
+    }
 }
