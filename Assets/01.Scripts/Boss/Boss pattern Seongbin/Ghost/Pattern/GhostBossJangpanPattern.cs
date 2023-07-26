@@ -20,6 +20,8 @@ public class GhostBossJangpanPattern : MonoBehaviour
     Poolable recsmoke;
     Poolable FRPRCol;
 
+    Poolable CircleWarning;
+
     float currenttime = 0f;
 
     float patterncurrenttime = 0f;
@@ -34,6 +36,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
         FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPRS", new Vector2(1000, 1000), Quaternion.identity);
         recsmoke = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", new Vector2(1000, 1000), Quaternion.identity);
         FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", new Vector2(1000, 1000), Quaternion.identity);
+
         Managers.Pool.Push(FRP);
         Managers.Pool.Push(FRPS);
         Managers.Pool.Push(circlesmoke);
@@ -53,50 +56,22 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     public IEnumerator FloorPatternCircle()
     {
-        
-        Managers.Pool.Pop(FRP.gameObject, transform.position);
-        Managers.Pool.Pop(FRPS.gameObject, transform.position);
-        
-        FRP.transform.position = transform.position;
-        FRPS.transform.position = transform.position;
-        
-        FRP.gameObject.SetActive(true);
-        FRPS.gameObject.SetActive(true);
-        
-        FRP.transform.DOScale(new Vector2(30f, 30f), 1f).SetEase(Ease.OutCirc);
-        
-        yield return new WaitForSeconds(1f);
-        
-        FRPS.transform.DOScale(new Vector2(30f, 30f), 3f).SetEase(Ease.OutCirc);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/GhostCircleWarning.prefab" ,transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.5f);
 
-        FRPSpriterenderer.enabled = false;
-        FRPStartSpriterenderer.enabled = false;
-        
         Managers.Pool.Pop(circlesmoke.gameObject, transform.position);
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Hilla1.wav");
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
 
         Poolable Col = Managers.Pool.Pop(FRPCol.gameObject, transform.position);
         Col.transform.position = transform.position;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
 
-        FRP.transform.localScale = Vector2.zero;
-        FRPS.transform.localScale = Vector2.zero;
-        
-        FRPSpriterenderer.enabled = true;
-        FRPStartSpriterenderer.enabled = true;
-        
-        FRP.gameObject.SetActive(false);
-        FRPS.gameObject.SetActive(false);
-        
-        Managers.Pool.Push(FRP);
-        Managers.Pool.Push(FRPS);
-        Managers.Pool.Push(FRPCol);
-        
+        Managers.Pool.Push(Col);
+
         yield return null;
     }
 

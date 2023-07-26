@@ -25,6 +25,7 @@ public abstract class BossPattern : MonoBehaviour
     #endregion
     #region init
     protected int[] patternCount = new int[6];
+    protected int[] patternWeight = new int[6];
 
     protected bool[] isThisSkillCoolDown = new bool[6];
     protected bool isCanUseFinalPattern = true;
@@ -42,6 +43,8 @@ public abstract class BossPattern : MonoBehaviour
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
+
+        SetPatternWeight();
 
         StartCoroutine(RandomPattern());
         StartCoroutine(ChangePhase());
@@ -81,6 +84,8 @@ public abstract class BossPattern : MonoBehaviour
         patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
 
+        SetPatternWeight();
+
         Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 
         yield return patternDelay;
@@ -98,7 +103,17 @@ public abstract class BossPattern : MonoBehaviour
 
             if (nowBPhaseChange) continue;
 
-            patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
+            int nowPatternWeight = 0;
+            int choisedWeight = Random.Range(0, 100);
+            for (int i = 0; i < phase_patternCount[NowPhase - 1]; i++)
+            {
+                nowPatternWeight += patternWeight[i]; 
+                if(choisedWeight <= nowPatternWeight)
+                {
+                    patternChoice = i;
+                    break;
+                }
+            }
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
@@ -157,6 +172,13 @@ public abstract class BossPattern : MonoBehaviour
     public virtual int GetRandomCount(int choisedPattern)
     {
         return 0;
+    }
+    public virtual void SetPatternWeight()
+    {
+        for(int i = 0; i < phase_patternCount[NowPhase - 1]; i++)
+        {
+            patternWeight[i] = 100 / phase_patternCount[NowPhase - 1];
+        }
     }
 
     #region Patterns

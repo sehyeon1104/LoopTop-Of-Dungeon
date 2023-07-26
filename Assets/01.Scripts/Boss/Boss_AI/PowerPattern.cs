@@ -363,8 +363,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                //yield return SCoroutine(Pattern_DASHATTACK());
-                yield return SCoroutine(Pattern_CATCHANDTHROW());
+                yield return SCoroutine(Pattern_DASHATTACK());
                 break;
             case 2:
                 yield return SCoroutine(Pattern_DS_2());
@@ -377,8 +376,7 @@ public class PowerPattern : P_Patterns
 
     public override IEnumerator Pattern3(int count = 0) //볼리베어
     {
-        // yield return SCoroutine(Pattern_JUMPATTACK(count));
-        yield return SCoroutine(Pattern_CATCHANDTHROW());
+        yield return SCoroutine(Pattern_JUMPATTACK(count));
 
         yield return null;
         Boss.Instance.actCoroutine = null;

@@ -280,6 +280,24 @@ public class GhostPattern : G_Patterns
         return 0;
 
     }
+    public override void SetPatternWeight()
+    {
+        switch (NowPhase)
+        {
+            case 1:
+                patternWeight[0] = 30;
+                patternWeight[1] = 40;
+                patternWeight[2] = 30;
+                break;
+            case 2:
+                patternWeight[0] = 10;
+                patternWeight[1] = 40;
+                patternWeight[2] = 30;
+                patternWeight[3] = 20;
+                break;
+        }
+
+    }
 
     private Coroutine SCoroutine(IEnumerator act)
     {
