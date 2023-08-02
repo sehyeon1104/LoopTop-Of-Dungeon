@@ -13,9 +13,9 @@ public class SetMap : MonoBehaviour
     private enum Wall
     {
         T = 0,
-        R,
         B,
-        L
+        L,
+        R
     }
 
     // 남은 방 개수
@@ -177,7 +177,7 @@ public class SetMap : MonoBehaviour
                 }
 
                 GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Map_Wall/{spawnWallstr}.prefab");
-                room.transform.position = new Vector3(x, y);
+                room.transform.position = new Vector3(x * 21, -y * 21);
             }
         }
         
