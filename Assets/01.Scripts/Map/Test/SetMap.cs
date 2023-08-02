@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-// 디버깅
 using TMPro;
 
 public class SetMap : MonoBehaviour
 {
-    // 디버깅용
-    public GameObject room = null;
-    public List<GameObject> rooms = new List<GameObject>();
+    [SerializeField]
+    private TextMeshProUGUI debug = null;
+
+    private enum Wall
+    {
+        T = 0,
+        R,
+        B,
+        L
+    }
 
     // 남은 방 개수
     int remainingRoomCount = 12;
@@ -23,6 +30,8 @@ public class SetMap : MonoBehaviour
 
     private Queue<Vector2> roomPosQueue = new Queue<Vector2>();
 
+    private string spawnWallstr = "";
+
     private void Awake()
     {
         mapArr = new int[arrSize, arrSize];
@@ -33,26 +42,14 @@ public class SetMap : MonoBehaviour
         Init();
 
         SetMapForm();
-    }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Init();
+        InstantiateWall();
 
-            SetMapForm();
-        }
+        DebugTest();
     }
 
     private void Init()
     {
-        foreach (var roomObj in rooms)
-        {
-            Destroy(roomObj);
-        }
-        rooms.Clear();
-
         for (int i = 0; i < arrSize; ++i)
         {
             for (int j = 0; j < arrSize; ++j)
@@ -69,19 +66,16 @@ public class SetMap : MonoBehaviour
     {
         // 시작방 (정중앙) 생성
         mapArr[3, 3] = (int)Define.RoomTypeFlag.StartRoom;
-        GameObject Room = Instantiate(room, new Vector3(3 - 3, 3 - 3), Quaternion.identity);
-        Room.GetComponent<SpriteRenderer>().color = Color.yellow;
-        rooms.Add(Room);
         remainingRoomCount--;
 
-        AddMap(new Vector2(3, 3), 2);
+        GenerateMapArr(new Vector2(3, 3), 2);
         while (roomPosQueue.Count != 0)
         {
-            AddMap(roomPosQueue.Dequeue());
+            GenerateMapArr(roomPosQueue.Dequeue());
         }
     }
 
-    private void AddMap(Vector2 pos, int MinSpawnCount = 1)
+    private void GenerateMapArr(Vector2 pos, int MinSpawnCount = 1)
     {
         if (remainingRoomCount <= 0)
             return;
@@ -123,13 +117,10 @@ public class SetMap : MonoBehaviour
                 if (CheckNearbyRoomCount(nx, ny) >= 2)
                     continue;
 
-                int rand = Random.Range(0, 2);
+                int rand = UnityEngine.Random.Range(0, 2);
                 if (rand < 1)
                 {
                     mapArr[ny, nx] = (int)Define.RoomTypeFlag.EnemyRoom;
-                    GameObject Room = Instantiate(room, new Vector3(nx - 3, ny - 3), Quaternion.identity);
-                    Room.GetComponent<SpriteRenderer>().color = Color.white;
-                    rooms.Add(Room);
                     remainingRoomCount--;
                     spawnRoomCount++;
                     roomPosQueue.Enqueue(new Vector2(nx, ny));
@@ -158,5 +149,52 @@ public class SetMap : MonoBehaviour
         }
 
         return roomCount;
+    }
+
+    private void InstantiateWall()
+    {
+        int nx = 0;
+        int ny = 0;
+
+        for(int y = 0; y < arrSize; ++y)
+        {
+            for(int x = 0; x < arrSize; ++x)
+            {
+                if (mapArr[y, x] == 0)
+                    continue;
+
+                spawnWallstr = "Wall_";
+                for(int i = 0; i < 4; ++i)
+                {
+                    nx = x + dx[i];
+                    ny = y + dy[i];
+
+                    if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0)
+                        continue;
+
+                    if (mapArr[ny, nx] != 0)
+                        spawnWallstr += Enum.GetName(typeof(Wall), i);
+                }
+
+                GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Map_Wall/{spawnWallstr}.prefab");
+                room.transform.position = new Vector3(x, y);
+            }
+        }
+        
+    }
+
+    private void DebugTest()
+    {
+        string s = "";
+        for (int y = 0; y < arrSize; ++y)
+        {
+            for (int x = 0; x < arrSize; ++x)
+            {
+                s += mapArr[y, x];
+            }
+            s += "\n";
+        }
+
+        debug.SetText(s);
     }
 }
