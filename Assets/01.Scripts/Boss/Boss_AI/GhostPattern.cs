@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using Cinemachine;
 using UnityEngine.UI;
 
 public class G_Patterns : BossPattern
@@ -33,6 +34,8 @@ public class G_Patterns : BossPattern
     private void Awake()
     {
         bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+        if (boss2PhaseVcam == null)
+            boss2PhaseVcam = GetComponentInChildren<CinemachineVirtualCamera>();
         bossAura.SetActive(false);
     }
 
@@ -202,7 +205,11 @@ public class G_Patterns : BossPattern
 
         if (isCanceled)
         {
-            yield return new WaitForSeconds(5f);
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = Boss.Instance.bossAnim.deathClip;
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            yield return new WaitForSeconds(10f);
+            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         }
 
         else
@@ -322,6 +329,55 @@ public class GhostPattern : G_Patterns
 
     }
 
+    protected override IEnumerator ChangePhase()
+    {
+        yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
+        isThisSkillCoolDown[patternChoice] = false;
+
+        if (Boss.Instance.actCoroutine != null)
+            StopCoroutine(Boss.Instance.actCoroutine);
+
+        Boss.Instance.actCoroutine = null;
+
+        nowBPhaseChange = true;
+        Boss.Instance.isBInvincible = true;
+        boss2PhaseVcam.Priority = 11;
+        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
+
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
+
+        yield return patternDelay;
+
+        while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 2;
+            yield return null;
+        }
+        Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        isCanUseFinalPattern = true;
+        isUsingFinalPattern = false;
+        patternDelay = new WaitForSeconds(1.2f);
+        NowPhase = 2;
+
+        Boss.Instance.bossAnim.overrideController[$"ChangePhase"] = absorbEnd;
+        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashPhase);
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", false);
+
+        SetPatternWeight();
+
+        Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
+
+        yield return patternDelay;
+
+        Boss.Instance.isBInvincible = false;
+        nowBPhaseChange = false;
+        boss2PhaseVcam.Priority = 0;
+
+        Boss.Instance.Phase2();
+
+    }
+
     private Coroutine SCoroutine(IEnumerator act)
     {
         return ActCoroutine = StartCoroutine(act);
@@ -332,6 +388,7 @@ public class GhostPattern : G_Patterns
         ActCoroutine = null;
         yield return null;
     }
+
 
     public override IEnumerator Pattern1(int count = 0) //장판 패턴
     {

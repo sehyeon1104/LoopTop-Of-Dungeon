@@ -134,6 +134,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             clone1.transform.localScale = new Vector3(10, 10, 0);
             yield return new WaitForSeconds(1f);
             GameManager.Instance.Player.OnDamage(12f, 0);
+            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         }
 
         checktime = 0f;
@@ -146,6 +147,7 @@ public class GhostBossFieldPattern : MonoBehaviour
                 bossAnim.overrideController[$"SkillFinal"] = finalHitted;
                 bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
                 yield return new WaitForSeconds(6f);
+                Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
                 yield break;
             }
             yield return null;
@@ -153,6 +155,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         }
 
         yield return waittime10s;
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
 
     }
 

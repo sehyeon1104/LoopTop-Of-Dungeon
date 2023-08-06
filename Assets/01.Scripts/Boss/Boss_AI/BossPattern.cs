@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +14,16 @@ public abstract class BossPattern : MonoBehaviour
     [Header("보스 옵션")]
 
     [Tooltip("페이즈별 보스 스킬 개수")]
-    [SerializeField] private int[] phase_patternCount;
-    private WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
+    [SerializeField] protected int[] phase_patternCount;
+    protected WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
 
     [Space]
 
     [Header("페이즈별 애니메이션")]
     public AnimationClip[] Phase_One_AnimArray;
     public AnimationClip[] Phase_Two_AnimArray;
+
+    public CinemachineVirtualCamera boss2PhaseVcam;
 
     #endregion
     #region init
@@ -33,7 +36,7 @@ public abstract class BossPattern : MonoBehaviour
 
     protected bool nowBPhaseChange = false;
     
-    int patternChoice = 0;
+    protected int patternChoice = 0;
 
     #endregion
 
@@ -56,9 +59,11 @@ public abstract class BossPattern : MonoBehaviour
             Boss.Instance.actCoroutine = null;
             StopAllCoroutines();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+            Boss.Instance.OnDamage(30, 0);
     }
 
-    private IEnumerator ChangePhase()
+    protected virtual IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
         isThisSkillCoolDown[patternChoice] = false;
@@ -70,6 +75,11 @@ public abstract class BossPattern : MonoBehaviour
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
+        boss2PhaseVcam.Priority = 11;
+        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
+
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
 
         yield return patternDelay;
 
@@ -92,6 +102,8 @@ public abstract class BossPattern : MonoBehaviour
 
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
+        boss2PhaseVcam.Priority = 0;
+
         Boss.Instance.Phase2();
     }
 

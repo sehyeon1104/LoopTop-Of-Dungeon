@@ -33,6 +33,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
     public readonly int _hashSkill = Animator.StringToHash("Skill");
     public readonly int _hashAttack = Animator.StringToHash("Attack");
     public readonly int _hashDeath = Animator.StringToHash("Death");
+    public readonly int _hashPhase = Animator.StringToHash("Phase");
     #endregion
 
     private void Awake()
