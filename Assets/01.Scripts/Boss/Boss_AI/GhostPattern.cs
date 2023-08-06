@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using Cinemachine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class G_Patterns : BossPattern
 {
@@ -26,6 +27,8 @@ public class G_Patterns : BossPattern
 
     protected GhostBossJangpanPattern bossRangePattern;
 
+    protected CanvasGroup playerPCUI;
+    protected CanvasGroup playerPPUI;
 
     protected List<Poolable> mobList = new List<Poolable>();
     protected WaitForSeconds waitTime = new WaitForSeconds(1f);
@@ -37,6 +40,9 @@ public class G_Patterns : BossPattern
         if (boss2PhaseVcam == null)
             boss2PhaseVcam = GetComponentInChildren<CinemachineVirtualCamera>();
         bossAura.SetActive(false);
+
+        playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
+        playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
     }
 
     #region patterns
@@ -133,7 +139,6 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = false;
         bossObject.SetActive(true);
-        bossAura.SetActive(NowPhase == 2);
 
         dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
@@ -143,20 +148,6 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        yield return waitTime;
-
-        if (count > -4)
-        {
-            dir = Boss.Instance.player.position - transform.position;
-            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            float angle = 7.2f;
-
-            for (int i = -4; i < count; i++)
-            {
-                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
-            }
-        }
-
         yield return waitTime;
     }
     public IEnumerator Pattern_SM(int count) //Èú¶ó
@@ -262,6 +253,7 @@ public class G_Patterns : BossPattern
         Vector2 dir;
 
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
+
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Teleport3.wav");
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
@@ -273,35 +265,36 @@ public class G_Patterns : BossPattern
         Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
 
-        Boss.Instance.isBInvincible = false;
-        bossObject.SetActive(true);
-        bossAura.SetActive(NowPhase == 2);
-
-        dir = Boss.Instance.player.position - transform.position;
-        Vector3 scale = transform.localScale;
-        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
-
-        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
-
-        Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
-        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        yield return waitTime;
-
-        if (count > -4)
+        for (int i = 0; i < 2; i++)
         {
-            dir = Boss.Instance.player.position - transform.position;
-            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            float angle = 7.2f;
+            Vector3 pos = new Vector3(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", pos, Quaternion.identity);
 
-            for (int i = -4; i < count; i++)
-            {
-                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
-            }
+            dir = (Boss.Instance.player.position - pos).normalized;
+            Vector3 anPos = new Vector3(pos.x + dir.x * 25f, pos.y + dir.y * 25f);
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", anPos, Quaternion.identity);
+
+            yield return new WaitForSeconds(0.1f);
+            transform.position = pos;
+
+            yield return new WaitForSeconds(1f);
+            transform.DOMove(anPos, 0.5f);
+
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
+
+            Vector3 scale = transform.localScale;
+            Boss.Instance.bossMove.CheckFlipValue(dir, scale);
+
+            Boss.Instance.isBInvincible = false;
+            bossObject.SetActive(true);
+            bossAura.SetActive(true);
+
+            yield return waitTime;
         }
-
-        yield return waitTime;
     }
 }
 
@@ -328,7 +321,6 @@ public class GhostPattern : G_Patterns
             if (nowBPhaseChange)
             {
                 bossObject.SetActive(true);
-                bossAura.SetActive(true);
                 SummonTimer.gameObject.SetActive(false);
             }
         }
@@ -340,11 +332,11 @@ public class GhostPattern : G_Patterns
         switch (choisedPattern)
         {
             case 0:
-                return Random.Range(3, 6);
+                break;
             case 1:
                 return NowPhase == 1 ? 3 : 5;
             case 2:
-                return NowPhase == 1 ? -4 : 4;
+                break;
             case 3:
                 break;
             case 4:
@@ -390,6 +382,8 @@ public class GhostPattern : G_Patterns
         Boss.Instance.isBInvincible = true;
 
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Phase2.prefab", transform.position, Quaternion.identity);
+        playerPCUI.alpha = 0;
+        playerPPUI.alpha = 0;
 
         yield return new WaitForSeconds(0.3f);
 
@@ -411,6 +405,7 @@ public class GhostPattern : G_Patterns
         yield return new WaitForSeconds(2.5f);
 
         CinemachineCameraShaking.Instance.CameraShake(20f, 0.5f);
+        bossAura.SetActive(true);
 
         yield return new WaitForSeconds(2f);
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
@@ -419,6 +414,8 @@ public class GhostPattern : G_Patterns
         boss2PhaseVcam.Priority = 0;
         patternDelay = new WaitForSeconds(1.5f);
         NowPhase = 2;
+        playerPCUI.alpha = 1;
+        playerPPUI.alpha = 1;
 
         SetPatternWeight();
 
@@ -480,7 +477,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_TP(count));
                 break;
             case 2:
-                yield return SCoroutine(Pattern_TP(count));
+                yield return SCoroutine(Pattern_TP_2(count));
                 break;
         }
 
