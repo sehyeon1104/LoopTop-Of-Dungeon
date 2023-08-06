@@ -341,11 +341,14 @@ public class GhostPattern : G_Patterns
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
-        boss2PhaseVcam.Priority = 11;
-        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
 
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
+
+        yield return new WaitForSeconds(0.2f);
+
+        boss2PhaseVcam.Priority = 11;
+        CinemachineCameraShaking.Instance.CameraShake(6, 20f);
 
         yield return patternDelay;
 
@@ -359,10 +362,6 @@ public class GhostPattern : G_Patterns
         isUsingFinalPattern = false;
         patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
-
-        Boss.Instance.bossAnim.overrideController[$"ChangePhase"] = absorbEnd;
-        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashPhase);
-        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", false);
 
         SetPatternWeight();
 
