@@ -376,7 +376,6 @@ public class GhostPattern : G_Patterns
 
     }
 
-    //페이즈 변경 연출 추가(DOG 참고)
     protected override IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
@@ -401,6 +400,7 @@ public class GhostPattern : G_Patterns
         Managers.Sound.Play("Assets/05.Sounds/BGM/Ghost/Boss_Ghost_Two.mp3", Define.Sound.Bgm, 1, 1);
 
         yield return new WaitForSeconds(0.25f);
+        CinemachineCameraShaking.Instance.CameraShake(3f, 3f);
 
         while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
         {
@@ -410,7 +410,7 @@ public class GhostPattern : G_Patterns
 
         yield return new WaitForSeconds(2.5f);
 
-        CinemachineCameraShaking.Instance.CameraShake(10f, 0.5f);
+        CinemachineCameraShaking.Instance.CameraShake(15f, 0.5f);
 
         yield return new WaitForSeconds(2f);
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
