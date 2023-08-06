@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8825015, g: 0.73018867, b: 1, a: 1}
+  m_Color: {r: 0.18645948, g: 0, b: 0.3301887, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.505151, g: 0.43050906, b: 0.5471698, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -450,19 +450,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 64d1900364eb32d4e832915825879329, type: 2}
     m_Events:
     - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: Boss, Assembly-CSharp
-          m_MethodName: StartBossAct
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &1573597247623314311
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.69006824, g: 0, b: 1, a: 0.5019608}
+  m_Color: {r: 0.75865364, g: 0, b: 1, a: 0.4117647}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1585,7 +1573,7 @@ MonoBehaviour:
   bossUltGage: {fileID: 2212349274443065286}
   Icon: {fileID: 2589592077360165920}
   shieldBar: {fileID: 2640553017121422250}
-  bossUltGageImages: {fileID: 0}
+  bossUltGageImages: {fileID: 2212349274377359101}
 --- !u!1 &2212349275706305036
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,7 +2156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -140}
+  m_AnchoredPosition: {x: 0, y: -121.75}
   m_SizeDelta: {x: 288, y: 432}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1854291586200932462
@@ -2266,7 +2254,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -175.80005}
-  m_SizeDelta: {x: 640, y: 450}
+  m_SizeDelta: {x: 950, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4481568757843399053
 MonoBehaviour:

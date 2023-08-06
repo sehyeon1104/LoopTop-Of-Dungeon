@@ -125,6 +125,7 @@ public class CinemachineCameraShaking : MonoSingleton<CinemachineCameraShaking>
     }
     public void CameraShake(float amplitude = 2f, float duration = 0.1f)
     {
+        ChangeCam();
         StopCoroutine(IECameraShake(amplitude, duration));
         StartCoroutine(IECameraShake(amplitude,duration));
     }

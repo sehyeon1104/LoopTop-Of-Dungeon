@@ -42,7 +42,7 @@ public class G_Patterns : BossPattern
     #region patterns
     public IEnumerator Pattern_BM(int count) //빔
     {
-        WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.25f);
+        WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.5f);
 
         yield return null;
 
@@ -230,6 +230,7 @@ public class G_Patterns : BossPattern
             CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
             Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
 
             int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
             while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
@@ -256,6 +257,52 @@ public class G_Patterns : BossPattern
         Boss.Instance.isBDamaged = false;
     }
     #endregion
+    public IEnumerator Pattern_TP_2(int count) //텔포 2페이즈
+    {
+        Vector2 dir;
+
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Teleport3.wav");
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
+
+        yield return new WaitForSeconds(1f);
+
+        bossObject.SetActive(false);
+        bossAura.SetActive(false);
+        Boss.Instance.isBInvincible = true;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(3f);
+
+        Boss.Instance.isBInvincible = false;
+        bossObject.SetActive(true);
+        bossAura.SetActive(NowPhase == 2);
+
+        dir = Boss.Instance.player.position - transform.position;
+        Vector3 scale = transform.localScale;
+        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
+
+        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
+
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        yield return waitTime;
+
+        if (count > -4)
+        {
+            dir = Boss.Instance.player.position - transform.position;
+            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = 7.2f;
+
+            for (int i = -4; i < count; i++)
+            {
+                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
+            }
+        }
+
+        yield return waitTime;
+    }
 }
 
 public class GhostPattern : G_Patterns
@@ -329,6 +376,7 @@ public class GhostPattern : G_Patterns
 
     }
 
+    //페이즈 변경 연출 추가(DOG 참고)
     protected override IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
@@ -342,25 +390,34 @@ public class GhostPattern : G_Patterns
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
 
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Phase2.prefab", transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.3f);
+
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
 
-        yield return new WaitForSeconds(0.2f);
-
         boss2PhaseVcam.Priority = 11;
-        CinemachineCameraShaking.Instance.CameraShake(6, 20f);
+        Managers.Sound.Play("Assets/05.Sounds/BGM/Ghost/Boss_Ghost_Two.mp3", Define.Sound.Bgm, 1, 1);
 
-        yield return patternDelay;
+        yield return new WaitForSeconds(0.25f);
 
         while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
         {
-            Boss.Instance.Base.Hp += 2;
+            Boss.Instance.Base.Hp += 4;
             yield return null;
         }
+
+        yield return new WaitForSeconds(2.5f);
+
+        CinemachineCameraShaking.Instance.CameraShake(10f, 0.5f);
+
+        yield return new WaitForSeconds(2f);
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
-        patternDelay = new WaitForSeconds(1.2f);
+        boss2PhaseVcam.Priority = 0;
+        patternDelay = new WaitForSeconds(1.5f);
         NowPhase = 2;
 
         SetPatternWeight();
@@ -371,7 +428,6 @@ public class GhostPattern : G_Patterns
 
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
-        boss2PhaseVcam.Priority = 0;
 
         Boss.Instance.Phase2();
 

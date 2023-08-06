@@ -42,7 +42,7 @@ public abstract class BossPattern : MonoBehaviour
 
     public void Init()
     {
-        patternDelay = new WaitForSeconds(1.5f);
+        patternDelay = new WaitForSeconds(2f);
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
@@ -60,7 +60,7 @@ public abstract class BossPattern : MonoBehaviour
             StopAllCoroutines();
         }
         if (Input.GetKeyDown(KeyCode.G))
-            Boss.Instance.OnDamage(30, 0);
+            Boss.Instance.OnDamage(100, 0);
     }
 
     protected virtual IEnumerator ChangePhase()
