@@ -6,9 +6,11 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.VFX;
+using Random = UnityEngine.Random;
 
 public class PowerSkill : PlayerSkillBase
 {
@@ -34,17 +36,34 @@ public class PowerSkill : PlayerSkillBase
     float jumpSpeed = 2f;
     float jumpAttackRange = 2f;
     float jumpAttackDmg = 20f;
-    bool isColumn; 
+    bool isClick = false;
+    float catchTime = 4f;
+    bool isColumn;
     float ColumnDuration = 5f;
     WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
     WaitForSeconds waitRockPush = new WaitForSeconds(2f);
     WaitForSeconds rockFallWait = new WaitForSeconds(0.5f);
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
+    WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
+    float shockWaveTime = 4f;
+    
+    Coroutine shockWaveCoroutine;
+    IEnumerator catchSkill;
+    readonly int hashThrow = Animator.StringToHash("Throw");
+    readonly int hashCatch = Animator.StringToHash("Catch");
+    Animator bossArmAni = null;
+    Poolable bossArm = null;
+    Material material;
+    List<Transform> catchEnemies = new List<Transform>();
+    float power = 20;
+    static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
+   [SerializeField] GameObject columnEffect;
     private void Awake()
     {
-        trailRenderer =GetComponentInChildren<TrailRenderer>();
+        trailRenderer = GetComponentInChildren<TrailRenderer>();
+        material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
         Cashing();
     }
     protected override void Update()
@@ -53,6 +72,7 @@ public class PowerSkill : PlayerSkillBase
     }
     private void Start()
     {
+        catchSkill = CatchSkill();
         attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
     }
     protected override void Attack()
@@ -97,17 +117,28 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void ThirdSkill(int level)
     {
-        StartCoroutine(Jumpdown());
+        if (level == 5)
+            StartCoroutine(FiveJumpDown());
+        else
+            StartCoroutine(Jumpdown());
     }
-
     protected override void ForuthSkill(int level)
     {
+     
+        if (isClick)
+        {
+            StopCoroutine(catchSkill);
+            StartCoroutine(Throw());
+        }
+        else
+            StartCoroutine(catchSkill);
+
 
     }
 
     protected override void FifthSkill(int level)
     {
-
+        StartCoroutine(Column());
     }
 
     protected override void UltimateSkill()
@@ -120,10 +151,6 @@ public class PowerSkill : PlayerSkillBase
     }
 
 
-    protected override void ThirdSkillUpdate(int level)
-    {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
-    }
 
     protected override void ForuthSkillUpdate(int level)
     {
@@ -203,7 +230,7 @@ public class PowerSkill : PlayerSkillBase
         }
     }
 
-    IEnumerator Rush(int level) 
+    IEnumerator Rush(int level)
     {
         float checkTime = 0;
         float timer = 0;
@@ -238,7 +265,7 @@ public class PowerSkill : PlayerSkillBase
                 rushNum = Mathf.Clamp(rushNum, rushMin, rushMax);
             }
         }
-        
+
         player.IsInvincibility = true;
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
@@ -289,7 +316,7 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator FiveRush()
     {
         int num = 0;
-        Dictionary<Poolable,float> tonados = new Dictionary<Poolable,float>();  
+        Dictionary<Poolable, float> tonados = new Dictionary<Poolable, float>();
         Collider2D[] playerCollider;
         float timer = 0;
         float checkTime = 0;
@@ -312,17 +339,17 @@ public class PowerSkill : PlayerSkillBase
             playerRigid.velocity = playerMovement.Direction * rushVelocity;
             if (timer >= 0.5f)
             {
-                tonados.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RuehFiveEffect.prefab", transform.position, Quaternion.identity),5);
-            if (fireDuration == 0)
-                fireDuration = tonados.First().Key.GetComponent<VisualEffect>().GetFloat("Duration");
-                KeyValuePair<Poolable,float> keyValue = tonados.First();
+                tonados.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RuehFiveEffect.prefab", transform.position, Quaternion.identity), 5);
+                if (fireDuration == 0)
+                    fireDuration = tonados.First().Key.GetComponent<VisualEffect>().GetFloat("Duration");
+                KeyValuePair<Poolable, float> keyValue = tonados.First();
                 StartCoroutine(FireTotenedo(keyValue.Key, keyValue.Value));
                 tonados.Remove(keyValue.Key);
                 timer = 0;
                 checkTime = 0;
                 num++;
             }
-            if(checkTime<timer)
+            if (checkTime < timer)
             {
                 playerCollider = Physics2D.OverlapBoxAll(transform.position, Vector2.one * 4, 0, 1 << enemyLayer);
                 for (int i = 0; i < playerCollider.Length; i++)
@@ -351,12 +378,12 @@ public class PowerSkill : PlayerSkillBase
         Collider2D[] attachObjs;
         while (timer < fireDuration)
         {
-            if(checkTime < timer)
-            {   
-                radius += fireCheckDuration / fireDuration  * 2;
-                attachObjs = Physics2D.OverlapCircleAll(tonados.transform.position, radius , 1 << enemyLayer);
-                    for (int j = 0; j < attachObjs.Length; j++)
-                        attachObjs[j].GetComponent<IHittable>().OnDamage(rushAttackDmg);
+            if (checkTime < timer)
+            {
+                radius += fireCheckDuration / fireDuration * 2;
+                attachObjs = Physics2D.OverlapCircleAll(tonados.transform.position, radius, 1 << enemyLayer);
+                for (int j = 0; j < attachObjs.Length; j++)
+                    attachObjs[j].GetComponent<IHittable>().OnDamage(rushAttackDmg);
                 checkTime = timer + fireCheckDuration;
             }
             timer += Time.deltaTime;
@@ -370,7 +397,7 @@ public class PowerSkill : PlayerSkillBase
             rushSize = 1.5f;
 
     }
-        
+
     IEnumerator Jumpdown()
     {
         float trailWith;
@@ -379,42 +406,43 @@ public class PowerSkill : PlayerSkillBase
         Vector2 currentPos = transform.position;
         float lerpValue = 0;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
-        Vector2 playerDirection = new Vector2(playerMovement.Direction.y,Mathf.Abs(playerMovement.Direction.x));
+        Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
         if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
             playerDirection = new Vector2(playerMovement.Direction.y * -1, Mathf.Abs(playerMovement.Direction.x));
         dots[0] = currentPos;
-        dots[1] = currentPos + playerDirection * jumpHeight;    
+        dots[1] = currentPos + playerDirection * jumpHeight;
         dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
         playerMovement.IsMove = false;
         playerMovement.IsControl = false;
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
-        trailRenderer.enabled = true;
+        trailRenderer.startWidth = trailWidth;
         trailRenderer.colorGradient = trailColor;
+        trailRenderer.enabled = true;
+        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        
+
         float value = 0;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
-                value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) -90 * Mathf.Deg2Rad;
+            value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
         else
-           value = playerMovement.Direction.y < 0 ? 180 *Mathf.Deg2Rad : 0 ; 
-        
+            value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
+
         a.startRotation = value;
 
-        trailRenderer.startWidth = trailWidth;
         while (lerpValue < 1)
         {
-            if(lerpValue > 0.5)
+            if (lerpValue > 0.5)
             {
                 multiPlyValue = 1.3f;
             }
             if (lerpValue < 0.5)
             {
-                multiPlyValue = 0.7f;   
+                multiPlyValue = 0.7f;
             }
-            trailRenderer.widthMultiplier = multiPlyValue * trailWidth; 
-            lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
+            trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
+            lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
             Vector2 FSegment = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
@@ -424,10 +452,11 @@ public class PowerSkill : PlayerSkillBase
         }
         trailRenderer.enabled = false;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
-        for(int i =0; i<enemies.Length; i++) {
+        for (int i = 0; i < enemies.Length; i++)
+        {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
         }
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position,Quaternion.identity);
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position, Quaternion.identity);
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
@@ -436,11 +465,168 @@ public class PowerSkill : PlayerSkillBase
 
     IEnumerator FiveJumpDown()
     {
+        float trailWith;
+        Collider2D[] enemies;
+        Vector2[] dots = new Vector2[4];
+        Vector2 currentPos = transform.position;
+        float lerpValue = 0;
+        //µÚÀÏ¶© + ¾Õ¿¤¶© -
+        Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
+        if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
+            playerDirection = new Vector2(playerMovement.Direction.y * -1, Mathf.Abs(playerMovement.Direction.x));
+        dots[0] = currentPos;
+        dots[1] = currentPos + playerDirection * jumpHeight;
+        dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
+        dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
+        playerMovement.IsMove = false;
+        playerMovement.IsControl = false;
+        Vector3 currentPlayerScale = transform.localScale;
+        float multiPlyValue = 1;
+        trailRenderer.enabled = true;
+        trailRenderer.colorGradient = trailColor;
+        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat2.mat");
+        ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+
+        float value = 0;
+        if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
+            value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
+        else
+            value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
+
+        a.startRotation = value;
+
+        trailRenderer.startWidth = trailWidth * 2;
+        while (lerpValue < 1)
+        {
+            if (lerpValue > 0.5)
+            {
+                multiPlyValue = 1.3f;
+            }
+            if (lerpValue < 0.5)
+            {
+                multiPlyValue = 0.7f;
+            }
+            trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
+            lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
+            lerpValue = Mathf.Clamp(lerpValue, 0, 1);
+            transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1) * 2;
+            Vector2 FSegment = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
+                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
+            playerRigid.MovePosition(FSegment);
+            yield return fixedWait;
+        }
+        Poolable shockWave = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ShockWave.prefab", transform.position, Quaternion.identity);
+        StartCoroutine(ShockWaveAction(shockWave, 0.1f, 1));
+        transform.localScale = currentPlayerScale;
+        trailRenderer.enabled = false;
+        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
+        }
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity);
+        CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
+        playerMovement.IsMove = true;
+        playerMovement.IsControl = true;
         yield return null;
+        yield return null;
+    }
+    IEnumerator ShockWaveAction(Poolable shockWave, float startPos, float endPos)
+    {
+        material.SetFloat(_waveDistanceFromCenter, startPos);
+
+        float lerpedAmount = 0f;
+
+        float elpsedTime = 0f;
+        while (lerpedAmount < endPos - 0.01)
+        {
+            elpsedTime += Time.deltaTime;
+
+            lerpedAmount = Mathf.Lerp(startPos, endPos, (elpsedTime / shockWaveTime));
+            material.SetFloat(_waveDistanceFromCenter, lerpedAmount);
+            yield return null;
+        }
+        Managers.Pool.Push(shockWave);
+    }
+    protected override void ThirdSkillUpdate(int level)
+    {
+        if (level != 5)
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
+        else
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+    }
+    IEnumerator CatchSkill()
+    {
+        KeyCode getKey = playerBase.PlayerSkillNum[0] == 4 ? KeyCode.U : KeyCode.I;
+        float timer = 0;
+        bossArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BossArm.prefab", transform);
+        bossArm.transform.position += (Vector3)playerMovement.Direction;
+        Transform hand = bossArm.transform.Find("BossArm/Hand");
+        bossArmAni = bossArm.transform.GetComponentInChildren<Animator>();
+        Quaternion quaternion = MathClass.VectorToQuaternion(playerMovement.Direction, transform, 45);
+        bossArm.transform.rotation = quaternion;
+        RaycastHit2D[] enemies = Physics2D.RaycastAll(transform.position, playerMovement.Direction, 4, 1 << enemyLayer);
+        bossArmAni.SetTrigger(hashCatch);
+
+       
+        if (enemies.Length == 0)
+        {
+            yield return waitAttack;
+            Managers.Pool.Push(bossArm);
+            yield break;
+        }
+
+        isClick = true;
+        UIManager.Instance.currentFillAmount[UIManager.Instance.playerskill.skillIndex[0] == 4 ? 0 : 1] -= playerBase.PlayerTransformData.skill[4].skillDelay;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Transform enemy = enemies[i].transform;    
+            catchEnemies.Add(enemy);
+            enemy.GetComponent<EnemyDefault>().isControl = false;
+        }
+        while (timer < catchTime)
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i].transform.position = hand.position;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        for (int i = 0; i < enemies.Length; i++)
+            enemies[i].transform.GetComponent<EnemyDefault>().isControl = true;
+        isClick = false;
+        
+    }
+    IEnumerator Throw()
+    {
+        bossArmAni.SetTrigger(hashThrow);
+        Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
+        for (int i=0; i<catchEnemies.Count; i++)
+        {
+          
+            catchEnemies[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * Random.Range(power - 10, power + 10) + force, ForceMode2D.Impulse);
+            catchEnemies[i].GetComponent<IHittable>().OnDamage(20, 0);
+            catchEnemies[i].GetComponent<EnemyDefault>().isControl = true;
+        }
+        yield return waitAttack;
+        isClick = false;
+        Managers.Pool.Push(bossArm);
     }
     IEnumerator Column()
     {
+        
         isColumn = true;
+        float timer = 0;
+        columnEffect.SetActive(true);
+        while (timer < ColumnDuration)
+        {
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        columnEffect.SetActive(false);
         yield return ColumnWait;
         isColumn = false;
     }
@@ -450,4 +636,6 @@ public class PowerSkill : PlayerSkillBase
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 2);
     }
+
+
 }

@@ -53,7 +53,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     protected Poolable poolable = null;
 
-    protected bool isMove { private set; get; } = false;
+    public bool isControl { get; set; } = true;
+    protected bool isMove {private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
 
@@ -81,6 +82,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     void Update()
     {
+        if (!isControl)
+            return;
         Act();
     }
 
