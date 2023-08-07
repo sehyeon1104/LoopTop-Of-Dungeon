@@ -251,6 +251,7 @@ public class G_Patterns : BossPattern
     public IEnumerator Pattern_TP_2(int count) //텔포 2페이즈
     {
         Vector2 dir;
+        Vector3 scale;
 
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
 
@@ -269,11 +270,15 @@ public class G_Patterns : BossPattern
 
         for (int i = 0; i < 2; i++)
         {
+            bossObject.SetActive(false);
+            bossAura.SetActive(false);
+            Boss.Instance.isBInvincible = true;
+
             Vector3 pos = new Vector3(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
             Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", pos, Quaternion.identity);
 
             dir = (Boss.Instance.player.position - pos).normalized;
-            Vector3 anPos = new Vector3(pos.x + dir.x * 25f, pos.y + dir.y * 25f);
+            Vector3 anPos = new Vector3(pos.x + dir.x * 30f, pos.y + dir.y * 25f);
             Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", anPos, Quaternion.identity);
 
             yield return new WaitForSeconds(0.1f);
@@ -283,18 +288,44 @@ public class G_Patterns : BossPattern
             transform.DOMove(anPos, 0.5f);
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
 
-            Vector3 scale = transform.localScale;
+            scale = transform.localScale;
             Boss.Instance.bossMove.CheckFlipValue(dir, scale);
 
             Boss.Instance.isBInvincible = false;
             bossObject.SetActive(true);
             bossAura.SetActive(true);
 
+            yield return new WaitForSeconds(0.1f);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(4.5f, 17f), clone.transform.rotation.z, 1 << 8);
+            if (col != null)
+                col.GetComponent<IHittable>().OnDamage(2, 0);
+
             yield return waitTime;
+
+            bossObject.SetActive(false);
+            bossAura.SetActive(false);
+            Boss.Instance.isBInvincible = true;
         }
+
+        yield return new WaitForSeconds(1.5f);
+
+        Boss.Instance.isBInvincible = false;
+        bossObject.SetActive(true);
+        bossAura.SetActive(true);
+
+        dir = Boss.Instance.player.position - transform.position;
+        scale = transform.localScale;
+        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
+
+        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
+
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        yield return waitTime;
+
     }
 }
 
