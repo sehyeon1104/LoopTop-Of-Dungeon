@@ -111,44 +111,47 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     public IEnumerator GhostUltStart()
     {
+        bool isCrashed = false;
         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossAnim.transform.position, Quaternion.identity);
         Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
-        //애니메이션 넣기 (흡수 시작 애니메이션 시전) 
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waittime2dot5s;
 
-        if (GhostBossUI.fillTime < 30f || GhostBossUI.fillTime > 70f)
+        checktime = 0f;
+        while (checktime < 10f)
+        {
+            yield return new WaitForSeconds(0.5f);
+            checktime += 0.5f;
+
+            if (Boss.Instance.Base.Shield <= 0)
+            {
+                Managers.Pool.Push(clone.GetComponent<Poolable>());
+                bossAnim.overrideController[$"SkillFinal"] = finalHitted;
+                bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+                isCrashed = true;
+                yield return new WaitForSeconds(10f);
+                Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+                yield break;
+            }
+
+            if (GhostBossUI.fillTime > 70f)
+            {
+                GameManager.Instance.Player.OnDamage(1, 0);
+            }
+        }
+
+        if (!isCrashed)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+            Managers.Pool.Push(clone.GetComponent<Poolable>());
             Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", bossAnim.transform.position, Quaternion.identity);
             clone1.transform.localScale = new Vector3(10, 10, 0);
             yield return new WaitForSeconds(1f);
             GameManager.Instance.Player.OnDamage(12f, 0);
             Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         }
-
-        checktime = 0f;
-        //애니메이션 넣기 (흡수 대기 애니메이션 시전)
-        while (checktime < 10f)
-        {
-            if (Boss.Instance.Base.Shield <= 0)
-            {
-                Managers.Pool.Push(clone.GetComponent<Poolable>());
-                bossAnim.overrideController[$"SkillFinal"] = finalHitted;
-                bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
-                yield return new WaitForSeconds(6f);
-                Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
-                yield break;
-            }
-            yield return null;
-            checktime += Time.deltaTime;
-        }
-
-        yield return waittime10s;
-        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
-
     }
 
     //public IEnumerator GhostUltStart()
