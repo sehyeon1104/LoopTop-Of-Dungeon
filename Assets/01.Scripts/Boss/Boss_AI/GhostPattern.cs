@@ -32,6 +32,8 @@ public class G_Patterns : BossPattern
 
     protected List<Poolable> mobList = new List<Poolable>();
     protected WaitForSeconds waitTime = new WaitForSeconds(1f);
+
+    public int panicValue = 0;
     #endregion
 
     private void Awake()
@@ -45,7 +47,7 @@ public class G_Patterns : BossPattern
         playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
     }
 
-    #region patterns
+    #region pattern1
     public IEnumerator Pattern_BM(int count) //ºö
     {
         WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.5f);
@@ -234,20 +236,8 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(2f);
         }
     }
-    public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
-    {
-        bossObject.SetActive(false);
-        bossAura.SetActive(false);
-        Boss.Instance.isBDamaged = true;
-        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
-
-        yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
-
-        bossObject.SetActive(true);
-        bossAura.SetActive(NowPhase == 2);
-        Boss.Instance.isBDamaged = false;
-    }
     #endregion
+    #region pattern2
     public IEnumerator Pattern_TP_2(int count) //ÅÚÆ÷ 2ÆäÀÌÁî
     {
         Vector2 dir;
@@ -299,7 +289,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(4.5f, 17f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(5.5f, 17f), clone.transform.rotation.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(2, 0);
 
@@ -327,6 +317,20 @@ public class G_Patterns : BossPattern
         yield return waitTime;
 
     }
+    public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
+    {
+        bossObject.SetActive(false);
+        bossAura.SetActive(false);
+        Boss.Instance.isBDamaged = true;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
+
+        yield return StartCoroutine(bossFieldPattern.GhostBossArmPattern());
+
+        bossObject.SetActive(true);
+        bossAura.SetActive(NowPhase == 2);
+        Boss.Instance.isBDamaged = false;
+    }
+    #endregion
 }
 
 public class GhostPattern : G_Patterns
@@ -335,7 +339,6 @@ public class GhostPattern : G_Patterns
 
     private void Update()
     {
-
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {
             isUsingFinalPattern = true;
@@ -356,6 +359,7 @@ public class GhostPattern : G_Patterns
             }
         }
 
+        SetPanicValue();
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
@@ -390,10 +394,10 @@ public class GhostPattern : G_Patterns
                 patternWeight[2] = 30;
                 break;
             case 2:
-                patternWeight[0] = 10;
+                patternWeight[0] = 20;
                 patternWeight[1] = 40;
                 patternWeight[2] = 30;
-                patternWeight[3] = 20;
+                patternWeight[3] = 10;
                 break;
         }
 
@@ -459,6 +463,32 @@ public class GhostPattern : G_Patterns
 
         Boss.Instance.Phase2();
 
+    }
+
+    private void SetPanicValue()
+    {
+        if (GhostBossUI.fillTime > 70f)
+        {
+            if (panicValue == Mathf.CeilToInt((GhostBossUI.fillTime - 70) * 0.1f)) return;
+
+            panicValue = Mathf.CeilToInt((GhostBossUI.fillTime - 70) * 0.1f);
+            Boss.Instance.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.25f + 1;
+            GameManager.Instance.Player.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.5f + 1;
+        }
+        else if (GhostBossUI.fillTime < 30f)
+        {
+            if (panicValue == Mathf.CeilToInt(GhostBossUI.fillTime * 0.1f) - 3) return;
+
+            panicValue = Mathf.CeilToInt(GhostBossUI.fillTime * 0.1f) - 3;
+            Boss.Instance.dmgMul = (panicValue * 0.25f) + 1;
+            GameManager.Instance.Player.dmgMul = (panicValue * 0.25f) + 1;
+        }
+        else if (panicValue != 0)
+        {
+            panicValue = 0;
+            Boss.Instance.dmgMul = 1;
+            GameManager.Instance.Player.dmgMul = 1;
+        }
     }
 
     private Coroutine SCoroutine(IEnumerator act)

@@ -38,6 +38,8 @@ public abstract class BossPattern : MonoBehaviour
     
     protected int patternChoice = 0;
 
+    public Vector3 hitPoint => throw new System.NotImplementedException();
+
     #endregion
 
     public void Init()

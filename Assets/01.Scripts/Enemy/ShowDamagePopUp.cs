@@ -17,7 +17,7 @@ public class ShowDamagePopUp : MonoBehaviour
         // 텍스트 소환
         Poolable damageTMP = Managers.Pool.Pop(displayDamageTMP);
         TextMeshProUGUI damageText = damageTMP.GetComponentInChildren<TextMeshProUGUI>();
-        damageText.text = damage.ToString();
+        damageText.text = Mathf.RoundToInt(damage).ToString();
         if (isCrit)
         {
             // 텍스트 색 변경

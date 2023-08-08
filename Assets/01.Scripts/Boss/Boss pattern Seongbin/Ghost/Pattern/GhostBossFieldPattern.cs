@@ -11,8 +11,6 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private int time = 0;
 
-    private int Randomtime = 0;
-
     private float ArmSizeX = 35.1f;
 
     private float ArmSizeY = 23f;
@@ -91,11 +89,8 @@ public class GhostBossFieldPattern : MonoBehaviour
     //궁극기 패턴
     public IEnumerator GhostBossUltPattern()
     {
-        yield return new WaitUntil(() => Boss.Instance.bossPattern.NowPhase == 2);
         while (true)
         {
-            Randomtime = Random.Range(0, 5);
-
             Vector2 Owntransform = transform.position;
 
             BubbleRandomSizeX = 0f;
@@ -119,14 +114,11 @@ public class GhostBossFieldPattern : MonoBehaviour
         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossAnim.transform.position, Quaternion.identity);
         Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
-        isPushAllBubbles = true; //필드 내 버블 다 사라짐
-        StopCoroutine(UltPattern); // 버블 생성 중지
-
         //애니메이션 넣기 (흡수 시작 애니메이션 시전) 
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        yield return waittime2dot5s; 
+        yield return waittime2dot5s;
 
-        if (BossUI.fillTime < 30f || BossUI.fillTime > 70f)
+        if (GhostBossUI.fillTime < 30f || GhostBossUI.fillTime > 70f)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
             bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
@@ -141,7 +133,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         //애니메이션 넣기 (흡수 대기 애니메이션 시전)
         while (checktime < 10f)
         {
-            if(Boss.Instance.Base.Shield <= 0)
+            if (Boss.Instance.Base.Shield <= 0)
             {
                 Managers.Pool.Push(clone.GetComponent<Poolable>());
                 bossAnim.overrideController[$"SkillFinal"] = finalHitted;
@@ -158,6 +150,51 @@ public class GhostBossFieldPattern : MonoBehaviour
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
 
     }
+
+    //public IEnumerator GhostUltStart()
+    //{
+    //    Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossAnim.transform.position, Quaternion.identity);
+    //    Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
+
+    //    isPushAllBubbles = true; //필드 내 버블 다 사라짐
+    //    StopCoroutine(UltPattern); // 버블 생성 중지
+
+    //    //애니메이션 넣기 (흡수 시작 애니메이션 시전) 
+    //    bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+    //    yield return waittime2dot5s; 
+
+    //    if (BossUI.fillTime < 30f || BossUI.fillTime > 70f)
+    //    {
+    //        bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+    //        bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+    //        Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", bossAnim.transform.position, Quaternion.identity);
+    //        clone1.transform.localScale = new Vector3(10, 10, 0);
+    //        yield return new WaitForSeconds(1f);
+    //        GameManager.Instance.Player.OnDamage(12f, 0);
+    //        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+    //    }
+
+    //    checktime = 0f;
+    //    //애니메이션 넣기 (흡수 대기 애니메이션 시전)
+    //    while (checktime < 10f)
+    //    {
+    //        if(Boss.Instance.Base.Shield <= 0)
+    //        {
+    //            Managers.Pool.Push(clone.GetComponent<Poolable>());
+    //            bossAnim.overrideController[$"SkillFinal"] = finalHitted;
+    //            bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+    //            yield return new WaitForSeconds(6f);
+    //            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+    //            yield break;
+    //        }
+    //        yield return null;
+    //        checktime += Time.deltaTime;
+    //    }
+
+    //    yield return waittime10s;
+    //    Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+
+    //}
 
 
     private void OnDrawGizmos()

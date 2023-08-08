@@ -41,6 +41,12 @@ public class Player : MonoBehaviour, IHittable
     [field: SerializeField]
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
     public Vector3 hitPoint { get; private set; }
+
+    [HideInInspector]
+    public float dmgMul = 1f;
+    [HideInInspector]
+    public float dmgAdd = 0f;
+
     private void Awake()
     {
         HPRelatedItemEffects.RemoveListener(Test);
@@ -80,7 +86,9 @@ public class Player : MonoBehaviour, IHittable
     {
         if (isPDamaged || playerBase.IsPDead || invincibility)
             return;
-        
+
+        damage = damage * dmgMul + dmgAdd;
+
         if (Random.Range(1, 101) <= critChance)
         {
             damage *= 1.5f;

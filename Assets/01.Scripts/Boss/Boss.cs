@@ -28,6 +28,11 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
     public Dictionary<int, SpriteRenderer> sprites = new Dictionary<int, SpriteRenderer>();
 
+    [HideInInspector]
+    public float dmgMul = 1f;
+    [HideInInspector]
+    public float dmgAdd = 0f;
+
     #region AnimHash
     public readonly int _hashMove = Animator.StringToHash("Move");
     public readonly int _hashSkill = Animator.StringToHash("Skill");
@@ -101,6 +106,8 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (isBDead) return;
         if (isBDamaged) return;
         if (isBInvincible) return;
+
+        damage = damage * dmgMul + dmgAdd;
 
         if (Random.Range(1, 101) <= critChance)
         {
