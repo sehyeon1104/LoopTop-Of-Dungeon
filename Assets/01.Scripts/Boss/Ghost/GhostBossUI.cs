@@ -29,7 +29,7 @@ public class GhostBossUI : MonoBehaviour
 
             if (fillTime > 0)
             {
-                fillTime -= 0.01f;
+                fillTime -= 0.02f;
             }
             if (fillTime > 100)
                 fillTime = 100;

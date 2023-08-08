@@ -115,6 +115,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         Poolable clone = Managers.Pool.PoolManaging("10.Effects/ghost/Absorb", bossAnim.transform.position, Quaternion.identity);
         Boss.Instance.Base.Shield = Boss.Instance.Base.MaxShield;
 
+        Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = Boss.Instance.bossPattern.Phase_Two_AnimArray[5];
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waittime2dot5s;
 

@@ -203,6 +203,8 @@ public class G_Patterns : BossPattern
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             yield return new WaitForSeconds(10f);
             Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+            Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+            yield return new WaitForSeconds(0.5f);
         }
 
         else
@@ -415,6 +417,7 @@ public class GhostPattern : G_Patterns
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
 
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Phase2.prefab", transform.position, Quaternion.identity);
         playerPCUI.alpha = 0;
@@ -422,7 +425,7 @@ public class GhostPattern : G_Patterns
 
         yield return new WaitForSeconds(0.3f);
 
-        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
 
         boss2PhaseVcam.Priority = 11;
@@ -453,7 +456,6 @@ public class GhostPattern : G_Patterns
         playerPPUI.alpha = 1;
 
         SetPatternWeight();
-
         Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 
         yield return patternDelay;
