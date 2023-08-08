@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
 using Cinemachine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 public class G_Patterns : BossPattern
 {
@@ -24,11 +25,13 @@ public class G_Patterns : BossPattern
     [Space]
     [SerializeField] protected AnimationClip tpStart;
     [SerializeField] protected AnimationClip absorbEnd;
+    [SerializeField] protected Volume panicVolume;
 
     protected GhostBossJangpanPattern bossRangePattern;
 
     protected CanvasGroup playerPCUI;
     protected CanvasGroup playerPPUI;
+    protected Vignette panicVignette;
 
     protected List<Poolable> mobList = new List<Poolable>();
     protected WaitForSeconds waitTime = new WaitForSeconds(1f);
@@ -45,6 +48,9 @@ public class G_Patterns : BossPattern
 
         playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
         playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
+
+        if (panicVolume.profile.TryGet(out Vignette vig))
+            panicVignette = vig;
     }
 
     #region pattern1
@@ -415,6 +421,7 @@ public class GhostPattern : G_Patterns
 
         Boss.Instance.actCoroutine = null;
 
+        GhostBossUI.fillTime = 50f;
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
@@ -469,25 +476,37 @@ public class GhostPattern : G_Patterns
 
     private void SetPanicValue()
     {
-        if (GhostBossUI.fillTime > 70f)
+        float fillTime = GhostBossUI.fillTime;
+        if (fillTime > 70f)
         {
-            if (panicValue == Mathf.CeilToInt((GhostBossUI.fillTime - 70) * 0.1f)) return;
+            panicVignette.intensity.value = (fillTime - 70) * 0.01f + 0.2f;
+            if (panicValue == Mathf.CeilToInt((fillTime - 70) * 0.1f)) return;
 
-            panicValue = Mathf.CeilToInt((GhostBossUI.fillTime - 70) * 0.1f);
+            panicVolume.weight = 1;
+
+            panicValue = Mathf.CeilToInt((fillTime - 70) * 0.1f);
             Boss.Instance.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.25f + 1;
             GameManager.Instance.Player.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.5f + 1;
-        }
-        else if (GhostBossUI.fillTime < 30f)
-        {
-            if (panicValue == Mathf.CeilToInt(GhostBossUI.fillTime * 0.1f) - 3) return;
 
-            panicValue = Mathf.CeilToInt(GhostBossUI.fillTime * 0.1f) - 3;
+            panicVignette.color.value = Color.red;
+        }
+        else if (fillTime < 30f)
+        {
+            panicVignette.intensity.value = 0.2f - (fillTime - 30) * 0.01f;
+            if (panicValue == Mathf.FloorToInt(fillTime * 0.1f) - 3) return;
+
+            panicVolume.weight = 1;
+
+            panicValue = Mathf.FloorToInt(fillTime * 0.1f) - 3;
             Boss.Instance.dmgMul = (panicValue * 0.25f) + 1;
             GameManager.Instance.Player.dmgMul = (panicValue * 0.25f) + 1;
+
+            panicVignette.color.value = Color.cyan;
         }
         else if (panicValue != 0)
         {
             panicValue = 0;
+            panicVolume.weight = 0;
             Boss.Instance.dmgMul = 1;
             GameManager.Instance.Player.dmgMul = 1;
         }
