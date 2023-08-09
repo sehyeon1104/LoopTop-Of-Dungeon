@@ -17,7 +17,7 @@ public class PlayerBossSkillHit : MonoBehaviour
         if (collision.gameObject.CompareTag("Bubble"))
         {
             Managers.Pool.Push(collision.gameObject.GetComponent<Poolable>());
-            BossUI.fillTime += 10;
+            GhostBossUI.fillTime += 10;
             Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", collision.transform.position, Quaternion.identity);
 
         }

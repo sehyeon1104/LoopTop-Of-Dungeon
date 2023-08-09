@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.VFX;
 
 public class PowerSkill : PlayerSkillBase
 {
+    public Gradient trailColor;
+    TrailRenderer trailRenderer;
+    float trailWidth = 5;
     float fireCheckDuration = 0.1f;
     float fireDuration = 0;
     float choppingDmg = 20;
@@ -39,6 +43,7 @@ public class PowerSkill : PlayerSkillBase
     ParticleSystem attackPar;
     private void Awake()
     {
+        trailRenderer =GetComponentInChildren<TrailRenderer>();
         Cashing();
     }
     protected override void Update()
@@ -366,6 +371,7 @@ public class PowerSkill : PlayerSkillBase
         
     IEnumerator Jumpdown()
     {
+        float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
@@ -380,10 +386,13 @@ public class PowerSkill : PlayerSkillBase
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
         playerMovement.IsMove = false;
         playerMovement.IsControl = false;
-        float currentJumpSpeed = jumpSpeed;
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
-        while(lerpValue < 1)
+        trailRenderer.enabled = true;
+        trailRenderer.colorGradient = trailColor;
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, quaternion.identity);
+        trailRenderer.startWidth = trailWidth;
+        while (lerpValue < 1)
         {
             if(lerpValue > 0.5)
             {
@@ -393,6 +402,7 @@ public class PowerSkill : PlayerSkillBase
             {
                 multiPlyValue = 0.7f;   
             }
+            trailRenderer.widthMultiplier = multiPlyValue * trailWidth; 
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
@@ -401,6 +411,7 @@ public class PowerSkill : PlayerSkillBase
             playerRigid.MovePosition(FSegment);
             yield return fixedWait;
         }
+        trailRenderer.enabled = false;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
         for(int i =0; i<enemies.Length; i++) {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);

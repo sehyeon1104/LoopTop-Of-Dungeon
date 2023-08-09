@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,8 @@ public abstract class BossPattern : MonoBehaviour
     [Header("보스 옵션")]
 
     [Tooltip("페이즈별 보스 스킬 개수")]
-    [SerializeField] private int[] phase_patternCount;
-    private WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
+    [SerializeField] protected int[] phase_patternCount;
+    protected WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
 
     [Space]
 
@@ -22,9 +23,12 @@ public abstract class BossPattern : MonoBehaviour
     public AnimationClip[] Phase_One_AnimArray;
     public AnimationClip[] Phase_Two_AnimArray;
 
+    public CinemachineVirtualCamera boss2PhaseVcam;
+
     #endregion
     #region init
     protected int[] patternCount = new int[6];
+    protected int[] patternWeight = new int[6];
 
     protected bool[] isThisSkillCoolDown = new bool[6];
     protected bool isCanUseFinalPattern = true;
@@ -32,16 +36,20 @@ public abstract class BossPattern : MonoBehaviour
 
     protected bool nowBPhaseChange = false;
     
-    int patternChoice = 0;
+    protected int patternChoice = 0;
+
+    public Vector3 hitPoint => throw new System.NotImplementedException();
 
     #endregion
 
     public void Init()
     {
-        patternDelay = new WaitForSeconds(1.5f);
+        patternDelay = new WaitForSeconds(2f);
 
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
+
+        SetPatternWeight();
 
         StartCoroutine(RandomPattern());
         StartCoroutine(ChangePhase());
@@ -53,9 +61,11 @@ public abstract class BossPattern : MonoBehaviour
             Boss.Instance.actCoroutine = null;
             StopAllCoroutines();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+            Boss.Instance.OnDamage(100, 0);
     }
 
-    private IEnumerator ChangePhase()
+    protected virtual IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
         isThisSkillCoolDown[patternChoice] = false;
@@ -67,6 +77,11 @@ public abstract class BossPattern : MonoBehaviour
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
+        boss2PhaseVcam.Priority = 11;
+        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
+
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
 
         yield return patternDelay;
 
@@ -81,12 +96,16 @@ public abstract class BossPattern : MonoBehaviour
         patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
 
+        SetPatternWeight();
+
         Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
 
         yield return patternDelay;
 
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
+        boss2PhaseVcam.Priority = 0;
+
         Boss.Instance.Phase2();
     }
 
@@ -98,7 +117,17 @@ public abstract class BossPattern : MonoBehaviour
 
             if (nowBPhaseChange) continue;
 
-            patternChoice = Random.Range(0, phase_patternCount[NowPhase - 1]);
+            int nowPatternWeight = 0;
+            int choisedWeight = Random.Range(0, 100);
+            for (int i = 0; i < phase_patternCount[NowPhase - 1]; i++)
+            {
+                nowPatternWeight += patternWeight[i]; 
+                if(choisedWeight <= nowPatternWeight)
+                {
+                    patternChoice = i;
+                    break;
+                }
+            }
             patternCount[patternChoice] = GetRandomCount(patternChoice);
 
             if (isThisSkillCoolDown[patternChoice]) continue;
@@ -157,6 +186,13 @@ public abstract class BossPattern : MonoBehaviour
     public virtual int GetRandomCount(int choisedPattern)
     {
         return 0;
+    }
+    public virtual void SetPatternWeight()
+    {
+        for(int i = 0; i < phase_patternCount[NowPhase - 1]; i++)
+        {
+            patternWeight[i] = 100 / phase_patternCount[NowPhase - 1];
+        }
     }
 
     #region Patterns
