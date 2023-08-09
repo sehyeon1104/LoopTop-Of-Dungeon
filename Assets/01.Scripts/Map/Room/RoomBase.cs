@@ -72,7 +72,7 @@ public abstract class RoomBase : MonoBehaviour
 
     public void CheckLinkedRoom()
     {
-        StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
+        //StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
     }
 
     protected virtual void ShowIcon()
