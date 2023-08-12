@@ -1006,6 +1006,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1157295496218240173, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6398945
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157295496218240173, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157295496218240173, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1417262088198852255, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1628835577605266579, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Color.b
       value: 0.4528302
@@ -1022,6 +1038,10 @@ PrefabInstance:
       propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 94708762846745765}
+    - target: {fileID: 2212349275013567168, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 69.6001
+      objectReference: {fileID: 0}
     - target: {fileID: 2212349275680131207, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1110,9 +1130,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2212349275680131259, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2602379015390291425, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269885283640380468, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269885283640380468, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 340
+      objectReference: {fileID: 0}
+    - target: {fileID: 3269885283640380468, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -156.7
       objectReference: {fileID: 0}
     - target: {fileID: 3391853154185854007, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1798,6 +1834,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7638766926344390186, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7638766926344390198, guid: 3b126c65ae0129049bac27491be42b3c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2105,6 +2145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Light
       objectReference: {fileID: 0}
+    - target: {fileID: 5212581110606597667, guid: bd9274dd21496744ab16ce57a21376d1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9274dd21496744ab16ce57a21376d1, type: 3}
 --- !u!1 &2007358599
@@ -2351,6 +2395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GhostBossStart
       objectReference: {fileID: 0}
+    - target: {fileID: 3849257788311083718, guid: 8e331d9714b0bed47b08b1a79691c1e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e331d9714b0bed47b08b1a79691c1e8, type: 3}
 --- !u!1001 &4868979322028950168
@@ -2447,6 +2495,10 @@ PrefabInstance:
     - target: {fileID: 2525266229045474688, guid: 96eed12c63d6e614d9c4c1f9b02342fe, type: 3}
       propertyPath: m_Name
       value: GhostBossUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525266229045474688, guid: 96eed12c63d6e614d9c4c1f9b02342fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96eed12c63d6e614d9c4c1f9b02342fe, type: 3}
@@ -2592,6 +2644,10 @@ PrefabInstance:
     - target: {fileID: 7442715256025506025, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442715256025506025, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9013106838610144560, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_AnchorMax.y

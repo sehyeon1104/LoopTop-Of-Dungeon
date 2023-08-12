@@ -25,13 +25,13 @@ public class G_Patterns : BossPattern
     [Space]
     [SerializeField] protected AnimationClip tpStart;
     [SerializeField] protected AnimationClip absorbEnd;
-    [SerializeField] protected Volume panicVolume;
+
+    [SerializeField] protected Material panicMat;
 
     protected GhostBossJangpanPattern bossRangePattern;
 
     protected CanvasGroup playerPCUI;
     protected CanvasGroup playerPPUI;
-    protected Vignette panicVignette;
 
     protected List<Poolable> mobList = new List<Poolable>();
     protected WaitForSeconds waitTime = new WaitForSeconds(1f);
@@ -49,8 +49,7 @@ public class G_Patterns : BossPattern
         playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
         playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
 
-        if (panicVolume.profile.TryGet(out Vignette vig))
-            panicVignette = vig;
+        panicMat.SetFloat("_VigIntensity", 0);
     }
 
     #region pattern1
@@ -479,34 +478,30 @@ public class GhostPattern : G_Patterns
         float fillTime = GhostBossUI.fillTime;
         if (fillTime > 70f)
         {
-            panicVignette.intensity.value = (fillTime - 70) * 0.01f + 0.2f;
+            panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.25f);
             if (panicValue == Mathf.CeilToInt((fillTime - 70) * 0.1f)) return;
 
-            panicVolume.weight = 1;
+            panicMat.SetColor("_Color", new Color(17f, 0, 0.8f));
 
             panicValue = Mathf.CeilToInt((fillTime - 70) * 0.1f);
             Boss.Instance.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.25f + 1;
             GameManager.Instance.Player.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.5f + 1;
-
-            panicVignette.color.value = Color.red;
         }
         else if (fillTime < 30f)
         {
-            panicVignette.intensity.value = 0.2f - (fillTime - 30) * 0.01f;
+            panicMat.SetFloat("_VigIntensity", (0.2f - (fillTime - 30) * 0.005f) + 0.15f);
             if (panicValue == Mathf.FloorToInt(fillTime * 0.1f) - 3) return;
 
-            panicVolume.weight = 1;
+            panicMat.SetColor("_Color", new Color(0, 16.5f, 9.3f));
 
             panicValue = Mathf.FloorToInt(fillTime * 0.1f) - 3;
             Boss.Instance.dmgMul = (panicValue * 0.25f) + 1;
             GameManager.Instance.Player.dmgMul = (panicValue * 0.25f) + 1;
-
-            panicVignette.color.value = Color.cyan;
         }
         else if (panicValue != 0)
         {
             panicValue = 0;
-            panicVolume.weight = 0;
+            panicMat.SetFloat("_VigIntensity", 0);
             Boss.Instance.dmgMul = 1;
             GameManager.Instance.Player.dmgMul = 1;
         }
