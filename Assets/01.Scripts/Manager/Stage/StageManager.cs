@@ -16,14 +16,14 @@ public class StageManager : MonoSingleton<StageManager>
     private void Awake()
     {
         mapArr = new int[arrSize, arrSize];
+
+        setWall = FindObjectOfType<SetWall>();
+        setRoom = FindObjectOfType<SetRoom>();
     }
 
     private void Start()
     {
         mapParent = new GameObject("Map");
-
-        setWall = FindObjectOfType<SetWall>();
-        setRoom = FindObjectOfType<SetRoom>();
 
         setWall.StartSetWall(mapParent.transform);
         setRoom.SetRoomInMapArr(ref mapArr);
@@ -48,48 +48,48 @@ public class StageManager : MonoSingleton<StageManager>
 
 
     // ¸ğ¸£¼è
-    //[SerializeField]
-    //private GameObject[] wallGrids;
-    //private GameObject wallGrid;
-    //private int[,] wallGridInfo;
-    //private int randWallGrid;
+    [SerializeField]
+    private GameObject[] wallGrids;
+    private GameObject wallGrid;
+    private int[,] wallGridInfo;
+    private int randWallGrid;
 
-    //[SerializeField]
-    //private SpawnRoom[] spawnRooms;
-    //private EnemyRoom[] enemyRooms;
+    [SerializeField]
+    private SpawnRoom[] spawnRooms;
+    private EnemyRoom[] enemyRooms;
 
-    //private int startRoomCount = 1;
-    //private int enemyRoomCount = 7;
-    //private int eliteMobRoomCount = 1;
-    //private int eventRoomCount = 3;
+    private int startRoomCount = 1;
+    private int enemyRoomCount = 7;
+    private int eliteMobRoomCount = 1;
+    private int eventRoomCount = 3;
 
-    //private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
-    //public Dictionary<Define.EventRoomTypeFlag, int> eventRoomCountDic = new Dictionary<Define.EventRoomTypeFlag, int>();
+    private Dictionary<Define.RoomTypeFlag, int> roomCountDic = new Dictionary<Define.RoomTypeFlag, int>();
+    public Dictionary<Define.EventRoomTypeFlag, int> eventRoomCountDic = new Dictionary<Define.EventRoomTypeFlag, int>();
 
-    //public ShopRoom shop { get; private set; } = null;
+    public ShopRoom shop { get; private set; } = null;
 
-    //[SerializeField]
-    //private List<GameObject> wayMinimapIconList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> wayMinimapIconList = new List<GameObject>();
 
-    //#region LinkedRoom
-    //// ë°°ì—´???? ?? ì¢? ?°ë? ?•ì¸??ë°°ì—´
-    //int[] dx = new int[4] { 1, 0, -1, 0 };
-    //int[] dy = new int[4] { 0, -1, 0, 1 };
+    #region LinkedRoom
+    // ë°°ì—´???? ?? ì¢? ?°ë? ?•ì¸??ë°°ì—´
+    int[] dx = new int[4] { 1, 0, -1, 0 };
+    int[] dy = new int[4] { 0, -1, 0, 1 };
 
-    //// ?„ì¬ ë°©ì˜ x, yì¢Œí‘œê°’ì„ ê°€?¸ì˜¬ ë³€??
-    //int posX = 0;
-    //int posY = 0;
+    // ?„ì¬ ë°©ì˜ x, yì¢Œí‘œê°’ì„ ê°€?¸ì˜¬ ë³€??
+    int posX = 0;
+    int posY = 0;
 
-    //Vector3 roomPos;
+    Vector3 roomPos;
 
-    //// ?°ê²°??ë°©ì˜ ì¢Œí‘œê°’ì„ ?´ì„ ë²¡í„°
-    //Vector3 originRoomPos;
-    //Vector3 originWayPos;
-    //#endregion
+    // ?°ê²°??ë°©ì˜ ì¢Œí‘œê°’ì„ ?´ì„ ë²¡í„°
+    Vector3 originRoomPos;
+    Vector3 originWayPos;
+    #endregion
 
-    //private GameObject dropItemPrefab = null;
+    private GameObject dropItemPrefab = null;
 
-    //public bool isSetting { private set; get; }
+    public bool isSetting { private set; get; }
 
     //private void Awake()
     //{
@@ -179,7 +179,7 @@ public class StageManager : MonoSingleton<StageManager>
     //            --i;
     //            continue;
     //        }
-            
+
     //        // ¹æ Å¸ÀÔ ÁöÁ¤
     //        spawnRooms[i].RoomTypeFlag = (Define.RoomTypeFlag)randRoom;
     //        roomCountDic[(Define.RoomTypeFlag)randRoom]--;
@@ -194,15 +194,15 @@ public class StageManager : MonoSingleton<StageManager>
     //    }
     //}
 
-    //public void InstantiateChest(Vector3 pos, Define.ChestRating chestRating)
-    //{
-    //    // TODO : »óÀÚ ¼ÒÈ¯
-    //    Debug.Log("»óÀÚ ¼ÒÈ¯");
-    //    GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
-    //    chestObj.transform.position = pos;
-    //    Chest chest = chestObj.GetComponent<Chest>();
-    //    chest.SetChestRating(chestRating);
-    //}
+    public void InstantiateChest(Vector3 pos, Define.ChestRating chestRating)
+    {
+        // TODO : »óÀÚ ¼ÒÈ¯
+        Debug.Log("»óÀÚ ¼ÒÈ¯");
+        GameObject chestObj = Managers.Resource.Instantiate("Assets/03.Prefabs/Chest.prefab");
+        chestObj.transform.position = pos;
+        Chest chest = chestObj.GetComponent<Chest>();
+        chest.SetChestRating(chestRating);
+    }
 
     //public void ShowLinkedMapInMinimap(Vector3 pos)
     //{
