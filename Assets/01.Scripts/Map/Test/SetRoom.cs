@@ -3,8 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+using TMPro;
+
 public class SetRoom : MonoBehaviour
 {
+    int[,] mapArr;
+    public TextMeshProUGUI tmp = null;
+    public void DebugTest()
+    {
+        mapArr = StageManager.Instance.GetMapArr();
+        string s = "";
+        for (int y = 0; y < arrSize; ++y)
+        {
+            for (int x = 0; x < arrSize; ++x)
+            {
+                s += mapArr[y, x];
+            }
+            s += "\n";
+        }
+
+        tmp.SetText(s);
+    }
+
     int eventRoomCount = 4;
 
     int arrSize = 6;
@@ -13,19 +33,27 @@ public class SetRoom : MonoBehaviour
     private int[] dx = new int[4] { 0, 0, -1, 1 };
     private int[] dy = new int[4] { -1, 1, 0, 0 };
 
-    public void SetRoomInMapArr(ref int[,] mapArr)
+    public void SetRoomInMapArr()
     {
+        mapArr = StageManager.Instance.GetMapArr();
+
         int nx = 0;
         int ny = 0;
 
         // 이벤트방 설정
         for (int y = 0; y < arrSize; ++y)
         {
+            if (y < arrSize / 2 && eventRoomCount <= 2)
+                continue;
+
             if (eventRoomCount == 0)
                 break;
 
             for (int x = 0; x < arrSize; ++x)
             {
+                if (y < arrSize / 2 && eventRoomCount <= 2)
+                    continue;
+
                 if (eventRoomCount == 0)
                     break;
 
@@ -37,13 +65,16 @@ public class SetRoom : MonoBehaviour
                         if (eventRoomCount == 0)
                             break;
 
+                        if (CheckNearbyRoomCount(x, y) == 1)
+                            break;
+
                         nx = x + dx[i];
                         ny = y + dy[i];
 
                         if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0)
                             continue;
 
-                        if (mapArr[ny, nx] != 1 && mapArr[ny, nx] != 0)
+                        if (mapArr[ny, nx] == 2)
                         {
                             mapArr[ny, nx] = 4;
                             eventRoomCount--;
@@ -85,10 +116,10 @@ public class SetRoom : MonoBehaviour
             nx = x + dx[i];
             ny = y + dy[i];
 
-            if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0)
+            if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0 || tempMapArr[ny, nx] == 1)
                 continue;
 
-            if (tempMapArr[ny, nx] != 0 && tempMapArr[ny, nx] != 1)
+            if (tempMapArr[ny, nx] == 2)
             {
                 tempMapArr[ny, nx] = 0;
                 FindFurthestRoom(nx, ny, dis++);
@@ -101,5 +132,27 @@ public class SetRoom : MonoBehaviour
             farDis = dis;
             furthestRooms.Add(new Vector2(x, y));
         }
+    }
+
+    // 주변 방 체크 함수
+    private int CheckNearbyRoomCount(int x, int y)
+    {
+        int nx = 0;
+        int ny = 0;
+        int roomCount = 0;
+
+        for (int i = 0; i < 4; ++i)
+        {
+            nx = x + dx[i];
+            ny = y + dy[i];
+
+            if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0)
+                continue;
+
+            if (mapArr[ny, nx] != 0)
+                roomCount++;
+        }
+
+        return roomCount;
     }
 }

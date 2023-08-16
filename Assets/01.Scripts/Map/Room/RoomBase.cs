@@ -18,9 +18,9 @@ public abstract class RoomBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        minimapIconSpriteRenderer.gameObject.SetActive(false);
-        curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
+        // minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        // minimapIconSpriteRenderer.gameObject.SetActive(false);
+        // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
     protected virtual void SetRoomTypeFlag()

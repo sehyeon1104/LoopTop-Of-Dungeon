@@ -17,8 +17,13 @@ public class StageManager : MonoSingleton<StageManager>
     {
         mapArr = new int[arrSize, arrSize];
 
+        dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
+
         setWall = FindObjectOfType<SetWall>();
         setRoom = FindObjectOfType<SetRoom>();
+
+        SetRoomCountDic();
+        SetEventRoomCountDic();
     }
 
     private void Start()
@@ -26,7 +31,10 @@ public class StageManager : MonoSingleton<StageManager>
         mapParent = new GameObject("Map");
 
         setWall.StartSetWall(mapParent.transform);
-        setRoom.SetRoomInMapArr(ref mapArr);
+        setRoom.SetRoomInMapArr();
+
+
+        setRoom.DebugTest();
     }
 
     public int[,] GetMapArr()
@@ -93,34 +101,29 @@ public class StageManager : MonoSingleton<StageManager>
 
     //private void Awake()
     //{
-    //    wallGrids = new GameObject[4];
-    //    // TODO : WallGrid ë°??¬íƒˆ ?´ë“œ?ˆì„œë¸”ë¡œ ë¶ˆëŸ¬?¤ê¸°
-    //    for(int i = 0; i < 4; ++i)
-    //    {
-    //        wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
-    //    }
-
-    //    dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
-
-    //    SetRoomCountDic();
-    //    SetEventRoomCountDic();
+    //    //wallGrids = new GameObject[4];
+    //    //// TODO : WallGrid ë°??¬íƒˆ ?´ë“œ?ˆì„œë¸”ë¡œ ë¶ˆëŸ¬?¤ê¸°
+    //    //for (int i = 0; i < 4; ++i)
+    //    //{
+    //    //    wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
+    //    //}
     //}
 
-    //private void SetRoomCountDic()
-    //{
-    //    roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
-    //    roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, enemyRoomCount);
-    //    roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, eliteMobRoomCount);
-    //    roomCountDic.Add(Define.RoomTypeFlag.EventRoom, eventRoomCount);
-    //}
+    private void SetRoomCountDic()
+    {
+        roomCountDic.Add(Define.RoomTypeFlag.StartRoom, startRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EnemyRoom, enemyRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EliteMobRoom, eliteMobRoomCount);
+        roomCountDic.Add(Define.RoomTypeFlag.EventRoom, eventRoomCount);
+    }
 
-    //private void SetEventRoomCountDic()
-    //{
-    //    for(int i = 0; i < System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length; ++i)
-    //    {
-    //        eventRoomCountDic.Add((Define.EventRoomTypeFlag)i, 1);
-    //    }
-    //}
+    private void SetEventRoomCountDic()
+    {
+        for (int i = 0; i < System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length; ++i)
+        {
+            eventRoomCountDic.Add((Define.EventRoomTypeFlag)i, 1);
+        }
+    }
 
     //private IEnumerator Start()
     //{
