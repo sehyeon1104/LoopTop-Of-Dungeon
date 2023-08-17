@@ -27,11 +27,8 @@ public class SetWall : MonoBehaviour
 
     private string spawnWallstr = "";
 
-    private float wallInterval = 28f;
-    private float roadIntervalVerticalX = 12f;
-    private float roadIntervalVerticalY = -5f;
-    private float roadIntervalHorizontalX = -1f;
-    private float roadIntervalHorizontalY = 9f;
+    public float wallInterval { private set; get; } = 28f;
+
 
     public void StartSetWall(Transform parent)
     {
@@ -42,7 +39,7 @@ public class SetWall : MonoBehaviour
 
         SetMapForm();
 
-        InstantiateWallAndRoad(parent);
+        InstantiateWall(parent);
     }
 
     private void Init()
@@ -148,7 +145,7 @@ public class SetWall : MonoBehaviour
         return roomCount;
     }
 
-    private void InstantiateWallAndRoad(Transform parent)
+    private void InstantiateWall(Transform parent)
     {
         int nx = 0;
         int ny = 0;

@@ -16,7 +16,7 @@ public class StatueRoom : RoomBase
         minimapIcon.SetActive(false);
 
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        minimapIconSpriteRenderer.gameObject.SetActive(false);
+        // minimapIconSpriteRenderer.gameObject.SetActive(false);
         //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 

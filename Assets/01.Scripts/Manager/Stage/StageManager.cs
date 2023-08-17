@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
 {
-    private SetWall setWall = null;
+    public SetWall setWall { private set; get; } = null;
+    public SetRoad setRoad { private set; get; } = null;
     private SetRoom setRoom = null;
 
     private int[,] mapArr;
@@ -21,6 +22,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         setWall = FindObjectOfType<SetWall>();
         setRoom = FindObjectOfType<SetRoom>();
+        setRoad = FindObjectOfType<SetRoad>();
 
         SetRoomCountDic();
         SetEventRoomCountDic();
@@ -30,8 +32,11 @@ public class StageManager : MonoSingleton<StageManager>
     {
         mapParent = new GameObject("Map");
 
+        StartCoroutine(SetStage());
         setWall.StartSetWall(mapParent.transform);
         setRoom.SetRoomInMapArr();
+        setRoad.StartSetRoad(mapParent.transform);
+        setRoom.DebugTest();
 
         isSetting = true;
         spawnRooms = FindObjectsOfType<SpawnRoom>();
@@ -41,7 +46,12 @@ public class StageManager : MonoSingleton<StageManager>
 
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
 
-        //setRoom.DebugTest();
+    }
+
+    public IEnumerator SetStage()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isSetting = false;
     }
 
     public int[,] GetMapArr()

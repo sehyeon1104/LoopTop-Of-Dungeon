@@ -28,7 +28,7 @@ public class BrokenItemRoom : RoomBase
         base.Awake();
         minimapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/BrokenItemRoomIcon.prefab", transform);
         minimapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);
-        minimapIcon.SetActive(false);
+        //minimapIcon.SetActive(false);
     }
 
     private void Start()

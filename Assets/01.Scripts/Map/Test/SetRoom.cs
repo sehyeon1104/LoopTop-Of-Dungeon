@@ -92,6 +92,26 @@ public class SetRoom : MonoBehaviour
         if (furthestRooms.Count != 0)
         {
             int rand = UnityEngine.Random.Range(0, furthestRooms.Count);
+            if(mapArr[(int)furthestRooms[rand].y, (int)furthestRooms[rand].x] == 4)
+            {
+                furthestRooms.RemoveAt(rand);
+                while (true)
+                {
+                    if(furthestRooms.Count == 0)
+                    {
+                        break;
+                    }
+                    rand = UnityEngine.Random.Range(0, furthestRooms.Count);
+                    if (mapArr[(int)furthestRooms[rand].y, (int)furthestRooms[rand].x] == 4)
+                    {
+                        furthestRooms.RemoveAt(rand);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
             mapArr[(int)furthestRooms[rand].y, (int)furthestRooms[rand].x] = 3;
         }
         else
@@ -119,7 +139,7 @@ public class SetRoom : MonoBehaviour
             if (nx > arrSize - 1 || nx < 0 || ny > arrSize - 1 || ny < 0 || tempMapArr[ny, nx] == 1)
                 continue;
 
-            if (tempMapArr[ny, nx] == 2)
+            if (tempMapArr[ny, nx] != 0)
             {
                 tempMapArr[ny, nx] = 0;
                 FindFurthestRoom(nx, ny, dis++);
