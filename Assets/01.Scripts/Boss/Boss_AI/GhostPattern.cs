@@ -298,7 +298,7 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(0.1f);
             Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(5.5f, 17f), clone.transform.rotation.z, 1 << 8);
             if (col != null)
-                col.GetComponent<IHittable>().OnDamage(2, 0);
+                col.GetComponent<IHittable>().OnDamage(15, 0);
 
             yield return waitTime;
 
@@ -472,13 +472,12 @@ public class GhostPattern : G_Patterns
         Boss.Instance.Phase2();
 
     }
-
     private void SetPanicValue()
     {
         float fillTime = GhostBossUI.fillTime;
         if (fillTime > 70f)
         {
-            panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.25f);
+            panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.3f);
             if (panicValue == Mathf.CeilToInt((fillTime - 70) * 0.1f)) return;
 
             panicMat.SetColor("_Color", new Color(17f, 0, 0.8f));

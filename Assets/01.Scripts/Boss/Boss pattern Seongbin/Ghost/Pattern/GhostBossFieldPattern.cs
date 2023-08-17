@@ -137,7 +137,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             if (GhostBossUI.fillTime > 70f)
             {
-                GameManager.Instance.Player.OnDamage(1, 0);
+                GameManager.Instance.Player.OnDamage(5, 0);
             }
         }
 

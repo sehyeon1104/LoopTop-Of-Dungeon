@@ -87,6 +87,8 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject blurPanel;
     public List<Heart> avcList = new List<Heart>();
     public List<Image> hpbars = new List<Image>();
+    public Image hpBar;
+    public TextMeshProUGUI hpText;
     public PlayerSkill playerskill;
     private int maxHpCount = 0;
 
@@ -135,7 +137,7 @@ public class UIManager : MonoSingleton<UIManager>
             playerPCUI = GameObject.Find("PCPlayerUI").gameObject;
             playerPPUI = GameObject.Find("PPPlayerUI").gameObject;
             ultFade = playerPCUI.transform.Find("UltFade").gameObject;
-            hpSpace = ultFade.transform.Find("LeftDown/PlayerHP").gameObject;
+            hpSpace = ultFade.transform.Find("LeftDown/NewPlayerHp").gameObject;
             playerItemListUI = ultFade.transform.Find("LeftDown/PlayerItemList");
 
             fragmentAmountTMP = ultFade.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
@@ -162,6 +164,9 @@ public class UIManager : MonoSingleton<UIManager>
             minimap = ultFade.transform.Find("Minimap");
             curStageName = showCurStageNameObj.transform.Find("CurStageName").GetComponent<TextMeshProUGUI>();
             curStageNameLine = showCurStageNameObj.transform.Find("Line").GetComponent<Image>();
+
+            hpBar = hpSpace.GetComponentInChildren<Heart>().transform.Find("HPImg").GetComponent<Image>();
+            hpText = hpBar.GetComponentInChildren<TextMeshProUGUI>();
         }
         itemUITemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemUI.prefab");
         ults = player.GetComponentsInChildren<PlayableDirector>();
@@ -181,7 +186,7 @@ public class UIManager : MonoSingleton<UIManager>
     private void Start()
     {
         obtainItemInfoScale = obtainItemInfo.transform.localScale;
-        HPInit();
+        //HPInit();
         UpdateUI();
         DisActiveAllPanels();
         if(SceneManager.GetActiveScene().name == "CenterScene")
@@ -193,8 +198,9 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void UpdateUI()
     {
-        MaxHpUpdate();
-        HpUpdate();
+        //MaxHpUpdate();
+        //HpUpdate();
+        NewHpUpdate();
         UpdateGoods();
     }
 
@@ -203,11 +209,11 @@ public class UIManager : MonoSingleton<UIManager>
         foreach (var avc in hpSpace.GetComponentsInChildren<Heart>())
         {
             avcList.Add(avc);
-            //Debug.Log(avc);
             hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
             avc.gameObject.SetActive(false);
         }
     }
+    
 
     public void TogglePlayerAttackUI()
     {
@@ -471,6 +477,13 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
     }
+    public void NewHpUpdate()
+    {
+        if (hpBar == null) return;
+        hpBar.fillAmount = ((float)GameManager.Instance.Player.playerBase.Hp) / ((float)GameManager.Instance.Player.playerBase.MaxHp);
+        hpText.text = $"{GameManager.Instance.Player.playerBase.Hp}<color=#aeaeae><size=90%>/{GameManager.Instance.Player.playerBase.MaxHp}";
+    }
+
     public void RotateInteractionButton()
     {
         AttackButton.SetActive(false);

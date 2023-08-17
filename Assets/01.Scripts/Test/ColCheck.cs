@@ -8,7 +8,7 @@ public class ColCheck : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            GameManager.Instance.Player.OnDamage(15, 0);
         }
     }
 }

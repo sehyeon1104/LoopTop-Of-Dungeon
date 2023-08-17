@@ -14,7 +14,7 @@ public class PlayerBase
 
     public void InitPlayerStat()
     {       
-        maxHp = 12;
+        maxHp = 100;
         hp = maxHp;
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
@@ -65,7 +65,8 @@ public class PlayerBase
             }
 
             GameManager.Instance.Player.HPRelatedItemEffects?.Invoke();
-            UIManager.Instance.HpUpdate();
+            //UIManager.Instance.HpUpdate();
+            UIManager.Instance.NewHpUpdate();
         }
     }
 
@@ -83,7 +84,7 @@ public class PlayerBase
     }
     public int InitMaxHp
     {
-        get => 12;
+        get => 100;
     }
 
     private float attack;
