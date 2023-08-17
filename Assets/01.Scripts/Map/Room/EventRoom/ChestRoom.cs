@@ -19,8 +19,8 @@ public class ChestRoom : RoomBase
         minimapIcon.SetActive(false);
 
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        minimapIconSpriteRenderer.gameObject.SetActive(false);
-        curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
+        // minimapIconSpriteRenderer.gameObject.SetActive(false);
+        //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
     private void Start()

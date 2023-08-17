@@ -55,7 +55,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     private void Start()
     {
-        door = FindObjectOfType<Door>();
+        // door = FindObjectOfType<Door>();
         waitForSpawnTime = new WaitForSeconds(spawnTime);
         waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
@@ -124,12 +124,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public IEnumerator ManagingEnemy(Transform[] enemySpawnPos)
     {
-        if (door.IsFirst)
-        {
-            door.IsFirst = false;
-        }
+        //if (door.IsFirst)
+        //{
+        //    door.IsFirst = false;
+        //}
 
-        door.CloseDoors();
+        // door.CloseDoors();
         
         isNextWave = false;
 

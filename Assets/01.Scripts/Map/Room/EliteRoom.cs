@@ -40,7 +40,7 @@ public class EliteRoom : RoomBase
             isEliteMonsterSpawn = true;
             // TODO : 엘리트 몬스터 등장 전 위험표시 및 엘리트 몬스터전 추가
 
-            Door.Instance.CloseDoors();
+            // Door.Instance.CloseDoors();
             EnemySpawnManager.Instance.SpawnEliteMonster(transform);
             StartCoroutine(CheckClear());
         }
@@ -58,7 +58,7 @@ public class EliteRoom : RoomBase
         {
             isClear = true;
             AssignMoveNextMapPortal();
-            Door.Instance.OpenDoors();
+            // Door.Instance.OpenDoors();
         }
     }
 

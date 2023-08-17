@@ -5,6 +5,74 @@ using UnityEngine;
 
 public class StageManager : MonoSingleton<StageManager>
 {
+    public SetWall setWall { private set; get; } = null;
+    public SetRoad setRoad { private set; get; } = null;
+    private SetRoom setRoom = null;
+
+    private int[,] mapArr;
+    public int arrSize { private set; get; } = 6;
+
+    private GameObject mapParent = null;
+
+    private void Awake()
+    {
+        mapArr = new int[arrSize, arrSize];
+
+        dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
+
+        setWall = FindObjectOfType<SetWall>();
+        setRoom = FindObjectOfType<SetRoom>();
+        setRoad = FindObjectOfType<SetRoad>();
+
+        SetRoomCountDic();
+        SetEventRoomCountDic();
+    }
+
+    private IEnumerator Start()
+    {
+        mapParent = new GameObject("Map");
+
+        StartCoroutine(SetStage());
+        setWall.StartSetWall(mapParent.transform);
+        setRoom.SetRoomInMapArr();
+        setRoad.StartSetRoad(mapParent.transform);
+        setRoom.DebugTest();
+
+        isSetting = true;
+        spawnRooms = FindObjectsOfType<SpawnRoom>();
+        shop = FindObjectOfType<ShopRoom>();
+        enemyRooms = FindObjectsOfType<EnemyRoom>();
+        yield return new WaitUntil(() => enemyRooms.Length > 3);
+
+        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+
+    }
+
+    public IEnumerator SetStage()
+    {
+        yield return new WaitForSeconds(1.5f);
+        isSetting = false;
+    }
+
+    public int[,] GetMapArr()
+    {
+        return mapArr;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // ∏∏£ºË
     [SerializeField]
     private GameObject[] wallGrids;
     private GameObject wallGrid;
@@ -48,20 +116,15 @@ public class StageManager : MonoSingleton<StageManager>
 
     public bool isSetting { private set; get; }
 
-    private void Awake()
-    {
-        wallGrids = new GameObject[4];
-        // TODO : WallGrid Î∞??¨ÌÉà ?¥Îìú?àÏÑúÎ∏îÎ°ú Î∂àÎü¨?§Í∏∞
-        for(int i = 0; i < 4; ++i)
-        {
-            wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
-        }
-
-        dropItemPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/DropItem.prefab");
-
-        SetRoomCountDic();
-        SetEventRoomCountDic();
-    }
+    //private void Awake()
+    //{
+    //    //wallGrids = new GameObject[4];
+    //    //// TODO : WallGrid Î∞??¨ÌÉà ?¥Îìú?àÏÑúÎ∏îÎ°ú Î∂àÎü¨?§Í∏∞
+    //    //for (int i = 0; i < 4; ++i)
+    //    //{
+    //    //    wallGrids[i] = Managers.Resource.Load<GameObject>($"Assets/03.Prefabs/Map_Wall/WallGrid{i + 1}.prefab");
+    //    //}
+    //}
 
     private void SetRoomCountDic()
     {
@@ -73,83 +136,83 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void SetEventRoomCountDic()
     {
-        for(int i = 0; i < System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length; ++i)
+        for (int i = 0; i < System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length; ++i)
         {
             eventRoomCountDic.Add((Define.EventRoomTypeFlag)i, 1);
         }
     }
 
-    private IEnumerator Start()
-    {
-        isSetting = true;
-        StartCoroutine(SetStage());
+    //private IEnumerator Start()
+    //{
+    //    isSetting = true;
+    //    StartCoroutine(SetStage());
 
-        SetWallGrid();
-        InitWay();
-        spawnRooms = FindObjectsOfType<SpawnRoom>();
-        SetRoom();
-        InstantiateRooms();
+    //    SetWallGrid();
+    //    InitWay();
+    //    spawnRooms = FindObjectsOfType<SpawnRoom>();
+    //    SetRoom();
+    //    InstantiateRooms();
 
-        shop = FindObjectOfType<ShopRoom>();
-        enemyRooms = FindObjectsOfType<EnemyRoom>();
-        yield return new WaitUntil(() => enemyRooms.Length > 3);
+    //    shop = FindObjectOfType<ShopRoom>();
+    //    enemyRooms = FindObjectsOfType<EnemyRoom>();
+    //    yield return new WaitUntil(() => enemyRooms.Length > 3);
 
-        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
-    }
+    //    StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+    //}
 
-    public IEnumerator SetStage()
-    {
-        yield return new WaitForSeconds(1.5f);
-        isSetting = false;
-    }
+    //public IEnumerator SetStage()
+    //{
+    //    yield return new WaitForSeconds(1.5f);
+    //    isSetting = false;
+    //}
 
-    public void SetWallGrid()
-    {
-        randWallGrid = Random.Range(0, wallGrids.Length);
-        wallGrid = wallGrids[randWallGrid];
-        var wallGridObj = Instantiate(wallGrid);
-        var wayMinimapIcon = wallGridObj.transform.Find("WayMinimapIcons");
-        for(int i = 0; i < wayMinimapIcon.childCount; ++i)
-        {
-            wayMinimapIconList.Add(wayMinimapIcon.GetChild(i).gameObject);
-        }
-    }
+    //public void SetWallGrid()
+    //{
+    //    randWallGrid = Random.Range(0, wallGrids.Length);
+    //    wallGrid = wallGrids[randWallGrid];
+    //    var wallGridObj = Instantiate(wallGrid);
+    //    var wayMinimapIcon = wallGridObj.transform.Find("WayMinimapIcons");
+    //    for(int i = 0; i < wayMinimapIcon.childCount; ++i)
+    //    {
+    //        wayMinimapIconList.Add(wayMinimapIcon.GetChild(i).gameObject);
+    //    }
+    //}
 
-    public void InitWay()
-    {
-        for(int i = 0; i < wayMinimapIconList.Count; ++i)
-        {
-            wayMinimapIconList[i].SetActive(false);
-        }
-    }
+    //public void InitWay()
+    //{
+    //    for(int i = 0; i < wayMinimapIconList.Count; ++i)
+    //    {
+    //        wayMinimapIconList[i].SetActive(false);
+    //    }
+    //}
 
-    private int randRoom = 0;
-    public void SetRoom()
-    {
-        for(int i = 0; i < spawnRooms.Length; ++i)
-        {
-            // Ω√¿€ πÊ∫Œ≈Õ ¿Ã∫•∆Æ πÊ±Ó¡ˆ ∑£¥˝¿∏∑Œ ±º∏≤
-            randRoom = Random.Range(1, 5);
+    //private int randRoom = 0;
+    //public void SetRoom()
+    //{
+    //    for(int i = 0; i < spawnRooms.Length; ++i)
+    //    {
+    //        // Ω√¿€ πÊ∫Œ≈Õ ¿Ã∫•∆Æ πÊ±Ó¡ˆ ∑£¥˝¿∏∑Œ ±º∏≤
+    //        randRoom = Random.Range(1, 5);
 
-            // ≥≤¿∫ πÊ¿« ∞≥ºˆ∞° 0¿Ã∂Û∏È ReRoll
-            if (roomCountDic[(Define.RoomTypeFlag)randRoom] == 0){
-                --i;
-                continue;
-            }
-            
-            // πÊ ≈∏¿‘ ¡ˆ¡§
-            spawnRooms[i].RoomTypeFlag = (Define.RoomTypeFlag)randRoom;
-            roomCountDic[(Define.RoomTypeFlag)randRoom]--;
-        }
-    }
+    //        // ≥≤¿∫ πÊ¿« ∞≥ºˆ∞° 0¿Ã∂Û∏È ReRoll
+    //        if (roomCountDic[(Define.RoomTypeFlag)randRoom] == 0){
+    //            --i;
+    //            continue;
+    //        }
 
-    public void InstantiateRooms()
-    {
-        foreach(var room in spawnRooms)
-        {
-            room.SetAndInstantiateRoom();
-        }
-    }
+    //        // πÊ ≈∏¿‘ ¡ˆ¡§
+    //        spawnRooms[i].RoomTypeFlag = (Define.RoomTypeFlag)randRoom;
+    //        roomCountDic[(Define.RoomTypeFlag)randRoom]--;
+    //    }
+    //}
+
+    //public void InstantiateRooms()
+    //{
+    //    foreach (var room in spawnRooms)
+    //    {
+    //        room.SetAndInstantiateRoom();
+    //    }
+    //}
 
     public void InstantiateChest(Vector3 pos, Define.ChestRating chestRating)
     {
@@ -161,76 +224,76 @@ public class StageManager : MonoSingleton<StageManager>
         chest.SetChestRating(chestRating);
     }
 
-    public void ShowLinkedMapInMinimap(Vector3 pos)
-    {
-        // wallGridInfo
-        wallGridInfo = randWallGrid switch
-        {
-            0 => MapInfo.WallGrid1,
-            1 => MapInfo.WallGrid2,
-            2 => MapInfo.WallGrid3,
-            3 => MapInfo.WallGrid4,
+    //public void ShowLinkedMapInMinimap(Vector3 pos)
+    //{
+    //    // wallGridInfo
+    //    wallGridInfo = randWallGrid switch
+    //    {
+    //        0 => MapInfo.WallGrid1,
+    //        1 => MapInfo.WallGrid2,
+    //        2 => MapInfo.WallGrid3,
+    //        3 => MapInfo.WallGrid4,
 
-            _ => null
-        };
+    //        _ => null
+    //    };
 
-        if (wallGridInfo == null)
-        {
-            Rito.Debug.Log("wallGridInfo is null");
-            return;
-        }
+    //    if (wallGridInfo == null)
+    //    {
+    //        Rito.Debug.Log("wallGridInfo is null");
+    //        return;
+    //    }
 
-        // xÍ∞íÍ≥º yÍ∞íÏù¥ ÏµúÎ? 3ÍπåÏ?Îß??òÏò§Í≤åÎÅî ?∏ÌåÖ
-        posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
-        posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
+    //    // xÍ∞íÍ≥º yÍ∞íÏù¥ ÏµúÎ? 3ÍπåÏ?Îß??òÏò§Í≤åÎÅî ?∏ÌåÖ
+    //    posY = ( (int)(pos.x - MapInfo.firstPosX) / (int)MapInfo.xDir ) * 2;
+    //    posX = ( (int)(pos.y - MapInfo.firstPosY) / (int)MapInfo.yDir) * 2;
 
-        // Î∞∞Ïó¥????x + 1), ??x - 1), Ï¢?y - 1), ??y + 1) Ï§?Í∏∏Ïù¥ ?àÎäîÏßÄ Ï≤¥ÌÅ¨
-        // ?úÏÑú : ?? Ï¢? ?? ??(Î∞òÏãúÍ≥?
-        for(int i = 0; i < 4; ++i)
-        {
-            // Î∞∞Ïó¥???ÑÏ≤¥ ?¨Í∏∞Î≥¥Îã§ ?¨Í±∞???ëÏùÑÍ≤ΩÏö∞ Î∞∞Ïó¥ Î≤îÏúÑ ?¥ÌÉà
-            if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
-            {
-                continue;
-            }
+    //    // Î∞∞Ïó¥????x + 1), ??x - 1), Ï¢?y - 1), ??y + 1) Ï§?Í∏∏Ïù¥ ?àÎäîÏßÄ Ï≤¥ÌÅ¨
+    //    // ?úÏÑú : ?? Ï¢? ?? ??(Î∞òÏãúÍ≥?
+    //    for(int i = 0; i < 4; ++i)
+    //    {
+    //        // Î∞∞Ïó¥???ÑÏ≤¥ ?¨Í∏∞Î≥¥Îã§ ?¨Í±∞???ëÏùÑÍ≤ΩÏö∞ Î∞∞Ïó¥ Î≤îÏúÑ ?¥ÌÉà
+    //        if ((posX + dx[i]) < 0 || posY + dy[i] < 0 || posX + dx[i] > 6 || posY + dy[i] > 6)
+    //        {
+    //            continue;
+    //        }
 
-            // wallGrid??x, yÏ¢åÌëúÍ∞Ä Í∏∏ÏùºÍ≤ΩÏö∞
-            if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
-            {
-                originRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
-                originWayPos = new Vector3((posY + dy[i]) * MapInfo.xDirWay + MapInfo.firstPosXWay, (posX + dx[i]) * MapInfo.yDirWay + MapInfo.firstPosYWay);
+    //        // wallGrid??x, yÏ¢åÌëúÍ∞Ä Í∏∏ÏùºÍ≤ΩÏö∞
+    //        if (wallGridInfo[posX + dx[i], posY + dy[i]] == 2)
+    //        {
+    //            originRoomPos = new Vector3(((posY / 2) + dy[i]) * MapInfo.xDir + MapInfo.firstPosX, ((posX / 2) + dx[i]) * MapInfo.yDir + MapInfo.firstPosY);
+    //            originWayPos = new Vector3((posY + dy[i]) * MapInfo.xDirWay + MapInfo.firstPosXWay, (posX + dx[i]) * MapInfo.yDirWay + MapInfo.firstPosYWay);
 
-                for (int j = 0; j < spawnRooms.Length; ++j)
-                {
-                    roomPos = spawnRooms[j].transform.position;
-                    // x, yÍ∞íÏùÑ ?êÎûò?ÄÎ°??åÎ†§?ìÏ? Í∞íÏù¥ spawnRooms[j]??Ï¢åÌëúÍ∞íÍ≥º Í∞ôÏùÑÍ≤ΩÏö∞
-                    if (roomPos == originRoomPos)
-                    {
-                        // ÎØ∏ÎãàÎßµÏóê ?ÑÏù¥ÏΩ??úÍ∏∞
-                        spawnRooms[j].GetSummonedRoom().ShowInMinimap();
-                        ShowWayMinimapIcon();
-                        break;
-                    }
-                }
-            }
-        }
-    }
+    //            for (int j = 0; j < spawnRooms.Length; ++j)
+    //            {
+    //                roomPos = spawnRooms[j].transform.position;
+    //                // x, yÍ∞íÏùÑ ?êÎûò?ÄÎ°??åÎ†§?ìÏ? Í∞íÏù¥ spawnRooms[j]??Ï¢åÌëúÍ∞íÍ≥º Í∞ôÏùÑÍ≤ΩÏö∞
+    //                if (roomPos == originRoomPos)
+    //                {
+    //                    // ÎØ∏ÎãàÎßµÏóê ?ÑÏù¥ÏΩ??úÍ∏∞
+    //                    spawnRooms[j].GetSummonedRoom().ShowInMinimap();
+    //                    ShowWayMinimapIcon();
+    //                    break;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void ShowWayMinimapIcon()
-    {
-        for(int i = 0; i < wayMinimapIconList.Count; ++i)
-        {
-            if(wayMinimapIconList[i].transform.position == originWayPos)
-            {
-                if(!wayMinimapIconList[i].activeSelf)
-                {
-                    wayMinimapIconList[i].SetActive(true);
-                }
-                else
-                {
-                    // Debug.Log("already wayIcon is active!");
-                }
-            }
-        }
-    }
+    //public void ShowWayMinimapIcon()
+    //{
+    //    for(int i = 0; i < wayMinimapIconList.Count; ++i)
+    //    {
+    //        if(wayMinimapIconList[i].transform.position == originWayPos)
+    //        {
+    //            if(!wayMinimapIconList[i].activeSelf)
+    //            {
+    //                wayMinimapIconList[i].SetActive(true);
+    //            }
+    //            else
+    //            {
+    //                // Debug.Log("already wayIcon is active!");
+    //            }
+    //        }
+    //    }
+    //}
 }
