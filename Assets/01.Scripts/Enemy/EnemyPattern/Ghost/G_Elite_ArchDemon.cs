@@ -49,7 +49,7 @@ public class G_Elite_ArchDemon : EnemyElite
             for (int j = 0; j < cols.Length; j++)
             {
                 if (cols[j].CompareTag("Player"))
-                    GameManager.Instance.Player.OnDamage(2, 0);
+                    GameManager.Instance.Player.OnDamage(15, 0);
             }
         }
 
@@ -87,7 +87,7 @@ public class G_Elite_ArchDemon : EnemyElite
     protected override IEnumerator Attack3()
     {
         distanceToPlayer = Vector2.Distance(playerTransform.position, transform.position);
-        if (distanceToPlayer > 2f) yield break;
+        if (distanceToPlayer > 4f) yield break;
 
         Vector2 dir = (playerTransform.position - transform.position).normalized;
         sprite.flipX = isFlip != (Mathf.Sign(dir.x) > 0);

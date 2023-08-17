@@ -27,7 +27,7 @@ public class BulletMove : MonoBehaviour
         {
             if (collision.gameObject.layer == 8)
             {
-                collision.GetComponent<IHittable>().OnDamage(1, 0);
+                collision.GetComponent<IHittable>().OnDamage(8, 0);
             }
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Bullet.wav");
             Managers.Pool.PoolManaging("10.Effects/ghost/Boom", transform.position, Quaternion.Euler(Vector2.zero));

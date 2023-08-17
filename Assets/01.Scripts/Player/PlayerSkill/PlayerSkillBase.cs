@@ -99,7 +99,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         while (timer < dashTime)
         {
             timer += Time.fixedDeltaTime;
-            alphaValue = timer / dashTime;
+            alphaValue = timer / dashTime; 
             distance = Vector2.SqrMagnitude(transform.position - changePosition);
             if (distance > instanceClonePerVelocity * instanceClonePerVelocity)
             {
@@ -113,10 +113,12 @@ public abstract class PlayerSkillBase : MonoBehaviour
                 dashPoolSprite.color = dashCloneColor;
 
             }
+            if(player.IsInvincibility && timer >= dashTime * 0.25f)
+                player.IsInvincibility = false;
+
             yield return waitforFixedUpdate;
         }
         playerMovement.IsMove = true;
-        player.IsInvincibility = false;
         //foreach (var c in cloneList)
         //{
         //    Managers.Pool.Push(c);

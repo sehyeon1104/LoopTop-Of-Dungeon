@@ -13,7 +13,7 @@ public class JangPanCircleRange : MonoBehaviour
     public float range;
     public LayerMask Layer;
 
-    WaitForSeconds DotTime = new WaitForSeconds(0.8f);
+    WaitForSeconds DotTime = new WaitForSeconds(0.5f);
 
     private void OnEnable()
     {
@@ -58,7 +58,7 @@ public class JangPanCircleRange : MonoBehaviour
     {
         while (true)
         {
-            GameManager.Instance.Player.OnDamage(1, 0);
+            GameManager.Instance.Player.OnDamage(5, 0);
             yield return DotTime;
         }
     }

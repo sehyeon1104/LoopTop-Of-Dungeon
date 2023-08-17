@@ -24,7 +24,7 @@ public class Slash : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            GameManager.Instance.Player.OnDamage(10, 0);
         }
     }
 }

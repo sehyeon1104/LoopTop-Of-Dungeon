@@ -18,7 +18,7 @@ public class Wave : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            GameManager.Instance.Player.OnDamage(20, 0);
         }
     }
 }

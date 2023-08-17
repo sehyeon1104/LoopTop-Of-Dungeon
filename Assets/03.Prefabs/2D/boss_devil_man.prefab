@@ -33,55 +33,6 @@ Transform:
   m_Father: {fileID: 3682323606085692060}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1323713309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1323713311}
-  - component: {fileID: 1323713310}
-  m_Layer: 0
-  m_Name: PanicVolume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1323713311
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323713309}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1025.3693, y: -628.16187, z: -0.8540407}
-  m_LocalScale: {x: 58.823524, y: 58.823524, z: 100}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3681022856023880979}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1323713310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323713309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 1
-  blendDistance: 0
-  weight: 0
-  sharedProfile: {fileID: 11400000, guid: 271e4fceac5a769439dd4674a8646b30, type: 2}
 --- !u!1 &1350390220
 GameObject:
   m_ObjectHideFlags: 0
@@ -3412,7 +3363,6 @@ Transform:
   - {fileID: 3676105497752404014}
   - {fileID: 1546229806}
   - {fileID: 936516663907735634}
-  - {fileID: 1323713311}
   m_Father: {fileID: 3676222466394034532}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3479,7 +3429,7 @@ MonoBehaviour:
   bossAura: {fileID: 1214343246}
   tpStart: {fileID: 7400000, guid: 4283d6bd29c60684c8be03d524fd9947, type: 2}
   absorbEnd: {fileID: 7400000, guid: f9ee3fe1ff3f8a44394800a8f26e3c83, type: 2}
-  panicVolume: {fileID: 1323713310}
+  panicMat: {fileID: 2100000, guid: 9d80e5f3a51dd35459e2ea1f6ca0dd93, type: 2}
   panicValue: 0
 --- !u!114 &7750198829649931643
 MonoBehaviour:
