@@ -26,13 +26,20 @@ public class StageManager : MonoSingleton<StageManager>
         SetEventRoomCountDic();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         mapParent = new GameObject("Map");
 
         setWall.StartSetWall(mapParent.transform);
         setRoom.SetRoomInMapArr();
 
+        isSetting = true;
+        spawnRooms = FindObjectsOfType<SpawnRoom>();
+        shop = FindObjectOfType<ShopRoom>();
+        enemyRooms = FindObjectsOfType<EnemyRoom>();
+        yield return new WaitUntil(() => enemyRooms.Length > 3);
+
+        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
 
         //setRoom.DebugTest();
     }

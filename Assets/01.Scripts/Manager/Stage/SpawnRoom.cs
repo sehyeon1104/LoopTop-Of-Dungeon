@@ -49,7 +49,7 @@ public class SpawnRoom : MonoBehaviour
         Vector3 parentPos = transform.parent.position;
         int[,] mapArr = StageManager.Instance.GetMapArr();
 
-        _roomTypeFlag = (Define.RoomTypeFlag)mapArr[(int)(-parentPos.y / 21f), (int)(parentPos.x / 21f)];
+        _roomTypeFlag = (Define.RoomTypeFlag)mapArr[(int)(-parentPos.y / 28f), (int)(parentPos.x / 28f)];
     }
 
     public void InstantiateRoom()

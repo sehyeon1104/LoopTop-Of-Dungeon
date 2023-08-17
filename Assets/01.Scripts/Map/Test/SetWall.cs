@@ -27,6 +27,12 @@ public class SetWall : MonoBehaviour
 
     private string spawnWallstr = "";
 
+    private float wallInterval = 28f;
+    private float roadIntervalVerticalX = 12f;
+    private float roadIntervalVerticalY = -5f;
+    private float roadIntervalHorizontalX = -1f;
+    private float roadIntervalHorizontalY = 9f;
+
     public void StartSetWall(Transform parent)
     {
         mapArr = StageManager.Instance.GetMapArr();
@@ -36,7 +42,7 @@ public class SetWall : MonoBehaviour
 
         SetMapForm();
 
-        InstantiateWall(parent);
+        InstantiateWallAndRoad(parent);
     }
 
     private void Init()
@@ -142,7 +148,7 @@ public class SetWall : MonoBehaviour
         return roomCount;
     }
 
-    private void InstantiateWall(Transform parent)
+    private void InstantiateWallAndRoad(Transform parent)
     {
         int nx = 0;
         int ny = 0;
@@ -169,7 +175,9 @@ public class SetWall : MonoBehaviour
 
                 GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Map_Wall/{spawnWallstr}.prefab");
                 room.transform.SetParent(parent);
-                room.transform.position = new Vector3(x * 21, -y * 21);
+                room.transform.position = new Vector3(x * wallInterval, -y * wallInterval);
+
+                // TODO : ±æ »ý¼º
             }
         }
 
