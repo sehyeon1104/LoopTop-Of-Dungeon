@@ -74,7 +74,7 @@ public class EnemyRoom : RoomBase
             if (!isClear && !isSpawnMonster)
             {
                 isSpawnMonster = true;
-                Door.Instance.CloseDoors();
+                // Door.Instance.CloseDoors();
                 SetEnemy();
             }
         }
@@ -109,7 +109,7 @@ public class EnemyRoom : RoomBase
 
         if (isClear)
         {
-            Door.Instance.OpenDoors();
+            // Door.Instance.OpenDoors();
         }
     }
 }

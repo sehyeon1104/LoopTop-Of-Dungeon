@@ -35,8 +35,8 @@ public class SpawnRoom : MonoBehaviour
     {
         SetMapTypeFlag();
         SetRoomTypeRoom();
-        // SetPlayerSpawnPos();
         InstantiateRoom();
+        SetPlayerSpawnPos();
     }
 
     public void SetMapTypeFlag()
@@ -65,12 +65,12 @@ public class SpawnRoom : MonoBehaviour
         }
         else if (_roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
         {
-            GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0.prefab", transform);
+            GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0.prefab", transform.parent);
             room.transform.Translate(12, 10, 0);
         }
         else if (_roomTypeFlag == Define.RoomTypeFlag.EliteMobRoom)
         {
-            GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Elite", transform);
+            GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Elite", transform.parent);
             room.transform.Translate(12, 10, 0);
         }
         else if (_roomTypeFlag == Define.RoomTypeFlag.EventRoom)
@@ -104,8 +104,6 @@ public class SpawnRoom : MonoBehaviour
         if (StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
         {
             Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} ¹èÄ¡");
-            //eventRoomName = randEventRoom.ToString();
-            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{randEventRoom.ToString().Substring(eventRoomName.Length - 4, eventRoomName.Length)}", transform);
             GameObject eventRoom = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform.parent);
             eventRoom.transform.Translate(12, 10, 0);
             eventRoom.GetComponent<EventRoom>().SetEventRoomType((Define.EventRoomTypeFlag)randEventRoom);
@@ -119,6 +117,7 @@ public class SpawnRoom : MonoBehaviour
         if (IsStartRoom)
         {
             GameManager.Instance.Player.transform.position = this.transform.position;
+            GameManager.Instance.Player.transform.Translate(12, 10, 0);
         }
     }
 

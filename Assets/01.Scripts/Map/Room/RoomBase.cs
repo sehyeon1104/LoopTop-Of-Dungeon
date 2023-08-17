@@ -18,8 +18,8 @@ public abstract class RoomBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        // minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        // minimapIconSpriteRenderer.gameObject.SetActive(false);
+        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -39,7 +39,7 @@ public abstract class RoomBase : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            curLocatedMapIcon.SetActive(true);
+            // curLocatedMapIcon.SetActive(true);  
 
             if (!isClear)
             {
@@ -85,7 +85,7 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
-            curLocatedMapIcon.SetActive(false);
+            //curLocatedMapIcon.SetActive(false);
         }
     }
 }

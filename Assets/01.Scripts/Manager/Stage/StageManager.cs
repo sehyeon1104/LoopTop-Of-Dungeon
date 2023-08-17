@@ -34,7 +34,7 @@ public class StageManager : MonoSingleton<StageManager>
         setRoom.SetRoomInMapArr();
 
 
-        setRoom.DebugTest();
+        //setRoom.DebugTest();
     }
 
     public int[,] GetMapArr()
