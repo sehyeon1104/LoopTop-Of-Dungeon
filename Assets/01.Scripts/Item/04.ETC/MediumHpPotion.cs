@@ -18,7 +18,7 @@ public class MediumHpPotion : ItemBase
     {
         Debug.Log("hp포션 (중) 사용");
         Debug.Log("체력 1칸 회복");
-        GameManager.Instance.Player.playerBase.Hp += 4;
+        GameManager.Instance.Player.playerBase.Hp += 20;
     }
 
     public override void Disabling()

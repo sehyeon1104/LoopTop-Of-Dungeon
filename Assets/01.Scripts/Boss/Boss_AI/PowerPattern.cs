@@ -10,6 +10,8 @@ public class P_Patterns : BossPattern
     [Space]
     [Header("파워")]
     #region Initialize
+    [SerializeField] protected AnimationClip[] groundHit;
+
     [SerializeField] protected GameObject shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
@@ -35,11 +37,16 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             //모션 추가
             shorkWarning.SetActive(true);
 
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(1f);
+
+            Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
+            yield return new WaitForSeconds(0.2f);
+
             shorkWarning.SetActive(false);
 
             Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
@@ -49,7 +56,7 @@ public class P_Patterns : BossPattern
             foreach (Collider2D col in cols)
             {
                 if (col.CompareTag("Player"))
-                    GameManager.Instance.Player.OnDamage(2, 0);
+                    GameManager.Instance.Player.OnDamage(20, 0);
             }
 
             for(int j = 0; j < count; j++)
@@ -113,11 +120,10 @@ public class P_Patterns : BossPattern
             {
                 if (cols[i].CompareTag("Player"))
                 {
-                    GameManager.Instance.Player.OnDamage(2, 0);
+                    GameManager.Instance.Player.OnDamage(20, 0);
                     break;
                 }
             }
-            //충돌을 어떤 방식으로 작동하게할까?
 
             yield return null;
         }
@@ -161,7 +167,7 @@ public class P_Patterns : BossPattern
             }
 
             if (col != null)
-                GameManager.Instance.Player.OnDamage(2, 0);
+                GameManager.Instance.Player.OnDamage(25, 0);
 
             Managers.Pool.Push(clone);
 
@@ -186,26 +192,25 @@ public class P_Patterns : BossPattern
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
         }
     }
-    public IEnumerator Pattern_CATCHANDTHROW(int count = 0) //잡고 던지기
+    public IEnumerator Pattern_THROW(int count = 0) //돌뿌리기
     {
-        if(Vector2.Distance(Boss.Instance.player.position, transform.position) > 3f)
-        {
-            yield return null;
-            yield break;
-        }
-        Vector2 dirToPlayerOld = (Boss.Instance.player.position - transform.position).normalized;
-        yield return new WaitForSeconds(1f);
-        Vector2 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
-        
-        float dot = Vector2.Dot(dirToPlayer, dirToPlayerOld);
-        float theta = Mathf.Acos(dot);
-        float deg = Mathf.Rad2Deg * theta;
+        float angleRange = 25f;
+        Vector3 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
+        float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
 
-        Debug.Log($"dot : {dot} the : {theta} deg : {deg}");
-        if(deg <= 30 && Vector2.Distance(Boss.Instance.player.position, transform.position) <= 3f)
+        for (int i = -2; i < 3; i++)
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
+            yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(1f);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        for (int i = -2; i < 3; i++)
+        {
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(1f);
     }
     #endregion
 
@@ -272,7 +277,6 @@ public class P_Patterns : BossPattern
         dash2Phase.SetActive(false);
 
         dashVCam.Priority = 0;
-        Camera.main.orthographic = false;
         yield return null;
     }
 
@@ -346,8 +350,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                //yield return SCoroutine(Pattern_SHOTGUN(count));
-                yield return SCoroutine(Pattern_CATCHANDTHROW());
+                yield return SCoroutine(Pattern_SHOTGUN(count));
                 break;
             case 2:
                 yield return SCoroutine(Pattern_SG_2(count));
@@ -382,12 +385,12 @@ public class PowerPattern : P_Patterns
         Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //잡&던
+    public override IEnumerator Pattern4(int count = 0) //돌뿌리기
     {
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_CATCHANDTHROW());
+                yield return SCoroutine(Pattern_THROW());
                 break;
             case 2:
                 break;

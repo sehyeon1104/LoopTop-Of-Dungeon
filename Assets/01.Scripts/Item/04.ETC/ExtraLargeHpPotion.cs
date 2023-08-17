@@ -18,7 +18,7 @@ public class ExtraLargeHpPotion : ItemBase
     {
         Debug.Log("hp포션 (특대) 사용");
         Debug.Log("체력 3칸 회복");
-        GameManager.Instance.Player.playerBase.Hp += 12;
+        GameManager.Instance.Player.playerBase.Hp += 100;
     }
 
     public override void Disabling()
