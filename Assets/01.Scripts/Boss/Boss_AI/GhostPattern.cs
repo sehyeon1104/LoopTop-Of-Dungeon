@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
+using Cinemachine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 public class G_Patterns : BossPattern
 {
@@ -23,23 +26,36 @@ public class G_Patterns : BossPattern
     [SerializeField] protected AnimationClip tpStart;
     [SerializeField] protected AnimationClip absorbEnd;
 
+    [SerializeField] protected Material panicMat;
+
     protected GhostBossJangpanPattern bossRangePattern;
 
+    protected CanvasGroup playerPCUI;
+    protected CanvasGroup playerPPUI;
 
     protected List<Poolable> mobList = new List<Poolable>();
     protected WaitForSeconds waitTime = new WaitForSeconds(1f);
+
+    public int panicValue = 0;
     #endregion
 
     private void Awake()
     {
         bossRangePattern = GetComponent<GhostBossJangpanPattern>();
+        if (boss2PhaseVcam == null)
+            boss2PhaseVcam = GetComponentInChildren<CinemachineVirtualCamera>();
         bossAura.SetActive(false);
+
+        playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
+        playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
+
+        panicMat.SetFloat("_VigIntensity", 0);
     }
 
-    #region patterns
+    #region pattern1
     public IEnumerator Pattern_BM(int count) //ºö
     {
-        WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.25f);
+        WaitForSeconds wait = NowPhase == 1 ? new WaitForSeconds(1.75f) : new WaitForSeconds(1.5f);
 
         yield return null;
 
@@ -130,7 +146,6 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = false;
         bossObject.SetActive(true);
-        bossAura.SetActive(NowPhase == 2);
 
         dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
@@ -141,24 +156,11 @@ public class G_Patterns : BossPattern
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waitTime;
-
-        if (count > -4)
-        {
-            dir = Boss.Instance.player.position - transform.position;
-            float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            float angle = 7.2f;
-
-            for (int i = -4; i < count; i++)
-            {
-                Managers.Pool.PoolManaging("03.Prefabs/Test/Bullet_Guided", transform.position, Quaternion.Euler(Vector3.forward * (angle * i + rot * 0.5f)));
-            }
-        }
-
-        yield return waitTime;
     }
     public IEnumerator Pattern_SM(int count) //Èú¶ó
     {
         int finalCount = 0;
+        bool isCanceled = false;
         WaitForSeconds waitTime = new WaitForSeconds(2f);
 
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -174,9 +176,23 @@ public class G_Patterns : BossPattern
 
         Boss.Instance.isBInvincible = true;
 
+        int nowCount = mobList.Count;
         for (int i = 1; i < 13; i++)
         {
             yield return waitTime;
+            for(int j = 0; j < nowCount; j++)
+            {
+                if (!mobList[j].isActiveAndEnabled)
+                {
+                    nowCount--;
+                    mobList.RemoveAt(j);
+                }
+            }
+            if(nowCount == 0)
+            {
+                isCanceled = true;
+                break;
+            }
             SummonClock.fillAmount = (float)i / 12;
         }
 
@@ -185,32 +201,128 @@ public class G_Patterns : BossPattern
         SummonClock.fillAmount = 0;
         SummonTimer.SetActive(false);
 
-        foreach (Poolable mob in mobList)
+        if (isCanceled)
         {
-            if (mob.isActiveAndEnabled)
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = Boss.Instance.bossAnim.deathClip;
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            yield return new WaitForSeconds(10f);
+            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+            Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        else
+        {
+            foreach (Poolable mob in mobList)
             {
-                finalCount++;
-                Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
-                Managers.Pool.Push(mob);
+                if (mob.isActiveAndEnabled)
+                {
+                    finalCount++;
+                    Managers.Pool.PoolManaging("10.Effects/ghost/Soul", mob.transform.position, Quaternion.identity);
+                    Managers.Pool.Push(mob);
+                }
+
             }
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
 
+
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
+            Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+            Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+
+            int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
+            while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+            {
+                Boss.Instance.Base.Hp += 1;
+                yield return null;
+            }
+            mobList.Clear();
+
+            yield return new WaitForSeconds(2f);
         }
-        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Heal.prefab", transform.position, Quaternion.identity);
+    }
+    #endregion
+    #region pattern2
+    public IEnumerator Pattern_TP_2(int count) //ÅÚÆ÷ 2ÆäÀÌÁî
+    {
+        Vector2 dir;
+        Vector3 scale;
 
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = tpStart;
 
-        CinemachineCameraShaking.Instance.CameraShake(5, 0.4f);
-        Boss.Instance.bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Teleport3.wav");
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
 
-        int hpFinal = Boss.Instance.Base.Hp + finalCount * 10;
-        while (Boss.Instance.Base.Hp < hpFinal && Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        yield return new WaitForSeconds(1f);
+
+        bossObject.SetActive(false);
+        bossAura.SetActive(false);
+        Boss.Instance.isBInvincible = true;
+        Managers.Pool.PoolManaging("10.Effects/ghost/Hide", transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(1.5f);
+
+        for (int i = 0; i < 2; i++)
         {
-            Boss.Instance.Base.Hp += 1;
-            yield return null;
-        }
-        mobList.Clear();
+            bossObject.SetActive(false);
+            bossAura.SetActive(false);
+            Boss.Instance.isBInvincible = true;
 
-        yield return new WaitForSeconds(2f);
+            Vector3 pos = new Vector3(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", pos, Quaternion.identity);
+
+            dir = (Boss.Instance.player.position - pos).normalized;
+            Vector3 anPos = new Vector3(pos.x + dir.x * 30f, pos.y + dir.y * 25f);
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", anPos, Quaternion.identity);
+
+            yield return new WaitForSeconds(0.1f);
+            transform.position = pos;
+
+            yield return new WaitForSeconds(1f);
+            transform.DOMove(anPos, 0.5f);
+
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
+
+            scale = transform.localScale;
+            Boss.Instance.bossMove.CheckFlipValue(dir, scale);
+
+            Boss.Instance.isBInvincible = false;
+            bossObject.SetActive(true);
+            bossAura.SetActive(true);
+
+            yield return new WaitForSeconds(0.1f);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(5.5f, 17f), clone.transform.rotation.z, 1 << 8);
+            if (col != null)
+                col.GetComponent<IHittable>().OnDamage(2, 0);
+
+            yield return waitTime;
+
+            bossObject.SetActive(false);
+            bossAura.SetActive(false);
+            Boss.Instance.isBInvincible = true;
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        Boss.Instance.isBInvincible = false;
+        bossObject.SetActive(true);
+        bossAura.SetActive(true);
+
+        dir = Boss.Instance.player.position - transform.position;
+        scale = transform.localScale;
+        scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
+
+        transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
+
+        Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        yield return waitTime;
+
     }
     public IEnumerator Pattern_GA(int count) //ÆÈ»¸±â
     {
@@ -234,7 +346,6 @@ public class GhostPattern : G_Patterns
 
     private void Update()
     {
-
         if (Boss.Instance.Base.Hp <= Boss.Instance.Base.MaxHp * 0.4f)
         {
             isUsingFinalPattern = true;
@@ -251,11 +362,11 @@ public class GhostPattern : G_Patterns
             if (nowBPhaseChange)
             {
                 bossObject.SetActive(true);
-                bossAura.SetActive(true);
                 SummonTimer.gameObject.SetActive(false);
             }
         }
 
+        SetPanicValue();
         base.Update();
     }
     public override int GetRandomCount(int choisedPattern)
@@ -263,11 +374,11 @@ public class GhostPattern : G_Patterns
         switch (choisedPattern)
         {
             case 0:
-                return Random.Range(3, 6);
+                break;
             case 1:
                 return NowPhase == 1 ? 3 : 5;
             case 2:
-                return NowPhase == 1 ? -4 : 4;
+                break;
             case 3:
                 break;
             case 4:
@@ -280,6 +391,121 @@ public class GhostPattern : G_Patterns
         return 0;
 
     }
+    public override void SetPatternWeight()
+    {
+        switch (NowPhase)
+        {
+            case 1:
+                patternWeight[0] = 30;
+                patternWeight[1] = 40;
+                patternWeight[2] = 30;
+                break;
+            case 2:
+                patternWeight[0] = 20;
+                patternWeight[1] = 40;
+                patternWeight[2] = 30;
+                patternWeight[3] = 10;
+                break;
+        }
+
+    }
+
+    protected override IEnumerator ChangePhase()
+    {
+        yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
+        isThisSkillCoolDown[patternChoice] = false;
+
+        if (Boss.Instance.actCoroutine != null)
+            StopCoroutine(Boss.Instance.actCoroutine);
+
+        Boss.Instance.actCoroutine = null;
+
+        GhostBossUI.fillTime = 50f;
+        nowBPhaseChange = true;
+        Boss.Instance.isBInvincible = true;
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Phase2.prefab", transform.position, Quaternion.identity);
+        playerPCUI.alpha = 0;
+        playerPPUI.alpha = 0;
+
+        yield return new WaitForSeconds(0.3f);
+
+        Boss.Instance.bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
+
+        boss2PhaseVcam.Priority = 11;
+        Managers.Sound.Play("Assets/05.Sounds/BGM/Ghost/Boss_Ghost_Two.mp3", Define.Sound.Bgm, 1, 1);
+
+        yield return new WaitForSeconds(0.25f);
+        CinemachineCameraShaking.Instance.CameraShake(1.5f, 3f);
+
+        while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 4;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2.5f);
+
+        CinemachineCameraShaking.Instance.CameraShake(20f, 0.5f);
+        bossAura.SetActive(true);
+
+        yield return new WaitForSeconds(2f);
+        Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        isCanUseFinalPattern = true;
+        isUsingFinalPattern = false;
+        boss2PhaseVcam.Priority = 0;
+        patternDelay = new WaitForSeconds(1.5f);
+        NowPhase = 2;
+        playerPCUI.alpha = 1;
+        playerPPUI.alpha = 1;
+
+        SetPatternWeight();
+        Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
+
+        yield return patternDelay;
+
+        Boss.Instance.isBInvincible = false;
+        nowBPhaseChange = false;
+
+        Boss.Instance.Phase2();
+
+    }
+
+    private void SetPanicValue()
+    {
+        float fillTime = GhostBossUI.fillTime;
+        if (fillTime > 70f)
+        {
+            panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.25f);
+            if (panicValue == Mathf.CeilToInt((fillTime - 70) * 0.1f)) return;
+
+            panicMat.SetColor("_Color", new Color(17f, 0, 0.8f));
+
+            panicValue = Mathf.CeilToInt((fillTime - 70) * 0.1f);
+            Boss.Instance.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.25f + 1;
+            GameManager.Instance.Player.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.5f + 1;
+        }
+        else if (fillTime < 30f)
+        {
+            panicMat.SetFloat("_VigIntensity", (0.2f - (fillTime - 30) * 0.005f) + 0.15f);
+            if (panicValue == Mathf.FloorToInt(fillTime * 0.1f) - 3) return;
+
+            panicMat.SetColor("_Color", new Color(0, 16.5f, 9.3f));
+
+            panicValue = Mathf.FloorToInt(fillTime * 0.1f) - 3;
+            Boss.Instance.dmgMul = (panicValue * 0.25f) + 1;
+            GameManager.Instance.Player.dmgMul = (panicValue * 0.25f) + 1;
+        }
+        else if (panicValue != 0)
+        {
+            panicValue = 0;
+            panicMat.SetFloat("_VigIntensity", 0);
+            Boss.Instance.dmgMul = 1;
+            GameManager.Instance.Player.dmgMul = 1;
+        }
+    }
 
     private Coroutine SCoroutine(IEnumerator act)
     {
@@ -291,6 +517,7 @@ public class GhostPattern : G_Patterns
         ActCoroutine = null;
         yield return null;
     }
+
 
     public override IEnumerator Pattern1(int count = 0) //ÀåÆÇ ÆÐÅÏ
     {
@@ -327,7 +554,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_TP(count));
                 break;
             case 2:
-                yield return SCoroutine(Pattern_TP(count));
+                yield return SCoroutine(Pattern_TP_2(count));
                 break;
         }
 
