@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageTo : MonoBehaviour
+public class RockFall : MonoBehaviour
 {
     [SerializeField] GameObject warning;
     WaitForSeconds waitTime = new WaitForSeconds(0.5f);
