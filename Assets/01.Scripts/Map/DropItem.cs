@@ -75,7 +75,7 @@ public class DropItem : MonoBehaviour, IPoolable
     {
         if (tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
         {
-            Debug.LogError("아이템 부족. 빨리 기획 더 해.");
+            Debug.LogError("아이템 부족. 빨리 개발 더 해.");
             return;
         }
 
@@ -84,8 +84,8 @@ public class DropItem : MonoBehaviour, IPoolable
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {
-            Debug.Log("ItemName : " + tempItemList[i].itemName);
-            Debug.Log("ItemName : " + tempItemList[i].itemNumber);
+            //Debug.Log("ItemName : " + tempItemList[i].itemName);
+            //Debug.Log("ItemNumber : " + tempItemList[i].itemNumber);
             // 현재 지닌 아이템 리스트 복사
             itemSelectNum.Add(tempItemList[i].itemNumber);
         }

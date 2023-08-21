@@ -49,15 +49,11 @@ public class Player : MonoBehaviour, IHittable
 
     private void Awake()
     {
-        HPRelatedItemEffects.RemoveListener(Test);
-        HPRelatedItemEffects.AddListener(Test);
-
         UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
         playerVisual = transform.Find("PlayerVisual").gameObject;
     }
     private void Start()
     {
-
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
 
@@ -75,11 +71,6 @@ public class Player : MonoBehaviour, IHittable
     {
         get => damageMultiples;
         set => damageMultiples = value;
-    }
-
-    public void Test()
-    {
-        Debug.Log("Test1");
     }
 
     public void OnDamage(float damage, float critChance, Poolable hitEffect = null)

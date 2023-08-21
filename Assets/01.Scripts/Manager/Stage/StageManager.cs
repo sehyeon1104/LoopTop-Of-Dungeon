@@ -18,6 +18,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     [SerializeField]
     private SpawnRoom[] spawnRooms;
+    [SerializeField]
     private EnemyRoom[] enemyRooms;
 
     private int startRoomCount = 1;
@@ -46,10 +47,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         SetRoomCountDic();
         SetEventRoomCountDic();
-    }
 
-    private IEnumerator Start()
-    {
         mapParent = new GameObject("Map");
 
         StartCoroutine(SetStage());
@@ -58,6 +56,15 @@ public class StageManager : MonoSingleton<StageManager>
         setRoad.StartSetRoad(mapParent.transform);
 
         isSetting = true;
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitUntil(() => 
+        setWall.isSetupComplete 
+        && setRoom.isSetupComplete 
+        && setRoom.isSetupComplete);
+
         spawnRooms = FindObjectsOfType<SpawnRoom>();
         shop = FindObjectOfType<ShopRoom>();
         enemyRooms = FindObjectsOfType<EnemyRoom>();

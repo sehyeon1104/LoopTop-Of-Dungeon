@@ -33,6 +33,8 @@ public class SetRoom : MonoBehaviour
     private int[] dx = new int[4] { 0, 0, -1, 1 };
     private int[] dy = new int[4] { -1, 1, 0, 0 };
 
+    public bool isSetupComplete { private set; get; } = false;
+
     public void SetRoomInMapArr()
     {
         mapArr = StageManager.Instance.GetMapArr();
@@ -119,6 +121,7 @@ public class SetRoom : MonoBehaviour
             Debug.LogError("坷幅. 郡府飘各 规 积己 救凳");
         }
 
+        isSetupComplete = true;
     }
 
     List<Vector2> furthestRooms = new List<Vector2>();
