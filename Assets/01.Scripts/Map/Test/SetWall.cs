@@ -173,6 +173,8 @@ public class SetWall : MonoBehaviour
                 GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Map_Wall/{spawnWallstr}.prefab");
                 room.transform.SetParent(parent);
                 room.transform.position = new Vector3(x * wallInterval, -y * wallInterval);
+                Debug.Log($"{room.transform.position.x / wallInterval}, {-room.transform.position.y / wallInterval}");
+                StageManager.Instance.AddWallDicKey(new Vector3(room.transform.position.x / wallInterval, -room.transform.position.y / wallInterval), room);
             }
         }
 

@@ -22,7 +22,7 @@ public abstract class RoomBase : MonoBehaviour
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
         doors = transform.parent.Find("Doors").gameObject;
-        // minimapIconSpriteRenderer.gameObject.SetActive(false);
+        minimapIconSpriteRenderer.gameObject.SetActive(false);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -46,7 +46,7 @@ public abstract class RoomBase : MonoBehaviour
             if (!isClear)
             {
                 ShowInMinimap();
-                CheckLinkedRoom();
+                // CheckLinkedRoom();
             }
 
             ChangeMinimapIconColor();
@@ -61,20 +61,35 @@ public abstract class RoomBase : MonoBehaviour
 
     public void ShowInMinimap()
     {
+        Debug.Log("ShowInMinimap");
         if (!minimapIconSpriteRenderer.gameObject.activeSelf)
         {
             minimapIconSpriteRenderer.gameObject.SetActive(true);
             ShowIcon();
         }
-        else
-        {
-            //Rito.Debug.Log("minimapIconSpriteRenderer is already active!");
-        }
     }
 
     public void CheckLinkedRoom()
     {
-        //StageManager.Instance.ShowLinkedMapInMinimap(transform.parent.position);
+        Debug.Log("CheckLinkedRoom");
+
+        int nx = 0;
+        int ny = 0;
+        int[] dx = new int[] { 0, 0, -1, 1 };
+        int[] dy = new int[] { 1, -1, 0, 0 };
+
+        for (int i = 0; i < 4; ++i)
+        {
+            nx = (int)(transform.parent.position.x / 28f) + dx[i];
+            ny = ((int)(transform.parent.position.y / 28f) + dy[i]) * -1;
+
+            if (nx > StageManager.Instance.arrSize - 1 || nx < 0 || ny > StageManager.Instance.arrSize - 1 || ny < 0)
+                continue;
+            if (StageManager.Instance.GetMapArr()[ny, nx] == 0)
+                continue;
+
+            StageManager.Instance.wallDic[new Vector3(nx, ny)].GetComponentInChildren<RoomBase>().ShowInMinimap();
+        }
     }
 
     protected virtual void ShowIcon()
