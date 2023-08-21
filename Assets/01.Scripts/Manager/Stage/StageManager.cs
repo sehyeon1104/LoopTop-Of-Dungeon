@@ -109,6 +109,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void ToggleRoomDoor(Vector3 vec)
     {
-        wallDic[vec].GetComponentInChildren<RoomBase>().ToggleDoors();
+        wallDic[new Vector3(vec.x / 28f, -vec.y / 28f)].GetComponentInChildren<RoomBase>().ToggleDoors();
     }
 }

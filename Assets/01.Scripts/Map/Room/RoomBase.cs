@@ -21,8 +21,9 @@ public abstract class RoomBase : MonoBehaviour
     protected virtual void Awake()
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        doors = transform.parent.Find("Doors").gameObject;
         minimapIconSpriteRenderer.gameObject.SetActive(false);
+        doors = transform.parent.Find("Doors").gameObject;
+        doors.SetActive(false);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -46,7 +47,7 @@ public abstract class RoomBase : MonoBehaviour
             if (!isClear)
             {
                 ShowInMinimap();
-                // CheckLinkedRoom();
+                CheckLinkedRoom();
             }
 
             ChangeMinimapIconColor();
@@ -71,8 +72,6 @@ public abstract class RoomBase : MonoBehaviour
 
     public void CheckLinkedRoom()
     {
-        Debug.Log("CheckLinkedRoom");
-
         int nx = 0;
         int ny = 0;
         int[] dx = new int[] { 0, 0, -1, 1 };

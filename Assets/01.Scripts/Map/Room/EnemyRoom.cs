@@ -109,7 +109,7 @@ public class EnemyRoom : RoomBase
 
         if (isClear)
         {
-            // Door.Instance.OpenDoors();
+            StageManager.Instance.ToggleRoomDoor(transform.parent.position);
         }
     }
 }

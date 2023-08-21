@@ -14,12 +14,13 @@ public class ChestRoom : RoomBase
 
     protected override void Awake()
     {
+        base.Awake();
         minimapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/ChestRoomIcon.prefab", transform);
         minimapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);
         minimapIcon.SetActive(false);
 
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        minimapIconSpriteRenderer.gameObject.SetActive(false);
+        //minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        //minimapIconSpriteRenderer.gameObject.SetActive(false);
         //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
