@@ -173,8 +173,6 @@ public class SetWall : MonoBehaviour
                 GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Map_Wall/{spawnWallstr}.prefab");
                 room.transform.SetParent(parent);
                 room.transform.position = new Vector3(x * wallInterval, -y * wallInterval);
-
-                // TODO : ±æ »ý¼º
             }
         }
 

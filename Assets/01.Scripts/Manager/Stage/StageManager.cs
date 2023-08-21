@@ -36,7 +36,6 @@ public class StageManager : MonoSingleton<StageManager>
         setWall.StartSetWall(mapParent.transform);
         setRoom.SetRoomInMapArr();
         setRoad.StartSetRoad(mapParent.transform);
-        setRoom.DebugTest();
 
         isSetting = true;
         spawnRooms = FindObjectsOfType<SpawnRoom>();

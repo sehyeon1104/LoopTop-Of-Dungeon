@@ -16,9 +16,12 @@ public abstract class RoomBase : MonoBehaviour
     [SerializeField]
     protected GameObject curLocatedMapIcon = null;
 
+    protected GameObject doors = null;
+
     protected virtual void Awake()
     {
         minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        doors = transform.parent.Find("Doors").gameObject;
         // minimapIconSpriteRenderer.gameObject.SetActive(false);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
@@ -86,5 +89,10 @@ public abstract class RoomBase : MonoBehaviour
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
             //curLocatedMapIcon.SetActive(false);
         }
+    }
+
+    public void ToggleDoors()
+    {
+        doors.SetActive(!isClear);
     }
 }
