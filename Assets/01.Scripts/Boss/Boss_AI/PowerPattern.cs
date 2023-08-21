@@ -18,18 +18,24 @@ public class P_Patterns : BossPattern
     [SerializeField] protected Transform dashBar;
 
     [SerializeField] protected CinemachineVirtualCamera dashVCam;
+    [SerializeField] protected GameObject standUpVCam;
 
     private List<Transform> partList = new List<Transform>();
+    private List<StandupObject> standupObjects = new List<StandupObject>();
+    private Camera mainCam;
     #endregion
 
     protected Vector2 dirToPlayerOld = Vector2.zero;
 
     private void Awake()
     {
+        mainCam = Camera.main;
         for (int i = 1; i <= 6; i++)
         {
             partList.Add(dash2Phase.transform.Find($"Part{i}"));
         }
+        foreach (var std in FindObjectsOfType<StandupObject>())
+            standupObjects.Add(std);
     }
 
     #region Phase 1
@@ -72,6 +78,17 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DASHATTACK(int count = 0) //돌진 1페이즈
     {
+        standupObjects.Clear();
+        foreach (var std in FindObjectsOfType<StandupObject>())
+            standupObjects.Add(std);
+
+        mainCam.orthographic = false;
+        standUpVCam.SetActive(true);
+        foreach(var std in standupObjects)
+        {
+            std.isStandUp = true;
+        }
+
         float timer = 0f;
         Vector3 dir = Boss.Instance.player.position - transform.position;
         float rot = 0;
@@ -127,6 +144,12 @@ public class P_Patterns : BossPattern
 
             yield return null;
         }
+        foreach (var std in standupObjects)
+        {
+            std.isStandUp = false;
+        }
+        standUpVCam.SetActive(false);
+        mainCam.orthographic = true;
         yield return null;
     }
     public IEnumerator Pattern_JUMPATTACK(int count = 0) //점프어택
@@ -266,7 +289,6 @@ public class P_Patterns : BossPattern
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
         dashVCam.Priority = 11;
-        Camera.main.orthographic = true;
 
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
