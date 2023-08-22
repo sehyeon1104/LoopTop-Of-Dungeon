@@ -28,7 +28,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     private void Init()
     {
-        Debug.Log("아이템 로딩");
+        // Debug.Log("아이템 로딩");
         slots.Clear();
         if(slotHolder.childCount > 0)
         {

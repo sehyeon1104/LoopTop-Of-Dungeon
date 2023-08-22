@@ -45,7 +45,6 @@ public class ItemAbility : MonoBehaviour
             if (itemType != null && itemType.IsSubclassOf(typeof(ItemBase)))
             {
                 Items.Add(item.itemNumber, Activator.CreateInstance(itemType) as ItemBase);
-                // Items[item.itemNumber] = Activator.CreateInstance(itemType) as ItemBase;
             }
             else
             {

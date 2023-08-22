@@ -7,9 +7,34 @@ public static class SetItemList
     public enum SetItem
     {
         Default = 0,
-        ComplateHourglass,
+        CompleteHourglass,
         MirrorOfDawn,
         EqualExchange,
         Overeager
+    }
+
+    public enum CompleteHourglass
+    {
+        BrokenHourglass,
+        RollingHourglass
+    }
+
+    public enum MirrorOfDawn
+    {
+        MirrorOfSun,
+        MirrorOfMoon
+    }
+
+    public enum EqualExchange
+    {
+        MidasTouch,
+        InvisibleHand
+    }
+
+    public enum Overeager
+    {
+        GiantGlove,
+        MagicBean,
+        HeavenHarp
     }
 }

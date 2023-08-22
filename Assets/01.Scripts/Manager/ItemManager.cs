@@ -40,7 +40,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         SetAllItemDic(allItemInfo);
 
-        setItemDic.Add(SetItem.ComplateHourglass, 2);
+        setItemDic.Add(SetItem.CompleteHourglass, 2);
         setItemDic.Add(SetItem.MirrorOfDawn, 2);
         setItemDic.Add(SetItem.EqualExchange, 2);
         setItemDic.Add(SetItem.Overeager, 3);
