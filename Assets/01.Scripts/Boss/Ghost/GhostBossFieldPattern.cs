@@ -33,7 +33,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay = new WaitForSeconds(0.25f);
 
-    WaitForSeconds waittime4s = new WaitForSeconds(4f);
+    WaitForSeconds waittime2s = new WaitForSeconds(2f);
     
     WaitForSeconds waittime2dot5s = new WaitForSeconds(2.5f);
 
@@ -50,7 +50,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private void Start()
     {
-        UltPattern =  StartCoroutine(GhostBossUltPattern());
+        UltPattern =  StartCoroutine(MakeBubble());
     }
     public IEnumerator GhostBossArmPattern()
     {
@@ -86,8 +86,8 @@ public class GhostBossFieldPattern : MonoBehaviour
         }
     }
 
-    //±Ã±Ø±â ÆÐÅÏ
-    public IEnumerator GhostBossUltPattern()
+    //¹öºí»ý¼º
+    public IEnumerator MakeBubble()
     {
         while (true)
         {
@@ -103,12 +103,12 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             Vector2 RealRandomPos = Owntransform + RandomPos;
 
-            if(Random.Range(0,2) == 0)
+            if(Random.Range(0,3) <= 1)
                 Managers.Pool.PoolManaging("10.Effects/ghost/Bubble", RealRandomPos, Quaternion.identity);
             else
                 Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BubbleBlue.prefab", RealRandomPos, Quaternion.identity);
 
-            yield return waittime4s;
+            yield return waittime2s;
         }
     }
 

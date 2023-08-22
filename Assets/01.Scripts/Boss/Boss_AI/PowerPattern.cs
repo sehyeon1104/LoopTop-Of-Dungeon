@@ -55,15 +55,12 @@ public class P_Patterns : BossPattern
 
             shorkWarning.SetActive(false);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
+            Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f, 1<<8);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            foreach (Collider2D col in cols)
-            {
-                if (col.CompareTag("Player"))
-                    GameManager.Instance.Player.OnDamage(20, 0);
-            }
+            if(col != null)
+                GameManager.Instance.Player.OnDamage(20, 0);
 
             for(int j = 0; j < count; j++)
             {
@@ -130,17 +127,14 @@ public class P_Patterns : BossPattern
         while (timer < 1f)
         {
             timer += Time.deltaTime;
+
+            if(Mathf.Sign(dir.x) * transform.position.x < Mathf.Sign(dir.x) * 14.25f + 14.25f 
+                    && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 8.75f + 6.75f)
             transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f);
-            for(int i = 0; i < cols.Length; i++)
-            {
-                if (cols[i].CompareTag("Player"))
-                {
-                    GameManager.Instance.Player.OnDamage(20, 0);
-                    break;
-                }
-            }
+            Collider2D col = Physics2D.OverlapCircle(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8);
+            if(col != null)
+                GameManager.Instance.Player.OnDamage(20, 0);
 
             yield return null;
         }
