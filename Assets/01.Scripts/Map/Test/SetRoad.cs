@@ -25,12 +25,16 @@ public class SetRoad : MonoBehaviour
 
     private int[,] tempMapArr;
 
+    public bool isSetupComplete { private set; get; } = false;
+
     public void StartSetRoad(Transform parent)
     {
         tempMapArr = (int[,])StageManager.Instance.GetMapArr().Clone();
         wallInterval = StageManager.Instance.setWall.wallInterval;
 
         SearchForRoom(3, 3, parent);
+
+        isSetupComplete = true;
     }
 
     private void SearchForRoom(int x, int y, Transform parent)

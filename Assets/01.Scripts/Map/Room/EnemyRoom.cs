@@ -54,7 +54,7 @@ public class EnemyRoom : RoomBase
     private void SpawnEnemies()
     {
         EnemySpawnManager.Instance.SetEnemyWaveCount();
-        StartCoroutine(EnemySpawnManager.Instance.ManagingEnemy(SetEnemySpawnPos()));
+        StartCoroutine(EnemySpawnManager.Instance.ManagingEnemy(SetEnemySpawnPos(), transform.parent.position));
 
         StartCoroutine(CheckClear());
     }
@@ -109,7 +109,7 @@ public class EnemyRoom : RoomBase
 
         if (isClear)
         {
-            // Door.Instance.OpenDoors();
+            StageManager.Instance.ToggleRoomDoor(transform.parent.position);
         }
     }
 }

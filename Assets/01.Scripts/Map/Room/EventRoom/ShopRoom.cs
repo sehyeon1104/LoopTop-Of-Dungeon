@@ -32,14 +32,15 @@ public class ShopRoom : RoomBase
 
     protected override void Awake()
     {
+        base.Awake();
         InteractionBtn = UIManager.Instance.GetInteractionButton();
 
         itemSpawnPosArr = itemPosObj.GetComponentsInChildren<Transform>();
         shopNpc = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Da.panda(ShopNpc).prefab");
         shopNpcIcon = transform.Find("ShopIcon").gameObject;
         shopNpcIcon.SetActive(false);
-        minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        // minimapIconSpriteRenderer.gameObject.SetActive(false);
+        //minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
+        //minimapIconSpriteRenderer.gameObject.SetActive(false);
         //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }   
     private void Start()

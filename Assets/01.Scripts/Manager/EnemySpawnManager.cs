@@ -122,12 +122,14 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
-    public IEnumerator ManagingEnemy(Transform[] enemySpawnPos)
+    public IEnumerator ManagingEnemy(Transform[] enemySpawnPos, Vector3 vec)
     {
         //if (door.IsFirst)
         //{
         //    door.IsFirst = false;
         //}
+
+        StageManager.Instance.ToggleRoomDoor(vec);
 
         // door.CloseDoors();
         
