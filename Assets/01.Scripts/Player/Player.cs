@@ -57,6 +57,14 @@ public class Player : MonoBehaviour, IHittable
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.GetCurItemDic()["VampireFangs"]);
+        }
+    }
+
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);

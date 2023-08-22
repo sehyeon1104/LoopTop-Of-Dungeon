@@ -59,7 +59,8 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // æ∆¿Ã≈€ »πµÊΩ√ ΩΩ∑‘ø° √ﬂ∞°
     public void AddItemSlot(Item item)
     {
-        GameManager.Instance.AddItemData(item);
+        ItemManager.Instance.AddCurItemDic(item);
+        // GameManager.Instance.AddItemData(item);
 
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
@@ -82,12 +83,13 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // «ˆ¿Á »πµÊ«— æ∆¿Ã≈€ ∏Ò∑œ ∞°¡Æø»
     public void LoadItemSlot()
     {
-        List<Item> itemList = GameManager.Instance.GetItemList();
+        Dictionary<string, Item> itemDic = ItemManager.Instance.GetCurItemDic();
+        //List<Item> itemList = GameManager.Instance.GetItemList();
 
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
 
-        foreach(var items in itemList)
+        foreach(var items in itemDic.Values)
         {
             if (items.itemNumber == 0)
                 continue;
@@ -113,7 +115,9 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     public void RemoveItemSlot(Item item)
     {
-
+        ItemAbility.Items[item.itemNumber].Disabling();
+        ItemManager.Instance.RemoveCurItemDic(item);
+        // LoadItemSlot();
     }
 
 }

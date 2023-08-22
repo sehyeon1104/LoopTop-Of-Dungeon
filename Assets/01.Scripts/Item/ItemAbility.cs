@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Reflection;
 
 public class ItemAbility : MonoBehaviour
 {
@@ -25,41 +27,30 @@ public class ItemAbility : MonoBehaviour
         {
 
         }
+
     }
 
-    public static ItemBase[] Items = new ItemBase[]
+    public static Dictionary<int, ItemBase> Items = new Dictionary<int, ItemBase>();
+    //public static ItemBase[] Items = new ItemBase[800];
+
+    public void CreateItem()
     {
-        new Default(),      // 0번 아이템 ( 효과x )
+        Type itemType = null;
 
-        // common
-        new WingShoes(),
-        new GiantGlove(),
-        new DullSword(),
+        foreach(var item in ItemManager.Instance.allItemDic.Values)
+        {
+            // Reflection을 사용하여 문자열로 클래스 인스턴스 생성
+            itemType = Type.GetType(item.itemNameEng);
 
-        // rare
-        new ChampionBelt(),
-        new TornPaper(),
-        new InquisitorsRing(),
-        new SharpSword(),
-
-        // epic
-        new VampireFangs(),
-        
-        // legendary
-        new AllRoundHalfGlove(),
-        new BerserkerSword(),
-
-        // ETC
-        new SmallHpPotion(),
-        new MediumHpPotion(),
-        new LargeHpPotion(),
-        new ExtraLargeHpPotion(),
-
-        // Special
-        new NailedShoes(),
-        new CloudyGlasses(),
-        new TurtleHat(),
-        new CursedRing(),
-        new RollingHourglass(),
-    };
+            if (itemType != null && itemType.IsSubclassOf(typeof(ItemBase)))
+            {
+                Items.Add(item.itemNumber, Activator.CreateInstance(itemType) as ItemBase);
+                // Items[item.itemNumber] = Activator.CreateInstance(itemType) as ItemBase;
+            }
+            else
+            {
+                Debug.LogError("Invalid item type!");
+            }
+        }
+    }
 }
