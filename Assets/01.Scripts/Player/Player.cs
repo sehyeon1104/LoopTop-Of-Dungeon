@@ -49,16 +49,20 @@ public class Player : MonoBehaviour, IHittable
 
     private void Awake()
     {
-        HPRelatedItemEffects.RemoveListener(Test);
-        HPRelatedItemEffects.AddListener(Test);
-
         UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
         playerVisual = transform.Find("PlayerVisual").gameObject;
     }
     private void Start()
     {
-
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.GetCurItemDic()["VampireFangs"]);
+        }
     }
 
     public IEnumerator IEDamaged(float damage = 0)
@@ -75,11 +79,6 @@ public class Player : MonoBehaviour, IHittable
     {
         get => damageMultiples;
         set => damageMultiples = value;
-    }
-
-    public void Test()
-    {
-        Debug.Log("Test1");
     }
 
     public void OnDamage(float damage, float critChance, Poolable hitEffect = null)

@@ -18,15 +18,15 @@ public class ChampionBelt : ItemBase
     {
         Debug.Log("헤비급 챔피언의 벨트 효과 발동");
         Debug.Log("하트 1/4칸 증가");
-        GameManager.Instance.Player.playerBase.MaxHp += incQuantity;
-        GameManager.Instance.Player.playerBase.Hp += incQuantity;
+        GameManager.Instance.Player.playerBase.MaxHp += 20;
+        GameManager.Instance.Player.playerBase.Hp += 20;
         UIManager.Instance.UpdateUI();
     }
 
     public override void Disabling()
     {
-        GameManager.Instance.Player.playerBase.MaxHp -= incQuantity;
-        GameManager.Instance.Player.playerBase.Hp -= incQuantity;
+        GameManager.Instance.Player.playerBase.MaxHp -= 20;
+        GameManager.Instance.Player.playerBase.Hp -= 20;
         UIManager.Instance.UpdateUI();
     }
 }

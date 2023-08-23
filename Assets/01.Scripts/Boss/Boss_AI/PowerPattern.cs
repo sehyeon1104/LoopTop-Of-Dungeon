@@ -10,24 +10,32 @@ public class P_Patterns : BossPattern
     [Space]
     [Header("파워")]
     #region Initialize
+    [SerializeField] protected AnimationClip[] groundHit;
+
     [SerializeField] protected GameObject shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
     [SerializeField] protected Transform dashBar;
 
     [SerializeField] protected CinemachineVirtualCamera dashVCam;
+    [SerializeField] protected GameObject standUpVCam;
 
     private List<Transform> partList = new List<Transform>();
+    private List<StandupObject> standupObjects = new List<StandupObject>();
+    private Camera mainCam;
     #endregion
 
     protected Vector2 dirToPlayerOld = Vector2.zero;
 
     private void Awake()
     {
+        mainCam = Camera.main;
         for (int i = 1; i <= 6; i++)
         {
             partList.Add(dash2Phase.transform.Find($"Part{i}"));
         }
+        foreach (var std in FindObjectsOfType<StandupObject>())
+            standupObjects.Add(std);
     }
 
     #region Phase 1
@@ -35,22 +43,24 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             //모션 추가
             shorkWarning.SetActive(true);
 
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(1f);
+
+            Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
+            Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+
+            yield return new WaitForSeconds(0.2f);
+
             shorkWarning.SetActive(false);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
+            Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f, 1<<8);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            foreach (Collider2D col in cols)
-            {
-                if (col.CompareTag("Player"))
-                    GameManager.Instance.Player.OnDamage(2, 0);
-            }
+            if(col != null)
+                GameManager.Instance.Player.OnDamage(20, 0);
 
             for(int j = 0; j < count; j++)
             {
@@ -65,6 +75,17 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DASHATTACK(int count = 0) //돌진 1페이즈
     {
+        standupObjects.Clear();
+        foreach (var std in FindObjectsOfType<StandupObject>())
+            standupObjects.Add(std);
+
+        mainCam.orthographic = false;
+        standUpVCam.SetActive(true);
+        foreach(var std in standupObjects)
+        {
+            std.isStandUp = true;
+        }
+
         float timer = 0f;
         Vector3 dir = Boss.Instance.player.position - transform.position;
         float rot = 0;
@@ -106,21 +127,23 @@ public class P_Patterns : BossPattern
         while (timer < 1f)
         {
             timer += Time.deltaTime;
+
+            if(Mathf.Sign(dir.x) * transform.position.x < Mathf.Sign(dir.x) * 14.25f + 14.25f 
+                    && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 8.75f + 6.75f)
             transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f);
-            for(int i = 0; i < cols.Length; i++)
-            {
-                if (cols[i].CompareTag("Player"))
-                {
-                    GameManager.Instance.Player.OnDamage(2, 0);
-                    break;
-                }
-            }
-            //충돌을 어떤 방식으로 작동하게할까?
+            Collider2D col = Physics2D.OverlapCircle(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8);
+            if(col != null)
+                GameManager.Instance.Player.OnDamage(20, 0);
 
             yield return null;
         }
+        foreach (var std in standupObjects)
+        {
+            std.isStandUp = false;
+        }
+        standUpVCam.SetActive(false);
+        mainCam.orthographic = true;
         yield return null;
     }
     public IEnumerator Pattern_JUMPATTACK(int count = 0) //점프어택
@@ -161,7 +184,7 @@ public class P_Patterns : BossPattern
             }
 
             if (col != null)
-                GameManager.Instance.Player.OnDamage(2, 0);
+                GameManager.Instance.Player.OnDamage(25, 0);
 
             Managers.Pool.Push(clone);
 
@@ -186,26 +209,25 @@ public class P_Patterns : BossPattern
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Column.prefab", randPos, Quaternion.identity);
         }
     }
-    public IEnumerator Pattern_CATCHANDTHROW(int count = 0) //잡고 던지기
+    public IEnumerator Pattern_THROW(int count = 0) //돌뿌리기
     {
-        if(Vector2.Distance(Boss.Instance.player.position, transform.position) > 3f)
-        {
-            yield return null;
-            yield break;
-        }
-        Vector2 dirToPlayerOld = (Boss.Instance.player.position - transform.position).normalized;
-        yield return new WaitForSeconds(1f);
-        Vector2 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
-        
-        float dot = Vector2.Dot(dirToPlayer, dirToPlayerOld);
-        float theta = Mathf.Acos(dot);
-        float deg = Mathf.Rad2Deg * theta;
+        float angleRange = 25f;
+        Vector3 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
+        float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
 
-        Debug.Log($"dot : {dot} the : {theta} deg : {deg}");
-        if(deg <= 30 && Vector2.Distance(Boss.Instance.player.position, transform.position) <= 3f)
+        for (int i = -2; i < 3; i++)
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
+            yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(1f);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        for (int i = -2; i < 3; i++)
+        {
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield return new WaitForSeconds(1f);
     }
     #endregion
 
@@ -261,7 +283,6 @@ public class P_Patterns : BossPattern
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
         dashVCam.Priority = 11;
-        Camera.main.orthographic = true;
 
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
@@ -272,7 +293,6 @@ public class P_Patterns : BossPattern
         dash2Phase.SetActive(false);
 
         dashVCam.Priority = 0;
-        Camera.main.orthographic = false;
         yield return null;
     }
 
@@ -346,8 +366,7 @@ public class PowerPattern : P_Patterns
         switch (NowPhase)
         {
             case 1:
-                //yield return SCoroutine(Pattern_SHOTGUN(count));
-                yield return SCoroutine(Pattern_CATCHANDTHROW());
+                yield return SCoroutine(Pattern_SHOTGUN(count));
                 break;
             case 2:
                 yield return SCoroutine(Pattern_SG_2(count));
@@ -382,12 +401,12 @@ public class PowerPattern : P_Patterns
         Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //잡&던
+    public override IEnumerator Pattern4(int count = 0) //돌뿌리기
     {
         switch (NowPhase)
         {
             case 1:
-                yield return SCoroutine(Pattern_CATCHANDTHROW());
+                yield return SCoroutine(Pattern_THROW());
                 break;
             case 2:
                 break;

@@ -34,6 +34,8 @@ public class SpawnRoom : MonoBehaviour
     private void Start()
     {
         SetMapTypeFlag();
+        SetRoomTypeRoom();
+        InstantiateRoom();
         SetPlayerSpawnPos();
     }
 
@@ -42,51 +44,37 @@ public class SpawnRoom : MonoBehaviour
         mapTypeFlag = GameManager.Instance.mapTypeFlag;
     }
 
-    public void SetAndInstantiateRoom()
+    public void SetRoomTypeRoom()
     {
-        if(mapTypeFlag == Define.MapTypeFlag.Default)
-        {
-            SetMapTypeFlag();
-        }
+        Vector3 parentPos = transform.parent.position;
+        int[,] mapArr = StageManager.Instance.GetMapArr();
 
-        if(_roomTypeFlag == Define.RoomTypeFlag.StartRoom)
+        _roomTypeFlag = (Define.RoomTypeFlag)mapArr[(int)(-parentPos.y / 28f), (int)(parentPos.x / 28f)];
+    }
+
+    public void InstantiateRoom()
+    {
+        if (mapTypeFlag == Define.MapTypeFlag.Default)
+            SetMapTypeFlag();
+
+        if (_roomTypeFlag == Define.RoomTypeFlag.StartRoom)
         {
             isStartRoom = true;
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Start", transform);
+            GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Start", transform.parent);
+            room.transform.Translate(12, 10, 0);
         }
-        else if(_roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
+        else if (_roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
         {
-            Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0.prefab", transform);
+            GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(0, 4)}.prefab", transform.parent);
+            room.transform.Translate(12, 10, 0);
         }
-        else if(_roomTypeFlag == Define.RoomTypeFlag.EliteMobRoom)
+        else if (_roomTypeFlag == Define.RoomTypeFlag.EliteMobRoom)
         {
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Elite", transform);
+            GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Elite", transform.parent);
+            room.transform.Translate(12, 10, 0);
         }
-        else if(_roomTypeFlag == Define.RoomTypeFlag.EventRoom)
-        {
+        else if (_roomTypeFlag == Define.RoomTypeFlag.EventRoom)
             SetAndInstantiateEventRoom();
-            // 임시
-            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform);
-        }
-
-        //    // 테스트
-        //    Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0", transform);
-        //    //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(1, 8)}", transform);
-        //    //Instantiate(mapPrefabs[Random.Range(0, mapPrefabs.Length)], transform);
-    }
-
-    public void SetPlayerSpawnPos()
-    {
-        if (IsStartRoom)
-        {
-            GameManager.Instance.Player.transform.position = this.transform.position;
-        }
-    }
-
-    public RoomBase GetSummonedRoom()
-    {
-        RoomBase room = GetComponentInChildren<RoomBase>();
-        return room;
     }
 
     private void SetAndInstantiateEventRoom()
@@ -95,7 +83,8 @@ public class SpawnRoom : MonoBehaviour
         if (StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom] == 1)
         {
             Debug.Log("상점 배치");
-            Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Shop", transform);
+            GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Shop", transform.parent);
+            room.transform.Translate(12, 10, 0);
             StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom]--;
             return;
         }
@@ -104,24 +93,38 @@ public class SpawnRoom : MonoBehaviour
         randEventRoom = Random.Range(0, System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length);
 
         // 만약 중복이라면
-        if(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
+        if (StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
         {
             // 중복이 아닐 때까지 rand
-            while(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
+            while (StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 0)
                 randEventRoom = Random.Range(0, System.Enum.GetValues(typeof(Define.EventRoomTypeFlag)).Length);
         }
 
         // 이벤트방 배치
-        if(StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
+        if (StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
         {
             Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} 배치");
-            //eventRoomName = randEventRoom.ToString();
-            //Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{randEventRoom.ToString().Substring(eventRoomName.Length - 4, eventRoomName.Length)}", transform);
-            GameObject eventRoom = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform);
+            GameObject eventRoom = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform.parent);
+            eventRoom.transform.Translate(12, 10, 0);
             eventRoom.GetComponent<EventRoom>().SetEventRoomType((Define.EventRoomTypeFlag)randEventRoom);
 
             StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom]--;
         }
+    }
+
+    public void SetPlayerSpawnPos()
+    {
+        if (IsStartRoom)
+        {
+            GameManager.Instance.Player.transform.position = this.transform.position;
+            GameManager.Instance.Player.transform.Translate(12, 10, 0);
+        }
+    }
+
+    public RoomBase GetSummonedRoom()
+    {
+        RoomBase room = GetComponentInChildren<RoomBase>();
+        return room;
     }
 
 }

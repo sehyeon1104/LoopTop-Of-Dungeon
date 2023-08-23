@@ -9,7 +9,7 @@ public class StartRoom : RoomBase
         minimapIconSpriteRenderer.gameObject.SetActive(true);
         minimapIconSpriteRenderer.color = Color.white;
         GameManager.Instance.minimapCamera.MoveMinimapCamera(transform.position);
-        curLocatedMapIcon.SetActive(true);
+        //curLocatedMapIcon.SetActive(true);
         CheckLinkedRoom();
     }
 

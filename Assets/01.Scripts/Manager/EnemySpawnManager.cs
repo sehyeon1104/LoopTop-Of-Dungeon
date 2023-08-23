@@ -55,7 +55,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     private void Start()
     {
-        door = FindObjectOfType<Door>();
+        // door = FindObjectOfType<Door>();
         waitForSpawnTime = new WaitForSeconds(spawnTime);
         waitForHalfSpawnTime = new WaitForSeconds(spawnTime * 0.5f);
         enemySpawnEffect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/EnemySpawnEffect2.prefab");
@@ -122,14 +122,16 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
         }
     }
 
-    public IEnumerator ManagingEnemy(Transform[] enemySpawnPos)
+    public IEnumerator ManagingEnemy(Transform[] enemySpawnPos, Vector3 vec)
     {
-        if (door.IsFirst)
-        {
-            door.IsFirst = false;
-        }
+        //if (door.IsFirst)
+        //{
+        //    door.IsFirst = false;
+        //}
 
-        door.CloseDoors();
+        StageManager.Instance.ToggleRoomDoor(vec);
+
+        // door.CloseDoors();
         
         isNextWave = false;
 
@@ -171,8 +173,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드
+            int loopCount = 0;
             while (enemySpawnPos[randPos].childCount != 0)
             {
+                if (loopCount >= 100)
+                    Debug.LogError("Too Many loop!");
+                loopCount++;
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 

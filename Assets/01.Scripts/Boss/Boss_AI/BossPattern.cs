@@ -77,7 +77,6 @@ public abstract class BossPattern : MonoBehaviour
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
-        boss2PhaseVcam.Priority = 11;
         CinemachineCameraShaking.Instance.CameraShake(6, 10f);
 
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
@@ -104,7 +103,6 @@ public abstract class BossPattern : MonoBehaviour
 
         Boss.Instance.isBInvincible = false;
         nowBPhaseChange = false;
-        boss2PhaseVcam.Priority = 0;
 
         Boss.Instance.Phase2();
     }

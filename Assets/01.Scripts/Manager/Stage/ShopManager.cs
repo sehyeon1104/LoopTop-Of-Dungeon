@@ -48,72 +48,82 @@ public class ShopManager : MonoSingleton<ShopManager>
     }
     
 
-    public void ShuffleItemSelectNum()
-    {
-        if(itemObjSpawnPos.Length - 1 > GameManager.Instance.allItemList.Count - GameManager.Instance.brokenItemCount)
-        {
-            Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
-            return;
-        }
+    //public void ShuffleItemSelectNum()
+    //{
+    //    if(itemObjSpawnPos.Length - 1 > ItemManager.Instance.allItemDic.Count - ItemManager.Instance.brokenItemCount)
+    //    {
+    //        Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
+    //        return;
+    //    }
 
-        int index = 0;
-        int randNum = 0;
+    //    int index = 0;
+    //    int randNum = 0;
 
-        List<Item> allItemList = new List<Item>();
-        allItemList = GameManager.Instance.allItemList;
+    //    Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
 
-        while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
-        {
-            randNum = Random.Range(1, allItemList.Count - GameManager.Instance.brokenItemCount);
+    //    while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
+    //    {
+    //        randNum = Random.Range(1, allItemDic.Count - ItemManager.Instance.brokenItemCount);
 
-            if (allItemList.Contains(allItemList[randNum])) 
-                continue;
+    //        if (allItemDic.Contains()) 
+    //            continue;
 
-            itemSelectNum.Add(randNum);
-            index++;
+    //        itemSelectNum.Add(randNum);
+    //        index++;
 
-            if(index > 100)
-            {
-                Debug.Log("break while loop");
-                break;
-            }
-        }
+    //        if(index > 100)
+    //        {
+    //            Debug.Log("break while loop");
+    //            break;
+    //        }
+    //    }
 
-        CreateObject();
-    }
+    //    CreateObject();
+    //}
     
     public void CreateObject()
     {
         GameObject newObject = null;
         ItemObj newItemObjComponent = null;
 
-        List<Item> curItemList = new List<Item>(); 
-        curItemList = GameManager.Instance.GetItemList();
+        Dictionary<string, Item> curItemDic = new Dictionary<string, Item>();
+        curItemDic = ItemManager.Instance.GetCurItemDic();
+
+        //List<Item> curItemList = new List<Item>(); 
+        //curItemList = GameManager.Instance.GetItemList();
 
         itemSelectNum.Clear();
-        for(int i = 0; i < curItemList.Count; ++i)
+        foreach(Item item in curItemDic.Values)
         {
-            itemSelectNum.Add(curItemList[i].itemNumber);
+            itemSelectNum.Add(item.itemNumber);
         }
+        //for(int i = 0; i < curItemDic.Count; ++i)
+        //{
+        //    itemSelectNum.Add(curItemList[i].itemNumber);
+        //}
 
         int index = 0;
         int loopCount = 0;
         int rand = 0;
 
-        List<Item> allItemList = new List<Item>();
-        allItemList = GameManager.Instance.allItemList;
+        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
 
         while (index < 4)
         {
-            rand = Random.Range(1, allItemList.Count - GameManager.Instance.brokenItemCount);
+            rand = Random.Range(1, allItemDic.Count - ItemManager.Instance.brokenItemCount);
 
             if (itemSelectNum.Contains(rand))
                 continue;
 
             itemSelectNum.Add(rand);
 
+            Item shopItem = null;
             // 아이템 오브젝트 생성
-            Item shopItem = GameManager.Instance.allItemList[rand];
+            foreach(Item item in ItemManager.Instance.allItemDic.Values)
+            {
+                if (item.itemNumber == rand)
+                    shopItem = item;
+            }
 
             newObject = Instantiate(itemObjTemplate, shopRoom.transform);
             newItemObjComponent = newObject.GetComponent<ItemObj>();
@@ -129,7 +139,7 @@ public class ShopManager : MonoSingleton<ShopManager>
                 Debug.Log("break while loop");
                 for(int i = index; i < 4; ++i)
                 {
-                    Item defaultItem = GameManager.Instance.allItemList[0];
+                    Item defaultItem = ItemManager.Instance.allItemDic["Default"];
 
                     newObject = Instantiate(itemObjTemplate);
                     newItemObjComponent = newObject.GetComponent<ItemObj>();

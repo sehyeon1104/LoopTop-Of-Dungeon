@@ -243,6 +243,12 @@ public class G_Patterns : BossPattern
             yield return new WaitForSeconds(2f);
         }
     }
+    public IEnumerator Pattern_SB(int count) //∫“∏¥
+    {
+        float angle = Random.Range(0f, 360f);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/AllBullet.prefab", GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * angle));
+        yield return new WaitForSeconds(0.5f);
+    }
     #endregion
     #region pattern2
     public IEnumerator Pattern_TP_2(int count) //≈⁄∆˜ 2∆‰¿Ã¡Ó
@@ -396,9 +402,10 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                patternWeight[0] = 30;
-                patternWeight[1] = 40;
-                patternWeight[2] = 30;
+                patternWeight[0] = 10;
+                patternWeight[1] = 30;
+                patternWeight[2] = 20;
+                patternWeight[3] = 40;
                 break;
             case 2:
                 patternWeight[0] = 20;
@@ -561,7 +568,21 @@ public class GhostPattern : G_Patterns
         Boss.Instance.actCoroutine = null;
     }
 
-    public override IEnumerator Pattern4(int count = 0) //∆»ª∏±‚ ∆–≈œ, 2∆‰¿Ã¡Óø°∏∏ ªÁøÎ
+    public override IEnumerator Pattern4(int count = 0) //∫“∏¥ ∆–≈œ
+    {
+        switch (NowPhase)
+        {
+            case 1:
+                yield return SCoroutine(Pattern_SB(count));
+                break;
+            case 2:
+                break;
+        }
+
+        yield return null;
+        Boss.Instance.actCoroutine = null;
+    }
+    public override IEnumerator Pattern5(int count = 0) //∆»º⁄æ∆ø¿∏£±‚
     {
         switch (NowPhase)
         {

@@ -8,7 +8,7 @@ public class VampireFangs : ItemBase
 
     public override bool isPersitantItem => true;
 
-    private float probabilityChance = 1f;
+    private int stack;
 
     public override void Init()
     {
@@ -22,30 +22,27 @@ public class VampireFangs : ItemBase
         Debug.Log("적 공격시 1% 확률로 hp 1 회복");
         //Debug.Log("적 처치 시 hp 1 회복");
 
-        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
-        GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
+        // TODO : 적 사망 시 발동되는 이벤트에 추가
     }
 
     public override void Disabling()
     {
-        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
+
     }
 
     public override void LastingEffect()
     {
-        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(VampireFangsEffect);
-        GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(VampireFangsEffect);
+
     }
 
     public void VampireFangsEffect()
     {
-        // 적 공격시 1% 확률로 hp 1 회복
-        Debug.Log("doing VampireFangsEffect");
-        if(Random.Range(0, 100) < probabilityChance)
+        // 적 10마리 처치 시 hp 1/4칸 회복
+        stack++;
+        if(stack >= 10)
         {
-            Debug.Log("뱀파이어 효과 터짐");
+            stack = 0;
             GameManager.Instance.Player.playerBase.Hp += 1;
         }
-
     }
 }

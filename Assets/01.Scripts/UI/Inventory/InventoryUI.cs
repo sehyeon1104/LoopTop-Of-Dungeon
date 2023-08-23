@@ -28,7 +28,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     private void Init()
     {
-        Debug.Log("아이템 로딩");
+        // Debug.Log("아이템 로딩");
         slots.Clear();
         if(slotHolder.childCount > 0)
         {
@@ -59,7 +59,13 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // 아이템 획득시 슬롯에 추가
     public void AddItemSlot(Item item)
     {
-        GameManager.Instance.AddItemData(item);
+        ItemManager.Instance.AddCurItemDic(item);
+        // GameManager.Instance.AddItemData(item);
+
+        //if (ItemManager.Instance.CheckSetItem(item))
+        //{
+        //    return;
+        //}
 
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
@@ -82,12 +88,13 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // 현재 획득한 아이템 목록 가져옴
     public void LoadItemSlot()
     {
-        List<Item> itemList = GameManager.Instance.GetItemList();
+        Dictionary<string, Item> itemDic = ItemManager.Instance.GetCurItemDic();
+        //List<Item> itemList = GameManager.Instance.GetItemList();
 
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
 
-        foreach(var items in itemList)
+        foreach(var items in itemDic.Values)
         {
             if (items.itemNumber == 0)
                 continue;
@@ -113,7 +120,9 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     public void RemoveItemSlot(Item item)
     {
-
+        ItemAbility.Items[item.itemNumber].Disabling();
+        ItemManager.Instance.RemoveCurItemDic(item);
+        // LoadItemSlot();
     }
 
 }

@@ -90,8 +90,9 @@ public static class Define
         Rare,
         Epic,
         Legendary,
-        ETC,
         Special,
+        Set,
+        ETC,
     }
 
     public enum ChestRating

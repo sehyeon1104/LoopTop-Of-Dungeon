@@ -54,7 +54,7 @@ public class EnemyRoom : RoomBase
     private void SpawnEnemies()
     {
         EnemySpawnManager.Instance.SetEnemyWaveCount();
-        StartCoroutine(EnemySpawnManager.Instance.ManagingEnemy(SetEnemySpawnPos()));
+        StartCoroutine(EnemySpawnManager.Instance.ManagingEnemy(SetEnemySpawnPos(), transform.parent.position));
 
         StartCoroutine(CheckClear());
     }
@@ -74,7 +74,6 @@ public class EnemyRoom : RoomBase
             if (!isClear && !isSpawnMonster)
             {
                 isSpawnMonster = true;
-                Door.Instance.CloseDoors();
                 SetEnemy();
             }
         }
@@ -103,13 +102,13 @@ public class EnemyRoom : RoomBase
 
     protected override void IsClear()
     {
-        // TODO : 맵이 클리어 되었는지 체크
         if (EnemySpawnManager.Instance.curEnemies.Count == 0 && EnemySpawnManager.Instance.isNextWave)
             isClear = true;
 
         if (isClear)
         {
-            Door.Instance.OpenDoors();
+            ItemManager.Instance.RoomClearRelatedItemEffects.Invoke();
+            StageManager.Instance.ToggleRoomDoor(transform.parent.position);
         }
     }
 }

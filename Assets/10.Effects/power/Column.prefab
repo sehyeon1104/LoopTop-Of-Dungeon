@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 2993552170444481486}
   - component: {fileID: 1310492712}
   - component: {fileID: 151789988}
+  - component: {fileID: 2097416183177301650}
   m_Layer: 0
   m_Name: Column
   m_TagString: Untagged
@@ -88,14 +89,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2993552170444481483}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1.43}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2993552170236905878}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2993552170444481486
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -135,7 +136,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: caa8d3fc380671d43ad1c5dc76134f11, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -194,6 +195,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2097416183177301650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993552170444481483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0251d49501cacf4c923feae21c877a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStandUp: 0
 --- !u!1001 &1736362842
 PrefabInstance:
   m_ObjectHideFlags: 0
