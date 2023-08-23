@@ -26,21 +26,27 @@ public class BelieversClock : ItemBase
 
     public override void Use()
     {
-
+        ItemManager.Instance.RoomClearRelatedItemEffects.RemoveListener(BelieversClockAbility);
+        ItemManager.Instance.RoomClearRelatedItemEffects.AddListener(BelieversClockAbility);
     }
 
     public override void LastingEffect()
     {
-        //TODO : 방 클리어 시 <- 조건추가
+        ItemManager.Instance.RoomClearRelatedItemEffects.RemoveListener(BelieversClockAbility);
+        ItemManager.Instance.RoomClearRelatedItemEffects.AddListener(BelieversClockAbility);
+    }
+
+    public void BelieversClockAbility()
+    {
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.005f;
         GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.005f;
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.005f;
 
-        if(stack >= 12)
+        if (stack >= 12)
         {
-            Disabling();
-            new LiarsPrayer();
+            InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
+            InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDic[typeof(LiarsPrayer).Name]);
         }
     }
 }

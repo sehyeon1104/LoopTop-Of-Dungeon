@@ -32,6 +32,9 @@ public class BrokenHourglass : ItemBase
 
     public void BrokenHourglassAbility()
     {
-        // TODO : 현재 사용한 스킬을 10%확률로 쿨타임 1초 감소
+        if(Random.Range(0, 100) < 10)
+        {
+            // TODO : 현재 사용한 스킬 쿨타임 1초 감소
+        }
     }
 }

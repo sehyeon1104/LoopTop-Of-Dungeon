@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using static SetItemList;
 
 public class ItemManager : MonoSingleton<ItemManager>
@@ -22,9 +23,12 @@ public class ItemManager : MonoSingleton<ItemManager>
     [field: SerializeField]
     public int brokenItemCount { get; private set; } = 0;
 
+    // 해당 세트 아이템, 세트아이템이 되기 위해 필요한 아이템 개수
     private Dictionary<SetItem, int> setItemDic = new Dictionary<SetItem, int>();
 
     private ItemAbility itemAbility = new ItemAbility();
+
+    public UnityEvent RoomClearRelatedItemEffects { private set; get; }
 
     public void Init()
     {
@@ -113,11 +117,10 @@ public class ItemManager : MonoSingleton<ItemManager>
         }
     }
 
-    public void CheckSetItem(SetItem setItem, int itemCount)
+    public bool CheckSetItem(Item item/*SetItem setItem*/)
     {
-        if(setItemDic[setItem] == itemCount)
-        {
-            // TODO : 현재 얻으려는 SetItem 활성화, 세트아이템 재료 제거
-        }
+        // TODO : 현재 얻으려는 SetItem 활성화, 세트아이템 재료 제거
+
+        return false;
     }
 }

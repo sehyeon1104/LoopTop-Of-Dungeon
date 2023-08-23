@@ -62,6 +62,11 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         ItemManager.Instance.AddCurItemDic(item);
         // GameManager.Instance.AddItemData(item);
 
+        //if (ItemManager.Instance.CheckSetItem(item))
+        //{
+        //    return;
+        //}
+
         GameObject newObject = null;
         InventorySlot newItemObjComponent = null;
 
