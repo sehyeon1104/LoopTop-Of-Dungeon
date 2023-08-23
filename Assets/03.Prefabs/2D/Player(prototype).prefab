@@ -608,6 +608,7 @@ GameObject:
   - component: {fileID: 4086107390685430464}
   - component: {fileID: 6605350721465296871}
   - component: {fileID: 1617654965204469657}
+  - component: {fileID: 164928567}
   m_Layer: 8
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -813,6 +814,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &164928567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0251d49501cacf4c923feae21c877a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStandUp: 0
 --- !u!1 &819211934394954388
 GameObject:
   m_ObjectHideFlags: 0
@@ -6813,7 +6827,6 @@ GameObject:
   - component: {fileID: 7442715256025506027}
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 5322660876921446628}
-  - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
   - component: {fileID: 878560112}
   - component: {fileID: 878560113}
@@ -6893,6 +6906,8 @@ MonoBehaviour:
   <OnDamagedRelatedItemEffects>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
+  dmgMul: 1
+  dmgAdd: 0
 --- !u!114 &5322660876921446628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6903,18 +6918,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f73006d45b00af146ae1c70e4a656a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &882001287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b5e059a6649eb48995fde3c0a685b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5092833302439140341
@@ -6977,7 +6980,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  trailRenderer: {fileID: 0}
 --- !u!114 &878560113
 MonoBehaviour:
   m_ObjectHideFlags: 0
