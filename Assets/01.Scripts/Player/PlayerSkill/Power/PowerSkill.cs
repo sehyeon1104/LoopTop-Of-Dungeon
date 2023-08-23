@@ -47,8 +47,8 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
+    //
     float shockWaveTime = 4f;
-    
     Coroutine shockWaveCoroutine;
     IEnumerator catchSkill;
     readonly int hashThrow = Animator.StringToHash("Throw");
@@ -64,7 +64,7 @@ public class PowerSkill : PlayerSkillBase
     {
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
-        Cashing();
+           Cashing();
     }
     protected override void Update()
     {
@@ -120,7 +120,7 @@ public class PowerSkill : PlayerSkillBase
         if (level == 5)
             StartCoroutine(FiveJumpDown());
         else
-            StartCoroutine(Jumpdown());
+            StartCoroutine(Jumpdown(level));
     }
     protected override void ForuthSkill(int level)
     {
@@ -398,7 +398,7 @@ public class PowerSkill : PlayerSkillBase
 
     }
 
-    IEnumerator Jumpdown()
+    IEnumerator Jumpdown(int level)
     {
         float trailWith;
         Collider2D[] enemies;
@@ -553,7 +553,11 @@ public class PowerSkill : PlayerSkillBase
         if (level != 5)
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
         else
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+        {
+            if (level == 2)
+                jumpAttackRange *= 1.5f;
+           UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+        }
     }
     IEnumerator CatchSkill()
     {
