@@ -402,10 +402,10 @@ public class GhostPattern : G_Patterns
         switch (NowPhase)
         {
             case 1:
-                patternWeight[0] = 20;
+                patternWeight[0] = 10;
                 patternWeight[1] = 30;
                 patternWeight[2] = 20;
-                patternWeight[3] = 30;
+                patternWeight[3] = 40;
                 break;
             case 2:
                 patternWeight[0] = 20;
