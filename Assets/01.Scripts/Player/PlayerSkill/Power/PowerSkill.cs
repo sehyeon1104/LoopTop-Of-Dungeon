@@ -581,8 +581,7 @@ public class PowerSkill : PlayerSkillBase
         }
 
         isClick = true;
-        UIManager.Instance.currentFillAmount[UIManager.Instance.playerskill.skillIndex[0] == 4 ? 0 : 1] -= playerBase.PlayerTransformData.skill[4].skillDelay;
-
+        UIManager.Instance.SkillCoolCalculation(playerBase.PlayerTransformData.skill[4].skillDelay,PlayerSkill.Instance.skillIndex[0] == 4 ? 0 : 1);    
         for (int i = 0; i < enemies.Length; i++)
         {
             Transform enemy = enemies[i].transform;    

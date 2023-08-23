@@ -93,15 +93,15 @@ public class UIManager : MonoSingleton<UIManager>
     private int maxHpCount = 0;
 
     private WaitForEndOfFrame waitForEndOfFrame;
-
+    PlayerBase playerBase;
     public ShopUI shopUI { private set; get; } = null;
     public float[] currentFillAmount;
     private float nowTimeScale;
 
     private void Awake()
     {
+        playerBase = GameManager.Instance.Player.playerBase;
         currentFillAmount = new float[10];
-
         playerUI = GameObject.Find("PlayerUI").gameObject;
         hpPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/Heart.prefab");
         playerskill = FindObjectOfType<PlayerSkill>();  
@@ -111,7 +111,7 @@ public class UIManager : MonoSingleton<UIManager>
         ultButton = playerUI.transform.Find("RightDown/Btns/UltimateSkill_Btn").gameObject;
         dashButton = playerUI.transform.Find("RightDown/Btns/Dash_Btn").gameObject;
         InteractionButton = playerUI.transform.Find("RightDown/Btns/Interaction_Btn").gameObject;
-        player = GameManager.Instance.Player.transform;
+        player = GameManager.Instance.Player.transform; 
         if (GameManager.Instance.platForm == Define.PlatForm.Mobile)
         {
             hpSpace = playerUI.transform.Find("LeftUp/PlayerHP").gameObject;
@@ -410,6 +410,11 @@ public class UIManager : MonoSingleton<UIManager>
         StartCoroutine(IESkillCooltime(num, currentImage, skillData.skill[skillNum].skillDelay));
 
         return true;
+    }
+    public void SkillCoolCalculation(float time, int num)
+    {
+            int skillNum = playerskill.skillIndex[num];
+            currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
     }
     public IEnumerator IESkillCooltime(int num, Image cooltimeImg, float skillCooltime)
     {

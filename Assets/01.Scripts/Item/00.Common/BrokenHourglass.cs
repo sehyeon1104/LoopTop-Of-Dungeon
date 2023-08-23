@@ -34,7 +34,10 @@ public class BrokenHourglass : ItemBase
     {
         if(Random.Range(0, 100) < 10)
         {
-            // TODO : 현재 사용한 스킬 쿨타임 1초 감소
+            for(int i=0; i<2; i++) {
+                UIManager.Instance.SkillCoolCalculation(1, i);
+            }
+            
         }
     }
 }

@@ -21459,7 +21459,6 @@ GameObject:
   - component: {fileID: 7442715256025506027}
   - component: {fileID: 7442715256223835011}
   - component: {fileID: 5322660876921446628}
-  - component: {fileID: 882001287}
   - component: {fileID: 5092833302439140341}
   - component: {fileID: 878560112}
   - component: {fileID: 878560113}
@@ -21539,6 +21538,8 @@ MonoBehaviour:
   <OnDamagedRelatedItemEffects>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
+  dmgMul: 1
+  dmgAdd: 0
 --- !u!114 &5322660876921446628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21549,18 +21550,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f73006d45b00af146ae1c70e4a656a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &882001287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7442715256025506025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b5e059a6649eb48995fde3c0a685b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5092833302439140341
