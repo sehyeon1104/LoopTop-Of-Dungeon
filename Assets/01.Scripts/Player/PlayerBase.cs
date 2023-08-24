@@ -31,11 +31,13 @@ public class PlayerBase
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
+        coolDown =90;
     }
 
     public float AttackRange { get; set; }
     public float InitAttackRange { get; set; }
     public int[] SlotLevel { get; set; }
+    public int coolDown { get; set; }
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 
