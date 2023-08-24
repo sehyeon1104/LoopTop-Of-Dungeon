@@ -48,6 +48,7 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
     //
+    float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
     Coroutine shockWaveCoroutine;
     IEnumerator catchSkill;
@@ -132,7 +133,6 @@ public class PowerSkill : PlayerSkillBase
         }
         else
             StartCoroutine(catchSkill);
-
 
     }
 
@@ -451,12 +451,13 @@ public class PowerSkill : PlayerSkillBase
             yield return fixedWait;
         }
         trailRenderer.enabled = false;
-        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
+        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
         }
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position, Quaternion.identity);
+        Poolable jumpDown = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position, Quaternion.identity);
+        jumpDown.transform.localScale = Vector3.one * jumpDownScaleMultiply;
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
@@ -551,13 +552,14 @@ public class PowerSkill : PlayerSkillBase
     protected override void ThirdSkillUpdate(int level)
     {
         if (level != 5)
-            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
-        else
         {
             if (level == 2)
-                jumpAttackRange *= 1.5f;
-           UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+                jumpDownScaleMultiply = 1.5f;
+            UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 0);
         }
+        else        
+           UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
+
     }
     IEnumerator CatchSkill()
     {

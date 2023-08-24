@@ -19,4 +19,5 @@ public class PlayerData
     public int bossFragmentAmount;
     public float fragmentAddAcq;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
+    public int coolDown;
 }

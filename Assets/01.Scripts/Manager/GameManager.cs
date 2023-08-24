@@ -213,6 +213,7 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
+        playerData.coolDown = Player.playerBase.coolDown;
     }
 
     /// <summary>
@@ -243,6 +244,7 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+        Player.playerBase.coolDown = playerData.coolDown;
     }
 
     /// <summary>

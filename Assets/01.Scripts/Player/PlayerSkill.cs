@@ -26,7 +26,8 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     int[] slotLevel;
     [HideInInspector]
     public int[] skillIndex;
-    Action[] skillEvent = new Action[5];
+    Action[] SkillAC = new Action[5];
+    Action[] itemAC = new Action[100];
     private float interactionDis = 2f;
     int itemLayer;
     GameObject skillSelectObj;
@@ -112,15 +113,15 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
-            skillEvent[0] = () => playerSkill.playerSkills[skillIndex[0]](slotLevel[0]);
+            SkillAC[0] = () => playerSkill.playerSkills[skillIndex[0]](slotLevel[0]);
             playerSkill.playerSkillUpdate[skillIndex[0]](slotLevel[0]);
-            skillEvent[1] = () => playerSkill.playerSkills[skillIndex[1]](slotLevel[1]);
+            SkillAC[1] = () => playerSkill.playerSkills[skillIndex[1]](slotLevel[1]);
             playerSkill.playerSkillUpdate[skillIndex[1]](slotLevel[1]);
-            skillEvent[2] = playerSkill.attack;
+            SkillAC[2] = playerSkill.attack;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 4, 6, 0);
-            skillEvent[3] = playerSkill.ultimateSkill;
+            SkillAC[3] = playerSkill.ultimateSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 2, 7, 0);
-            skillEvent[4] = playerSkill.dashSkill;
+            SkillAC[4] = playerSkill.dashSkill;
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 3, 8, 0);
             
         }
@@ -138,7 +139,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if (playerBase.IsPDead)
             return;
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[0]))
-            skillEvent[0]();
+            SkillAC[0]();
     }
 
 
@@ -148,18 +149,18 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if (playerBase.IsPDead)
             return;
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, skillIndex[1]) )
-            skillEvent[1]();
+            SkillAC[1]();
     }
     void Attack()
     {
         if (PlayerMovement.Instance.IsControl)
-            skillEvent[2]();
+            SkillAC[2]();
 
     }
     void UltimateSkill()
     {
         if (PlayerMovement.Instance.IsControl && UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData,7))
-            skillEvent[3]();
+            SkillAC[3]();
     }
 
     void DashSkill()
@@ -168,7 +169,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
             return;
 
         if (UIManager.Instance.SkillCooltime(playerBase.PlayerTransformData, 8))
-            skillEvent[4]();
+            SkillAC[4]();
     }
     #region ½ºÅ³ ¼ÅÇÃ
 
