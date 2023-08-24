@@ -69,8 +69,11 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
     {
         for (int i = 0; i < count; ++i)
         {
+
             fragmentObj = Managers.Pool.Pop(fragmentCollect);
             fragmentObj.transform.position = (Random.insideUnitCircle * 0.75f) + (Vector2)obj.transform.position;
+            if(amount < 0)
+                fragmentObj.GetComponent<Fragment>().SetIsDecrease(true);
         }
 
         fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq * oneTimeIncrease));

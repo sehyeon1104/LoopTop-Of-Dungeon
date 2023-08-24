@@ -187,7 +187,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
         if (Random.Range(1, 101) <= critChance)
         {
-            damage *= 1.5f;
+            damage *= GameManager.Instance.Player.playerBase.CritDamage * 0.01f;
             EnemyUIManager.Instance.ShowDamage(damage, gameObject, true);
             GameManager.Instance.PlayHitEffect(transform, true, hitEffect);
         }

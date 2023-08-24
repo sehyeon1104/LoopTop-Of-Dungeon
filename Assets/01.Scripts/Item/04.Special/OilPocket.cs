@@ -10,11 +10,6 @@ public class OilPocket : ItemBase
 
     public override bool isPersitantItem => false;
 
-    public override void Disabling()
-    {
-
-    }
-
     public override void Init()
     {
 
@@ -22,6 +17,18 @@ public class OilPocket : ItemBase
 
     public override void Use()
     {
+        OilPocketAbility();
+    }
 
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.CritDamage += 20f;
+        GameManager.Instance.Player.playerBase.SkillCoolDown += 20;
+    }
+
+    public void OilPocketAbility()
+    {
+        GameManager.Instance.Player.playerBase.CritDamage -= 20f;
+        GameManager.Instance.Player.playerBase.SkillCoolDown -= 20;
     }
 }

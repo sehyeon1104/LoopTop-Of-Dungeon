@@ -208,12 +208,13 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attackRange = Player.playerBase.AttackRange;
         playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
+        playerData.critDamage = Player.playerBase.CritDamage;
         playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
-        playerData.coolDown = Player.playerBase.coolDown;
+        playerData.skillCoolDown = Player.playerBase.SkillCoolDown;
     }
 
     /// <summary>
@@ -239,12 +240,13 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.AttackRange = playerData.attackRange;
         Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
+        Player.playerBase.CritDamage = playerData.critDamage;
         Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
-        Player.playerBase.coolDown = playerData.coolDown;
+        Player.playerBase.SkillCoolDown = playerData.skillCoolDown;
     }
 
     /// <summary>

@@ -384,7 +384,7 @@ public class UIManager : MonoSingleton<UIManager>
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
         float coolTime = skillData.skill[skillNum].skillDelay;
-        float skillCoolTime = coolTime - (coolTime * playerBase.coolDown/100);
+        float skillCoolTime = coolTime - (coolTime * playerBase.SkillCoolDown / 100);
         print(skillCoolTime);
         int num =skillNum;
         if (skillNum ==7)

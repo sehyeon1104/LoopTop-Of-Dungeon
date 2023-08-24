@@ -10,11 +10,6 @@ public class PictureCake : ItemBase
 
     public override bool isPersitantItem => false;
 
-    public override void Disabling()
-    {
-
-    }
-
     public override void Init()
     {
 
@@ -22,6 +17,19 @@ public class PictureCake : ItemBase
 
     public override void Use()
     {
-
+        PictureCakeAbility(); 
     }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.CritChance += 20;
+        GameManager.Instance.Player.playerBase.CritDamage -= 50;
+    }
+
+    public void PictureCakeAbility()
+    {
+        GameManager.Instance.Player.playerBase.CritChance -= 20;
+        GameManager.Instance.Player.playerBase.CritDamage += 50;
+    }
+
 }
