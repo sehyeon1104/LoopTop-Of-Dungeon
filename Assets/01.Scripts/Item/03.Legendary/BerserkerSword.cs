@@ -1,4 +1,5 @@
-﻿using Debug = Rito.Debug;
+﻿using UnityEngine;
+using Debug = Rito.Debug;
 
 public class BerserkerSword : ItemBase
 {
@@ -7,15 +8,15 @@ public class BerserkerSword : ItemBase
 
     public override bool isPersitantItem => true;
 
-    float temp = 0;
-    int rise = 0;
-    int totalRise = 0;
-
-    int maxIncrease = 15;
+    private int curHp = 0;
+    private int maxHp = 0;
+    private int temp = 0;
+    private static float rise = 0;
 
     public override void Init()
     {
-
+        curHp = GameManager.Instance.Player.playerBase.Hp;
+        maxHp = GameManager.Instance.Player.playerBase.MaxHp;
     }
 
     public override void Use()
@@ -28,14 +29,12 @@ public class BerserkerSword : ItemBase
 
     public override void Disabling()
     {
-        Debug.Log("Disabling");
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
-        GameManager.Instance.Player.playerBase.Attack -= lastRise;
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
     }
 
     public override void LastingEffect()
     {
-        Debug.Log("아이템 효과 Listener 추가");
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordEffect);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordEffect);
     }
@@ -44,26 +43,18 @@ public class BerserkerSword : ItemBase
 
     public void BerserkerSwordEffect()
     {
-        GameManager.Instance.Player.playerBase.Attack -= lastRise;
-        temp = GameManager.Instance.Player.playerBase.Hp;
-        rise = maxIncrease / GameManager.Instance.Player.playerBase.MaxHp;
-        totalRise = 0;
-
-        while (temp < GameManager.Instance.Player.playerBase.MaxHp && rise < 15)
+        if(rise > 0)
         {
-            if (temp < GameManager.Instance.Player.playerBase.MaxHp)
-            {
-                totalRise += rise;
-            }
-            else
-            {
-                break;
-            }
-            temp++;
+            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
         }
 
-        lastRise = totalRise;
-        GameManager.Instance.Player.playerBase.Attack += totalRise;
-        Debug.Log("Player Attack : " + GameManager.Instance.Player.playerBase.Attack);
+        temp = maxHp - curHp;
+
+        rise = (temp / maxHp) * 100;
+        Mathf.CeilToInt(rise);
+        rise = Mathf.Clamp(rise, 0, 70);
+        rise /= 100;
+
+        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * rise;
     }
 }
