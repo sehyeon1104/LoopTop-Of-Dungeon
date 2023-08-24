@@ -100,6 +100,12 @@ public class Player : MonoBehaviour, IHittable
     
     public void Dead()
     {
+        if (ItemManager.Instance.curItemDic.ContainsKey("LifeInsurance"))
+        {
+            ItemAbility.Items[404].Use();
+            return;
+        }
+
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         PlayerVisual.Instance.PlayerAnimator.SetTrigger("Death");
@@ -117,7 +123,6 @@ public class Player : MonoBehaviour, IHittable
     {
         playerVisual.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
-        //UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

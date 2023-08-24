@@ -25,7 +25,7 @@ public class MirrorOfMoon : ItemBase
     public override void Disabling()
     {
         GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.2f;
-
+        GameManager.Instance.Player.playerBase.coolDown -= 20;
     }
 
     public override void SetItemCheck()
@@ -37,6 +37,7 @@ public class MirrorOfMoon : ItemBase
     {
         // TODO : 스킬 쿨타임 감소
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.2f;
+        GameManager.Instance.Player.playerBase.coolDown += 20;
 
     }
 }
