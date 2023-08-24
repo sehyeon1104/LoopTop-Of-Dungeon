@@ -548,6 +548,7 @@ GameObject:
   - component: {fileID: 520647064}
   - component: {fileID: 520647067}
   - component: {fileID: 520647068}
+  - component: {fileID: 520647069}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -570,8 +571,6 @@ MonoBehaviour:
   platForm: 0
   mapTypeFlag: 3
   sceneType: 3
-  <allItemList>k__BackingField: []
-  <brokenItemCount>k__BackingField: 0
 --- !u!114 &520647065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +664,20 @@ MonoBehaviour:
   normalEnemyPrefabsList: []
   <curEnemies>k__BackingField: []
   spawnTime: 1
+--- !u!114 &520647069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520647063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7b86c8b0552064e871fc9373117253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allItemInfo: []
+  <brokenItemCount>k__BackingField: 0
 --- !u!1 &524012580
 GameObject:
   m_ObjectHideFlags: 0

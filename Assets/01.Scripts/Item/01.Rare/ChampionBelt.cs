@@ -16,8 +16,6 @@ public class ChampionBelt : ItemBase
 
     public override void Use()
     {
-        Debug.Log("헤비급 챔피언의 벨트 효과 발동");
-        Debug.Log("하트 1/4칸 증가");
         GameManager.Instance.Player.playerBase.MaxHp += 20;
         GameManager.Instance.Player.playerBase.Hp += 20;
         UIManager.Instance.UpdateUI();

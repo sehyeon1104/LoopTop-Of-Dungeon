@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.PackageManager;
-//using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 using Random = UnityEngine.Random;
 
@@ -55,14 +52,6 @@ public class Player : MonoBehaviour, IHittable
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.GetCurItemDic()["VampireFangs"]);
-        }
     }
 
     public IEnumerator IEDamaged(float damage = 0)

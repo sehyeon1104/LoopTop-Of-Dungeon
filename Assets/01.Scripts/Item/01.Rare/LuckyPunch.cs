@@ -10,10 +10,6 @@ public class LuckyPunch : ItemBase
 
     public override bool isPersitantItem => true;
 
-    public override void Disabling()
-    {
-        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(LuckyPunchAbility);
-    }
 
     public override void Init()
     {
@@ -29,6 +25,11 @@ public class LuckyPunch : ItemBase
     {
         GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(LuckyPunchAbility);
         GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(LuckyPunchAbility);
+    }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(LuckyPunchAbility);
     }
 
     private int luckyPunchChance = 0;

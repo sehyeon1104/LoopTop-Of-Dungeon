@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RussianRouletteBullet : ProjectileObj
+public class MagicBeanBullet : ProjectileObj
 {
     private float damage = 0;
 
@@ -16,8 +16,7 @@ public class RussianRouletteBullet : ProjectileObj
     protected override void OnEnable()
     {
         base.OnEnable();
-        playerAttack = GameManager.Instance.Player.playerBase.Attack;
-        damage = Random.Range(playerAttack * 0.1f, playerAttack * 2f);
+        damage = GameManager.Instance.Player.playerBase.Attack * 0.1f;
         damage = Mathf.RoundToInt(damage);
     }
 

@@ -8,24 +8,9 @@ public class MirrorOfSun : ItemBase
 
     public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
-    public override bool isPersitantItem => true;
+    public override bool isPersitantItem => false;
 
     public override bool isSetElement => true;
-
-    public override void Disabling()
-    {
-
-    }
-
-    public override void LastingEffect()
-    {
-
-    }
-
-    public override void SetItemCheck()
-    {
-
-    }
 
     public override void Init()
     {
@@ -34,6 +19,23 @@ public class MirrorOfSun : ItemBase
 
     public override void Use()
     {
+        MirrorOfSunAbility();
+    }
 
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
+        GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * 0.2f;
+    }
+    
+    public override void SetItemCheck()
+    {   
+        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
+    }
+
+    public void MirrorOfSunAbility()
+    {
+        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
+        GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.2f;
     }
 }

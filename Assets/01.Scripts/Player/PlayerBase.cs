@@ -54,6 +54,7 @@ public class PlayerBase
         get => hp;
         set
         {
+            recentReceiveDamage = hp - value;
             hp = value;
             if (hp < 0)
             {
@@ -86,6 +87,9 @@ public class PlayerBase
     {
         get => 100;
     }
+
+    private int recentReceiveDamage;
+    public int RecentReceiveDamage { get { return recentReceiveDamage; } set { recentReceiveDamage = value; } }
 
     private float attack;
     public float Attack
