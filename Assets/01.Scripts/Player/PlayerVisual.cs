@@ -34,8 +34,6 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         if(GameManager.Instance.platForm == Define.PlatForm.Mobile)
              UIManager.Instance.playerUI.transform.Find("LeftUp/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
-        else
-            UIManager.Instance.ultFade.transform.Find("LeftDown/PlayerImg/PlayerIcon").GetComponent<Image>().sprite = data.playerImg;
         if (data.idlClip != null) overrideController["Idle"] = data.idlClip;
         if (data.atkClip != null) overrideController["Attack1"] = data.atkClip;
         if (data.dieClip != null) overrideController["Death"] = data.dieClip;
