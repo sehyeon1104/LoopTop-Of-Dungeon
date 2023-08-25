@@ -10,6 +10,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     [SerializeField]
     private List<Item> allItemInfo = new List<Item>(); // ÀúÀå¿ë
 
+    [field:SerializeField]
     public Dictionary<string, Item> allItemDic { get; private set; } = new Dictionary<string, Item>();
     public Dictionary<string, Item> curItemDic { get; private set; } = new Dictionary<string, Item>();
 
@@ -81,7 +82,8 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         foreach(Item item in itemList)
         {
-            allItemDic.Add(item.itemNameEng, item);
+            if(!allItemDic.ContainsKey(item.itemNameEng))
+                allItemDic.Add(item.itemNameEng, item);
         }
     }
 
