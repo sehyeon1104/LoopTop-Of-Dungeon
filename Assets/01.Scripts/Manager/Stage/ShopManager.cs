@@ -89,6 +89,8 @@ public class ShopManager : MonoSingleton<ShopManager>
         Dictionary<string, Item> curItemDic = new Dictionary<string, Item>();
         curItemDic = ItemManager.Instance.GetCurItemDic();
 
+        List<Item> allItemList = ItemManager.Instance.allItemDic.Values.ToList();
+
         //List<Item> curItemList = new List<Item>(); 
         //curItemList = GameManager.Instance.GetItemList();
 
@@ -119,9 +121,11 @@ public class ShopManager : MonoSingleton<ShopManager>
 
             Item shopItem = null;
             // 아이템 오브젝트 생성
+
+
             foreach(Item item in ItemManager.Instance.allItemDic.Values)
             {
-                if (item.itemNumber == rand)
+                if (item.itemNumber == allItemList[rand].itemNumber)
                     shopItem = item;
             }
 

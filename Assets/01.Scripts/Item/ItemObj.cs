@@ -72,6 +72,7 @@ public class ItemObj : MonoBehaviour
 
     public void SetValue(Item item)
     {
+        Debug.Log(item.itemName);
         this.item = item;
         UpdateValues();
     }

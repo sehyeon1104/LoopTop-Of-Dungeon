@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -75,7 +76,7 @@ public class DropItem : MonoBehaviour, IPoolable
     {
         if (tempItemList.Count == ItemManager.Instance.allItemDic.Count - 1)
         {
-            Debug.LogError("아이템 부족. 빨리 개발 더 해.");
+            Debug.LogError("아이템 부족. 빨리 기획/개발 더 해.");
             return;
         }
 
@@ -97,6 +98,7 @@ public class DropItem : MonoBehaviour, IPoolable
         int rand = 0;
 
         Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
+        List<Item> allItemList = allItemDic.Values.ToList();
 
         while (item == null)
         {
@@ -113,7 +115,7 @@ public class DropItem : MonoBehaviour, IPoolable
 
             foreach(Item items in allItemDic.Values)
             {
-                if (items.itemNumber == rand)
+                if (items.itemNumber == allItemList[rand].itemNumber)
                     item = items;
             }
             //item = ItemManager.Instance.allItemDic[rand];

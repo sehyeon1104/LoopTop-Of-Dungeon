@@ -107,8 +107,6 @@ public class BrokenItemRoom : RoomBase
         int loopCount = 0;
         int rand = 0;
 
-        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
-
         while (index < 4)
         {
             loopCount++;
@@ -129,7 +127,7 @@ public class BrokenItemRoom : RoomBase
                 break;
             }
 
-            rand = Random.Range(allItemDic.Count - ItemManager.Instance.brokenItemCount, allItemDic.Count);
+            rand = Random.Range(0, ItemManager.Instance.brokenItemCount);
 
             if (itemSelectNum.Contains(rand))
                 continue;
@@ -137,16 +135,16 @@ public class BrokenItemRoom : RoomBase
             itemSelectNum.Add(rand);
 
             // 아이템 오브젝트 생성
-            Item shopItem = null;
-            foreach (Item item in ItemManager.Instance.allItemDic.Values)
+            Item brokenItem = null;
+            foreach (Item item in ItemManager.Instance.brokenItemList)
             {
-                if (item.itemNumber == rand)
-                    shopItem = item;
+                if (item.itemNumber == ItemManager.Instance.brokenItemList[rand].itemNumber)
+                    brokenItem = item;
             }
 
             newObject = Instantiate(itemObjTemplate);
             newItemObjComponent = newObject.GetComponent<ItemObj>();
-            newItemObjComponent.SetValue(shopItem);
+            newItemObjComponent.SetValue(brokenItem);
             newObject.SetActive(true);
             itemObjList.Add(newItemObjComponent);
 
