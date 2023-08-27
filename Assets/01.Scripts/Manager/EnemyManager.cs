@@ -5,5 +5,5 @@ using UnityEngine.Events;
 
 public class EnemyManager : MonoSingleton<EnemyManager>
 {
-    public UnityEvent EnemyDeadRelatedItemEffects { get; private set; }
+    public UnityEvent EnemyDeadRelatedItemEffects { get; private set; } = new UnityEvent();
 }

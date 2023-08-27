@@ -102,10 +102,10 @@ public class GameManager : MonoSingleton<GameManager>
             GetPlayerStat();
         }
 
-        ItemManager.Instance.Init();
         if (!SaveManager.GetCheckDataBool("ItemData"))
         {
             Debug.Log("[GameManager] ItemData  저장파일 없음");
+            ItemManager.Instance.Init();
             SetItemData();
             SaveManager.Save<ItemData>(ref itemData);
             InventoryUI.Instance.LoadItemSlot();
@@ -115,6 +115,7 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
+            ItemManager.Instance.Init();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -273,6 +274,11 @@ public class GameManager : MonoSingleton<GameManager>
     {
         ItemManager.Instance.SetAllItemDic(itemData.allItemList);
         ItemManager.Instance.SetCurItemDic(itemData.curItemList);
+
+        foreach(var item in ItemManager.Instance.allItemDic.Values)
+        {
+            Debug.Log($"{item.itemNumber} : {item.itemName}");
+        }
         //ItemManager.Instance.allItemList = itemData.allItemList;
     }
 

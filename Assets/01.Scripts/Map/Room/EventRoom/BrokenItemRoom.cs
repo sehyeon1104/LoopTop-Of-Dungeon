@@ -90,18 +90,12 @@ public class BrokenItemRoom : RoomBase
 
         Dictionary<string, Item> curItemDic = new Dictionary<string, Item>();
         curItemDic = ItemManager.Instance.GetCurItemDic();
-        //List<Item> curItemList = new List<Item>();
-        //curItemList = GameManager.Instance.GetItemList();
 
         itemSelectNum.Clear();
         foreach(Item item in curItemDic.Values)
         {
             itemSelectNum.Add(item.itemNumber);
         }
-        //for (int i = 0; i < curItemDic.Count; ++i)
-        //{
-        //    itemSelectNum.Add(curItemDic[i].itemNumber);
-        //}
 
         int index = 0;
         int loopCount = 0;
@@ -134,10 +128,14 @@ public class BrokenItemRoom : RoomBase
 
             itemSelectNum.Add(rand);
 
+            Debug.Log(rand);
+
             // 아이템 오브젝트 생성
             Item brokenItem = null;
             foreach (Item item in ItemManager.Instance.brokenItemList)
             {
+                Debug.Log("OriginItem : " + item.itemNumber);
+                Debug.Log("SelectItem : " + ItemManager.Instance.brokenItemList[rand].itemNumber);
                 if (item.itemNumber == ItemManager.Instance.brokenItemList[rand].itemNumber)
                     brokenItem = item;
             }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EqualExchange : ItemBase
+public class Flexodia : ItemBase
 {
     public override Define.ItemType itemType => Define.ItemType.buff;
 

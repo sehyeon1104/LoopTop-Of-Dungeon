@@ -42,6 +42,8 @@ public class ItemAbility : MonoBehaviour
             if (Items.ContainsKey(item.itemNumber))
                 continue;
 
+            Debug.Log(item.itemName);
+
             // Reflection을 사용하여 문자열로 클래스 인스턴스 생성
             itemType = Type.GetType(item.itemNameEng);
 
@@ -51,6 +53,7 @@ public class ItemAbility : MonoBehaviour
             }
             else
             {
+                Debug.Log($"{item.itemNumber} : {item.itemName}");
                 Debug.LogError("Invalid item type!");
             }
         }
