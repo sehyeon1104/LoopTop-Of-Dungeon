@@ -26,14 +26,14 @@ public class Player : MonoBehaviour, IHittable
     private float invincibleTime = 0.2f;
 
     // HP 관련 아이템 효과
-    public UnityEvent HPRelatedItemEffects;
+    public UnityEvent HPRelatedItemEffects { get; private set; } = new UnityEvent();
     // 공격 관련 아이템 효과
-    public UnityEvent AttackRelatedItemEffects { get; private set; }
+    public UnityEvent AttackRelatedItemEffects { get; private set; } = new UnityEvent();
     // 스킬 관련 아이템 효과
-    public UnityEvent SkillRelatedItemEffects { get; private set; }
+    public UnityEvent SkillRelatedItemEffects { get; private set; } = new UnityEvent();
     // 피격 관련 아이템 효과
-    public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
-    public UnityEvent DashRelatedItemEffects { get; private set; } 
+    public UnityEvent OnDamagedRelatedItemEffects { get; private set; } = new UnityEvent();
+    public UnityEvent DashRelatedItemEffects { get; private set; } = new UnityEvent();
 
     public Vector3 hitPoint { get; private set; }
 

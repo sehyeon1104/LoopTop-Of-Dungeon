@@ -1,6 +1,6 @@
 ﻿using Debug = Rito.Debug;
 
-public class CloudyGlasses : ItemBase
+public class RunawayHorseSeal : ItemBase
 {
     public override Define.ItemType itemType => Define.ItemType.broken;
 
@@ -15,7 +15,7 @@ public class CloudyGlasses : ItemBase
 
     public override void Use()
     {
-        Debug.Log("흐린 안경 효과 발동");
+        Debug.Log("폭주마 휘장 효과 발동");
         Debug.Log("이동속도 20% 증가, 치명타 확률 8% 감소");
         GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.2f;
         GameManager.Instance.Player.playerBase.CritChance -= 8f;
