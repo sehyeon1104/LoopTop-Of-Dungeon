@@ -116,7 +116,10 @@ public class DropItem : MonoBehaviour, IPoolable
             foreach(Item items in allItemDic.Values)
             {
                 if (items.itemNumber == allItemList[rand].itemNumber)
+                {
                     item = items;
+                    break;
+                }
             }
             //item = ItemManager.Instance.allItemDic[rand];
         }

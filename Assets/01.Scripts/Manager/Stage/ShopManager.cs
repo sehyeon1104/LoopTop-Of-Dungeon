@@ -126,7 +126,10 @@ public class ShopManager : MonoSingleton<ShopManager>
             foreach(Item item in ItemManager.Instance.allItemDic.Values)
             {
                 if (item.itemNumber == allItemList[rand].itemNumber)
+                {
                     shopItem = item;
+                    break;
+                }
             }
 
             newObject = Instantiate(itemObjTemplate, shopRoom.transform);

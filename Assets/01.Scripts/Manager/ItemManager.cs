@@ -29,7 +29,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     private ItemAbility itemAbility = new ItemAbility();
 
-    public UnityEvent RoomClearRelatedItemEffects { private set; get; }
+    public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
 
     public void Init()
     {

@@ -128,16 +128,15 @@ public class BrokenItemRoom : RoomBase
 
             itemSelectNum.Add(rand);
 
-            Debug.Log(rand);
-
             // 아이템 오브젝트 생성
             Item brokenItem = null;
             foreach (Item item in ItemManager.Instance.brokenItemList)
             {
-                Debug.Log("OriginItem : " + item.itemNumber);
-                Debug.Log("SelectItem : " + ItemManager.Instance.brokenItemList[rand].itemNumber);
                 if (item.itemNumber == ItemManager.Instance.brokenItemList[rand].itemNumber)
+                {
                     brokenItem = item;
+                    break;
+                }
             }
 
             newObject = Instantiate(itemObjTemplate);
