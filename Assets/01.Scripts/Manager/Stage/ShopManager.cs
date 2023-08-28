@@ -112,7 +112,11 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         while (index < 4)
         {
-            rand = Random.Range(1, allItemDic.Count - ItemManager.Instance.brokenItemCount);
+            rand = Random.Range(1,
+                ItemManager.Instance.allItemDic.Count
+                - ItemManager.Instance.brokenItemCount
+                - ItemManager.Instance.etcItemList.Count
+                - ItemManager.Instance.setItemList.Count);
 
             if (itemSelectNum.Contains(rand))
                 continue;

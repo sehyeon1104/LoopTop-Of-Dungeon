@@ -71,7 +71,6 @@ public class BrokenItemRoom : RoomBase
 
     protected override void ShowIcon()
     {
-        Debug.Log("ShowIcon");
         minimapIcon.SetActive(true);
     }
 

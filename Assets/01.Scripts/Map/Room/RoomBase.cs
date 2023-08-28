@@ -12,6 +12,8 @@ public abstract class RoomBase : MonoBehaviour
     protected bool isClear = false;
 
     [SerializeField]
+    protected GameObject minimapUnexplorerdRoomIcon = null;
+    [SerializeField]
     protected SpriteRenderer minimapIconSpriteRenderer = null;
     [SerializeField]
     protected GameObject curLocatedMapIcon = null;
@@ -24,6 +26,8 @@ public abstract class RoomBase : MonoBehaviour
         minimapIconSpriteRenderer.gameObject.SetActive(false);
         doors = transform.parent.Find("Doors").gameObject;
         doors.SetActive(false);
+        minimapUnexplorerdRoomIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/UnExploreredMinimapIcon.prefab", transform);
+        minimapUnexplorerdRoomIcon.SetActive(true);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -92,7 +96,7 @@ public abstract class RoomBase : MonoBehaviour
 
     protected virtual void ShowIcon()
     {
-
+        minimapUnexplorerdRoomIcon.SetActive(false);
     }
 
     protected virtual void OnTriggerExit2D(Collider2D collision)
@@ -100,6 +104,7 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
+            ShowIcon();
             //curLocatedMapIcon.SetActive(false);
         }
     }
