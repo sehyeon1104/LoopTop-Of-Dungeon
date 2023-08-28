@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PUltLerpColor
-  m_Shader: {fileID: -6465566751694194690, guid: 23fa9b9cbf687b2498d8cbf01c1cff48, type: 3}
+  m_Name: BossHpLerpColor
+  m_Shader: {fileID: -6465566751694194690, guid: 8383fcfed6075e64488d146a7dc39b95, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -38,8 +38,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorRange: 0.99
+    - _ColorRange: 0.97
+    - _VoronoiPower: 1.74
+    - _VoronoiScale: 1.43
     m_Colors:
-    - _GetColor: {r: 1, g: 0.78779936, b: 0, a: 1}
-    - _SetColor: {r: 9.550469, g: 2.3876173, b: 50.670544, a: 1}
+    - _EndColor: {r: 1.4275935, g: 1.7564095, b: 2.5053794, a: 0}
+    - _GetColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SetColor: {r: 5.485305, g: 1.3713262, b: 29.102589, a: 1}
+    - _StartColor: {r: 0, g: 4.579145, b: 4.969413, a: 0}
   m_BuildTextureStacks: []

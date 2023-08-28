@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GhostBossUI : MonoBehaviour
+public class GhostBossUI : MonoSingleton<GhostBossUI>
 {
     [SerializeField] private Image bossUltGageImages;
     [SerializeField] private Image ultArrow;
@@ -14,7 +14,8 @@ public class GhostBossUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI conditionTxt;
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
-    public static float fillTime { get; set; } = 50f;
+    public float fillTime { get; set; } = 50f;
+    public ParticleSystem ultParticle;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class GhostBossUI : MonoBehaviour
         while (true)
         {
             bossUltGageImages.fillAmount = fillTime / time;
-            ultArrow.rectTransform.localPosition = new Vector2((bossUltGageImages.fillAmount - 1) * 1400 + 700, -7.5f);
+            ultArrow.rectTransform.localPosition = new Vector2((bossUltGageImages.fillAmount - 1) * 1400 + 700, 0f);
 
             if (fillTime > 0)
             {
