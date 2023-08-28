@@ -73,14 +73,18 @@ public class DropItem : MonoBehaviour, IPoolable
 
     public void SetItem(Define.ChestRating chestRate)
     {
-        if (tempItemList.Count == GameManager.Instance.allItemList.Count - 1)
+        if (tempItemList.Count == ItemManager.Instance.allItemDic.Count - 1)
         {
             Debug.LogError("아이템 부족. 빨리 개발 더 해.");
             return;
         }
 
         // 현재 지닌 아이템 리스트
-        tempItemList = GameManager.Instance.GetItemList();
+        foreach(Item item in ItemManager.Instance.GetCurItemDic().Values)
+        {
+            tempItemList.Add(item);
+        }
+        //tempItemList = GameManager.Instance.GetItemList();
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {
@@ -92,13 +96,12 @@ public class DropItem : MonoBehaviour, IPoolable
 
         int rand = 0;
 
-        List<Item> allItemList = new List<Item>();
-        allItemList = GameManager.Instance.allItemList;
+        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
 
         while (item == null)
         {
             // 저주아이템을 제외한 모든 아이템 rand
-            rand = Random.Range(1, GameManager.Instance.allItemList.Count - GameManager.Instance.brokenItemCount);
+            rand = Random.Range(1, ItemManager.Instance.allItemDic.Count - ItemManager.Instance.brokenItemCount);
 
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
             if (itemSelectNum.Contains(rand) || itemObjListNum.Contains(rand))
@@ -108,7 +111,12 @@ public class DropItem : MonoBehaviour, IPoolable
 
             itemSelectNum.Add(rand);
 
-            item = GameManager.Instance.allItemList[rand];
+            foreach(Item items in allItemDic.Values)
+            {
+                if (items.itemNumber == rand)
+                    item = items;
+            }
+            //item = ItemManager.Instance.allItemDic[rand];
         }
 
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
@@ -147,7 +155,7 @@ public class DropItem : MonoBehaviour, IPoolable
     // 아이템 획득 함수
     public void TakeItem()
     {
-        if (GameManager.Instance.GetItemList().Contains(item))
+        if (ItemManager.Instance.GetCurItemDic().ContainsKey(item.itemNameEng))
         {
             Debug.Log("이미 가지고있는 아이템");
             return;

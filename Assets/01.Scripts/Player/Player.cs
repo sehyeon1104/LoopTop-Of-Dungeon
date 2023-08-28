@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.PackageManager;
-//using UnityEditor.Rendering.PostProcessing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 using Debug = Rito.Debug;
 using Random = UnityEngine.Random;
 
@@ -29,17 +26,15 @@ public class Player : MonoBehaviour, IHittable
     private float invincibleTime = 0.2f;
 
     // HP 관련 아이템 효과
-    [field: SerializeField]
     public UnityEvent HPRelatedItemEffects;
     // 공격 관련 아이템 효과
-    [field:SerializeField]
     public UnityEvent AttackRelatedItemEffects { get; private set; }
     // 스킬 관련 아이템 효과
-    [field:SerializeField]
     public UnityEvent SkillRelatedItemEffects { get; private set; }
     // 피격 관련 아이템 효과
-    [field: SerializeField]
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; }
+    public UnityEvent DashRelatedItemEffects { get; private set; } 
+
     public Vector3 hitPoint { get; private set; }
 
     [HideInInspector]
@@ -103,6 +98,12 @@ public class Player : MonoBehaviour, IHittable
     
     public void Dead()
     {
+        if (ItemManager.Instance.curItemDic.ContainsKey("LifeInsurance"))
+        {
+            ItemAbility.Items[404].Use();
+            return;
+        }
+
         playerBase.IsPDead = true;
         CinemachineCameraShaking.Instance.CameraShake();
         PlayerVisual.Instance.PlayerAnimator.SetTrigger("Death");
@@ -120,7 +121,6 @@ public class Player : MonoBehaviour, IHittable
     {
         playerVisual.SetActive(true);
         UIManager.Instance.ToggleGameOverPanel();
-        //UIManager.Instance.CloseGameOverPanel();
         playerBase.Hp = playerBase.MaxHp;
         playerBase.IsPDead = false;
         StartCoroutine(Invincibility(reviveInvincibleTime));

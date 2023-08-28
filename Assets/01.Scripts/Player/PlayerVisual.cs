@@ -81,5 +81,10 @@ public class PlayerVisual : MonoSingleton<PlayerVisual>
     {
         playerSprite.flipX = VelocityX < 0 ? false : true;
     }
+
+    public bool IsFlipX()
+    {
+        return playerSprite.flipX;
+    }
     
 }

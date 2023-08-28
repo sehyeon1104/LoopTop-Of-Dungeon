@@ -173,8 +173,12 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             // 적 소환 위치를 담은 배열의 끝까지 범위지정
             randPos = Random.Range(1, enemySpawnPos.Length);
             // 자식(몹)이 있다면 다시 랜드
+            int loopCount = 0;
             while (enemySpawnPos[randPos].childCount != 0)
             {
+                if (loopCount >= 100)
+                    Debug.LogError("Too Many loop!");
+                loopCount++;
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }
 

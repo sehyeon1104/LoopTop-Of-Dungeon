@@ -26,12 +26,6 @@ public class GameManager : MonoSingleton<GameManager>
     public Player Player => _player ??= FindObjectOfType<Player>();
     private Player _player;
 
-    [Tooltip("아이템 추가")]
-    [field: SerializeField]
-    public List<Item> allItemList { get; private set; } = new List<Item>();
-    [field: SerializeField]
-    public int brokenItemCount { get; private set; } = 0;
-
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
     private ItemData itemData = new ItemData();
@@ -108,6 +102,7 @@ public class GameManager : MonoSingleton<GameManager>
             GetPlayerStat();
         }
 
+        ItemManager.Instance.Init();
         if (!SaveManager.GetCheckDataBool("ItemData"))
         {
             Debug.Log("[GameManager] ItemData  저장파일 없음");
@@ -213,11 +208,13 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attackRange = Player.playerBase.AttackRange;
         playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
+        playerData.critDamage = Player.playerBase.CritDamage;
         playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
+        playerData.skillCoolDown = Player.playerBase.SkillCoolDown;
     }
 
     /// <summary>
@@ -243,11 +240,13 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.AttackRange = playerData.attackRange;
         Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
+        Player.playerBase.CritDamage = playerData.critDamage;
         Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
+        Player.playerBase.SkillCoolDown = playerData.skillCoolDown;
     }
 
     /// <summary>
@@ -261,29 +260,29 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetItemData()
     {
-        itemData.allItemList = allItemList;
+        foreach(Item item in ItemManager.Instance.allItemDic.Values)
+        {
+            itemData.allItemList.Add(item);
+        }
+        //itemData.allItemList = ItemManager.Instance.allItemList;
     }
 
     public void LoadItemData()
     {
-        allItemList = itemData.allItemList;
-    }
-
-    public void AddItemData(Item item)
-    {
-        itemData.curItemList.Add(item);
+        ItemManager.Instance.SetAllItemDic(itemData.allItemList);
+        ItemManager.Instance.SetCurItemDic(itemData.curItemList);
+        //ItemManager.Instance.allItemList = itemData.allItemList;
     }
 
     // 디버깅
     public void SetItemData(List<Item> item)
     {
-        itemData.curItemList = item;
+        foreach(var items in item)
+        {
+            ItemManager.Instance.curItemDic.Add(items.itemNameEng, items);
+        }
+        //itemData.curItemDic = item;
         SaveManager.Save<ItemData>(ref itemData);
-    }
-
-    public List<Item> GetItemList()
-    {
-        return itemData.curItemList;
     }
 
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)

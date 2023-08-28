@@ -41,7 +41,7 @@ public class SpawnRoom : MonoBehaviour
 
     public void SetMapTypeFlag()
     {
-        mapTypeFlag = Define.MapTypeFlag.Ghost; //GameManager.Instance.mapTypeFlag;
+        mapTypeFlag = GameManager.Instance.mapTypeFlag;
     }
 
     public void SetRoomTypeRoom()
@@ -65,7 +65,7 @@ public class SpawnRoom : MonoBehaviour
         }
         else if (_roomTypeFlag == Define.RoomTypeFlag.EnemyRoom)
         {
-            GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.0.prefab", transform.parent);
+            GameObject room = Managers.Resource.Instantiate($"Assets/03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.{Random.Range(0, 4)}.prefab", transform.parent);
             room.transform.Translate(12, 10, 0);
         }
         else if (_roomTypeFlag == Define.RoomTypeFlag.EliteMobRoom)

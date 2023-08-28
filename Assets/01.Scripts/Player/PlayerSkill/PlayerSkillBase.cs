@@ -86,6 +86,8 @@ public abstract class PlayerSkillBase : MonoBehaviour
 
     protected virtual IEnumerator Dash()
     {
+        GameManager.Instance.Player.DashRelatedItemEffects.Invoke();
+
         timer = 0;
         alphaValue = 0;
         playerMovement.IsMove = false;

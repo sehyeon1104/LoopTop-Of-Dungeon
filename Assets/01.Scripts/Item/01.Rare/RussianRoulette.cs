@@ -24,12 +24,13 @@ public class RussianRoulette : ItemBase
 
     public override void Use()
     {
-
+        LastingEffect();
     }
 
     public override void LastingEffect()
     {
-
+        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(RussianRouletteAbility);
+        GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(RussianRouletteAbility);
     }
 
     public void RussianRouletteAbility()
@@ -38,7 +39,8 @@ public class RussianRoulette : ItemBase
         if(stack >= 6)
         {
             stack = 0;
-            // TODO : 공격력 10% ~ 200%의 총알 발사
+            GameObject bullet = Managers.Resource.Instantiate("Assets/03.Prefabs/Item/RussianRouletteBullet.prefab");
+            bullet.transform.right = PlayerVisual.Instance.IsFlipX() ? -GameManager.Instance.Player.transform.right : GameManager.Instance.Player.transform.right;
         }
     }
 }

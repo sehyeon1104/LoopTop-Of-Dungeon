@@ -14,9 +14,11 @@ public class PlayerData
     public float attackRange;
     public float moveSpeed;
     public float critChance;
+    public float critDamage;
     public int[] playerSkillNum;
     public int _fragmentAmount;
     public int bossFragmentAmount;
     public float fragmentAddAcq;
     public Define.PlayerTransformTypeFlag playerTransformTypeFlag;
+    public int skillCoolDown;
 }

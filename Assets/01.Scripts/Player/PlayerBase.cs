@@ -21,21 +21,34 @@ public class PlayerBase
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;
-        PlayerSkillNum = new int[] { 2, 3 };
+        critDamage = 150f;
+        PlayerSkillNum = new int[] { 3, 4 };
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         _fragmentAddAcq = 1f;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
+        skillCoolDown = 0;
     }
 
     public float AttackRange { get; set; }
     public float InitAttackRange { get; set; }
     public int[] SlotLevel { get; set; }
+    private int skillCoolDown;
+    public int SkillCoolDown
+    {
+        get => skillCoolDown;
+        set 
+        {
+            skillCoolDown = value;
+            if (skillCoolDown > 70)
+                skillCoolDown = 70; 
+        }
+    }
     public List<PlayerSkillData> PlayerTransformDataSOList { get; set; }
     public PlayerSkillData PlayerTransformData { get; set; }
 
@@ -54,6 +67,7 @@ public class PlayerBase
         get => hp;
         set
         {
+            recentReceiveDamage = hp - value;
             hp = value;
             if (hp < 0)
             {
@@ -86,6 +100,9 @@ public class PlayerBase
     {
         get => 100;
     }
+
+    private int recentReceiveDamage;
+    public int RecentReceiveDamage { get { return recentReceiveDamage; } set { recentReceiveDamage = value; } }
 
     private float attack;
     public float Attack
@@ -173,6 +190,19 @@ public class PlayerBase
                 critChance = 0;
             }
 
+        }
+    }
+
+    private float critDamage;
+    public float CritDamage
+    {
+        get => critDamage;
+        set
+        {
+            if (value < 0)
+                return;
+            
+            critDamage = value;
         }
     }
 

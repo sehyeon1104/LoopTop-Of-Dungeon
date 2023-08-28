@@ -88,21 +88,26 @@ public class BrokenItemRoom : RoomBase
         GameObject newObject = null;
         ItemObj newItemObjComponent = null;
 
-        List<Item> curItemList = new List<Item>();
-        curItemList = GameManager.Instance.GetItemList();
+        Dictionary<string, Item> curItemDic = new Dictionary<string, Item>();
+        curItemDic = ItemManager.Instance.GetCurItemDic();
+        //List<Item> curItemList = new List<Item>();
+        //curItemList = GameManager.Instance.GetItemList();
 
         itemSelectNum.Clear();
-        for (int i = 0; i < curItemList.Count; ++i)
+        foreach(Item item in curItemDic.Values)
         {
-            itemSelectNum.Add(curItemList[i].itemNumber);
+            itemSelectNum.Add(item.itemNumber);
         }
+        //for (int i = 0; i < curItemDic.Count; ++i)
+        //{
+        //    itemSelectNum.Add(curItemDic[i].itemNumber);
+        //}
 
         int index = 0;
         int loopCount = 0;
         int rand = 0;
 
-        List<Item> allItemList = new List<Item>();
-        allItemList = GameManager.Instance.allItemList;
+        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
 
         while (index < 4)
         {
@@ -113,7 +118,7 @@ public class BrokenItemRoom : RoomBase
                 Debug.Log("break while loop");
                 for (int i = index; i < 4; ++i)
                 {
-                    Item defaultItem = GameManager.Instance.allItemList[0];
+                    Item defaultItem = ItemManager.Instance.allItemDic["Default"];
 
                     newObject = Instantiate(itemObjTemplate);
                     newItemObjComponent = newObject.GetComponent<ItemObj>();
@@ -124,7 +129,7 @@ public class BrokenItemRoom : RoomBase
                 break;
             }
 
-            rand = Random.Range(allItemList.Count - GameManager.Instance.brokenItemCount, allItemList.Count);
+            rand = Random.Range(allItemDic.Count - ItemManager.Instance.brokenItemCount, allItemDic.Count);
 
             if (itemSelectNum.Contains(rand))
                 continue;
@@ -132,7 +137,12 @@ public class BrokenItemRoom : RoomBase
             itemSelectNum.Add(rand);
 
             // 아이템 오브젝트 생성
-            Item shopItem = GameManager.Instance.allItemList[rand];
+            Item shopItem = null;
+            foreach (Item item in ItemManager.Instance.allItemDic.Values)
+            {
+                if (item.itemNumber == rand)
+                    shopItem = item;
+            }
 
             newObject = Instantiate(itemObjTemplate);
             newItemObjComponent = newObject.GetComponent<ItemObj>();

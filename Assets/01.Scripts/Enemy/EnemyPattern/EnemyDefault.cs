@@ -53,7 +53,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     protected Poolable poolable = null;
 
-    protected bool isMove { private set; get; } = false;
+    public bool isControl { get; set; } = true;
+    protected bool isMove {private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
 
@@ -81,6 +82,8 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     void Update()
     {
+        if (!isControl)
+            return;
         Act();
     }
 
@@ -184,7 +187,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
         if (Random.Range(1, 101) <= critChance)
         {
-            damage *= 1.5f;
+            damage *= GameManager.Instance.Player.playerBase.CritDamage * 0.01f;
             EnemyUIManager.Instance.ShowDamage(damage, gameObject, true);
             GameManager.Instance.PlayHitEffect(transform, true, hitEffect);
         }
@@ -250,6 +253,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
             Managers.Pool.Push(poolable);
             FragmentCollectManager.Instance.DropFragment(gameObject, Random.Range(3, 5));
+            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke();
         }
     }
 }

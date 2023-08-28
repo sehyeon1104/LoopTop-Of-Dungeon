@@ -27,6 +27,22 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
 
     private bool isAddAll = false;
 
+    private int oneTimeIncrease = 1;
+    public int OneTimeIncrease {
+        get
+        {
+            return oneTimeIncrease;
+        }
+        set 
+        {
+            if(value < 5)
+            {
+                oneTimeIncrease = value; 
+            }
+        } 
+    }
+
+
     private void Awake()
     {
         fragmentCollect = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/2D/Fragment.prefab");
@@ -45,18 +61,23 @@ public class FragmentCollectManager : MonoSingleton<FragmentCollectManager>
             fragmentObj.transform.position = obj.transform.position;
         }
 
-        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq));
+        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq * oneTimeIncrease));
+        oneTimeIncrease = 1;
     }
 
     public void DropFragmentByCircle(GameObject obj, int amount, int count = 3)
     {
         for (int i = 0; i < count; ++i)
         {
+
             fragmentObj = Managers.Pool.Pop(fragmentCollect);
             fragmentObj.transform.position = (Random.insideUnitCircle * 0.75f) + (Vector2)obj.transform.position;
+            if(amount < 0)
+                fragmentObj.GetComponent<Fragment>().SetIsDecrease(true);
         }
 
-        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq));
+        fragmentAmountQueue.Enqueue(Mathf.RoundToInt(amount * GameManager.Instance.Player.playerBase.FragmentAddAcq * oneTimeIncrease));
+        oneTimeIncrease = 1;
     }
 
     public void IncreaseGoods()

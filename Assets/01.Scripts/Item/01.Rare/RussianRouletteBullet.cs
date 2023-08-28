@@ -11,7 +11,6 @@ public class RussianRouletteBullet : ProjectileObj
     protected override void Init()
     {
         base.Init();
-        // TODO : 방향 지정
     }
 
     protected override void OnEnable()

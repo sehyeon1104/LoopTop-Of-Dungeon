@@ -10,6 +10,8 @@ public class BrokenHourglass : ItemBase
 
     public override bool isPersitantItem => true;
 
+    public override bool isSetElement => true;
+
     public override void Disabling()
     {
 
@@ -22,16 +24,28 @@ public class BrokenHourglass : ItemBase
 
     public override void Use()
     {
-
+        LastingEffect();
     }
 
     public override void LastingEffect()
     {
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(BrokenHourglassAbility);
+        GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(BrokenHourglassAbility);
+    }
 
+    public override void SetItemCheck()
+    {
+        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
     }
 
     public void BrokenHourglassAbility()
     {
-        // TODO : 현재 사용한 스킬을 10%확률로 쿨타임 1초 감소
+        if(Random.Range(0, 100) < 10)
+        {
+            for(int i=0; i<2; i++) {
+                UIManager.Instance.SkillCoolCalculation(1, i);
+            }
+            
+        }
     }
 }
