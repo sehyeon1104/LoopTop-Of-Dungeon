@@ -27,7 +27,7 @@ public abstract class RoomBase : MonoBehaviour
         doors = transform.parent.Find("Doors").gameObject;
         doors.SetActive(false);
         minimapUnexplorerdRoomIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/UnExploreredMinimapIcon.prefab", transform);
-        minimapUnexplorerdRoomIcon.SetActive(true);
+        minimapUnexplorerdRoomIcon.SetActive(false);
         // curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -69,6 +69,7 @@ public abstract class RoomBase : MonoBehaviour
         if (!minimapIconSpriteRenderer.gameObject.activeSelf)
         {
             minimapIconSpriteRenderer.gameObject.SetActive(true);
+            minimapUnexplorerdRoomIcon.gameObject.SetActive(true);
             // ShowIcon();
         }
     }

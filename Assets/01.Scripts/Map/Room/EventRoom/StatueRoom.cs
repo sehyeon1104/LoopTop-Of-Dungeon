@@ -27,7 +27,7 @@ public class StatueRoom : RoomBase
 
     protected override void ShowIcon()
     {
-        // Debug.Log("ShowIcon");
+        base.ShowIcon();
         minimapIcon.SetActive(true);
     }
 

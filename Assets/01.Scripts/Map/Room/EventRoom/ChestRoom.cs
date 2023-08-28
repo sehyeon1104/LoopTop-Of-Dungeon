@@ -35,6 +35,7 @@ public class ChestRoom : RoomBase
 
     protected override void ShowIcon()
     {
+        base.ShowIcon();
         minimapIcon.SetActive(true);
     }
 
