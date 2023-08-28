@@ -188,14 +188,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 6040851711635457460}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 907
+  m_shaderPropertyID: 912
   m_materialData:
   - m_trailRenderer: {fileID: 8998113805171845814}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0
+    m_move: 0.3286264
   - m_trailRenderer: {fileID: 2161863729305463246}
     m_uvTiling: {x: 0.25, y: 1}
-    m_move: 0
+    m_move: 0.8810437
 --- !u!1 &5069282648893139602
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 5069282648893139602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.82, y: 0.55, z: 0}
-  m_LocalScale: {x: 0.175, y: 0.175, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6040851711635457460}

@@ -17,7 +17,7 @@ public class AllBullet : MonoBehaviour
         while (timer <= 4.5f)
         {
             transform.position = Vector2.Lerp(transform.position, GameManager.Instance.Player.transform.position, Time.deltaTime * 10f);
-            transform.Rotate(Vector3.forward * (4.5f - timer) * 0.15f);
+            transform.Rotate(Vector3.forward * (4.5f - timer) * 0.5f);
             timer += Time.deltaTime;
 
             yield return null;

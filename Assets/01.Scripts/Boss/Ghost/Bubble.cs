@@ -10,7 +10,8 @@ public class Bubble : MonoBehaviour
         if (collision.gameObject.layer == 8)
         {
             Managers.Pool.Push(GetComponent<Poolable>());
-            GhostBossUI.fillTime += isRed ? 10 : -5;
+            GhostBossUI.Instance.fillTime += isRed ? 10 : -5;
+            GhostBossUI.Instance.ultParticle.Play();
             Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", transform.position, Quaternion.identity);
         }
     }
