@@ -275,10 +275,6 @@ public class GameManager : MonoSingleton<GameManager>
         ItemManager.Instance.SetAllItemDic(itemData.allItemList);
         ItemManager.Instance.SetCurItemDic(itemData.curItemList);
 
-        foreach(var item in ItemManager.Instance.allItemDic.Values)
-        {
-            Debug.Log($"{item.itemNumber} : {item.itemName}");
-        }
         //ItemManager.Instance.allItemList = itemData.allItemList;
     }
 
