@@ -1372,7 +1372,7 @@ MonoBehaviour:
     itemRating: 1
     itemNumber: 105
     itemName: "500\uCE90\uB7FF \uB098\uC774\uD504"
-    itemNameEng: 500CKnife
+    itemNameEng: MICKnife
     itemEffectDescription: "\uAE30\uBCF8 \uACF5\uACA9 \uC2DC 5% \uD655\uB960\uB85C
       \uCD9C\uD608 \uBD80\uC5EC"
     itemDescription: "\uC190\uC7A1\uC774 \uBD80\uBD84\uC5D0 Made In China \uB77C\uB294
@@ -1639,7 +1639,7 @@ MonoBehaviour:
     itemRating: 4
     itemNumber: 406
     itemName: "33\uBC88 \uB514\uC2A4\uD06C"
-    itemNameEng: 33thDisc
+    itemNameEng: ThirtyThreeDisc
     itemEffectDescription: "\uB300\uC2DC \uC2DC \uCDA9\uB3CC\uD55C \uC801\uC5D0\uAC8C
       \uACF5\uACA9\uB825 50%\uC758 \uB370\uBBF8\uC9C0\uB97C \uC90C"
     itemDescription: "\uB178\uB9D0\uD0C0\uC785, \uC704\uB825 40, \uBA85\uC911\uB960
@@ -1764,8 +1764,8 @@ MonoBehaviour:
   - itemType: 1
     itemRating: 6
     itemNumber: 603
-    itemName: "\uB4F1\uAC00 \uAD50\uD658"
-    itemNameEng: EqualExchange
+    itemName: "\uD50C\uB809\uC870\uB514\uC544"
+    itemNameEng: Flexodia
     itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 50% \uC99D\uAC00, \uC7AC\uD654
       \uD3ED\uBC1C \uBC94\uC704 30% \uC99D\uAC00. \uC801 \uD53C\uACA9\uC2DC 5% \uD655\uB960\uB85C
       \uC7AC\uD654 1 \uB4DC\uB78D"
@@ -1781,6 +1781,38 @@ MonoBehaviour:
       \uD130\uD2B8\uB9B4 \uC218 \uC788\uC74C"
     itemDescription: 
     price: 0
+  - itemType: 2
+    itemRating: 7
+    itemNumber: 701
+    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC18C)"
+    itemNameEng: SmallHpPotion
+    itemEffectDescription: "\uCCB4\uB825\uC744 10 \uD68C\uBCF5\uD55C\uB2E4"
+    itemDescription: 
+    price: 100
+  - itemType: 2
+    itemRating: 7
+    itemNumber: 702
+    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC911)"
+    itemNameEng: MediumHpPotion
+    itemEffectDescription: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uD55C\uB2E4"
+    itemDescription: 
+    price: 200
+  - itemType: 2
+    itemRating: 7
+    itemNumber: 703
+    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uB300)"
+    itemNameEng: LargeHpPotion
+    itemEffectDescription: "\uCCB4\uB825\uC744 50 \uD68C\uBCF5\uD55C\uB2E4"
+    itemDescription: 
+    price: 300
+  - itemType: 2
+    itemRating: 7
+    itemNumber: 704
+    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uD2B9\uB300)"
+    itemNameEng: ExtraLargeHpPotion
+    itemEffectDescription: "\uCCB4\uB825\uC744 100 \uD68C\uBCF5\uD55C\uB2E4"
+    itemDescription: 
+    price: 400
   <brokenItemCount>k__BackingField: 0
 --- !u!1 &524012580
 GameObject:
@@ -9594,6 +9626,10 @@ PrefabInstance:
     - target: {fileID: 5575783386755548393, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: far clip plane

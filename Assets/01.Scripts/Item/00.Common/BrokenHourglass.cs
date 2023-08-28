@@ -10,6 +10,8 @@ public class BrokenHourglass : ItemBase
 
     public override bool isPersitantItem => true;
 
+    public override bool isSetElement => true;
+
     public override void Disabling()
     {
 
@@ -22,12 +24,18 @@ public class BrokenHourglass : ItemBase
 
     public override void Use()
     {
-
+        LastingEffect();
     }
 
     public override void LastingEffect()
     {
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(BrokenHourglassAbility);
+        GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(BrokenHourglassAbility);
+    }
 
+    public override void SetItemCheck()
+    {
+        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
     }
 
     public void BrokenHourglassAbility()

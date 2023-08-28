@@ -12,7 +12,7 @@ public class TinyPiggy : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.playerBase.FragmentAddAcq -= GameManager.Instance.Player.playerBase.InitFragmentAddAcq * 0.05f;
     }
 
     public override void Init()

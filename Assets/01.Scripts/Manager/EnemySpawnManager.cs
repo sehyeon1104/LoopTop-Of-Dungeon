@@ -178,6 +178,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
             {
                 if (loopCount >= 100)
                     Debug.LogError("Too Many loop!");
+
                 loopCount++;
                 randPos = Random.Range(1, enemySpawnPos.Length);
             }

@@ -39,6 +39,9 @@ public class ItemAbility : MonoBehaviour
 
         foreach(var item in ItemManager.Instance.allItemDic.Values)
         {
+            if (Items.ContainsKey(item.itemNumber))
+                continue;
+
             // Reflection을 사용하여 문자열로 클래스 인스턴스 생성
             itemType = Type.GetType(item.itemNameEng);
 
@@ -48,6 +51,7 @@ public class ItemAbility : MonoBehaviour
             }
             else
             {
+                Debug.Log($"{item.itemNumber} : {item.itemName}");
                 Debug.LogError("Invalid item type!");
             }
         }

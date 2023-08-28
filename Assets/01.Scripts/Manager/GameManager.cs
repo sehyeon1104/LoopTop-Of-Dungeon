@@ -102,10 +102,10 @@ public class GameManager : MonoSingleton<GameManager>
             GetPlayerStat();
         }
 
-        ItemManager.Instance.Init();
         if (!SaveManager.GetCheckDataBool("ItemData"))
         {
             Debug.Log("[GameManager] ItemData  저장파일 없음");
+            ItemManager.Instance.Init();
             SetItemData();
             SaveManager.Save<ItemData>(ref itemData);
             InventoryUI.Instance.LoadItemSlot();
@@ -115,6 +115,7 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
+            ItemManager.Instance.Init();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -132,6 +133,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void InitItemColorDic()
     {
+        Debug.Log("InitItemColorDic");
+
         itemRateColor.Clear();
         // 회색
         itemRateColor[(int)Define.ItemRating.Common] = "#D3D3D3";
@@ -208,12 +211,13 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.attackRange = Player.playerBase.AttackRange;
         playerData.moveSpeed = Player.playerBase.MoveSpeed;
         playerData.critChance = Player.playerBase.CritChance;
+        playerData.critDamage = Player.playerBase.CritDamage;
         playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
         playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
-        playerData.coolDown = Player.playerBase.coolDown;
+        playerData.skillCoolDown = Player.playerBase.SkillCoolDown;
     }
 
     /// <summary>
@@ -239,12 +243,13 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.AttackRange = playerData.attackRange;
         Player.playerBase.MoveSpeed = playerData.moveSpeed;
         Player.playerBase.CritChance = playerData.critChance;
+        Player.playerBase.CritDamage = playerData.critDamage;
         Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
         Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
-        Player.playerBase.coolDown = playerData.coolDown;
+        Player.playerBase.SkillCoolDown = playerData.skillCoolDown;
     }
 
     /// <summary>
@@ -269,6 +274,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         ItemManager.Instance.SetAllItemDic(itemData.allItemList);
         ItemManager.Instance.SetCurItemDic(itemData.curItemList);
+
         //ItemManager.Instance.allItemList = itemData.allItemList;
     }
 

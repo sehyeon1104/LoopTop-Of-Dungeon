@@ -16,7 +16,6 @@ public class TurtleHat : ItemBase
     public override void Use()
     {
         Debug.Log("거북 모자 효과 발동");
-        Debug.Log("하트 1칸 증가, 공격력 15% 감소");
         GameManager.Instance.Player.playerBase.MaxHp += 50; //(int)(GameManager.Instance.Player.playerBase.InitMaxHp * 0.3f);
         GameManager.Instance.Player.playerBase.Hp += 50;
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.2f;

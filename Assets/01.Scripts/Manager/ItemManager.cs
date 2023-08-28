@@ -10,6 +10,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     [SerializeField]
     private List<Item> allItemInfo = new List<Item>(); // 저장용
 
+    [field:SerializeField]
     public Dictionary<string, Item> allItemDic { get; private set; } = new Dictionary<string, Item>();
     public Dictionary<string, Item> curItemDic { get; private set; } = new Dictionary<string, Item>();
 
@@ -28,20 +29,26 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     private ItemAbility itemAbility = new ItemAbility();
 
-    public UnityEvent RoomClearRelatedItemEffects { private set; get; }
+    public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
 
     public void Init()
     {
+        Debug.Log("ItemManager Init");
+
+        // 모든 아이템 스크립트 생성
         itemAbility.CreateItem();
 
+        // 딕셔너리 초기화
         InitDic();
-        InitItemLists();
+        // 아이템 타입 분류
+        SortItemLists();
 
         brokenItemCount = brokenItemList.Count;
     }
 
     public void InitDic()
     {
+        // AllItemDic에 모든 아이템 정보 추가
         SetAllItemDic(allItemInfo);
 
         setItemDic.Add(SetItem.CompleteHourglass, 2);
@@ -50,7 +57,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         setItemDic.Add(SetItem.Overeager, 3);
     }
 
-    public void InitItemLists()
+    public void SortItemLists()
     {
         foreach(Item item in allItemDic.Values)
         {
@@ -81,7 +88,8 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         foreach(Item item in itemList)
         {
-            allItemDic.Add(item.itemNameEng, item);
+            if(!allItemDic.ContainsKey(item.itemNameEng))
+                allItemDic.Add(item.itemNameEng, item);
         }
     }
 

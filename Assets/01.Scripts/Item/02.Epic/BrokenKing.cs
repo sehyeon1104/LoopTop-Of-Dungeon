@@ -10,15 +10,15 @@ public class BrokenKing : ItemBase
 
     public override bool isPersitantItem => true;
 
-    public override void Disabling()
-    {
+    private float timer = 0f;
+    private float targetTime = 10f;
 
-    }
+    private bool isEquip = false;
 
-    public override void LastingEffect()
-    {
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
-    }
+    private static int stack = 0;
+    int temp = 1;
 
     public override void Init()
     {
@@ -27,6 +27,50 @@ public class BrokenKing : ItemBase
 
     public override void Use()
     {
+        isEquip = true;
 
+        StartCoroutine(Timer());
+    }
+
+    public override void Disabling()
+    {
+        isEquip = false;
+    }
+
+    public override void LastingEffect()
+    {
+        isEquip = true;
+        StartCoroutine(Timer());
+    }
+
+    public void BrokenKingAbility()
+    {
+        GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f;
+    }
+
+    public void ResetStack()
+    {
+        stack = 0;
+        timer = 0f;
+        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f * stack;
+    }
+
+    public IEnumerator Timer()
+    {
+        while (isEquip)
+        {
+            if (timer >= targetTime)
+                continue;
+
+            timer += Time.deltaTime;
+            if(temp - Mathf.CeilToInt(timer) > 0)
+            {
+                temp = Mathf.CeilToInt(timer);
+                stack++;
+                BrokenKingAbility();
+            }
+
+            yield return waitForEndOfFrame;
+        }
     }
 }

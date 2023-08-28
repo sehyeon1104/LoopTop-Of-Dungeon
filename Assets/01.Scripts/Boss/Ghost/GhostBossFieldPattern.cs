@@ -50,7 +50,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private void Start()
     {
-        UltPattern =  StartCoroutine(MakeBubble());
+        //UltPattern =  StartCoroutine(MakeBubble());
     }
     public IEnumerator GhostBossArmPattern()
     {
@@ -138,7 +138,7 @@ public class GhostBossFieldPattern : MonoBehaviour
                 yield break;
             }
 
-            if (GhostBossUI.fillTime > 70f)
+            if (GhostBossUI.Instance.fillTime > 70f)
             {
                 GameManager.Instance.Player.OnDamage(5, 0);
             }

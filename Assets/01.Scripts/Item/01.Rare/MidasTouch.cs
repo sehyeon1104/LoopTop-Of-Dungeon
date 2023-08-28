@@ -14,10 +14,6 @@ public class MidasTouch : ItemBase
 
     private int midasTouchChance = 0;
 
-    public override void Disabling()
-    {
-        isEquip = false;
-    }
 
     public override void Init()
     {
@@ -34,6 +30,11 @@ public class MidasTouch : ItemBase
 
     }
 
+    public override void Disabling()
+    {
+        isEquip = false;
+    }
+
     public void MidasTouchAbility()
     {
         if (isEquip)
@@ -41,7 +42,7 @@ public class MidasTouch : ItemBase
             midasTouchChance = Random.Range(0, 100);
             if(midasTouchChance < 10)
             {
-                // TODO : ÀçÈ­ 2¹è È¹µæ ±¸Çö
+                FragmentCollectManager.Instance.OneTimeIncrease += 1;
             }
         }
     }

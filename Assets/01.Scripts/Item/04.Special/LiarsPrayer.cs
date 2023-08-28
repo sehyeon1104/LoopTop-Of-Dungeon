@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class LiarsPrayer : ItemBase
 {
-    public override Define.ItemType itemType => throw new System.NotImplementedException();
+    public override Define.ItemType itemType => Define.ItemType.buff;
 
-    public override Define.ItemRating itemRating => throw new System.NotImplementedException();
+    public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
-    public override bool isPersitantItem => throw new System.NotImplementedException();
-
-    public override void Disabling()
-    {
-        throw new System.NotImplementedException();
-    }
+    public override bool isPersitantItem => false;
 
     public override void Init()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void Use()
     {
-        throw new System.NotImplementedException();
+        LiarsPrayerAbility();
+    }
+
+    public override void Disabling()
+    {
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.12f;
+        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.12f;
+        GameManager.Instance.Player.playerBase.MoveSpeed -= GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.12f;
+        GameManager.Instance.Player.playerBase.SkillCoolDown -= 24;
+    }
+
+    public void LiarsPrayerAbility()
+    {
+        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.12f;
+        GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.12f;
+        GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.12f;
+        GameManager.Instance.Player.playerBase.SkillCoolDown += 24;
     }
 }

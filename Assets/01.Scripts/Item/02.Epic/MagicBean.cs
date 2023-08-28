@@ -12,21 +12,6 @@ public class MagicBean : ItemBase
 
     public override bool isSetElement => true;
 
-    public override void Disabling()
-    {
-
-    }
-
-    public override void LastingEffect()
-    {
-
-    }
-
-    public override void SetItemCheck()
-    {
-
-    }
-
     public override void Init()
     {
 
@@ -34,6 +19,29 @@ public class MagicBean : ItemBase
 
     public override void Use()
     {
+        LastingEffect();
+    }
 
+    public override void Disabling()
+    {
+
+    }
+
+    public override void LastingEffect()
+    {
+        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(MagicBeanAbility);
+        GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(MagicBeanAbility);
+    }
+
+    public override void SetItemCheck()
+    {
+        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
+    }
+
+
+    public void MagicBeanAbility()
+    {
+        GameObject bean = Managers.Resource.Instantiate("Assets/03.Prefabs/Item/MagicBeanBullet.prefab");
+        bean.transform.right = PlayerVisual.Instance.IsFlipX() ? -GameManager.Instance.Player.transform.right : GameManager.Instance.Player.transform.right;
     }
 }

@@ -286,11 +286,13 @@ public class G_Patterns : BossPattern
 
             yield return new WaitForSeconds(0.1f);
             transform.position = pos;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpWarning.prefab", pos + (anPos - pos) / 2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
 
             yield return new WaitForSeconds(1f);
             transform.DOMove(anPos, 0.5f);
 
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Ghost/G_Claw.mp3");
 
@@ -427,7 +429,7 @@ public class GhostPattern : G_Patterns
 
         Boss.Instance.actCoroutine = null;
 
-        GhostBossUI.fillTime = 50f;
+        GhostBossUI.Instance.fillTime = 50f;
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
@@ -481,7 +483,7 @@ public class GhostPattern : G_Patterns
     }
     private void SetPanicValue()
     {
-        float fillTime = GhostBossUI.fillTime;
+        float fillTime = GhostBossUI.Instance.fillTime;
         if (fillTime > 70f)
         {
             panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.3f);

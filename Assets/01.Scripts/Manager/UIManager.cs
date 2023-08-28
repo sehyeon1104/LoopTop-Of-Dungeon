@@ -143,11 +143,11 @@ public class UIManager : MonoSingleton<UIManager>
             fragmentAmountTMP = ultFade.transform.Find("LeftUp/Goods/ExperienceFragmentUI/FragmentAmountTMP").GetComponent<TextMeshProUGUI>();
             bossFragmentAmountTMP = ultFade.transform.Find("LeftUp/Goods/BossFragmentUI/BossFragmentAmountTMP").GetComponent<TextMeshProUGUI>();
 
-            pcSkillIcons[0] = playerPPUI.transform.Find("RightDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[1] = playerPPUI.transform.Find("RightDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[2] = playerPPUI.transform.Find("RightDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[3] = playerPPUI.transform.Find("RightDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
-            pcSkillIcons[4] = playerPPUI.transform.Find("RightDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[0] = playerPPUI.transform.Find("LeftDown/Btns/Skill1_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[1] = playerPPUI.transform.Find("LeftDown/Btns/Skill2_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[2] = playerPPUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[3] = playerPPUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
+            pcSkillIcons[4] = playerPPUI.transform.Find("LeftDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
 
             gameOverPanel = ultFade.transform.Find("All/GameOverPanel").gameObject;
             blurPanel = ultFade.transform.Find("All/BlurPanel").gameObject;
@@ -384,10 +384,8 @@ public class UIManager : MonoSingleton<UIManager>
     public bool SkillCooltime(PlayerSkillData skillData,int skillNum , bool isCheck = false)
     {
         float coolTime = skillData.skill[skillNum].skillDelay;
-        float skillCoolTime = coolTime;
-        if (skillNum <6 )
-         skillCoolTime = coolTime - (coolTime * playerBase.coolDown/100);
-        
+        float skillCoolTime = coolTime - (coolTime * playerBase.SkillCoolDown / 100);
+        print(skillCoolTime);
         int num =skillNum;
         if (skillNum ==7)
             num = 2;
@@ -406,7 +404,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            currentImage = playerPPUI.transform.Find("RightDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
+            currentImage = playerPPUI.transform.Find("LeftDown/Btns").GetChild(num).transform.Find("CooltimeImg").GetComponent<Image>();
 
             if (currentImage.fillAmount > 0)
                 return false;

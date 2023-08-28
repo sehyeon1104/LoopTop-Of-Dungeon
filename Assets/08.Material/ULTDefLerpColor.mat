@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UILerpColor
+  m_Name: ULTDefLerpColor
   m_Shader: {fileID: -6465566751694194690, guid: 23fa9b9cbf687b2498d8cbf01c1cff48, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 826e84a4b798e7844aad09414551c014, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2d136088200c3024f88bbe589ae3f6a8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -38,8 +38,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorRange: 0.99
+    - _ColorRange: 1.02
+    - _VoronoiPower: 2.17
+    - _VoronoiScale: 16.43
     m_Colors:
-    - _GetColor: {r: 1, g: 0.78779936, b: 0, a: 1}
-    - _SetColor: {r: 5.485305, g: 1.3713262, b: 29.102589, a: 1}
+    - _EndColor: {r: 7.098798, g: 6.388918, b: 67.79352, a: 0}
+    - _GetColor: {r: 0, g: 1, b: 0.8042793, a: 1}
+    - _SetColor: {r: 26.783062, g: 21.470306, b: 62.52343, a: 1}
+    - _StartColor: {r: 24.596079, g: 4.0156865, b: 95.87451, a: 0}
   m_BuildTextureStacks: []
