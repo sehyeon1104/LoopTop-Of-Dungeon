@@ -16,6 +16,7 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     public float fillTime { get; set; } = 50f;
     public ParticleSystem ultParticle;
+    public Material partMat;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
     public void InitUltGage()
     {
         GetComponent<Canvas>().worldCamera = GameObject.Find("UICam").GetComponent<Camera>();
+        partMat = ultParticle.GetComponent<ParticleSystemRenderer>().material;
         bossUltGageImages.fillAmount = 0;
 
         atkGroup.alpha = 0.2f;
