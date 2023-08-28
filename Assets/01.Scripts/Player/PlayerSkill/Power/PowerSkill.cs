@@ -33,7 +33,7 @@ public class PowerSkill : PlayerSkillBase
     float rushWait = 0.2f;
     float jumpHeight = 5f;
     float jumpWidth = 10f;
-    float jumpSpeed = 2f;
+    float jumpSpeed = 1.5f;
     float jumpAttackRange = 2f;
     float jumpAttackDmg = 20f;
     bool isClick = false;
@@ -234,9 +234,9 @@ public class PowerSkill : PlayerSkillBase
     {
         float checkTime = 0;
         float timer = 0;
-        int rushNum = 1;
         int rushCheckNum = 0;
-        int num = 1;
+        float rushCheckTime = 0.7f;
+        float num = 1;
         Collider2D[] playerCollider;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
@@ -244,34 +244,32 @@ public class PowerSkill : PlayerSkillBase
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
             {
-                float chargingTime = 0;
                 KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.U : KeyCode.I;
                 while (Input.GetKey(keyBoardButton))
                 {
-                    chargingTime += Time.deltaTime * 2;
-                    if (chargingTime > num)
+                    checkTime += Time.deltaTime;
+                    if (checkTime > rushCheckTime)
                     {
                         Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ChargingEffect.prefab", transform.position, Quaternion.identity);
                         num++;
+                        checkTime = 0;
                     }
                     yield return null;
                 }
                 if (num > 1)
                 {
-
                     Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/emitEffect.prefab", transform.position, Quaternion.identity);
                 }
-                rushNum += Mathf.FloorToInt(chargingTime);
-                rushNum = Mathf.Clamp(rushNum, rushMin, rushMax);
+                num = Mathf.Clamp(num, rushMin, rushMax);
             }
         }
 
         player.IsInvincibility = true;
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
-        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 1.prefab", transform);
+        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 2.prefab", transform);
         rushEffect.transform.rotation = angleAxis;
-        while (rushCheckNum < rushNum)
+        while (rushCheckNum < num)
         {
             playerRigid.velocity = playerMovement.Direction * rushVelocity;
             if (timer > rushWait)
@@ -400,6 +398,8 @@ public class PowerSkill : PlayerSkillBase
 
     IEnumerator Jumpdown(int level)
     {
+        
+        Poolable tonado = null;
         float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
@@ -417,12 +417,11 @@ public class PowerSkill : PlayerSkillBase
         playerMovement.IsControl = false;
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
-        trailRenderer.startWidth = trailWidth;
-        trailRenderer.colorGradient = trailColor;
-        trailRenderer.enabled = true;
-        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
+        float angle = 0;
+        Vector2 beforePos = Vector2.zero;
+        Vector2 direction = Vector2.zero;
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-
+        
         float value = 0;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
@@ -433,6 +432,28 @@ public class PowerSkill : PlayerSkillBase
 
         while (lerpValue < 1)
         {
+            if (level > 2 && tonado == null)
+            {
+                tonado = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Tornado.prefab", transform);
+
+            }
+            else
+            {
+                if(beforePos == null)
+                {
+                    beforePos = transform.position;
+                    direction = transform.position;
+                }
+                else
+                {
+                    direction =  (Vector2)transform.position - beforePos;
+                    beforePos = transform.position;
+                    print("ss");
+                }
+               angle = Mathf.Atan2(direction.y, direction.x);
+               tonado.transform.rotation = Quaternion.AngleAxis(angle -90,transform.forward);
+
+            }
             if (lerpValue > 0.5)
             {
                 multiPlyValue = 1.3f;
@@ -441,7 +462,6 @@ public class PowerSkill : PlayerSkillBase
             {
                 multiPlyValue = 0.7f;
             }
-            trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
             lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);

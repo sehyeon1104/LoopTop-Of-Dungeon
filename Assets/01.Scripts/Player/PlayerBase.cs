@@ -31,7 +31,7 @@ public class PlayerBase
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
         SlotLevel = new int[] { 1, 1 };
-        coolDown =90;
+        coolDown =0;
     }
 
     public float AttackRange { get; set; }
