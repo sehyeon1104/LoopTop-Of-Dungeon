@@ -112,13 +112,11 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         while (index < 4)
         {
-            rand = Random.Range(1,
-                ItemManager.Instance.allItemDic.Count
-                - ItemManager.Instance.brokenItemCount
-                - ItemManager.Instance.etcItemList.Count
-                - ItemManager.Instance.setItemList.Count);
+            rand = Random.Range(1, ItemManager.Instance.allItemDic.Count);
 
-            if (itemSelectNum.Contains(rand))
+            if (itemSelectNum.Contains(rand) 
+                || allItemList[rand].itemRating == Define.ItemRating.Special 
+                || allItemList[rand].itemRating == Define.ItemRating.Set)
                 continue;
 
             itemSelectNum.Add(rand);

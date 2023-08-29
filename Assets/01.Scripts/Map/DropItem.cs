@@ -103,15 +103,14 @@ public class DropItem : MonoBehaviour, IPoolable
         while (item == null)
         {
             // 저주아이템을 제외한 모든 아이템 rand
-            rand = Random.Range(1, 
-                ItemManager.Instance.allItemDic.Count 
-                - ItemManager.Instance.brokenItemCount 
-                - ItemManager.Instance.etcItemList.Count 
-                - ItemManager.Instance.setItemList.Count);
+            rand = Random.Range(1, ItemManager.Instance.allItemDic.Count);
 
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
-            if (itemSelectNum.Contains(rand) || itemObjListNum.Contains(rand))
-                continue;
+            if (itemSelectNum.Contains(rand) 
+                || itemObjListNum.Contains(rand) 
+                || allItemList[rand].itemRating == Define.ItemRating.Special
+                || allItemList[rand].itemRating == Define.ItemRating.Set)
+            continue;
 
             Debug.Log("rand : " + rand);
 
