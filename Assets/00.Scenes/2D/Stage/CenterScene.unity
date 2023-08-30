@@ -1288,7 +1288,7 @@ MonoBehaviour:
       \uC7AC\uB8CC\uC544\uC774\uD15C"
     itemDescription: "\uAD6C\uB984 \uC704\uC5D0 \uC0AC\uB294 \uAC70\uC778\uC758 \uC678\uCD9C\uC6A9
       \uC7A5\uAC11"
-    price: 0
+    price: 100
   - itemType: 1
     itemRating: 1
     itemNumber: 103
@@ -1592,7 +1592,7 @@ MonoBehaviour:
     itemEffectDescription: "\uACF5\uACA9\uB825 50% \uC99D\uAC00, \uC774\uB3D9\uC18D\uB3C4
       25% \uAC10\uC18C"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 502
@@ -1601,7 +1601,7 @@ MonoBehaviour:
     itemEffectDescription: "\uC774\uB3D9\uC18D\uB3C4 30% \uC99D\uAC00, \uCE58\uBA85\uD0C0
       \uD655\uB960 8% \uAC10\uC18C"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 503
@@ -1609,7 +1609,7 @@ MonoBehaviour:
     itemNameEng: TurtleHat
     itemEffectDescription: "Hp 50 \uC99D\uAC00, \uACF5\uACA9\uB825 20% \uAC10\uC18C"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 504
@@ -1618,7 +1618,7 @@ MonoBehaviour:
     itemEffectDescription: "\uBC1B\uB294 \uB370\uBBF8\uC9C0\uC640 \uC8FC\uB294 \uB370\uBBF8\uC9C0
       2\uBC30 \uC99D\uAC00"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 505
@@ -1628,7 +1628,7 @@ MonoBehaviour:
       \uC2A4\uD0AC \uCFE8\uD0C0\uC784 50% ~ 150% \uC801\uC6A9. [\uC628\uC804\uD55C
       \uBAA8\uB798\uC2DC\uACC4] \uC7AC\uB8CC"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 506
@@ -1637,7 +1637,7 @@ MonoBehaviour:
     itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 20% \uC99D\uAC00, \uC801\uC5D0\uAC8C
       \uD53C\uACA9\uC2DC \uC77C\uC815\uB7C9\uC758 \uC7AC\uD654 \uAC10\uC18C"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 507
@@ -1646,7 +1646,7 @@ MonoBehaviour:
     itemEffectDescription: "\uCE58\uBA85\uD0C0 \uD53C\uD574 20% \uAC10\uC18C, \uC2A4\uD0AC
       \uCFE8\uD0C0\uC784 20% \uAC10\uC18C"
     itemDescription: 
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 508
@@ -1656,7 +1656,7 @@ MonoBehaviour:
       \uD53C\uD574 50% \uC99D\uAC00"
     itemDescription: "\uD565\uC544\uBD10\uB3C4 \uC544\uBB34 \uB9DB\uB3C4 \uB098\uC9C0
       \uC54A\uB294\uB2E4"
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 509
@@ -1668,7 +1668,7 @@ MonoBehaviour:
       5\uC758 \uB370\uBBF8\uC9C0\uB97C \uBC1B\uACE0 \uC2A4\uD0DC \uCD08\uAE30\uD654"
     itemDescription: "\uC5B4\uB5A0\uD55C \uADFC\uC2EC\uB3C4 \uC78A\uACE0 \uD558\uB298\uB85C
       \uB0A0\uC544\uC624\uB974\uB77C"
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 5
     itemNumber: 510
@@ -1679,7 +1679,7 @@ MonoBehaviour:
       24% \uC99D\uAC00"
     itemDescription: "\uADF8\uB7EC\uB098 \uB108\uD76C \uC911 \uD55C \uC0AC\uB78C\uC740
       \uB9C8\uADC0\uB2C8\uB77C \uD558\uC2DC\uB2C8"
-    price: 500
+    price: 0
   - itemType: 1
     itemRating: 6
     itemNumber: 601
@@ -9392,6 +9392,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 702522677, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: orthographic size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548181, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -9447,6 +9451,10 @@ PrefabInstance:
     - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: far clip plane
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5575783386755548394, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: orthographic size
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}

@@ -28,6 +28,7 @@ public class EliteRoom : RoomBase
 
     protected override void ShowIcon()
     {
+        base.ShowIcon();
         portalMapIcon.SetActive(true);
     }
 
