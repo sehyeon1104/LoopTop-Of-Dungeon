@@ -17,8 +17,6 @@ public class StatueRoom : RoomBase
         minimapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);  
         minimapIcon.SetActive(false);
 
-        //minimapIconSpriteRenderer = transform.parent.Find("MinimapIcon").GetComponent<SpriteRenderer>();
-        //minimapIconSpriteRenderer.gameObject.SetActive(false);
         //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
@@ -29,7 +27,7 @@ public class StatueRoom : RoomBase
 
     protected override void ShowIcon()
     {
-        // Debug.Log("ShowIcon");
+        base.ShowIcon();
         minimapIcon.SetActive(true);
     }
 

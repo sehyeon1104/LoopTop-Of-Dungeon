@@ -27,7 +27,10 @@ public class G_Patterns : BossPattern
     [SerializeField] protected AnimationClip absorbEnd;
 
     [SerializeField] protected Material panicMat;
+    [SerializeField] protected CinemachineVirtualCamera boss2PhaseVcam;
+    [SerializeField] protected CinemachineVirtualCamera jangpanVCam;
 
+    protected ShowDamagePopUp showDmg;
     protected GhostBossJangpanPattern bossRangePattern;
 
     protected CanvasGroup playerPCUI;
@@ -41,6 +44,7 @@ public class G_Patterns : BossPattern
 
     private void Awake()
     {
+        showDmg = FindObjectOfType<ShowDamagePopUp>();
         bossRangePattern = GetComponent<GhostBossJangpanPattern>();
         if (boss2PhaseVcam == null)
             boss2PhaseVcam = GetComponentInChildren<CinemachineVirtualCamera>();
@@ -537,6 +541,8 @@ public class GhostPattern : G_Patterns
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
+                jangpanVCam.transform.position = new Vector3(15.5f, 7f, -1f);
+                jangpanVCam.Priority = 11;
                 yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }

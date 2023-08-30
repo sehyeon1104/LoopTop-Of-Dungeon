@@ -82,7 +82,7 @@ public class ItemObj : MonoBehaviour
         itemImage.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         itemName = item.itemName;
         itemNameTMP.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{itemName}</color>";
-        itemDesTMP.SetText(item.itemDescription);
+        itemDesTMP.SetText(item.itemEffectDescription.ToString());
         priceTMP.SetText(string.Format("{0}", item.price));
         Num = item.itemNumber;
     }

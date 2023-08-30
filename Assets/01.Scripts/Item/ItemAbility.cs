@@ -55,5 +55,7 @@ public class ItemAbility : MonoBehaviour
                 Debug.LogError("Invalid item type!");
             }
         }
+
+        ItemManager.Instance.InitItems();
     }
 }

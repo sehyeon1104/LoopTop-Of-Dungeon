@@ -20,6 +20,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     public List<Item> legendaryItemList { get; private set; } = new List<Item>();
     public List<Item> brokenItemList { get; private set; } = new List<Item>();
     public List<Item> setItemList { get; private set; } = new List<Item>();
+    public List<Item> etcItemList { get; private set; } = new List<Item>();
 
     [field: SerializeField]
     public int brokenItemCount { get; private set; } = 0;
@@ -76,6 +77,7 @@ public class ItemManager : MonoSingleton<ItemManager>
                     legendaryItemList.Add(item);
                     break;
                 case Define.ItemRating.ETC:
+                    etcItemList.Add(item);
                     break;   
                 case Define.ItemRating.Special:
                     brokenItemList.Add(item);
@@ -119,9 +121,9 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void InitItems()
     {
-        for(int i = 1; i < ItemAbility.Items.Count; ++i)
+        foreach(var item in allItemDic.Values)
         {
-            ItemAbility.Items[i].Init();
+            ItemAbility.Items[item.itemNumber].Init();
         }
     }
 
