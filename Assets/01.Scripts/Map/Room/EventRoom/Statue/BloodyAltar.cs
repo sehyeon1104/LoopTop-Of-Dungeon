@@ -19,6 +19,9 @@ public class BloodyAltar : StatueBase
 
     protected override void StatueFunc()
     {
+        if (!isUseable)
+            return;
+
         GameManager.Instance.Player.playerBase.MaxHp -= 20;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.5f;
 
