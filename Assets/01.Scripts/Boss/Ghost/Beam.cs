@@ -127,6 +127,9 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
+        if(Random.Range(0,2) == 0)
+            Managers.Pool.PoolManaging("10.Effects/ghost/Bubble", transform.position, Quaternion.identity);
+
         //yield return new WaitForSeconds(0.2f);
         //CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
 

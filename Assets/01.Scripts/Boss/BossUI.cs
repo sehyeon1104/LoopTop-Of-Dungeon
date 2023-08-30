@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class BossUI : MonoBehaviour
     private GameObject hpBar = null;
     [SerializeField]
     private Image Icon = null;
+    [SerializeField]
+    private TextMeshProUGUI hpTxt = null;
 
     [SerializeField]
     private GameObject shieldBar = null;
@@ -30,6 +33,7 @@ public class BossUI : MonoBehaviour
     public void UpdateHpBar()
     {
         hpBarSlider.value = (float)Boss.Instance.Base.Hp / (float)Boss.Instance.Base.MaxHp;
+        hpTxt.text = $"{Mathf.RoundToInt(Boss.Instance.Base.Hp)}/{Boss.Instance.Base.MaxHp} <size=85%>({Mathf.RoundToInt(hpBarSlider.value * 100f)}%)";
     }
 
     public void UpdateShieldBar()

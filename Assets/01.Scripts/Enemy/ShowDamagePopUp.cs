@@ -8,11 +8,11 @@ using TMPro;
 public class ShowDamagePopUp : MonoBehaviour
 {
     [SerializeField]
-    private GameObject displayDamageTMP = null;
+    public GameObject displayDamageTMP = null;
 
     private WaitForSeconds waitForHalfSeconds = new WaitForSeconds(0.5f);
 
-    public IEnumerator IEShowDamage(float damage, GameObject damagedObj, bool isCrit = false)
+    public IEnumerator IEShowDamage(float damage, GameObject damagedObj, bool isCrit = false, float dmgMul = 1)
     {
         // 텍스트 소환
         Poolable damageTMP = Managers.Pool.Pop(displayDamageTMP);
@@ -21,11 +21,11 @@ public class ShowDamagePopUp : MonoBehaviour
         if (isCrit)
         {
             // 텍스트 색 변경
-            damageText.color = Color.red;
+            damageText.color = Color.yellow;
         }
         else
         {
-            damageText.color = Color.white;
+            damageText.color = dmgMul == 1 ? Color.white : dmgMul < 1 ? Color.cyan : Color.red;
         }
 
         // 초기화
