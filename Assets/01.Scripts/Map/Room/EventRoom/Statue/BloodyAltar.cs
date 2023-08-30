@@ -24,5 +24,7 @@ public class BloodyAltar : StatueBase
 
         effectTmp.SetText("최대체력 20 감소, 공격력 50% 증가.");
         StartCoroutine(IETextAnim());
+
+        isUseable = false;
     }
 }

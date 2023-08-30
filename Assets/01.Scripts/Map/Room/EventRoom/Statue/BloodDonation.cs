@@ -21,8 +21,18 @@ public class BloodDonation : StatueBase
 
     protected override void StatueFunc()
     {
-        GameManager.Instance.Player.playerBase.Hp -= requireHp;
+        if (requireHp > GameManager.Instance.Player.playerBase.Hp)
+        {
+            effectTmp.SetText($"체력이 부족합니다! 요구치 : {requireHp}");
+            StartCoroutine(IETextAnim());
+            return;
+        }
 
+        GameManager.Instance.Player.playerBase.Hp -= requireHp;
+        if(Random.Range(0, 100) < requireHp)
+        {
+            StageManager.Instance.InstantiateChest(new Vector3(transform.position.x, transform.position.y - 3), Define.ChestRating.Common);
+        }
 
 
         effectTmp.SetText($"체력 {requireHp * 5}소모");
