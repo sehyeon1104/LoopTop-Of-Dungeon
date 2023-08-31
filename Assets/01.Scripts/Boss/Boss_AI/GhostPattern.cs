@@ -28,7 +28,6 @@ public class G_Patterns : BossPattern
 
     [SerializeField] protected Material panicMat;
     [SerializeField] protected CinemachineVirtualCamera boss2PhaseVcam;
-    [SerializeField] protected CinemachineVirtualCamera jangpanVCam;
 
     protected ShowDamagePopUp showDmg;
     protected GhostBossJangpanPattern bossRangePattern;
@@ -142,7 +141,7 @@ public class G_Patterns : BossPattern
         yield return new WaitForSeconds(1f);
 
         bossObject.SetActive(false);
-        bossAura.SetActive(false);
+
         Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
@@ -308,7 +307,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(5.5f, 17f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(30f, 4f), clone.transform.rotation.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(15, 0);
 
@@ -414,10 +413,11 @@ public class GhostPattern : G_Patterns
                 patternWeight[3] = 40;
                 break;
             case 2:
-                patternWeight[0] = 20;
-                patternWeight[1] = 40;
-                patternWeight[2] = 30;
-                patternWeight[3] = 10;
+                patternWeight[0] = 30;
+                patternWeight[1] = 25;
+                patternWeight[2] = 20;
+                patternWeight[3] = 15;
+                patternWeight[4] = 10;
                 break;
         }
 
@@ -455,11 +455,11 @@ public class GhostPattern : G_Patterns
 
         while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
         {
-            Boss.Instance.Base.Hp += 4;
+            Boss.Instance.Base.Hp += 8;
             yield return null;
         }
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
 
         CinemachineCameraShaking.Instance.CameraShake(20f, 0.5f);
         bossAura.SetActive(true);
@@ -487,13 +487,20 @@ public class GhostPattern : G_Patterns
     }
     private void SetPanicValue()
     {
+
         float fillTime = GhostBossUI.Instance.fillTime;
         if (fillTime > 70f)
         {
             panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.3f);
             if (panicValue == Mathf.CeilToInt((fillTime - 70) * 0.1f)) return;
 
-            panicMat.SetColor("_Color", new Color(17f, 0, 0.8f));
+            if (panicValue < 1)
+            {
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/P_AtkUp.prefab", GameManager.Instance.Player.transform);
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/B_AtkUp.prefab", transform);
+
+                panicMat.SetColor("_Color", new Color(17f, 0, 0.8f));
+            }
 
             panicValue = Mathf.CeilToInt((fillTime - 70) * 0.1f);
             Boss.Instance.dmgMul = Mathf.Pow(2, panicValue - 1) * 0.25f + 1;
@@ -504,7 +511,13 @@ public class GhostPattern : G_Patterns
             panicMat.SetFloat("_VigIntensity", (0.2f - (fillTime - 30) * 0.005f) + 0.15f);
             if (panicValue == Mathf.FloorToInt(fillTime * 0.1f) - 3) return;
 
-            panicMat.SetColor("_Color", new Color(0, 16.5f, 9.3f));
+            if (panicValue > -1)
+            {
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/P_DefUp.prefab", GameManager.Instance.Player.transform);
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/B_DefUp.prefab", transform);
+
+                panicMat.SetColor("_Color", new Color(0, 16.5f, 9.3f));
+            }
 
             panicValue = Mathf.FloorToInt(fillTime * 0.1f) - 3;
             Boss.Instance.dmgMul = (panicValue * 0.25f) + 1;
@@ -541,8 +554,6 @@ public class GhostPattern : G_Patterns
                 yield return StartCoroutine(bossRangePattern.FloorPatternCircle());
                 break;
             case 2:
-                jangpanVCam.transform.position = new Vector3(15.5f, 7f, -1f);
-                jangpanVCam.Priority = 11;
                 yield return StartCoroutine(bossRangePattern.FloorPatternRectangle());
                 break;
         }

@@ -887,8 +887,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 609601283, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 609601283, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 609601283, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5943396
+      objectReference: {fileID: 0}
+    - target: {fileID: 609601283, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_fontSizeBase
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 609601283, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4288190616
       objectReference: {fileID: 0}
     - target: {fileID: 2212349274594600943, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
       propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1016,17 +1032,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f43ffcb2094cc14f834f9771c1eaaf0, type: 3}
---- !u!114 &753093560 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 753093560, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-  m_PrefabInstance: {fileID: 94708762846745764}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &831903236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,6 +1958,14 @@ PrefabInstance:
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 5212581110606597666, guid: bd9274dd21496744ab16ce57a21376d1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212581110606597666, guid: bd9274dd21496744ab16ce57a21376d1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212581110606597666, guid: bd9274dd21496744ab16ce57a21376d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 49.034042
       objectReference: {fileID: 0}
@@ -2103,10 +2116,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 753093560, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-      propertyPath: m_Priority
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3676222466394034532, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2155,10 +2164,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss_devil_man
       objectReference: {fileID: 0}
-    - target: {fileID: 3681022856023880976, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-      propertyPath: jangpanVCam
-      value: 
-      objectReference: {fileID: 753093560}
     - target: {fileID: 3681022856023880976, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
       propertyPath: bossFieldPattern
       value: 
