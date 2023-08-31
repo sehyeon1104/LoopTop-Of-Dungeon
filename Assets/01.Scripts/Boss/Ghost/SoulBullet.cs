@@ -38,7 +38,7 @@ public class SoulBullet : MonoBehaviour
         transform.localPosition = Vector3.right * nowPosition;
 
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSecondsRealtime(0.25f);
 
         if(col != null)
             clone = Managers.Pool.PoolManaging("10.Effects/ghost/Bubble", transform.position, Quaternion.identity);

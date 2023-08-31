@@ -127,10 +127,7 @@ public class Beam : MonoBehaviour
             yield return null;
         }
 
-        //yield return new WaitForSeconds(0.2f);
-        //CinemachineCameraShaking.Instance.CameraShake(3, 0.5f);
-
-        //lineWidth *= 2;
+        yield return new WaitForSeconds(0.25f);
 
         points[1] = Vector2.zero;
         col.points = points;

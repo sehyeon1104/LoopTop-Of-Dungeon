@@ -5,18 +5,26 @@ using UnityEngine;
 public class Bubble : MonoBehaviour
 {
     public bool isRed = true;
+    private string takeEffect = "";
     private Color partColor = Color.white;
+
+    private void Awake()
+    {
+        partColor = isRed ? new Color(56.25f, 0, 2.5f) : new Color(0, 18f, 56.25f);
+        takeEffect = isRed ?
+            "Assets/10.Effects/ghost/Bubble&Bullet/TakeRageBubble.prefab" :
+            "Assets/10.Effects/ghost/Bubble&Bullet/TakeFearBubble.prefab";
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
         {
             Managers.Pool.Push(GetComponent<Poolable>());
             GhostBossUI.Instance.fillTime += isRed ? 10 : -10;
-            partColor = isRed ? new Color(56.25f, 0, 2.5f) : new Color(0, 18f, 56.25f);
 
             GhostBossUI.Instance.partMat.SetColor("_SetColor", partColor);
             GhostBossUI.Instance.ultParticle.Play();
-            Managers.Pool.PoolManaging("10.Effects/ghost/EatBubble", transform.position, Quaternion.identity);
+            Managers.Pool.PoolManaging(takeEffect, transform.position, Quaternion.identity);
         }
     }
 }

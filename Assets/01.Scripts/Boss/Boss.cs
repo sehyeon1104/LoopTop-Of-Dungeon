@@ -116,7 +116,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         }
         else
         {
-            EnemyUIManager.Instance.ShowDamage(damage, gameObject);
+            EnemyUIManager.Instance.ShowDamage(damage, gameObject, false, dmgMul);
         }
 
         if(damage >= 15)

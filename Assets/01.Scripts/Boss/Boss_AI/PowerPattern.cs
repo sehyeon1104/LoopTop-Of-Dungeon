@@ -128,8 +128,8 @@ public class P_Patterns : BossPattern
         {
             timer += Time.deltaTime;
 
-            if(Mathf.Sign(dir.x) * transform.position.x < Mathf.Sign(dir.x) * 14.25f + 14.25f 
-                    && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 8.75f + 6.75f)
+            if(Mathf.Sign(dir.x) * transform.position.x < Mathf.Sign(dir.x) * 16.25f + 14.25f 
+                    && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 10.5f + 7.5f)
             transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
             Collider2D col = Physics2D.OverlapCircle(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8);

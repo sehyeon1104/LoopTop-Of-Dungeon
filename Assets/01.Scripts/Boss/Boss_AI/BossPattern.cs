@@ -23,8 +23,6 @@ public abstract class BossPattern : MonoBehaviour
     public AnimationClip[] Phase_One_AnimArray;
     public AnimationClip[] Phase_Two_AnimArray;
 
-    public CinemachineVirtualCamera boss2PhaseVcam;
-
     #endregion
     #region init
     protected int[] patternCount = new int[6];

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
+using Cinemachine;
 
 public class GhostBossJangpanPattern : MonoBehaviour
 {
+    [SerializeField] private CinemachineVirtualCamera jangpanVCam;
     private SpriteRenderer FRPRSpriterenderer;
     private SpriteRenderer FRPRStartSpriterenderer;
-    private SpriteRenderer FRPSpriterenderer;
-    private SpriteRenderer FRPStartSpriterenderer;
 
     Poolable circlesmoke;
     Poolable FRPCol;
@@ -67,8 +67,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
 
     public IEnumerator FloorPatternRectangle()
     {
+        jangpanVCam.transform.position = new Vector3(15.5f, 7f, -1f);
+        jangpanVCam.Priority = 11;
         Managers.Pool.Pop(FRPR.gameObject, transform.position);
         Managers.Pool.Pop(FRPRS.gameObject, transform.position);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/GhostBigWarning.prefab", transform.position, Quaternion.identity);
 
         FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
@@ -128,6 +131,7 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Managers.Pool.Push(FRPR);
         Managers.Pool.Push(FRPRS);
         Managers.Pool.Push(FRPRCol);
+        jangpanVCam.Priority = 0;
 
 
     }

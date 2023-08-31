@@ -14,8 +14,8 @@ public class EnemyUIManager : MonoSingleton<EnemyUIManager>
         showDamagePopUp = FindObjectOfType<ShowDamagePopUp>();
     }
 
-    public void ShowDamage(float damage, GameObject damagedObj, bool isCrit = false)
+    public void ShowDamage(float damage, GameObject damagedObj, bool isCrit = false, float dmgMul = 1)
     {
-        StartCoroutine(showDamagePopUp.IEShowDamage(damage, damagedObj, isCrit));
+        StartCoroutine(showDamagePopUp.IEShowDamage(damage, damagedObj, isCrit, dmgMul));
     }
 }
