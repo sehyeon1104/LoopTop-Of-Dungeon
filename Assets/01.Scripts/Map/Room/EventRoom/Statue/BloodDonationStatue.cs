@@ -1,8 +1,9 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BloodDonation : StatueBase
+public class BloodDonationStatue : StatueBase
 {
     private int requireHp = 5;
 
@@ -31,7 +32,10 @@ public class BloodDonation : StatueBase
         GameManager.Instance.Player.playerBase.Hp -= requireHp;
         if(Random.Range(0, 100) < requireHp)
         {
-            StageManager.Instance.InstantiateChest(new Vector3(transform.position.x, transform.position.y - 3), Define.ChestRating.Common);
+            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
+            dropItemObj.transform.position = transform.position;
+            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Special);
+            dropItemObj.transform.DOJump(new Vector3(transform.position.x, transform.position.y - 3f), 1, 1, 0.4f);
         }
 
 
