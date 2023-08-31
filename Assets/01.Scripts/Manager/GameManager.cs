@@ -155,8 +155,8 @@ public class GameManager : MonoSingleton<GameManager>
         if(_player != null)
         {
             InitPlayerInfo();
-            Managers.Pool.CreatePool(hitEffect, 20);
-            Managers.Pool.CreatePool(critHitEffect, 20);
+            Managers.Pool.CreatePool(hitEffect, 10);
+            Managers.Pool.CreatePool(critHitEffect, 10);
             Player.playerBase.FragmentAmount = Player.playerBase.FragmentAmount;
             InventoryUI.Instance.LoadItemSlot();
 
@@ -189,6 +189,8 @@ public class GameManager : MonoSingleton<GameManager>
         }
         
         effect.transform.position = (Vector2)objTransform.position + (Random.insideUnitCircle * 0.5f);
+        effect.gameObject.SetActive(false);
+        effect.gameObject.SetActive(true);
     }
 
     public void InitSomeStats()
