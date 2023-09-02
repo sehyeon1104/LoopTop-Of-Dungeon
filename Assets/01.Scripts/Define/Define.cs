@@ -102,6 +102,7 @@ public static class Define
         Rare,
         Epic,
         Legendary,
+        Special,
     }
 
     public enum PlatForm

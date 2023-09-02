@@ -5,16 +5,6 @@ using DG.Tweening;
 
 public class GachaStatue : StatueBase
 {
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-    }
-
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
@@ -26,11 +16,6 @@ public class GachaStatue : StatueBase
         base.InteractiveWithPlayer();
         button.onClick.RemoveListener(StatueFunc);
         button.onClick.AddListener(StatueFunc);
-    }
-
-    protected override void StandBy()
-    {
-        base.StandBy();
     }
 
     int rand = 0;

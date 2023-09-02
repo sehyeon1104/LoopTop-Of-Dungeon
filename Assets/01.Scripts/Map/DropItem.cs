@@ -6,14 +6,12 @@ using UnityEngine.UI;
 
 public class DropItem : MonoBehaviour, IPoolable
 {
-
     [SerializeField]
     private SpriteRenderer spriteRenderer = null;
     // 현재 지닌 아이템 리스트
     private List<Item> tempItemList = new List<Item>();
+    private List<int> tempBrokenItemList = new List<int>();
     private Item item = null;
-    //private bool isItemSetting = false;
-    //private bool isDuplication = false;
     Button interactionButton;
 
     private HashSet<int> itemSelectNum = new HashSet<int>();
@@ -80,17 +78,20 @@ public class DropItem : MonoBehaviour, IPoolable
             return;
         }
 
+        if (chestRate == Define.ChestRating.Special)
+        {
+            SetBrokenItem();
+            return;
+        }
+
         // 현재 지닌 아이템 리스트
         foreach(Item item in ItemManager.Instance.GetCurItemDic().Values)
         {
             tempItemList.Add(item);
         }
-        //tempItemList = GameManager.Instance.GetItemList();
 
         for (int i = 0; i < tempItemList.Count; ++i)
         {
-            //Debug.Log("ItemName : " + tempItemList[i].itemName);
-            //Debug.Log("ItemNumber : " + tempItemList[i].itemNumber);
             // 현재 지닌 아이템 리스트 복사
             itemSelectNum.Add(tempItemList[i].itemNumber);
         }
@@ -112,8 +113,6 @@ public class DropItem : MonoBehaviour, IPoolable
                 || allItemList[rand].itemRating == Define.ItemRating.Set)
             continue;
 
-            Debug.Log("rand : " + rand);
-
             itemSelectNum.Add(rand);
 
             foreach(Item items in allItemDic.Values)
@@ -124,7 +123,54 @@ public class DropItem : MonoBehaviour, IPoolable
                     break;
                 }
             }
-            //item = ItemManager.Instance.allItemDic[rand];
+        }
+
+        spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+    }
+
+    public void SetBrokenItem()
+    {
+        // 현재 지닌 아이템 리스트
+        foreach (Item item in ItemManager.Instance.GetCurItemDic().Values)
+        {
+            tempItemList.Add(item);
+        }
+
+        for (int i = 0; i < tempItemList.Count; ++i)
+        {
+            // 현재 지닌 아이템 리스트 복사
+            itemSelectNum.Add(tempItemList[i].itemNumber);
+        }
+
+        if(StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.BrokenItemRoom] == 0)
+        {
+            tempBrokenItemList = FindObjectOfType<BrokenItemRoom>().GetItemList();
+        }
+
+        int rand = 0;
+
+        while (item == null)
+        {
+            // 저주아이템을 제외한 모든 아이템 rand
+            rand = Random.Range(1, ItemManager.Instance.brokenItemList.Count);
+
+            // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
+            if (itemSelectNum.Contains(rand)
+                || itemObjListNum.Contains(rand)
+                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber)
+                )
+                continue;
+
+            itemSelectNum.Add(rand);
+
+            foreach (Item items in ItemManager.Instance.brokenItemList)
+            {
+                if (items.itemNumber == ItemManager.Instance.brokenItemList[rand].itemNumber)
+                {
+                    item = items;
+                    break;
+                }
+            }
         }
 
         spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
@@ -151,6 +197,7 @@ public class DropItem : MonoBehaviour, IPoolable
             UIManager.Instance.RotateInteractionButton();
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)  
     {
         if(collision.CompareTag("Player"))

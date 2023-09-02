@@ -11,6 +11,7 @@ public class BrokenItemRoom : RoomBase
 
     private Vector3[] itemObjSpawnPos = new Vector3[4];
     private List<ItemObj> itemObjList = new List<ItemObj>();
+    private List<int> itemList = new List<int>();
     private HashSet<int> itemSelectNum = new HashSet<int>();
 
     private float interactiveDis = 1f;
@@ -65,9 +66,7 @@ public class BrokenItemRoom : RoomBase
         UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
     }
 
-    protected override void IsClear()
-    {
-    }
+    protected override void IsClear() { }
 
     protected override void ShowIcon()
     {
@@ -135,6 +134,7 @@ public class BrokenItemRoom : RoomBase
                 if (item.itemNumber == ItemManager.Instance.brokenItemList[rand].itemNumber)
                 {
                     brokenItem = item;
+                    itemList.Add(item.itemNumber);
                     break;
                 }
             }
@@ -154,10 +154,7 @@ public class BrokenItemRoom : RoomBase
     public void SetItemPos()
     {
         for (int i = 0; i < itemObjSpawnPos.Length; ++i)
-        {
             itemObjList[i].transform.position = itemObjSpawnPos[i];
-        }
-
     }
 
     public IEnumerator ToggleItemInfoPanel()
@@ -195,9 +192,7 @@ public class BrokenItemRoom : RoomBase
                     break;
                 }
                 else
-                {
                     UIManager.Instance.RotateAttackButton();
-                }
             }
 
             yield return waitForEndOfFrame;
@@ -224,5 +219,10 @@ public class BrokenItemRoom : RoomBase
                 isTakeItem = true;
             }
         }
+    }
+
+    public List<int> GetItemList()
+    {
+        return itemList;
     }
 }
