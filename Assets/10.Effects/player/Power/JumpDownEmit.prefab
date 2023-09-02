@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2476620945342788605}
   - component: {fileID: 8409145198482848201}
   m_Layer: 0
-  m_Name: JumpDownCharging
+  m_Name: JumpDownEmit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4682336468144679228}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: a0ebd951f7ee9a24abe7e551920ca4e3, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 48bfb534e01966846954c21903eb037c, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -89,7 +89,7 @@ VFXRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4682336468144679228}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -133,4 +133,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
-  PushTime: 6
+  PushTime: 10

@@ -37,7 +37,7 @@ public class PowerSkill : PlayerSkillBase
     float jumpAttackRange = 2f;
     float jumpAttackDmg = 20f;
     float tornadoSpeed = 9f;
-    float tornadoDuration = 5f;
+    float tornadoDuration = 10f;
     bool isClick = false;
     float catchTime = 4f;
     bool isColumn;
@@ -62,7 +62,7 @@ public class PowerSkill : PlayerSkillBase
     List<Transform> catchEnemies = new List<Transform>();
     float power = 20;
     static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
-    
+
     [SerializeField] GameObject columnEffect;
     private void Awake()
     {
@@ -401,16 +401,19 @@ public class PowerSkill : PlayerSkillBase
 
     IEnumerator Jumpdown(int level)
     {
+        Vector3 scale = Vector3.zero;
         Transform tornado = null;
         float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
-        VisualEffect tornadoEffect =null;
+        VisualEffect tornadoEffect = null;
         float lerpValue = 0;
         Vector2 beforePos = Vector2.zero;
+        Poolable emitJumpDown;
         float multiPlyValue = 1;
         float value = 0;
+        float TornadoTimer = 0;
         jumpWidth = 2f;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
@@ -421,16 +424,18 @@ public class PowerSkill : PlayerSkillBase
         KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeyCode.U : KeyCode.I;
         playerMovement.IsControl = false;
         playerRigid.velocity = Vector2.zero;
+
         Poolable charging = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownCharging.prefab", transform.position, Quaternion.identity);
         while (Input.GetKey(keyBoardButton))
         {
             timer += Time.deltaTime;
-            jumpWidth += 2.5f * Time.deltaTime;
-            if (timer > 5f)
-                 break;
+            jumpWidth += 4 * Time.deltaTime;
+            if (timer > 3f)
+                break;
             yield return null;
         }
-        Managers.Pool.Push(charging);   
+
+        Managers.Pool.Push(charging);
         dots[0] = currentPos;
         dots[1] = currentPos + playerDirection * jumpHeight;
         dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
@@ -460,7 +465,7 @@ public class PowerSkill : PlayerSkillBase
             }
             trailRenderer.widthMultiplier = trailWidth * multiPlyValue;
             lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
-            lerpValue = Mathf.Clamp(lerpValue, 0, 1);   
+            lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
             beforePos = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
@@ -473,9 +478,6 @@ public class PowerSkill : PlayerSkillBase
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
         trailRenderer.enabled = false;
-        if(tornado != null)
-          StartCoroutine(TornadoMove(tornado, direction, tornadoEffect));
-        
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -484,19 +486,44 @@ public class PowerSkill : PlayerSkillBase
         Poolable jumpDown = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDown.prefab", transform.position, Quaternion.identity);
         jumpDown.transform.localScale = Vector3.one * jumpDownScaleMultiply;
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
-        playerMovement.IsMove = true;
-        playerMovement.IsControl = true;
-        yield return null;
-    }
-    IEnumerator TornadoMove(Transform tornadoTrans,Vector3 tornadoDirection,VisualEffect tornado)
-    {
-        float timer = 0;
-        while(timer <tornadoDuration)
+        if (level == 3)
         {
-            tornadoTrans.Translate(tornadoDirection * Time.fixedDeltaTime * tornadoSpeed);
-            timer += Time.fixedDeltaTime;
-            yield return fixedWait;
+            emitJumpDown = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownThree.prefab", transform);
+            while (TornadoTimer < tornadoDuration)
+            {
+                scale = Vector3.one * TornadoTimer;
+                if (scale.x > 1 || scale.y > 1)
+                    scale = Vector3.one;
+                emitJumpDown.transform.localScale = scale;
+                emitJumpDown.transform.Rotate(Vector3.back * 180 * Time.fixedDeltaTime);
+                TornadoTimer += Time.fixedDeltaTime;
+                yield return fixedWait;
+            }
         }
+        else if (level == 4)
+        {
+            Collider2D[] attachenemies;
+            emitJumpDown = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownEmit.prefab", transform);
+            while (TornadoTimer < tornadoDuration)
+            {
+
+                scale = Vector3.one * TornadoTimer;
+                if (scale.x > 1 || scale.y > 1)
+                    scale = Vector3.one;
+                emitJumpDown.transform.localScale = scale;
+                attachenemies = Physics2D.OverlapCircleAll(transform.position, 4.5f,1 <<enemyLayer);
+                for(int i=0; i< attachenemies.Length; i++)
+                {
+                    if (Vector2.SqrMagnitude(attachenemies[i].transform.position - transform.position)>3.5 * 3.5)
+                    {
+                        attachenemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack);
+                    }
+                }
+                TornadoTimer += Time.fixedDeltaTime;
+                yield return fixedWait;
+            }
+        }
+        yield return null;
     }
     IEnumerator FiveJumpDown()
     {
@@ -506,7 +533,7 @@ public class PowerSkill : PlayerSkillBase
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
         float lerpValue = 0;
-        
+
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
         if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
@@ -672,8 +699,8 @@ public class PowerSkill : PlayerSkillBase
     #endregion
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 2);
+        Gizmos.color = Color.clear;
+        Gizmos.DrawWireSphere(transform.position, 3.5f);    
     }
 
 
