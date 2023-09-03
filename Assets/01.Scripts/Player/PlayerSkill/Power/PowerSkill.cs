@@ -58,6 +58,7 @@ public class PowerSkill : PlayerSkillBase
     readonly int hashCatch = Animator.StringToHash("Catch");
     Animator bossArmAni = null;
     Poolable bossArm = null;
+    Material jumpDownMat;
     Material material;
     List<Transform> catchEnemies = new List<Transform>();
     float power = 20;
@@ -66,6 +67,7 @@ public class PowerSkill : PlayerSkillBase
     [SerializeField] GameObject columnEffect;
     private void Awake()
     {
+        jumpDownMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
         Cashing();
@@ -444,7 +446,7 @@ public class PowerSkill : PlayerSkillBase
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
-        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
+        trailRenderer.material = jumpDownMat;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
         else
@@ -533,7 +535,7 @@ public class PowerSkill : PlayerSkillBase
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
         float lerpValue = 0;
-
+        jumpWidth = 10;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
         if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
@@ -548,7 +550,7 @@ public class PowerSkill : PlayerSkillBase
         float multiPlyValue = 1;
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
-        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat2.mat");
+        trailRenderer.material = jumpDownMat;
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
 
         float value = 0;
