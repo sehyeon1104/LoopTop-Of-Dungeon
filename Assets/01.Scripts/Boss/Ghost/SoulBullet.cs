@@ -51,7 +51,7 @@ public class SoulBullet : MonoBehaviour
             col.enabled = true;
         yield return new WaitForSecondsRealtime(0.25f);
 
-        int random = waitTime == 1f ? 1 : Random.Range(0, 2);
+        int random = waitTime != 1f ? 1 : Random.Range(0, 3);
         if(random == 1)
         {
             if (col != null)
