@@ -307,7 +307,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.eulerAngles.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(15, 0);
 
@@ -340,14 +340,16 @@ public class G_Patterns : BossPattern
         for (int i = 0; i < 5; i++)
         {
             float angle = Random.Range(0f, 360f);
+            int randomNum = Random.Range(0, 5);
             string bulletType = "";
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 5; j++)
             {
-                bulletType = j != 1?
+                bulletType = j != randomNum?
                     "Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab" : 
                     "Assets/10.Effects/ghost/Bubble&Bullet/SafeBulletGroup.prefab";
 
-                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 45f)));
+                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 15f)));
+                yield return new WaitForSeconds(0.05f);
             }
             yield return new WaitForSeconds(1f);
         }
