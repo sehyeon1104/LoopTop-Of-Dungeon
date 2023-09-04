@@ -335,6 +335,23 @@ public class G_Patterns : BossPattern
         yield return waitTime;
 
     }
+    public IEnumerator Pattern_SB_2(int count) //∫“∏¥ 2∆‰¿Ã¡Ó
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            float angle = Random.Range(0f, 360f);
+            string bulletType = "";
+            for (int j = 0; j < 3; j++)
+            {
+                bulletType = j != 1?
+                    "Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab" : 
+                    "Assets/10.Effects/ghost/Bubble&Bullet/SafeBulletGroup.prefab";
+
+                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 45f)));
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
     public IEnumerator Pattern_GA(int count) //∆»ª∏±‚
     {
         bossObject.SetActive(false);
@@ -413,11 +430,11 @@ public class GhostPattern : G_Patterns
                 patternWeight[3] = 40;
                 break;
             case 2:
-                patternWeight[0] = 30;
-                patternWeight[1] = 25;
-                patternWeight[2] = 20;
-                patternWeight[3] = 15;
-                patternWeight[4] = 10;
+                patternWeight[0] = 15;
+                patternWeight[1] = 35;
+                patternWeight[2] = 25;
+                patternWeight[3] = 20;
+                patternWeight[4] = 5;
                 break;
         }
 
@@ -595,6 +612,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_SB(count));
                 break;
             case 2:
+                yield return SCoroutine(Pattern_SB_2(count));
                 break;
         }
 

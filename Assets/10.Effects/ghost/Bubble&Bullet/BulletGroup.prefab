@@ -236,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952580431972719248}
   - component: {fileID: 4129990969849055424}
+  - component: {fileID: 1851013156590161545}
   m_Layer: 0
   m_Name: BulletGroup
   m_TagString: Untagged
@@ -275,6 +276,20 @@ MonoBehaviour:
   warning:
   - {fileID: 4129990970387454485}
   - {fileID: 4129990970695710825}
+--- !u!114 &1851013156590161545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6952580431972719249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 8
 --- !u!1001 &6952580432199301759
 PrefabInstance:
   m_ObjectHideFlags: 0
