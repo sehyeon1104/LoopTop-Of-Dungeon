@@ -307,7 +307,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(30f, 4f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.rotation.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(15, 0);
 

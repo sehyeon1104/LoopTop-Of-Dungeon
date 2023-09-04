@@ -17,8 +17,10 @@ public class SoulBullet : MonoBehaviour
     {
         if(nowPosition != 0f)
             transform.localPosition = Vector3.right * nowPosition;
-
-        if (waitTime != 1f && Boss.Instance.bossPattern.NowPhase == 2)
+        
+        if(waitTime != 5f && Boss.Instance.bossPattern.NowPhase == 1)
+            waitTime = 5f;
+        else if (waitTime != 1f && Boss.Instance.bossPattern.NowPhase == 2)
             waitTime = 1f;
 
         if (col != null)

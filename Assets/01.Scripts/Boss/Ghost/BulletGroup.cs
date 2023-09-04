@@ -11,10 +11,10 @@ public class BulletGroup : MonoBehaviour
     {
         transform.localScale = Vector3.one;
         StartCoroutine(OnShoot());
-        if(waitTime != 0.5f && Boss.Instance.bossPattern.NowPhase == 2)
-        {
+        if (waitTime != 4.5f && Boss.Instance.bossPattern.NowPhase == 1)
+            waitTime = 4.5f;
+        else if (waitTime != 0.5f && Boss.Instance.bossPattern.NowPhase == 2)
             waitTime = 0.5f;
-        }
     }
 
     private IEnumerator OnShoot()
