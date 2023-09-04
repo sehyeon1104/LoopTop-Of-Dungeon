@@ -57,7 +57,10 @@ public class DropItem : MonoBehaviour, IPoolable
         spriteRenderer.sprite = null;
         itemSelectNum.Clear();
         tempItemList.Clear();
-        itemObjList = StageManager.Instance.shop.itemList;
+        if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+        {
+            itemObjList = StageManager.Instance.shop.itemList;
+        }
         poolable = GetComponent<Poolable>();
     }
 
