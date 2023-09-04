@@ -13,6 +13,13 @@ public class Inventory : MonoSingleton<Inventory>
     [SerializeField]
     private TextMeshProUGUI itemDesTmp = null;
 
+    public void ClearText()
+    {
+        itemNameTmp.text = string.Empty;
+        itemEffDesTmp.text = string.Empty;
+        itemDesTmp.text = string.Empty;
+    }
+
     public void ShowItemInfo(Item item)
     {
         itemNameTmp.text = $"<color={GameManager.Instance.itemRateColor[(int)item.itemRating]}>{item.itemName}</color>";

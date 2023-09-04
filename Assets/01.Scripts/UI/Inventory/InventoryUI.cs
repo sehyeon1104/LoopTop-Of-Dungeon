@@ -44,6 +44,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     public void ToggleInventoryUI()
     {
         inventoryPanel.SetActive(!inventoryPanel.gameObject.activeSelf);
+        Inventory.Instance.ClearText();
         if (inventoryPanel.gameObject.activeSelf)
         {
             MouseManager.Lock(false);

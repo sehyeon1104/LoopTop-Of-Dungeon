@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public class StatueBase : MonoBehaviour
+public abstract class StatueBase : MonoBehaviour
 {
     [SerializeField]
     protected TextMeshProUGUI effectTmp = null;
@@ -51,10 +51,7 @@ public class StatueBase : MonoBehaviour
         UIManager.Instance.RotateAttackButton();
     }
 
-    protected virtual void StatueFunc()
-    {
-
-    }
+    protected abstract void StatueFunc();
 
     protected IEnumerator IETextAnim()
     {
