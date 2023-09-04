@@ -8,12 +8,9 @@ using Cinemachine;
 public class GhostBossJangpanPattern : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera jangpanVCam;
-    private SpriteRenderer FRPRSpriterenderer;
-    private SpriteRenderer FRPRStartSpriterenderer;
 
     Poolable circlesmoke;
     Poolable FRPCol;
-    Poolable FRPR;
     Poolable FRPRS;
     Poolable recsmoke;
     Poolable FRPRCol;
@@ -26,22 +23,15 @@ public class GhostBossJangpanPattern : MonoBehaviour
     {
         circlesmoke = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", new Vector2(1000, 1000), Quaternion.identity);
         FRPCol = Managers.Pool.PoolManaging("10.Effects/ghost/CircleCol", new Vector2(1000, 1000), Quaternion.identity);
-        FRPR = Managers.Pool.PoolManaging("10.Effects/ghost/FRPR", new Vector2(1000, 1000), Quaternion.identity);
         FRPRS = Managers.Pool.PoolManaging("10.Effects/ghost/FRPRS", new Vector2(1000, 1000), Quaternion.identity);
         recsmoke = Managers.Pool.PoolManaging("10.Effects/ghost/RecSmoke", new Vector2(1000, 1000), Quaternion.identity);
         FRPRCol = Managers.Pool.PoolManaging("10.Effects/ghost/RecCol", new Vector2(1000, 1000), Quaternion.identity);
 
         Managers.Pool.Push(circlesmoke);
         Managers.Pool.Push(FRPCol);
-        Managers.Pool.Push(FRPR);
         Managers.Pool.Push(FRPRS);
         Managers.Pool.Push(recsmoke);
         Managers.Pool.Push(FRPRCol);
-
-        FRPRSpriterenderer = FRPR.GetComponent<SpriteRenderer>();
-        FRPRStartSpriterenderer = FRPRS.GetComponent<SpriteRenderer>();
-
-
     }
 
     public IEnumerator FloorPatternCircle()
@@ -69,31 +59,17 @@ public class GhostBossJangpanPattern : MonoBehaviour
     {
         jangpanVCam.transform.position = new Vector3(15.5f, 7f, -1f);
         jangpanVCam.Priority = 11;
-        Managers.Pool.Pop(FRPR.gameObject, transform.position);
+
         Managers.Pool.Pop(FRPRS.gameObject, transform.position);
         Managers.Pool.PoolManaging("Assets/10.Effects/ghost/GhostBigWarning.prefab", transform.position, Quaternion.identity);
 
-        FRPR.transform.position = transform.position;
         FRPRS.transform.position = transform.position;
 
-
-        FRPR.gameObject.SetActive(true);
         FRPRS.gameObject.SetActive(true);
 
-        //30±îÁö
-        FRPR.transform.DOScale(new Vector2(30f, 30f), 1f).SetEase(Ease.OutCirc);
+        yield return new WaitForSeconds(4f);
 
-        yield return new WaitForSeconds(1f);
-
-        FRPRS.transform.DOScale(new Vector2(30f, 30f), 3f).SetEase(Ease.OutCirc);
-
-        yield return new WaitForSeconds(3f);
-
-        FRPRS.transform.localScale = Vector2.zero;
-        FRPR.transform.localScale = Vector2.zero;
-
-        FRPRSpriterenderer.enabled = false;
-        FRPRStartSpriterenderer.enabled = false;
+        Managers.Pool.Push(FRPRS);
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Hilla1.wav");
 
         Poolable clone = Managers.Pool.Pop(recsmoke.gameObject, transform.position);
@@ -121,15 +97,6 @@ public class GhostBossJangpanPattern : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         currenttime = 0f;
-
-        FRPRSpriterenderer.enabled = true;
-        FRPRStartSpriterenderer.enabled = true;
-
-        FRPR.gameObject.SetActive(false);
-        FRPRS.gameObject.SetActive(false);
-
-        Managers.Pool.Push(FRPR);
-        Managers.Pool.Push(FRPRS);
         Managers.Pool.Push(FRPRCol);
         jangpanVCam.Priority = 0;
 

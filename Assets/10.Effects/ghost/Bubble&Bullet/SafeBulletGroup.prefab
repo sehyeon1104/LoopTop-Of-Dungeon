@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2170848536787834222}
   - component: {fileID: 5119551301966235450}
+  - component: {fileID: 7196576201151730033}
   m_Layer: 0
   m_Name: SafeBulletGroup
   m_TagString: Untagged
@@ -49,6 +50,20 @@ MonoBehaviour:
   warning:
   - {fileID: 5119551302515219038}
   - {fileID: 5119551302254459069}
+--- !u!114 &7196576201151730033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2170848536787834223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 8
 --- !u!1 &5119551302254459069
 GameObject:
   m_ObjectHideFlags: 0
