@@ -66,6 +66,7 @@ public class ZoneEntrance : MonoBehaviour
             }
             else
             {
+                UIManager.Instance.GetInteractionButton().onClick.RemoveListener(MoveNextStage);
                 UIManager.Instance.RotateAttackButton();
             }
             isInteraction = false;
