@@ -307,7 +307,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(30f, 4f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.eulerAngles.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(15, 0);
 
@@ -334,6 +334,25 @@ public class G_Patterns : BossPattern
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         yield return waitTime;
 
+    }
+    public IEnumerator Pattern_SB_2(int count) //∫“∏¥ 2∆‰¿Ã¡Ó
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            float angle = Random.Range(0f, 360f);
+            int randomNum = Random.Range(0, 5);
+            string bulletType = "";
+            for (int j = 0; j < 5; j++)
+            {
+                bulletType = j != randomNum?
+                    "Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab" : 
+                    "Assets/10.Effects/ghost/Bubble&Bullet/SafeBulletGroup.prefab";
+
+                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 15f)));
+                yield return new WaitForSeconds(0.05f);
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
     public IEnumerator Pattern_GA(int count) //∆»ª∏±‚
     {
@@ -413,11 +432,11 @@ public class GhostPattern : G_Patterns
                 patternWeight[3] = 40;
                 break;
             case 2:
-                patternWeight[0] = 30;
-                patternWeight[1] = 25;
-                patternWeight[2] = 20;
-                patternWeight[3] = 15;
-                patternWeight[4] = 10;
+                patternWeight[0] = 15;
+                patternWeight[1] = 35;
+                patternWeight[2] = 25;
+                patternWeight[3] = 20;
+                patternWeight[4] = 5;
                 break;
         }
 
@@ -595,6 +614,7 @@ public class GhostPattern : G_Patterns
                 yield return SCoroutine(Pattern_SB(count));
                 break;
             case 2:
+                yield return SCoroutine(Pattern_SB_2(count));
                 break;
         }
 

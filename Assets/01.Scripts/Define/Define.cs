@@ -40,11 +40,13 @@ public static class Define
     public enum EventRoomTypeFlag
     {
         ShopRoom,
-        StatueRoom,
         ChestRoom,
         BrokenItemRoom,
-        //BattleRoom,
-        //SurvivalRoom,
+        DiceRoom,
+        DevilSwordRoom,
+        BloodyAltarRoom,
+        BloodDonationRoom,
+        RedFountainRoom,
     }
 
     public enum PlayerTransformTypeFlag

@@ -60,7 +60,7 @@ public abstract class BossPattern : MonoBehaviour
             StopAllCoroutines();
         }
         if (Input.GetKeyDown(KeyCode.G))
-            Boss.Instance.OnDamage(100, 0);
+            Boss.Instance.OnDamage(1000, 0);
     }
 
     protected virtual IEnumerator ChangePhase()

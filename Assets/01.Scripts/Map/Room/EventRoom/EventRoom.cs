@@ -18,22 +18,27 @@ public class EventRoom : MonoBehaviour
     {
         switch (_eventRoomTypeFlag)
         {
-            // TODO : 미니맵 아이콘 생성
-            case EventRoomTypeFlag.StatueRoom:
-                gameObject.AddComponent<StatueRoom>();
-                break;
             case EventRoomTypeFlag.ChestRoom:
                 gameObject.AddComponent<ChestRoom>();
                 break;
             case EventRoomTypeFlag.BrokenItemRoom:
                 gameObject.AddComponent<BrokenItemRoom>();
                 break;
-            //case EventRoomTypeFlag.BattleRoom:
-                //gameObject.AddComponent<BattleRoom>();
-                //break;
-            //case EventRoomTypeFlag.SurvivalRoom:
-                //gameObject.AddComponent<SurvivalRoom>();
-                //break;
+            //case EventRoomTypeFlag.DiceRoom:
+            //    gameObject.AddComponent<DiceRoom>();
+            //    break;
+            //case EventRoomTypeFlag.DevilSwordRoom:
+            //    gameObject.AddComponent<DevilSwordRoom>();
+            //    break;
+            case EventRoomTypeFlag.BloodyAltarRoom:
+                gameObject.AddComponent<BloodyAltarRoom>();
+                break;
+            case EventRoomTypeFlag.BloodDonationRoom:
+                gameObject.AddComponent<BloodDonationRoom>();
+                break;
+            case EventRoomTypeFlag.RedFountainRoom:
+                gameObject.AddComponent<RedFountainRoom>();
+                break;
         }
 
     }

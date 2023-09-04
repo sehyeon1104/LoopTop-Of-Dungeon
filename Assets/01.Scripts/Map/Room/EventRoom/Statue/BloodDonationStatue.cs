@@ -38,7 +38,6 @@ public class BloodDonationStatue : StatueBase
             dropItemObj.transform.DOJump(new Vector3(transform.position.x, transform.position.y - 3f), 1, 1, 0.4f);
         }
 
-
         effectTmp.SetText($"체력 {requireHp * 5}소모");
         StartCoroutine(IETextAnim());
 
