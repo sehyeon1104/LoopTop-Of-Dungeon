@@ -1,4 +1,5 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,13 +8,16 @@ using System.Linq;
 using System.Threading;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.VFX;
+using Cinemachine;
 using Random = UnityEngine.Random;
 
 public class PowerSkill : PlayerSkillBase
 {
+    CinemachineVirtualCamera cineMachine;
     public Gradient trailColor;
     TrailRenderer trailRenderer;
     float trailWidth = 5;
@@ -58,16 +62,20 @@ public class PowerSkill : PlayerSkillBase
     readonly int hashCatch = Animator.StringToHash("Catch");
     Animator bossArmAni = null;
     Poolable bossArm = null;
+    Material jumpDownMat;
     Material material;
     List<Transform> catchEnemies = new List<Transform>();
+    AnimationCurve fiveJumpDownCurve;
     float power = 20;
     static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
 
     [SerializeField] GameObject columnEffect;
     private void Awake()
     {
+        jumpDownMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
+        cineMachine = FindObjectOfType<CinemachineVirtualCamera>();
         Cashing();
     }
     protected override void Update()
@@ -420,23 +428,38 @@ public class PowerSkill : PlayerSkillBase
         if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
             playerDirection = new Vector2(playerMovement.Direction.y * -1, Mathf.Abs(playerMovement.Direction.x));
         float timer = 0;
+        float timerA = 0;
         Vector3 currentPlayerScale = transform.localScale;
         KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeyCode.U : KeyCode.I;
         playerMovement.IsControl = false;
         playerRigid.velocity = Vector2.zero;
+        Vector2 normailzedVec = playerMovement.Direction;
+        if (playerMovement.Direction.x !=0 && playerMovement.Direction.y !=0)
+        normailzedVec = new Vector2(playerMovement.Direction.x /MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
 
+        cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(normailzedVec.x * 8f, normailzedVec.y * 6,-10);   
         Poolable charging = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownCharging.prefab", transform.position, Quaternion.identity);
+        Transform trans = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Expectedrange.prefab",transform.position,Quaternion.identity).transform;
+           
+        VisualEffect expectedRande = trans.GetComponent<VisualEffect>();    
         while (Input.GetKey(keyBoardButton))
         {
             timer += Time.deltaTime;
+            timerA += Time.deltaTime;
+            if (timerA > 1)
+            {
+                timerA = 0;
+                expectedRande.Reinit();
+            }
             jumpWidth += 4 * Time.deltaTime;
-            if (timer > 3f)
+            trans.position = currentPos +  playerMovement.Direction * jumpWidth;
+            if (timer > 3f)     
                 break;
             yield return null;
         }
 
         Managers.Pool.Push(charging);
-        dots[0] = currentPos;
+        dots[0] = currentPos;   
         dots[1] = currentPos + playerDirection * jumpHeight;
         dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
@@ -444,7 +467,7 @@ public class PowerSkill : PlayerSkillBase
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
-        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
+        trailRenderer.material = jumpDownMat;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
         else
@@ -478,6 +501,7 @@ public class PowerSkill : PlayerSkillBase
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
         trailRenderer.enabled = false;
+        cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = Vector3.back;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -529,11 +553,14 @@ public class PowerSkill : PlayerSkillBase
     {
 
         float trailWith;
+        float timer=0;
+        float radius = 0;
+        float maxRadius = 16;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
         float lerpValue = 0;
-
+        jumpWidth = 10;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
         if ((playerMovement.Direction.x < 1 && playerMovement.Direction.x > 0))
@@ -548,7 +575,7 @@ public class PowerSkill : PlayerSkillBase
         float multiPlyValue = 1;
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
-        trailRenderer.material = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat2.mat");
+        trailRenderer.material = jumpDownMat;
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
 
         float value = 0;
@@ -587,11 +614,21 @@ public class PowerSkill : PlayerSkillBase
         {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
         }
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity);
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
-        yield return null;
+        Vector2 jumpDown =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity).transform.position;
+        while(timer<1.5f)
+        {
+            radius += maxRadius * Time.fixedDeltaTime /2;
+            enemies = Physics2D.OverlapCircleAll(jumpDown, radius,1<<enemyLayer);
+            for(int i=0; i< enemies.Length;i++)
+            {
+                enemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack * 5);
+            }
+            timer += Time.fixedDeltaTime;
+            yield return fixedWait;
+        }
         yield return null;
     }
     IEnumerator ShockWaveAction(Poolable shockWave, float startPos, float endPos)
@@ -625,6 +662,7 @@ public class PowerSkill : PlayerSkillBase
     }
     IEnumerator CatchSkill()
     {
+        print("dd");
         KeyCode getKey = playerBase.PlayerSkillNum[0] == 4 ? KeyCode.U : KeyCode.I;
         float timer = 0;
         bossArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BossArm.prefab", transform);
@@ -699,8 +737,8 @@ public class PowerSkill : PlayerSkillBase
     #endregion
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.clear;
-        Gizmos.DrawWireSphere(transform.position, 3.5f);    
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 16);    
     }
 
 

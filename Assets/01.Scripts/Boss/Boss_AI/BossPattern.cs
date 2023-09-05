@@ -15,7 +15,7 @@ public abstract class BossPattern : MonoBehaviour
 
     [Tooltip("페이즈별 보스 스킬 개수")]
     [SerializeField] protected int[] phase_patternCount;
-    protected WaitForSeconds patternDelay = new WaitForSeconds(1.5f);
+    protected WaitForSeconds patternDelay = new WaitForSeconds(1.2f);
 
     [Space]
 
@@ -90,7 +90,7 @@ public abstract class BossPattern : MonoBehaviour
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
-        patternDelay = new WaitForSeconds(1.2f);
+        patternDelay = new WaitForSeconds(1f);
         NowPhase = 2;
 
         SetPatternWeight();

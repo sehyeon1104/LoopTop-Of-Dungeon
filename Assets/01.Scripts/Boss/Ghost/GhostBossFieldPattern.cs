@@ -33,11 +33,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     WaitForSeconds Delay = new WaitForSeconds(0.25f);
 
-    WaitForSeconds waittime2s = new WaitForSeconds(2f);
-    
-    WaitForSeconds waittime2dot5s = new WaitForSeconds(2.5f);
-
-    WaitForSeconds waittime10s = new WaitForSeconds(10f);
+    WaitForSeconds waittime4s = new WaitForSeconds(4f);
 
     public Coroutine UltPattern { get; set; } = null;
 
@@ -50,7 +46,7 @@ public class GhostBossFieldPattern : MonoBehaviour
 
     private void Start()
     {
-        //UltPattern =  StartCoroutine(MakeBubble());
+        UltPattern =  StartCoroutine(MakeBubble());
     }
     public IEnumerator GhostBossArmPattern()
     {
@@ -79,7 +75,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             {
                 mat.SetFloat("_StepValue", RealRandomPos.y);
             }
-
+            
             time++;
 
             yield return Delay;
@@ -91,7 +87,7 @@ public class GhostBossFieldPattern : MonoBehaviour
     {
         while (true)
         {
-            Vector2 Owntransform = transform.position;
+            Vector2 Owntransform = new Vector2(14.5f, 7.5f);
 
             BubbleRandomSizeX = 0f;
             BubbleRandomSizeY = 0f;
@@ -108,7 +104,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             else
                 Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BubbleBlue.prefab", RealRandomPos, Quaternion.identity);
 
-            yield return waittime2s;
+            yield return waittime4s;
         }
     }
 
@@ -131,7 +127,7 @@ public class GhostBossFieldPattern : MonoBehaviour
             {
                 Managers.Pool.Push(clone.GetComponent<Poolable>());
                 bossAnim.overrideController[$"SkillFinal"] = finalHitted;
-                bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+                bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
                 isCrashed = true;
                 yield return new WaitForSeconds(10f);
                 Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
@@ -140,27 +136,20 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             if (GhostBossUI.Instance.fillTime > 70f)
             {
-                GameManager.Instance.Player.OnDamage(5, 0);
+                GameManager.Instance.Player.OnDamage(3, 0);
             }
         }
 
         if (!isCrashed)
         {
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-            bossAnim.anim.ResetTrigger(Boss.Instance._hashAttack);
+            bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Managers.Pool.Push(clone.GetComponent<Poolable>());
             Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", bossAnim.transform.position, Quaternion.identity);
             clone1.transform.localScale = new Vector3(10, 10, 0);
             yield return new WaitForSeconds(1f);
-            GameManager.Instance.Player.OnDamage(12f, 0);
+            GameManager.Instance.Player.OnDamage(100f, 0);
             Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         }
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, size1);
     }
 }   

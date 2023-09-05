@@ -294,6 +294,7 @@ public class G_Patterns : BossPattern
             Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpWarning.prefab", pos + (anPos - pos) / 2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
 
             yield return new WaitForSeconds(1f);
+            CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
             transform.DOMove(anPos, 0.5f);
 
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
@@ -307,7 +308,7 @@ public class G_Patterns : BossPattern
             bossAura.SetActive(true);
 
             yield return new WaitForSeconds(0.1f);
-            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.rotation.z, 1 << 8);
+            Collider2D col = Physics2D.OverlapBox(clone.transform.position, new Vector2(2.5f, 20f), clone.transform.eulerAngles.z, 1 << 8);
             if (col != null)
                 col.GetComponent<IHittable>().OnDamage(15, 0);
 
@@ -340,14 +341,16 @@ public class G_Patterns : BossPattern
         for (int i = 0; i < 5; i++)
         {
             float angle = Random.Range(0f, 360f);
+            int randomNum = Random.Range(0, 5);
             string bulletType = "";
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 5; j++)
             {
-                bulletType = j != 1?
+                bulletType = j != randomNum?
                     "Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab" : 
                     "Assets/10.Effects/ghost/Bubble&Bullet/SafeBulletGroup.prefab";
 
-                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 45f)));
+                Managers.Pool.PoolManaging(bulletType, GameManager.Instance.Player.transform.position, Quaternion.Euler(Vector3.forward * (angle + j * 15f)));
+                yield return new WaitForSeconds(0.05f);
             }
             yield return new WaitForSeconds(1f);
         }
@@ -486,7 +489,7 @@ public class GhostPattern : G_Patterns
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
         boss2PhaseVcam.Priority = 0;
-        patternDelay = new WaitForSeconds(1.5f);
+        patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
         playerPCUI.alpha = 1;
         playerPPUI.alpha = 1;
