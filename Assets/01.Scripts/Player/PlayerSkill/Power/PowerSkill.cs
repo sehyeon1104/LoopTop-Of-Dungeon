@@ -411,7 +411,6 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator Jumpdown(int level)
     {
         Vector3 scale = Vector3.zero;
-        Transform tornado = null;
         float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
@@ -483,12 +482,13 @@ public class PowerSkill : PlayerSkillBase
             multiPlyValue = jumpValue.Evaluate(lerpValue);
             trailRenderer.widthMultiplier = trailWidth * multiPlyValue;
             lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
+        
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
+            
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
+            
             beforePos = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
-            if (tornado != null)
-                tornado.position = transform.position;
             playerRigid.MovePosition(beforePos);
             cineMachine.m_Lens.OrthographicSize -= (Time.deltaTime * jumpSpeed * multiPlyValue * subtractValue);
             yield return null;
@@ -497,6 +497,7 @@ public class PowerSkill : PlayerSkillBase
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
         trailRenderer.enabled = false;
+     
         //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = Vector3.back;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
