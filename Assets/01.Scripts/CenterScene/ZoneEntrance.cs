@@ -13,6 +13,8 @@ public class ZoneEntrance : MonoBehaviour
     private bool isInteraction = false;
 
     [SerializeField]
+    private GameObject zoneCanvas = null;
+    [SerializeField]
     private TextMeshProUGUI mapNameTMP = null;
 
     private SpriteRenderer spriteRenderer = null;
@@ -26,7 +28,7 @@ public class ZoneEntrance : MonoBehaviour
 
     private void Init()
     {
-        spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/{gameObject.name}PortalSprite.png");
+        spriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Portal/MagicCircle.png");
         ToggleMapNameTMP();
     }
 
@@ -117,7 +119,7 @@ public class ZoneEntrance : MonoBehaviour
 
     public void ToggleMapNameTMP()
     {
-        mapNameTMP.gameObject.SetActive(isInteraction);
+        zoneCanvas.SetActive(isInteraction);
         mapNameTMP.SetText(gameObject.name);
     }
 }

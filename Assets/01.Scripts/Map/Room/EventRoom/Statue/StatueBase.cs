@@ -55,7 +55,6 @@ public abstract class StatueBase : MonoBehaviour
 
     protected IEnumerator IETextAnim()
     {
-        Debug.Log("IETextAnim");
         effectTmp.transform.DOScale(Vector3.one, 0f);
         effectTmp.gameObject.SetActive(true);
 

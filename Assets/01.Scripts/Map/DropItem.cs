@@ -38,9 +38,12 @@ public class DropItem : MonoBehaviour, IPoolable
     private void Start()
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
-        for (int i = 0; i < itemObjList.Count; ++i)
+        if (itemObjList != null)
         {
-            itemObjListNum.Add(itemObjList[i].Num);
+            for (int i = 0; i < itemObjList.Count; ++i)
+            {
+                itemObjListNum.Add(itemObjList[i].Num);
+            }
         }
 
         SetItem(Define.ChestRating.Common);
