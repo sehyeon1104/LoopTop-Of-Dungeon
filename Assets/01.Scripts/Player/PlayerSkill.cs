@@ -16,8 +16,6 @@ using Random = UnityEngine.Random;
 public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     PlayerBase playerBase;
-    [Space]
-    [Header("��ų")]
     List<PlayerSkillBase> SkillBase;
     Button interaction;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
