@@ -46,6 +46,7 @@ public class PowerSkill : PlayerSkillBase
     float catchTime = 4f;
     bool isColumn;
     float ColumnDuration = 5f;
+    public AnimationCurve jumpValue;
     WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
     WaitForSeconds waitRockPush = new WaitForSeconds(2f);
@@ -422,6 +423,7 @@ public class PowerSkill : PlayerSkillBase
         float multiPlyValue = 1;
         float value = 0;
         float TornadoTimer = 0;
+        float lensValue =cineMachine.m_Lens.OrthographicSize;
         jumpWidth = 2f;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
@@ -437,7 +439,8 @@ public class PowerSkill : PlayerSkillBase
         if (playerMovement.Direction.x !=0 && playerMovement.Direction.y !=0)
         normailzedVec = new Vector2(playerMovement.Direction.x /MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
 
-        cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(normailzedVec.x * 8f, normailzedVec.y * 6,-10);   
+        
+        //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(normailzedVec.x * 8f, normailzedVec.y * 6,-10);   
         Poolable charging = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownCharging.prefab", transform.position, Quaternion.identity);
         Transform trans = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Expectedrange.prefab",transform.position,Quaternion.identity).transform;
            
@@ -453,11 +456,13 @@ public class PowerSkill : PlayerSkillBase
             }
             jumpWidth += 4 * Time.deltaTime;
             trans.position = currentPos +  playerMovement.Direction * jumpWidth;
+            cineMachine.m_Lens.OrthographicSize += Time.deltaTime * 2; // 3ÃÊ Â÷Â¡ÇßÀ» ¶§ 6ÀÌ ´Ã¾î³²
             if (timer > 3f)     
                 break;
             yield return null;
         }
-
+        float subtractValue = cineMachine.m_Lens.OrthographicSize - lensValue;
+        timer = 0;
         Managers.Pool.Push(charging);
         dots[0] = currentPos;   
         dots[1] = currentPos + playerDirection * jumpHeight;
@@ -475,17 +480,9 @@ public class PowerSkill : PlayerSkillBase
 
         Vector3 direction = playerMovement.Direction;
         a.startRotation = value;
-
         while (lerpValue < 1)
         {
-            if (lerpValue > 0.5)
-            {
-                multiPlyValue = 1.3f;
-            }
-            if (lerpValue < 0.5)
-            {
-                multiPlyValue = 0.7f;
-            }
+            multiPlyValue = jumpValue.Evaluate(lerpValue);
             trailRenderer.widthMultiplier = trailWidth * multiPlyValue;
             lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
@@ -495,13 +492,14 @@ public class PowerSkill : PlayerSkillBase
             if (tornado != null)
                 tornado.position = transform.position;
             playerRigid.MovePosition(beforePos);
-
-            yield return fixedWait;
+            cineMachine.m_Lens.OrthographicSize -= (Time.deltaTime * jumpSpeed * multiPlyValue * subtractValue);
+            yield return null;
         }
+        cineMachine.m_Lens.OrthographicSize = 6;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
         trailRenderer.enabled = false;
-        cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = Vector3.back;
+        //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = Vector3.back;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
