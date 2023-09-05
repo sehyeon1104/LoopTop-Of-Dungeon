@@ -72,17 +72,15 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         }
         if (Input.GetKey(/*KeyCode.J*/KeySetting.keys[KeyAction.ATTACK]))
         {
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                if (interaction.gameObject.activeSelf)
-                {
-                    interaction.onClick.Invoke();
-                    return;
-                }
-            }
-            if (!interaction.gameObject.activeSelf)
               Attack();
-
+        }
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            if (interaction.gameObject.activeSelf)
+            {
+                interaction.onClick.Invoke();
+                return;
+            }
         }
         if (Input.GetKeyDown(KeyCode.K))
             DashSkill();
