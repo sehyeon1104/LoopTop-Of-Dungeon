@@ -8,10 +8,17 @@ public class KeySettingUI : MonoBehaviour
 {
     public KeyCode[] exceptionKeys = new KeyCode[]
     {
+        KeyCode.W,
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D,
         KeyCode.Escape,
         KeyCode.Return,
         KeyCode.Backspace,
     };
+
+    [SerializeField]
+    private GameObject keySettingPanel = null;
 
     [SerializeField]
     private TextMeshProUGUI[] buttonTmp;
@@ -20,17 +27,24 @@ public class KeySettingUI : MonoBehaviour
 
     private void Start()
     {
+        keySettingPanel.SetActive(false);
+
         for(int i = 0; i < buttonTmp.Length; ++i)
         {
             buttonTmp[i].text = KeySetting.keys[(KeyAction)i].ToString().ToUpper();
         }
     }
 
+    public void ToggleKeySettingPanel()
+    {
+        UIManager.Instance.PushPanel(keySettingPanel);
+        keySettingPanel.SetActive(!keySettingPanel.activeSelf);
+    }
+
     public void UpdateKeyTmp()
     {
         for (int i = 0; i < buttonTmp.Length; ++i)
         {
-            // Debug.Log(KeySetting.keys[(KeyAction)i].ToString().ToUpper());
             buttonTmp[i].text = KeySetting.keys[(KeyAction)i].ToString().ToUpper();
         }
     }

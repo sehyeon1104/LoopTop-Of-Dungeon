@@ -27,6 +27,7 @@ public static class KeySetting
 public class KeyManager : MonoSingleton<KeyManager>
 {
     public KeySettingUI keySettingUI { get; private set; } = null;
+    Event keyEvent = null;
 
     KeyCode[] defaultKeys = new KeyCode[]
     {
@@ -54,26 +55,10 @@ public class KeyManager : MonoSingleton<KeyManager>
         if (!keySettingUI.isChangeKey)
             return;
 
-        Event keyEvent = Event.current;
+        keyEvent = Event.current;
         if (keyEvent.isKey)
         {
-            if (keyEvent.keyCode == KeyCode.W
-                || keyEvent.keyCode == KeyCode.A
-                || keyEvent.keyCode == KeyCode.S
-                || keyEvent.keyCode == KeyCode.D)
-            {
-                keySettingUI.SetIsChangeKey(false);
-                return;
-            }
-
-            foreach (var keyCode in KeySetting.keys.Values)
-            {
-                if (keyEvent.keyCode == keyCode)
-                {
-                    keySettingUI.SetIsChangeKey(false);
-                    return;
-                }
-            }
+            ExceptionCheck();
 
             KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
             key = -1;
@@ -85,6 +70,23 @@ public class KeyManager : MonoSingleton<KeyManager>
     public void ChangeKey(int num)
     {
         key = num;
+    }
+
+    public void ExceptionCheck()
+    {
+        foreach (var keyCode in KeySetting.keys.Values)
+        {
+            if (keyEvent.keyCode == keyCode)
+            {
+                keySettingUI.SetIsChangeKey(false);
+                return;
+            }
+        }
+        for (int i = 0; i < keySettingUI.exceptionKeys.Length; ++i)
+        {
+            if (keyEvent.keyCode == keySettingUI.exceptionKeys[i])
+                return;
+        }
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)

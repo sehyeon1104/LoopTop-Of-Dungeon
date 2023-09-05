@@ -45,6 +45,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private GameObject pausePanel;
     [SerializeField]
+    private GameObject settingPanel;
+    [SerializeField]
     private GameObject gameOverPanel;
     [SerializeField]
     private GameObject checkOneMorePanel;
@@ -223,19 +225,47 @@ public class UIManager : MonoSingleton<UIManager>
         ultButton.SetActive(!ultButton.activeSelf);
     }
 
+
     #region Panels
+    private Stack<GameObject> panelStack = new Stack<GameObject>();
+
+    public void PushPanel(GameObject panel)
+    {
+        panelStack.Push(panel);
+    }
+
+    public Stack<GameObject> GetPanelStack()
+    {
+        return panelStack;
+    }
+
     public void DisActiveAllPanels()
     {
         blurPanel.SetActive(false);
         pausePanel.SetActive(false);
+        settingPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         checkOneMorePanel.SetActive(false);
         InventoryUI.Instance.transform.Find("Background").gameObject.SetActive(false);
     }
+    public void ToggleSettingPanel()
+    {
+        PushPanel(settingPanel);
+        settingPanel.SetActive(settingPanel.activeSelf);
+    }
+
+    public void ActiveFalsePanel()
+    {
+        if(panelStack.Peek().name == "PausePanel")
+        {
+            TogglePausePanel();
+        }
+
+        panelStack.Pop().SetActive(false);
+    }
 
     public void TogglePausePanel()
     {
-
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
         if (pausePanel.activeSelf)

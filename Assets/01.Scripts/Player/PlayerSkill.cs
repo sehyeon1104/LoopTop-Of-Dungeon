@@ -86,10 +86,19 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
             DashSkill();
         if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if(Input.GetKeyDown(KeyCode.Escape))
-            UIManager.Instance.TogglePausePanel();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(UIManager.Instance.GetPanelStack().Count != 0)
+            {
+                UIManager.Instance.ActiveFalsePanel();
+            }
+            else
+            {
+                UIManager.Instance.TogglePausePanel();   
+            }
+        }
 
-        if(Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
             InventoryUI.Instance.ToggleInventoryUI();
         
       
