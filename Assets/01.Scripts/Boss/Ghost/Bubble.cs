@@ -24,6 +24,7 @@ public class Bubble : MonoBehaviour
 
             GhostBossUI.Instance.partMat.SetColor("_SetColor", partColor);
             GhostBossUI.Instance.ultParticle.Play();
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_EatBubble.wav");
             Managers.Pool.PoolManaging(takeEffect, transform.position, Quaternion.identity);
         }
     }

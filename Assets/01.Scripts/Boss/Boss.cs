@@ -113,10 +113,12 @@ public class Boss : MonoSingleton<Boss>, IHittable
         {
             damage *= 1.5f;
             EnemyUIManager.Instance.ShowDamage(damage, gameObject, true);
+            GameManager.Instance.PlayHitEffect(transform, true, hitEffect);
         }
         else
         {
             EnemyUIManager.Instance.ShowDamage(damage, gameObject, false, dmgMul);
+            GameManager.Instance.PlayHitEffect(transform, false, hitEffect);
         }
 
         if(damage >= 15)

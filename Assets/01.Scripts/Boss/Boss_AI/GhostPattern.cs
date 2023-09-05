@@ -294,6 +294,7 @@ public class G_Patterns : BossPattern
             Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpWarning.prefab", pos + (anPos - pos) / 2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
 
             yield return new WaitForSeconds(1f);
+            CinemachineCameraShaking.Instance.CameraShake(4, 0.2f);
             transform.DOMove(anPos, 0.5f);
 
             Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/BossTpEffect.prefab", pos + (anPos - pos)/2, Quaternion.AngleAxis(angle - 90, Vector3.forward));
@@ -488,7 +489,7 @@ public class GhostPattern : G_Patterns
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
         boss2PhaseVcam.Priority = 0;
-        patternDelay = new WaitForSeconds(1.5f);
+        patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
         playerPCUI.alpha = 1;
         playerPPUI.alpha = 1;

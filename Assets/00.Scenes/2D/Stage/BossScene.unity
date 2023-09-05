@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &9307520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-  m_PrefabInstance: {fileID: 1498750862}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf19c1d4e81fb14093598ce4dc2e718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &119251785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,29 +1317,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-      propertyPath: bossAnim
-      value: 
-      objectReference: {fileID: 7700669223063157216}
-    - target: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-      propertyPath: absorbEnd
-      value: 
-      objectReference: {fileID: 7400000, guid: f9ee3fe1ff3f8a44394800a8f26e3c83, type: 2}
-    - target: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-      propertyPath: bossPattern
-      value: 
-      objectReference: {fileID: 3622556385524146612}
-    - target: {fileID: 4520822832484563962, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-      propertyPath: finalHitted
-      value: 
-      objectReference: {fileID: 7400000, guid: bc75f78e33681214d8b0738b4cbfa9b6, type: 2}
     - target: {fileID: 6270959655087070444, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
       propertyPath: m_Name
       value: GhostBossField
-      objectReference: {fileID: 0}
-    - target: {fileID: 6270959655087070444, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6270959655087070446, guid: 60dbf2f22de1efe40b10a667bd212301, type: 3}
       propertyPath: m_RootOrder
@@ -2120,10 +2089,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 753093560, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-      propertyPath: m_Priority
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3676222466394034532, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2172,10 +2137,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss_devil_man
       objectReference: {fileID: 0}
-    - target: {fileID: 3681022856023880976, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-      propertyPath: bossFieldPattern
-      value: 
-      objectReference: {fileID: 9307520}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
 --- !u!114 &94708762846745765 stripped
@@ -2187,17 +2148,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 868268b1b74dcbb4a8d0c129099e847d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3622556385524146612 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3681022856023880976, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-  m_PrefabInstance: {fileID: 94708762846745764}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68af6515ee181084ab565c6d8d212f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3849257786646798348
@@ -2605,16 +2555,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5031a51ed841ca445a8354df13cc8b64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7700669223063157216 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7750198829649931588, guid: da9fc09b3a2300145b0c7d59826e3221, type: 3}
-  m_PrefabInstance: {fileID: 94708762846745764}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05402ef2efc23564ebce7c5b04ca28c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
