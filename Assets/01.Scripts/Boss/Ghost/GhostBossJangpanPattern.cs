@@ -94,13 +94,11 @@ public class GhostBossJangpanPattern : MonoBehaviour
         Poolable Col = Managers.Pool.Pop(FRPRCol.gameObject, transform.position);
         Col.transform.position = transform.position;
 
+        jangpanVCam.Priority = 0;
         yield return new WaitForSeconds(5f);
 
         currenttime = 0f;
         Managers.Pool.Push(FRPRCol);
-        jangpanVCam.Priority = 0;
-
-
     }
 
 }
