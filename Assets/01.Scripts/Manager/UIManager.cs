@@ -53,6 +53,8 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private Button resumeBtn;
     [SerializeField]
+    private Button settingBtn;
+    [SerializeField]
     private Button quitBtn;
     [SerializeField]
     private GameObject obtainItemInfo = null;
@@ -156,6 +158,7 @@ public class UIManager : MonoSingleton<UIManager>
             reviveButton = ultFade.transform.Find("All/GameOverPanel/Panel/Btns/Revive").GetComponent<Button>();
             leaveButton = ultFade.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
+            settingBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Setting").GetComponent<Button>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
@@ -174,15 +177,24 @@ public class UIManager : MonoSingleton<UIManager>
         ults = player.GetComponentsInChildren<PlayableDirector>();
          clawEffect = player.GetComponentsInChildren<VisualEffect>(true);
         animator = player.Find("Skill/GhostUlt/GhostBossUlt/GhostBoss").GetComponent<Animator>();
-        leaveButton.onClick.AddListener(LeaveBtn);
-        resumeBtn.onClick.RemoveListener(Resume);
-        resumeBtn.onClick.AddListener(Resume);
-        quitBtn.onClick.RemoveListener(LeaveBtn);
-        quitBtn.onClick.AddListener(LeaveBtn);
+
+        InitBtns();
 
         shopUI = FindObjectOfType<ShopUI>();
 
         waitForEndOfFrame = new WaitForEndOfFrame();
+    }
+
+    public void InitBtns()
+    {
+        leaveButton.onClick.RemoveListener(LeaveBtn);
+        leaveButton.onClick.AddListener(LeaveBtn);
+        resumeBtn.onClick.RemoveListener(Resume);
+        resumeBtn.onClick.AddListener(Resume);
+        settingBtn.onClick.RemoveListener(ToggleSettingPanel);
+        settingBtn.onClick.AddListener(ToggleSettingPanel);
+        quitBtn.onClick.RemoveListener(LeaveBtn);
+        quitBtn.onClick.AddListener(LeaveBtn);
     }
 
     private void Start()
@@ -228,9 +240,15 @@ public class UIManager : MonoSingleton<UIManager>
 
     #region Panels
     private Stack<GameObject> panelStack = new Stack<GameObject>();
+    private Dictionary<string, bool> panelDic = new Dictionary<string, bool>();
 
     public void PushPanel(GameObject panel)
     {
+        panel.SetActive(true);
+        if (panelDic.ContainsKey(panel.name))
+            return;
+
+        panelDic.Add(panel.name, true);
         panelStack.Push(panel);
     }
 
@@ -248,15 +266,16 @@ public class UIManager : MonoSingleton<UIManager>
         checkOneMorePanel.SetActive(false);
         InventoryUI.Instance.transform.Find("Background").gameObject.SetActive(false);
     }
+
     public void ToggleSettingPanel()
     {
         PushPanel(settingPanel);
-        settingPanel.SetActive(settingPanel.activeSelf);
     }
 
-    public void ActiveFalsePanel()
+    public void PopPanel()
     {
-        if(panelStack.Peek().name == "PausePanel")
+        panelDic.Remove(panelStack.Peek().name);
+        if (panelStack.Peek().name == "PausePanel")
         {
             TogglePausePanel();
         }
@@ -415,7 +434,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         float coolTime = skillData.skill[skillNum].skillDelay;
         float skillCoolTime = coolTime - (coolTime * playerBase.SkillCoolDown / 100);
-        print(skillCoolTime);
         int num =skillNum;
         if (skillNum ==7)
             num = 2;
@@ -606,11 +624,11 @@ public class UIManager : MonoSingleton<UIManager>
             Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
-        else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
-        {
-            // 전시용
-            SaveManager.DeleteAllData();
-            GameManager.Instance.GameQuit();
-        }
+        //else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
+        //{
+        //    // 전시용
+        //    SaveManager.DeleteAllData();
+        //    GameManager.Instance.GameQuit();
+        //}
     }
 }
