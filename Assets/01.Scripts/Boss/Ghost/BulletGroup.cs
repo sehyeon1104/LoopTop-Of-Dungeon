@@ -22,6 +22,7 @@ public class BulletGroup : MonoBehaviour
         float timer = 0f;
         if (waitTime == 0.5f)
         {
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Warning.wav", Define.Sound.Effect, 0.75f, 0.5f);
             while (timer < waitTime)
             {
                 transform.Rotate(Vector3.forward * Time.deltaTime * 300);
@@ -30,7 +31,7 @@ public class BulletGroup : MonoBehaviour
             }
         }
         else
-            yield return new WaitForSecondsRealtime(waitTime);
+            yield return new WaitForSeconds(waitTime);
 
         for (int i = 0; i < warning.Length; i++)
             warning[i].SetActive(true);
@@ -41,6 +42,7 @@ public class BulletGroup : MonoBehaviour
         for (int i = 0; i < warning.Length; i++)
             warning[i].SetActive(false);
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_SoulBullet.wav", Define.Sound.Effect, 1.5f, 0.5f);
         while (transform.localScale.x >= -10)
         {
             transform.localScale -= Vector3.right * 0.05f;
