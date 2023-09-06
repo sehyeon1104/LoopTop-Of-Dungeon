@@ -467,32 +467,30 @@ public class PowerSkill : PlayerSkillBase
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
         
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        trailRenderer.enabled = true;
-        trailRenderer.colorGradient = trailColor;
         trailRenderer.material = jumpDownMat;
+        trailRenderer.enabled = true;
+        //trailRenderer.colorGradient = trailColor;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
         else
             value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
-
+            
         Vector3 direction = playerMovement.Direction;
         a.startRotation = value;
         while (lerpValue < 1)
         {
             multiPlyValue = jumpValue.Evaluate(lerpValue);
-            trailRenderer.widthMultiplier = trailWidth * multiPlyValue;
-            lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
-        
+            lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
-            
+            print(multiPlyValue);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
-            
             beforePos = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
             playerRigid.MovePosition(beforePos);
-            cineMachine.m_Lens.OrthographicSize -= (Time.deltaTime * jumpSpeed * multiPlyValue * subtractValue);
-            yield return null;
+            cineMachine.m_Lens.OrthographicSize -= (Time.fixedDeltaTime * jumpSpeed * multiPlyValue * subtractValue);
+            yield return fixedWait;
         }
+        
         cineMachine.m_Lens.OrthographicSize = 6;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
@@ -586,7 +584,6 @@ public class PowerSkill : PlayerSkillBase
         while (lerpValue < 1)
         {
             multiPlyValue = jumpValue.Evaluate(lerpValue);
-            trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1) * 2;
@@ -597,28 +594,17 @@ public class PowerSkill : PlayerSkillBase
         }
         Poolable shockWave = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ShockWave.prefab", transform.position, Quaternion.identity);
         StartCoroutine(ShockWaveAction(shockWave, 0.1f, 1));
-        transform.localScale = currentPlayerScale;
-        trailRenderer.enabled = false;
-        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
+        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
         }
+        transform.localScale = currentPlayerScale;
+        trailRenderer.enabled = false;
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
-        Vector2 jumpDown =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity).transform.position;
-        while(timer<1.5f)
-        {
-            radius += maxRadius * Time.fixedDeltaTime /2;
-            enemies = Physics2D.OverlapCircleAll(jumpDown, radius,1<<enemyLayer);
-            for(int i=0; i< enemies.Length;i++)
-            {
-                enemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack * 5);
-            }
-            timer += Time.fixedDeltaTime;
-            yield return fixedWait;
-        }
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity);   
         yield return null;
     }
     IEnumerator ShockWaveAction(Poolable shockWave, float startPos, float endPos)
@@ -684,7 +670,7 @@ public class PowerSkill : PlayerSkillBase
             for (int i = 0; i < enemies.Length; i++)
             {
                 enemies[i].transform.position = hand.position;
-            }
+            }   
             timer += Time.deltaTime;
             yield return null;
         }
@@ -728,7 +714,7 @@ public class PowerSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, jumpAttackRange);    
+        Gizmos.DrawWireSphere(transform.position, 4);    
     }
 
 
