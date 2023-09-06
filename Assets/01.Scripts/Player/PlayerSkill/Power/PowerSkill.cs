@@ -438,12 +438,10 @@ public class PowerSkill : PlayerSkillBase
         Vector2 normailzedVec = playerMovement.Direction;
         if (playerMovement.Direction.x !=0 && playerMovement.Direction.y !=0)
         normailzedVec = new Vector2(playerMovement.Direction.x /MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
-
-        
         //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(normailzedVec.x * 8f, normailzedVec.y * 6,-10);   
         Poolable charging = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownCharging.prefab", transform.position, Quaternion.identity);
         Transform trans = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Expectedrange.prefab",transform.position,Quaternion.identity).transform;
-           
+        trans.localScale =Vector3.one * jumpDownScaleMultiply;
         VisualEffect expectedRande = trans.GetComponent<VisualEffect>();    
         while (Input.GetKey(keyBoardButton))
         {
@@ -468,7 +466,7 @@ public class PowerSkill : PlayerSkillBase
         dots[1] = currentPos + playerDirection * jumpHeight;
         dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
-
+        
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         trailRenderer.enabled = true;
         trailRenderer.colorGradient = trailColor;
@@ -586,14 +584,7 @@ public class PowerSkill : PlayerSkillBase
         trailRenderer.startWidth = trailWidth * 2;
         while (lerpValue < 1)
         {
-            if (lerpValue > 0.5)
-            {
-                multiPlyValue = 1.3f;
-            }
-            if (lerpValue < 0.5)
-            {
-                multiPlyValue = 0.7f;
-            }
+            multiPlyValue = jumpValue.Evaluate(lerpValue);
             trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
@@ -736,7 +727,7 @@ public class PowerSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 16);    
+        Gizmos.DrawWireSphere(transform.position, jumpAttackRange);    
     }
 
 
