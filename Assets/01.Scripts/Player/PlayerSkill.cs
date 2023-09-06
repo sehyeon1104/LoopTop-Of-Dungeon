@@ -16,8 +16,6 @@ using Random = UnityEngine.Random;
 public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     PlayerBase playerBase;
-    [Space]
-    [Header("��ų")]
     List<PlayerSkillBase> SkillBase;
     Button interaction;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
@@ -62,27 +60,25 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl)
             return;
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]))
         {
             Skill1();
         }
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(/*KeyCode.I*/KeySetting.keys[KeyAction.SKILL2]))
         {
             Skill2();
         }
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(/*KeyCode.J*/KeySetting.keys[KeyAction.ATTACK]))
         {
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                if (interaction.gameObject.activeSelf)
-                {
-                    interaction.onClick.Invoke();
-                    return;
-                }
-            }
-            if (!interaction.gameObject.activeSelf)
               Attack();
-
+        }
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            if (interaction.gameObject.activeSelf)
+            {
+                interaction.onClick.Invoke();
+                return;
+            }
         }
         if (Input.GetKeyDown(KeyCode.K))
             DashSkill();

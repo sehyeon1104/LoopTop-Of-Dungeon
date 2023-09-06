@@ -13,6 +13,8 @@ public class TitleSceneManager : MonoBehaviour
 
     private Transform titleUI = null;
     private TextMeshProUGUI titleTmp = null;
+    private TextMeshProUGUI startTMP = null;
+    private WaitForSeconds waitSec = null;
 
     private GameObject blurPanel = null;
 
@@ -44,6 +46,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         titleUI = GameObject.Find("TitleUI").transform;
         titleTmp = titleUI.Find("MiddleUp/Title/TitleTMP").GetComponent<TextMeshProUGUI>();
+        startTMP = titleUI.Find("StartTMP").GetComponent<TextMeshProUGUI>();
 
         blurPanel = titleUI.Find("Blur/BlurPanel").gameObject;
 
@@ -60,6 +63,8 @@ public class TitleSceneManager : MonoBehaviour
         InitBtns();
 
         backgroundPanel.rectTransform.position = options.transform.position;
+
+        waitSec = new WaitForSeconds(1f);
     }
 
     private void InitBtns()
@@ -87,6 +92,8 @@ public class TitleSceneManager : MonoBehaviour
 
     private void OnStart()
     {
+        startTMP.gameObject.SetActive(true);
+        StartCoroutine(IEStartTMPFade());
         selectionList.gameObject.SetActive(false);
         blurPanel.SetActive(false);
     }
@@ -98,12 +105,24 @@ public class TitleSceneManager : MonoBehaviour
         InputKeyOrButton();
     }
 
+    private IEnumerator IEStartTMPFade()
+    {
+        while (startTMP.gameObject.activeSelf)
+        {
+            startTMP.DOFade(0f, 1f);
+            yield return waitSec;
+            startTMP.DOFade(1f, 1f);
+            yield return waitSec;
+        }
+    }
+
     private void InputKeyOrButton()
     {
         if(!isClickScreen && Input.anyKeyDown)
         {
             isClickScreen = true;
 
+            startTMP.gameObject.SetActive(false);
             StartCoroutine(ShowListOnTouch());
             return;
         }

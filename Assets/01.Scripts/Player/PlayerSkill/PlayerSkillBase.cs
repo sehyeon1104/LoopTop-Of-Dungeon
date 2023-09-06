@@ -74,8 +74,8 @@ public abstract class PlayerSkillBase : MonoBehaviour
             PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
             CinemachineCameraShaking.Instance.CameraShake();
             enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
-            GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
         }
+        GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
     }
     protected abstract void UltimateSkill();
 

@@ -38,9 +38,12 @@ public class DropItem : MonoBehaviour, IPoolable
     private void Start()
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
-        for (int i = 0; i < itemObjList.Count; ++i)
+        if (itemObjList != null)
         {
-            itemObjListNum.Add(itemObjList[i].Num);
+            for (int i = 0; i < itemObjList.Count; ++i)
+            {
+                itemObjListNum.Add(itemObjList[i].Num);
+            }
         }
 
         SetItem(Define.ChestRating.Common);
@@ -57,7 +60,10 @@ public class DropItem : MonoBehaviour, IPoolable
         spriteRenderer.sprite = null;
         itemSelectNum.Clear();
         tempItemList.Clear();
-        itemObjList = StageManager.Instance.shop.itemList;
+        if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+        {
+            itemObjList = StageManager.Instance.shop.itemList;
+        }
         poolable = GetComponent<Poolable>();
     }
 
