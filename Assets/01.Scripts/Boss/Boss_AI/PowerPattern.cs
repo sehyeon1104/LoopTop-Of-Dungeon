@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
 using UnityEditor;
+using UnityEngine.Rendering;
 
 public class P_Patterns : BossPattern
 {
@@ -12,6 +13,7 @@ public class P_Patterns : BossPattern
     #region Initialize
     [SerializeField] protected AnimationClip[] groundHit;
 
+    [SerializeField] protected SortingGroup powerVisual;
     [SerializeField] protected GameObject shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
@@ -116,8 +118,8 @@ public class P_Patterns : BossPattern
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         dashWarning.SetActive(false);
-        CinemachineCameraShaking.Instance.CameraShake(2, 1f);
-        while (timer < 2f)
+        CinemachineCameraShaking.Instance.CameraShake(2, 1.5f);
+        while (timer < 1.5f)
         {
             timer += Time.deltaTime;
 
@@ -139,38 +141,36 @@ public class P_Patterns : BossPattern
     {
         for (int i = 0; i < 3; i++)
         {
-            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", Boss.Instance.player.position, Quaternion.identity);
+            Vector3 playerPos = Boss.Instance.player.position;
+
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", playerPos, Quaternion.identity);
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-            if (i == 2) clone.transform.localScale = new Vector3(2f, 2f);
-            else clone.transform.localScale = new Vector3(1.5f, 1.5f);
+            if (i == 2) clone.transform.localScale = new Vector3(1.75f, 1.75f);
+            else clone.transform.localScale = new Vector3(1.25f, 1.25f);
 
-            yield return new WaitForSeconds(0.5f);
+            transform.DOMove(transform.position + Vector3.up * 100, 0.2f);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+            yield return new WaitForSeconds(0.2f);
+            //powerVisual.sortingLayerName = "Default";
 
-            while (Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
-            {
-                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 5f);
-                yield return null;
-            }
+            transform.DOMove(playerPos, 1f);
+            yield return new WaitForSeconds(1f);
+
+            powerVisual.sortingLayerName = "Boss";
 
             Collider2D col = null;
             if(i == 2)
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 9f, 1 << 8);
+                col = Physics2D.OverlapCircle(clone.transform.position, 7.5f, 1 << 8);
                 CinemachineCameraShaking.Instance.CameraShake(12, 0.4f);
             }
             else
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 6.75f, 1 << 8);
+                col = Physics2D.OverlapCircle(clone.transform.position, 5.5f, 1 << 8);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
             }
-
-            for (int j = 0; j < count; j++)
-            {
-                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
-            }
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", playerPos, Quaternion.identity);
 
             if (col != null)
                 GameManager.Instance.Player.OnDamage(25, 0);
@@ -209,7 +209,7 @@ public class P_Patterns : BossPattern
             Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
         //Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         for (int i = -2; i < 3; i++)
@@ -356,7 +356,7 @@ public class PowerPattern : P_Patterns
             case 1:
                 break;
             case 2:
-                return NowPhase == 1 ? 0 : 4;
+                break;
             case 3:
                 break;
             case 4:

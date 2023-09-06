@@ -9,22 +9,12 @@ public class DashParts : MonoBehaviour
     Vector3 startPos;
 
     GameObject warning;
-    GameObject bar;
-
-    SpriteRenderer barRenderer;
-    Color mainColor;
 
     int xDir = 0;
 
     private void Awake()
     {
         startPos = transform.position;
-
-        warning = transform.Find("Warning").gameObject;
-        bar = warning.transform.Find("Bar").gameObject;
-
-        barRenderer = bar.GetComponentInChildren<SpriteRenderer>();
-        mainColor = barRenderer.color;
 
         string name = gameObject.name;
         string result = Regex.Replace(name, @"[^0-9]", "");
@@ -47,16 +37,8 @@ public class DashParts : MonoBehaviour
         transform.position = startPos;
 
         warning.SetActive(true);
-        bar.transform.localScale = new Vector3(1, 0);
-
-        bar.transform.DOScaleY(1, 2f);
 
         yield return new WaitForSeconds(2f);
-        barRenderer.color = Color.white;
-        
-        yield return new WaitForSeconds(0.1f);
-
-        barRenderer.color = mainColor;
         warning.SetActive(false);
 
         transform.DOMoveX(transform.position.x + xDir * 50f, 0.3f);
@@ -68,7 +50,7 @@ public class DashParts : MonoBehaviour
     {
         if(collision.gameObject.layer == 8)
         {
-            GameManager.Instance.Player.OnDamage(2, 0);
+            GameManager.Instance.Player.OnDamage(20, 0);
         }
     }
 }
