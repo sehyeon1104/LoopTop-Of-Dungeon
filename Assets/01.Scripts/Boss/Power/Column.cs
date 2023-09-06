@@ -27,8 +27,7 @@ public class Column : MonoBehaviour
     {
         StopCoroutine(Attack());
 
-        if(nowBossPhase != 2)
-            nowBossPhase = Boss.Instance.bossPattern.NowPhase;
+        nowBossPhase = Boss.Instance.bossPattern.NowPhase;
 
         warning.SetActive(false);
         shockWave.SetActive(false);
