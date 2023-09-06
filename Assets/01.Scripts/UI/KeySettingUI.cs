@@ -6,17 +6,6 @@ using TMPro;
 
 public class KeySettingUI : MonoBehaviour
 {
-    public KeyCode[] exceptionKeys = new KeyCode[]
-    {
-        KeyCode.W,
-        KeyCode.A,
-        KeyCode.S,
-        KeyCode.D,
-        KeyCode.Escape,
-        KeyCode.Return,
-        KeyCode.Backspace,
-    };
-
     [SerializeField]
     private GameObject keySettingPanel = null;
 
@@ -38,7 +27,6 @@ public class KeySettingUI : MonoBehaviour
     public void ToggleKeySettingPanel()
     {
         UIManager.Instance.PushPanel(keySettingPanel);
-        keySettingPanel.SetActive(!keySettingPanel.activeSelf);
     }
 
     public void UpdateKeyTmp()

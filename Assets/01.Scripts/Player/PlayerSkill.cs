@@ -88,7 +88,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         {
             if(UIManager.Instance.GetPanelStack().Count != 0)
             {
-                UIManager.Instance.ActiveFalsePanel();
+                UIManager.Instance.PopPanel();
             }
             else
             {

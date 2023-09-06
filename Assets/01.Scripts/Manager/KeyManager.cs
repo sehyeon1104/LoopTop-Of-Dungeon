@@ -19,6 +19,8 @@ public enum KeyAction
     KeyCount,
 }
 
+
+
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
@@ -40,13 +42,25 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeyCode.O,
     };
 
+    KeyCode[] exceptionKeys = new KeyCode[]
+    {
+        KeyCode.W,
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D,
+        KeyCode.Escape,
+        KeyCode.Return,
+        KeyCode.Backspace,
+    };
+
     private void Awake()
     {
         keySettingUI = FindObjectOfType<KeySettingUI>()
 ;
         for(int i = 0; i < (int)KeyAction.KeyCount; ++i)
         {
-            KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+            if(!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
     }
 
@@ -58,7 +72,8 @@ public class KeyManager : MonoSingleton<KeyManager>
         keyEvent = Event.current;
         if (keyEvent.isKey)
         {
-            ExceptionCheck();
+            if (!ExceptionCheck())
+                return;
 
             KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
             key = -1;
@@ -72,21 +87,23 @@ public class KeyManager : MonoSingleton<KeyManager>
         key = num;
     }
 
-    public void ExceptionCheck()
+    public bool ExceptionCheck()
     {
         foreach (var keyCode in KeySetting.keys.Values)
         {
             if (keyEvent.keyCode == keyCode)
             {
                 keySettingUI.SetIsChangeKey(false);
-                return;
+                return false;
             }
         }
-        for (int i = 0; i < keySettingUI.exceptionKeys.Length; ++i)
+        for (int i = 0; i < exceptionKeys.Length; ++i)
         {
-            if (keyEvent.keyCode == keySettingUI.exceptionKeys[i])
-                return;
+            if (keyEvent.keyCode == exceptionKeys[i])
+                return false;
         }
+
+        return true;
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)
