@@ -95,7 +95,12 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 UIManager.Instance.TogglePausePanel();   
             }
         }
-
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            Collider2D[] enemies;
+            enemies = Physics2D.OverlapCircleAll(transform.position, 3);
+            enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40);
+        }
         if (Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
             InventoryUI.Instance.ToggleInventoryUI();
         

@@ -57,17 +57,16 @@ public class PowerSkill : PlayerSkillBase
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
-    Coroutine shockWaveCoroutine;
-    IEnumerator catchSkill;
     readonly int hashThrow = Animator.StringToHash("Throw");
     readonly int hashCatch = Animator.StringToHash("Catch");
     Animator bossArmAni = null;
     Poolable bossArm = null;
     Material jumpDownMat;
     Material material;
-    List<Transform> catchEnemies = new List<Transform>();
+    Transform[] catchEnemies = new Transform[100];
+    bool[] isTrrigerEnemies = new bool[100];
     AnimationCurve fiveJumpDownCurve;
-    float power = 20;
+    float power = 50;
     static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
 
     [SerializeField] GameObject columnEffect;
@@ -76,17 +75,13 @@ public class PowerSkill : PlayerSkillBase
         jumpDownMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
+        attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
         cineMachine = FindObjectOfType<CinemachineVirtualCamera>();
         Cashing();
     }
     protected override void Update()
     {
         base.Update();
-    }
-    private void Start()
-    {
-        catchSkill = CatchSkill();
-        attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
     }
     protected override void Attack()
     {
@@ -137,14 +132,17 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void ForuthSkill(int level)
     {
-
+        
         if (isClick)
         {
-            StopCoroutine(catchSkill);
+            StopCoroutine(CatchSkill());
             StartCoroutine(Throw());
         }
         else
-            StartCoroutine(catchSkill);
+        {
+            print("ss");
+            StartCoroutine(CatchSkill());
+        }
 
     }
 
@@ -548,9 +546,6 @@ public class PowerSkill : PlayerSkillBase
     {
 
         float trailWith;
-        float timer=0;
-        float radius = 0;
-        float maxRadius = 16;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
@@ -662,7 +657,7 @@ public class PowerSkill : PlayerSkillBase
         for (int i = 0; i < enemies.Length; i++)
         {
             Transform enemy = enemies[i].transform;
-            catchEnemies.Add(enemy);
+            catchEnemies[i] = enemy;
             enemy.GetComponent<EnemyDefault>().isControl = false;
         }
         while (timer < catchTime)
@@ -675,24 +670,32 @@ public class PowerSkill : PlayerSkillBase
             yield return null;
         }
         for (int i = 0; i < enemies.Length; i++)
+        {
             enemies[i].transform.GetComponent<EnemyDefault>().isControl = true;
+            isTrrigerEnemies[i] = catchEnemies[i].GetComponent<Collider2D>().isTrigger;
+            catchEnemies[i].GetComponent<Collider2D>().isTrigger = true;
+        }
         isClick = false;
-
+        Managers.Pool.Push(bossArm);
     }
     IEnumerator Throw()
-    {
+    {   
         bossArmAni.SetTrigger(hashThrow);
-        Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
-        for (int i = 0; i < catchEnemies.Count; i++)
+        //Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
+        for (int i = 0; i < catchEnemies.Length; i++)
         {
-
-            catchEnemies[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * Random.Range(power - 10, power + 10) + force, ForceMode2D.Impulse);
-            catchEnemies[i].GetComponent<IHittable>().OnDamage(20, 0);
+            print(catchEnemies[i].name); 
             catchEnemies[i].GetComponent<EnemyDefault>().isControl = true;
+            catchEnemies[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * Random.Range(power - 20, power + 20), ForceMode2D.Impulse);
+            catchEnemies[i].GetComponent<IHittable>().OnDamage(20, 0);
+            catchEnemies[i].GetComponent<Collider2D>().isTrigger = isTrrigerEnemies[i];
         }
+        isTrrigerEnemies = null;
+        catchEnemies = null;
         yield return waitAttack;
         isClick = false;
         Managers.Pool.Push(bossArm);
+
     }
     IEnumerator Column()
     {
