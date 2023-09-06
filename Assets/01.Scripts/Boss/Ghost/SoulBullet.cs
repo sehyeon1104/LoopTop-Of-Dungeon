@@ -49,7 +49,7 @@ public class SoulBullet : MonoBehaviour
         transform.localPosition = Vector3.right * nowPosition;
         if(col != null)
             col.enabled = true;
-        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSeconds(0.25f);
 
         int random = waitTime != 1f ? 1 : Random.Range(0, 3);
         if(random == 1)

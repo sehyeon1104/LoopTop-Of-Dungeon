@@ -145,16 +145,19 @@ public class G_Patterns : BossPattern
         Boss.Instance.isBInvincible = true;
         Managers.Pool.PoolManaging("10.Effects/ghost/Hide",transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(3f);
-
-        Boss.Instance.isBInvincible = false;
-        bossObject.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
 
         dir = Boss.Instance.player.position - transform.position;
         Vector3 scale = transform.localScale;
         scale = Boss.Instance.bossMove.CheckFlipValue(dir, scale);
 
         transform.position = Vector3.left * scale.x * 3f + Boss.Instance.player.position;
+
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Teleport.prefab", transform.position + Vector3.down, Quaternion.identity);
+        
+        yield return new WaitForSeconds(0.25f);
+        Boss.Instance.isBInvincible = false;
+        bossObject.SetActive(true);
 
         Boss.Instance.bossAnim.overrideController[$"Skill3"] = Phase_One_AnimArray[2];
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -563,7 +566,6 @@ public class GhostPattern : G_Patterns
         yield return null;
     }
 
-
     public override IEnumerator Pattern1(int count = 0) //ÀåÆÇ ÆÐÅÏ
     {
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -581,7 +583,6 @@ public class GhostPattern : G_Patterns
         yield return null;
         Boss.Instance.actCoroutine = null;
     }
-
     public override IEnumerator Pattern2(int count = 0) //ºö ÆÐÅÏ
     {
 
@@ -590,7 +591,6 @@ public class GhostPattern : G_Patterns
         yield return null;
         Boss.Instance.actCoroutine = null;
     }
-
     public override IEnumerator Pattern3(int count = 0) //ÅÚ·¹Æ÷Æ® ÆÐÅÏ
     {
         switch(NowPhase)
@@ -606,7 +606,6 @@ public class GhostPattern : G_Patterns
         yield return null;
         Boss.Instance.actCoroutine = null;
     }
-
     public override IEnumerator Pattern4(int count = 0) //ºÒ¸´ ÆÐÅÏ
     {
         switch (NowPhase)
@@ -636,7 +635,6 @@ public class GhostPattern : G_Patterns
         yield return null;
         Boss.Instance.actCoroutine = null;
     }
-
     public override IEnumerator PatternFinal(int count = 0) //Èú¶ó, ±Ã±Ø±â
     {
         switch(NowPhase)

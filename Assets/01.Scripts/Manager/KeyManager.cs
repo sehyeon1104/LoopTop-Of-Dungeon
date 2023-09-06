@@ -19,6 +19,8 @@ public enum KeyAction
     KeyCount,
 }
 
+
+
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
@@ -26,6 +28,9 @@ public static class KeySetting
 
 public class KeyManager : MonoSingleton<KeyManager>
 {
+    public KeySettingUI keySettingUI { get; private set; } = null;
+    Event keyEvent = null;
+
     KeyCode[] defaultKeys = new KeyCode[]
     {
         KeyCode.J,
@@ -37,16 +42,72 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeyCode.O,
     };
 
+    KeyCode[] exceptionKeys = new KeyCode[]
+    {
+        KeyCode.W,
+        KeyCode.A,
+        KeyCode.S,
+        KeyCode.D,
+        KeyCode.Escape,
+        KeyCode.Return,
+        KeyCode.Backspace,
+    };
+
     private void Awake()
     {
+        keySettingUI = FindObjectOfType<KeySettingUI>()
+;
         for(int i = 0; i < (int)KeyAction.KeyCount; ++i)
         {
-            KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+            if(!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
     }
 
-    public void ChangeKey(string keyAction, KeyCode key)
+    private void OnGUI()
     {
-        KeySetting.keys[(KeyAction)Enum.Parse(typeof(KeyAction), keyAction)] = key;
+        if (!keySettingUI.isChangeKey)
+            return;
+
+        keyEvent = Event.current;
+        if (keyEvent.isKey)
+        {
+            if (!ExceptionCheck())
+                return;
+
+            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+            key = -1;
+            keySettingUI.UpdateKeyTmp();
+        }
     }
+
+    int key = -1;
+    public void ChangeKey(int num)
+    {
+        key = num;
+    }
+
+    public bool ExceptionCheck()
+    {
+        foreach (var keyCode in KeySetting.keys.Values)
+        {
+            if (keyEvent.keyCode == keyCode)
+            {
+                keySettingUI.SetIsChangeKey(false);
+                return false;
+            }
+        }
+        for (int i = 0; i < exceptionKeys.Length; ++i)
+        {
+            if (keyEvent.keyCode == exceptionKeys[i])
+                return false;
+        }
+
+        return true;
+    }
+
+    //public void ChangeKey(string keyAction, KeyCode key)
+    //{
+    //    KeySetting.keys[(KeyAction)Enum.Parse(typeof(KeyAction), keyAction)] = key;
+    //}
 }

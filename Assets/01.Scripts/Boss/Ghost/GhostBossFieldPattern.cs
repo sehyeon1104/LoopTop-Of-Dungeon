@@ -118,7 +118,7 @@ public class GhostBossFieldPattern : MonoBehaviour
         bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         checktime = 0f;
-        while (checktime < 15f)
+        while (checktime < 20f)
         {
             yield return new WaitForSeconds(0.5f);
             checktime += 0.5f;
@@ -137,6 +137,18 @@ public class GhostBossFieldPattern : MonoBehaviour
             if (GhostBossUI.Instance.fillTime > 70f)
             {
                 GameManager.Instance.Player.OnDamage(3, 0);
+            }
+
+            if(checktime % 2f == 0)
+            {
+                int random = Random.Range(0, 2);
+                Poolable bubble = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab", 
+                GameManager.Instance.Player.transform.position, 
+                Quaternion.Euler(Vector3.forward * random * 90));
+
+                Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Bubble&Bullet/SafeBulletGroup.prefab", 
+                bubble.transform.position, 
+                Quaternion.Euler(Vector3.forward * ((random - 1) * 90)));
             }
         }
 

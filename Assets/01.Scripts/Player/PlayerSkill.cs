@@ -72,7 +72,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         {
               Attack();
         }
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]))
         {
             if (interaction.gameObject.activeSelf)
             {
@@ -80,14 +80,23 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 return;
             }
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]))
             DashSkill();
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if(Input.GetKeyDown(KeyCode.Escape))
-            UIManager.Instance.TogglePausePanel();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(UIManager.Instance.GetPanelStack().Count != 0)
+            {
+                UIManager.Instance.PopPanel();
+            }
+            else
+            {
+                UIManager.Instance.TogglePausePanel();   
+            }
+        }
 
-        if(Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
             InventoryUI.Instance.ToggleInventoryUI();
         
       
