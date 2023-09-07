@@ -23,7 +23,7 @@ public class TutoEnemyRoom : RoomBase
         if (isClear)
             return;
 
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !isPlayerEnter)
         {
             isPlayerEnter = true;
             tutoEnemySpawn.SpawnEnemy();
