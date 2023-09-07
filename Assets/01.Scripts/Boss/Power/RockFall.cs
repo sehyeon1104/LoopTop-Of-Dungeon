@@ -26,14 +26,8 @@ public class RockFall : MonoBehaviour
         particle.Play();
         CinemachineCameraShaking.Instance.CameraShake(3, 0.2f);
 
-        Collider2D col = Physics2D.OverlapCircle(transform.position, 2.5f, 1<<8);
+        Collider2D col = Physics2D.OverlapCircle(transform.position, 2.5f, 1 << 8 | 1 << 15);
         if(col != null)
-            GameManager.Instance.Player.OnDamage(1, 0);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position,2);
+            col.GetComponent<IHittable>().OnDamage(10, 0);
     }
 }

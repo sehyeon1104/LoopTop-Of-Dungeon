@@ -42,9 +42,9 @@ public class DashParts : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 8)
+        if(collision.gameObject.layer == 8 || collision.gameObject.layer == 15)
         {
-            GameManager.Instance.Player.OnDamage(20, 0);
+           collision.GetComponent<IHittable>().OnDamage(20, 0);
         }
     }
 }

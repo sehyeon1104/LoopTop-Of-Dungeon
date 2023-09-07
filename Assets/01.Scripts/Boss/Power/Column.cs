@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Column : MonoBehaviour
+public class Column : MonoBehaviour, IHittable
 {
     private GameObject warning;
     private GameObject shockWave;
@@ -15,7 +15,9 @@ public class Column : MonoBehaviour
     private int hashBoom = Animator.StringToHash("Boom");
 
     private static int nowBossPhase = 1;
-    
+
+    public Vector3 hitPoint => throw new System.NotImplementedException();
+
     private void Awake()
     {
         warning = transform.Find("Warning").gameObject;
@@ -48,22 +50,31 @@ public class Column : MonoBehaviour
 
             shockWave.SetActive(true);
             Collider2D col = Physics2D.OverlapCircle(transform.position, 4.5f, 1 << 8);
-            if (col != null) GameManager.Instance.Player.OnDamage(1, 0);
+            if (col != null) GameManager.Instance.Player.OnDamage(10, 0);
         }
         yield return waitTime;
-        switch (nowBossPhase)
+
+        columnAnim.SetTrigger(hashDisappear);
+
+        yield return delay;
+        Managers.Pool.Push(GetComponent<Poolable>());
+    }
+
+    public void OnDamage(float damage, float critChance = 0, Poolable hitEffect = null)
+    {
+        StopCoroutine(Attack());
+
+        switch(nowBossPhase)
         {
             case 1:
-                columnAnim.SetTrigger(hashDisappear);
+                shockWave.SetActive(true);
+                Collider2D col = Physics2D.OverlapCircle(transform.position, 4.5f, 1 << 8 | 1 << 15);
+                if (col != null) col.GetComponent<IHittable>().OnDamage(10, 0);
                 break;
             case 2:
-                columnAnim.SetTrigger(hashBoom);
-                yield return delay;
-
                 break;
         }
 
-        yield return delay;
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 }
