@@ -330,7 +330,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameQuit()
     {
-        if(sceneType == Define.Scene.CenterScene)
+        if(sceneType == Define.Scene.Center)
         {
             SaveData();
         }

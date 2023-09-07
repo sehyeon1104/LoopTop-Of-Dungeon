@@ -472,6 +472,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5575783386755548180, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+      propertyPath: m_DefaultBlend.m_Time
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5575783386755548181, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -530,11 +534,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
---- !u!210 &427499642 stripped
-SortingGroup:
-  m_CorrespondingSourceObject: {fileID: 8768845030863187040, guid: dade719d535b99048b64f45f35dc356d, type: 3}
-  m_PrefabInstance: {fileID: 8768845031286776301}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &520647063
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,8 +566,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platForm: 0
-  mapTypeFlag: 0
-  sceneType: 0
+  mapTypeFlag: 2
+  sceneType: 3
 --- !u!114 &520647065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31046,18 +31045,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8768845030863187040, guid: dade719d535b99048b64f45f35dc356d, type: 3}
-      propertyPath: m_SortingLayer
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768845030863187040, guid: dade719d535b99048b64f45f35dc356d, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1636186537
-      objectReference: {fileID: 0}
-    - target: {fileID: 8768845031835754245, guid: dade719d535b99048b64f45f35dc356d, type: 3}
-      propertyPath: powerVisual
-      value: 
-      objectReference: {fileID: 427499642}
     - target: {fileID: 8768845031835754245, guid: dade719d535b99048b64f45f35dc356d, type: 3}
       propertyPath: standUpVCam
       value: 

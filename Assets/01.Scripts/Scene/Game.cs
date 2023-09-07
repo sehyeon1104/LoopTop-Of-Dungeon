@@ -8,13 +8,14 @@ public class Game : Base
     {
         base.Init();
 
+        Managers.Sound.Play($"Assets/05.Sounds/BGM/{MapType}/{SceneType}_{MapType}.mp3", Define.Sound.Bgm, 1, 0.5f);
         switch(MapType)
         {
             case Define.MapTypeFlag.Ghost:
-                if(SceneType == Define.Scene.StageScene)
-                    Managers.Sound.Play("Assets/05.Sounds/BGM/Field_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
-                else if(SceneType == Define.Scene.BossScene)
-                    Managers.Sound.Play("Assets/05.Sounds/BGM/Boss_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
+                //if(SceneType == Define.Scene.StageScene)
+                //    Managers.Sound.Play("Assets/05.Sounds/BGM/Field_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
+                //else if(SceneType == Define.Scene.BossScene)
+                //    Managers.Sound.Play("Assets/05.Sounds/BGM/Boss_Ghost.mp3", Define.Sound.Bgm, 1, 0.5f);
                 break;
 
             case Define.MapTypeFlag.LavaSlime:

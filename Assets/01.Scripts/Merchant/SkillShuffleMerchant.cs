@@ -23,7 +23,7 @@ public class SkillShuffleMerchant : MerchantBase
     {
         isInteractive = true;
 
-        if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+        if(GameManager.Instance.sceneType == Define.Scene.Field)
             StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateInteractionButton();
         button.onClick.RemoveListener(MerchantFunc);
@@ -52,7 +52,7 @@ public class SkillShuffleMerchant : MerchantBase
             return;
 
         isInteractive = false;
-        if (GameManager.Instance.sceneType == Define.Scene.StageScene)
+        if (GameManager.Instance.sceneType == Define.Scene.Field)
             StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);

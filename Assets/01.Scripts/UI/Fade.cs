@@ -24,7 +24,7 @@ public class Fade : MonoSingleton<Fade>
 
     private void Init()
     {
-        if(GameManager.Instance.sceneType != Define.Scene.BossScene)
+        if(GameManager.Instance.sceneType != Define.Scene.Boss)
         {
             fadeImg.gameObject.SetActive(true);
             fadeImg.fillAmount = 1f;

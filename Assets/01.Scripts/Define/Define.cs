@@ -64,9 +64,9 @@ public static class Define
     {
         Unknown,
         TitleScene = 0,
-        CenterScene,
-        StageScene,
-        BossScene,
+        Center,
+        Field,
+        Boss,
     }
 
     public enum Sound

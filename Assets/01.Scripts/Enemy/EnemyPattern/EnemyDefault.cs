@@ -246,7 +246,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
             CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
 
-            if (GameManager.Instance.sceneType == Define.Scene.StageScene)
+            if (GameManager.Instance.sceneType == Define.Scene.Field)
             {
                 EnemySpawnManager.Instance.RemoveEnemyInList(poolable);
             }

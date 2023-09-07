@@ -5,6 +5,7 @@ using DG.Tweening;
 using Cinemachine;
 using UnityEditor;
 using UnityEngine.Rendering;
+using UnityEngine.VFX;
 
 public class P_Patterns : BossPattern
 {
@@ -13,8 +14,7 @@ public class P_Patterns : BossPattern
     #region Initialize
     [SerializeField] protected AnimationClip[] groundHit;
 
-    [SerializeField] protected SortingGroup powerVisual;
-    [SerializeField] protected GameObject shorkWarning;
+    [SerializeField] protected VisualEffect shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
 
@@ -53,17 +53,17 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            //모션 추가
-            shorkWarning.SetActive(true);
+            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.2f : 0.7f);
+            shorkWarning.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(i == 2? 1 : 0.5f);
 
             Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
             yield return new WaitForSeconds(0.2f);
 
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
             Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f, 1<<8);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
@@ -72,14 +72,17 @@ public class P_Patterns : BossPattern
             if(col != null)
                 GameManager.Instance.Player.OnDamage(20, 0);
 
-            for(int j = 0; j < count; j++)
+            if (i == 2)
             {
-                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity) ;
+                for (int j = 0; j < count; j++)
+                {
+                    float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
+                    Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
+                }
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
         }
         yield return null;
     }
@@ -149,15 +152,12 @@ public class P_Patterns : BossPattern
             if (i == 2) clone.transform.localScale = new Vector3(1.75f, 1.75f);
             else clone.transform.localScale = new Vector3(1.25f, 1.25f);
 
-            transform.DOMove(transform.position + Vector3.up * 100, 0.2f);
+            transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
             yield return new WaitForSeconds(0.2f);
-            //powerVisual.sortingLayerName = "Default";
 
             transform.DOMove(playerPos, 1f);
             yield return new WaitForSeconds(1f);
-
-            powerVisual.sortingLayerName = "Boss";
 
             Collider2D col = null;
             if(i == 2)
@@ -229,9 +229,9 @@ public class P_Patterns : BossPattern
 
         for (int i = 0; i < 3; i++)
         {
-            shorkWarning.SetActive(true);
+            shorkWarning.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.2f);            
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
@@ -334,7 +334,7 @@ public class PowerPattern : P_Patterns
         if (nowBPhaseChange && ActCoroutine != null)
         {
             dashWarning.SetActive(false);
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
             StartCoroutine(ECoroutine());
         }
