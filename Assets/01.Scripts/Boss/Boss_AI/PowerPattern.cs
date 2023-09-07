@@ -65,12 +65,12 @@ public class P_Patterns : BossPattern
 
             shorkWarning.gameObject.SetActive(false);
 
-            Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f, 1<<8 | 1<<15);
+            Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f, 1<<8 | 1<<15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            if(col != null)
-                col.GetComponent<IHittable>().OnDamage(20, 0);
+            for (int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(20, 0);
 
             if (i == 2)
             {
@@ -129,9 +129,9 @@ public class P_Patterns : BossPattern
                && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 5.5f + 11.5f)
             transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
-            Collider2D col = Physics2D.OverlapCircle(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8 | 1 << 15);
-            if(col != null)
-                col.GetComponent<IHittable>().OnDamage(20, 0);
+            Collider2D[] col = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8 | 1 << 15);
+            for(int i = 0; i < col.Length; i++)
+                col[i].GetComponent<IHittable>().OnDamage(20, 0);
 
             yield return null;
         }
@@ -158,21 +158,21 @@ public class P_Patterns : BossPattern
             transform.DOMove(clone.transform.position, 1f);
             yield return new WaitForSeconds(1f);
 
-            Collider2D col = null;
+            Collider2D[] col = null;
             if(i == 2)
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 7.5f, 1 << 8 | 1 << 15);
+                col = Physics2D.OverlapCircleAll(clone.transform.position, 7.5f, 1 << 8 | 1 << 15);
                 CinemachineCameraShaking.Instance.CameraShake(12, 0.4f);
             }
             else
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
+                col = Physics2D.OverlapCircleAll(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
             }
             Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
 
-            if (col != null)
-                col.GetComponent<IHittable>().OnDamage(25, 0);
+            for(int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(25, 0);
 
             Managers.Pool.Push(clone);
 
@@ -234,12 +234,12 @@ public class P_Patterns : BossPattern
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-            Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f , 1 << 8 | 1 << 15);
+            Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f , 1 << 8 | 1 << 15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            if(col != null)
-                col.GetComponent<IHittable>().OnDamage(20, 0);
+            for(int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(20, 0);
 
             for (int j = 0; j < count; j++)
             { 
@@ -289,13 +289,13 @@ public class P_Patterns : BossPattern
         transform.DOMove(clone.transform.position, 1f);
         yield return new WaitForSeconds(1f);
 
-        Collider2D col = Physics2D.OverlapCircle(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
+        Collider2D[] col = Physics2D.OverlapCircleAll(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
         CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
 
         Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
 
-        if (col != null)
-            col.GetComponent<IHittable>().OnDamage(25, 0);
+        for(int i = 0; i < col.Length; i++)
+            col[i].GetComponent<IHittable>().OnDamage(25, 0);
         yield return null;
     }
     public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
