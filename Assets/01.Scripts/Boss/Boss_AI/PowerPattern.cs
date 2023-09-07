@@ -53,10 +53,10 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.2f : 0.7f);
+            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.7f : 0.75f);
             shorkWarning.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(i == 2? 1 : 0.5f);
+            yield return new WaitForSeconds(i == 2? 1.5f : 0.75f);
 
             Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -156,7 +156,7 @@ public class P_Patterns : BossPattern
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
             yield return new WaitForSeconds(0.2f);
 
-            transform.DOMove(playerPos, 1f);
+            transform.DOMove(clone.transform.position, 1f);
             yield return new WaitForSeconds(1f);
 
             Collider2D col = null;
@@ -170,7 +170,7 @@ public class P_Patterns : BossPattern
                 col = Physics2D.OverlapCircle(clone.transform.position, 5.5f, 1 << 8);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
             }
-            Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", playerPos, Quaternion.identity);
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
 
             if (col != null)
                 GameManager.Instance.Player.OnDamage(25, 0);
@@ -204,18 +204,18 @@ public class P_Patterns : BossPattern
         Vector3 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
 
-        for (int i = -2; i < 3; i++)
+        for (int i = -7; i < 8; i++)
         {
             Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(0.75f);
         CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
         //Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        for (int i = -2; i < 3; i++)
+        for (int i = -7; i < 8; i++)
         {
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(0.5f);
     }
@@ -272,17 +272,34 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
+        transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
         dashVCam.Priority = 11;
 
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
         dash2Phase.SetActive(true);
-        yield return new WaitForSeconds(3f);
+
+        yield return new WaitForSeconds(2f);
+        CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
+        yield return new WaitForSeconds(1f);
 
         partList[randomInvisible].gameObject.SetActive(true);
         dash2Phase.SetActive(false);
-
         dashVCam.Priority = 0;
+
+        Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", GameManager.Instance.Player.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+
+        transform.DOMove(clone.transform.position, 1f);
+        yield return new WaitForSeconds(1f);
+
+        Collider2D col = Physics2D.OverlapCircle(clone.transform.position, 5.5f, 1 << 8);
+        CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
+
+        Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
+
+        if (col != null)
+            GameManager.Instance.Player.OnDamage(25, 0);
         yield return null;
     }
     public IEnumerator Pattern_TH_2(int count = 0) //돌뿌리기 2페이즈

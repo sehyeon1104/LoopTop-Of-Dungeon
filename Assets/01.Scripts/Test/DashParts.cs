@@ -8,8 +8,6 @@ public class DashParts : MonoBehaviour
 {
     Vector3 startPos;
 
-    GameObject warning;
-
     int xDir = 0;
 
     private void Awake()
@@ -35,11 +33,7 @@ public class DashParts : MonoBehaviour
     {
         yield return null;
         transform.position = startPos;
-
-        warning.SetActive(true);
-
         yield return new WaitForSeconds(2f);
-        warning.SetActive(false);
 
         transform.DOMoveX(transform.position.x + xDir * 50f, 0.3f);
 
