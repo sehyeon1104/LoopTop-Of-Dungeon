@@ -32,7 +32,7 @@ public class Rock : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8)
+        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 15)
         {
             collision.GetComponent<IHittable>().OnDamage(15, 0);
         }

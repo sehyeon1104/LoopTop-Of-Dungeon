@@ -84,7 +84,7 @@ public abstract class BossPattern : MonoBehaviour
 
         while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
         {
-            Boss.Instance.Base.Hp += 2;
+            Boss.Instance.Base.Hp += 8;
             yield return null;
         }
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
