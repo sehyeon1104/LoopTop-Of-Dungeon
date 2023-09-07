@@ -11,9 +11,25 @@ public class TutoObjSpawn : MonoBehaviour
     [SerializeField]
     private Transform dropItemPos = null;
 
-    private GameObject dummy = null;
-    private GameObject statue = null;
-    private GameObject dropItem = null;
+    private GameObject dummyPrefab = null;
+    private GameObject statuePrefab = null;
+    private GameObject dropItemObj = null;
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        LoadObjPrefab();
+        InstantiateAllObj();
+    }
+
+    private void LoadObjPrefab()
+    {
+
+    }
 
     public void InstantiateAllObj()
     {
@@ -31,9 +47,11 @@ public class TutoObjSpawn : MonoBehaviour
     {
 
     }
-
+    
     public void InstantiateDropItem()
     {
-
+        dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
+        dropItemObj.transform.position = transform.position;
+        dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Special);
     }
 }

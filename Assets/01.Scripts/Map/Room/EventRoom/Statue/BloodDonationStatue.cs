@@ -38,8 +38,6 @@ public class BloodDonationStatue : StatueBase
             return;
         }
 
-        Debug.Log(requireHp);
-
         GameManager.Instance.Player.playerBase.Hp -= requireHp;
         if(Random.Range(0, 100) < requireHp * 4)
         {

@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class TutorialManager : MonoSingleton<TutorialManager>
 {
-    private TutoObjSpawn tutoObjSpawn = null;
-    private TutoEnemySpawn tutoEnemySpawn = null;
+    [SerializeField]
+    private GameObject movePortal = null;
+
+    public TutoObjSpawn tutoObjSpawn { get; private set; } = null;
+    public TutoEnemyRoom tutoEnemyRoom { get; private set; } = null;
 
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         tutoObjSpawn = FindObjectOfType<TutoObjSpawn>();
-        tutoEnemySpawn = FindObjectOfType<TutoEnemySpawn>();
+        tutoEnemyRoom = FindObjectOfType<TutoEnemyRoom>();
     }
 
     public void Start()
     {
         GameManager.Instance.Player.transform.position = Vector3.zero;
+    }
+
+    public void ClearTuto()
+    {
+
     }
 }

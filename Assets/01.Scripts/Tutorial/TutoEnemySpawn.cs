@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class TutoEnemySpawn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] 
+    private Transform[] enemySpawnPos = null;
+    private GameObject enemyPrefab = null;
+    private int mobSpawnCount;
+
+    private void Start()
     {
-        
+        Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Init()
     {
-        
+        enemyPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/Ghost/Normal/G_Mob_01.prefab");
+
+        mobSpawnCount = enemySpawnPos.Length;
+    }
+
+    public void SpawnEnemy()
+    {
+        for(int i = 0; i < mobSpawnCount; ++i)
+        {
+            GameObject enemy = Instantiate(enemyPrefab, enemySpawnPos[i]);
+            TutorialManager.Instance.tutoEnemyRoom.AddEnemyInList(enemy);
+        }
     }
 }
