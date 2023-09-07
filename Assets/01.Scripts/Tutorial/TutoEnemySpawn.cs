@@ -23,7 +23,7 @@ public class TutoEnemySpawn : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        for(int i = 0; i < mobSpawnCount; ++i)
+        for (int i = 0; i < mobSpawnCount; ++i)
         {
             GameObject enemy = Instantiate(enemyPrefab, enemySpawnPos[i]);
             TutorialManager.Instance.tutoEnemyRoom.AddEnemyInList(enemy);

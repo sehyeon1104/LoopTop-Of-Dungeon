@@ -28,7 +28,7 @@ public class TutoObjSpawn : MonoBehaviour
 
     private void LoadObjPrefab()
     {
-
+        dummyPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/Dummy.prefab");
     }
 
     public void InstantiateAllObj()
@@ -40,7 +40,10 @@ public class TutoObjSpawn : MonoBehaviour
 
     public void InstantiateDummy()
     {
-
+        GameObject dummyObj = Instantiate(dummyPrefab);
+        Vector3 pos = dummySpawnPos.position;
+        pos.y += 1;
+        dummyObj.transform.position = pos;
     }
 
     public void InstantiateStatue()
@@ -51,7 +54,7 @@ public class TutoObjSpawn : MonoBehaviour
     public void InstantiateDropItem()
     {
         dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
-        dropItemObj.transform.position = transform.position;
-        dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Special);
+        dropItemObj.transform.position = dropItemPos.position;
+        dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
     }
 }

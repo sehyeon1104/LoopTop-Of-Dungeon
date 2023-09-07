@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Dummy : EnemyDefault
 {
-    private void Start()
+    public override void Init()
     {
+        base.Init();
         isControl = false;
     }
 
