@@ -184,7 +184,7 @@ public class TitleSceneManager : MonoBehaviour
         {
             isLoading = true;
 
-            Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+            Fade.Instance.FadeInAndLoadScene(Define.Scene.Center);
         }
     }
 

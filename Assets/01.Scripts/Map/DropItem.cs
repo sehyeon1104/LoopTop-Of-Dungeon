@@ -60,7 +60,7 @@ public class DropItem : MonoBehaviour, IPoolable
         spriteRenderer.sprite = null;
         itemSelectNum.Clear();
         tempItemList.Clear();
-        if(GameManager.Instance.sceneType == Define.Scene.StageScene)
+        if(GameManager.Instance.sceneType == Define.Scene.Field)
         {
             itemObjList = StageManager.Instance.shop.itemList;
         }

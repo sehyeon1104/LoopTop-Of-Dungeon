@@ -569,7 +569,7 @@ public class UIManager : MonoSingleton<UIManager>
             Debug.LogWarning("showCurStageNameObj is Null!");
             yield break;
         }
-        if (GameManager.Instance.sceneType == Define.Scene.CenterScene || GameManager.Instance.sceneType == Define.Scene.BossScene)
+        if (GameManager.Instance.sceneType == Define.Scene.Center || GameManager.Instance.sceneType == Define.Scene.Boss)
         {
             yield break;
         }
@@ -604,7 +604,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void LoadToCenterScene()
     {
-        Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+        Fade.Instance.FadeInAndLoadScene(Define.Scene.Center);
         //Managers.Scene.LoadScene(Define.Scene.CenterScene);
     }
 
@@ -617,11 +617,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void LeaveBtn()
     {
         Time.timeScale = 1f;
-        if (GameManager.Instance.sceneType == Define.Scene.BossScene || GameManager.Instance.sceneType == Define.Scene.StageScene)
+        if (GameManager.Instance.sceneType == Define.Scene.Boss || GameManager.Instance.sceneType == Define.Scene.Field)
         {
             // Àü½Ã¿ë
             SaveManager.DeleteAllData();
-            Fade.Instance.FadeInAndLoadScene(Define.Scene.CenterScene);
+            Fade.Instance.FadeInAndLoadScene(Define.Scene.Center);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         //else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
