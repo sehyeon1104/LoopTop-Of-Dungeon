@@ -16,7 +16,7 @@ public class TutoEnemySpawn : MonoBehaviour
 
     private void Init()
     {
-        enemyPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/Ghost/Normal/G_Mob_01.prefab");
+        enemyPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/TutoMob.prefab");
 
         mobSpawnCount = enemySpawnPos.Length;
     }
