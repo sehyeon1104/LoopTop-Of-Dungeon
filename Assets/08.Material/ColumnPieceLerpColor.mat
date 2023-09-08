@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HitMat
-  m_Shader: {fileID: -6465566751694194690, guid: bfaf912528100be4c919f5a410679af9, type: 3}
+  m_Name: ColumnPieceLerpColor
+  m_Shader: {fileID: -6465566751694194690, guid: 23fa9b9cbf687b2498d8cbf01c1cff48, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -20,8 +20,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: 0ef8afebd3c7dc24b91648421ac77443, type: 3}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 826e84a4b798e7844aad09414551c014, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -37,7 +37,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _ColorRange: 0.19
     m_Colors:
-    - _HitColor: {r: 4.237095, g: 2.9060702, b: 1.4641271, a: 1}
+    - _GetColor: {r: 1, g: 0.89839494, b: 0, a: 1}
+    - _SetColor: {r: 139.3989, g: 14.596744, b: 0, a: 1}
   m_BuildTextureStacks: []

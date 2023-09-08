@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Column : MonoBehaviour, IHittable
 {
+    [SerializeField] private SpriteRenderer sprite;
+
     private bool isDie = false;
 
     private GameObject warning;
@@ -18,12 +20,17 @@ public class Column : MonoBehaviour, IHittable
     private static int nowBossPhase = 1;
 
     public Vector3 hitPoint => throw new System.NotImplementedException();
+    private Material hitMat;
+    private Material defaultMat;
 
     private void Awake()
     {
         warning = transform.Find("Warning").gameObject;
         shockWave = transform.Find("ShockWave").gameObject;
         columnAnim = GetComponentInChildren<Animator>();
+
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        defaultMat = sprite.material;
     }
 
     private void OnEnable()
@@ -73,14 +80,30 @@ public class Column : MonoBehaviour, IHittable
 
                 Collider2D col = Physics2D.OverlapCircle(transform.position, 4.5f, 1 << 8 | 1 << 15);
                 if (col != null && col.gameObject != this) col.GetComponent<IHittable>().OnDamage(10, 0);
-
-                yield return new WaitForSeconds(0.2f);
-                Managers.Pool.Push(GetComponent<Poolable>());
                 break;
             case 2:
+                int randomAngle = Random.Range(0, 2);
+                int angle = randomAngle * 45;
+
+                hitMat.SetTexture("_Texture2D", sprite.sprite.texture);
+                sprite.material = hitMat;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnPieceWarning.prefab", transform.position, Quaternion.Euler(Vector3.forward * (angle + 90 * i)));
+                }
+                yield return new WaitForSeconds(0.5f);
+                CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+                for (int i = 0; i < 4; i++)
+                {
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnPiece.prefab", transform.position, Quaternion.Euler(Vector3.forward * (angle + 90 * i)));
+                }
                 break;
         }
-      
+        yield return new WaitForSeconds(0.2f);
+        sprite.material = defaultMat;
+        Managers.Pool.Push(GetComponent<Poolable>());
+
     }
 
     public void OnDamage(float damage, float critChance = 0, Poolable hitEffect = null)

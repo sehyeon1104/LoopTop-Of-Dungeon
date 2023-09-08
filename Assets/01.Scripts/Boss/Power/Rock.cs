@@ -13,12 +13,14 @@ public class Rock : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(MoveTo());
-        trail.SetActive(true);
+        if(trail != null)
+            trail.SetActive(true);
     }
 
     private void OnDisable()
     {
-        trail.SetActive(false);
+        if(trail != null)
+            trail.SetActive(false);
     }
 
     private IEnumerator MoveTo()

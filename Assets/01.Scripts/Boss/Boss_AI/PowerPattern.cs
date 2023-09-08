@@ -53,10 +53,10 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.2f : 0.5f);
+            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.2f : 0.7f);
             shorkWarning.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(i == 2? 1f : 0.5f);
+            yield return new WaitForSeconds(i == 2? 1f : 0.7f);
 
             Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
@@ -152,11 +152,13 @@ public class P_Patterns : BossPattern
             else clone.transform.localScale = new Vector3(1.25f, 1.25f);
 
             transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
+            Boss.Instance.isBInvincible = true;
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
             yield return new WaitForSeconds(0.2f);
 
             transform.DOMove(clone.transform.position, 1f);
             yield return new WaitForSeconds(1f);
+            Boss.Instance.isBInvincible = false;
 
             Collider2D[] col = null;
             if(i == 2)
@@ -385,6 +387,51 @@ public class PowerPattern : P_Patterns
         }
         return 0;
 
+    }
+
+    protected override IEnumerator ChangePhase()
+    {
+        yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
+
+        StandUp(false);
+
+        isThisSkillCoolDown[patternChoice] = false;
+
+        if (Boss.Instance.actCoroutine != null)
+            StopCoroutine(Boss.Instance.actCoroutine);
+
+        Boss.Instance.actCoroutine = null;
+
+        nowBPhaseChange = true;
+        Boss.Instance.isBInvincible = true;
+        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
+
+        Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
+
+        yield return patternDelay;
+
+        while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        {
+            Boss.Instance.Base.Hp += 8;
+            yield return null;
+        }
+        Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        isCanUseFinalPattern = true;
+        isUsingFinalPattern = false;
+        patternDelay = new WaitForSeconds(1f);
+        NowPhase = 2;
+
+        SetPatternWeight();
+
+        Boss.Instance.bossAnim.overrideController = Boss.Instance.bossAnim.SetSkillAnimation(Boss.Instance.bossAnim.overrideController);
+
+        yield return patternDelay;
+
+        Boss.Instance.isBInvincible = false;
+        nowBPhaseChange = false;
+
+        Boss.Instance.Phase2();
     }
 
     private void Start()
