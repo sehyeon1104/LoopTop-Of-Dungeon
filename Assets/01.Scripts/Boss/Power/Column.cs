@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Column : MonoBehaviour, IHittable
 {
+    private bool isDie = false;
+
     private GameObject warning;
     private GameObject shockWave;
     private Animator columnAnim;
@@ -12,7 +14,6 @@ public class Column : MonoBehaviour, IHittable
     private WaitForSeconds delay = new WaitForSeconds(1.5f);
 
     private int hashDisappear = Animator.StringToHash("Disappear");
-    private int hashBoom = Animator.StringToHash("Boom");
 
     private static int nowBossPhase = 1;
 
@@ -29,6 +30,7 @@ public class Column : MonoBehaviour, IHittable
     {
         StopCoroutine(Attack());
 
+        isDie = false;
         nowBossPhase = Boss.Instance.bossPattern.NowPhase;
 
         warning.SetActive(false);
@@ -60,21 +62,33 @@ public class Column : MonoBehaviour, IHittable
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 
-    public void OnDamage(float damage, float critChance = 0, Poolable hitEffect = null)
+    private IEnumerator OnDestroy()
     {
-        StopCoroutine(Attack());
-
-        switch(nowBossPhase)
+        yield return null;
+        switch (nowBossPhase)
         {
             case 1:
-                shockWave.SetActive(true);
+                CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnShock.prefab", transform.position, Quaternion.identity);
+
                 Collider2D col = Physics2D.OverlapCircle(transform.position, 4.5f, 1 << 8 | 1 << 15);
-                if (col != null) col.GetComponent<IHittable>().OnDamage(10, 0);
+                if (col != null && col.gameObject != this) col.GetComponent<IHittable>().OnDamage(10, 0);
+
+                yield return new WaitForSeconds(0.2f);
+                Managers.Pool.Push(GetComponent<Poolable>());
                 break;
             case 2:
                 break;
         }
+      
+    }
 
-        Managers.Pool.Push(GetComponent<Poolable>());
+    public void OnDamage(float damage, float critChance = 0, Poolable hitEffect = null)
+    {
+        if (isDie) return;
+        
+        isDie = true;
+        StopCoroutine(Attack());
+        StartCoroutine(OnDestroy());
     }
 }
