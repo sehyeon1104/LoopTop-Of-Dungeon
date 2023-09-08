@@ -16,6 +16,8 @@ public enum KeyAction
     SKILL2,         // Ω∫≈≥2
     ULTIMATE,       // ±√±ÿ±‚
 
+    INVENTORY,      // ¿Œ∫•≈‰∏Æ
+
     KeyCount,
 }
 
@@ -40,6 +42,8 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeyCode.Mouse1,
         KeyCode.Q,
         KeyCode.E,
+
+        KeyCode.Tab,
     };
 
     KeyCode[] exceptionKeys = new KeyCode[]
