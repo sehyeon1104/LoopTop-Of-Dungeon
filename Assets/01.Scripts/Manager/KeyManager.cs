@@ -33,13 +33,13 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     KeyCode[] defaultKeys = new KeyCode[]
     {
-        KeyCode.J,
+        KeyCode.Mouse0,
         KeyCode.F,
-        KeyCode.K,
+        KeyCode.Space,
 
-        KeyCode.U,
-        KeyCode.I,
-        KeyCode.O,
+        KeyCode.Mouse1,
+        KeyCode.Q,
+        KeyCode.E,
     };
 
     KeyCode[] exceptionKeys = new KeyCode[]
