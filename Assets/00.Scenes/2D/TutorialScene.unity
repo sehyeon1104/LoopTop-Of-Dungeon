@@ -1416,7 +1416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064825775}
   m_Layer: 0
-  m_Name: StatuePos
+  m_Name: ChestPos
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1486,6 +1486,7 @@ GameObject:
   - component: {fileID: 1113621831}
   - component: {fileID: 1113621832}
   - component: {fileID: 1113621833}
+  - component: {fileID: 1113621834}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1608,7 +1609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5d1f656e0cb9b4783db447a38948cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePortal: {fileID: 0}
 --- !u!114 &1113621833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2113,6 +2113,19 @@ MonoBehaviour:
     itemDescription: 
     price: 400
   <brokenItemCount>k__BackingField: 0
+--- !u!114 &1113621834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113621826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e942c0a790d3d4da6b46e9b66afa7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
 --- !u!1 &1217826731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,7 +2897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dummySpawnPos: {fileID: 1902248067}
-  statuePos: {fileID: 1064825775}
+  chestSpawnPos: {fileID: 1064825775}
   dropItemPos: {fileID: 572036534}
 --- !u!4 &2081090448
 Transform:

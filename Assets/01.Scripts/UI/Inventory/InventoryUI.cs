@@ -82,7 +82,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         slots.Add(newItemObjComponent);
         ItemAbility.Items[item.itemNumber].Use();
 
-        UIManager.Instance.AddItemListUI(item);
+        // UIManager.Instance.AddItemListUI(item);
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
 

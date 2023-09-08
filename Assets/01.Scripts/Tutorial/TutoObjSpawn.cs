@@ -7,12 +7,12 @@ public class TutoObjSpawn : MonoBehaviour
     [SerializeField]
     private Transform dummySpawnPos = null;
     [SerializeField]
-    private Transform statuePos = null;
+    private Transform chestSpawnPos = null;
     [SerializeField]
     private Transform dropItemPos = null;
 
     private GameObject dummyPrefab = null;
-    private GameObject statuePrefab = null;
+    private GameObject chestPrefab = null;
     private GameObject dropItemObj = null;
 
     private void Awake()
@@ -28,13 +28,14 @@ public class TutoObjSpawn : MonoBehaviour
 
     private void LoadObjPrefab()
     {
+        chestPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Chest.prefab");
         dummyPrefab = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Enemy/Dummy.prefab");
     }
 
     public void InstantiateAllObj()
     {
         InstantiateDummy();
-        InstantiateStatue();
+        InstantiateChest();
         InstantiateDropItem();
     }
 
@@ -46,9 +47,13 @@ public class TutoObjSpawn : MonoBehaviour
         dummyObj.transform.position = pos;
     }
 
-    public void InstantiateStatue()
+    public void InstantiateChest()
     {
-
+        GameObject chestObj = Instantiate(chestPrefab);
+        Vector3 pos = chestSpawnPos.position;
+        chestObj.transform.position = pos;
+        Chest chest = chestObj.GetComponent<Chest>();
+        chest.SetChestRating(Define.ChestRating.Rare);
     }
     
     public void InstantiateDropItem()

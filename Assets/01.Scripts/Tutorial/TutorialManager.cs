@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TutorialManager : MonoSingleton<TutorialManager>
 {
-    [SerializeField]
     private GameObject movePortal = null;
     private Vector3 portalPos;
 
