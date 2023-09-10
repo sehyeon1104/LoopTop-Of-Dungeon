@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
 using UnityEditor;
+using UnityEngine.Rendering;
+using UnityEngine.VFX;
 
 public class P_Patterns : BossPattern
 {
@@ -12,7 +14,7 @@ public class P_Patterns : BossPattern
     #region Initialize
     [SerializeField] protected AnimationClip[] groundHit;
 
-    [SerializeField] protected GameObject shorkWarning;
+    [SerializeField] protected VisualEffect shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
 
@@ -51,32 +53,34 @@ public class P_Patterns : BossPattern
     {
         for(int i = 0; i < 3; i++)
         {
-            //모션 추가
-            shorkWarning.SetActive(true);
+            shorkWarning.SetFloat("LifeTime", i == 2 ? 1.2f : 0.5f);
+            shorkWarning.gameObject.SetActive(true);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(i == 2? 1f : 0.5f);
 
             Boss.Instance.bossAnim.overrideController[$"Skill1"] = groundHit[i];
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(i == 2? 0.5f : 0.2f);
 
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
-            Collider2D col = Physics2D.OverlapCircle(shorkWarning.transform.position, 8f, 1<<8);
+            Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f, 1<<8 | 1<<15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            if(col != null)
-                GameManager.Instance.Player.OnDamage(20, 0);
+            for (int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(20, 0);
 
-            for(int j = 0; j < count; j++)
+            if (i == 2)
             {
-                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity) ;
+                for (int j = 0; j < count; j++)
+                {
+                    float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
+                    Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
+                }
             }
-
             yield return new WaitForSeconds(0.5f);
         }
         yield return null;
@@ -116,8 +120,8 @@ public class P_Patterns : BossPattern
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
         dashWarning.SetActive(false);
-        CinemachineCameraShaking.Instance.CameraShake(2, 1f);
-        while (timer < 2f)
+        CinemachineCameraShaking.Instance.CameraShake(2, 1.5f);
+        while (timer < 1.5f)
         {
             timer += Time.deltaTime;
 
@@ -125,9 +129,9 @@ public class P_Patterns : BossPattern
                && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 5.5f + 11.5f)
             transform.Translate(dir.normalized * Time.deltaTime * 30f);
 
-            Collider2D col = Physics2D.OverlapCircle(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8);
-            if(col != null)
-                GameManager.Instance.Player.OnDamage(20, 0);
+            Collider2D[] col = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8 | 1 << 15);
+            for(int i = 0; i < col.Length; i++)
+                col[i].GetComponent<IHittable>().OnDamage(20, 0);
 
             yield return null;
         }
@@ -139,41 +143,36 @@ public class P_Patterns : BossPattern
     {
         for (int i = 0; i < 3; i++)
         {
-            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", Boss.Instance.player.position, Quaternion.identity);
+            Vector3 playerPos = Boss.Instance.player.position;
+
+            Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", playerPos, Quaternion.identity);
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-            if (i == 2) clone.transform.localScale = new Vector3(2f, 2f);
-            else clone.transform.localScale = new Vector3(1.5f, 1.5f);
+            if (i == 2) clone.transform.localScale = new Vector3(1.75f, 1.75f);
+            else clone.transform.localScale = new Vector3(1.25f, 1.25f);
 
-            yield return new WaitForSeconds(0.5f);
+            transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
+            CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+            yield return new WaitForSeconds(0.2f);
 
-            while (Vector2.Distance(clone.transform.position, transform.position) >= 0.1f)
-            {
-                transform.position = Vector3.Lerp(transform.position, clone.transform.position, Time.deltaTime * 5f);
-                yield return null;
-            }
+            transform.DOMove(clone.transform.position, 1f);
+            yield return new WaitForSeconds(1f);
 
-            Collider2D col = null;
+            Collider2D[] col = null;
             if(i == 2)
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 9f, 1 << 8);
+                col = Physics2D.OverlapCircleAll(clone.transform.position, 7.5f, 1 << 8 | 1 << 15);
                 CinemachineCameraShaking.Instance.CameraShake(12, 0.4f);
             }
             else
             {
-                col = Physics2D.OverlapCircle(clone.transform.position, 6.75f, 1 << 8);
+                col = Physics2D.OverlapCircleAll(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
             }
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
 
-            for (int j = 0; j < count; j++)
-            {
-                float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 5f;
-                Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
-            }
-
-            if (col != null)
-                GameManager.Instance.Player.OnDamage(25, 0);
+            for(int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(25, 0);
 
             Managers.Pool.Push(clone);
 
@@ -204,18 +203,18 @@ public class P_Patterns : BossPattern
         Vector3 dirToPlayer = (Boss.Instance.player.position - transform.position).normalized;
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
 
-        for (int i = -2; i < 3; i++)
+        for (int i = -7; i < 8; i++)
         {
             Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
         //Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
-        for (int i = -2; i < 3; i++)
+        for (int i = -7; i < 8; i++)
         {
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(0.5f);
     }
@@ -229,21 +228,18 @@ public class P_Patterns : BossPattern
 
         for (int i = 0; i < 3; i++)
         {
-            shorkWarning.SetActive(true);
+            shorkWarning.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.2f);            
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
             Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
 
-            Collider2D[] cols = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f);
+            Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f , 1 << 8 | 1 << 15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
-            foreach (Collider2D col in cols)
-            {
-                if (col.CompareTag("Player"))
-                    GameManager.Instance.Player.OnDamage(2, 0);
-            }
+            for(int k = 0; k < col.Length; k++)
+                col[k].GetComponent<IHittable>().OnDamage(20, 0);
 
             for (int j = 0; j < count; j++)
             { 
@@ -272,17 +268,39 @@ public class P_Patterns : BossPattern
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
+        transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
         dashVCam.Priority = 11;
 
         int randomInvisible = Random.Range(0, 6);
         partList[randomInvisible].gameObject.SetActive(false);
         dash2Phase.SetActive(true);
-        yield return new WaitForSeconds(3f);
+
+        yield return new WaitForSeconds(2f);
+        CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
+        yield return new WaitForSeconds(1f);
 
         partList[randomInvisible].gameObject.SetActive(true);
         dash2Phase.SetActive(false);
-
         dashVCam.Priority = 0;
+
+        Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", GameManager.Instance.Player.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.2f);
+
+        transform.DOMove(clone.transform.position, 1f);
+        yield return new WaitForSeconds(1f);
+
+        Collider2D[] col = Physics2D.OverlapCircleAll(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
+        CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
+
+        Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
+
+        for(int i = 0; i < col.Length; i++)
+            col[i].GetComponent<IHittable>().OnDamage(25, 0);
+        yield return null;
+    }
+    public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
+    {
+        StandUp();
         yield return null;
     }
     public IEnumerator Pattern_TH_2(int count = 0) //돌뿌리기 2페이즈
@@ -309,7 +327,6 @@ public class P_Patterns : BossPattern
             }
         }
     }
-
     #endregion
 }
 public class PowerPattern : P_Patterns
@@ -334,7 +351,7 @@ public class PowerPattern : P_Patterns
         if (nowBPhaseChange && ActCoroutine != null)
         {
             dashWarning.SetActive(false);
-            shorkWarning.SetActive(false);
+            shorkWarning.gameObject.SetActive(false);
 
             StartCoroutine(ECoroutine());
         }
@@ -356,7 +373,7 @@ public class PowerPattern : P_Patterns
             case 1:
                 break;
             case 2:
-                return NowPhase == 1 ? 0 : 4;
+                break;
             case 3:
                 break;
             case 4:

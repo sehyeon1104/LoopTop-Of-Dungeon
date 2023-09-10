@@ -57,10 +57,10 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 7.5322213, y: 1.6048716, z: 0.2366143, w: 1}
+      - m_Value: {x: 10.147661, y: 2.9221015, z: 0.47816208, w: 1}
         m_Name: Color
         m_Overridden: 1
-      - m_Value: {x: 2.0151656, y: 0.743098, z: 0.21672522, w: 1}
+      - m_Value: {x: 6.4373794, y: 3.1957233, z: 0.69232154, w: 1}
         m_Name: AftershocksColor
         m_Overridden: 1
     m_Uint:
@@ -72,9 +72,46 @@ VisualEffect:
     m_AnimationCurve:
       m_Array: []
     m_Gradient:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 0, g: 79.32905, b: 148.39198, a: 0}
+          key1: {r: 51.377876, g: 9.683788, b: 0.80698234, a: 1}
+          key2: {r: 11.16555, g: 3.0801518, b: 0, a: 0.8}
+          key3: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 6554
+          ctime1: 9830
+          ctime2: 65535
+          ctime3: 65535
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 6554
+          atime2: 52428
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_NumColorKeys: 3
+          m_NumAlphaKeys: 4
+        m_Name: MainGradient
+        m_Overridden: 1
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: 2dadeecadb5ba254b94bd3ecd2312a85, type: 3}
+        m_Name: MainTex
+        m_Overridden: 1
+      - m_Value: {fileID: 2800000, guid: 866b8131f28cd9c4192a7fa1b6b2bd89, type: 3}
+        m_Name: AfterShocksTex
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!73398921 &7690577589284305775

@@ -84,17 +84,17 @@ public class ZoneEntrance : MonoBehaviour
 
             GameManager.Instance.StageMoveCount++;
 
-            if (GameManager.Instance.StageMoveCount == 0 && GameManager.Instance.sceneType != Define.Scene.BossScene)
+            if (GameManager.Instance.StageMoveCount == 0 && GameManager.Instance.sceneType != Define.Scene.Boss)
             {
-                sceneType = Define.Scene.BossScene;
+                sceneType = Define.Scene.Boss;
             }
-            else if (GameManager.Instance.StageMoveCount < 3 && GameManager.Instance.sceneType != Define.Scene.BossScene)
+            else if (GameManager.Instance.StageMoveCount < 3 && GameManager.Instance.sceneType != Define.Scene.Boss)
             {
-                sceneType = Define.Scene.StageScene;
+                sceneType = Define.Scene.Field;
             }
-            else if (GameManager.Instance.sceneType == Define.Scene.BossScene)
+            else if (GameManager.Instance.sceneType == Define.Scene.Boss)
             {
-                sceneType = Define.Scene.CenterScene;
+                sceneType = Define.Scene.Center;
             }
             GameManager.Instance.SetSceneType(sceneType);
             GameManager.Instance.SaveData();

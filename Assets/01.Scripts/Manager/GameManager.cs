@@ -133,8 +133,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void InitItemColorDic()
     {
-        Debug.Log("InitItemColorDic");
-
         itemRateColor.Clear();
         // È¸»ö
         itemRateColor[(int)Define.ItemRating.Common] = "#D3D3D3";
@@ -330,7 +328,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameQuit()
     {
-        if(sceneType == Define.Scene.CenterScene)
+        if(sceneType == Define.Scene.Center)
         {
             SaveData();
         }

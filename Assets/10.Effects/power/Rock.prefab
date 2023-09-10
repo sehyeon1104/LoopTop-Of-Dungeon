@@ -72,12 +72,12 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 3
   m_Time: 0.8
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -169,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 3092810229249019615}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.16, y: -0.15, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2423387817513258139}
@@ -215,7 +215,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 5
   m_Sprite: {fileID: 1099633509, guid: acf72535cca6a7941b84030cad3f0b94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -322,14 +322,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 2423387817513258139}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 904
+  m_shaderPropertyID: 959
   m_materialData:
   - m_trailRenderer: {fileID: 1057017794978833305}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0.17544872
+    m_move: 0.86123055
   - m_trailRenderer: {fileID: 7815024476172132577}
     m_uvTiling: {x: 0.25, y: 1}
-    m_move: 0.29241452
+    m_move: 0.4353835
 --- !u!199 &8768189866054634413
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -370,7 +370,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 4
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5193,12 +5193,12 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 4
   m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:

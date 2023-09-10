@@ -13,7 +13,7 @@ public class CenterSceneManager : MonoBehaviour
     {
         Debug.Log("CenterSceneManager Init");
         GameManager.Instance.SetMapTypeFlag(Define.MapTypeFlag.CenterMap);
-        GameManager.Instance.SetSceneType(Define.Scene.CenterScene);
+        GameManager.Instance.SetSceneType(Define.Scene.Center);
         GameManager.Instance.StageMoveCount = 0;
         GameManager.Instance.SaveData();
 
