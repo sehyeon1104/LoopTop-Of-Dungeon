@@ -98,8 +98,8 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if(Input.GetKeyDown(KeyCode.H))
         {
             Collider2D[] enemies;
-            enemies = Physics2D.OverlapCircleAll(transform.position, 3);
-            enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40);
+            enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
+            enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
         }
         if (Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
             InventoryUI.Instance.ToggleInventoryUI();

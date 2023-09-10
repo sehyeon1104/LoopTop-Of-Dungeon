@@ -52,8 +52,19 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private EnemyHpBar hpBar;
 
     protected Poolable poolable = null;
-
-    public bool isControl { get; set; } = true;
+    public bool dsaf = true;
+    public bool isControl
+    {
+        get
+        {
+            return dsaf;
+        }
+        set
+        {
+            Debug.Log(dsaf);
+            dsaf = value;
+        }
+    }
     protected bool isMove {private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
