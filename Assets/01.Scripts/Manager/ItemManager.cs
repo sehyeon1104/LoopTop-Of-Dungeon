@@ -34,8 +34,6 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void Init()
     {
-        Debug.Log("ItemManager Init");
-
         // 모든 아이템 스크립트 생성
         itemAbility.CreateItem();
 
@@ -115,7 +113,8 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void RemoveCurItemDic(Item item)
     {
-        curItemDic.Remove(item.itemNameEng);
+        if(curItemDic.ContainsKey(item.itemNameEng))
+            curItemDic.Remove(item.itemNameEng);
     }
 
 

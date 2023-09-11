@@ -37,7 +37,7 @@ public class BloodyAltarRoom : RoomBase
 
     public void SpawnStatue()
     {
-        statue = Managers.Resource.Instantiate("Assets/03.Prefabs/Statue/BloodyAltar.prefab", transform);
+        statue = Managers.Resource.Instantiate("Assets/03.Prefabs/Statue/BloodyAltarStatue.prefab", transform);
         statue.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 3f);
     }
 }

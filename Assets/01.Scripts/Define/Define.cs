@@ -26,6 +26,7 @@ public static class Define
         Electricity,
         Werewolf,
         Lizard,
+        Tutorial,
     }
 
     public enum RoomTypeFlag
@@ -35,6 +36,7 @@ public static class Define
         EnemyRoom,
         EliteMobRoom,
         EventRoom,
+        Tutorial,
     }
 
     public enum EventRoomTypeFlag
@@ -64,6 +66,7 @@ public static class Define
     {
         Unknown,
         TitleScene = 0,
+        Tutorial,
         Center,
         Field,
         Boss,

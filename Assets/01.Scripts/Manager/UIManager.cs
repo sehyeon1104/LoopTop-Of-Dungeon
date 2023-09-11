@@ -159,6 +159,7 @@ public class UIManager : MonoSingleton<UIManager>
             leaveButton = ultFade.transform.Find("All/GameOverPanel/Panel/Btns/Leave").GetComponent<Button>();
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             settingBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Setting").GetComponent<Button>();
+            settingPanel = playerPCUI.transform.Find("SettingPanel").gameObject;
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
