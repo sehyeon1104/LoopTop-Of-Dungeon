@@ -14,6 +14,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.VFX;
 using Cinemachine;
 using Random = UnityEngine.Random;
+using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
+using static Cinemachine.DocumentationSortingAttribute;
+using Unity.Burst.Intrinsics;
 
 public class PowerSkill : PlayerSkillBase
 {
@@ -43,9 +47,13 @@ public class PowerSkill : PlayerSkillBase
     float tornadoSpeed = 9f;
     float tornadoDuration = 10f;
     bool isClick = false;
+    bool isClicked = false;
     float catchTime = 4f;
-    bool isColumn;
-    float ColumnDuration = 5f;
+  public bool isColumn;
+    bool isColumning = true;
+    float columnDetective = 5f;
+    int columnLevel = 1;
+    WaitForSeconds columnDuration = new WaitForSeconds(5f);
     public AnimationCurve jumpValue;
     WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
     WaitForSeconds waitcolliderPerTimr = new WaitForSeconds(0.1f);
@@ -54,58 +62,71 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
+    WaitForSeconds ColumningWait = new WaitForSeconds(0.4f);
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
-    Coroutine shockWaveCoroutine;
-    IEnumerator catchSkill;
     readonly int hashThrow = Animator.StringToHash("Throw");
     readonly int hashCatch = Animator.StringToHash("Catch");
     Animator bossArmAni = null;
     Poolable bossArm = null;
     Material jumpDownMat;
     Material material;
-    List<Transform> catchEnemies = new List<Transform>();
     AnimationCurve fiveJumpDownCurve;
     float power = 20;
     static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
-
-    [SerializeField] GameObject columnEffect;
+    List<Transform> enemiesTrans = new List<Transform>();
+    bool[] boolGroup = new bool[50];
     private void Awake()
     {
+    
         jumpDownMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
+        attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
         cineMachine = FindObjectOfType<CinemachineVirtualCamera>();
         Cashing();
+        Init();
+    }
+    void Init()
+    {
+        for (int i = 0; i < 50; i++)
+        {
+            boolGroup[i] = true;
+        }
     }
     protected override void Update()
     {
         base.Update();
     }
-    private void Start()
-    {
-        catchSkill = CatchSkill();
-        attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
-    }
     protected override void Attack()
     {
-        if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || player.playerBase.IsPDead)
-            return;
-        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
-
-        CinemachineCameraShaking.Instance.CameraShake();
-        playerAnim.SetTrigger("Attack");
-        attackPar.transform.SetParent(transform);
-        attackPar.transform.localPosition = playerSprite.flipX ? Vector3.right : Vector3.left;
-        attackPar.Play();
-        attackPar.transform.SetParent(null);
-
-        RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one, 0, attackPar.transform.localPosition, attackRange / 2, 1 << enemyLayer);
-        for (int i = 0; i < enemys.Length; i++)
+        
+        if (isColumning && isColumn)
         {
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);
-            enemys[i].transform.GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            isColumning = false;
+            StartCoroutine(ColumnAttack());
+        }
+        else
+        {
+            if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || player.playerBase.IsPDead)
+                return;
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
+
+            CinemachineCameraShaking.Instance.CameraShake();
+            playerAnim.SetTrigger("Attack");
+            attackPar.transform.SetParent(transform);
+            attackPar.transform.localPosition = playerSprite.flipX ? Vector3.right : Vector3.left;
+            attackPar.Play();
+            attackPar.transform.SetParent(null);
+
+            RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one, 0, attackPar.transform.localPosition, attackRange / 2, 1 << enemyLayer);
+            for (int i = 0; i < enemys.Length; i++)
+            {
+                CinemachineCameraShaking.Instance.CameraShake(5, 0.3f);
+                enemys[i].transform.GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
+            }
+
         }
     }
 
@@ -137,20 +158,12 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void ForuthSkill(int level)
     {
-
-        if (isClick)
-        {
-            StopCoroutine(catchSkill);
-            StartCoroutine(Throw());
-        }
-        else
-            StartCoroutine(catchSkill);
-
+        StartCoroutine(CatchSkill());
     }
 
     protected override void FifthSkill(int level)
     {
-        StartCoroutine(Column());
+        StartCoroutine(Column(level));
     }
 
     protected override void UltimateSkill()
@@ -169,10 +182,7 @@ public class PowerSkill : PlayerSkillBase
         UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 4, 0);
     }
 
-    protected override void FifthSkillUpdate(int level)
-    {
-        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
-    }
+ 
     #region ½ºÅ³ ±¸Çö
     IEnumerator BottomingOut()
     {
@@ -256,7 +266,7 @@ public class PowerSkill : PlayerSkillBase
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
             {
-                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.U : KeyCode.I;
+                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeySetting.keys[KeyAction.SKILL1] : KeySetting.keys[KeyAction.SKILL2];
                 while (Input.GetKey(keyBoardButton))
                 {
                     checkTime += Time.deltaTime;
@@ -411,7 +421,6 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator Jumpdown(int level)
     {
         Vector3 scale = Vector3.zero;
-        Transform tornado = null;
         float trailWith;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
@@ -423,7 +432,7 @@ public class PowerSkill : PlayerSkillBase
         float multiPlyValue = 1;
         float value = 0;
         float TornadoTimer = 0;
-        float lensValue =cineMachine.m_Lens.OrthographicSize;
+        float lensValue = cineMachine.m_Lens.OrthographicSize;
         jumpWidth = 2f;
         //µÚÀÏ¶© + ¾Õ¿¤¶© -
         Vector2 playerDirection = new Vector2(playerMovement.Direction.y, Mathf.Abs(playerMovement.Direction.x));
@@ -432,17 +441,17 @@ public class PowerSkill : PlayerSkillBase
         float timer = 0;
         float timerA = 0;
         Vector3 currentPlayerScale = transform.localScale;
-        KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeyCode.U : KeyCode.I;
+        KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeySetting.keys[KeyAction.SKILL1] : KeySetting.keys[KeyAction.SKILL2];
         playerMovement.IsControl = false;
         playerRigid.velocity = Vector2.zero;
         Vector2 normailzedVec = playerMovement.Direction;
-        if (playerMovement.Direction.x !=0 && playerMovement.Direction.y !=0)
-        normailzedVec = new Vector2(playerMovement.Direction.x /MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
+        if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
+            normailzedVec = new Vector2(playerMovement.Direction.x / MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
         //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(normailzedVec.x * 8f, normailzedVec.y * 6,-10);   
         Poolable charging = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/JumpDownCharging.prefab", transform.position, Quaternion.identity);
-        Transform trans = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Expectedrange.prefab",transform.position,Quaternion.identity).transform;
-        trans.localScale =Vector3.one * jumpDownScaleMultiply;
-        VisualEffect expectedRande = trans.GetComponent<VisualEffect>();    
+        Transform trans = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Expectedrange.prefab", transform.position, Quaternion.identity).transform;
+        trans.localScale = Vector3.one * jumpDownScaleMultiply;
+        VisualEffect expectedRande = trans.GetComponent<VisualEffect>();
         while (Input.GetKey(keyBoardButton))
         {
             timer += Time.deltaTime;
@@ -453,50 +462,51 @@ public class PowerSkill : PlayerSkillBase
                 expectedRande.Reinit();
             }
             jumpWidth += 4 * Time.deltaTime;
-            trans.position = currentPos +  playerMovement.Direction * jumpWidth;
+            trans.position = currentPos + playerMovement.Direction * jumpWidth;
             cineMachine.m_Lens.OrthographicSize += Time.deltaTime * 2; // 3ÃÊ Â÷Â¡ÇßÀ» ¶§ 6ÀÌ ´Ã¾î³²
-            if (timer > 3f)     
+            if (timer > 3f)
                 break;
             yield return null;
         }
         float subtractValue = cineMachine.m_Lens.OrthographicSize - lensValue;
         timer = 0;
         Managers.Pool.Push(charging);
-        dots[0] = currentPos;   
+        dots[0] = currentPos;
         dots[1] = currentPos + playerDirection * jumpHeight;
         dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
         dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
-        
+
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
-        trailRenderer.enabled = true;
-        trailRenderer.colorGradient = trailColor;
         trailRenderer.material = jumpDownMat;
+        trailRenderer.enabled = true;
+        //trailRenderer.colorGradient = trailColor;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
         else
             value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
 
+        player.IsInvincibility = true;
         Vector3 direction = playerMovement.Direction;
         a.startRotation = value;
         while (lerpValue < 1)
         {
             multiPlyValue = jumpValue.Evaluate(lerpValue);
-            trailRenderer.widthMultiplier = trailWidth * multiPlyValue;
-            lerpValue += Time.deltaTime * jumpSpeed * multiPlyValue;
+            lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
+            print(multiPlyValue);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
             beforePos = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
-            if (tornado != null)
-                tornado.position = transform.position;
             playerRigid.MovePosition(beforePos);
-            cineMachine.m_Lens.OrthographicSize -= (Time.deltaTime * jumpSpeed * multiPlyValue * subtractValue);
-            yield return null;
+            cineMachine.m_Lens.OrthographicSize -= (Time.fixedDeltaTime * jumpSpeed * multiPlyValue * subtractValue);
+            yield return fixedWait;
         }
+
         cineMachine.m_Lens.OrthographicSize = 6;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = true;
         trailRenderer.enabled = false;
+        player.IsInvincibility = false;
         //cineMachine.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = Vector3.back;
         enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
@@ -531,10 +541,10 @@ public class PowerSkill : PlayerSkillBase
                 if (scale.x > 1 || scale.y > 1)
                     scale = Vector3.one;
                 emitJumpDown.transform.localScale = scale;
-                attachenemies = Physics2D.OverlapCircleAll(transform.position, 4.5f,1 <<enemyLayer);
-                for(int i=0; i< attachenemies.Length; i++)
+                attachenemies = Physics2D.OverlapCircleAll(transform.position, 4.5f, 1 << enemyLayer);
+                for (int i = 0; i < attachenemies.Length; i++)
                 {
-                    if (Vector2.SqrMagnitude(attachenemies[i].transform.position - transform.position)>3.5 * 3.5)
+                    if (Vector2.SqrMagnitude(attachenemies[i].transform.position - transform.position) > 3.5 * 3.5)
                     {
                         attachenemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack);
                     }
@@ -549,9 +559,6 @@ public class PowerSkill : PlayerSkillBase
     {
 
         float trailWith;
-        float timer=0;
-        float radius = 0;
-        float maxRadius = 16;
         Collider2D[] enemies;
         Vector2[] dots = new Vector2[4];
         Vector2 currentPos = transform.position;
@@ -581,11 +588,11 @@ public class PowerSkill : PlayerSkillBase
             value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
 
         a.startRotation = value;
+        player.IsInvincibility = true;
         trailRenderer.startWidth = trailWidth * 2;
         while (lerpValue < 1)
         {
             multiPlyValue = jumpValue.Evaluate(lerpValue);
-            trailRenderer.widthMultiplier = multiPlyValue * trailWidth;
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1) * 2;
@@ -594,30 +601,20 @@ public class PowerSkill : PlayerSkillBase
             playerRigid.MovePosition(FSegment);
             yield return fixedWait;
         }
+        player.IsInvincibility = false;
         Poolable shockWave = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ShockWave.prefab", transform.position, Quaternion.identity);
         StartCoroutine(ShockWaveAction(shockWave, 0.1f, 1));
-        transform.localScale = currentPlayerScale;
-        trailRenderer.enabled = false;
-        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange, 1 << enemyLayer);
+        enemies = Physics2D.OverlapCircleAll(transform.position, jumpAttackRange * jumpDownScaleMultiply, 1 << enemyLayer);
         for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i].GetComponent<IHittable>().OnDamage(jumpAttackDmg);
         }
+        transform.localScale = currentPlayerScale;
+        trailRenderer.enabled = false;
         CinemachineCameraShaking.Instance.CameraShake(30, 0.3f);
         playerMovement.IsMove = true;
         playerMovement.IsControl = true;
-        Vector2 jumpDown =  Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity).transform.position;
-        while(timer<1.5f)
-        {
-            radius += maxRadius * Time.fixedDeltaTime /2;
-            enemies = Physics2D.OverlapCircleAll(jumpDown, radius,1<<enemyLayer);
-            for(int i=0; i< enemies.Length;i++)
-            {
-                enemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack * 5);
-            }
-            timer += Time.fixedDeltaTime;
-            yield return fixedWait;
-        }
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FiveJumpDown.prefab", transform.position, Quaternion.identity);
         yield return null;
     }
     IEnumerator ShockWaveAction(Poolable shockWave, float startPos, float endPos)
@@ -651,8 +648,13 @@ public class PowerSkill : PlayerSkillBase
     }
     IEnumerator CatchSkill()
     {
-        print("dd");
-        KeyCode getKey = playerBase.PlayerSkillNum[0] == 4 ? KeyCode.U : KeyCode.I;
+
+        if (isClick)
+        {
+            StartCoroutine(Throw());
+            yield break;
+        }
+
         float timer = 0;
         bossArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BossArm.prefab", transform);
         bossArm.transform.position += (Vector3)playerMovement.Direction;
@@ -675,11 +677,14 @@ public class PowerSkill : PlayerSkillBase
         for (int i = 0; i < enemies.Length; i++)
         {
             Transform enemy = enemies[i].transform;
-            catchEnemies.Add(enemy);
+            enemiesTrans.Add(enemy);
             enemy.GetComponent<EnemyDefault>().isControl = false;
+            boolGroup[i] = enemy.GetComponent<Collider2D>().isTrigger;
         }
         while (timer < catchTime)
         {
+            if (isClicked)
+                yield break;
             for (int i = 0; i < enemies.Length; i++)
             {
                 enemies[i].transform.position = hand.position;
@@ -688,46 +693,98 @@ public class PowerSkill : PlayerSkillBase
             yield return null;
         }
         for (int i = 0; i < enemies.Length; i++)
-            enemies[i].transform.GetComponent<EnemyDefault>().isControl = true;
-        isClick = false;
-
-    }
-    IEnumerator Throw()
-    {
-        bossArmAni.SetTrigger(hashThrow);
-        Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
-        for (int i = 0; i < catchEnemies.Count; i++)
         {
-
-            catchEnemies[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * Random.Range(power - 10, power + 10) + force, ForceMode2D.Impulse);
-            catchEnemies[i].GetComponent<IHittable>().OnDamage(20, 0);
-            catchEnemies[i].GetComponent<EnemyDefault>().isControl = true;
+            enemies[i].transform.GetComponent<EnemyDefault>().isControl = true;
+            //enemies[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
         }
-        yield return waitAttack;
         isClick = false;
         Managers.Pool.Push(bossArm);
     }
-    IEnumerator Column()
+    IEnumerator Throw()
     {
-
-        isColumn = true;
-        float timer = 0;
-        columnEffect.SetActive(true);
-        while (timer < ColumnDuration)
+        isClicked = true;
+        bossArmAni.SetTrigger(hashThrow);
+        //Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
+        for (int i = 0; i < enemiesTrans.Count; i++)
         {
-
-            timer += Time.deltaTime;
-            yield return null;
+            enemiesTrans[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * power/*Random.Range(power - 50, power + 50)*/, ForceMode2D.Impulse);
+            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().isControl);
         }
-        columnEffect.SetActive(false);
-        yield return ColumnWait;
+        yield return waitAttack;
+        for (int i = 0; i < enemiesTrans.Count; i++)
+        {
+            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().isControl);
+            enemiesTrans[i].GetComponent<EnemyDefault>().isControl = true;
+            //enemiesTrans[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
+        }
+        isClick = false;
+        isClicked = false;
+        enemiesTrans.Clear();
+        Managers.Pool.Push(bossArm);
+    }
+    IEnumerator Column(int level)
+    {
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ColumnTrail.prefab", transform);
+        isColumn = true;
+        yield return columnDuration;
         isColumn = false;
     }
-    #endregion
+    IEnumerator ColumnAttack()
+    {
+        RaycastHit2D[] attachEnemies;
+        List<Poolable> Columns = new List<Poolable>();
+        if (Physics2D.OverlapCircle(transform.position, columnDetective, 1 << enemyLayer))
+        {
+            float minDistance;
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, columnDetective, 1 << enemyLayer);
+            List<Collider2D> enemiesList = enemies.ToList();
+            int index = 0;
+            minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            if (columnLevel > enemiesList.Count)
+            {
+                columnLevel = enemiesList.Count;
+            }
+ 
+            for (int i = 0; i < columnLevel; i++)
+            {
+                for (int j = 0; j < enemiesList.Count; j++)
+                {
+                    if (minDistance * minDistance > Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position))
+                    {
+                        minDistance = Mathf.Sqrt(Vector2.SqrMagnitude(enemiesList[j].transform.position - transform.position));
+                        index = j;
+                    }
+                }
+                Columns.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/column.prefab", enemiesList[index].transform.position, Quaternion.identity));
+                attachEnemies = Physics2D.RaycastAll(enemiesList[index].transform.position, Vector2.up,3,1<<enemyLayer);
+                for (int a =0; a<attachEnemies.Length; a++)
+                {
+                    attachEnemies[a].transform.GetComponent<IHittable>().OnDamage(playerBase.Attack * 1.2f + columnLevel * 5, 0);
+                }
+                enemiesList.RemoveAt(index);
+                minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            }
+            yield return ColumningWait;
+        isColumning = true;
+        }
+        else
+        {
+            isColumning = true;
+            yield break;
+        }
+        
+        yield return null;
+    }
+    protected override void FifthSkillUpdate(int level)
+    {
+        UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
+        columnLevel = level;
+    }
+    #endregion  
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, jumpAttackRange);    
+        Gizmos.DrawWireSphere(transform.position, 4);
     }
 
 

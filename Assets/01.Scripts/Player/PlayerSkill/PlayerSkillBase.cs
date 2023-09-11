@@ -115,7 +115,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
                 dashPoolSprite.color = dashCloneColor;
 
             }
-            if(player.IsInvincibility && timer >= dashTime * 0.25f)
+            if(player.IsInvincibility && timer >= dashTime*0.5f)
                 player.IsInvincibility = false;
 
             yield return waitforFixedUpdate;
