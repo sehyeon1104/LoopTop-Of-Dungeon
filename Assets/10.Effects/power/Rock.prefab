@@ -271,7 +271,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  trail: {fileID: 7858427512557783543}
+  trail:
+  - {fileID: 1057017794978833305}
+  - {fileID: 7815024476172132577}
 --- !u!1 &7858427512557783543
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,10 +328,10 @@ MonoBehaviour:
   m_materialData:
   - m_trailRenderer: {fileID: 1057017794978833305}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0.96084315
+    m_move: 0.17544872
   - m_trailRenderer: {fileID: 7815024476172132577}
     m_uvTiling: {x: 0.25, y: 1}
-    m_move: 0.9347371
+    m_move: 0.29241452
 --- !u!199 &8768189866054634413
 ParticleSystemRenderer:
   serializedVersion: 6

@@ -7,7 +7,6 @@ using TMPro;
 public class GhostBossUI : MonoSingleton<GhostBossUI>
 {
     [SerializeField] private Image bossUltGageImages;
-    [SerializeField] private Image ultArrow;
 
     [SerializeField] private CanvasGroup atkGroup;
     [SerializeField] private CanvasGroup defGroup;
@@ -15,6 +14,10 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
 
     private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
     public float fillTime { get; set; } = 50f;
+
+    public Image ChangeFillTrail;
+    public Image ultArrow;
+
     public ParticleSystem ultParticle;
     public Material partMat;
 
@@ -43,7 +46,7 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
 
             if (fillTime > 0)
             {
-                fillTime -= 0.02f;
+                fillTime -= 0.01f;
             }
             if (fillTime > 100)
                 fillTime = 100;

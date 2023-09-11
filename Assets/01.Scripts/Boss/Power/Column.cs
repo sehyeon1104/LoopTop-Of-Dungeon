@@ -69,12 +69,19 @@ public class Column : MonoBehaviour, IHittable
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 
-    private IEnumerator OnDestroy()
+    private IEnumerator StartDestroy()
     {
         yield return null;
+
+        hitMat.SetTexture("_Texture2D", sprite.sprite.texture);
+        sprite.material = hitMat;
+        warning.SetActive(false);
+
         switch (nowBossPhase)
         {
             case 1:
+                yield return new WaitForSeconds(0.5f);
+                
                 CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
                 Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnShock.prefab", transform.position, Quaternion.identity);
 
@@ -85,9 +92,7 @@ public class Column : MonoBehaviour, IHittable
                 int randomAngle = Random.Range(0, 2);
                 int angle = randomAngle * 45;
 
-                hitMat.SetTexture("_Texture2D", sprite.sprite.texture);
-                sprite.material = hitMat;
-
+                CinemachineCameraShaking.Instance.CameraShake(8, 0.1f);
                 for (int i = 0; i < 2; i++)
                 {
                     Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnPieceWarning.prefab", transform.position, Quaternion.Euler(Vector3.forward * (angle + 90 * i)));
@@ -112,6 +117,6 @@ public class Column : MonoBehaviour, IHittable
         
         isDie = true;
         StopCoroutine(Attack());
-        StartCoroutine(OnDestroy());
+        StartCoroutine(StartDestroy());
     }
 }
