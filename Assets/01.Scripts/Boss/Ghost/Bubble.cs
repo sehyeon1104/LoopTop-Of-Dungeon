@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Bubble : MonoBehaviour
 {
+    private Camera mainCam;
     public bool isRed = true;
     private string takeEffect = "";
     private Color partColor = Color.white;
 
     private void Awake()
     {
+        mainCam = Camera.main;
         partColor = isRed ? new Color(56.25f, 0, 2.5f) : new Color(0, 18f, 56.25f);
         takeEffect = isRed ?
             "Assets/10.Effects/ghost/Bubble&Bullet/TakeRageBubble.prefab" :
@@ -21,6 +24,10 @@ public class Bubble : MonoBehaviour
         {
             Managers.Pool.Push(GetComponent<Poolable>());
             GhostBossUI.Instance.fillTime += isRed ? 10 : -10;
+
+            GhostBossUI.Instance.ChangeFillTrail.gameObject.SetActive(true);
+            GhostBossUI.Instance.ChangeFillTrail.transform.position = mainCam.WorldToScreenPoint(transform.position);
+            GhostBossUI.Instance.ChangeFillTrail.transform.DOLocalMove(Vector3.zero, 0.5f);
 
             GhostBossUI.Instance.partMat.SetColor("_SetColor", partColor);
             GhostBossUI.Instance.ultParticle.Play();

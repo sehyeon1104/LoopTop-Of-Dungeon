@@ -26,6 +26,8 @@ public class ShowDamagePopUp : MonoBehaviour
         else
         {
             damageText.color = dmgMul == 1 ? Color.white : dmgMul < 1 ? Color.cyan : Color.red;
+            if(dmgMul != 1)
+                damageText.text = $"{Mathf.RoundToInt(damage)}<size=50%>({Mathf.RoundToInt(damage - damage / dmgMul)})";
         }
 
         // √ ±‚»≠

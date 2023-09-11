@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2259139963886003102}
   - component: {fileID: 2398467718173084815}
   - component: {fileID: 2701594540723802794}
+  - component: {fileID: 1488421537336453977}
   m_Layer: 0
   m_Name: FiveJumpDown
   m_TagString: Untagged
@@ -139,7 +140,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
 --- !u!58 &2398467718173084815
 CircleCollider2D:
@@ -151,7 +152,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -193,3 +194,17 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1488421537336453977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3616953749617541021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 3

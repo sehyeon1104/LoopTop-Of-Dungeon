@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 132528832}
   - component: {fileID: 132528831}
   - component: {fileID: 132528830}
+  - component: {fileID: 1029725850}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -95,6 +96,23 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AngularDamping: 0
+--- !u!114 &1029725850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132528828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &671402107
 GameObject:
   m_ObjectHideFlags: 0
@@ -7949,9 +7967,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000071525574, y: -0.0000019073486}
+  m_Offset: {x: -0.00000071525585, y: -0.0000019073483}
   serializedVersion: 2
-  m_Radius: 1.0850003
+  m_Radius: 0.8563555
 --- !u!114 &665589508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8015,9 +8033,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000009536743, y: 0}
+  m_Offset: {x: 0.58801436, y: 0.07898017}
   serializedVersion: 2
-  m_Radius: 1.2750003
+  m_Radius: 0.8974496
 --- !u!114 &677531722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8081,9 +8099,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0000009536743, y: -0.0000019073486}
+  m_Offset: {x: -0.017267225, y: -0.00000190529}
   serializedVersion: 2
-  m_Radius: 1.2400002
+  m_Radius: 0.724047
 --- !u!114 &988531884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8124,9 +8142,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000014305115, y: 0.0000019073486}
+  m_Offset: {x: 0.0000014476825, y: 0.0000018487901}
   serializedVersion: 2
-  m_Radius: 1.4600004
+  m_Radius: 1.3592175
 --- !u!114 &1109421753
 MonoBehaviour:
   m_ObjectHideFlags: 0
