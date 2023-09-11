@@ -74,7 +74,7 @@ public class KeyManager : MonoSingleton<KeyManager>
             return;
 
         keyEvent = Event.current;
-        if (keyEvent.isKey)
+        if (keyEvent.type == EventType.KeyDown)
         {
             if (!ExceptionCheck())
                 return;
