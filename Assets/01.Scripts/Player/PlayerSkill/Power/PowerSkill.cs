@@ -49,7 +49,7 @@ public class PowerSkill : PlayerSkillBase
     bool isClick = false;
     bool isClicked = false;
     float catchTime = 4f;
-    bool isColumn;
+  public bool isColumn;
     bool isColumning = true;
     float columnDetective = 5f;
     int columnLevel = 1;
@@ -62,7 +62,7 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
-    WaitForSeconds ColumningWait = new WaitForSeconds(0.2f);
+    WaitForSeconds ColumningWait = new WaitForSeconds(0.4f);
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
