@@ -51,6 +51,7 @@ public class PowerSkill : PlayerSkillBase
     float catchTime = 4f;
     bool isColumn;
     bool isColumning = true;
+    float columnDetective = 5f;
     int columnLevel = 1;
     WaitForSeconds columnDuration = new WaitForSeconds(5f);
     public AnimationCurve jumpValue;
@@ -61,7 +62,7 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
-    
+    WaitForSeconds ColumningWait = new WaitForSeconds(0.2f);
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
@@ -78,6 +79,7 @@ public class PowerSkill : PlayerSkillBase
     bool[] boolGroup = new bool[50];
     private void Awake()
     {
+    
         jumpDownMat = Managers.Resource.Load<Material>("Assets/10.Effects/player/Power/TrailMat.mat");
         trailRenderer = GetComponentInChildren<TrailRenderer>();
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
@@ -99,8 +101,10 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void Attack()
     {
-        if (isColumn)
+        
+        if (isColumning && isColumn)
         {
+            isColumning = false;
             StartCoroutine(ColumnAttack());
         }
         else
@@ -262,7 +266,7 @@ public class PowerSkill : PlayerSkillBase
         {
             if (GameManager.Instance.platForm == Define.PlatForm.PC)
             {
-                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeyCode.U : KeyCode.I;
+                KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 2 ? KeySetting.keys[KeyAction.SKILL1] : KeySetting.keys[KeyAction.SKILL2];
                 while (Input.GetKey(keyBoardButton))
                 {
                     checkTime += Time.deltaTime;
@@ -437,7 +441,7 @@ public class PowerSkill : PlayerSkillBase
         float timer = 0;
         float timerA = 0;
         Vector3 currentPlayerScale = transform.localScale;
-        KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeyCode.U : KeyCode.I;
+        KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeySetting.keys[KeyAction.SKILL1] : KeySetting.keys[KeyAction.SKILL2];
         playerMovement.IsControl = false;
         playerRigid.velocity = Vector2.zero;
         Vector2 normailzedVec = playerMovement.Direction;
@@ -650,7 +654,7 @@ public class PowerSkill : PlayerSkillBase
             StartCoroutine(Throw());
             yield break;
         }
-        KeyCode getKey = playerBase.PlayerSkillNum[0] == 4 ? KeyCode.U : KeyCode.I;
+
         float timer = 0;
         bossArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BossArm.prefab", transform);
         bossArm.transform.position += (Vector3)playerMovement.Direction;
@@ -729,11 +733,10 @@ public class PowerSkill : PlayerSkillBase
     {
         RaycastHit2D[] attachEnemies;
         List<Poolable> Columns = new List<Poolable>();
-        isColumning = true;
-        if (Physics2D.OverlapCircle(transform.position, detectiveDistance, 1 << enemyLayer))
+        if (Physics2D.OverlapCircle(transform.position, columnDetective, 1 << enemyLayer))
         {
             float minDistance;
-            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectiveDistance, 1 << enemyLayer);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, columnDetective, 1 << enemyLayer);
             List<Collider2D> enemiesList = enemies.ToList();
             int index = 0;
             minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
@@ -756,16 +759,17 @@ public class PowerSkill : PlayerSkillBase
                 attachEnemies = Physics2D.RaycastAll(enemiesList[index].transform.position, Vector2.up,3,1<<enemyLayer);
                 for (int a =0; a<attachEnemies.Length; a++)
                 {
-                    attachEnemies[a].transform.GetComponent<IHittable>().OnDamage(playerBase.Attack * 1.5f + columnLevel * 5, 0);
+                    attachEnemies[a].transform.GetComponent<IHittable>().OnDamage(playerBase.Attack * 1.2f + columnLevel * 5, 0);
                 }
                 enemiesList.RemoveAt(index);
                 minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
             }
-        isColumning = false;
+            yield return ColumningWait;
+        isColumning = true;
         }
         else
         {
-            isColumning = false;
+            isColumning = true;
             yield break;
         }
         
