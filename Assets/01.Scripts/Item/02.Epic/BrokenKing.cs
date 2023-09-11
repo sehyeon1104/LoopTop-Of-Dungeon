@@ -15,6 +15,7 @@ public class BrokenKing : ItemBase
 
     private bool isEquip = false;
 
+    private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private static int stack = 0;
@@ -22,14 +23,14 @@ public class BrokenKing : ItemBase
 
     public override void Init()
     {
-
+        co = null;
     }
 
     public override void Use()
     {
         isEquip = true;
 
-        StartCoroutine(Timer());
+        co = StartCoroutine(Timer());
     }
 
     public override void Disabling()
@@ -40,7 +41,7 @@ public class BrokenKing : ItemBase
     public override void LastingEffect()
     {
         isEquip = true;
-        StartCoroutine(Timer());
+        co = StartCoroutine(Timer());
     }
 
     public void BrokenKingAbility()

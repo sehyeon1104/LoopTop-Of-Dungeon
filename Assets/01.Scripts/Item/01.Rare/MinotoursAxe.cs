@@ -10,6 +10,7 @@ public class MinotoursAxe : ItemBase
 
     public override bool isPersitantItem => true;
 
+    private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private bool isEquip = false;
@@ -33,7 +34,7 @@ public class MinotoursAxe : ItemBase
 
     public override void Init()
     {
-
+        co = null;
     }
 
     public override void Use()
