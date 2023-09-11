@@ -13,13 +13,14 @@ public class Portal : MonoBehaviour
 
     private bool isInteraction = false;
     Button interactionButton;
+    [SerializeField]
     private GameObject moveCanvas = null;
     private SpriteRenderer spriteRenderer = null;
 
     private void Awake()
     {
         interactionButton = UIManager.Instance.GetInteractionButton();
-        moveCanvas = transform.Find("MoveCanvas").gameObject;
+        //moveCanvas = transform.Find("MoveCanvas").gameObject;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -67,8 +68,8 @@ public class Portal : MonoBehaviour
                 sceneType = Define.Scene.Center;
                 SaveManager.DeleteAllData();
                 Fade.Instance.FadeInAndLoadScene(sceneType);
+                return;
             }
-
 
             GameManager.Instance.StageMoveCount++;
 
@@ -88,7 +89,6 @@ public class Portal : MonoBehaviour
 
             GameManager.Instance.SaveData();
             Fade.Instance.FadeInAndLoadScene(sceneType);
-
         }
     }
 
