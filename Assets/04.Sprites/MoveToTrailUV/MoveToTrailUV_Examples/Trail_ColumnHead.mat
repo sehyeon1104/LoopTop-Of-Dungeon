@@ -7,12 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Trail_FlameStoneAdd 1
-  m_Shader: {fileID: 4800000, guid: 0bf068526a8b4af48b092394026ec12b, type: 3}
+  m_Name: Trail_ColumnHead
+  m_Shader: {fileID: 4800000, guid: 08c457e8e00a9114bb4b8d52f920fad8, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - TINTTEX_ON
-  m_LightmapFlags: 4
+  - CAMOFFSET_ON
+  - SPRITE_ATLAS_ON
+  m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -21,6 +22,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 2eab9c5c6d6bb6e4f948d83c8971bd0a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -42,8 +51,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 05cda407c12da774c975bce33082f592, type: 3}
-        m_Scale: {x: 0.15, y: 1}
+        m_Texture: {fileID: 2800000, guid: b3c4df2a031631a4883a334ce5b31c54, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -58,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TintTex:
-        m_Texture: {fileID: 2800000, guid: 337d5f662d7fed8468f25c258af2d2c5, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -68,36 +77,29 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Fade: 1
-    - _FadeHead: 2
-    - _GlossMapScale: 1
     - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _LineFade: 1
+    - _InvFade: 1
     - _MainScrollSpeedU: 10
     - _MainScrollSpeedV: 0
-    - _MainTexMultiplier: 0.97
-    - _MainTexPow: 0.56
-    - _MainTexVFade: 1
-    - _MainTexVFadePow: 0.62
     - _Metallic: 0
     - _Mode: 0
-    - _Multiplier: 3.94
+    - _Multiplier: 1.5
     - _OcclusionStrength: 1
-    - _OffSetFactor: 0
-    - _OffSetUnits: 0
-    - _OffsetAmount: 0
-    - _OffsetColor: 0
+    - _OffsetAmount: 0.5
     - _Parallax: 0.02
-    - _ScrollSpeed: 0
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _RandomValue: 0
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseTextureAtlas: 0
+    - _UseAlphaTex: 0
+    - _UseFlipVMainTex: 0
+    - _UseMainTexScroll: 0
+    - _UseOrthoCam: 0
+    - _UseTextureAtlas: 1
     - _UseTintTex: 0
+    - _ZTestMode: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorArrow: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []

@@ -136,10 +136,10 @@ public class GhostBossFieldPattern : MonoBehaviour
 
             if (GhostBossUI.Instance.fillTime > 70f)
             {
-                GameManager.Instance.Player.OnDamage(3, 0);
+                GameManager.Instance.Player.OnDamage(1, 0);
             }
 
-            if(checktime % 2f == 0)
+            if(checktime % 1.5f == 0)
             {
                 int random = Random.Range(0, 2);
                 Poolable bubble = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Bubble&Bullet/BulletGroup.prefab", 

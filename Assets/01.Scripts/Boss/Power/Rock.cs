@@ -7,18 +7,23 @@ public class Rock : MonoBehaviour
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
-    private GameObject trail;
+    private TrailRenderer[] trail;
 
     private void OnEnable()
     {
         StopAllCoroutines();
         StartCoroutine(MoveTo());
-        trail.SetActive(true);
     }
 
     private void OnDisable()
     {
-        trail.SetActive(false);
+        if (trail != null)
+        {
+            for(int i = 0; i < trail.Length; i++)
+            {
+                trail[i].Clear();
+            }
+        }
     }
 
     private IEnumerator MoveTo()

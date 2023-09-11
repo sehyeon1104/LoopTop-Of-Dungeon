@@ -11,6 +11,7 @@ public class SharpSword : ItemBase
 
     public override bool isPersitantItem => true;
 
+    private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private float abilityDuration = 10f;
@@ -22,6 +23,7 @@ public class SharpSword : ItemBase
     {
         stack = 0;
         delay = abilityDuration;
+        co = null;
     }
 
     public override void Use()
@@ -29,7 +31,7 @@ public class SharpSword : ItemBase
         Debug.Log("날카로운 검 효과 발동");
         Debug.Log("공격력 20% 증가, 적 처치 시 공격력 5% 증가 (최대 3 중첩, 지속시간 10초)");
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
-        StartCoroutine(CoolTime());
+        // StartCoroutine(CoolTime());
     }
 
     public override void LastingEffect()
@@ -45,11 +47,17 @@ public class SharpSword : ItemBase
 
     public void SharpSwordAbility()
     {
+        if (co != null)
+        {
+            StopCoroutine(co);
+            co = null;
+        }
+
+        co = StartCoroutine(CoolTime());
+
         delay = 0f;
         if(stack >= 3)
-        {
             return;
-        }
 
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;

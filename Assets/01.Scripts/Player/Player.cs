@@ -33,7 +33,10 @@ public class Player : MonoBehaviour, IHittable
     public UnityEvent SkillRelatedItemEffects { get; private set; } = new UnityEvent();
     // 피격 관련 아이템 효과
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; } = new UnityEvent();
+    // 대쉬 관련 아이템 효과
     public UnityEvent DashRelatedItemEffects { get; private set; } = new UnityEvent();
+    // 사망 관련 아이템 효과
+    public UnityEvent DeadRelatedItemEffects { get; private set; } = new UnityEvent();
 
     public Vector3 hitPoint { get; private set; }
 

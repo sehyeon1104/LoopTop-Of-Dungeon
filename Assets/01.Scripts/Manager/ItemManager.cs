@@ -113,7 +113,8 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void RemoveCurItemDic(Item item)
     {
-        curItemDic.Remove(item.itemNameEng);
+        if(curItemDic.ContainsKey(item.itemNameEng))
+            curItemDic.Remove(item.itemNameEng);
     }
 
 

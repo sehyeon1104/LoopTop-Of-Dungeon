@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RedFountainRoom : RoomBase
 {
-    private int randStatue = 0;
     private GameObject statue = null;
     private GameObject minimapIcon = null;
 
