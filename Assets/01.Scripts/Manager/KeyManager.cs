@@ -90,6 +90,7 @@ public class KeyManager : MonoSingleton<KeyManager>
             if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
+        GameManager.Instance.SaveKeyData();
     }
 
     public void KeySpriteInit()
@@ -167,26 +168,6 @@ public class KeyManager : MonoSingleton<KeyManager>
         obj.transform.SetParent(parent);
         obj.transform.position = parent.position;
         return obj;
-    }
-
-    public void SetKeyData(KeySettingData keySettingData)
-    {
-        KeySetting.keys.Clear();
-        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
-        {
-            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
-                KeySetting.keys.Add((KeyAction)i, keySettingData.keySetting[i]);
-        }
-    }
-
-    public void SaveKeyData(ref KeySettingData keySettingData)
-    {
-        keySettingData.keySetting.Clear();
-
-        foreach (var key in KeySetting.keys.Values)
-        {
-            keySettingData.keySetting.Add(key);
-        }
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)

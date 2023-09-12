@@ -129,7 +129,7 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Debug.Log("[GameManager] KeySettingData 저장파일 있음");
             SaveManager.Load<KeySettingData>(ref keySettingData);
-            KeyManager.Instance.SetKeyData(keySettingData);
+            SetKeyData();
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -303,6 +303,27 @@ public class GameManager : MonoSingleton<GameManager>
         SaveManager.Save<ItemData>(ref itemData);
     }
 
+    public void SetKeyData()
+    {
+        KeySetting.keys.Clear();
+
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(keySettingData.keySetting[i]))
+                KeySetting.keys.Add((KeyAction)i, keySettingData.keySetting[i]);
+        }
+    }
+
+    public void SaveKeyData()
+    {
+        keySettingData.keySetting.Clear();
+
+        foreach (var key in KeySetting.keys.Values)
+        {
+            keySettingData.keySetting.Add(key);
+        }
+    }
+
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
@@ -324,7 +345,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         SetGameData();
-        KeyManager.Instance.SaveKeyData(ref keySettingData);
+        SaveKeyData();
         SaveManager.Save<GameData>(ref gameData);
         SaveManager.Save<ItemData>(ref itemData);
         SaveManager.Save<KeySettingData>(ref keySettingData);
@@ -342,7 +363,7 @@ public class GameManager : MonoSingleton<GameManager>
         LoadItemData();
 
         SaveManager.Load<KeySettingData>(ref keySettingData);
-        KeyManager.Instance.SetKeyData(keySettingData);
+        SetKeyData();
     }
 
     public void GameQuit()

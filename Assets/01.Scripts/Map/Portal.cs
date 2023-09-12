@@ -15,7 +15,8 @@ public class Portal : MonoBehaviour
     Button interactionButton;
     [SerializeField]
     private GameObject moveCanvas = null;
-    private TextMeshPro moveText = null;
+    [SerializeField]
+    private TextMeshProUGUI moveText = null;
 
     private SpriteRenderer spriteRenderer = null;
 
