@@ -10,6 +10,7 @@ public class MinotoursAxe : ItemBase
 
     public override bool isPersitantItem => true;
 
+    private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private bool isEquip = false;
@@ -33,15 +34,15 @@ public class MinotoursAxe : ItemBase
 
     public override void Init()
     {
-
+        co = null;
     }
 
     public override void Use()
     {
         isEquip = true;
         delay = abilityDuration;
-        StartCoroutine(CoolTime());
-        StartCoroutine(MinotoursAxeAbility());
+        ItemManager.Instance.StartCoroutine(CoolTime());
+        ItemManager.Instance.StartCoroutine(MinotoursAxeAbility());
     }
 
     public IEnumerator MinotoursAxeAbility()

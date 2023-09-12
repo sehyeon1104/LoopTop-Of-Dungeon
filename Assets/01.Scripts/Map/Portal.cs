@@ -15,6 +15,9 @@ public class Portal : MonoBehaviour
     Button interactionButton;
     [SerializeField]
     private GameObject moveCanvas = null;
+    [SerializeField]
+    private TextMeshProUGUI moveText = null;
+
     private SpriteRenderer spriteRenderer = null;
 
     private void Awake()
@@ -55,6 +58,7 @@ public class Portal : MonoBehaviour
 
     public void ToggleMoveTMP()
     {
+        moveText.SetText($"{KeySetting.keys[KeyAction.INTERACTION]} 이동하기");
         moveCanvas.gameObject.SetActive(isInteraction);
     }
 

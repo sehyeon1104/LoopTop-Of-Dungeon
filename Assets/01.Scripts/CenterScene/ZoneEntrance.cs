@@ -120,6 +120,6 @@ public class ZoneEntrance : MonoBehaviour
     public void ToggleMapNameTMP()
     {
         zoneCanvas.SetActive(isInteraction);
-        mapNameTMP.SetText(gameObject.name);
+        mapNameTMP.SetText($"{KeySetting.keys[KeyAction.INTERACTION]} 이동하기");
     }
 }

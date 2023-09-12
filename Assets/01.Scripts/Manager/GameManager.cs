@@ -29,6 +29,8 @@ public class GameManager : MonoSingleton<GameManager>
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
     private ItemData itemData = new ItemData();
+    private KeySettingData keySettingData = new KeySettingData();
+    private ImportantGameData importantGameData = new ImportantGameData();
 
     private GameObject hitEffect = null;
     private GameObject critHitEffect = null;
@@ -116,6 +118,30 @@ public class GameManager : MonoSingleton<GameManager>
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
             ItemManager.Instance.Init();
+        }
+
+        if (!SaveManager.GetCheckDataBool("KeySettingData"))
+        {
+            Debug.Log("[GameManager] KeySettingData 저장파일 없음");
+            KeyManager.Instance.InitKey();
+            SaveManager.Save<KeySettingData>(ref keySettingData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] KeySettingData 저장파일 있음");
+            SaveManager.Load<KeySettingData>(ref keySettingData);
+            SetKeyData();
+        }
+
+        if (!SaveManager.GetCheckDataBool("ImportantGameData"))
+        {
+            Debug.Log("[GameManager] ImportantGameData 저장파일 없음");
+            SaveManager.Save<ImportantGameData>(ref importantGameData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] ImportantGameData 저장파일 있음");
+            SaveManager.Load<ImportantGameData>(ref importantGameData);
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -289,6 +315,42 @@ public class GameManager : MonoSingleton<GameManager>
         SaveManager.Save<ItemData>(ref itemData);
     }
 
+    public void SetKeyData()
+    {
+        KeySetting.keys.Clear();
+
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(keySettingData.keySetting[i]))
+                KeySetting.keys.Add((KeyAction)i, keySettingData.keySetting[i]);
+        }
+    }
+
+    public void SaveKeyData()
+    {
+        keySettingData.keySetting.Clear();
+
+        foreach (var key in KeySetting.keys.Values)
+        {
+            keySettingData.keySetting.Add(key);
+        }
+    }
+
+    public void ClearTuto()
+    {
+        importantGameData.isClearTuto = true;
+    }
+
+    public void GetBossFragment()
+    {
+        importantGameData.bossFragmentAmount = playerData.bossFragmentAmount;
+    }
+
+    public void ObtainCharacter(Define.PlayerTransformTypeFlag playerTransformTypeFlag)
+    {
+        importantGameData.isObtainBoss[(int)playerTransformTypeFlag] = true;
+    }
+
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
@@ -310,8 +372,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         SetGameData();
+        SaveKeyData();
         SaveManager.Save<GameData>(ref gameData);
         SaveManager.Save<ItemData>(ref itemData);
+        SaveManager.Save<KeySettingData>(ref keySettingData);
+        SaveManager.Save<ImportantGameData>(ref importantGameData);
     }
 
     public void LoadData()
@@ -324,6 +389,11 @@ public class GameManager : MonoSingleton<GameManager>
 
         SaveManager.Load<ItemData>(ref itemData);
         LoadItemData();
+
+        SaveManager.Load<KeySettingData>(ref keySettingData);
+        SetKeyData();
+
+        SaveManager.Load<ImportantGameData>(ref importantGameData);
     }
 
     public void GameQuit()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 
 public enum KeyAction
@@ -26,10 +27,18 @@ public enum KeyAction
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
+    public static Dictionary<string, Sprite> keySprite = new Dictionary<string, Sprite>();
 }
 
 public class KeyManager : MonoSingleton<KeyManager>
 {
+    private Sprite[] keySprite = null;
+
+    [SerializeField]
+    private Sprite[] specKey = null;
+    private GameObject keyCap = null;
+    private GameObject mouseClick = null;
+
     public KeySettingUI keySettingUI { get; private set; } = null;
     Event keyEvent = null;
 
@@ -52,19 +61,45 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeyCode.A,
         KeyCode.S,
         KeyCode.D,
+
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+
         KeyCode.Escape,
         KeyCode.Return,
         KeyCode.Backspace,
     };
 
+
     private void Awake()
     {
-        keySettingUI = FindObjectOfType<KeySettingUI>()
-;
-        for(int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        keySettingUI = FindObjectOfType<KeySettingUI>();
+
+        keyCap = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/KeyCap.prefab");
+        mouseClick = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/MouseClick.prefab");
+
+        KeySpriteInit();
+    }
+
+    public void InitKey()
+    {
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
         {
-            if(!KeySetting.keys.ContainsValue(defaultKeys[i]))
+            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+        }
+        GameManager.Instance.SaveKeyData();
+    }
+
+    public void KeySpriteInit()
+    {
+        foreach(var keySpr in specKey)
+        {
+            string s = keySpr.name.Substring(9, keySpr.name.Length - 9);
+            if(!KeySetting.keySprite.ContainsKey(s))
+                KeySetting.keySprite.Add(s, keySpr);
         }
     }
 
@@ -108,6 +143,31 @@ public class KeyManager : MonoSingleton<KeyManager>
         }
 
         return true;
+    }
+
+    public GameObject InstantiateKey(KeyCode keyCode, Transform parent)
+    {
+        GameObject obj = null;
+
+        if(keyCode.ToString().Length == 1)
+        {
+            obj = Instantiate(keyCap);
+            obj.GetComponentInChildren<TextMeshPro>().SetText(keyCode.ToString());
+        }
+        else if(keyCode == KeyCode.Mouse0 || keyCode == KeyCode.Mouse1)
+        {
+            obj = Instantiate(mouseClick);
+            obj.GetComponent<SpriteRenderer>().flipX = (int)keyCode % 2 == 0 ? true : false;
+        }
+        else
+        {
+            obj = Instantiate(keyCap);
+            obj.GetComponent<SpriteRenderer>().sprite = KeySetting.keySprite[((int)keyCode).ToString()];
+        }
+
+        obj.transform.SetParent(parent);
+        obj.transform.position = parent.position;
+        return obj;
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)

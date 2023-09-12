@@ -29,6 +29,9 @@ public class DropItem : MonoBehaviour, IPoolable
 
     private WaitForEndOfFrame waitForEndOfFrame;
 
+    [SerializeField]
+    private GameObject canvas = null;
+
     private void Awake()
     {
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -113,7 +116,7 @@ public class DropItem : MonoBehaviour, IPoolable
             rand = Random.Range(1, ItemManager.Instance.allItemDic.Count);
 
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
-            if (itemSelectNum.Contains(rand) 
+            if (itemSelectNum.Contains(allItemList[rand].itemNumber) 
                 || itemObjListNum.Contains(rand) 
                 || allItemList[rand].itemRating == Define.ItemRating.Special
                 || allItemList[rand].itemRating == Define.ItemRating.Set)
@@ -163,7 +166,8 @@ public class DropItem : MonoBehaviour, IPoolable
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
             if (itemSelectNum.Contains(rand)
                 || itemObjListNum.Contains(rand)
-                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber)
+                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber) 
+                || ItemManager.Instance.brokenItemList[rand].itemNumber == 510
                 )
                 continue;
 
@@ -201,6 +205,7 @@ public class DropItem : MonoBehaviour, IPoolable
             interactionButton.onClick.RemoveListener(TakeItem);
             interactionButton.onClick.AddListener(TakeItem);
             UIManager.Instance.RotateInteractionButton();
+            canvas.SetActive(true);
         }
     }
 
@@ -210,6 +215,7 @@ public class DropItem : MonoBehaviour, IPoolable
         {
            interactionButton.onClick.RemoveListener(TakeItem);
            UIManager.Instance.RotateAttackButton();
+            canvas.SetActive(false);
         }
     }
 
