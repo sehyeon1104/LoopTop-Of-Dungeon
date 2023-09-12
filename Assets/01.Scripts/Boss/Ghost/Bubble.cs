@@ -18,17 +18,23 @@ public class Bubble : MonoBehaviour
             "Assets/10.Effects/ghost/Bubble&Bullet/TakeRageBubble.prefab" :
             "Assets/10.Effects/ghost/Bubble&Bullet/TakeFearBubble.prefab";
     }
+    private IEnumerator trailMove()
+    {
+        GhostBossUI.Instance.ChangeFillTrail.gameObject.SetActive(true);
+        GhostBossUI.Instance.ChangeFillTrail.transform.position = transform.position;
+        GhostBossUI.Instance.ChangeFillTrail.transform.DOLocalMove(Vector3.zero, 0.4f);
+        
+        yield return new WaitForSeconds(0.4f);
+
+        GhostBossUI.Instance.ChangeFillTrail.gameObject.SetActive(false);
+        Managers.Pool.Push(GetComponent<Poolable>());
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
         {
-            Managers.Pool.Push(GetComponent<Poolable>());
             GhostBossUI.Instance.fillTime += isRed ? 10 : -10;
-
-            GhostBossUI.Instance.ChangeFillTrail.gameObject.SetActive(true);
-            GhostBossUI.Instance.ChangeFillTrail.transform.position = mainCam.WorldToScreenPoint(transform.position);
-            GhostBossUI.Instance.ChangeFillTrail.transform.DOLocalMove(Vector3.zero, 0.5f);
-
+            StartCoroutine(trailMove());
             GhostBossUI.Instance.partMat.SetColor("_SetColor", partColor);
             GhostBossUI.Instance.ultParticle.Play();
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_EatBubble.wav");

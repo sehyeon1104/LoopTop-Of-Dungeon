@@ -609,6 +609,7 @@ GameObject:
   - component: {fileID: 6605350721465296871}
   - component: {fileID: 1617654965204469657}
   - component: {fileID: 661580549}
+  - component: {fileID: 2628801764422081413}
   m_Layer: 8
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -695,9 +696,9 @@ SpriteRenderer:
   m_SortingLayerID: -726151
   m_SortingLayer: 9
   m_SortingOrder: 4
-  m_Sprite: {fileID: -1292953530, guid: 16cb5b01f3744ef46967020f481c100b, type: 3}
+  m_Sprite: {fileID: -1742413704, guid: 6db48f9aec4f4d341b41e4097efad424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.7066667, y: 1.7066667}
@@ -827,6 +828,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStandUp: 0
+--- !u!114 &2628801764422081413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739109838891585982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227e9bb5774aded4585171ec68c02722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSkill: {fileID: 878560112}
 --- !u!1 &819211934394954388
 GameObject:
   m_ObjectHideFlags: 0
@@ -6968,6 +6982,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 3
+  isColumn: 0
   jumpValue:
     serializedVersion: 2
     m_Curve:
@@ -7028,7 +7043,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  columnEffect: {fileID: 0}
 --- !u!114 &878560113
 MonoBehaviour:
   m_ObjectHideFlags: 0

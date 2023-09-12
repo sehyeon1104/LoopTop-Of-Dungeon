@@ -164,7 +164,7 @@ public class P_Patterns : BossPattern
             if(i == 2)
             {
                 col = Physics2D.OverlapCircleAll(clone.transform.position, 7.5f, 1 << 8 | 1 << 15);
-                CinemachineCameraShaking.Instance.CameraShake(12, 0.4f);
+                CinemachineCameraShaking.Instance.CameraShake(15, 0.5f);
             }
             else
             {
@@ -221,7 +221,10 @@ public class P_Patterns : BossPattern
         yield return new WaitForSeconds(0.5f);
     }
     #endregion
-
+    public IEnumerator Pattern_PChange(int count = 0) // 페이즈 변경 패턴
+    {
+        yield return null;
+    }
     #region Phase 2
     public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
     {
