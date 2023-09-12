@@ -5,6 +5,7 @@ using UnityEngine;
 public class RockFall : MonoBehaviour
 {
     [SerializeField] GameObject warning;
+    [SerializeField] GameObject boxWarning;
     [SerializeField] SpriteRenderer Rock;
     [SerializeField] ParticleSystem particle;
     [SerializeField] GameObject TrailLight;
@@ -17,6 +18,7 @@ public class RockFall : MonoBehaviour
         {
             Rock.color = new Color(1, 1, 1, 0);
             TrailLight.SetActive(false);
+            boxWarning.SetActive(false);
             GetComponent<BoxCollider2D>().enabled = false;
         }
         StartCoroutine(DmgTo());
@@ -40,11 +42,22 @@ public class RockFall : MonoBehaviour
 
         Rock.color = new Color(1, 1, 1, 1);
         TrailLight.SetActive(true);
+
+        yield return new WaitUntil(() => GetComponent<BoxCollider2D>().enabled == true);
+
+        boxWarning.SetActive(true);
+        Vector3 dirToBoss = (Boss.Instance.transform.position - transform.position).normalized;
+        float angle = Mathf.Atan2(dirToBoss.y, dirToBoss.x) * Mathf.Rad2Deg;
+
+        boxWarning.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (Rock == null)
             return;
+        if (collision.gameObject.layer == 8 || collision.gameObject.layer == 15)
+            collision.GetComponent<IHittable>().OnDamage(15, 0);
+
     }
 }

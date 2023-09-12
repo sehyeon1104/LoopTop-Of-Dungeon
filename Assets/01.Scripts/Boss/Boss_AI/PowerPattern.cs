@@ -352,15 +352,25 @@ public class P_Patterns : BossPattern
             }
             bodyCount = 0;
         }
-        yield return new WaitForSeconds(2f);
-        CinemachineCameraShaking.Instance.CameraShake(0.9f, 0.2f);
-        for(int i = 0; i < bodyList.Count; i++)
-        {
-            bodyList[i].GetComponent<BoxCollider2D>().enabled = true;
-            bodyList[i].transform.DOMove(transform.position, 0.2f);
-        }
 
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < bodyList.Count; i++)
+            bodyList[i].GetComponent<BoxCollider2D>().enabled = true;
+
+        yield return new WaitForSeconds(1f);
+
+        CinemachineCameraShaking.Instance.CameraShake(8f, 0.2f);
+
+        for(int i = 0; i < bodyList.Count; i++)
+            bodyList[i].transform.DOMove(transform.position, 0.2f);
+
+        yield return new WaitForSeconds(0.3f);
+
+        for (int i = 0; i < bodyList.Count; i++)
+            Managers.Pool.Push(bodyList[i].GetComponent<Poolable>());
+        Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", transform.position, Quaternion.identity);
+
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {
@@ -392,11 +402,6 @@ public class P_Patterns : BossPattern
 
         for(int i = 0; i < col.Length; i++)
             col[i].GetComponent<IHittable>().OnDamage(25, 0);
-        yield return null;
-    }
-    public IEnumerator Pattern_JA_2(int count = 0) //점프어택 2페이즈
-    {
-        StandUp();
         yield return null;
     }
     public IEnumerator Pattern_TH_2(int count = 0) //돌뿌리기 2페이즈
