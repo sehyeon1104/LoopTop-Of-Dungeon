@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class TutoObjSpawn : MonoBehaviour
 {
@@ -15,9 +16,22 @@ public class TutoObjSpawn : MonoBehaviour
     private GameObject chestPrefab = null;
     private GameObject dropItemObj = null;
 
+    [SerializeField]
+    private Transform[] moveTransform = null;
+    [SerializeField]
+    private Transform[] AtkTransform = null;
+    [SerializeField]
+    private Transform[] InteractiveTransform = null;
+
     private void Awake()
     {
         Init();
+
+    }
+
+    private void Start()
+    {
+        InstantiateKeyGuide();
     }
 
     private void Init()
@@ -61,5 +75,30 @@ public class TutoObjSpawn : MonoBehaviour
         dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
         dropItemObj.transform.position = dropItemPos.position;
         dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
+    }
+
+    public void InstantiateKeyGuide()
+    {
+        KeyManager.Instance.InstantiateKey(KeyCode.W, moveTransform[0]);
+        KeyManager.Instance.InstantiateKey(KeyCode.A, moveTransform[1]);
+        KeyManager.Instance.InstantiateKey(KeyCode.S, moveTransform[2]);
+        KeyManager.Instance.InstantiateKey(KeyCode.D, moveTransform[3]);
+        KeyManager.Instance.InstantiateKey(KeySetting.keys[KeyAction.DASH], moveTransform[4]);
+
+        for(int i = 0; i < AtkTransform.Length; ++i)
+        {
+            var str = (KeyAction)Enum.Parse(typeof(KeyAction), AtkTransform[i].name.ToUpper());
+            KeyManager.Instance.InstantiateKey(KeySetting.keys[str], AtkTransform[i]);
+        }
+
+        for (int i = 0; i < InteractiveTransform.Length; ++i)
+        {
+            var str = (KeyAction)Enum.Parse(typeof(KeyAction), InteractiveTransform[i].name.ToUpper());
+            KeyManager.Instance.InstantiateKey(KeySetting.keys[str], InteractiveTransform[i]);
+        }
+
+        //AtkTransform
+
+        //InteractiveTransform
     }
 }

@@ -27,7 +27,7 @@ public enum KeyAction
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
-    public static Dictionary<KeyCode, Sprite> keySprite = new Dictionary<KeyCode, Sprite>();
+    public static Dictionary<string, Sprite> keySprite = new Dictionary<string, Sprite>();
 }
 
 public class KeyManager : MonoSingleton<KeyManager>
@@ -85,6 +85,19 @@ public class KeyManager : MonoSingleton<KeyManager>
 
         keyCap = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/KeyCap.prefab");
         mouseClick = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/MouseClick.prefab");
+
+        KeySpriteInit();
+    }
+
+    public void KeySpriteInit()
+    {
+        foreach(var keySpr in specKey)
+        {
+            string s = keySpr.name.Substring(9, keySpr.name.Length - 9);
+            Debug.Log(s);
+            KeySetting.keySprite.Add(s, keySpr);
+            
+        }
     }
 
     private void OnGUI()
@@ -129,7 +142,7 @@ public class KeyManager : MonoSingleton<KeyManager>
         return true;
     }
 
-    public GameObject InstantiateKey(KeyCode keyCode)
+    public GameObject InstantiateKey(KeyCode keyCode, Transform parent)
     {
         GameObject obj = null;
 
@@ -146,9 +159,11 @@ public class KeyManager : MonoSingleton<KeyManager>
         else
         {
             obj = Instantiate(keyCap);
-            obj.GetComponent<SpriteRenderer>().sprite = KeySetting.keySprite[keyCode];
+            obj.GetComponent<SpriteRenderer>().sprite = KeySetting.keySprite[((int)keyCode).ToString()];
         }
 
+        obj.transform.SetParent(parent);
+        obj.transform.position = parent.position;
         return obj;
     }
 
