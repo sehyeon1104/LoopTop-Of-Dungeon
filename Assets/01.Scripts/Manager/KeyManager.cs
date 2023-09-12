@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 
 public enum KeyAction
@@ -26,10 +27,18 @@ public enum KeyAction
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
+    public static Dictionary<KeyCode, Sprite> keySprite = new Dictionary<KeyCode, Sprite>();
 }
 
 public class KeyManager : MonoSingleton<KeyManager>
 {
+    private Sprite[] keySprite = null;
+
+    [SerializeField]
+    private Sprite[] specKey = null;
+    private GameObject keyCap = null;
+    private GameObject mouseClick = null;
+
     public KeySettingUI keySettingUI { get; private set; } = null;
     Event keyEvent = null;
 
@@ -52,10 +61,17 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeyCode.A,
         KeyCode.S,
         KeyCode.D,
+
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow,
+
         KeyCode.Escape,
         KeyCode.Return,
         KeyCode.Backspace,
     };
+
 
     private void Awake()
     {
@@ -66,6 +82,9 @@ public class KeyManager : MonoSingleton<KeyManager>
             if(!KeySetting.keys.ContainsValue(defaultKeys[i]))
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
+
+        keyCap = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/KeyCap.prefab");
+        mouseClick = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/MouseClick.prefab");
     }
 
     private void OnGUI()
@@ -108,6 +127,29 @@ public class KeyManager : MonoSingleton<KeyManager>
         }
 
         return true;
+    }
+
+    public GameObject InstantiateKey(KeyCode keyCode)
+    {
+        GameObject obj = null;
+
+        if(keyCode.ToString().Length == 1)
+        {
+            obj = Instantiate(keyCap);
+            obj.GetComponentInChildren<TextMeshPro>().SetText(keyCode.ToString());
+        }
+        else if(keyCode == KeyCode.Mouse0 || keyCode == KeyCode.Mouse1)
+        {
+            obj = Instantiate(mouseClick);
+            obj.GetComponent<SpriteRenderer>().flipX = (int)keyCode % 2 == 0 ? true : false;
+        }
+        else
+        {
+            obj = Instantiate(keyCap);
+            obj.GetComponent<SpriteRenderer>().sprite = KeySetting.keySprite[keyCode];
+        }
+
+        return obj;
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)
