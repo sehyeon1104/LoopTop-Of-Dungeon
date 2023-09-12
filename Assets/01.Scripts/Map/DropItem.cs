@@ -166,7 +166,8 @@ public class DropItem : MonoBehaviour, IPoolable
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
             if (itemSelectNum.Contains(rand)
                 || itemObjListNum.Contains(rand)
-                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber)
+                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber) 
+                || ItemManager.Instance.brokenItemList[rand].itemNumber == 510
                 )
                 continue;
 

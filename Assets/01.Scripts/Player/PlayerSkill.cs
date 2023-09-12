@@ -57,7 +57,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     private void Update()
     {
-        if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl)
+        if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || KeyManager.Instance.keySettingUI.isChangeKey)
             return;
 
         if (Input.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]))
