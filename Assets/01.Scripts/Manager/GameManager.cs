@@ -29,6 +29,7 @@ public class GameManager : MonoSingleton<GameManager>
     private PlayerData playerData = new PlayerData();
     private GameData gameData = new GameData();
     private ItemData itemData = new ItemData();
+    private KeySettingData keySettingData = new KeySettingData();
 
     private GameObject hitEffect = null;
     private GameObject critHitEffect = null;
@@ -116,6 +117,19 @@ public class GameManager : MonoSingleton<GameManager>
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
             ItemManager.Instance.Init();
+        }
+
+        if (!SaveManager.GetCheckDataBool("KeySettingData"))
+        {
+            Debug.Log("[GameManager] KeySettingData 저장파일 없음");
+            KeyManager.Instance.InitKey();
+            SaveManager.Save<KeySettingData>(ref keySettingData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] KeySettingData 저장파일 있음");
+            SaveManager.Load<KeySettingData>(ref keySettingData);
+            KeyManager.Instance.SetKeyData(keySettingData);
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -310,8 +324,10 @@ public class GameManager : MonoSingleton<GameManager>
         }
 
         SetGameData();
+        KeyManager.Instance.SaveKeyData(ref keySettingData);
         SaveManager.Save<GameData>(ref gameData);
         SaveManager.Save<ItemData>(ref itemData);
+        SaveManager.Save<KeySettingData>(ref keySettingData);
     }
 
     public void LoadData()
@@ -324,6 +340,9 @@ public class GameManager : MonoSingleton<GameManager>
 
         SaveManager.Load<ItemData>(ref itemData);
         LoadItemData();
+
+        SaveManager.Load<KeySettingData>(ref keySettingData);
+        KeyManager.Instance.SetKeyData(keySettingData);
     }
 
     public void GameQuit()

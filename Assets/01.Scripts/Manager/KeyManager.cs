@@ -75,13 +75,7 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     private void Awake()
     {
-        keySettingUI = FindObjectOfType<KeySettingUI>()
-;
-        for(int i = 0; i < (int)KeyAction.KeyCount; ++i)
-        {
-            if(!KeySetting.keys.ContainsValue(defaultKeys[i]))
-                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
-        }
+        keySettingUI = FindObjectOfType<KeySettingUI>();
 
         keyCap = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/KeyCap.prefab");
         mouseClick = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/Tutorial/MouseClick.prefab");
@@ -89,13 +83,22 @@ public class KeyManager : MonoSingleton<KeyManager>
         KeySpriteInit();
     }
 
+    public void InitKey()
+    {
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+        }
+    }
+
     public void KeySpriteInit()
     {
         foreach(var keySpr in specKey)
         {
             string s = keySpr.name.Substring(9, keySpr.name.Length - 9);
-            KeySetting.keySprite.Add(s, keySpr);
-            
+            if(!KeySetting.keySprite.ContainsKey(s))
+                KeySetting.keySprite.Add(s, keySpr);
         }
     }
 
@@ -164,6 +167,26 @@ public class KeyManager : MonoSingleton<KeyManager>
         obj.transform.SetParent(parent);
         obj.transform.position = parent.position;
         return obj;
+    }
+
+    public void SetKeyData(KeySettingData keySettingData)
+    {
+        KeySetting.keys.Clear();
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, keySettingData.keySetting[i]);
+        }
+    }
+
+    public void SaveKeyData(ref KeySettingData keySettingData)
+    {
+        keySettingData.keySetting.Clear();
+
+        foreach (var key in KeySetting.keys.Values)
+        {
+            keySettingData.keySetting.Add(key);
+        }
     }
 
     //public void ChangeKey(string keyAction, KeyCode key)
