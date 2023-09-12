@@ -30,6 +30,7 @@ public class GameManager : MonoSingleton<GameManager>
     private GameData gameData = new GameData();
     private ItemData itemData = new ItemData();
     private KeySettingData keySettingData = new KeySettingData();
+    private ImportantGameData importantGameData = new ImportantGameData();
 
     private GameObject hitEffect = null;
     private GameObject critHitEffect = null;
@@ -130,6 +131,17 @@ public class GameManager : MonoSingleton<GameManager>
             Debug.Log("[GameManager] KeySettingData 저장파일 있음");
             SaveManager.Load<KeySettingData>(ref keySettingData);
             SetKeyData();
+        }
+
+        if (!SaveManager.GetCheckDataBool("ImportantGameData"))
+        {
+            Debug.Log("[GameManager] ImportantGameData 저장파일 없음");
+            SaveManager.Save<ImportantGameData>(ref importantGameData);
+        }
+        else
+        {
+            Debug.Log("[GameManager] ImportantGameData 저장파일 있음");
+            SaveManager.Load<ImportantGameData>(ref importantGameData);
         }
 
         Player.playerBase.PlayerTransformDataSOList.Add(Managers.Resource.Load<PlayerSkillData>("Assets/07.SO/Player/Power.asset"));
@@ -324,6 +336,21 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void ClearTuto()
+    {
+        importantGameData.isClearTuto = true;
+    }
+
+    public void GetBossFragment()
+    {
+        importantGameData.bossFragmentAmount = playerData.bossFragmentAmount;
+    }
+
+    public void ObtainCharacter(Define.PlayerTransformTypeFlag playerTransformTypeFlag)
+    {
+        importantGameData.isObtainBoss[(int)playerTransformTypeFlag] = true;
+    }
+
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)
     {
         this.mapTypeFlag = mapTypeFlag;
@@ -349,6 +376,7 @@ public class GameManager : MonoSingleton<GameManager>
         SaveManager.Save<GameData>(ref gameData);
         SaveManager.Save<ItemData>(ref itemData);
         SaveManager.Save<KeySettingData>(ref keySettingData);
+        SaveManager.Save<ImportantGameData>(ref importantGameData);
     }
 
     public void LoadData()
@@ -364,6 +392,8 @@ public class GameManager : MonoSingleton<GameManager>
 
         SaveManager.Load<KeySettingData>(ref keySettingData);
         SetKeyData();
+
+        SaveManager.Load<ImportantGameData>(ref importantGameData);
     }
 
     public void GameQuit()
