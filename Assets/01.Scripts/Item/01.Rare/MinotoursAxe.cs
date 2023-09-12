@@ -41,8 +41,8 @@ public class MinotoursAxe : ItemBase
     {
         isEquip = true;
         delay = abilityDuration;
-        StartCoroutine(CoolTime());
-        StartCoroutine(MinotoursAxeAbility());
+        ItemManager.Instance.StartCoroutine(CoolTime());
+        ItemManager.Instance.StartCoroutine(MinotoursAxeAbility());
     }
 
     public IEnumerator MinotoursAxeAbility()

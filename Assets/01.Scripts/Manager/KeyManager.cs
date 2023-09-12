@@ -94,7 +94,6 @@ public class KeyManager : MonoSingleton<KeyManager>
         foreach(var keySpr in specKey)
         {
             string s = keySpr.name.Substring(9, keySpr.name.Length - 9);
-            Debug.Log(s);
             KeySetting.keySprite.Add(s, keySpr);
             
         }

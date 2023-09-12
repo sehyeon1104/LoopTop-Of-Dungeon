@@ -30,7 +30,7 @@ public class BrokenKing : ItemBase
     {
         isEquip = true;
 
-        co = StartCoroutine(Timer());
+        co = ItemManager.Instance.StartCoroutine(Timer());
     }
 
     public override void Disabling()
@@ -41,7 +41,7 @@ public class BrokenKing : ItemBase
     public override void LastingEffect()
     {
         isEquip = true;
-        co = StartCoroutine(Timer());
+        co = ItemManager.Instance.StartCoroutine(Timer());//StartCoroutine(Timer());
     }
 
     public void BrokenKingAbility()

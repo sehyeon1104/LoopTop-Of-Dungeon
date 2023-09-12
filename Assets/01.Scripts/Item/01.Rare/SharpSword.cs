@@ -49,11 +49,11 @@ public class SharpSword : ItemBase
     {
         if (co != null)
         {
-            StopCoroutine(co);
+            ItemManager.Instance.StopCoroutine(co);
             co = null;
         }
 
-        co = StartCoroutine(CoolTime());
+        co = ItemManager.Instance.StartCoroutine(CoolTime());
 
         delay = 0f;
         if(stack >= 3)

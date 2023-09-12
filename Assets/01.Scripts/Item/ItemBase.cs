@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public abstract class ItemBase : MonoBehaviour
+public abstract class ItemBase
 {
     // 아이템 타입
     public abstract ItemType itemType { get; }

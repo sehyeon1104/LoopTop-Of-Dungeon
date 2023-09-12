@@ -29,6 +29,9 @@ public class DropItem : MonoBehaviour, IPoolable
 
     private WaitForEndOfFrame waitForEndOfFrame;
 
+    [SerializeField]
+    private GameObject canvas = null;
+
     private void Awake()
     {
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
@@ -201,6 +204,7 @@ public class DropItem : MonoBehaviour, IPoolable
             interactionButton.onClick.RemoveListener(TakeItem);
             interactionButton.onClick.AddListener(TakeItem);
             UIManager.Instance.RotateInteractionButton();
+            canvas.SetActive(true);
         }
     }
 
@@ -210,6 +214,7 @@ public class DropItem : MonoBehaviour, IPoolable
         {
            interactionButton.onClick.RemoveListener(TakeItem);
            UIManager.Instance.RotateAttackButton();
+            canvas.SetActive(false);
         }
     }
 
