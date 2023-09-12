@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6df6497c3e929649bd1b88839ca9829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 60
   trail:
   - {fileID: 1057017794978833305}
   - {fileID: 7815024476172132577}
@@ -324,14 +324,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 2423387817513258139}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 959
+  m_shaderPropertyID: 1065
   m_materialData:
   - m_trailRenderer: {fileID: 1057017794978833305}
     m_uvTiling: {x: 0.15, y: 1}
-    m_move: 0.17544872
+    m_move: 0
   - m_trailRenderer: {fileID: 7815024476172132577}
     m_uvTiling: {x: 0.25, y: 1}
-    m_move: 0.29241452
+    m_move: 0
 --- !u!199 &8768189866054634413
 ParticleSystemRenderer:
   serializedVersion: 6

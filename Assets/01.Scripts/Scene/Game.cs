@@ -8,7 +8,7 @@ public class Game : Base
     {
         base.Init();
 
-        Managers.Sound.Play($"Assets/05.Sounds/BGM/{MapType}/{SceneType}_{MapType}.mp3", Define.Sound.Bgm, 1, 0.5f);
+        Managers.Sound.Play($"Assets/05.Sounds/BGM/{MapType}/{SceneType}_{MapType}.mp3", Define.Sound.Bgm);
         switch(MapType)
         {
             case Define.MapTypeFlag.Ghost:

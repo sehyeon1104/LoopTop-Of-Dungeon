@@ -510,8 +510,10 @@ public class GhostPattern : G_Patterns
     }
     private void SetPanicValue()
     {
-
         float fillTime = GhostBossUI.Instance.fillTime;
+        if (Boss.Instance.isBDead)
+            fillTime = 50f;
+
         if (fillTime > 70f)
         {
             panicMat.SetFloat("_VigIntensity", (fillTime - 70) * 0.01f + 0.3f);

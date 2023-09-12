@@ -17,9 +17,11 @@ public class P_Patterns : BossPattern
     [SerializeField] protected VisualEffect shorkWarning;
     [SerializeField] protected GameObject dashWarning;
     [SerializeField] protected GameObject dash2Phase;
+    [SerializeField] protected GameObject bossAura;
 
     [SerializeField] protected CinemachineVirtualCamera dashVCam;
     [SerializeField] protected GameObject standUpVCam;
+    [SerializeField] protected GameObject twoPhaseVCam;
 
     private List<Transform> partList = new List<Transform>();
     private List<StandupObject> standupObjects = new List<StandupObject>();
@@ -37,6 +39,8 @@ public class P_Patterns : BossPattern
         }
         foreach (var std in FindObjectsOfType<StandupObject>())
             standupObjects.Add(std);
+
+        bossAura.SetActive(false);
     }
     public void StandUp(bool isStdUp = true)
     {
@@ -151,13 +155,13 @@ public class P_Patterns : BossPattern
             if (i == 2) clone.transform.localScale = new Vector3(1.75f, 1.75f);
             else clone.transform.localScale = new Vector3(1.25f, 1.25f);
 
-            transform.DOMove(transform.position + Vector3.up * 600, 0.2f);
+            transform.DOMove(transform.position + Vector3.up * 200, 0.2f);
             Boss.Instance.isBInvincible = true;
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.7f);
 
-            transform.DOMove(clone.transform.position, 1f);
-            yield return new WaitForSeconds(1f);
+            transform.DOMove(clone.transform.position, 0.3f);
+            yield return new WaitForSeconds(0.3f);
             Boss.Instance.isBInvincible = false;
 
             Collider2D[] col = null;
@@ -223,7 +227,90 @@ public class P_Patterns : BossPattern
     #endregion
     public IEnumerator Pattern_PChange(int count = 0) // 페이즈 변경 패턴
     {
-        yield return null;
+        Vector2 firstPos = transform.position + Vector3.up * 200;
+
+        twoPhaseVCam.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
+        CinemachineCameraShaking.Instance.CameraShake(40, 0.1f);
+        Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 2);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        transform.DOMove(firstPos, 3f);
+        yield return new WaitForSeconds(1f);
+
+        twoPhaseVCam.SetActive(false);
+        yield return new WaitForSeconds(2f);
+
+        for(int i = 0; i < 30; i++)
+        {
+            Boss.Instance.Base.Hp += 50;
+            int random = Random.Range(0, 2);
+            Vector3 playerPos = GameManager.Instance.Player.transform.position;
+            Vector3 randomPos = random == 0 ? new Vector3(35.5f, Random.Range(-6, 17)) : new Vector3(Random.Range(-2, 30.5f), 22);
+            Vector3 dirToPlayer = (playerPos - randomPos).normalized;
+            float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+
+            if(i % 6 == 0 && i != 0)
+            {
+                dashWarning.SetActive(true);
+                transform.position = random == 0 ? new Vector3(37.5f, playerPos.y) : new Vector3(playerPos.x, 24);
+                
+                Vector3 realdirToPlayer = playerPos - transform.position;
+                float realAngle = Mathf.Atan2(realdirToPlayer.y, realdirToPlayer.x) * Mathf.Rad2Deg;
+
+                dashWarning.transform.rotation = Quaternion.Euler(Vector3.forward * (realAngle - 90 - Mathf.Sign(transform.lossyScale.x) * 90));
+                for(int j = -5; j < 6; j++)
+                {
+                    if (j == 0) continue;
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", transform.position + Vector3.up * 2.5f, Quaternion.AngleAxis(realAngle + 15 * j, Vector3.forward));
+                }
+
+                yield return new WaitForSeconds(1f);
+                dashWarning.SetActive(false);
+
+                for (int j = -5; j < 6; j++)
+                {
+                    if (j == 0) continue;
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + Vector3.up * 2.5f, Quaternion.AngleAxis(realAngle + 15 * j, Vector3.forward));
+                }
+
+                CinemachineCameraShaking.Instance.CameraShake(8f, 0.3f);
+                transform.DOMove(new Vector3(playerPos.x - 50f + random * 50f, playerPos.y - 50f * random), 0.5f);
+
+                Collider2D realCol = Physics2D.OverlapBox(((transform.position + Vector3.up * 2.5f) + playerPos) / 2, new Vector3(40f, 4f), realAngle, 1 << 8);
+                if (realCol != null)
+                    GameManager.Instance.Player.OnDamage(20, 0);
+                
+                yield return new WaitForSeconds(0.4f);
+            }
+
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/RockWarning.prefab", randomPos, Quaternion.AngleAxis(angle, Vector3.forward));
+
+            yield return new WaitForSeconds(0.6f - (i * 0.01f));
+
+            Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", randomPos, Quaternion.AngleAxis(angle, Vector3.forward));
+        }
+        yield return new WaitForSeconds(1f);
+        transform.position = firstPos;
+
+        Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", GameManager.Instance.Player.transform.position, Quaternion.identity);
+        clone.transform.localScale = new Vector3(1.75f, 1.75f);
+
+        yield return new WaitForSeconds(0.3f);
+        Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 2);
+        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
+        yield return new WaitForSeconds(0.4f);
+
+        transform.DOMove(clone.transform.position, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        Collider2D[] col = Physics2D.OverlapCircleAll(clone.transform.position, 7.5f, 1 << 8 | 1 << 15);
+        CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
+
+        Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
+
+        for (int i = 0; i < col.Length; i++)
+            col[i].GetComponent<IHittable>().OnDamage(25, 0);
     }
     #region Phase 2
     public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
@@ -247,26 +334,30 @@ public class P_Patterns : BossPattern
                 col[k].GetComponent<IHittable>().OnDamage(20, 0);
 
             for (int j = 0; j < count; j++)
-            { 
+            {
                 float randDist = Random.Range(0, 360f) * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized * 9.5f;
+                Vector2 dir = new Vector2(Mathf.Cos(randDist), Mathf.Sin(randDist)).normalized;
+
+                Vector2 randPos = new Vector2(Random.Range(0f, 28.5f), Random.Range(-2f, 15.5f));
                 if (bodyCount < 3)
                 {
                     bodyCount++;
-                    GameObject clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity).gameObject;
+                    GameObject clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/ShockRock.prefab", new Vector2(transform.position.x + dir.x * 15.5f, transform.position.y + 2 + dir.y * 15.5f), Quaternion.identity).gameObject;
                     bodyList.Add(clone);
                 }
                 else
                 {
-                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x, transform.position.y + 2 + dir.y), Quaternion.identity);
+                    Managers.Pool.PoolManaging("Assets/10.Effects/power/RockFall.prefab", new Vector2(transform.position.x + dir.x * 9.5f, transform.position.y + 2 + dir.y * 9.5f), Quaternion.identity);
                 }
             }
             bodyCount = 0;
         }
         yield return new WaitForSeconds(2f);
+        CinemachineCameraShaking.Instance.CameraShake(0.9f, 0.2f);
         for(int i = 0; i < bodyList.Count; i++)
         {
-            bodyList[i].transform.DOMove(transform.position, 0.5f);
+            bodyList[i].GetComponent<BoxCollider2D>().enabled = true;
+            bodyList[i].transform.DOMove(transform.position, 0.2f);
         }
 
         yield return new WaitForSeconds(0.6f);
@@ -396,6 +487,7 @@ public class PowerPattern : P_Patterns
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
 
+        Managers.Sound.Play("Assets/05.Sounds/BGM/Power/Boss_Power_Two.mp3", Define.Sound.Bgm, 1, 1f);
         StandUp(false);
 
         isThisSkillCoolDown[patternChoice] = false;
@@ -407,21 +499,18 @@ public class PowerPattern : P_Patterns
 
         nowBPhaseChange = true;
         Boss.Instance.isBInvincible = true;
-        CinemachineCameraShaking.Instance.CameraShake(6, 10f);
 
         Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
-        Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashPhase);
 
-        yield return patternDelay;
+        yield return StartCoroutine(Pattern_PChange());
 
-        while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
-        {
-            Boss.Instance.Base.Hp += 8;
-            yield return null;
-        }
+        //while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
+        //{
+        //    Boss.Instance.Base.Hp += 1;
+        //    yield return null;
+        //}
+
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
-        isCanUseFinalPattern = true;
-        isUsingFinalPattern = false;
         patternDelay = new WaitForSeconds(1f);
         NowPhase = 2;
 

@@ -44,7 +44,7 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
             bossUltGageImages.fillAmount = fillTime / time;
             ultArrow.rectTransform.localPosition = new Vector2((bossUltGageImages.fillAmount - 1) * 1400 + 700, 0f);
 
-            if (fillTime > 0)
+            if (fillTime > 0 && !Boss.Instance.isBDead)
             {
                 fillTime -= 0.01f;
             }
