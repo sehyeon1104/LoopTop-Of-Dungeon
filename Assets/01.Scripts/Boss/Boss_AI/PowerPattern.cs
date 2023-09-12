@@ -236,10 +236,10 @@ public class P_Patterns : BossPattern
         Boss.Instance.bossAnim.anim.SetInteger(Boss.Instance._hashSkill, 2);
         Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         transform.DOMove(firstPos, 3f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
 
         twoPhaseVCam.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.25f);
 
         for(int i = 0; i < 30; i++)
         {
