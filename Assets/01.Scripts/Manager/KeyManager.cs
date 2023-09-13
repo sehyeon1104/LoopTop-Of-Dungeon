@@ -85,12 +85,15 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     public void InitKey()
     {
+        KeySetting.keys.Clear();
+
         for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
         {
             if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
         GameManager.Instance.SaveKeyData();
+        keySettingUI.UpdateKeyTmp();
     }
 
     public void KeySpriteInit()
@@ -109,15 +112,24 @@ public class KeyManager : MonoSingleton<KeyManager>
             return;
 
         keyEvent = Event.current;
-        if (keyEvent.type == EventType.KeyDown)
+        Debug.Log(keyEvent.isMouse);
+
+        if (keyEvent.type == EventType.KeyDown || keyEvent.isMouse)
         {
             if (!ExceptionCheck())
                 return;
 
-            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+            if (keyEvent.isMouse)
+                KeySetting.keys[(KeyAction)key] = (KeyCode)(keyEvent.button + 323);
+            else
+                KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+
             key = -1;
+            keySettingUI.ToggleChangeKeyPanel();
             keySettingUI.UpdateKeyTmp();
+            keySettingUI.SetIsChangeKey(false);
         }
+
     }
 
     int key = -1;
@@ -139,7 +151,10 @@ public class KeyManager : MonoSingleton<KeyManager>
         for (int i = 0; i < exceptionKeys.Length; ++i)
         {
             if (keyEvent.keyCode == exceptionKeys[i])
+            {
+                keySettingUI.SetIsChangeKey(false);
                 return false;
+            }
         }
 
         return true;
@@ -169,9 +184,4 @@ public class KeyManager : MonoSingleton<KeyManager>
         obj.transform.position = parent.position;
         return obj;
     }
-
-    //public void ChangeKey(string keyAction, KeyCode key)
-    //{
-    //    KeySetting.keys[(KeyAction)Enum.Parse(typeof(KeyAction), keyAction)] = key;
-    //}
 }

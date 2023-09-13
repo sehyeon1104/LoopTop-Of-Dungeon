@@ -101,6 +101,7 @@ public class UIManager : MonoSingleton<UIManager>
     public ShopUI shopUI { private set; get; } = null;
     public float[] currentFillAmount;
     private float nowTimeScale;
+    public bool isSetting { get; private set; } = false;
 
     private void Awake()
     {
@@ -286,6 +287,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void TogglePausePanel()
     {
+        isSetting = !pausePanel.activeSelf;
         blurPanel.SetActive(!pausePanel.activeSelf);
         pausePanel.SetActive(!pausePanel.activeSelf);
         if (pausePanel.activeSelf)
