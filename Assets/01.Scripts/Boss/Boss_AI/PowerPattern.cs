@@ -315,9 +315,10 @@ public class P_Patterns : BossPattern
     #region Phase 2
     public IEnumerator Pattern_SG_2(int count = 0) //πŸ¥⁄¬Ô±‚ 2∆‰¿Ã¡Ó
     {
-        List<GameObject> bodyList = new List<GameObject>();
+        List<Poolable> bodyList = new List<Poolable>();
         int bodyCount = 0;
 
+        bodyList.Clear();
         for (int i = 0; i < 3; i++)
         {
             shorkWarning.gameObject.SetActive(true);
@@ -342,7 +343,7 @@ public class P_Patterns : BossPattern
                 if (bodyCount < 3)
                 {
                     bodyCount++;
-                    GameObject clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/ShockRock.prefab", new Vector2(transform.position.x + dir.x * 15.5f, transform.position.y + 2 + dir.y * 15.5f), Quaternion.identity).gameObject;
+                    Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/ShockRock.prefab", new Vector2(transform.position.x + dir.x * 15.5f, transform.position.y + 2 + dir.y * 15.5f), Quaternion.identity);
                     bodyList.Add(clone);
                 }
                 else
@@ -368,7 +369,7 @@ public class P_Patterns : BossPattern
         yield return new WaitForSeconds(0.3f);
 
         for (int i = 0; i < bodyList.Count; i++)
-            Managers.Pool.Push(bodyList[i].GetComponent<Poolable>());
+            Managers.Pool.Push(bodyList[i]);
         Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", transform.position, Quaternion.identity);
 
     }

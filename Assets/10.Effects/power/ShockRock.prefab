@@ -4986,7 +4986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
-  PushTime: 10
+  PushTime: 0
 --- !u!114 &2008571954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5161,9 +5161,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4143530697764947913}
-  - component: {fileID: 2963101726305386472}
   m_Layer: 0
-  m_Name: ShockRockWarning
+  m_Name: RealWarning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5185,20 +5184,6 @@ Transform:
   m_Father: {fileID: 1155650478560801446}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2963101726305386472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4143530697764947926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsUsing: 0
-  PushTime: 1
 --- !u!1 &4373344269668591060
 GameObject:
   m_ObjectHideFlags: 0
