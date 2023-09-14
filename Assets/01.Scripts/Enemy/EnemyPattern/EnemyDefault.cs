@@ -52,17 +52,16 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     private EnemyHpBar hpBar;
 
     protected Poolable poolable = null;
-    public bool dsaf = true;
-    public bool isControl
+    public bool isControl = true;
+    public bool IsControl
     {
         get
         {
-            return dsaf;
+            return isControl;
         }
         set
         {
-            Debug.Log(dsaf);
-            dsaf = value;
+            isControl = value;
         }
     }
     protected bool isMove {private set; get; } = false;
@@ -93,7 +92,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     void Update()
     {
-        if (!isControl)
+        if (!IsControl)
             return;
         Act();
     }

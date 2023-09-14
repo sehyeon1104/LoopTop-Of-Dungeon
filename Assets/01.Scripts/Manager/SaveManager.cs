@@ -71,7 +71,7 @@ public static class SaveManager
         System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(SAVE_PATH);
         foreach (System.IO.FileInfo File in di.GetFiles())
         {
-            if(File.Name == "ImportantGameData")
+            if(File.Name == "ImportantGameData.json")
             {
                 continue;
             }

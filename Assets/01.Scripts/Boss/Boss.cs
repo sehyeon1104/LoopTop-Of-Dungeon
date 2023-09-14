@@ -98,6 +98,9 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         actCoroutine = null;
         StopAllCoroutines();
+
+        var movePortal = Managers.Resource.Instantiate("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
+        movePortal.transform.position = new Vector3(15, 8, 0);
         //gameObject.SetActive(false);
     }
 

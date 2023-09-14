@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using TMPro;
 
-
 public enum KeyAction
 {
     // 플레이어 베이스 스킬
@@ -22,8 +21,6 @@ public enum KeyAction
     KeyCount,
 }
 
-
-
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keys = new Dictionary<KeyAction, KeyCode>();
@@ -40,7 +37,7 @@ public class KeyManager : MonoSingleton<KeyManager>
     private GameObject mouseClick = null;
 
     public KeySettingUI keySettingUI { get; private set; } = null;
-    Event keyEvent = null;
+    private Event keyEvent = null;
 
     KeyCode[] defaultKeys = new KeyCode[]
     {
@@ -85,12 +82,27 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     public void InitKey()
     {
+        KeySetting.keys.Clear();
+
         for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
         {
             if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
         GameManager.Instance.SaveKeyData();
+    }
+
+    public void InitKeySetting()
+    {
+        KeySetting.keys.Clear();
+
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+        }
+        GameManager.Instance.SaveKeyData();
+        keySettingUI.UpdateKeyTmp();
     }
 
     public void KeySpriteInit()
@@ -105,18 +117,26 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     private void OnGUI()
     {
+
         if (!keySettingUI.isChangeKey)
             return;
 
         keyEvent = Event.current;
-        if (keyEvent.type == EventType.KeyDown)
+
+        if (keyEvent.type == EventType.KeyDown || keyEvent.isMouse)
         {
-            if (!ExceptionCheck())
+            if (!ExceptionCheck() || keyEvent.keyCode == KeyCode.None && !keyEvent.isMouse)
                 return;
 
-            KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+            if (keyEvent.isMouse)
+                KeySetting.keys[(KeyAction)key] = (KeyCode)(keyEvent.button + 323);
+            else
+                KeySetting.keys[(KeyAction)key] = keyEvent.keyCode;
+
             key = -1;
+            keySettingUI.ToggleChangeKeyPanel();
             keySettingUI.UpdateKeyTmp();
+            keySettingUI.SetIsChangeKey(false);
         }
     }
 
@@ -128,14 +148,19 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     public bool ExceptionCheck()
     {
+        // 현재 지닌 키
         foreach (var keyCode in KeySetting.keys.Values)
         {
             if (keyEvent.keyCode == keyCode)
-            {
-                keySettingUI.SetIsChangeKey(false);
                 return false;
+
+            if (keyEvent.isMouse)
+            {
+                if ((KeyCode)(keyEvent.button + 323) == keyCode)
+                    return false;
             }
         }
+        // 예외 키
         for (int i = 0; i < exceptionKeys.Length; ++i)
         {
             if (keyEvent.keyCode == exceptionKeys[i])
@@ -169,9 +194,4 @@ public class KeyManager : MonoSingleton<KeyManager>
         obj.transform.position = parent.position;
         return obj;
     }
-
-    //public void ChangeKey(string keyAction, KeyCode key)
-    //{
-    //    KeySetting.keys[(KeyAction)Enum.Parse(typeof(KeyAction), keyAction)] = key;
-    //}
 }

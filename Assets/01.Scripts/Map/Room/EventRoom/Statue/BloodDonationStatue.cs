@@ -8,6 +8,20 @@ public class BloodDonationStatue : StatueBase
     private int requireHp = 5;
     private Coroutine co = null;
 
+    [SerializeField]
+    private GameObject visual = null;
+    [SerializeField]
+    private Sprite[] spriteImage = null;
+    private SpriteRenderer spriteRenderer = null;
+
+    private int count = 0;
+
+    protected override void Start()
+    {
+        base.Start();
+        spriteRenderer = visual.GetComponent<SpriteRenderer>();
+    }
+
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
@@ -37,6 +51,9 @@ public class BloodDonationStatue : StatueBase
             co = StartCoroutine(IETextAnim());
             return;
         }
+
+        count++;
+        spriteRenderer.sprite = spriteImage[count];
 
         GameManager.Instance.Player.playerBase.Hp -= requireHp;
         if(Random.Range(0, 100) < requireHp * 4)

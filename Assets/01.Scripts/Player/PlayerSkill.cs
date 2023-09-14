@@ -12,15 +12,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+using WindowsInput;
+
 // Player Skill Class
 public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     PlayerBase playerBase;
-    List<PlayerSkillBase> SkillBase;
     Button interaction;
     Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
-    Rigidbody2D rb;
     int[] slotLevel;
     [HideInInspector]
     public int[] skillIndex;
@@ -57,22 +57,39 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     private void Update()
     {
-        if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || KeyManager.Instance.keySettingUI.isChangeKey)
+        if (WinInput.GetKeyDown(KeyCode.Escape))
+        {
+            if (KeyManager.Instance.keySettingUI.isChangeKey)
+                return;
+
+            if (UIManager.Instance.GetPanelStack().Count != 0)
+            {
+                UIManager.Instance.PopPanel();
+            }
+            else
+            {
+                UIManager.Instance.TogglePausePanel();
+            }
+        }
+        if (WinInput.GetKeyDown(KeyCode.Tab))
+            InventoryUI.Instance.ToggleInventoryUI();
+
+        if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || UIManager.Instance.isSetting)
             return;
 
-        if (Input.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]))
+        if (WinInput.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL1]))
         {
             Skill1();
         }
-        if (Input.GetKeyDown(/*KeyCode.I*/KeySetting.keys[KeyAction.SKILL2]))
+        if (WinInput.GetKeyDown(/*KeyCode.I*/KeySetting.keys[KeyAction.SKILL2]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL2]))
         {
             Skill2();
         }
-        if (Input.GetKey(/*KeyCode.J*/KeySetting.keys[KeyAction.ATTACK]))
+        if (WinInput.GetKey(/*KeyCode.J*/KeySetting.keys[KeyAction.ATTACK]) || Input.GetKey(KeySetting.keys[KeyAction.ATTACK]))
         {
               Attack();
         }
-        if(Input.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]))
+        if(WinInput.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]) || Input.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]))
         {
             if (interaction.gameObject.activeSelf)
             {
@@ -80,32 +97,16 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 return;
             }
         }
-        if (Input.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]))
+        if (WinInput.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]) || Input.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]))
             DashSkill();
-        if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
+        if (WinInput.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]) || Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(UIManager.Instance.GetPanelStack().Count != 0)
-            {
-                UIManager.Instance.PopPanel();
-            }
-            else
-            {
-                UIManager.Instance.TogglePausePanel();   
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.H))
+        if(WinInput.GetKeyDown(KeyCode.H))
         {
             Collider2D[] enemies;
             enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
             enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
         }
-        if (Input.GetKeyDown(KeyCode.Tab)|| Input.GetKeyUp(KeyCode.Tab))
-            InventoryUI.Instance.ToggleInventoryUI();
-        
-      
-
     }
     public void SlotUp(int index)
     {
@@ -242,7 +243,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         Time.timeScale = 0;
         while(WaitButton() != 1)
         {
-            if(Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.D))
+            if(WinInput.GetKeyDown(KeyCode.A)|| WinInput.GetKeyDown(KeyCode.D))
             {
                 currentObj.sizeDelta = usuallySize;
                 index += (int)Input.GetAxisRaw("Horizontal");
@@ -250,7 +251,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 currentObj = rectObjs[index];
                 currentObj.sizeDelta = enlargementSize;
             }
-            if(Input.GetKeyDown(KeyCode.Return))
+            if(WinInput.GetKeyDown(KeyCode.Return))
             {
                 skillIndex[3 - rectObjs.Count] = int.Parse(currentObj.name);
                 

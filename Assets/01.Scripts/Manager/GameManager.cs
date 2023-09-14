@@ -339,6 +339,12 @@ public class GameManager : MonoSingleton<GameManager>
     public void ClearTuto()
     {
         importantGameData.isClearTuto = true;
+        SaveData();
+    }
+
+    public bool CheckClearTuto()
+    {
+        return importantGameData.isClearTuto;
     }
 
     public void GetBossFragment()

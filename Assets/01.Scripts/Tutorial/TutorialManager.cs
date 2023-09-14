@@ -17,6 +17,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Init()
     {
+        GameManager.Instance.SetMapTypeFlag(Define.MapTypeFlag.Tutorial);
+        GameManager.Instance.SetSceneType(Define.Scene.Tutorial);
+
         tutoObjSpawn = FindObjectOfType<TutoObjSpawn>();
         tutoEnemyRoom = FindObjectOfType<TutoEnemyRoom>();
 
@@ -35,5 +38,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         movePortal = Managers.Resource.Instantiate("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         movePortal.transform.position = portalPos;
+        GameManager.Instance.ClearTuto();
     }
 }
