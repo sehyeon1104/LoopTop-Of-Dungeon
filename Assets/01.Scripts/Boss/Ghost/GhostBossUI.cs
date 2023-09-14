@@ -18,11 +18,13 @@ public class GhostBossUI : MonoSingleton<GhostBossUI>
     public Image ChangeFillTrail;
     public Image ultArrow;
 
+    public TrailRenderer FillTrail;
     public ParticleSystem ultParticle;
     public Material partMat;
 
     private void Start()
     {
+        FillTrail = ChangeFillTrail.GetComponentInChildren<TrailRenderer>();
         InitUltGage();
         StartCoroutine(FillBossUltGage(100f));
     }
