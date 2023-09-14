@@ -352,7 +352,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateGoods()
     {
         fragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.FragmentAmount.ToString());
-        bossFragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.BossFragmentAmount.ToString());
+        bossFragmentAmountTMP.SetText(GameManager.Instance.GetBossFragmentAmount().ToString());
     }
 
     #region GameOver

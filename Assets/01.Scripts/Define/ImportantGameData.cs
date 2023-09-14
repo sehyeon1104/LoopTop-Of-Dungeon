@@ -7,4 +7,5 @@ public class ImportantGameData
     public bool isClearTuto;
     public int bossFragmentAmount;
     public bool[] isObtainBoss;
+    public List<Define.MapTypeFlag> clearMapTypeList = new List<Define.MapTypeFlag>();
 }

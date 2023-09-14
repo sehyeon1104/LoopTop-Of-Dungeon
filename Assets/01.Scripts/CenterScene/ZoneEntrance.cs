@@ -78,6 +78,12 @@ public class ZoneEntrance : MonoBehaviour
 
     public void MoveNextStage()
     {
+        if (GameManager.Instance.GetClearStage().Contains(GameManager.Instance.mapTypeFlag))
+        {
+            Debug.Log("이미 클리어한 스테이지");
+            return;
+        }
+
         if (!isLoadScene)
         {
             isLoadScene = true;
