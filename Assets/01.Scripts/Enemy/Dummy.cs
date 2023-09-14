@@ -7,7 +7,7 @@ public class Dummy : EnemyDefault
     public override void Init()
     {
         base.Init();
-        isControl = false;
+        IsControl = false;
     }
 
     public override void AnimInit()

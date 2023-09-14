@@ -678,7 +678,7 @@ public class PowerSkill : PlayerSkillBase
         {
             Transform enemy = enemies[i].transform;
             enemiesTrans.Add(enemy);
-            enemy.GetComponent<EnemyDefault>().isControl = false;
+            enemy.GetComponent<EnemyDefault>().IsControl = false;
             boolGroup[i] = enemy.GetComponent<Collider2D>().isTrigger;
         }
         while (timer < catchTime)
@@ -694,7 +694,7 @@ public class PowerSkill : PlayerSkillBase
         }
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].transform.GetComponent<EnemyDefault>().isControl = true;
+            enemies[i].transform.GetComponent<EnemyDefault>().IsControl = true;
             //enemies[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
         }
         isClick = false;
@@ -708,13 +708,13 @@ public class PowerSkill : PlayerSkillBase
         for (int i = 0; i < enemiesTrans.Count; i++)
         {
             enemiesTrans[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * power/*Random.Range(power - 50, power + 50)*/, ForceMode2D.Impulse);
-            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().isControl);
+            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
         }
         yield return waitAttack;
         for (int i = 0; i < enemiesTrans.Count; i++)
         {
-            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().isControl);
-            enemiesTrans[i].GetComponent<EnemyDefault>().isControl = true;
+            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
+            enemiesTrans[i].GetComponent<EnemyDefault>().IsControl = true;
             //enemiesTrans[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
         }
         isClick = false;

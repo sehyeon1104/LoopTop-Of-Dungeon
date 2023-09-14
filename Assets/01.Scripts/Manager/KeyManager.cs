@@ -40,7 +40,7 @@ public class KeyManager : MonoSingleton<KeyManager>
     private GameObject mouseClick = null;
 
     public KeySettingUI keySettingUI { get; private set; } = null;
-    Event keyEvent = null;
+    private Event keyEvent = null;
 
     KeyCode[] defaultKeys = new KeyCode[]
     {
@@ -108,15 +108,15 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     private void OnGUI()
     {
+
         if (!keySettingUI.isChangeKey)
             return;
 
         keyEvent = Event.current;
-        Debug.Log(keyEvent.isMouse);
 
         if (keyEvent.type == EventType.KeyDown || keyEvent.isMouse)
         {
-            if (!ExceptionCheck())
+            if (!ExceptionCheck() || keyEvent.keyCode == KeyCode.None && !keyEvent.isMouse)
                 return;
 
             if (keyEvent.isMouse)
@@ -129,7 +129,6 @@ public class KeyManager : MonoSingleton<KeyManager>
             keySettingUI.UpdateKeyTmp();
             keySettingUI.SetIsChangeKey(false);
         }
-
     }
 
     int key = -1;
@@ -140,19 +139,26 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     public bool ExceptionCheck()
     {
+        // 현재 지닌 키
         foreach (var keyCode in KeySetting.keys.Values)
         {
             if (keyEvent.keyCode == keyCode)
             {
-                keySettingUI.SetIsChangeKey(false);
+                //keySettingUI.SetIsChangeKey(false);
                 return false;
             }
+            if (keyEvent.isMouse)
+            {
+                if ((KeyCode)(keyEvent.button + 323) == keyCode)
+                    return false;
+            }
         }
+        // 예외 키
         for (int i = 0; i < exceptionKeys.Length; ++i)
         {
             if (keyEvent.keyCode == exceptionKeys[i])
             {
-                keySettingUI.SetIsChangeKey(false);
+                //keySettingUI.SetIsChangeKey(false);
                 return false;
             }
         }
