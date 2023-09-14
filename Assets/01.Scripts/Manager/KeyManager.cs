@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using TMPro;
 
-
 public enum KeyAction
 {
     // 플레이어 베이스 스킬
@@ -21,8 +20,6 @@ public enum KeyAction
 
     KeyCount,
 }
-
-
 
 public static class KeySetting
 {
@@ -93,6 +90,18 @@ public class KeyManager : MonoSingleton<KeyManager>
                 KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
         }
         GameManager.Instance.SaveKeyData();
+    }
+
+    public void InitKeySetting()
+    {
+        KeySetting.keys.Clear();
+
+        for (int i = 0; i < (int)KeyAction.KeyCount; ++i)
+        {
+            if (!KeySetting.keys.ContainsValue(defaultKeys[i]))
+                KeySetting.keys.Add((KeyAction)i, defaultKeys[i]);
+        }
+        GameManager.Instance.SaveKeyData();
         keySettingUI.UpdateKeyTmp();
     }
 
@@ -143,10 +152,8 @@ public class KeyManager : MonoSingleton<KeyManager>
         foreach (var keyCode in KeySetting.keys.Values)
         {
             if (keyEvent.keyCode == keyCode)
-            {
-                //keySettingUI.SetIsChangeKey(false);
                 return false;
-            }
+
             if (keyEvent.isMouse)
             {
                 if ((KeyCode)(keyEvent.button + 323) == keyCode)
@@ -157,10 +164,7 @@ public class KeyManager : MonoSingleton<KeyManager>
         for (int i = 0; i < exceptionKeys.Length; ++i)
         {
             if (keyEvent.keyCode == exceptionKeys[i])
-            {
-                //keySettingUI.SetIsChangeKey(false);
                 return false;
-            }
         }
 
         return true;

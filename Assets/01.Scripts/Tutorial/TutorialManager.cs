@@ -35,5 +35,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         movePortal = Managers.Resource.Instantiate("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         movePortal.transform.position = portalPos;
+        GameManager.Instance.ClearTuto();
     }
 }

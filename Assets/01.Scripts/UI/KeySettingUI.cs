@@ -60,6 +60,6 @@ public class KeySettingUI : MonoBehaviour
 
     public void InitKeySetting()
     {
-        KeyManager.Instance.InitKey();
+        KeyManager.Instance.InitKeySetting();
     }
 }
