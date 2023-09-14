@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class BossUI : MonoBehaviour
@@ -16,6 +18,11 @@ public class BossUI : MonoBehaviour
     [SerializeField]
     private GameObject shieldBar = null;
 
+    [SerializeField]
+    private SignalReceiver bossStartSignal = null;
+    [SerializeField]
+    private SignalAsset bossStartSignalAsset = null;
+
     private Slider hpBarSlider = null;
     private Slider shieldBarSlider = null;
 
@@ -28,6 +35,10 @@ public class BossUI : MonoBehaviour
     private void Start()
     {
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
+        
+        UnityEvent SignalEvent = new UnityEvent();
+        SignalEvent.AddListener(Boss.Instance.StartBossAct);
+        bossStartSignal.AddReaction(bossStartSignalAsset, SignalEvent);
     }
 
     public void UpdateHpBar()

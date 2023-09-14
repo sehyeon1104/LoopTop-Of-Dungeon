@@ -40,6 +40,7 @@ public class P_Patterns : BossPattern
         foreach (var std in FindObjectsOfType<StandupObject>())
             standupObjects.Add(std);
 
+        standUpVCam.GetComponent<CinemachineVirtualCamera>().Follow = GameManager.Instance.Player.transform;
         bossAura.SetActive(false);
     }
     public void StandUp(bool isStdUp = true)
@@ -293,6 +294,7 @@ public class P_Patterns : BossPattern
         yield return new WaitForSeconds(1f);
         transform.position = firstPos;
 
+        bossAura.SetActive(true);
         Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/WarningFX.prefab", GameManager.Instance.Player.transform.position, Quaternion.identity);
         clone.transform.localScale = new Vector3(1.75f, 1.75f);
 
