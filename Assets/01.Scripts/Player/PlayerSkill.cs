@@ -75,8 +75,11 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || UIManager.Instance.isSetting)
             return;
 
-        if (WinInput.GetKeyDown(KeyCode.Tab))
+        if (WinInput.GetKeyDown(KeySetting.keys[KeyAction.INVENTORY]))
+        {
+            Debug.Log("Inventory");
             InventoryUI.Instance.ToggleInventoryUI();
+        }
         if (WinInput.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL1]))
         {
             Skill1();
