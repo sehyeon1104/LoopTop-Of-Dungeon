@@ -54,6 +54,7 @@ public abstract class RoomBase : MonoBehaviour
                 CheckLinkedRoom();
             }
 
+            ShowIcon();
             ChangeMinimapIconColor();
             GameManager.Instance.minimapCamera.MoveMinimapCamera(minimapIconSpriteRenderer.transform.position);
         }
@@ -105,7 +106,6 @@ public abstract class RoomBase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             minimapIconSpriteRenderer.color = new Color(0.8f, 0.8f, 0.8f);
-            ShowIcon();
             //curLocatedMapIcon.SetActive(false);
         }
     }

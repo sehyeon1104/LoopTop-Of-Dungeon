@@ -71,12 +71,12 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 UIManager.Instance.TogglePausePanel();
             }
         }
-        if (WinInput.GetKeyDown(KeyCode.Tab))
-            InventoryUI.Instance.ToggleInventoryUI();
 
         if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || UIManager.Instance.isSetting)
             return;
 
+        if (WinInput.GetKeyDown(KeyCode.Tab))
+            InventoryUI.Instance.ToggleInventoryUI();
         if (WinInput.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL1]))
         {
             Skill1();
