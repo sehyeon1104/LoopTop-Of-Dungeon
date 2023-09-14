@@ -17,6 +17,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Init()
     {
+        GameManager.Instance.SetMapTypeFlag(Define.MapTypeFlag.Tutorial);
+        GameManager.Instance.SetSceneType(Define.Scene.Tutorial);
+
         tutoObjSpawn = FindObjectOfType<TutoObjSpawn>();
         tutoEnemyRoom = FindObjectOfType<TutoEnemyRoom>();
 

@@ -84,6 +84,10 @@ public class ZoneEntrance : MonoBehaviour
 
             GameManager.Instance.StageMoveCount++;
 
+            // 임시
+            if (GameManager.Instance.mapTypeFlag == Define.MapTypeFlag.Electricity)
+                return;
+
             if (GameManager.Instance.StageMoveCount == 0 && GameManager.Instance.sceneType != Define.Scene.Boss)
             {
                 sceneType = Define.Scene.Boss;
@@ -120,6 +124,13 @@ public class ZoneEntrance : MonoBehaviour
     public void ToggleMapNameTMP()
     {
         zoneCanvas.SetActive(isInteraction);
+        // 임시
+        if(GameManager.Instance.mapTypeFlag == Define.MapTypeFlag.Electricity)
+        {
+            mapNameTMP.SetText($"Comming Soon!");
+            return;
+        }
+
         mapNameTMP.SetText($"{KeySetting.keys[KeyAction.INTERACTION]} 이동하기");
     }
 }
