@@ -102,7 +102,6 @@ public class G_Elite_ArchDemon : EnemyElite
 
     public override void EnemyDead()
     {
-        StageManager.Instance.InstantiateChest(transform.position, Define.ChestRating.Epic);
         base.EnemyDead();
     }
 }
