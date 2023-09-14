@@ -21,6 +21,7 @@ public class Bubble : MonoBehaviour
     private IEnumerator trailMove()
     {
         GhostBossUI.Instance.ChangeFillTrail.gameObject.SetActive(true);
+        GhostBossUI.Instance.FillTrail.Clear();
         GhostBossUI.Instance.ChangeFillTrail.transform.position = transform.position;
         GhostBossUI.Instance.ChangeFillTrail.transform.DOLocalMove(Vector3.zero, 0.4f);
         
