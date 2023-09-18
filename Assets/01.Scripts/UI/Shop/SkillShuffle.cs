@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-
-public class SkillEnhance : MonoBehaviour
+public class SkillShuffle : MonoBehaviour
 {
     [SerializeField]
     private int skillSlotNum;
@@ -15,15 +14,10 @@ public class SkillEnhance : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI contentTMP = null;
     [SerializeField]
-    private TextMeshProUGUI priceTMP = null;
-    [SerializeField]
-    private TextMeshProUGUI levelTMP = null;
-    [SerializeField]
-    private Button enhanceBtn = null;
-
-    private int price = 0;
+    private Button selectBtn = null;
 
     PlayerSkillInfo[] playerskillInfo;
+    private SkillShuffle[] anotherSkillShuffleOption = null;
 
     [SerializeField]
     private Image skillIcon = null;    // 스킬 아이콘
@@ -40,9 +34,10 @@ public class SkillEnhance : MonoBehaviour
     private WaitForSeconds waitforWaitDelay;
 
     private Coroutine co = null;
+    private Coroutine moveAndRegCo = null;
 
-    private float inputDis = 100f;
-    private float outputDis = 250f;
+    private float inputDis = 60f;
+    private float outputDis = 200f;
 
     private void Awake()
     {
@@ -52,13 +47,12 @@ public class SkillEnhance : MonoBehaviour
         content.SetActive(false);
         panel.gameObject.SetActive(false);
         panel.fillAmount = 1f;
-
     }
 
     private void OnEnable()
     {
         InitPos();
-        UpdateValue();
+        RandSkill();
     }
 
     public void InitPos()
@@ -73,10 +67,7 @@ public class SkillEnhance : MonoBehaviour
     private void Start()
     {
         playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
-        if(GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[1];
-        else
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[0];
+        anotherSkillShuffleOption = transform.parent.GetComponentsInChildren<SkillShuffle>();
     }
 
     private void Update()
@@ -103,49 +94,24 @@ public class SkillEnhance : MonoBehaviour
     }
 
     /// <summary>
-    /// 내용 업데이트
+    /// 스킬 랜덤 선택
     /// </summary>
-    public void UpdateValue()
+    public void RandSkill()
     {
-        // 스킬 아이콘 업데이트
-        if (GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[1];
-        else
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[0];
+        // 스킬 쿨타임이 돌고있을 경우 X
+        if (!UIManager.Instance.SkillCooltime(GameManager.Instance.Player.playerBase.PlayerTransformData, PlayerSkill.Instance.skillIndex[0], true) 
+            || !UIManager.Instance.SkillCooltime(GameManager.Instance.Player.playerBase.PlayerTransformData, PlayerSkill.Instance.skillIndex[1], true))
+            return;
 
-        // 스킬 이름
-        skillNameTMP.SetText($"{playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillName}");
-
-        // 스킬 설명
-        contentTMP.SetText($"{playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillExplanation}");
-
-        // 스킬 레벨
-        if (GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
-            levelTMP.SetText($"Level : {GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum]} (MaxLevel)");
-
-        levelTMP.SetText($"Level : {GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum]}");
-
-        // 스킬 강화 가격
-        priceTMP.SetText($"필요 재화 : {price}");
-        // TODO : 필요 재화 수 테이블 제작 및 적용
+        PlayerMovement.Instance.IsControl = false;
     }
 
     /// <summary>
-    /// 강화 버튼에 들어갈 함수
+    /// 선택 버튼에 들어갈 함수
     /// </summary>
-    public void Enhance()
+    public void Select()
     {
-        Debug.Log("강화");
-        // TODO : 강화 가격 인상
-        if (GameManager.Instance.Player.playerBase.FragmentAmount < price
-            || GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
-        {
-            Debug.Log("최대 강화");
-            return;
-        }
 
-        PlayerSkill.Instance.SlotUp(skillSlotNum);
-        UpdateValue();
     }
 
     /// <summary>
@@ -159,7 +125,13 @@ public class SkillEnhance : MonoBehaviour
         isShow = true;
 
         panel.gameObject.SetActive(true);
-        MoveAndRegScaleSkillIcon(panel.gameObject.activeSelf);
+        if (moveAndRegCo != null)
+        {
+            StopCoroutine(moveAndRegCo);
+            moveAndRegCo = null;
+        }
+        moveAndRegCo = StartCoroutine(MoveAndRegScaleSkillIcon(panel.gameObject.activeSelf));
+        RegScaleAnotherSkillIcon(panel.gameObject.activeSelf);
         content.SetActive(true);
         yield return waitforWaitDelay;
         FadeOutPanel();
@@ -175,13 +147,20 @@ public class SkillEnhance : MonoBehaviour
 
         isShow = false;
 
+        if(moveAndRegCo != null)
+        {
+            StopCoroutine(moveAndRegCo);
+            moveAndRegCo = null;
+        }
+
         panel.gameObject.SetActive(false);
-        MoveAndRegScaleSkillIcon(panel.gameObject.activeSelf);
+        moveAndRegCo = StartCoroutine(MoveAndRegScaleSkillIcon(panel.gameObject.activeSelf));
+        RegScaleAnotherSkillIcon(panel.gameObject.activeSelf);
         FadeInPanel();
         content.SetActive(false);
     }
 
-    private void MoveAndRegScaleSkillIcon(bool isActive)
+    private IEnumerator MoveAndRegScaleSkillIcon(bool isActive)
     {
         if (isActive)
         {
@@ -192,6 +171,31 @@ public class SkillEnhance : MonoBehaviour
         {
             skillIconRectTransform.DOAnchorPosY(0f, waitDelay);
             skillIconRectTransform.DOScale(Vector3.one, waitDelay);
+        }
+
+        yield break;
+    }
+
+    public void ReduceSkillShuffleScale()
+    {
+        skillIconRectTransform.DOAnchorPosY(0f, waitDelay);
+        skillIconRectTransform.DOScale(new Vector3(0.5f, 0.5f), waitDelay);
+    }
+
+    private void RegScaleAnotherSkillIcon(bool isActive)
+    {
+        for(int i = 0; i < anotherSkillShuffleOption.Length; ++i)
+        {
+            if (anotherSkillShuffleOption[i] == this)
+                continue;
+
+            if (isActive)
+                anotherSkillShuffleOption[i].ReduceSkillShuffleScale();
+            else
+            {
+                if(moveAndRegCo == null)
+                    moveAndRegCo = StartCoroutine(anotherSkillShuffleOption[i].MoveAndRegScaleSkillIcon(false));
+            }
         }
     }
 

@@ -10,6 +10,7 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField]
     private GameObject skillBookPanel = null;
+    public bool isSkillBookPanelActive { get; private set; } = false;
 
     public int slotNum { get; private set; } = 0;
     private int price = 0;
@@ -40,25 +41,10 @@ public class ShopUI : MonoBehaviour
 
     public void ToggleSkillBookPanel()
     {
+        isSkillBookPanelActive = !skillBookPanel.activeSelf;
         skillBookPanel.SetActive(!skillBookPanel.activeSelf);
         MouseManager.Lock(!skillBookPanel.activeSelf);
         MouseManager.Show(skillBookPanel.activeSelf);
-    }
-
-    public void Enhance()
-    {
-        // TODO : 강화 가격 인상
-        // TODO : 선택한 슬롯의 스킬 레벨 증가
-
-        if (GameManager.Instance.Player.playerBase.FragmentAmount < price
-            || GameManager.Instance.Player.playerBase.SlotLevel[UIManager.Instance.shopUI.slotNum] == 5)
-        {
-            Debug.Log("최대 강화");
-            return;
-        }
-
-        PlayerSkill.Instance.SlotUp(slotNum);
-        ToggleSkillBookPanel();
     }
 
     public void Cancle()

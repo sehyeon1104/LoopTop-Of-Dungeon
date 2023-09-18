@@ -136,6 +136,7 @@ public class KeyManager : MonoSingleton<KeyManager>
             keySettingUI.ToggleChangeKeyPanel();
             keySettingUI.UpdateKeyTmp();
             keySettingUI.SetIsChangeKey(false);
+            UIManager.Instance.UpdateSkillKey();
         }
     }
 
