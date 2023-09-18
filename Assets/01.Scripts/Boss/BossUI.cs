@@ -49,10 +49,10 @@ public class BossUI : MonoBehaviour
         switch(GameManager.Instance.mapTypeFlag)
         {
             case Define.MapTypeFlag.Ghost:
-                startNameTxt.text = "ø¿ºø∑Œ";
+                startNameTxt.text = "<size=70%>ƒ´≈∏≈¨∏Æ¡Ú";
                 startNameTxt.color = new Color(0.85f, 0.75f, 1f);
 
-                startDescTxt.text = "¿ÿ«Ù¡¯ ø’";
+                startDescTxt.text = "¿ÿ«Ù¡¯ ø’¿« ¡÷∞À";
                 startDescTxt.color = new Color(0.9f, 0.7f, 1f);
 
                 BackgroundImg.color = new Color(0.7f, 0.3f, 0.85f);
