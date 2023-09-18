@@ -71,25 +71,27 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 UIManager.Instance.TogglePausePanel();
             }
         }
-        if (WinInput.GetKeyDown(KeyCode.Tab))
-            InventoryUI.Instance.ToggleInventoryUI();
 
         if (playerBase.IsPDead || !PlayerMovement.Instance.IsControl || UIManager.Instance.isSetting)
             return;
 
-        if (WinInput.GetKeyDown(/*KeyCode.U*/KeySetting.keys[KeyAction.SKILL1]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL1]))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.INVENTORY]))
+        {
+            InventoryUI.Instance.ToggleInventoryUI();
+        }
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL1]))
         {
             Skill1();
         }
-        if (WinInput.GetKeyDown(/*KeyCode.I*/KeySetting.keys[KeyAction.SKILL2]) || Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL2]))
+        if (Input.GetKeyDown(KeySetting.keys[KeyAction.SKILL2]))
         {
             Skill2();
         }
-        if (WinInput.GetKey(/*KeyCode.J*/KeySetting.keys[KeyAction.ATTACK]) || Input.GetKey(KeySetting.keys[KeyAction.ATTACK]))
+        if (Input.GetKey(KeySetting.keys[KeyAction.ATTACK]))
         {
               Attack();
         }
-        if(WinInput.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]) || Input.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]))
+        if(Input.GetKeyDown(/*KeyCode.F*/KeySetting.keys[KeyAction.INTERACTION]))
         {
             if (interaction.gameObject.activeSelf)
             {
@@ -97,11 +99,11 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
                 return;
             }
         }
-        if (WinInput.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]) || Input.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]))
+        if (Input.GetKeyDown(/*KeyCode.K*/KeySetting.keys[KeyAction.DASH]))
             DashSkill();
-        if (WinInput.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]) || Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
+        if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if(WinInput.GetKeyDown(KeyCode.H))
+        if(Input.GetKeyDown(KeyCode.H))
         {
             Collider2D[] enemies;
             enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);

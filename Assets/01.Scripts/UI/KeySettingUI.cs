@@ -14,7 +14,6 @@ public class KeySettingUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI[] buttonTmp;
 
-
     public bool isChangeKey { get; private set; } = false;
 
     private void Start()

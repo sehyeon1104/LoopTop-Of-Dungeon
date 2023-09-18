@@ -207,7 +207,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
 --- !u!114 &3969967639081102440
 MonoBehaviour:
@@ -246,7 +246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2456924919884571731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.32, y: -0.88, z: 0}
+  m_LocalPosition: {x: 0.87, y: -2.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -274,7 +274,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98f9e90f5d9d32a41aabc20d0c09cef1, type: 2}
+  - {fileID: 2100000, guid: 8059e67ff96236846a86980df71e66ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,20 +293,20 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
   m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 6.34644
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.20083427
-        inSlope: 0.64793056
-        outSlope: 0.64793056
+        time: 0.022418976
+        value: 0.99030495
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -314,8 +314,8 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0.98618305
         value: 1
-        inSlope: 0.8069339
-        outSlope: 0.8069339
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.12228796
@@ -325,24 +325,24 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1.4980392, g: 0.42047966, b: 0, a: 0}
+      key1: {r: 1.4980392, g: 0.08627451, b: 0, a: 1}
+      key2: {r: 1.4980392, g: 0.09411765, b: 0, a: 0}
+      key3: {r: 1, g: 1, b: 1, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 64957
-      ctime2: 0
-      ctime3: 0
+      ctime0: 5975
+      ctime1: 18119
+      ctime2: 44333
+      ctime3: 59945
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 6746
+      atime1: 5975
       atime2: 65535
       atime3: 0
       atime4: 0
@@ -350,11 +350,11 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 2
+      m_NumColorKeys: 4
       m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
@@ -418,7 +418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4127592211983155581}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.08, y: -0.97, z: 0}
+  m_LocalPosition: {x: 1.08, y: -2.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -446,7 +446,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98f9e90f5d9d32a41aabc20d0c09cef1, type: 2}
+  - {fileID: 2100000, guid: 8059e67ff96236846a86980df71e66ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -465,20 +465,20 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Time: 0.35
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 6
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0058937073
-        value: 0.21365929
-        inSlope: 0.64793056
-        outSlope: 0.64793056
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -486,8 +486,8 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0.97247314
         value: 0.98290634
-        inSlope: 0.8069339
-        outSlope: 0.8069339
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.12228796
@@ -497,24 +497,24 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1.4980392, g: 0.42047966, b: 0, a: 0}
+      key1: {r: 1.4980392, g: 0.08627451, b: 0, a: 1}
+      key2: {r: 1.4980392, g: 0.09411765, b: 0, a: 0}
+      key3: {r: 1, g: 1, b: 1, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 64957
-      ctime2: 0
-      ctime3: 0
+      ctime0: 5975
+      ctime1: 18119
+      ctime2: 44333
+      ctime3: 59945
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 6746
+      atime1: 5975
       atime2: 65535
       atime3: 0
       atime4: 0
@@ -522,11 +522,11 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 2
+      m_NumColorKeys: 4
       m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
@@ -773,7 +773,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
 --- !u!70 &3699677819310582884
 CapsuleCollider2D:
@@ -860,7 +860,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6911153198922734968}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.41, y: -0.72, z: 0}
+  m_LocalPosition: {x: 0.41, y: -1.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -888,7 +888,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98f9e90f5d9d32a41aabc20d0c09cef1, type: 2}
+  - {fileID: 2100000, guid: 8059e67ff96236846a86980df71e66ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -907,20 +907,20 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
-  m_Time: 0.35
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 6
+    widthMultiplier: 3
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.015716553
-        value: 0.1581173
-        inSlope: 0.64793056
-        outSlope: 0.64793056
+        time: 0.00077056885
+        value: 0.9475918
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -928,8 +928,8 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0.9960327
         value: 1
-        inSlope: 0.8069339
-        outSlope: 0.8069339
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.12228796
@@ -939,24 +939,24 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1.4980392, g: 0.42047966, b: 0, a: 0}
+      key1: {r: 1.4980392, g: 0.08627451, b: 0, a: 1}
+      key2: {r: 1.4980392, g: 0.09411765, b: 0, a: 0}
+      key3: {r: 1, g: 1, b: 1, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 64957
-      ctime2: 0
-      ctime3: 0
+      ctime0: 5975
+      ctime1: 18119
+      ctime2: 44333
+      ctime3: 59945
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 6746
+      atime1: 5975
       atime2: 65535
       atime3: 0
       atime4: 0
@@ -964,11 +964,11 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 2
+      m_NumColorKeys: 4
       m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
@@ -1167,7 +1167,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -406324367
-  m_SortingLayer: 12
+  m_SortingLayer: 13
   m_SortingOrder: 0
 --- !u!70 &4978219570332565869
 CapsuleCollider2D:

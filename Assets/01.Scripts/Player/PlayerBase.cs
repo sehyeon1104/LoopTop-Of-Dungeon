@@ -94,6 +94,8 @@ public class PlayerBase
         set
         {
             maxHp = value;
+            if (hp > maxHp)
+                hp = maxHp;
             UIManager.Instance.NewHpUpdate();
         }
     }

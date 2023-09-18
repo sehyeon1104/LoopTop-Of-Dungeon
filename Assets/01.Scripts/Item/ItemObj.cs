@@ -65,9 +65,6 @@ public class ItemObj : MonoBehaviour
         waitForEndOfFrame = new WaitForEndOfFrame();
         _isPurchaseAble = false;
         isSold = false;
-
-        if (item.itemType == Define.ItemType.broken)
-            priceTMP.transform.parent.gameObject.SetActive(false);
     }
 
     public void SetValue(Item item)
@@ -85,6 +82,9 @@ public class ItemObj : MonoBehaviour
         itemDesTMP.SetText(item.itemEffectDescription.ToString());
         priceTMP.SetText(string.Format("{0}", item.price));
         Num = item.itemNumber;
+
+        if (item.itemType == Define.ItemType.broken)
+            priceTMP.transform.parent.gameObject.SetActive(false);
     }
 
     private IEnumerator MoveUpDown()
