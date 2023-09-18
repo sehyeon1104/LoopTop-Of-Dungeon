@@ -62,7 +62,8 @@ public class PowerSkill : PlayerSkillBase
     WaitForSeconds ColumnWait = new WaitForSeconds(5f);
     WaitForSeconds waitAttack = new WaitForSeconds(0.5f);
     ParticleSystem attackPar;
-    WaitForSeconds ColumningWait = new WaitForSeconds(0.4f);
+    WaitForSeconds columningWait = new WaitForSeconds(0.4f);
+    WaitForSeconds columnExplosionWait = new WaitForSeconds(0.1f);
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
@@ -724,7 +725,12 @@ public class PowerSkill : PlayerSkillBase
     }
     IEnumerator Column(int level)
     {
-        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ColumnTrail.prefab", transform);
+        
+       Poolable trail = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ColumnTrail.prefab", transform);
+        if(level >= 5)
+        {
+            trail.transform.localScale = Vector2.one * 1.5f;
+        }
         isColumn = true;
         yield return columnDuration;
         isColumn = false;
@@ -732,7 +738,7 @@ public class PowerSkill : PlayerSkillBase
     IEnumerator ColumnAttack()
     {
         RaycastHit2D[] attachEnemies;
-        List<Poolable> Columns = new List<Poolable>();
+       Poolable Columns =null;
         if (Physics2D.OverlapCircle(transform.position, columnDetective, 1 << enemyLayer))
         {
             float minDistance;
@@ -740,11 +746,24 @@ public class PowerSkill : PlayerSkillBase
             List<Collider2D> enemiesList = enemies.ToList();
             int index = 0;
             minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            if(columnLevel >=5)
+            {
+                Columns = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/column.prefab", enemiesList[index].transform.position, Quaternion.identity);
+                Columns.transform.localScale = Vector2.one * 1.5f;
+                attachEnemies = Physics2D.RaycastAll(enemiesList[index].transform.position, Vector2.up, 3, 1 << enemyLayer);
+                for (int a = 0; a < attachEnemies.Length; a++)
+                {
+                    attachEnemies[a].transform.GetComponent<IHittable>().OnDamage(playerBase.Attack * 1.2f + columnLevel * 5, 0);
+                }
+                StartCoroutine(ColumnExplosion(Columns));
+            }
+            else
+            {
+
             if (columnLevel > enemiesList.Count)
             {
                 columnLevel = enemiesList.Count;
             }
- 
             for (int i = 0; i < columnLevel; i++)
             {
                 for (int j = 0; j < enemiesList.Count; j++)
@@ -755,7 +774,8 @@ public class PowerSkill : PlayerSkillBase
                         index = j;
                     }
                 }
-                Columns.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/column.prefab", enemiesList[index].transform.position, Quaternion.identity));
+
+                Columns = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/column.prefab", enemiesList[index].transform.position, Quaternion.identity);
                 attachEnemies = Physics2D.RaycastAll(enemiesList[index].transform.position, Vector2.up,3,1<<enemyLayer);
                 for (int a =0; a<attachEnemies.Length; a++)
                 {
@@ -764,7 +784,8 @@ public class PowerSkill : PlayerSkillBase
                 enemiesList.RemoveAt(index);
                 minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
             }
-            yield return ColumningWait;
+            }
+            yield return columningWait;
         isColumning = true;
         }
         else
@@ -773,6 +794,17 @@ public class PowerSkill : PlayerSkillBase
             yield break;
         }
         
+        yield return null;
+    }
+    IEnumerator ColumnExplosion(Poolable column)
+    {
+        yield return columnExplosionWait;
+        Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/ColumnExplo.prefab", column.transform.position, Quaternion.identity);
+        Collider2D[] attachEnemies = Physics2D.OverlapCircleAll(column.transform.position, 3, 1 << enemyLayer);
+        for (int i = 0; i < attachEnemies.Length; i++)
+        {
+            attachEnemies[i].GetComponent<IHittable>().OnDamage(playerBase.Attack +3);
+        }
         yield return null;
     }
     protected override void FifthSkillUpdate(int level)
