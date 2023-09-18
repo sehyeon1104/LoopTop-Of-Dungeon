@@ -594,8 +594,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281581567
-  m_fontColor: {r: 1, g: 0.75, b: 0.2, a: 1}
+    rgba: 4294921420
+  m_fontColor: {r: 0.8, g: 0.3, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1469,8 +1469,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe9ff1f5f908014dabea2943e828dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossImgSprite:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 9810a0e74071b1a44a7dabefc232316d, type: 3}
+  - {fileID: 21300000, guid: 8f50b1b899118c64bae8282db4f623a4, type: 3}
   hpBar: {fileID: 1573597247623314311}
   Icon: {fileID: 2589592077360165920}
+  bossImg: {fileID: 61144975176320082}
   BackgroundImg: {fileID: 7414448522632611639}
   startNameTxt: {fileID: 2955232555186255026}
   startDescTxt: {fileID: 2018731819731640976}
@@ -2592,7 +2598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11320752, g: 0.05536741, b: 0, a: 1}
+  m_Color: {r: 0.009433985, g: 0.009433985, b: 0.009433985, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2923,7 +2929,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9810a0e74071b1a44a7dabefc232316d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc0b1a34de64779408b00367a9e81556, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

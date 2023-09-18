@@ -9,9 +9,13 @@ using UnityEngine.UI;
 public class BossUI : MonoBehaviour
 {
     [SerializeField]
+    private Sprite[] bossImgSprite = null;
+    [SerializeField]
     private GameObject hpBar = null;
     [SerializeField]
     private Image Icon = null;
+    [SerializeField]
+    private Image bossImg;
     [SerializeField]
     private Image BackgroundImg = null;
     [SerializeField]
@@ -41,11 +45,12 @@ public class BossUI : MonoBehaviour
 
     private void Start()
     {
+        bossImg.sprite = bossImgSprite[(int)GameManager.Instance.mapTypeFlag];
         switch(GameManager.Instance.mapTypeFlag)
         {
             case Define.MapTypeFlag.Ghost:
                 startNameTxt.text = "ø¿ºø∑Œ";
-                startNameTxt.color = new Color(0.8f, 0.3f, 1f);
+                startNameTxt.color = new Color(0.85f, 0.75f, 1f);
 
                 startDescTxt.text = "¿ÿ«Ù¡¯ ø’";
                 startDescTxt.color = new Color(0.9f, 0.7f, 1f);
