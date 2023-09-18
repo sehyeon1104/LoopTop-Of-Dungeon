@@ -10,7 +10,10 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField]
     private GameObject skillBookPanel = null;
+    [SerializeField]
+    private GameObject skillShufflePanel = null;
     public bool isSkillBookPanelActive { get; private set; } = false;
+    public bool isSkillShufflePanelActive { get; private set; } = false;
 
     public int slotNum { get; private set; } = 0;
     private int price = 0;
@@ -21,7 +24,7 @@ public class ShopUI : MonoBehaviour
 
 
     PlayerSkillInfo[] playerskillInfo;
-    public GameObject skillSelect = null;
+    //public GameObject skillSelect = null;
 
     #endregion
 
@@ -32,7 +35,7 @@ public class ShopUI : MonoBehaviour
 
     private void Init()
     {
-        SkillSelectButtonInit();
+        //SkillSelectButtonInit();
 
         playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
     }
@@ -47,6 +50,7 @@ public class ShopUI : MonoBehaviour
         MouseManager.Show(skillBookPanel.activeSelf);
     }
 
+
     public void Cancle()
     {
         ToggleSkillBookPanel();
@@ -55,13 +59,21 @@ public class ShopUI : MonoBehaviour
     #endregion
 
     #region SkillShuffle_Func
-    public void SkillSelectButtonInit()
+    //public void SkillSelectButtonInit()
+    //{
+    //    for (int i = 0; i < skillSelect.transform.childCount; i++)
+    //    {
+    //        GameObject button = skillSelect.transform.GetChild(i).gameObject;
+    //        button.GetComponent<Button>().onClick.AddListener(() => button.SetActive(false));
+    //    }
+    //}
+
+    public void ToggleSkillShufflePanel()
     {
-        for (int i = 0; i < skillSelect.transform.childCount; i++)
-        {
-            GameObject button = skillSelect.transform.GetChild(i).gameObject;
-            button.GetComponent<Button>().onClick.AddListener(() => button.SetActive(false));
-        }
+        isSkillShufflePanelActive = !skillShufflePanel.activeSelf;
+        skillShufflePanel.SetActive(!skillShufflePanel.activeSelf);
+        MouseManager.Lock(!skillShufflePanel.activeSelf);
+        MouseManager.Show(skillShufflePanel.activeSelf);
     }
     #endregion
 }
