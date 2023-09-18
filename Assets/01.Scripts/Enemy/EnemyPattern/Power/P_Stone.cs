@@ -38,7 +38,7 @@ public class P_Stone : EnemyDefault
         anim.SetTrigger(_attack);
 
         crack.SetActive(true);
-        Collider2D col = Physics2D.OverlapCircle(warningPos, 1.5f, 1 << 8);
+        Collider2D col = Physics2D.OverlapCircle(warningPos, 2.5f, 1 << 8);
         if (col != null)
             GameManager.Instance.Player.OnDamage(damage, 0);
 

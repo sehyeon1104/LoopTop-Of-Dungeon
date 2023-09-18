@@ -9,6 +9,7 @@ public class P_Slime : EnemyDefault
     {
         yield return base.AttackToPlayer();
         float dir = Mathf.Sign(playerTransform.position.x - transform.position.x);
+        yield return new WaitForSeconds(0.5f);
         transform.DOMoveX(transform.position.x + dir * 3f, 0.2f);
         
         yield return new WaitForSeconds(0.5f);
