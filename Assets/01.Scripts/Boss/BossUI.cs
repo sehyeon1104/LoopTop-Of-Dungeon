@@ -13,6 +13,13 @@ public class BossUI : MonoBehaviour
     [SerializeField]
     private Image Icon = null;
     [SerializeField]
+    private Image BackgroundImg = null;
+    [SerializeField]
+    private TextMeshProUGUI startNameTxt = null;
+    [SerializeField]
+    private TextMeshProUGUI startDescTxt = null;
+
+    [SerializeField]
     private TextMeshProUGUI hpTxt = null;
 
     [SerializeField]
@@ -34,6 +41,27 @@ public class BossUI : MonoBehaviour
 
     private void Start()
     {
+        switch(GameManager.Instance.mapTypeFlag)
+        {
+            case Define.MapTypeFlag.Ghost:
+                startNameTxt.text = "오셀로";
+                startNameTxt.color = new Color(0.8f, 0.3f, 1f);
+
+                startDescTxt.text = "잊혀진 왕";
+                startDescTxt.color = new Color(0.9f, 0.7f, 1f);
+
+                BackgroundImg.color = new Color(0.7f, 0.3f, 0.85f);
+                break;
+            case Define.MapTypeFlag.Power:
+                startNameTxt.text = "아틀라스";
+                startNameTxt.color = new Color(1f, 0.75f, 0.2f);
+
+                startDescTxt.text = "대지를 지는 거신";
+                startDescTxt.color = new Color(0.65f, 0.45f, 0.2f);
+
+                BackgroundImg.color = new Color(0.5f, 0.35f, 0f);
+                break;
+        }
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
         
         UnityEvent SignalEvent = new UnityEvent();

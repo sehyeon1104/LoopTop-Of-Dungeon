@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 2113291218, guid: 5b38d498c734c47a5b88ffb669f2427d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -102,12 +102,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: 9e0947f2fad19874eb2ccc2dd62405a4, type: 2}
-  detectDistance: 5
-  minDistance: 1
+  minDistance: 2
   idleClip: {fileID: 0}
   moveClip: {fileID: 0}
   attackClip: {fileID: 0}
   anim: {fileID: 0}
+  isControl: 1
 --- !u!61 &553409723790091
 BoxCollider2D:
   m_ObjectHideFlags: 0
