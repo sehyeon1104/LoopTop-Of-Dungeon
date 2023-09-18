@@ -6,11 +6,11 @@ public static class MouseManager
 {
     public static void Show(bool isShow)
     {
-        Cursor.visible = isShow;
+        //Cursor.visible = isShow;
     }
 
     public static void Lock(bool isLock)
     {
-        Cursor.lockState = isLock ? CursorLockMode.Locked : CursorLockMode.None;
+        //Cursor.lockState = isLock ? CursorLockMode.Locked : CursorLockMode.None;
     }
 }
