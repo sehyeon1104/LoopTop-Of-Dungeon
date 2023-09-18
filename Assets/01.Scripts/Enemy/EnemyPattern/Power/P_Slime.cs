@@ -1,10 +1,19 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class P_Slime : EnemyDefault
 {
-
+    public override IEnumerator AttackToPlayer()
+    {
+        yield return base.AttackToPlayer();
+        float dir = Mathf.Sign(playerTransform.position.x - transform.position.x);
+        transform.DOMoveX(transform.position.x + dir * 3f, 0.2f);
+        
+        yield return new WaitForSeconds(0.5f);
+        actCoroutine = null;
+    }
     public override void EnemyDead()
     {
         for (int i = -1; i <= 1; i += 2)
