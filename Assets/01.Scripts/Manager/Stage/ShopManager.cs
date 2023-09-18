@@ -44,65 +44,22 @@ public class ShopManager : MonoSingleton<ShopManager>
         itemObjSpawnPos = shopRoom.GetItemSpawnPos();
 
         CreateObject();
-        //ShuffleItemSelectNum();
     }
-    
-
-    //public void ShuffleItemSelectNum()
-    //{
-    //    if(itemObjSpawnPos.Length - 1 > ItemManager.Instance.allItemDic.Count - ItemManager.Instance.brokenItemCount)
-    //    {
-    //        Debug.LogWarning($"아이템 개수 부족. 최소 개수 : {itemObjSpawnPos.Length - 1}");
-    //        return;
-    //    }
-
-    //    int index = 0;
-    //    int randNum = 0;
-
-    //    Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
-
-    //    while (itemSelectNum.Count != itemObjSpawnPos.Length - 1)
-    //    {
-    //        randNum = Random.Range(1, allItemDic.Count - ItemManager.Instance.brokenItemCount);
-
-    //        if (allItemDic.Contains()) 
-    //            continue;
-
-    //        itemSelectNum.Add(randNum);
-    //        index++;
-
-    //        if(index > 100)
-    //        {
-    //            Debug.Log("break while loop");
-    //            break;
-    //        }
-    //    }
-
-    //    CreateObject();
-    //}
     
     public void CreateObject()
     {
         GameObject newObject = null;
         ItemObj newItemObjComponent = null;
 
-        Dictionary<string, Item> curItemDic = new Dictionary<string, Item>();
-        curItemDic = ItemManager.Instance.GetCurItemDic();
+        Dictionary<string, Item> curItemDic = ItemManager.Instance.GetCurItemDic();
 
         List<Item> allItemList = ItemManager.Instance.allItemDic.Values.ToList();
-
-        //List<Item> curItemList = new List<Item>(); 
-        //curItemList = GameManager.Instance.GetItemList();
 
         itemSelectNum.Clear();
         foreach(Item item in curItemDic.Values)
         {
             itemSelectNum.Add(item.itemNumber);
         }
-        //for(int i = 0; i < curItemDic.Count; ++i)
-        //{
-        //    itemSelectNum.Add(curItemList[i].itemNumber);
-        //}
 
         int index = 0;
         int loopCount = 0;
@@ -119,7 +76,7 @@ public class ShopManager : MonoSingleton<ShopManager>
                 || allItemList[rand].itemRating == Define.ItemRating.Set)
                 continue;
 
-            itemSelectNum.Add(rand);
+            itemSelectNum.Add(allItemList[rand].itemNumber);
 
             Item shopItem = null;
             // 아이템 오브젝트 생성

@@ -101,6 +101,10 @@ public class Boss : MonoSingleton<Boss>, IHittable
 
         var movePortal = Managers.Resource.Instantiate("Assets/03.Prefabs/Maps/Magic_Circle_Move.prefab");
         movePortal.transform.position = new Vector3(15, 8, 0);
+
+        // юс╫ц
+        GameManager.Instance.ObtainBossFragment(50);
+        GameManager.Instance.ClearStage(GameManager.Instance.mapTypeFlag);
         //gameObject.SetActive(false);
     }
 

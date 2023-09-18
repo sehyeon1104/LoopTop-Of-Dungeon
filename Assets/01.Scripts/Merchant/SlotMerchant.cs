@@ -41,7 +41,7 @@ public class SlotMerchant : MerchantBase
 
     protected override void MerchantFunc()
     {
-        UIManager.Instance.shopUI.ToggleSkillBookPanel(slotNum);
+        UIManager.Instance.shopUI.ToggleSkillBookPanel();
     }
 
     protected override void StandBy()
@@ -55,7 +55,8 @@ public class SlotMerchant : MerchantBase
 
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);
-        UIManager.Instance.shopUI.ToggleSkillBookPanel(slotNum, false);
+        if(UIManager.Instance.shopUI.isSkillBookPanelActive)
+            UIManager.Instance.shopUI.ToggleSkillBookPanel();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

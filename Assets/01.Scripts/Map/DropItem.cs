@@ -122,7 +122,7 @@ public class DropItem : MonoBehaviour, IPoolable
                 || allItemList[rand].itemRating == Define.ItemRating.Set)
             continue;
 
-            itemSelectNum.Add(rand);
+            itemSelectNum.Add(allItemList[rand].itemNumber);
 
             foreach(Item items in allItemDic.Values)
             {
