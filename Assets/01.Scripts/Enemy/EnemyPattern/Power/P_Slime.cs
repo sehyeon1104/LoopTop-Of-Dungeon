@@ -10,9 +10,17 @@ public class P_Slime : EnemyDefault
         yield return base.AttackToPlayer();
         float dir = Mathf.Sign(playerTransform.position.x - transform.position.x);
         yield return new WaitForSeconds(0.5f);
-        transform.DOMoveX(transform.position.x + dir * 3f, 0.2f);
+
+        transform.DOMoveX(transform.position.x + dir * 5f, 0.2f);
+
+        Collider2D col = Physics2D.OverlapBox(transform.position + Vector3.right * dir * 2.5f, new Vector2(5f, 1f), 0 , 1 << 8);
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (col != null)
+            GameManager.Instance.Player.OnDamage(10, 0);
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         actCoroutine = null;
     }
     public override void EnemyDead()
