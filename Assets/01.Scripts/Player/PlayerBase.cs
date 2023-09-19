@@ -30,7 +30,7 @@ public class PlayerBase
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
-        SlotLevel = new int[] { 1, 1 };
+        SlotLevel = new int[] { 5, 5 };
         skillCoolDown = 0;
     }
 
@@ -208,7 +208,19 @@ public class PlayerBase
         }
     }
 
-    public int[] PlayerSkillNum { get; set; }
+    public int[] PlayerSkillNum
+    {
+        get
+        {
+            return PlayerSkillNum;
+        }
+        set
+        {
+             PlayerSkillNum =value; 
+            PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
+        }
+    }
+        
  
 
     private int _fragmentAmount;

@@ -56,6 +56,7 @@ public class PowerSkill : PlayerSkillBase
     bool isColumning = true;
     float columnDetective = 5f;
     int columnLevel = 1;
+    int obstacleLayer;
     WaitForSeconds columnDuration = new WaitForSeconds(5f);
     public AnimationCurve jumpValue;
     WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
@@ -89,6 +90,7 @@ public class PowerSkill : PlayerSkillBase
         material = Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Player/Shader Graphs_ShockWaveScreen.mat");
         attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
         cineMachine = FindObjectOfType<CinemachineVirtualCamera>();
+        obstacleLayer = LayerMask.NameToLayer("Obstacle");
         Cashing();
         Init();
     }
@@ -719,9 +721,15 @@ public class PowerSkill : PlayerSkillBase
         Poolable fiveBall = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", (Vector2)transform.position +playerMovement.Direction, Quaternion.identity) ;
         fiveBall.transform.localScale = Vector2.one * 1.5f;
         Collider2D[] attachEnemies = null;
+        RaycastHit2D hit ;
         Vector2 direction = playerMovement.Direction;
-        while (timer < 10)
+        while (timer < 5)
         {
+            hit = Physics2D.Raycast(fiveBall.transform.position, direction, 2, 1 << obstacleLayer);
+            if(hit.collider != null)
+            {
+                direction = hit.normal;
+            }
             timer += Time.fixedDeltaTime;
             fiveBall.transform.Translate(direction * Time.fixedDeltaTime * 4 * animationSpeed.Evaluate(timer / 10));
                 attachEnemies = Physics2D.OverlapCircleAll(fiveBall.transform.position, 1.5f, 1 << enemyLayer);
