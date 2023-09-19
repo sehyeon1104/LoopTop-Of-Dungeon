@@ -11,9 +11,9 @@ public class P_Slime : EnemyDefault
         float dir = Mathf.Sign(playerTransform.position.x - transform.position.x);
         yield return new WaitForSeconds(0.5f);
 
-        transform.DOMoveX(transform.position.x + dir * 5f, 0.2f);
+        rigid.DOMoveX(transform.position.x + dir * 5f, 0.2f);
 
-        Collider2D col = Physics2D.OverlapBox(transform.position + Vector3.right * dir * 2.5f, new Vector2(5f, 1f), 0 , 1 << 8);
+        Collider2D col = Physics2D.OverlapBox(transform.position + Vector3.right * dir * 2f, new Vector2(4f, 0.75f), 0 , 1 << 8);
 
         yield return new WaitForSeconds(0.1f);
 

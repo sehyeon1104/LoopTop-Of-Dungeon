@@ -9,9 +9,15 @@ public class SkillShuffle : MonoBehaviour
 
     private HashSet<int> skillSelectNum = new HashSet<int>();
 
+    private int skillSlotNum = 0;
+
     private void OnEnable()
     {
         RandSkill();
+        for(int i = 0; i < skillShuffleObjs.Length; ++i)
+        {
+            skillShuffleObjs[i].gameObject.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -40,6 +46,25 @@ public class SkillShuffle : MonoBehaviour
 
             skillShuffleObjs[skillCount].SetValue(rand, playerskillInfo[rand].skillName, playerskillInfo[rand].skillExplanation, playerskillInfo[rand].skillIcon[0]);
             skillCount++;
+        }
+    }
+
+    public void ApplySkillShuffleInPlayer(int _skillNum)
+    {
+        GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum] = _skillNum;
+        UIManager.Instance.UpdateUI();
+        skillSlotNum++;
+        CheckSkillChangeCount();
+    }
+
+    public void CheckSkillChangeCount()
+    {
+        if(skillSlotNum % 2== 0)
+        {
+            skillSlotNum = 0;
+            PlayerMovement.Instance.IsControl = true;
+            UIManager.Instance.shopUI.ToggleSkillShufflePanel();
+            PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
         }
     }
 }

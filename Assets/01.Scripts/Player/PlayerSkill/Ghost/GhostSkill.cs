@@ -115,8 +115,6 @@ public class GhostSkill : PlayerSkillBase
             {
                 passiveAction();
             }
-
-            GameManager.Instance.Player.AttackRelatedItemEffects?.Invoke();
         }
     }
 

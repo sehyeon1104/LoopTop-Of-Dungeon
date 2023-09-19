@@ -22,6 +22,8 @@ public class P_Stone : EnemyDefault
         anim.runtimeAnimatorController = overrideController;
         yield return base.AttackToPlayer();
         //점프모션
+
+        isInvincible = true;
         yield return new WaitForSeconds(0.3f);
         sprite.color = new Color(1, 1, 1, 0);
         yield return new WaitForSeconds(1.5f);
@@ -42,8 +44,15 @@ public class P_Stone : EnemyDefault
         if (col != null)
             GameManager.Instance.Player.OnDamage(damage, 0);
 
+        yield return new WaitForSeconds(0.5f);
+        isInvincible = false;
         yield return new WaitForSeconds(2f);
         crack.SetActive(false);
         actCoroutine = null;
+    }
+    public override void EnemyDead()
+    {
+        crack.SetActive(false);
+        base.EnemyDead();
     }
 }
