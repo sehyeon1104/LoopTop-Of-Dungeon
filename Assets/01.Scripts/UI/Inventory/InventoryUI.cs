@@ -120,7 +120,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
                 ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
             }
 
-            UIManager.Instance.AddItemListUI(items);
+            // UIManager.Instance.AddItemListUI(items);
         }
     }
 

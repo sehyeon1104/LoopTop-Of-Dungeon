@@ -109,6 +109,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     public void AddCurItemDic(Item item)
     {
         curItemDic.Add(item.itemNameEng, item);
+        GameManager.Instance.SaveItemData();
     }
 
     public void RemoveCurItemDic(Item item)

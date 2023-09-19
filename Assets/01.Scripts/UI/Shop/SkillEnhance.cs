@@ -53,6 +53,7 @@ public class SkillEnhance : MonoBehaviour
         panel.gameObject.SetActive(false);
         panel.fillAmount = 1f;
 
+        playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
     }
 
     private void OnEnable()
@@ -68,15 +69,6 @@ public class SkillEnhance : MonoBehaviour
         content.SetActive(false);
         panel.gameObject.SetActive(false);
         panel.fillAmount = 1f;
-    }
-
-    private void Start()
-    {
-        playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
-        if(GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[1];
-        else
-            skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[0];
     }
 
     private void Update()
@@ -107,6 +99,8 @@ public class SkillEnhance : MonoBehaviour
     /// </summary>
     public void UpdateValue()
     {
+        Debug.Log(playerskillInfo);
+
         // 스킬 아이콘 업데이트
         if (GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
             skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[1];

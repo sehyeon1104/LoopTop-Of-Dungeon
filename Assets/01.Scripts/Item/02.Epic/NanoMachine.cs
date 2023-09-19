@@ -16,7 +16,7 @@ public class NanoMachine : ItemBase
 
     public override void Init()
     {
-        recentReceiveDamage = GameManager.Instance.Player.playerBase.RecentReceiveDamage;
+
     }
 
     public override void Use()
@@ -37,6 +37,9 @@ public class NanoMachine : ItemBase
 
     public void NanoMachineAbility()
     {
+        Debug.Log("HP 자동수복!");
+        recentReceiveDamage = GameManager.Instance.Player.playerBase.RecentReceiveDamage;
+        Debug.Log(recentReceiveDamage);
         if(recentReceiveDamage > 0)
         {
             temp = recoveryAmount;

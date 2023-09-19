@@ -9,6 +9,11 @@ public class ProjectileObj : MonoBehaviour
 
     private Poolable poolable = null;
 
+    private void Awake()
+    {
+        Init();
+    }
+
     protected virtual void Init()
     {
         poolable = GetComponent<Poolable>();

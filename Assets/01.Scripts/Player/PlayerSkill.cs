@@ -95,7 +95,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         {
             if (interaction.gameObject.activeSelf)
             {
-                interaction.onClick.Invoke();
+                interaction.onClick?.Invoke();
                 return;
             }
         }

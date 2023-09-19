@@ -77,7 +77,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>
 
     public void SetEnemyInList()
     {
-        Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
+        //Debug.Log($"mapTypeFlag : {GameManager.Instance.mapTypeFlag}");
 
         // TODO : 동적으로 몬스터 개수 가져와 리스트 할당
 

@@ -12,6 +12,11 @@ public class MeltedWaxWing : ItemBase
 
     private static int stack = 0;
 
+    private Coroutine co = null;
+    private float targetTime = 5f;
+    private float timer = 0f;
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
     public override void Init()
     {
 
@@ -39,15 +44,40 @@ public class MeltedWaxWing : ItemBase
         GameManager.Instance.Player.DashRelatedItemEffects.AddListener(MeltedWaxWingAbility);
     }
 
+    private void ResetStack()
+    {
+        stack = 0;
+        GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
+    }
+
     public void MeltedWaxWingAbility()
     {
         stack++;
         if(stack >= 16)
         {
+            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * (stack - 1);
             stack = 0;
             GameManager.Instance.Player.OnDamage(10, 0);
+            ItemManager.Instance.StopCoroutine(co);
+        }
+        else
+        {
+            GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
+            if (co != null)
+                ItemManager.Instance.StopCoroutine(co);
+            co = ItemManager.Instance.StartCoroutine(Timer());
+        }
+    }
+
+    private IEnumerator Timer()
+    {
+        timer = 0;
+        while(timer < targetTime)
+        {
+            timer += Time.deltaTime;
+            yield return waitForEndOfFrame;
         }
 
-        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
+        ResetStack();
     }
 }

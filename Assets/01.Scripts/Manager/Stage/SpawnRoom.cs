@@ -82,7 +82,7 @@ public class SpawnRoom : MonoBehaviour
         // 상점 배치가 안되어있다면 확정배치
         if (StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom] == 1)
         {
-            Debug.Log("상점 배치");
+            //Debug.Log("상점 배치");
             GameObject room = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Shop", transform.parent);
             room.transform.Translate(12, 10, 0);
             StageManager.Instance.eventRoomCountDic[Define.EventRoomTypeFlag.ShopRoom]--;
@@ -103,7 +103,7 @@ public class SpawnRoom : MonoBehaviour
         // 이벤트방 배치
         if (StageManager.Instance.eventRoomCountDic[(Define.EventRoomTypeFlag)randEventRoom] == 1)
         {
-            Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} 배치");
+            //Debug.Log($"{(Define.EventRoomTypeFlag)randEventRoom} 배치");
             GameObject eventRoom = Managers.Resource.Instantiate($"03.Prefabs/Maps/{mapTypeFlag}/{mapTypeFlag}FieldNormal.Event", transform.parent);
             eventRoom.transform.Translate(12, 10, 0);
             eventRoom.GetComponent<EventRoom>().SetEventRoomType((Define.EventRoomTypeFlag)randEventRoom);
