@@ -8,6 +8,8 @@ using DG.Tweening;
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField]
+    private GameObject panel = null;
+    [SerializeField]
     private Image screenShotImage = null;
     [SerializeField]
     private TextMeshProUGUI playTimeTMP = null;
@@ -18,12 +20,24 @@ public class GameOverUI : MonoBehaviour
     private float fadeInOutDelay = 1f;
     private WaitForSeconds waitFadeDelay;
 
-    [SerializeField]
     private GameObject itemUITemplate = null;
+
+    private bool isShow = false;
 
     private void Awake()
     {
         Init();
+    }
+
+    private void Update()
+    {
+        if (isShow)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            BackToCenterScene();
+        }
     }
 
     private void Init()
@@ -32,9 +46,9 @@ public class GameOverUI : MonoBehaviour
         waitFadeDelay = new WaitForSeconds(fadeInOutDelay);
     }
 
-    private void OnEnable()
+    public void ToggleGameOverPanel()
     {
-        UpdateValue();
+        panel.SetActive(!panel.activeSelf);
         ShowGameOverContent();
     }
 
@@ -48,6 +62,7 @@ public class GameOverUI : MonoBehaviour
         playTimeTMP.SetText($"플레이 타임 : {GamePlayTimerManager.Instance.GetTimer()}");
         AddCurItemSlot();
         StartCoroutine(FadeInOutBackTMP());
+        isShow = true;
     }
 
     public void AddCurItemSlot()
@@ -70,5 +85,11 @@ public class GameOverUI : MonoBehaviour
             backTMP.DOFade(0f, fadeInOutDelay);
             yield return waitFadeDelay;
         }
+    }
+
+    public void BackToCenterScene()
+    {
+        SaveManager.DeleteAllData();
+        Managers.Scene.LoadScene(Define.Scene.Center);
     }
 }

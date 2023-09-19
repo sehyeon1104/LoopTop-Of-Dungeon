@@ -45,10 +45,14 @@ public class SkillShuffleObj : MonoBehaviour
         skillIconRectTransform = skillIcon.transform.parent.GetComponent<RectTransform>();
         waitforWaitDelay = new WaitForSeconds(waitDelay);
 
+        skillShuffle = FindObjectOfType<SkillShuffle>();
+    }
+
+    private void InitPanel()
+    {
         content.SetActive(false);
         panel.gameObject.SetActive(false);
         panel.fillAmount = 1f;
-        skillShuffle = FindObjectOfType<SkillShuffle>();
     }
 
     /// <summary>
@@ -68,6 +72,7 @@ public class SkillShuffleObj : MonoBehaviour
     private void OnEnable()
     {
         InitPos();
+        InitPanel();
     }
 
     public void InitPos()
@@ -113,8 +118,9 @@ public class SkillShuffleObj : MonoBehaviour
     /// </summary>
     public void Select()
     {
-        skillShuffle.ApplySkillShuffleInPlayer(skillNum);
+        RegScaleAnotherSkillIcon(false);
         gameObject.SetActive(false);
+        skillShuffle.ApplySkillShuffleInPlayer(skillNum);
     }
 
     /// <summary>
@@ -196,7 +202,7 @@ public class SkillShuffleObj : MonoBehaviour
                 anotherSkillShuffleOption[i].ReduceSkillShuffleScale();
             else
             {
-                if(moveAndRegCo == null)
+                if(moveAndRegCo == null && gameObject.activeSelf && anotherSkillShuffleOption[i].gameObject.activeSelf)
                     moveAndRegCo = StartCoroutine(anotherSkillShuffleOption[i].MoveAndRegScaleSkillIcon(false));
             }
         }

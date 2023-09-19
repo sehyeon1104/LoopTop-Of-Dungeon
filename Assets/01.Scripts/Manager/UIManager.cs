@@ -102,6 +102,7 @@ public class UIManager : MonoSingleton<UIManager>
     private WaitForEndOfFrame waitForEndOfFrame;
     PlayerBase playerBase;
     public ShopUI shopUI { private set; get; } = null;
+    public GameOverUI gameOverUI { get; private set; } = null;
     public float[] currentFillAmount;
     private float nowTimeScale;
     public bool isSetting { get; private set; } = false;
@@ -186,6 +187,7 @@ public class UIManager : MonoSingleton<UIManager>
         InitBtns();
 
         shopUI = FindObjectOfType<ShopUI>();
+        gameOverUI = FindObjectOfType<GameOverUI>();
         skill1Tmp = playerPPUI.transform.Find("LeftDown/Btns/Skill1_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
         skill2Tmp = playerPPUI.transform.Find("LeftDown/Btns/Skill2_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
         ultTmp = playerPPUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
