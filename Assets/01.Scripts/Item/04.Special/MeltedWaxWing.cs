@@ -46,7 +46,6 @@ public class MeltedWaxWing : ItemBase
 
     private void ResetStack()
     {
-        Debug.Log("스택 초기화");
         stack = 0;
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
     }

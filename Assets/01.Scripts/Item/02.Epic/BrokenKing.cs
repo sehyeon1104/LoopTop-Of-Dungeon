@@ -40,6 +40,7 @@ public class BrokenKing : ItemBase
     public override void LastingEffect()
     {
         isEquip = true;
+        ResetStack();
         co = ItemManager.Instance.StartCoroutine(Timer());//StartCoroutine(Timer());
         GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(ResetStack);
         GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(ResetStack);
@@ -52,9 +53,9 @@ public class BrokenKing : ItemBase
 
     public void ResetStack()
     {
+        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f * stack;
         stack = 0;
         timer = 0f;
-        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f * stack;
         if (co != null)
             ItemManager.Instance.StopCoroutine(co);
         co = ItemManager.Instance.StartCoroutine(Timer());
@@ -66,7 +67,6 @@ public class BrokenKing : ItemBase
             yield break;
 
         temp = 1;
-        timer = 0f;
 
         while (timer < targetTime)
         {
