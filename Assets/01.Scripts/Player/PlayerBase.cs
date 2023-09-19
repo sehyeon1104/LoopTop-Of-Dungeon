@@ -26,7 +26,7 @@ public class PlayerBase
         _fragmentAmount = 0;
         _bossFragmentAmount = 0;
         _fragmentAddAcq = 1f;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();

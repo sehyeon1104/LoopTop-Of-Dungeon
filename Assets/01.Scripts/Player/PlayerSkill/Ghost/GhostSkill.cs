@@ -421,24 +421,24 @@ public class GhostSkill : PlayerSkillBase
         {
             Vector3 currentPostion = transform.position;
 
-            //float timer = 0;
-            //Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
-            //Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
-            //PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
-            //LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
-            //lineRenderer.sortingOrder++;
-            //PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
-            //leftBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
-            //rightBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
-            //while (timer < beamRotationDuration)
-            //{
-            //    playerBeam1.timerA = 0;
-            //    playerBeam2.timerA = 0;
-            //    leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
-            //    rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
-            //    timer += Time.deltaTime;
-            //    yield return new WaitForEndOfFrame();
-            //}
+            float timer = 0;
+            Poolable leftBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot + 45, transform.forward));
+            Poolable rightBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/PlayerBeam.prefab", currentPostion, Quaternion.AngleAxis(beamRot - 45, transform.forward));
+            PlayerBeam playerBeam1 = leftBeam.GetComponent<PlayerBeam>();
+            LineRenderer lineRenderer = playerBeam1.GetComponentInChildren<LineRenderer>();
+            lineRenderer.sortingOrder++;
+            PlayerBeam playerBeam2 = rightBeam.GetComponent<PlayerBeam>();
+            leftBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
+            rightBeam.GetComponent<PlayerBeam>().damage = subBeamDmg;
+            while (timer < beamRotationDuration)
+            {
+                playerBeam1.timerA = 0;
+                playerBeam2.timerA = 0;
+                leftBeam.transform.Rotate(new Vector3(0, 0, -45 * Time.deltaTime / beamRotationDuration));
+                rightBeam.transform.Rotate(new Vector3(0, 0, 45 * Time.deltaTime / beamRotationDuration));
+                timer += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
 
             Poolable fiveBeam = Managers.Pool.PoolManaging("Assets/10.Effects/player/Ghost/Beam5Effect.prefab", currentPostion, angleAxis);
             playerBeam = fiveBeam.GetComponent<PlayerBeam>();

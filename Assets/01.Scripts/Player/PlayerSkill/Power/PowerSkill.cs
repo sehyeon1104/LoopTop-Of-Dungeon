@@ -21,6 +21,8 @@ using Unity.Burst.Intrinsics;
 
 public class PowerSkill : PlayerSkillBase
 {
+    [SerializeField]
+    AnimationCurve animationSpeed;
     CinemachineVirtualCamera cineMachine;
     public Gradient trailColor;
     TrailRenderer trailRenderer;
@@ -159,7 +161,7 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void ForuthSkill(int level)
     {
-        StartCoroutine(CatchSkill());
+        StartCoroutine(FireBall(level));
     }
 
     protected override void FifthSkill(int level)
@@ -647,82 +649,86 @@ public class PowerSkill : PlayerSkillBase
             UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 3, 1);
 
     }
-    IEnumerator CatchSkill()
+    IEnumerator FireBall(int level)
     {
-
-        if (isClick)
-        {
-            StartCoroutine(Throw());
-            yield break;
-        }
-
+        List<Poolable> ballList = new List<Poolable>();
+        List<Vector2> vectorList = new List<Vector2>(); 
+        Collider2D[] attachEnemies;
         float timer = 0;
-        bossArm = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/BossArm.prefab", transform);
-        bossArm.transform.position += (Vector3)playerMovement.Direction;
-        Transform hand = bossArm.transform.Find("BossArm/Hand");
-        bossArmAni = bossArm.transform.GetComponentInChildren<Animator>();
-        Quaternion quaternion = MathClass.VectorToQuaternion(playerMovement.Direction, transform, 45);
-        bossArm.transform.rotation = quaternion;
-        RaycastHit2D[] enemies = Physics2D.RaycastAll(transform.position, playerMovement.Direction, 4, 1 << enemyLayer);
-        bossArmAni.SetTrigger(hashCatch);
-
-        if (enemies.Length == 0)
+        Vector3 playerPos = transform.position;
+        Quaternion angleAxis = MathClass.VectorToQuaternion(playerMovement.Direction, transform);
+        Vector2 direction = playerMovement.Direction;
+        if (level == 1)
         {
-            yield return waitAttack;
-            Managers.Pool.Push(bossArm);
-            yield break;
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, 0) * direction, Quaternion.identity));
+            vectorList.Add((ballList[0].transform.position - playerPos).normalized );
         }
-
-        isClick = true;
-        UIManager.Instance.SkillCoolCalculation(playerBase.PlayerTransformData.skill[4].skillDelay, PlayerSkill.Instance.skillIndex[0] == 4 ? 0 : 1);
-        for (int i = 0; i < enemies.Length; i++)
+        else if (level == 2)
         {
-            Transform enemy = enemies[i].transform;
-            enemiesTrans.Add(enemy);
-            enemy.GetComponent<EnemyDefault>().IsControl = false;
-            boolGroup[i] = enemy.GetComponent<Collider2D>().isTrigger;
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0,0,15) * direction, Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, -15) * direction,Quaternion.identity));
+            vectorList.Add((ballList[0].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[1].transform.position - playerPos).normalized);
         }
-        while (timer < catchTime)
+        else if (level == 3)
         {
-            if (isClicked)
-                yield break;
-            for (int i = 0; i < enemies.Length; i++)
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, -15) * direction, Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, 0) * direction , Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, 15) * direction, Quaternion.identity));
+            vectorList.Add((ballList[0].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[1].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[2].transform.position - playerPos).normalized);
+        }
+        else if (level == 4)
+        {
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, -15)  * direction/*+ (beamRot % 90 == 0 ? Vector3.up : new Vector3(-1, 1, 0))*/, Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos+ Quaternion.Euler(0, 0, -30) * direction/*+ (beamRot % 90 == 0 ? Vector3.down : new Vector3(1, -1, 0))*/, Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, 15) * direction/*+ (beamRot % 90 == 0 ? Vector3.right : new Vector3(1, 1, 0))*/, Quaternion.identity));
+            ballList.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", playerPos + Quaternion.Euler(0, 0, 30) * direction/* + (beamRot % 90 == 0 ? Vector3.left : new Vector3(-1, -1, 0))*/, Quaternion.identity));
+            vectorList.Add((ballList[0].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[1].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[2].transform.position - playerPos).normalized);
+            vectorList.Add((ballList[3].transform.position - playerPos).normalized);
+        }
+        while(timer < 10)
+        {
+            timer += Time.fixedDeltaTime;
+            
+            for (int i = 0; i < ballList.Count; i++)
             {
-                enemies[i].transform.position = hand.position;
+                ballList[i].transform.Translate(vectorList[i] * Time.fixedDeltaTime * 4 * animationSpeed.Evaluate(timer/10));  
+                attachEnemies = Physics2D.OverlapCircleAll(ballList[i].transform.position, 1.5f, 1 << enemyLayer);
+                for(int j=0; j<attachEnemies.Length; j++)
+                {
+                    attachEnemies[j].GetComponent<IHittable>().OnDamage(playerBase.Attack + level *2);
+                }
+                print(vectorList[i]);
             }
-            timer += Time.deltaTime;
-            yield return null;
+            yield return fixedWait;
         }
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i].transform.GetComponent<EnemyDefault>().IsControl = true;
-            //enemies[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
-        }
-        isClick = false;
-        Managers.Pool.Push(bossArm);
     }
-    IEnumerator Throw()
-    {
-        isClicked = true;
-        bossArmAni.SetTrigger(hashThrow);
-        //Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
-        for (int i = 0; i < enemiesTrans.Count; i++)
-        {
-            enemiesTrans[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * power/*Random.Range(power - 50, power + 50)*/, ForceMode2D.Impulse);
-            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
-        }
-        yield return waitAttack;
-        for (int i = 0; i < enemiesTrans.Count; i++)
-        {
-            print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
-            enemiesTrans[i].GetComponent<EnemyDefault>().IsControl = true;
-            //enemiesTrans[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
-        }
-        isClick = false;
-        isClicked = false;
-        enemiesTrans.Clear();
-        Managers.Pool.Push(bossArm);
-    }
+    //IEnumerator Throw()
+    //{ 
+    //    isClicked = true;
+    //    bossArmAni.SetTrigger(hashThrow);
+    //    //Vector2 force = new Vector2(Random.Range(playerMovement.Direction.y * -1, playerMovement.Direction.y), Random.Range(playerMovement.Direction.x * -1, playerMovement.Direction.x)) * Random.Range(power - 10, power + 10);
+    //    for (int i = 0; i < enemiesTrans.Count; i++)
+    //    {
+    //        enemiesTrans[i].GetComponent<Rigidbody2D>().AddForce(playerMovement.Direction * power/*Random.Range(power - 50, power + 50)*/, ForceMode2D.Impulse);
+    //        print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
+    //    }
+    //    yield return waitAttack;
+    //    for (int i = 0; i < enemiesTrans.Count; i++)
+    //    {
+    //        print(enemiesTrans[i].transform.GetComponent<EnemyDefault>().IsControl);
+    //        enemiesTrans[i].GetComponent<EnemyDefault>().IsControl = true;
+    //        //enemiesTrans[i].transform.GetComponent<Collider2D>().isTrigger = boolGroup[i];
+    //    }
+    //    isClick = false;
+    //    isClicked = false;
+    //    enemiesTrans.Clear();
+    //    Managers.Pool.Push(bossArm);
+    //}
     IEnumerator Column(int level)
     {
         
@@ -816,7 +822,7 @@ public class PowerSkill : PlayerSkillBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 4);
+        Gizmos.DrawWireSphere(transform.position, 1);
     }
 
 
