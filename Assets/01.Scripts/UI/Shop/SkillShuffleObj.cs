@@ -38,6 +38,8 @@ public class SkillShuffleObj : MonoBehaviour
     private float inputDis = 60f;
     private float outputDis = 200f;
 
+    private SkillShuffle skillShuffle = null;
+
     private void Awake()
     {
         skillIconRectTransform = skillIcon.transform.parent.GetComponent<RectTransform>();
@@ -46,6 +48,7 @@ public class SkillShuffleObj : MonoBehaviour
         content.SetActive(false);
         panel.gameObject.SetActive(false);
         panel.fillAmount = 1f;
+        skillShuffle = FindObjectOfType<SkillShuffle>();
     }
 
     /// <summary>
@@ -110,7 +113,7 @@ public class SkillShuffleObj : MonoBehaviour
     /// </summary>
     public void Select()
     {
-        // TODO : 바꾼 스킬 플레이어에게 적용되게
+        skillShuffle.ApplySkillShuffleInPlayer(skillNum);
     }
 
     /// <summary>
