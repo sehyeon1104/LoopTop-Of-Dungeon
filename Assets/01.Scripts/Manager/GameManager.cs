@@ -71,13 +71,13 @@ public class GameManager : MonoSingleton<GameManager>
         #region 게임 데이터 로딩
         if (!SaveManager.GetCheckDataBool("GameData"))
         {
-            Debug.Log("[GameManager] GameData 저장파일 없음");
+            //Debug.Log("[GameManager] GameData 저장파일 없음");
             SetGameData();
             SaveManager.Save<GameData>(ref gameData);
         }
         else
         {
-            Debug.Log("[GameManager] GameData 저장파일 있음");
+            //Debug.Log("[GameManager] GameData 저장파일 있음");
             SaveManager.Load<GameData>(ref gameData);
             GetGameData();
         }
@@ -92,21 +92,21 @@ public class GameManager : MonoSingleton<GameManager>
         #region 플레이어 정보 로딩
         if (!SaveManager.GetCheckDataBool("PlayerData"))
         {
-            Debug.Log("[GameManager] PlayerData 저장파일 없음");
+            //Debug.Log("[GameManager] PlayerData 저장파일 없음");
             Player.playerBase.InitPlayerStat();
             SetPlayerStat();
             SaveManager.Save<PlayerData>(ref playerData);
         }
         else
         {
-            Debug.Log("[GameManager] PlayerData 저장파일 있음");
+            //Debug.Log("[GameManager] PlayerData 저장파일 있음");
             SaveManager.Load<PlayerData>(ref playerData);
             GetPlayerStat();
         }
 
         if (!SaveManager.GetCheckDataBool("ItemData"))
         {
-            Debug.Log("[GameManager] ItemData  저장파일 없음");
+            //Debug.Log("[GameManager] ItemData  저장파일 없음");
             ItemManager.Instance.Init();
             SetItemData();
             SaveManager.Save<ItemData>(ref itemData);
@@ -114,7 +114,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
         else
         {
-            Debug.Log("[GameManager] ItemData 저장파일 있음");
+            //Debug.Log("[GameManager] ItemData 저장파일 있음");
             SaveManager.Load<ItemData>(ref itemData);
             LoadItemData();
             ItemManager.Instance.Init();
@@ -122,25 +122,25 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (!SaveManager.GetCheckDataBool("KeySettingData"))
         {
-            Debug.Log("[GameManager] KeySettingData 저장파일 없음");
+            //Debug.Log("[GameManager] KeySettingData 저장파일 없음");
             KeyManager.Instance.InitKey();
             SaveManager.Save<KeySettingData>(ref keySettingData);
         }
         else
         {
-            Debug.Log("[GameManager] KeySettingData 저장파일 있음");
+            //Debug.Log("[GameManager] KeySettingData 저장파일 있음");
             SaveManager.Load<KeySettingData>(ref keySettingData);
             SetKeyData();
         }
 
         if (!SaveManager.GetCheckDataBool("ImportantGameData"))
         {
-            Debug.Log("[GameManager] ImportantGameData 저장파일 없음");
+            //Debug.Log("[GameManager] ImportantGameData 저장파일 없음");
             SaveManager.Save<ImportantGameData>(ref importantGameData);
         }
         else
         {
-            Debug.Log("[GameManager] ImportantGameData 저장파일 있음");
+            //Debug.Log("[GameManager] ImportantGameData 저장파일 있음");
             SaveManager.Load<ImportantGameData>(ref importantGameData);
         }
 

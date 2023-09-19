@@ -20,7 +20,7 @@ public class EliteRoom : RoomBase
 
     public void InstantiateMoveMapIcon()
     {
-        Debug.Log("酒捞能 积己");
+        //Debug.Log("酒捞能 积己");
         portalMapIcon = Managers.Resource.Instantiate("Assets/03.Prefabs/MinimapIcon/PortalMapIcon.prefab");
         portalMapIcon.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.5f);
         portalMapIcon.SetActive(false);

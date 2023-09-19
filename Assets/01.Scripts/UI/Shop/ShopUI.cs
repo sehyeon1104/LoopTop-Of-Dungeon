@@ -50,12 +50,6 @@ public class ShopUI : MonoBehaviour
         MouseManager.Show(skillBookPanel.activeSelf);
     }
 
-
-    public void Cancle()
-    {
-        ToggleSkillBookPanel();
-    }
-
     #endregion
 
     #region SkillShuffle_Func
