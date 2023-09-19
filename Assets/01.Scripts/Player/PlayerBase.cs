@@ -22,7 +22,7 @@ public class PlayerBase
         moveSpeed = 5.3f;
         critChance = 5f;
         critDamage = 150f;
-        PlayerSkillNum = new int[] { 5, 4 };
+        playerSkillNum = new int[] { 5, 4 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
@@ -208,15 +208,17 @@ public class PlayerBase
         }
     }
 
+    private int[] playerSkillNum;
+
     public int[] PlayerSkillNum
     {
         get
         {
-            return PlayerSkillNum;
+            return playerSkillNum;
         }
         set
         {
-             PlayerSkillNum =value; 
+            playerSkillNum = value;
             PlayerSkill.Instance?.SkillSelect(playerTransformTypeFlag);
         }
     }
