@@ -217,7 +217,7 @@ public class PlayerBase
         set
         {
              PlayerSkillNum =value; 
-            PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
+            PlayerSkill.Instance?.SkillSelect(playerTransformTypeFlag);
         }
     }
         
