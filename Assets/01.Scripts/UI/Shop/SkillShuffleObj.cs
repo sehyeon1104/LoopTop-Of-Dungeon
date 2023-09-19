@@ -114,6 +114,7 @@ public class SkillShuffleObj : MonoBehaviour
     public void Select()
     {
         skillShuffle.ApplySkillShuffleInPlayer(skillNum);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

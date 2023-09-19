@@ -47,7 +47,7 @@ public class SkillShuffle : MonoBehaviour
 
     public void ApplySkillShuffleInPlayer(int _skillNum)
     {
-        GameManager.Instance.Player.playerBase.PlayerSkillNum[0] = _skillNum;
+        GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum] = _skillNum;
         UIManager.Instance.UpdateUI();
         skillSlotNum++;
         CheckSkillChangeCount();
