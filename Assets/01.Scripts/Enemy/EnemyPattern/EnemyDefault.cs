@@ -64,6 +64,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             isControl = value;
         }
     }
+    protected bool isInvincible = false;
     protected bool isMove {private set; get; } = false;
     protected bool isDead { private set; get; } = false;
     protected bool isFlip { private set; get; } = false;
@@ -183,7 +184,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
     public virtual void OnDamage(float damage, float critChance, Poolable hitEffect = null)
     {
-        if (isDead || !gameObject.activeSelf)
+        if (isInvincible || isDead || !gameObject.activeSelf)
         {
             return;
         }
