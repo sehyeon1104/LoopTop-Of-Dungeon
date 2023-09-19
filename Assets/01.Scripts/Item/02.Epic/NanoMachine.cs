@@ -37,6 +37,7 @@ public class NanoMachine : ItemBase
 
     public void NanoMachineAbility()
     {
+        Debug.Log("HP 자동수복!");
         if(recentReceiveDamage > 0)
         {
             temp = recoveryAmount;

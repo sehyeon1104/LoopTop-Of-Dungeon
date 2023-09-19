@@ -411,17 +411,17 @@ public class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Item
-    public void AddItemListUI(Item item)
-    {
-        if(item.itemType == Define.ItemType.heal)
-        {
-            return;
-        }
+    //public void AddItemListUI(Item item)
+    //{
+    //    if(item.itemType == Define.ItemType.heal)
+    //    {
+    //        return;
+    //    }
 
-        GameObject itemUI = Instantiate(itemUITemplate, playerItemListUI);
-        Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
-        itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
-    }
+    //    GameObject itemUI = Instantiate(itemUITemplate, playerItemListUI);
+    //    Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
+    //    itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+    //}
 
     public IEnumerator ShowObtainItemInfo(Item item)
     {

@@ -399,6 +399,15 @@ public class GameManager : MonoSingleton<GameManager>
         SaveManager.Save<ImportantGameData>(ref importantGameData);
     }
 
+    public void SaveItemData()
+    {
+        itemData.curItemList.Clear();
+        foreach(var item in ItemManager.Instance.curItemDic.Values)
+        {
+            itemData.curItemList.Add(item);
+        }
+    }
+
     public void LoadData()
     {
         SaveManager.Load<GameData>(ref gameData);
