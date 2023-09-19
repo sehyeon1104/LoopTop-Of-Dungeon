@@ -31,7 +31,7 @@ public class GameOverUI : MonoBehaviour
 
     private void Update()
     {
-        if (isShow)
+        if (!isShow)
             return;
 
         if (Input.GetKeyDown(KeyCode.Space))
