@@ -44,6 +44,7 @@ public class MeltedWaxWing : ItemBase
         stack++;
         if(stack >= 16)
         {
+            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * (stack - 1);
             stack = 0;
             GameManager.Instance.Player.OnDamage(10, 0);
         }

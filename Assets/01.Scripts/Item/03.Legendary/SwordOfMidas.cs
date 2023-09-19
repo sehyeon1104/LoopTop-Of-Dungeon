@@ -18,7 +18,7 @@ public class SwordOfMidas : ItemBase
 
     public override void Use()
     {
-        Debug.Log("광전사의 검 효과 발동");
+        Debug.Log("미다스의 검 효과 발동");
         SwordOfMidasAbility();
         LastingEffect();
     }
