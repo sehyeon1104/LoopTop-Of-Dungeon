@@ -4,30 +4,43 @@ using UnityEngine;
 
 public class GamePlayTimerManager : MonoSingleton<GamePlayTimerManager>
 {
-    private static float timer = 0f;
+    private static float startTime = 0f;
+    private float resultTime = 0f;
+    private string timeStr = string.Empty;
 
-    private static bool isStart = false;
-
-    private void Update()
+    public void StartTimer()
     {
-        if (!isStart)
-            return;
-
-        timer += Time.deltaTime;
-    }
-
-    private void StartTimer()
-    {
-        isStart = true;
+        startTime = Time.time;
     }
 
     public void ResetTimer()
     {
-        timer = 0f;
+        startTime = 0;
     }
 
-    public float GetTimer()
+    public string GetTimer()
     {
-        return timer;
+        ReplacementTime();
+        return timeStr;
+    }
+
+    public void ReplacementTime()
+    {
+        int num = 3600;
+        timeStr = string.Empty;
+        resultTime = Mathf.CeilToInt(Time.time - startTime);
+
+        while(resultTime > 0)
+        {
+            if ((int)(resultTime / num) > 0)
+                timeStr += (int)(resultTime / num);
+            else
+                timeStr += "00";
+
+            timeStr += ":";
+            resultTime %= num;
+            num /= 60;
+        }
+        timeStr = timeStr.Remove(timeStr.Length - 1);
     }
 }

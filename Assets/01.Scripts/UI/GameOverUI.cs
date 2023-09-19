@@ -60,6 +60,7 @@ public class GameOverUI : MonoBehaviour
     public void ShowGameOverContent()
     {
         playTimeTMP.SetText($"플레이 타임 : {GamePlayTimerManager.Instance.GetTimer()}");
+        GamePlayTimerManager.Instance.ResetTimer();
         AddCurItemSlot();
         StartCoroutine(FadeInOutBackTMP());
         isShow = true;
@@ -70,7 +71,7 @@ public class GameOverUI : MonoBehaviour
         foreach(var item in ItemManager.Instance.GetCurItemDic().Values)
         {
             GameObject itemUI = Instantiate(itemUITemplate, earnItems.transform);
-            itemUI.GetComponent<Button>().enabled = false;
+            // itemUI.GetComponent<Button>().enabled = false;
             Image itemIcon = itemUI.transform.Find("ItemIcon").GetComponent<Image>();
             itemIcon.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         }

@@ -36,7 +36,7 @@ public class ScreenShotManager : MonoSingleton<ScreenShotManager>
         screenshotCamera.targetTexture = null;
 
         // Texture2D -> Sprite로 타입 변환
-        Rect rect = new Rect(0, 0, screenshot.width, screenshot.height);
+        Rect rect = new Rect(screenshot.width / 2 - 250, screenshot.height / 2 - 250, 500, 500);
         Sprite sprite = Sprite.Create(screenshot, rect, Vector2.one * 0.5f);
 
         return sprite;

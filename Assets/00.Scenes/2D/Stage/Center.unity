@@ -885,6 +885,7 @@ GameObject:
   - component: {fileID: 520647071}
   - component: {fileID: 520647072}
   - component: {fileID: 520647074}
+  - component: {fileID: 520647075}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1463,6 +1464,19 @@ MonoBehaviour:
   - {fileID: 11555632, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
   - {fileID: 1708916282, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
   - {fileID: 693774890, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
+--- !u!114 &520647075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520647063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266f20f552b393c40bc2c804ca21462c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenshotCamera: {fileID: 0}
 --- !u!1 &688839365
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,6 +9656,10 @@ PrefabInstance:
     - target: {fileID: 4232022181168890279, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774988755435762456, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8314175531885849773, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_Pivot.x
