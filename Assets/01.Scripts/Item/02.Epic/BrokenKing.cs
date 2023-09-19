@@ -28,20 +28,22 @@ public class BrokenKing : ItemBase
 
     public override void Use()
     {
-        isEquip = true;
-
-        co = ItemManager.Instance.StartCoroutine(Timer());
+        LastingEffect();
     }
 
     public override void Disabling()
     {
         isEquip = false;
+        ResetStack();
     }
 
     public override void LastingEffect()
     {
         isEquip = true;
+        ResetStack();
         co = ItemManager.Instance.StartCoroutine(Timer());//StartCoroutine(Timer());
+        GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(ResetStack);
+        GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(ResetStack);
     }
 
     public void BrokenKingAbility()
@@ -51,27 +53,33 @@ public class BrokenKing : ItemBase
 
     public void ResetStack()
     {
+        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f * stack;
         stack = 0;
         timer = 0f;
-        GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f * stack;
+        if (co != null)
+            ItemManager.Instance.StopCoroutine(co);
+        co = ItemManager.Instance.StartCoroutine(Timer());
     }
 
     public IEnumerator Timer()
     {
-        while (isEquip)
-        {
-            if (timer >= targetTime)
-                continue;
+        if (!isEquip)
+            yield break;
 
+        temp = 1;
+
+        while (timer < targetTime)
+        {
             timer += Time.deltaTime;
-            if(temp - Mathf.CeilToInt(timer) > 0)
+            if(temp - Mathf.CeilToInt(timer) < 0)
             {
-                temp = Mathf.CeilToInt(timer);
+                temp++;
                 stack++;
                 BrokenKingAbility();
             }
 
             yield return waitForEndOfFrame;
         }
+        co = null;
     }
 }
