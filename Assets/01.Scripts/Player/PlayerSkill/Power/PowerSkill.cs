@@ -18,6 +18,7 @@ using UnityEngine.UIElements;
 using static UnityEngine.EventSystems.EventTrigger;
 using static Cinemachine.DocumentationSortingAttribute;
 using Unity.Burst.Intrinsics;
+using System.Timers;
 
 public class PowerSkill : PlayerSkillBase
 {
@@ -161,12 +162,18 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override void ForuthSkill(int level)
     {
+        if(level >=5)
+            StartCoroutine(FiveFireBall());
+        else
         StartCoroutine(FireBall(level));
+
+
     }
 
     protected override void FifthSkill(int level)
     {
         StartCoroutine(Column(level));
+
     }
 
     protected override void UltimateSkill()
@@ -702,10 +709,29 @@ public class PowerSkill : PlayerSkillBase
                 {
                     attachEnemies[j].GetComponent<IHittable>().OnDamage(playerBase.Attack + level *2);
                 }
-                print(vectorList[i]);
             }
             yield return fixedWait;
         }
+    }
+    IEnumerator FiveFireBall()
+    {
+        float timer = 0;
+        Poolable fiveBall = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/FireBall.prefab", (Vector2)transform.position +playerMovement.Direction, Quaternion.identity) ;
+        fiveBall.transform.localScale = Vector2.one * 1.5f;
+        Collider2D[] attachEnemies = null;
+        Vector2 direction = playerMovement.Direction;
+        while (timer < 10)
+        {
+            timer += Time.fixedDeltaTime;
+            fiveBall.transform.Translate(direction * Time.fixedDeltaTime * 4 * animationSpeed.Evaluate(timer / 10));
+                attachEnemies = Physics2D.OverlapCircleAll(fiveBall.transform.position, 1.5f, 1 << enemyLayer);
+                for (int j = 0; j < attachEnemies.Length; j++)
+                {
+                    attachEnemies[j].GetComponent<IHittable>().OnDamage(playerBase.Attack *1.5f);
+                }
+            yield return fixedWait;
+        }
+        yield return null;
     }
     //IEnumerator Throw()
     //{ 
