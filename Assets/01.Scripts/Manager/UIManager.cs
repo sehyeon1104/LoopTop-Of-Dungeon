@@ -81,6 +81,9 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject skill2Button;
     public GameObject ultButton;
     public GameObject dashButton;
+    private TextMeshProUGUI skill1Tmp;
+    private TextMeshProUGUI skill2Tmp;
+    private TextMeshProUGUI ultTmp;
     public Button reviveButton;
     public Button leaveButton;
     Image[] skillIcons = new Image[5];
@@ -183,6 +186,9 @@ public class UIManager : MonoSingleton<UIManager>
         InitBtns();
 
         shopUI = FindObjectOfType<ShopUI>();
+        skill1Tmp = playerPPUI.transform.Find("LeftDown/Btns/Skill1_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
+        skill2Tmp = playerPPUI.transform.Find("LeftDown/Btns/Skill2_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
+        ultTmp = playerPPUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/KeyCodeBack/SkillKeyTMP").GetComponent<TextMeshProUGUI>();
 
         waitForEndOfFrame = new WaitForEndOfFrame();
     }
@@ -218,6 +224,7 @@ public class UIManager : MonoSingleton<UIManager>
         //HpUpdate();
         NewHpUpdate();
         UpdateGoods();
+        UpdateSkillKey();
     }
 
     public void HPInit()
@@ -237,6 +244,27 @@ public class UIManager : MonoSingleton<UIManager>
         skill1Button.SetActive(!skill1Button.activeSelf);
         skill2Button.SetActive(!skill2Button.activeSelf);
         ultButton.SetActive(!ultButton.activeSelf);
+    }
+
+    public void UpdateSkillKey()
+    {
+        skill1Tmp.SetText($"{KeyStringException(KeySetting.keys[KeyAction.SKILL1].ToString())}");
+        skill2Tmp.SetText($"{KeyStringException(KeySetting.keys[KeyAction.SKILL2].ToString())}");
+        ultTmp.SetText($"{KeyStringException(KeySetting.keys[KeyAction.ULTIMATE].ToString())}");
+    }
+
+    private string KeyStringException(string key)
+    {
+        string str = string.Empty;
+        str += key;
+        if (str == "Mouse1")
+            str = "M1";
+        else if (str == "Mouse2")
+            str = "M2";
+        else if (str == "Space")
+            str = "Spc";
+
+        return str;
     }
 
 
@@ -352,7 +380,7 @@ public class UIManager : MonoSingleton<UIManager>
     public void UpdateGoods()
     {
         fragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.FragmentAmount.ToString());
-        bossFragmentAmountTMP.SetText(GameManager.Instance.Player.playerBase.BossFragmentAmount.ToString());
+        bossFragmentAmountTMP.SetText(GameManager.Instance.GetBossFragmentAmount().ToString());
     }
 
     #region GameOver

@@ -51,7 +51,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
     private void Start()
     {
-        skillSelectObj = UIManager.Instance.shopUI.skillSelect;
+        // skillSelectObj = UIManager.Instance.shopUI.skillSelect;
         enlargementSize = usuallySize * 1.1f;
         SkillSelect(playerBase.PlayerTransformTypeFlag);
     }

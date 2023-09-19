@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 553409723790091}
   - component: {fileID: 5673228179172838435}
   - component: {fileID: -1339373940738622809}
-  - component: {fileID: -744974284116524347}
   m_Layer: 9
   m_Name: P_Mob_02
   m_TagString: Untagged
@@ -103,10 +102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySO: {fileID: 11400000, guid: 9e0947f2fad19874eb2ccc2dd62405a4, type: 2}
-  minDistance: 1
+  minDistance: 2
   idleClip: {fileID: 0}
-  moveClip: {fileID: 0}
-  attackClip: {fileID: 0}
+  moveClip: {fileID: 7400000, guid: f020e6fe5ad59c649908a6b04ad98f09, type: 2}
+  attackClip: {fileID: 7400000, guid: 1bc76bd7bb7c2394a904d48d7f558f77, type: 2}
   anim: {fileID: 0}
   isControl: 1
 --- !u!61 &553409723790091
@@ -176,20 +175,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-744974284116524347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4425185828109606242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsUsing: 0
-  PushTime: 0
 --- !u!1001 &2903601405874261698
 PrefabInstance:
   m_ObjectHideFlags: 0

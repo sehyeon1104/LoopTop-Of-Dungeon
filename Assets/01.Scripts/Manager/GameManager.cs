@@ -240,7 +240,6 @@ public class GameManager : MonoSingleton<GameManager>
         playerData.critDamage = Player.playerBase.CritDamage;
         playerData.playerSkillNum = Player.playerBase.PlayerSkillNum;
         playerData._fragmentAmount = Player.playerBase.FragmentAmount;
-        playerData.bossFragmentAmount = Player.playerBase.BossFragmentAmount;
         playerData.fragmentAddAcq = Player.playerBase.FragmentAddAcq;
         playerData.playerTransformTypeFlag = Player.playerBase.PlayerTransformTypeFlag;
         playerData.skillCoolDown = Player.playerBase.SkillCoolDown;
@@ -272,7 +271,6 @@ public class GameManager : MonoSingleton<GameManager>
         Player.playerBase.CritDamage = playerData.critDamage;
         Player.playerBase.PlayerSkillNum = playerData.playerSkillNum;
         Player.playerBase.FragmentAmount = playerData._fragmentAmount;
-        Player.playerBase.BossFragmentAmount = playerData.bossFragmentAmount;
         Player.playerBase.FragmentAddAcq = playerData.fragmentAddAcq;
         Player.playerBase.PlayerTransformTypeFlag = playerData.playerTransformTypeFlag;
         Player.playerBase.SkillCoolDown = playerData.skillCoolDown;
@@ -347,14 +345,30 @@ public class GameManager : MonoSingleton<GameManager>
         return importantGameData.isClearTuto;
     }
 
-    public void GetBossFragment()
+    public int GetBossFragmentAmount()
     {
-        importantGameData.bossFragmentAmount = playerData.bossFragmentAmount;
+        return importantGameData.bossFragmentAmount;
+    }
+
+    public void ObtainBossFragment(int amount)
+    {
+        importantGameData.bossFragmentAmount = amount;
+        UIManager.Instance.UpdateGoods();
     }
 
     public void ObtainCharacter(Define.PlayerTransformTypeFlag playerTransformTypeFlag)
     {
         importantGameData.isObtainBoss[(int)playerTransformTypeFlag] = true;
+    }
+
+    public void ClearStage(Define.MapTypeFlag mapTypeFlag)
+    {
+        importantGameData.clearMapTypeList.Add(mapTypeFlag);
+    }
+
+    public List<Define.MapTypeFlag> GetClearStage()
+    {
+        return importantGameData.clearMapTypeList;
     }
 
     public void SetMapTypeFlag(Define.MapTypeFlag mapTypeFlag)

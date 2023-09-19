@@ -34,16 +34,17 @@ public class SkillShuffleMerchant : MerchantBase
 
     protected override void MerchantFunc()
     {
-        StartCoroutine(PlayerSkill.Instance.SkillShuffle());
+        UIManager.Instance.shopUI.ToggleSkillShufflePanel();
+        //StartCoroutine(PlayerSkill.Instance.SkillShuffle());
     }
 
     public void SkillNum(List<int> skillList)
     {
-        Button[] selectTexts = UIManager.Instance.shopUI.skillSelect.GetComponentsInChildren<Button>(true);
-        for (int i = 0; i < selectTexts.Length; i++)
-        {
-            selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
-        }
+        //Button[] selectTexts = UIManager.Instance.shopUI.skillSelect.GetComponentsInChildren<Button>(true);
+        //for (int i = 0; i < selectTexts.Length; i++)
+        //{
+        //    selectTexts[i].GetComponentInChildren<TextMeshProUGUI>().text = skillList[i].ToString();
+        //}
     }
 
     protected override void StandBy()

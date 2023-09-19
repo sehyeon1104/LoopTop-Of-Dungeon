@@ -24,7 +24,6 @@ public class PlayerBase
         critDamage = 150f;
         PlayerSkillNum = new int[] { 5, 4 };
         _fragmentAmount = 0;
-        _bossFragmentAmount = 0;
         _fragmentAddAcq = 1f;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
         AttackRange = 1.3f;
@@ -228,25 +227,6 @@ public class PlayerBase
             }
 
             UIManager.Instance.UpdateGoods();
-        }
-    }
-
-    private int _bossFragmentAmount;
-    public int BossFragmentAmount
-    {
-        get
-        {
-            return _bossFragmentAmount;
-        }
-        set
-        {
-            _bossFragmentAmount = value;
-            if(_bossFragmentAmount < 0)
-            {
-                _bossFragmentAmount = 0;
-            }
-            // TODO : UI에 현재 남은 보스조각 개수 표기
-
         }
     }
 

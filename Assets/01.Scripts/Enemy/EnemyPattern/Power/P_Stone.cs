@@ -6,12 +6,14 @@ public class P_Stone : EnemyDefault
 {
     //아마 플레이어 발견하면 점프해서 플레이어 위치에 내려찍는 공격 쓸 듯
     [SerializeField] private AnimationClip jumpDownAnim;
+    [SerializeField] private GameObject crack;
     private SpriteRenderer sprite;
 
     public override void Init()
     {
         base.Init();
         sprite = GetComponent<SpriteRenderer>();
+        crack.SetActive(false);
     }
 
     public override IEnumerator AttackToPlayer()
@@ -35,11 +37,13 @@ public class P_Stone : EnemyDefault
         anim.runtimeAnimatorController = overrideController;
         anim.SetTrigger(_attack);
 
-        Collider2D col = Physics2D.OverlapCircle(warningPos, 1.5f, 1 << 8);
+        crack.SetActive(true);
+        Collider2D col = Physics2D.OverlapCircle(warningPos, 2.5f, 1 << 8);
         if (col != null)
             GameManager.Instance.Player.OnDamage(damage, 0);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
+        crack.SetActive(false);
         actCoroutine = null;
     }
 }
