@@ -25,7 +25,7 @@ public class PlayerBase
         PlayerSkillNum = new int[] { 5, 4 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
@@ -208,18 +208,8 @@ public class PlayerBase
         }
     }
 
-    public int[] PlayerSkillNum
-    {
-        get
-        {
-            return PlayerSkillNum;
-        }
-        set
-        {
-             PlayerSkillNum =value; 
-            PlayerSkill.Instance?.SkillSelect(playerTransformTypeFlag);
-        }
-    }
+    public int[] PlayerSkillNum { get;set; }
+
         
  
 
