@@ -117,7 +117,7 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     private void OnGUI()
     {
-        if (!keySettingUI.isChangeKey)
+        if (!keySettingUI.isChangeKey)  
             return;
 
         keyEvent = Event.current;
