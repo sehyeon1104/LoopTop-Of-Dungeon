@@ -125,7 +125,7 @@ public class BrokenItemRoom : RoomBase
             if (itemSelectNum.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber) || ItemManager.Instance.brokenItemList[rand].itemNumber == 510)
                 continue;
 
-            itemSelectNum.Add(rand);
+            itemSelectNum.Add(ItemManager.Instance.brokenItemList[rand].itemNumber);
 
             // 아이템 오브젝트 생성
             Item brokenItem = null;
