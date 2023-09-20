@@ -33,6 +33,7 @@ public class Rock : MonoBehaviour
 
     private IEnumerator MoveTo()
     {
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_RockSling.wav");
         while (true)
         {
             transform.Translate(Vector3.right * Time.deltaTime * speed);
