@@ -45,6 +45,6 @@ public class SwordOfMidas : ItemBase
         rise = GameManager.Instance.Player.playerBase.FragmentAmount / 20;
         rise = Mathf.Clamp(Mathf.CeilToInt(rise), 0, 70);
 
-        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * rise;
+        GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (rise * 0.01f);
     }
 }

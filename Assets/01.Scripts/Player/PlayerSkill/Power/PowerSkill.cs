@@ -130,6 +130,7 @@ public class PowerSkill : PlayerSkillBase
                 return;
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
 
+            GameManager.Instance.Player.AttackRelatedItemEffects.Invoke();
             CinemachineCameraShaking.Instance.CameraShake();
             playerAnim.SetTrigger("Attack");
             attackPar.transform.SetParent(transform);
