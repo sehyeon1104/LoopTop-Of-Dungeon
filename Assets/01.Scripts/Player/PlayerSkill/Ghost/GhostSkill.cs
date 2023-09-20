@@ -97,6 +97,7 @@ public class GhostSkill : PlayerSkillBase
         if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !playerMovement.IsMove)
             return;
 
+        GameManager.Instance.Player.AttackRelatedItemEffects.Invoke();
         playerAnim.SetTrigger("Attack");
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, playerBase.AttackRange, 1 << enemyLayer);
 

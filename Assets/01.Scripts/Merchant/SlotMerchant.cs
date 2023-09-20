@@ -7,8 +7,6 @@ using TMPro;
 // 슬롯 상인
 public class SlotMerchant : MerchantBase
 {
-    [SerializeField]
-    private int slotNum = 0;
     Button button;
 
     private void Start()
@@ -19,7 +17,6 @@ public class SlotMerchant : MerchantBase
     protected override void SetDialogueText()
     {
         dialogueText.Clear();
-        //dialogueText.Append("우적우적..");
     }
 
     // TODO : 상호작용 연결
@@ -32,11 +29,6 @@ public class SlotMerchant : MerchantBase
         UIManager.Instance.RotateInteractionButton();
         button.onClick.RemoveListener(MerchantFunc);
         button.onClick.AddListener(MerchantFunc);
-        //DialogueManager.Instance.SetContentNPos(dialogueText.ToString(), gameObject);
-        //if (!DialogueManager.Instance.isDialogue)
-        //{
-        //    MerchantFunc();
-        //}
     }
 
     protected override void MerchantFunc()

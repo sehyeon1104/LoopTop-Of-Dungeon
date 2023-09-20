@@ -22,7 +22,7 @@ public class GhostUltSignal : MonoBehaviour
     PlayableDirector PD;
     CanvasGroup playerPCUI;
     CanvasGroup playerPPUI;
-
+    PlayerBase playerBase;
     List<string> animArray;
     
     WaitForSecondsRealtime zerodotzeroone = new WaitForSecondsRealtime(0.01f);
@@ -44,6 +44,7 @@ public class GhostUltSignal : MonoBehaviour
         playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
         playerScript = player.GetComponent<Player>();
         //  UltSkillAnim(); 
+        playerBase = GameManager.Instance.Player.playerBase;
     }
 
     //public void AnimationArray()
@@ -63,7 +64,7 @@ public class GhostUltSignal : MonoBehaviour
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, CamSize, 0, 1 << enemyLayer);
         for (int i = 0; i < attachEnemises.Length; i++)
         {
-            attachEnemises[i].GetComponent<IHittable>().OnDamage(50, 0);
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(playerBase.Attack * 5, 0);
         }
         playerPCUI.alpha = 1;
         playerPPUI.alpha = 1;

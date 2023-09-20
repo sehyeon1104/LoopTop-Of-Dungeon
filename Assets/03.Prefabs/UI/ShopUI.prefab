@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4920813942307241246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1060,10 +1060,10 @@ RectTransform:
   m_Father: {fileID: 6451127737567741721}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 380}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 460, y: -240}
+  m_SizeDelta: {x: 306.66666, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7508430412565483110
 MonoBehaviour:
@@ -2305,7 +2305,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2824829283011257747}
         m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
-        m_MethodName: Cancle
+        m_MethodName: ToggleSkillBookPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5971,10 +5971,10 @@ RectTransform:
   m_Father: {fileID: 6451127737567741721}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 380}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 766.6666, y: -240}
+  m_SizeDelta: {x: 306.66666, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2665624335019957099
 MonoBehaviour:
@@ -6029,10 +6029,10 @@ RectTransform:
   m_Father: {fileID: 6451127737567741721}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 380}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 153.33333, y: -240}
+  m_SizeDelta: {x: 306.66666, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4072181488714351103
 MonoBehaviour:
@@ -6048,7 +6048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillNameTMP: {fileID: 2764166861547249412}
   contentTMP: {fileID: 2833544434301612142}
-  selectBtn: {fileID: 4549468086019650642}
+  selectBtn: {fileID: 0}
   skillIcon: {fileID: 246328001742107771}
   content: {fileID: 4412720509905522953}
   panel: {fileID: 2826186034524257592}
@@ -6466,7 +6466,6 @@ GameObject:
   - component: {fileID: 8505744379050946547}
   - component: {fileID: 5875957126287230686}
   - component: {fileID: 7936106968997607933}
-  - component: {fileID: 4549468086019650642}
   m_Layer: 5
   m_Name: SelectBtn
   m_TagString: Untagged
@@ -6533,62 +6532,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4549468086019650642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9184289285014305900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 7936106968997607933}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4072181488714351103}
-        m_TargetAssemblyTypeName: SkillShuffleObj, Assembly-CSharp
-        m_MethodName: Select
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &2484052254566298585
 PrefabInstance:
   m_ObjectHideFlags: 0
