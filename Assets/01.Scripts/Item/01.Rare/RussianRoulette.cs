@@ -40,7 +40,8 @@ public class RussianRoulette : ItemBase
         {
             stack = 0;
             GameObject bullet = Managers.Resource.Instantiate("Assets/03.Prefabs/Item/RussianRouletteBullet.prefab");
-            bullet.transform.right = PlayerVisual.Instance.IsFlipX() ? -GameManager.Instance.Player.transform.right : GameManager.Instance.Player.transform.right;
+            bullet.transform.position = GameManager.Instance.Player.transform.position;
+            bullet.transform.right = PlayerVisual.Instance.IsFlipX() ? GameManager.Instance.Player.transform.right : -GameManager.Instance.Player.transform.right;
         }
     }
 }

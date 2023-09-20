@@ -42,6 +42,7 @@ public class MagicBean : ItemBase
     public void MagicBeanAbility()
     {
         GameObject bean = Managers.Resource.Instantiate("Assets/03.Prefabs/Item/MagicBeanBullet.prefab");
-        bean.transform.right = PlayerVisual.Instance.IsFlipX() ? -GameManager.Instance.Player.transform.right : GameManager.Instance.Player.transform.right;
+        bean.transform.position = GameManager.Instance.Player.transform.position;
+        bean.transform.right = PlayerVisual.Instance.IsFlipX() ? GameManager.Instance.Player.transform.right : -GameManager.Instance.Player.transform.right;
     }
 }
