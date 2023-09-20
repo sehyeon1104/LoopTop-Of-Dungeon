@@ -53,7 +53,7 @@ public class SkillShuffleMerchant : MerchantBase
     {
         if (!isInteractive)
             return;
-
+        interactionTMP.gameObject.SetActive(false);
         isInteractive = false;
         if (GameManager.Instance.sceneType == Define.Scene.Field)
             StageManager.Instance.shop.isInteractive = isInteractive;

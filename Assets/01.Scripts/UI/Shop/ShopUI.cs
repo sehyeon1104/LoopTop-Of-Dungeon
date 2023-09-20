@@ -96,6 +96,7 @@ public class ShopUI : MonoBehaviour
         }
         else
         {
+            PlayerMovement.Instance.IsControl = true;
             UIManager.Instance.PopPanel();
             MouseManager.Lock(!changeCharacterPanel.activeSelf);
             MouseManager.Show(changeCharacterPanel.activeSelf);

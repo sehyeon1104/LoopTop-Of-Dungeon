@@ -23,7 +23,7 @@ public class ChangeCharacterMerchant : MerchantBase
         base.InteractiveWithPlayer();
 
         isInteractive = true;
-
+        interactionTMP.gameObject.SetActive(false);
         if (GameManager.Instance.sceneType == Define.Scene.Field)
             StageManager.Instance.shop.isInteractive = isInteractive;
         UIManager.Instance.RotateInteractionButton();
