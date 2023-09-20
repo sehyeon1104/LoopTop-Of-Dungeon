@@ -65,9 +65,9 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
         }
     }
     protected bool isInvincible = false;
-    protected bool isMove {private set; get; } = false;
-    protected bool isDead { private set; get; } = false;
-    protected bool isFlip { private set; get; } = false;
+    protected bool isMove = false;
+    protected bool isDead  = false;
+    protected bool isFlip = false;
 
     void OnEnable()
     {
