@@ -5,14 +5,19 @@ using UnityEngine;
 public class Rock : MonoBehaviour
 {
     [SerializeField]
+    private bool isMove = true;
+    [SerializeField]
     private float speed = 5f;
     [SerializeField]
     private TrailRenderer[] trail;
 
     private void OnEnable()
     {
-        StopAllCoroutines();
-        StartCoroutine(MoveTo());
+        if (isMove)
+        {
+            StopAllCoroutines();
+            StartCoroutine(MoveTo());
+        }
     }
 
     private void OnDisable()

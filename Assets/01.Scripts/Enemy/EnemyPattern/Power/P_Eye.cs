@@ -23,6 +23,7 @@ public class P_Eye : EnemyDefault
         beam.SetActive(true);
         beam.transform.rotation = Quaternion.AngleAxis(randomAngle, Vector3.forward);
 
+        CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
         for (int i = 0; i < 2; i++)
         {
             Collider2D col = Physics2D.OverlapBox(transform.position, new Vector2(60f, 0.25f), angle * i + randomAngle, 1 << 8);

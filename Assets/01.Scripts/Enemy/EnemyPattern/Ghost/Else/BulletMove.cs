@@ -6,6 +6,8 @@ public class BulletMove : MonoBehaviour
 {
     [SerializeField]
     private float speed = 5f;
+    [SerializeField]
+    private TrailRenderer trail;
 
     private void OnEnable()
     {
@@ -18,6 +20,7 @@ public class BulletMove : MonoBehaviour
     private IEnumerator Push()
     {
         yield return new WaitForSeconds(3f);
+        trail.Clear();
         Managers.Pool.Push(GetComponent<Poolable>());
     }
 
@@ -29,6 +32,7 @@ public class BulletMove : MonoBehaviour
             {
                 collision.GetComponent<IHittable>().OnDamage(8, 0);
             }
+            trail.Clear();
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Bullet.wav");
             Managers.Pool.PoolManaging("10.Effects/ghost/Boom", transform.position, Quaternion.Euler(Vector2.zero));
             Managers.Pool.Push(GetComponent<Poolable>());

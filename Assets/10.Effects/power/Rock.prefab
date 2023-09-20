@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
-  PushTime: 3
+  PushTime: 2.5
 --- !u!114 &5931073769528109422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6df6497c3e929649bd1b88839ca9829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMove: 1
   speed: 60
   trail:
   - {fileID: 1057017794978833305}
@@ -324,7 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 2423387817513258139}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 1065
+  m_shaderPropertyID: 958
   m_materialData:
   - m_trailRenderer: {fileID: 1057017794978833305}
     m_uvTiling: {x: 0.15, y: 1}
