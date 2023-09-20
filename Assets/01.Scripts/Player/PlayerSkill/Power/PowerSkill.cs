@@ -195,6 +195,12 @@ public class PowerSkill : PlayerSkillBase
     }
     protected override IEnumerator Dash()
     {
+        //Poolable a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/DashPower.prefab", transform.position, Quaternion.identity);
+        //ParticleSystem s = a.GetComponent<ParticleSystem>();
+        //Vector2 dmg = playerMovement.Direction - (Vector2)transform.position;
+        //s.startRotation = Mathf.Atan2(dmg.y, dmg.x) * Mathf.Rad2Deg;
+        //print(s.startRotation);
+        //ParticleSystemRenderer d = a.GetComponent<ParticleSystemRenderer>();
         return base.Dash();
     }
 
@@ -312,7 +318,7 @@ public class PowerSkill : PlayerSkillBase
         player.IsInvincibility = true;
         float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
-        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 2.prefab", transform);
+        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffct2.prefab", transform);
         rushEffect.transform.rotation = angleAxis;
         while (rushCheckNum < num)
         {
@@ -365,21 +371,21 @@ public class PowerSkill : PlayerSkillBase
         float checkTime = 0;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
+        Vector2 direction = playerMovement.Direction;
         player.IsInvincibility = true;
-        float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion rotationValue = Quaternion.AngleAxis(angle - 90, transform.forward);
         while (player.transform.localScale.x <= 2)
         {
             player.transform.localScale += Vector3.one * Time.deltaTime * 2;
             yield return null;
         }
-        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffect 1.prefab", transform);
-        rushEffect.transform.localScale *= 2;
+        Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffct2.prefab", transform); 
+        rushEffect.transform.localScale = Vector3.one;
         rushEffect.transform.rotation = rotationValue;
-
         while (num <= 3)
         {
-            playerRigid.velocity = playerMovement.Direction * rushVelocity;
+            playerRigid.velocity = direction * rushVelocity;
             if (timer >= 0.5f)
             {
                 tonados.Add(Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RuehFiveEffect.prefab", transform.position, Quaternion.identity), 5);
@@ -600,7 +606,6 @@ public class PowerSkill : PlayerSkillBase
         Vector3 currentPlayerScale = transform.localScale;
         float multiPlyValue = 1;
         trailRenderer.enabled = true;
-        trailRenderer.colorGradient = trailColor;
         trailRenderer.material = jumpDownMat;
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
 

@@ -22,7 +22,7 @@ public class PlayerBase
         moveSpeed = 5.3f;
         critChance = 5f;
         critDamage = 150f;
-        playerSkillNum = new int[] { 5, 4 };
+        playerSkillNum = new int[] { 2, 3 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
