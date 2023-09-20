@@ -19,12 +19,14 @@ using static UnityEngine.EventSystems.EventTrigger;
 using static Cinemachine.DocumentationSortingAttribute;
 using Unity.Burst.Intrinsics;
 using System.Timers;
-
+using UnityEngine.Playables;
 public class PowerSkill : PlayerSkillBase
 {
     [SerializeField]
     AnimationCurve animationSpeed;
+    [SerializeField] Material shatterMaterial;
     CinemachineVirtualCamera cineMachine;
+    ScreenShatterExplosion explo;
     public Gradient trailColor;
     TrailRenderer trailRenderer;
     float trailWidth = 5;
@@ -68,6 +70,7 @@ public class PowerSkill : PlayerSkillBase
     ParticleSystem attackPar;
     WaitForSeconds columningWait = new WaitForSeconds(0.4f);
     WaitForSeconds columnExplosionWait = new WaitForSeconds(0.1f);
+    WaitForSeconds exploWait = new WaitForSeconds(5f);
     //
     float jumpDownScaleMultiply = 1;
     float shockWaveTime = 4f;
@@ -82,6 +85,11 @@ public class PowerSkill : PlayerSkillBase
     static int _waveDistanceFromCenter = Shader.PropertyToID("_waveDistanceFromCenter");
     List<Transform> enemiesTrans = new List<Transform>();
     bool[] boolGroup = new bool[50];
+    CanvasGroup playerPCUI;
+    CanvasGroup playerPPUI;
+    [SerializeField]
+    PlayableDirector directior;
+    [SerializeField] GameObject exploObj;
     private void Awake()
     {
     
@@ -91,6 +99,9 @@ public class PowerSkill : PlayerSkillBase
         attackPar = Managers.Resource.Instantiate("Assets/10.Effects/player/P_Attack.prefab", transform).GetComponent<ParticleSystem>();
         cineMachine = FindObjectOfType<CinemachineVirtualCamera>();
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
+        playerPCUI = GameObject.Find("PCPlayerUI").transform.Find("UltFade").GetComponent<CanvasGroup>();
+        playerPPUI = GameObject.Find("PPPlayerUI").GetComponent<CanvasGroup>();
+        explo = exploObj.GetComponent<ScreenShatterExplosion>();
         Cashing();
         Init();
     }
@@ -138,7 +149,7 @@ public class PowerSkill : PlayerSkillBase
     }
 
 
-
+   
     protected override void FirstSkill(int level)
     {
         if (level == 5)
@@ -181,7 +192,7 @@ public class PowerSkill : PlayerSkillBase
 
     protected override void UltimateSkill()
     {
-
+        directior.Play();
     }
     protected override IEnumerator Dash()
     {
@@ -852,6 +863,63 @@ public class PowerSkill : PlayerSkillBase
     {
         UIManager.Instance.SetSkillIcon(playerBase.PlayerTransformData, 0, 5, 0);
         columnLevel = level;
+    }
+    IEnumerator CoroutineScreenshot()
+    {
+        yield return new WaitForEndOfFrame();
+
+        int width = Screen.width;
+        int height = Screen.height;
+        Texture2D screenshotTexture2D = new Texture2D(width, height, TextureFormat.ARGB32, false);
+        Rect rect = new Rect(0, 0, width, height);
+        screenshotTexture2D.ReadPixels(rect, 0, 0);
+        screenshotTexture2D.Apply();
+
+        shatterMaterial.SetTexture("_BaseMap", screenshotTexture2D);
+        exploObj.SetActive(true);
+        exploObj.transform.position = transform.position + Vector3.back * 4;
+    }
+    public void UltimateStart()
+    {
+        playerPCUI.alpha = 0f;
+        playerPPUI.alpha = 0f;
+        playerRigid.velocity = Vector2.zero;
+        PlayerMovement.Instance.IsControl = false;
+        PlayerMovement.Instance.IsMove = false;
+    }
+    public void ScreentShot()
+    {
+        StartCoroutine(CoroutineScreenshot());
+    }
+    public void StartShoot()
+    {
+        StartCoroutine(Shotss());
+    }
+    public void ExploStart()
+    {
+        explo.Explo();
+    }
+    IEnumerator Shotss()
+    {
+
+        float ySize = Camera.main.orthographicSize * 2;
+        Vector2 CamSize = new Vector2(ySize * Camera.main.aspect, ySize);
+        Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, CamSize, 0, 1 << enemyLayer);
+        for (int i = 0; i < attachEnemises.Length; i++)
+        {
+            attachEnemises[i].GetComponent<IHittable>().OnDamage(playerBase.Attack *5, 0);
+        }
+        playerPCUI.alpha = 1;
+        playerPPUI.alpha = 1;
+        PlayerMovement.Instance.IsMove = true;
+        PlayerMovement.Instance.IsControl = true;
+        Time.timeScale = 1;
+        yield return exploWait;
+        exploObj.SetActive(false);
+    }
+    public void CameraShake(int a)
+    {
+        CinemachineCameraShaking.Instance.CameraShake(a, 0.1f);
     }
     #endregion  
     private void OnDrawGizmos()
