@@ -122,7 +122,7 @@ public class BrokenItemRoom : RoomBase
 
             rand = Random.Range(0, ItemManager.Instance.brokenItemCount);
 
-            if (itemSelectNum.Contains(rand) || ItemManager.Instance.brokenItemList[rand].itemNumber == 510)
+            if (itemSelectNum.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber) || ItemManager.Instance.brokenItemList[rand].itemNumber == 510)
                 continue;
 
             itemSelectNum.Add(rand);
