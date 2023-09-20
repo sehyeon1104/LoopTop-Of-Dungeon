@@ -8,16 +8,19 @@ public class P_Elite_Golem : EnemyElite
 {
     [SerializeField] private GameObject warning;
     [SerializeField] private GameObject shock;
+    [SerializeField] private GameObject absorb;
 
     public override void Init()
     {
         base.Init();
         warning.SetActive(false);
         shock.SetActive(false);
+        absorb.SetActive(false);
     }
 
     protected override IEnumerator Attack1()
     {
+        yield return new WaitForSeconds(3f);
         anim.SetTrigger(_attack);
 
         yield return new WaitForSeconds(0.1f);
@@ -26,12 +29,11 @@ public class P_Elite_Golem : EnemyElite
             Poolable clone = Managers.Pool.PoolManaging("Assets/03.Prefabs/Enemy/Power/Non_Load/P_EliteMob_Summon.prefab", transform.position, Quaternion.identity);
         }
         CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
-        
-        yield return new WaitForSeconds(3f);
     }
 
     protected override IEnumerator Attack2()
     {
+        yield return new WaitForSeconds(3f);
         anim.SetTrigger(_attack);
 
         yield return new WaitForSeconds(0.2f);
@@ -44,23 +46,24 @@ public class P_Elite_Golem : EnemyElite
             clone.transform.localScale = Vector2.one * (1.125f - i * 0.125f);
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(3f);
     }
 
     protected override IEnumerator Attack3()
     {
+        yield return new WaitForSeconds(3f);
+
         float timer = 0f;
         float force = 0.1f;
         WaitForSeconds waitTime = new WaitForSeconds(0.1f);
 
+        absorb.SetActive(true);
         warning.SetActive(true);
         while (timer < 5f)
         {
             timer += 0.1f;
             timer = (float)Math.Round(timer, 2);
-            if(timer % 0.5f <= float.Epsilon)
+            if(timer % 0.5f <= float.Epsilon && timer <= 3f)
             {
-                Debug.Log("·Ï¹ß»ç");
                 float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
                 Vector3 dir = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)).normalized;
                 Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/EliteRock.prefab", transform.position + dir * 20f, Quaternion.identity);
@@ -71,20 +74,20 @@ public class P_Elite_Golem : EnemyElite
             switch (Vector3.Distance(transform.position, playerTransform.position))
             {
                 case var a when a <= 1f:
-                    force = 9f;
+                    force = 15.5f;
                     break;
                 case var a when a <= 3f:
-                    force = 7f;
+                    force = 13.5f;
                     break;
                 default:
-                    force = 5f;
+                    force = 11.5f;
                     break;
             }
             playerTransform.position += blackholeDir * force * Time.deltaTime;
 
             yield return waitTime;
         }
-
+        absorb.SetActive(false);
         yield return new WaitForSeconds(0.25f);
         
         warning.SetActive(false);
@@ -99,12 +102,16 @@ public class P_Elite_Golem : EnemyElite
         
         CinemachineCameraShaking.Instance.CameraShake(8, 0.1f);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         shock.SetActive(false);
     }
 
     public override void EnemyDead()
     {
+        warning.SetActive(false);
+        shock.SetActive(false);
+        absorb.SetActive(false);
+
         base.EnemyDead();
     }
 }
