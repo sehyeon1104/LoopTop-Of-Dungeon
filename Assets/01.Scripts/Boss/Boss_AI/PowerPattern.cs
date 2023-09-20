@@ -73,6 +73,7 @@ public class P_Patterns : BossPattern
             Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f, 1<<8 | 1<<15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_GroundHit.wav",Define.Sound.Effect, 0.5f);
 
             for (int k = 0; k < col.Length; k++)
                 col[k].GetComponent<IHittable>().OnDamage(20, 0);
