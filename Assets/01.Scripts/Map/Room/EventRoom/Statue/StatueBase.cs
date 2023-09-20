@@ -62,6 +62,7 @@ public abstract class StatueBase : MonoBehaviour
 
     protected virtual void StandBy()
     {
+        ToggleInteractiveTMP();
         UIManager.Instance.RotateAttackButton();
     }
 
