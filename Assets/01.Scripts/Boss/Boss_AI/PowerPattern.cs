@@ -73,7 +73,7 @@ public class P_Patterns : BossPattern
             Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f, 1<<8 | 1<<15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
-            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_GroundHit.wav",Define.Sound.Effect, 0.5f);
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_GroundHit.wav");
 
             for (int k = 0; k < col.Length; k++)
                 col[k].GetComponent<IHittable>().OnDamage(20, 0);
@@ -127,19 +127,25 @@ public class P_Patterns : BossPattern
 
         dashWarning.SetActive(false);
         CinemachineCameraShaking.Instance.CameraShake(2, 1.5f);
+        WaitForSeconds wait = new WaitForSeconds(0.01f);
         while (timer < 1.5f)
         {
-            timer += Time.deltaTime;
+            timer += 0.01f;
+            timer = (float)System.Math.Round(timer, 2);
 
             if (Mathf.Sign(dir.x) * transform.position.x < Mathf.Sign(dir.x) * 14.25f + 16.25f 
                && Mathf.Sign(dir.y) * transform.position.y < Mathf.Sign(dir.y) * 5.5f + 11.5f)
-            transform.Translate(dir.normalized * Time.deltaTime * 30f);
+            transform.Translate(dir.normalized * Time.deltaTime * 50f);
 
-            Collider2D[] col = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8 | 1 << 15);
-            for(int i = 0; i < col.Length; i++)
-                col[i].GetComponent<IHittable>().OnDamage(20, 0);
+            if (timer % 0.1f <= float.Epsilon)
+            {
+                Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_Dash.wav");
+                Collider2D[] col = Physics2D.OverlapCircleAll(transform.position + Vector3.up * 3.5f + dir.normalized, 3f, 1 << 8 | 1 << 15);
+                for (int i = 0; i < col.Length; i++)
+                    col[i].GetComponent<IHittable>().OnDamage(20, 0);
+            }
 
-            yield return null;
+            yield return wait;
         }
 
         StandUp(false);
@@ -177,6 +183,7 @@ public class P_Patterns : BossPattern
                 col = Physics2D.OverlapCircleAll(clone.transform.position, 5.5f, 1 << 8 | 1 << 15);
                 CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
             }
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_JumpAttack.wav");
             Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", clone.transform.position, Quaternion.identity);
 
             for(int k = 0; k < col.Length; k++)
@@ -332,6 +339,7 @@ public class P_Patterns : BossPattern
 
             Collider2D[] col = Physics2D.OverlapCircleAll(shorkWarning.transform.position, 8f , 1 << 8 | 1 << 15);
             Managers.Pool.PoolManaging("Assets/10.Effects/power/GroundCrack.prefab", shorkWarning.transform.position, Quaternion.identity);
+            Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_GroundHit.wav");
             CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
 
             for(int k = 0; k < col.Length; k++)
@@ -365,8 +373,9 @@ public class P_Patterns : BossPattern
         yield return new WaitForSeconds(1f);
 
         CinemachineCameraShaking.Instance.CameraShake(8f, 0.2f);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_ColumnDestroy.wav");
 
-        for(int i = 0; i < bodyList.Count; i++)
+        for (int i = 0; i < bodyList.Count; i++)
             bodyList[i].transform.DOMove(transform.position, 0.2f);
 
         yield return new WaitForSeconds(0.3f);

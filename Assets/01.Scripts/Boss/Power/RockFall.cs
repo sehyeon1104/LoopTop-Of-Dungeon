@@ -32,6 +32,7 @@ public class RockFall : MonoBehaviour
 
         particle.Play();
         CinemachineCameraShaking.Instance.CameraShake(3, 0.2f);
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_GroundShock.wav");
 
         Collider2D col = Physics2D.OverlapCircle(transform.position, transform.lossyScale.x * 2.5f, 1 << 8 | 1 << 15);
         if(col != null)
