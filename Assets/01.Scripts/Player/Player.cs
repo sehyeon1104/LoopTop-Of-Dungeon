@@ -126,8 +126,10 @@ public class Player : MonoBehaviour, IHittable
 
     public IEnumerator GameoverPlayer()
     {
-        yield return new WaitForSeconds(2.5f);
-        UIManager.Instance.ToggleGameOverPanel();
+        yield return new WaitForSeconds(0.2f);
+        UIManager.Instance.gameOverUI.UpdateValue();
+        yield return new WaitForSeconds(2.3f);
+        UIManager.Instance.gameOverUI.ToggleGameOverPanel();
         playerVisual.SetActive(false);
     }
 

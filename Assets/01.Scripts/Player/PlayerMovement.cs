@@ -26,6 +26,9 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     }
     private void FixedUpdate()
     {
+        if (!IsControl)
+            direction = Vector2.zero;
+
        if (isMove && IsControl)
          Move((new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) + joystick.Direction).normalized);
     }

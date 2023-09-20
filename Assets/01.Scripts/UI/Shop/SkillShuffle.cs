@@ -14,6 +14,10 @@ public class SkillShuffle : MonoBehaviour
     private void OnEnable()
     {
         RandSkill();
+        for(int i = 0; i < skillShuffleObjs.Length; ++i)
+        {
+            skillShuffleObjs[i].gameObject.SetActive(true);
+        }
     }
 
     /// <summary>
