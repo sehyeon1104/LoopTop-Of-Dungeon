@@ -1,19 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScreenShatterExplosion : MonoBehaviour
 {
-    private void Awake()
+    [SerializeField] Transform a;
+    public class Shatters
     {
-        foreach(Transform child in transform)
+        public Transform shatterTransform;
+        public Vector3 startPos;
+        public Shatters(Transform _shatterTransform, Vector3 _startPos)
         {
-            Vector3 explosionPositon = new Vector3(0, 6.34f, -7.896055f);
-            if(child.TryGetComponent(out Rigidbody childRigidbody))
-            {
-                childRigidbody.AddExplosionForce(10, explosionPositon, 10f);
-            }
+            shatterTransform = _shatterTransform;
+            startPos =  _startPos;
+        }
+    }
+    [SerializeField]
+    List<Rigidbody> childRigidbody;
+    [SerializeField] List<Shatters> shatters = new List<Shatters>();
+
+    public void Explo()
+    {
+        foreach (Transform child in transform)
+        {
+            shatters.Add(new Shatters(child, child.localPosition));          
+        }
+        for (int i=0; i<childRigidbody.Count; i++)
+        {
+            childRigidbody[i].AddExplosionForce(1000, a.position, 10f);
+            childRigidbody[i].useGravity = true;
         }
 
+    }
+    private void OnDisable()
+    {
+        for (int i = 0; i < childRigidbody.Count; i++)
+        {
+            childRigidbody[i].useGravity = false;
+        }
+        foreach (Shatters shatter in shatters)
+        {
+            shatter.shatterTransform.localPosition = shatter.startPos;
+        }   
     }
 }
