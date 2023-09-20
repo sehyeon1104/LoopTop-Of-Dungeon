@@ -73,5 +73,6 @@ public class GachaStatue : StatueBase
         }
 
         StartCoroutine(IETextAnim());
+        ToggleInteractiveTMP();
     }
 }

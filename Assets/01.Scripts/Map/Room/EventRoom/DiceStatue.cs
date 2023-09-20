@@ -54,6 +54,8 @@ public class DiceStatue : StatueBase
 
         // 주사위 효과 UI 띄우기
         DiceEffect(dice1, dice2);
+
+        ToggleInteractiveTMP();
     }
 
     private void DiceEffect(int dice1, int dice2)

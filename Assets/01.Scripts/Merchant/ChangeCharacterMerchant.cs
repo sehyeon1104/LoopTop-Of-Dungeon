@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-// 슬롯 상인
-public class SlotMerchant : MerchantBase
+public class ChangeCharacterMerchant : MerchantBase
 {
     Button button;
 
@@ -19,10 +17,11 @@ public class SlotMerchant : MerchantBase
         dialogueText.Clear();
     }
 
-    // TODO : 상호작용 연결
+
     protected override void InteractiveWithPlayer()
     {
         base.InteractiveWithPlayer();
+
         isInteractive = true;
 
         if (GameManager.Instance.sceneType == Define.Scene.Field)
@@ -34,8 +33,8 @@ public class SlotMerchant : MerchantBase
 
     protected override void MerchantFunc()
     {
-        interactionTMP.gameObject.SetActive(false);
-        UIManager.Instance.shopUI.ToggleSkillBookPanel();
+        PlayerMovement.Instance.IsControl = false;
+        UIManager.Instance.shopUI.ToggleChangeCharacterPanel();
     }
 
     protected override void StandBy()
@@ -49,8 +48,8 @@ public class SlotMerchant : MerchantBase
 
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);
-        if(UIManager.Instance.shopUI.isSkillBookPanelActive)
-            UIManager.Instance.shopUI.ToggleSkillBookPanel();
+        if (UIManager.Instance.shopUI.isChangeCharacterPanelActive)
+            UIManager.Instance.shopUI.ToggleChangeCharacterPanel();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

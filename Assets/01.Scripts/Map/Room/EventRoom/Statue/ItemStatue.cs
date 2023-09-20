@@ -38,5 +38,6 @@ public class ItemStatue : StatueBase
         if (!isUseable)
             return;
         isUseable = false;
+        ToggleInteractiveTMP();
     }
 }

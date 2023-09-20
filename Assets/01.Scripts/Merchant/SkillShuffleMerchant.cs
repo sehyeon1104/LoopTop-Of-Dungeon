@@ -21,6 +21,7 @@ public class SkillShuffleMerchant : MerchantBase
 
     protected override void InteractiveWithPlayer()
     {
+        base.InteractiveWithPlayer();
         isInteractive = true;
 
         if(GameManager.Instance.sceneType == Define.Scene.Field)
@@ -35,6 +36,7 @@ public class SkillShuffleMerchant : MerchantBase
     protected override void MerchantFunc()
     {
         UIManager.Instance.shopUI.ToggleSkillShufflePanel();
+        interactionTMP.gameObject.SetActive(false);
         //StartCoroutine(PlayerSkill.Instance.SkillShuffle());
     }
 
