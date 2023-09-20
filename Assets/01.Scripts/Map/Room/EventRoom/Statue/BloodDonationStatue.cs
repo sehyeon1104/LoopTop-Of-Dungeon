@@ -40,7 +40,7 @@ public class BloodDonationStatue : StatueBase
         if (!isUseable)
             return;
 
-        if(co != null)
+        if (co != null)
             StopCoroutine(co);
 
         co = null;
@@ -69,5 +69,7 @@ public class BloodDonationStatue : StatueBase
         co = StartCoroutine(IETextAnim());
 
         requireHp *= 2;
+
+        ToggleInteractiveTMP();
     }
 }

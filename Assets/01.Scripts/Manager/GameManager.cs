@@ -157,6 +157,13 @@ public class GameManager : MonoSingleton<GameManager>
         InitItemColorDic();
     }
 
+    public void UpdatePlayerTransformData()
+    {
+        Player.playerBase.PlayerTransformData = Player.playerBase.PlayerTransformDataSOList[(int)Player.playerBase.PlayerTransformTypeFlag];
+        PlayerSkill.Instance.SkillSelect(Player.playerBase.PlayerTransformTypeFlag);
+        PlayerVisual.Instance.UpdateVisual(Player.playerBase.PlayerTransformData);
+    }
+
     private void InitItemColorDic()
     {
         itemRateColor.Clear();

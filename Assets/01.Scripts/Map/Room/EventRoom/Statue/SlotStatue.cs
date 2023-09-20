@@ -67,5 +67,6 @@ public class SlotStatue : StatueBase
         PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
 
         StartCoroutine(IETextAnim());
+        ToggleInteractiveTMP();
     }
 }
