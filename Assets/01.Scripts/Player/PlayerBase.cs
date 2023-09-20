@@ -22,7 +22,7 @@ public class PlayerBase
         moveSpeed = 5.3f;
         critChance = 5f;
         critDamage = 150f;
-        playerSkillNum = new int[] { 5, 4 };
+        playerSkillNum = new int[] { 4, 5 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
         playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
@@ -30,7 +30,7 @@ public class PlayerBase
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
         PlayerTransformData = null;
-        SlotLevel = new int[] { 5, 5 };
+        SlotLevel = new int[] { 1, 1 };
         skillCoolDown = 0;
     }
 
