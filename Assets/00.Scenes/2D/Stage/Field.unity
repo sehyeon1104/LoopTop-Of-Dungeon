@@ -5630,11 +5630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96487ca7ce503142aec52f5efd07788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1259794105 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4105959900013200798, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
-  m_PrefabInstance: {fileID: 928939354}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1264394689
 Mesh:
   m_ObjectHideFlags: 0
@@ -8570,6 +8565,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adb1544c507590b46ae0ba1e9a97fae8, type: 3}
+--- !u!1 &2033392325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4105959900013200798, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
+  m_PrefabInstance: {fileID: 928939354}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &2099326563
 Mesh:
   m_ObjectHideFlags: 0
@@ -8908,7 +8908,7 @@ PrefabInstance:
     - target: {fileID: 878560112, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: exploObj
       value: 
-      objectReference: {fileID: 1259794105}
+      objectReference: {fileID: 2033392325}
     - target: {fileID: 1835319771, guid: f4a0d1e1ff7d6074999a319e92230db6, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.19

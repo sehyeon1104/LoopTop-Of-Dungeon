@@ -23,26 +23,34 @@ public class ScreenShatterExplosion : MonoBehaviour
 
     public void Explo()
     {
+        if(shatters.Count <=0)
+        {
+
         foreach (Transform child in transform)
         {
             shatters.Add(new Shatters(child, child.localPosition));          
         }
+        }
         for (int i=0; i<childRigidbody.Count; i++)
         {
-            childRigidbody[i].AddExplosionForce(1000, a.position, 10f);
-            childRigidbody[i].useGravity = true;
+            childRigidbody[i].isKinematic = false;
+            childRigidbody[i].AddExplosionForce(800, a.position, 10f);
+            //childRigidbody[i].useGravity = true;
         }
 
     }
     private void OnDisable()
     {
-        for (int i = 0; i < childRigidbody.Count; i++)
-        {
-            childRigidbody[i].useGravity = false;
-        }
         foreach (Shatters shatter in shatters)
         {
             shatter.shatterTransform.localPosition = shatter.startPos;
+            shatter.shatterTransform.rotation = Quaternion.identity;
         }   
+        for (int i = 0; i < childRigidbody.Count; i++)
+        {
+            //childRigidbody[i].useGravity = false;
+            //childRigidbody[i].velocity = Vector3.zero;
+            childRigidbody[i].isKinematic = true;
+        }
     }
 }
