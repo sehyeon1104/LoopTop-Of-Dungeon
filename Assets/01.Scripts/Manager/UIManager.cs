@@ -331,6 +331,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void PopPanel()
     {
+        PlayerMovement.Instance.IsControl = true;
         panelDic.Remove(panelStack.Peek().name);
         if (panelStack.Peek().name == "PausePanel")
         {

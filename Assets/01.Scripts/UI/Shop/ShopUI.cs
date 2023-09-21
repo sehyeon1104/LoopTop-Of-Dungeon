@@ -71,6 +71,7 @@ public class ShopUI : MonoBehaviour
         isSkillShufflePanelActive = !skillShufflePanel.activeSelf;
         if (isSkillShufflePanelActive)
         {
+
             UIManager.Instance.PushPanel(skillShufflePanel);
             MouseManager.Lock(!skillShufflePanel.activeSelf);
             MouseManager.Show(skillShufflePanel.activeSelf);
@@ -96,7 +97,6 @@ public class ShopUI : MonoBehaviour
         }
         else
         {
-            PlayerMovement.Instance.IsControl = true;
             UIManager.Instance.PopPanel();
             MouseManager.Lock(!changeCharacterPanel.activeSelf);
             MouseManager.Show(changeCharacterPanel.activeSelf);

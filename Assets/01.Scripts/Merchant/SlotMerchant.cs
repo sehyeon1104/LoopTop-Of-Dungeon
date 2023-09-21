@@ -49,7 +49,7 @@ public class SlotMerchant : MerchantBase
 
         UIManager.Instance.RotateAttackButton();
         button.onClick.RemoveListener(MerchantFunc);
-        if(UIManager.Instance.shopUI.isSkillBookPanelActive)
+        if (UIManager.Instance.shopUI.isSkillBookPanelActive)
             UIManager.Instance.shopUI.ToggleSkillBookPanel();
     }
 
