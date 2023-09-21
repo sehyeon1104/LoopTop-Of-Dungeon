@@ -25,7 +25,7 @@ public class PlayerBase
         playerSkillNum = new int[] { 4, 5 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
