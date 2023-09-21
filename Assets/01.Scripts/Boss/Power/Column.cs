@@ -29,7 +29,7 @@ public class Column : MonoBehaviour, IHittable
         shockWave = transform.Find("ShockWave").gameObject;
         columnAnim = GetComponentInChildren<Animator>();
 
-        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/ColumnHitMat.mat"));
         defaultMat = sprite.material;
     }
 
