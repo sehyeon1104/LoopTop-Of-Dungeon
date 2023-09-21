@@ -23,6 +23,10 @@ public class ScreenShatterExplosion : MonoBehaviour
 
     public void Explo()
     {
+        StartCoroutine(dx());
+    }
+    IEnumerator dx()
+    {
         if(shatters.Count <=1)
         {
 
@@ -42,6 +46,7 @@ public class ScreenShatterExplosion : MonoBehaviour
 
         childRigidbody[i].AddExplosionForce(1000, a.position, 10f);
         }
+
 
     }
     private void OnDisable()
