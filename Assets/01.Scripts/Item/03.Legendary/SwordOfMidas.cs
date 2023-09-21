@@ -8,6 +8,7 @@ public class SwordOfMidas : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Legendary;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private static float rise = 0;
 

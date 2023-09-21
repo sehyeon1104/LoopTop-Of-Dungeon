@@ -9,6 +9,7 @@ public class RussianRoulette : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private int stack = 0;
 
@@ -43,5 +44,6 @@ public class RussianRoulette : ItemBase
             bullet.transform.position = GameManager.Instance.Player.transform.position;
             bullet.transform.right = PlayerVisual.Instance.IsFlipX() ? GameManager.Instance.Player.transform.right : -GameManager.Instance.Player.transform.right;
         }
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

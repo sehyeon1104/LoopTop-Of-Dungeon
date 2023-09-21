@@ -10,6 +10,8 @@ public class BelieversClock : ItemBase
 
     public override bool isPersitantItem => true;
 
+    public override bool isStackItem => true;
+
     private int stack = 0;
 
     public override void Disabling()
@@ -48,5 +50,13 @@ public class BelieversClock : ItemBase
             InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
             InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDic[typeof(LiarsPrayer).Name]);
         }
+        ShowStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

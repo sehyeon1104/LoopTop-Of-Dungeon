@@ -9,6 +9,7 @@ public class NanoMachine : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private static int recoveryAmount = 100;
     private int recentReceiveDamage = 0;

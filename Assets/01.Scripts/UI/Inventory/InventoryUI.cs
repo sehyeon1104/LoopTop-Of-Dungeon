@@ -14,6 +14,10 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     [SerializeField]
     private GameObject itemObjTemplate = null;
+    [SerializeField]
+    private GameObject uiItemObjTemplate = null;
+
+    public Dictionary<string, UIInventorySlot> uiInventorySlotDic = new Dictionary<string, UIInventorySlot>();
 
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             Debug.Log("itemObjTemplate is null!");
             itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
         }
+        uiItemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/UIItemSlot.prefab");
         inventoryPanel = transform.Find("Background").gameObject;
         Init();
     }
@@ -86,6 +91,15 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         newObject.SetActive(true);
         slots.Add(newItemObjComponent);
         ItemAbility.Items[item.itemNumber].Use();
+
+        GameObject uiObj = null;
+        UIInventorySlot uiObjComponent = null;
+        Item uiObjItem = item;
+        uiObj = Instantiate(uiItemObjTemplate);
+        uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
+        uiObjComponent.SetValue(uiObjItem);
+        uiObj.SetActive(true);
+        uiInventorySlotDic.Add(uiObjItem.itemName, uiObjComponent);
 
         // UIManager.Instance.AddItemListUI(item);
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));

@@ -7,6 +7,7 @@ public class VampireFangs : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => false;
 
     private int stack;
 

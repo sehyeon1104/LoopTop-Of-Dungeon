@@ -18,6 +18,7 @@ public class BrokenKing : ItemBase
     private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
+    public override bool isStackItem => true;
     private static int stack = 0;
     int temp = 1;
 
@@ -49,6 +50,7 @@ public class BrokenKing : ItemBase
     public void BrokenKingAbility()
     {
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f;
+        ShowStack();
     }
 
     public void ResetStack()
@@ -59,6 +61,7 @@ public class BrokenKing : ItemBase
         if (co != null)
             ItemManager.Instance.StopCoroutine(co);
         co = ItemManager.Instance.StartCoroutine(Timer());
+        ShowStack();
     }
 
     public IEnumerator Timer()
@@ -81,5 +84,12 @@ public class BrokenKing : ItemBase
             yield return waitForEndOfFrame;
         }
         co = null;
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }
