@@ -23,7 +23,7 @@ public class ScreenShatterExplosion : MonoBehaviour
 
     public void Explo()
     {
-        if(shatters.Count <=0)
+        if(shatters.Count <=1)
         {
 
         foreach (Transform child in transform)
