@@ -41,6 +41,7 @@ public class ScreenShatterExplosion : MonoBehaviour
             childRigidbody[i].useGravity = true;
         }
         yield return new WaitUntil(() => childRigidbody[29].isKinematic == false);
+        yield return null;
         for (int i = 0; i < childRigidbody.Count; i++)
         {
 
