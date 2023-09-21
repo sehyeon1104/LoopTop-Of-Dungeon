@@ -881,7 +881,7 @@ public class PowerSkill : PlayerSkillBase
         screenshotTexture2D.Apply();
         shatterMaterial.SetTexture("_BaseMap", screenshotTexture2D);
         exploObj.SetActive(true);
-        exploObj.transform.position = transform.position + Vector3.back * 4;
+        exploObj.transform.position = transform.position + Vector3.back * 1.4f;
     }
     public void UltimateStart()
     {
