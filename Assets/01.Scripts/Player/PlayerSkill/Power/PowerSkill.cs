@@ -879,7 +879,6 @@ public class PowerSkill : PlayerSkillBase
         Rect rect = new Rect(0, 0, width, height);
         screenshotTexture2D.ReadPixels(rect, 0, 0);
         screenshotTexture2D.Apply();
-        print("ss");
         shatterMaterial.SetTexture("_BaseMap", screenshotTexture2D);
         exploObj.SetActive(true);
         exploObj.transform.position = transform.position + Vector3.back * 4;
@@ -888,6 +887,7 @@ public class PowerSkill : PlayerSkillBase
     {
         playerPCUI.alpha = 0f;
         playerPPUI.alpha = 0f;
+        Time.timeScale = 0f;
         playerRigid.velocity = Vector2.zero;
         PlayerMovement.Instance.IsControl = false;
         PlayerMovement.Instance.IsMove = false;
@@ -907,7 +907,6 @@ public class PowerSkill : PlayerSkillBase
     }
     IEnumerator Shotss()
     {
-        print("s");
         float ySize = Camera.main.orthographicSize * 2;
         Vector2 CamSize = new Vector2(ySize * Camera.main.aspect, ySize);
         Collider2D[] attachEnemises = Physics2D.OverlapBoxAll(transform.position, CamSize, 0, 1 << enemyLayer);
