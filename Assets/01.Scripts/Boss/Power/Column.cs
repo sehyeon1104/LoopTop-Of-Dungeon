@@ -29,7 +29,7 @@ public class Column : MonoBehaviour, IHittable
         shockWave = transform.Find("ShockWave").gameObject;
         columnAnim = GetComponentInChildren<Animator>();
 
-        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/HitMat.mat"));
+        hitMat = new Material(Managers.Resource.Load<Material>("Assets/12.ShaderGraph/Mat/ColumnHitMat.mat"));
         defaultMat = sprite.material;
     }
 
@@ -81,7 +81,8 @@ public class Column : MonoBehaviour, IHittable
         {
             case 1:
                 yield return new WaitForSeconds(0.5f);
-                
+
+                Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_ColumnDestroy.wav");
                 CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
                 Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnShock.prefab", transform.position, Quaternion.identity);
 
@@ -97,6 +98,7 @@ public class Column : MonoBehaviour, IHittable
                 {
                     Managers.Pool.PoolManaging("Assets/10.Effects/power/ColumnPieceWarning.prefab", transform.position, Quaternion.Euler(Vector3.forward * (angle + 90 * i)));
                 }
+                Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_ColumnDestroy.wav");
                 yield return new WaitForSeconds(0.5f);
                 CinemachineCameraShaking.Instance.CameraShake(6, 0.2f);
                 for (int i = 0; i < 4; i++)

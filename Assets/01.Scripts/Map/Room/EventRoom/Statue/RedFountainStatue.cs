@@ -39,5 +39,6 @@ public class RedFountainStatue : StatueBase
         effectTmp.SetText("당신은 분수에 피를 흘립니다...");
         StartCoroutine(IETextAnim());
         isUseable = false;
+        ToggleInteractiveTMP();
     }
 }

@@ -9,6 +9,8 @@ public abstract class StatueBase : MonoBehaviour
 {
     [SerializeField]
     protected TextMeshProUGUI effectTmp = null;
+    [SerializeField]
+    protected TextMeshProUGUI interactiveTmp = null;
 
     protected bool isUseable = true;
 
@@ -44,6 +46,18 @@ public abstract class StatueBase : MonoBehaviour
     {
         Debug.Log("상호작용");
         UIManager.Instance.RotateInteractionButton();
+        ToggleInteractiveTMP();
+    }
+
+    protected virtual void ToggleInteractiveTMP()
+    {
+        interactiveTmp.gameObject.SetActive(false);
+
+        if (!isUseable)
+            return;
+
+        interactiveTmp.gameObject.SetActive(!interactiveTmp.gameObject.activeSelf);
+        interactiveTmp.SetText($"{KeySetting.keys[KeyAction.INTERACTION]} 상호작용");
     }
 
     protected virtual void StandBy()

@@ -77,6 +77,7 @@ public class PrayerStatue : StatueBase
         GameManager.Instance.Player.OnDamage(1, 0);
         chestSpriteRenderer.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/chests.png[chests_{prayCount - 1}]");
         StartCoroutine(IECooltime());
+        ToggleInteractiveTMP();
     }
 
     private IEnumerator IECooltime()

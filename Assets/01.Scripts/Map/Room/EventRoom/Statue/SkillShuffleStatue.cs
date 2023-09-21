@@ -54,5 +54,6 @@ public class SkillShuffleStatue : StatueBase
         GameManager.Instance.Player.playerBase.PlayerSkillNum[0] = randSkillNum1;
         GameManager.Instance.Player.playerBase.PlayerSkillNum[1] = randSkillNum2;
         PlayerSkill.Instance.SkillSelect(GameManager.Instance.Player.playerBase.PlayerTransformTypeFlag);
+        ToggleInteractiveTMP();
     }
 }

@@ -31,5 +31,7 @@ public class BloodyAltarStatue : StatueBase
         StartCoroutine(IETextAnim());
 
         isUseable = false;
+
+        ToggleInteractiveTMP();
     }
 }

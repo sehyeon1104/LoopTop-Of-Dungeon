@@ -22,6 +22,7 @@ public class SlotMerchant : MerchantBase
     // TODO : 상호작용 연결
     protected override void InteractiveWithPlayer()
     {
+        base.InteractiveWithPlayer();
         isInteractive = true;
 
         if (GameManager.Instance.sceneType == Define.Scene.Field)
@@ -33,6 +34,7 @@ public class SlotMerchant : MerchantBase
 
     protected override void MerchantFunc()
     {
+        interactionTMP.gameObject.SetActive(false);
         UIManager.Instance.shopUI.ToggleSkillBookPanel();
     }
 
@@ -40,7 +42,7 @@ public class SlotMerchant : MerchantBase
     {
         if (!isInteractive)
             return;
-
+        interactionTMP.gameObject.SetActive(false);
         isInteractive = false;
         if (GameManager.Instance.sceneType == Define.Scene.Field)
             StageManager.Instance.shop.isInteractive = isInteractive;
