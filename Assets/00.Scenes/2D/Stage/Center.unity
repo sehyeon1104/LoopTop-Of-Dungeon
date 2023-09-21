@@ -2690,7 +2690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ecf096c76f766f4a897f81c6ba44508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotNum: 1
 --- !u!43 &449083358
 Mesh:
   m_ObjectHideFlags: 0
@@ -3276,7 +3275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ecf096c76f766f4a897f81c6ba44508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotNum: 0
 --- !u!54 &492173334 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959899289749353, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
@@ -11908,7 +11906,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32898
+  m_Name: pb_Mesh32910
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13694,6 +13692,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105959900671110274, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
       propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105959900671110274, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
+      propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4105959900671110275, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
