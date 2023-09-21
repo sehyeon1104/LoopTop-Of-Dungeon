@@ -44,7 +44,6 @@ public abstract class StatueBase : MonoBehaviour
 
     protected virtual void InteractiveWithPlayer()
     {
-        Debug.Log("상호작용");
         UIManager.Instance.RotateInteractionButton();
         ToggleInteractiveTMP();
     }
@@ -62,6 +61,7 @@ public abstract class StatueBase : MonoBehaviour
 
     protected virtual void StandBy()
     {
+        interactiveTmp.gameObject.SetActive(false);
         UIManager.Instance.RotateAttackButton();
     }
 
