@@ -57,7 +57,7 @@ public class SoundManager
                 audioSource.Stop();
 
             audioSource.pitch = pitch;
-            audioSource.volume = volume;
+            audioSource.volume = volume * Managers.Instance.BgmVolume * Managers.Instance.MasterVolume;
             audioSource.clip = audioClip;
             audioSource.Play();
         }
@@ -65,9 +65,14 @@ public class SoundManager
         {
             AudioSource audioSource = audioSources[(int)Define.Sound.Effect];
             audioSource.pitch = pitch;
-            audioSource.volume = volume;
+            audioSource.volume = volume * Managers.Instance.SfxVolume * Managers.Instance.MasterVolume;
             audioSource.PlayOneShot(audioClip);
         }
+    }
+    public void SetVolume()
+    {
+        audioSources[(int)Define.Sound.Bgm].volume = Managers.Instance.BgmVolume * Managers.Instance.MasterVolume;
+        audioSources[(int)Define.Sound.Effect].volume = Managers.Instance.SfxVolume * Managers.Instance.MasterVolume;
     }
     AudioClip GetorAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
     {
