@@ -447,8 +447,8 @@ public class GhostSkill : PlayerSkillBase
             playerBeam.enabled = false;
             yield return beamWait;
             beamFiveMat.SetTexture("_MainTex", eyeEffect);
-            //Managers.Pool.Push(leftBeam);
-            //Managers.Pool.Push(rightBeam);
+            Managers.Pool.Push(leftBeam);
+            Managers.Pool.Push(rightBeam);
             beamParticle.Play();
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
             playerBeam.enabled = true;
