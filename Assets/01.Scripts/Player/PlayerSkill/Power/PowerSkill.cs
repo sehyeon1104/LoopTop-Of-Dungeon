@@ -290,6 +290,7 @@ public class PowerSkill : PlayerSkillBase
         float rushCheckTime = 0.7f;
         float num = 1;
         Collider2D[] playerCollider;
+        Vector2 direction = playerMovement.Direction;
         playerRigid.velocity = Vector2.zero;
         playerMovement.IsControl = false;
         if (level >= 2)
@@ -317,13 +318,13 @@ public class PowerSkill : PlayerSkillBase
         }
 
         player.IsInvincibility = true;
-        float angle = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion angleAxis = Quaternion.AngleAxis(angle - 90, transform.forward);
         Poolable rushEffect = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/RushEffct2.prefab", transform);
         rushEffect.transform.rotation = angleAxis;
         while (rushCheckNum < num)
         {
-            playerRigid.velocity = playerMovement.Direction * rushVelocity;
+            playerRigid.velocity = direction * rushVelocity;
             if (timer > rushWait)
             {
 
@@ -474,6 +475,7 @@ public class PowerSkill : PlayerSkillBase
         KeyCode keyBoardButton = playerBase.PlayerSkillNum[0] == 3 ? KeySetting.keys[KeyAction.SKILL1] : KeySetting.keys[KeyAction.SKILL2];
         playerMovement.IsControl = false;
         playerRigid.velocity = Vector2.zero;
+        Vector2 direction = playerMovement.Direction;
         Vector2 normailzedVec = playerMovement.Direction;
         if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
             normailzedVec = new Vector2(playerMovement.Direction.x / MathF.Abs(playerMovement.Direction.x), playerMovement.Direction.y / MathF.Abs(playerMovement.Direction.y));
@@ -492,7 +494,7 @@ public class PowerSkill : PlayerSkillBase
                 expectedRande.Reinit();
             }
             jumpWidth += 4 * Time.deltaTime;
-            trans.position = currentPos + playerMovement.Direction * jumpWidth;
+            trans.position = currentPos + direction * jumpWidth;
             cineMachine.m_Lens.OrthographicSize += Time.deltaTime * 2; // 3ÃÊ Â÷Â¡ÇßÀ» ¶§ 6ÀÌ ´Ã¾î³²
             if (timer > 3f)
                 break;
@@ -503,27 +505,25 @@ public class PowerSkill : PlayerSkillBase
         Managers.Pool.Push(charging);
         dots[0] = currentPos;
         dots[1] = currentPos + playerDirection * jumpHeight;
-        dots[2] = dots[1] + playerMovement.Direction * jumpWidth;
-        dots[3] = dots[0] + playerMovement.Direction * jumpWidth;
+        dots[2] = dots[1] + direction * jumpWidth;
+        dots[3] = dots[0] + direction * jumpWidth;
 
         ParticleSystem a = Managers.Pool.PoolManaging("Assets/10.Effects/player/Power/Flame_sides.prefab", transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         trailRenderer.material = jumpDownMat;
         trailRenderer.enabled = true;
         //trailRenderer.colorGradient = trailColor;
-        if (playerMovement.Direction.x != 0 && playerMovement.Direction.y != 0)
-            value = Mathf.Atan2(playerMovement.Direction.y, playerMovement.Direction.x) - 90 * Mathf.Deg2Rad;
+        if (direction.x != 0 && direction.y != 0)
+            value = Mathf.Atan2(direction.y, direction.x) - 90 * Mathf.Deg2Rad;
         else
-            value = playerMovement.Direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
+            value = direction.y < 0 ? 180 * Mathf.Deg2Rad : 0;
 
         player.IsInvincibility = true;
-        Vector3 direction = playerMovement.Direction;
         a.startRotation = value;
         while (lerpValue < 1)
         {
             multiPlyValue = jumpValue.Evaluate(lerpValue);
             lerpValue += Time.fixedDeltaTime * jumpSpeed * multiPlyValue;
             lerpValue = Mathf.Clamp(lerpValue, 0, 1);
-            print(multiPlyValue);
             transform.localScale = currentPlayerScale * (Mathf.Sin(lerpValue * Mathf.PI) + 1);
             beforePos = Vector2.Lerp(Vector2.Lerp(Vector2.Lerp(dots[0], dots[1], lerpValue), Vector2.Lerp(dots[1], dots[2], lerpValue), lerpValue),
                                            Vector2.Lerp(Vector2.Lerp(dots[1], dots[2], lerpValue), Vector2.Lerp(dots[2], dots[3], lerpValue), lerpValue), lerpValue);
@@ -881,7 +881,7 @@ public class PowerSkill : PlayerSkillBase
         screenshotTexture2D.Apply();
         shatterMaterial.SetTexture("_BaseMap", screenshotTexture2D);
         exploObj.SetActive(true);
-        exploObj.transform.position = transform.position + Vector3.back * 4;
+        exploObj.transform.position = transform.position + Vector3.back * 1.4f;
     }
     public void UltimateStart()
     {

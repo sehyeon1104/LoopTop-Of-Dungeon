@@ -23,6 +23,10 @@ public class ScreenShatterExplosion : MonoBehaviour
 
     public void Explo()
     {
+        StartCoroutine(dx());
+    }
+    IEnumerator dx()
+    {
         if(shatters.Count <=1)
         {
 
@@ -34,9 +38,16 @@ public class ScreenShatterExplosion : MonoBehaviour
         for (int i=0; i<childRigidbody.Count; i++)
         {
             childRigidbody[i].isKinematic = false;
-            childRigidbody[i].AddExplosionForce(800, a.position, 10f);
-            //childRigidbody[i].useGravity = true;
+            childRigidbody[i].useGravity = true;
         }
+        yield return new WaitUntil(() => childRigidbody[29].isKinematic == false);
+        yield return null;
+        for (int i = 0; i < childRigidbody.Count; i++)
+        {
+
+        childRigidbody[i].AddExplosionForce(1000, a.position, 10f);
+        }
+
 
     }
     private void OnDisable()
@@ -48,7 +59,7 @@ public class ScreenShatterExplosion : MonoBehaviour
         }   
         for (int i = 0; i < childRigidbody.Count; i++)
         {
-            //childRigidbody[i].useGravity = false;
+            childRigidbody[i].useGravity = false;
             //childRigidbody[i].velocity = Vector3.zero;
             childRigidbody[i].isKinematic = true;
         }

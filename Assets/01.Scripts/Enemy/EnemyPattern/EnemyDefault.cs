@@ -49,7 +49,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
     
     public Vector3 hitPoint => Vector3.zero;
 
-    private EnemyHpBar hpBar;
+    protected EnemyHpBar hpBar;
 
     protected Poolable poolable = null;
     public bool isControl = true;
