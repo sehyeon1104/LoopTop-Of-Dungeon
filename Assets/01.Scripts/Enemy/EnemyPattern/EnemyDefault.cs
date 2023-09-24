@@ -194,7 +194,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             hpBar.gameObject.SetActive(true);
         }
 
-        damage = GameManager.Instance.Player.playerBase.FinalDamageMul;
+        damage *= GameManager.Instance.Player.playerBase.FinalDamageMul;
 
         if (Random.Range(1, 101) <= critChance)
         {
