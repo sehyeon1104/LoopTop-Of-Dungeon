@@ -50,12 +50,18 @@ public class UIManager : MonoSingleton<UIManager>
     private GameObject gameOverPanel;
     [SerializeField]
     private GameObject checkOneMorePanel;
+    
     [SerializeField]
     private Button resumeBtn;
     [SerializeField]
     private Button settingBtn;
     [SerializeField]
     private Button quitBtn;
+
+    private Slider MasterVolume;
+    private Slider SfxVolume;
+    private Slider BgmVolume;
+
     [SerializeField]
     private GameObject obtainItemInfo = null;
     [SerializeField]
@@ -81,15 +87,20 @@ public class UIManager : MonoSingleton<UIManager>
     public GameObject skill2Button;
     public GameObject ultButton;
     public GameObject dashButton;
+
     private TextMeshProUGUI skill1Tmp;
     private TextMeshProUGUI skill2Tmp;
     private TextMeshProUGUI ultTmp;
+
     public Button reviveButton;
     public Button leaveButton;
+
     Image[] skillIcons = new Image[5];
     Image[] pcSkillIcons = new Image[5];
+
     GameObject AttackButton;
     GameObject InteractionButton;
+
     [SerializeField]
     private GameObject blurPanel;
     public List<Heart> avcList = new List<Heart>();
@@ -165,6 +176,9 @@ public class UIManager : MonoSingleton<UIManager>
             resumeBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Resume").GetComponent<Button>();
             settingBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Setting").GetComponent<Button>();
             settingPanel = playerPCUI.transform.Find("SettingPanel").gameObject;
+            MasterVolume = settingPanel.transform.Find("Panel/Volume/MasterVolume").GetComponentInChildren<Slider>();
+            SfxVolume = settingPanel.transform.Find("Panel/Volume/EffectVolume").GetComponentInChildren<Slider>();
+            BgmVolume = settingPanel.transform.Find("Panel/Volume/BGMVolume").GetComponentInChildren<Slider>();
             pausePanel = playerPCUI.transform.Find("Middle/PausePanel").gameObject;
             quitBtn = playerPCUI.transform.Find("Middle/PausePanel/Panel/Btns/Quit").GetComponent<Button>();
             checkOneMorePanel = playerPCUI.transform.Find("Middle/CheckOneMorePanel").gameObject;
@@ -205,6 +219,9 @@ public class UIManager : MonoSingleton<UIManager>
         settingBtn.onClick.AddListener(ToggleSettingPanel);
         quitBtn.onClick.RemoveListener(LeaveBtn);
         quitBtn.onClick.AddListener(LeaveBtn);
+        MasterVolume.onValueChanged.AddListener(delegate { SetVolume(); });
+        SfxVolume.onValueChanged.AddListener(delegate { SetVolume(); });
+        BgmVolume.onValueChanged.AddListener(delegate { SetVolume(); });
     }
 
     private void Start()
@@ -227,6 +244,7 @@ public class UIManager : MonoSingleton<UIManager>
         NewHpUpdate();
         UpdateGoods();
         UpdateSkillKey();
+        SetVolume();
     }
 
     public void HPInit()
@@ -237,6 +255,13 @@ public class UIManager : MonoSingleton<UIManager>
             hpbars.Add(avc.transform.Find("HeartImg").GetComponent<Image>());
             avc.gameObject.SetActive(false);
         }
+    }
+
+    public void SetVolume()
+    {
+        Managers.Instance.MasterVolume = MasterVolume.value;
+        Managers.Instance.SfxVolume = SfxVolume.value;
+        Managers.Instance.BgmVolume = BgmVolume.value;
     }
     
 
@@ -259,10 +284,12 @@ public class UIManager : MonoSingleton<UIManager>
     {
         string str = string.Empty;
         str += key;
-        if (str == "Mouse1")
+        if (str == "Mouse0")
             str = "M1";
-        else if (str == "Mouse2")
+        else if (str == "Mouse1")
             str = "M2";
+        else if (str == "Mouse2")
+            str = "M3";
         else if (str == "Space")
             str = "Spc";
 
@@ -306,6 +333,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void PopPanel()
     {
+        PlayerMovement.Instance.IsControl = true;
         panelDic.Remove(panelStack.Peek().name);
         if (panelStack.Peek().name == "PausePanel")
         {

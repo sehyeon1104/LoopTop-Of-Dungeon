@@ -20,6 +20,10 @@ public class Managers : MonoBehaviour
     ResourceManager _resource = new ResourceManager();
     PoolManager _pool = new PoolManager();
 
+    public float MasterVolume = 1f;
+    public float SfxVolume = 1f;
+    public float BgmVolume = 1f;
+
     public static SoundManager Sound { get { return Instance._sound; } }
     public static ScenesManager Scene { get { return Instance._scene; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -28,6 +32,10 @@ public class Managers : MonoBehaviour
     private void Awake()
     {
         Init();
+    }
+    private void Update()
+    {
+        Sound.SetVolume();
     }
 
     static void Init()

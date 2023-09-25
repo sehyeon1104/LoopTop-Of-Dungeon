@@ -16,7 +16,7 @@ public class GhostSkill : PlayerSkillBase
     float jangpanDealinterval = 0;
     float jangpanSize = 0f;
     float jangpanDuration = 0f;
-    float jangPanDamage = 0f;
+    float jangPanDamage = 1f;
     float jangpanoverlapFloat = 0;
     Poolable smokePoolable = null;
     GameObject smoke = null;
@@ -201,7 +201,7 @@ public class GhostSkill : PlayerSkillBase
                 attachObjs = Physics2D.OverlapCircleAll(transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                 for (int i = 0; i < attachObjs.Length; i++)
                 {
-                    attachObjs[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
+                    attachObjs[i].GetComponent<IHittable>().OnDamage(playerBase.Attack *0.1f, 0);
                     if (!attachObjs[i].gameObject.activeSelf)
                     {
                         passiveAction();
@@ -447,8 +447,8 @@ public class GhostSkill : PlayerSkillBase
             playerBeam.enabled = false;
             yield return beamWait;
             beamFiveMat.SetTexture("_MainTex", eyeEffect);
-            //Managers.Pool.Push(leftBeam);
-            //Managers.Pool.Push(rightBeam);
+            Managers.Pool.Push(leftBeam);
+            Managers.Pool.Push(rightBeam);
             beamParticle.Play();
             yield return new WaitUntil(() => beamParticle.time > 0.99f);
             playerBeam.enabled = true;

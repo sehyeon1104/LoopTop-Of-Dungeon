@@ -23,6 +23,7 @@ public class P_Stone : EnemyDefault
         yield return base.AttackToPlayer();
         //점프모션
 
+        hpBar.gameObject.SetActive(false);
         isInvincible = true;
         yield return new WaitForSeconds(0.3f);
         sprite.color = new Color(1, 1, 1, 0);
@@ -38,6 +39,7 @@ public class P_Stone : EnemyDefault
         overrideController["Attack"] = jumpDownAnim;
         anim.runtimeAnimatorController = overrideController;
         anim.SetTrigger(_attack);
+        hpBar.gameObject.SetActive(true);
 
         crack.SetActive(true);
         Collider2D col = Physics2D.OverlapCircle(warningPos, 2.5f, 1 << 8);

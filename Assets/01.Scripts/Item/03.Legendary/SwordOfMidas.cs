@@ -40,7 +40,7 @@ public class SwordOfMidas : ItemBase
     {
         if (rise > 0)
         {
-            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
+            GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * (rise * 0.01f);
         }
 
         rise = GameManager.Instance.Player.playerBase.FragmentAmount / 20;
