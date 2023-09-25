@@ -18,6 +18,7 @@ public class PlayerBase
         hp = maxHp;
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
+        finalDamageMul = InitFinalDamageMul;
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;

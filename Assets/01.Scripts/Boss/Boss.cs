@@ -114,7 +114,7 @@ public class Boss : MonoSingleton<Boss>, IHittable
         if (isBDamaged) return;
         if (isBInvincible) return;
 
-        damage = damage * dmgMul + dmgAdd;
+        damage = damage * dmgMul * GameManager.Instance.Player.playerBase.FinalDamageMul + dmgAdd;
 
         if (Random.Range(1, 101) <= critChance)
         {

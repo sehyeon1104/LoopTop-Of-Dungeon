@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7825553922424661699}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41,7 +41,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7825553922424661699}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: a19b3684b52ee01409a23fba2d83116c, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 3d379cfe43580034288bd3b857632462, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -66,22 +66,57 @@ VisualEffect:
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.25
+            value: 50
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: SubAlphaCurve
+        m_Overridden: 1
     m_Gradient:
       m_Array:
       - m_Value:
           serializedVersion: 2
-          key0: {r: 520.255, g: 117.29551, b: 0, a: 0}
-          key1: {r: 12.066339, g: 0, b: 52.8223, a: 1}
-          key2: {r: 12.066339, g: 0, b: 52.8223, a: 0.8}
+          key0: {r: 220.26176, g: 50.74093, b: 0, a: 0}
+          key1: {r: 4.6162696, g: 1.5522609, b: 17.504229, a: 1}
+          key2: {r: 4.616272, g: 1.5522614, b: 17.504229, a: 0.8}
           key3: {r: 12.066339, g: 0, b: 52.8223, a: 0}
           key4: {r: 1.0899949, g: 0, b: 52.8223, a: 0}
           key5: {r: 0, g: 0, b: 0, a: 0}
           key6: {r: 0, g: 0, b: 0, a: 0}
           key7: {r: 0, g: 0, b: 0, a: 0}
           ctime0: 0
-          ctime1: 65535
-          ctime2: 65535
+          ctime1: 45875
+          ctime2: 53074
           ctime3: 65535
           ctime4: 46151
           ctime5: 0
@@ -104,6 +139,9 @@ VisualEffect:
       m_Array:
       - m_Value: {fileID: 2800000, guid: 96345d69b59a4054d868908dde562574, type: 3}
         m_Name: MainTex
+        m_Overridden: 1
+      - m_Value: {fileID: 2800000, guid: 1be6ecb2a70ab274ebdf20057e7983a2, type: 3}
+        m_Name: SubTex
         m_Overridden: 1
     m_Bool:
       m_Array: []
@@ -144,6 +182,6 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -726151
+  m_SortingLayer: 9
+  m_SortingOrder: 10
