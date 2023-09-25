@@ -39,11 +39,11 @@ public class RussianRouletteBullet : ProjectileObj
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == 9)
         {
             collision.GetComponent<IHittable>().OnDamage(damage);
             if(!isStronger)
-                Pool();
+                StartCoroutine(Pool(0));
         }
     }
 }

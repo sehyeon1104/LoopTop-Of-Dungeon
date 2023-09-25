@@ -23,7 +23,7 @@ public class ProjectileObj : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        Invoke("Pool", moveTime);
+        StartCoroutine(Pool(moveTime));
     }
 
     protected virtual void Update()
@@ -36,8 +36,12 @@ public class ProjectileObj : MonoBehaviour
         transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
     }
 
-    protected virtual void Pool()
+    protected virtual IEnumerator Pool(float PoolTime)
     {
+        if (PoolTime != 0)
+            yield return new WaitForSeconds(PoolTime);
+        else
+            yield return null;
         Managers.Pool.Push(poolable);
     }
 }
