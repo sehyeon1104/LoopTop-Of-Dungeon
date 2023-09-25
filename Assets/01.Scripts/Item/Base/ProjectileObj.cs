@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ProjectileObj : MonoBehaviour
 {
+    [SerializeField]
     protected float moveSpeed = 10f;
+    [SerializeField]
     protected float moveTime = 5f;
 
     private Poolable poolable = null;

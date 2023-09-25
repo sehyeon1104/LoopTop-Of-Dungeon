@@ -32,11 +32,11 @@ public class LuckyPunch : ItemBase
         GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(LuckyPunchAbility);
     }
 
-    private int luckyPunchChance = 0;
+    private float luckyPunchChance = 0f;
     public void LuckyPunchAbility()
     {
-        luckyPunchChance = Random.Range(0, 100);
-        if (luckyPunchChance == 0)
-            GameManager.Instance.Player.playerBase.FinalDamageMul += 1;
+        luckyPunchChance = Random.Range(0f, 100f);
+        if (luckyPunchChance <= 0.777f)
+            GameManager.Instance.Player.playerBase.FinalDamageMul += 6;
     }
 }
