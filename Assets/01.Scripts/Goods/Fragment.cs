@@ -56,6 +56,7 @@ public class Fragment : MonoBehaviour
 
     public IEnumerator MoveToPlayer()
     {
+        ItemManager.Instance.FragmentDropRelatedItemEffects.Invoke(transform.position);
         yield return new WaitForSeconds(collectionTime);
 
         transform.DOMove(playerTransform.position, moveToPlayerTime).SetEase(Ease.InQuad);
