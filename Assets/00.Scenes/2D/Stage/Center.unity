@@ -439,7 +439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8013415304890610352, guid: 7271cdcbb79602147b7957ccc10e5e92, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 8013415304890610352, guid: 7271cdcbb79602147b7957ccc10e5e92, type: 3}
       propertyPath: m_AnchorMax.x
@@ -852,37 +852,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &139299801
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 139299802}
-  m_Layer: 0
-  m_Name: Map
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &139299802
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 139299801}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 520647066}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &176789345
 Mesh:
   m_ObjectHideFlags: 0
@@ -1701,7 +1670,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &292819165
 Mesh:
@@ -2274,7 +2243,7 @@ Transform:
   - {fileID: 336537417}
   - {fileID: 337577021}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &376451394
 Mesh:
@@ -3316,582 +3285,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959899149305329, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
   m_PrefabInstance: {fileID: 1592273057}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &520647063
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 520647066}
-  - component: {fileID: 520647064}
-  - component: {fileID: 520647065}
-  - component: {fileID: 520647073}
-  - component: {fileID: 520647069}
-  - component: {fileID: 520647070}
-  - component: {fileID: 520647071}
-  - component: {fileID: 520647072}
-  - component: {fileID: 520647074}
-  m_Layer: 0
-  m_Name: Managers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &520647064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e320d4197fcc46e4d908f89b1cefa3d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  platForm: 0
-  mapTypeFlag: 0
-  sceneType: 0
---- !u!114 &520647065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a9a30876bbc5643b31bae40314ce68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
-  playerPCUI: {fileID: 0}
-  playerPPUI: {fileID: 0}
-  ultFade: {fileID: 0}
-  hpPrefab: {fileID: 4894266444047524962, guid: 8ae09b705cb28fa4fb1abc98cc1517cd, type: 3}
-  hpSpace: {fileID: 0}
-  fragmentAmountTMP: {fileID: 0}
-  bossFragmentAmountTMP: {fileID: 0}
-  playerItemListUI: {fileID: 0}
-  itemUITemplate: {fileID: 0}
-  pausePanel: {fileID: 0}
-  settingPanel: {fileID: 837958732}
-  gameOverPanel: {fileID: 0}
-  checkOneMorePanel: {fileID: 0}
-  resumeBtn: {fileID: 0}
-  settingBtn: {fileID: 0}
-  quitBtn: {fileID: 0}
-  obtainItemInfo: {fileID: 0}
-  obtainItemInfoImg: {fileID: 0}
-  obtainItemInfoTMP: {fileID: 0}
-  showCurStageNameObj: {fileID: 0}
-  curStageName: {fileID: 0}
-  curStageNameLine: {fileID: 0}
-  showCurStageNameTime: 3
-  skill1Button: {fileID: 0}
-  skill2Button: {fileID: 0}
-  ultButton: {fileID: 0}
-  dashButton: {fileID: 0}
-  reviveButton: {fileID: 0}
-  leaveButton: {fileID: 0}
-  blurPanel: {fileID: 0}
-  avcList: []
-  hpbars: []
-  hpBar: {fileID: 0}
-  hpText: {fileID: 0}
-  playerskill: {fileID: 0}
-  currentFillAmount: []
---- !u!4 &520647066
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 139299802}
-  - {fileID: 1031838750}
-  - {fileID: 950730181}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &520647069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bec049d7be64ad42a7d983a6ee55585, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemObjSpawnPos: []
-  itemObjTemplate: {fileID: 4778024336246859236, guid: 3b7dd1b68af3ea04e8304abb1d7800f3, type: 3}
---- !u!114 &520647070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e942c0a790d3d4da6b46e9b66afa7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.5
---- !u!114 &520647071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb26c5aa6819a214ca72aa3baccad5f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 0}
-  contentTmp: {fileID: 0}
-  waitTime: 3
---- !u!114 &520647072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ecf4d4b41dbe047980bf77ecda3c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &520647073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7b86c8b0552064e871fc9373117253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allItemInfo:
-  - itemType: 0
-    itemRating: 0
-    itemNumber: 0
-    itemName: Default
-    itemNameEng: Default
-    itemEffectDescription: Default
-    itemDescription: Default
-    price: 0
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 101
-    itemName: "\uB0A0\uAC1C \uB2EC\uB9B0 \uC2E0\uBC1C"
-    itemNameEng: WingShoes
-    itemEffectDescription: "\uC774\uB3D9\uC18D\uB3C4 10% \uC99D\uAC00"
-    itemDescription: "\"\uB0A0\uAC1C\uB294 \uC7A5\uC2DD\uC774\uB77C \uB0A0 \uC218\uB294
-      \uC5C6\uB2E4\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 102
-    itemName: "\uAC70\uC778\uC758 \uC7A5\uAC11"
-    itemNameEng: GiantGlove
-    itemEffectDescription: "\uACF5\uACA9\uBC94\uC704 10% \uC99D\uAC00. [\uACFC\uC695]
-      \uC7AC\uB8CC\uC544\uC774\uD15C"
-    itemDescription: "\"\uAD6C\uB984 \uC704\uC5D0 \uC0AC\uB294 \uAC70\uC778\uC758
-      \uC678\uCD9C\uC6A9 \uC7A5\uAC11\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 103
-    itemName: "\uBB34\uB38C\uC9C4 \uAC80"
-    itemNameEng: DullSword
-    itemEffectDescription: "\uACF5\uACA9\uB825 10% \uC99D\uAC00"
-    itemDescription: "\"\uC591\uB0A0\uAC80\uC778\uB370, \uC65C \uD55C\uCABD \uB0A0\uB9CC
-      \uB2F3\uC544\uC788\uC9C0?\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 104
-    itemName: "\uBB34\uD615\uC758 \uAC80"
-    itemNameEng: IntangibleSword
-    itemEffectDescription: "\uACF5\uACA9\uC18D\uB3C4 10% \uC99D\uAC00"
-    itemDescription: "\"\uB9D0 \uADF8\uB300\uB85C \uC190\uC7A1\uC774 \uC678\uC5D0\uB294
-      \uC544\uBB34 \uD615\uD0DC\uB3C4 \uC5C6\uB294 \uAC80\uC774\uB2E4\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 107
-    itemName: "\uB9DD\uAC00\uC9C4 \uBAA8\uB798\uC2DC\uACC4"
-    itemNameEng: BrokenHourglass
-    itemEffectDescription: "\uC2A4\uD0AC \uC0AC\uC6A9 \uC2DC 10% \uD655\uB960\uB85C
-      \uC2A4\uD0AC \uCFE8\uD0C0\uC784 1\uCD08 \uAC10\uC18C. [\uC628\uC804\uD55C \uBAA8\uB798\uC2DC\uACC4]
-      \uC7AC\uB8CC \uC544\uC774\uD15C"
-    itemDescription: "\"\uC0B0\uC0B0\uC774 \uBD80\uC11C\uC9C4 \uBAA8\uB798\uC2DC\uACC4\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 108
-    itemName: "\uC791\uC740 \uC800\uAE08\uD1B5"
-    itemNameEng: TinyPiggy
-    itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 5% \uC99D\uAC00"
-    itemDescription: "\"\uAFC0!\""
-    price: 100
-  - itemType: 1
-    itemRating: 1
-    itemNumber: 109
-    itemName: "\uC0AC\uB3C4\uC758 \uC2DC\uACC4"
-    itemNameEng: BelieversClock
-    itemEffectDescription: "\uBC29 \uD074\uB9AC\uC5B4 \uC2DC \uACF5\uACA9\uB825 0.5%,
-      \uC774\uB3D9\uC18D\uB3C4 0.5%, \uACF5\uACA9\uC18D\uB3C4 0.5% \uC99D\uAC00.
-      (\uCD5C\uB300 6%).\\n 12\uC2A4\uD0DD \uC911\uCCA9 \uC2DC [\uAC70\uC9D3  \uAE30\uB3C4\uBB38]
-      \uBCC0\uD654"
-    itemDescription: "\"\uB0B4\uAC00 \uB108\uD76C \uC5F4 \uB458\uC744 \uD0DD\uD558\uC9C0
-      \uC544\uB2C8\uD558\uC600\uB290\uB0D0\""
-    price: 100
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 201
-    itemName: "\uD5E4\uBE44\uAE09 \uCC54\uD53C\uC5B8\uC758 \uBCA8\uD2B8"
-    itemNameEng: ChampionBelt
-    itemEffectDescription: "Hp 20 \uC99D\uAC00, \uACF5\uACA9 \uBC94\uC704 10% \uC99D\uAC00"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 202
-    itemName: "\uB7ED\uD0A4 \uD380\uCE58"
-    itemNameEng: LuckyPunch
-    itemEffectDescription: "\uC801 \uD0C0\uACA9\uC2DC 1% \uD655\uB960\uB85C \uCD5C\uC885\uB370\uBBF8\uC9C0\uAC00
-      2\uBC30\uB85C \uC801\uC6A9\uB428"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 203
-    itemName: "\uBBF8\uB178\uD0C0\uC6B0\uB974\uC2A4\uC758 \uB3C4\uB07C"
-    itemNameEng: MinotoursAxe
-    itemEffectDescription: "\uACF5\uACA9 \uBC94\uC704 10% \uC99D\uAC00, \uC8FC\uC704
-      \uC801 \uB9C8\uB9AC \uC218 1\uB9C8\uB9AC\uB2F9 \uACF5\uACA9 \uBC94\uC704 4%
-      \uC99D\uAC00.(\uCD5C\uB300 20%, \uC9C0\uC18D\uC2DC\uAC04 5\uCD08, \uCFE8\uD0C0\uC784
-      5\uCD08)"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 205
-    itemName: "\uD0D0\uAD6C\uC790\uC758 \uBC18\uC9C0"
-    itemNameEng: InquisitorsRing
-    itemEffectDescription: "\uCE58\uBA85\uD0C0 \uD655\uB960 10% \uC99D\uAC00"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 206
-    itemName: "\uB0A0\uCE74\uB85C\uC6B4 \uAC80"
-    itemNameEng: SharpSword
-    itemEffectDescription: "\uACF5\uACA9\uB825 20% \uC99D\uAC00, \uC801 \uCC98\uCE58
-      \uC2DC \uACF5\uACA9\uB825 5% \uC99D\uAC00. (\uCD5C\uB300 3\uC911\uCCA9, \uC9C0\uC18D\uC2DC\uAC04
-      10\uCD08)"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 2
-    itemNumber: 209
-    itemName: "\uB7EC\uC2DC\uC548 \uB8F0\uB81B"
-    itemNameEng: RussianRoulette
-    itemEffectDescription: "6\uBC88\uC9F8 \uAE30\uBCF8\uACF5\uACA9\uB9C8\uB2E4 \uACF5\uACA9\uB825
-      10% ~ 200% \uB370\uBBF8\uC9C0\uC758 \uCD1D\uC54C \uBC1C\uC0AC"
-    itemDescription: 
-    price: 200
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 301
-    itemName: "\uBC40\uD30C\uC774\uC5B4\uC758 \uC1A1\uACF3\uB2C8"
-    itemNameEng: VampireFangs
-    itemEffectDescription: "\uC801\uC744 10\uB9C8\uB9AC \uCC98\uCE58\uD560 \uB54C\uB9C8\uB2E4
-      hp3 \uD68C\uBCF5"
-    itemDescription: 
-    price: 300
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 303
-    itemName: "\uB9C8\uBC95\uC758\uCF69"
-    itemNameEng: MagicBean
-    itemEffectDescription: "\uAE30\uBCF8 \uACF5\uACA9 \uC0AC\uC6A9\uC2DC \uACF5\uACA9\uB825
-      10%\uC758 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uB294 \uCF69 \uBC1C\uC0AC. [\uACFC\uC721]
-      \uC7AC\uB8CC \uC544\uC774\uD15C"
-    itemDescription: 
-    price: 300
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 304
-    itemName: "\uD0DC\uC591\uC758 \uAC70\uC6B8"
-    itemNameEng: MirrorOfSun
-    itemEffectDescription: "\uACF5\uACA9\uB825 20% \uC99D\uAC00, \uACF5\uACA9 \uBC94\uC704
-      20% \uC99D\uAC00. [\uC5EC\uBA85\uC758 \uAC70\uC6B8] \uC7AC\uB8CC\uC544\uC774\uD15C"
-    itemDescription: 
-    price: 300
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 305
-    itemName: "\uB51C\uC758 \uAC70\uC6B8"
-    itemNameEng: MirrorOfMoon
-    itemEffectDescription: "\uACF5\uACA9\uC18D\uB3C4 20% \uC99D\uAC00, \uC2A4\uD0AC
-      \uCFE8\uD0C0\uC784 20% \uAC10\uC18C. [\uC5EC\uBA85\uC758 \uAC70\uC6B8] \uC7AC\uB8CC\uC544\uC774\uD15C"
-    itemDescription: 
-    price: 300
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 306
-    itemName: "\uBD80\uC11C\uC9C4 \uC655"
-    itemNameEng: BrokenKing
-    itemEffectDescription: "10\uCD08\uB3D9\uC548 \uACF5\uACA9\uC18D\uB3C4\uAC00 50%\uAE4C\uC9C0
-      \uC11C\uC11C\uD788 \uC99D\uAC00. \uD53C\uACA9\uC2DC \uC2A4\uD0DD \uCD08\uAE30\uD654"
-    itemDescription: 
-    price: 300
-  - itemType: 1
-    itemRating: 3
-    itemNumber: 308
-    itemName: "\uC785\uC790 \uC7A5\uCE58"
-    itemNameEng: NanoMachine
-    itemEffectDescription: "\uD53C\uACA9 \uC2DC Hp \uC790\uB3D9 \uC218\uBCF5, \uD574\uB2F9
-      \uC544\uC774\uD15C\uC73C\uB85C \uC218\uBCF5\uD55C Hp\uAC00 100 \uC774\uC0C1\uC77C
-      \uACBD\uC6B0 \uC544\uC774\uD15C \uD30C\uC190"
-    itemDescription: '"Nano,achines, son!"'
-    price: 300
-  - itemType: 1
-    itemRating: 4
-    itemNumber: 401
-    itemName: "\uB9CC\uB2A5 \uD558\uD504\uAE00\uB7EC\uBE0C"
-    itemNameEng: AllRoundHalfGlove
-    itemEffectDescription: "\uD50C\uB808\uC774\uC5B4 Hp 10 \uC99D\uAC00, \uD50C\uB808\uC774\uC5B4
-      \uACF5\uACA9\uB825 30% \uC99D\uAC00, \uC774\uB3D9\uC18D\uB3C4 15% \uC99D\uAC00,
-      \uD50C\uB808\uC774\uC5B4 \uC2A4\uD0AC \uCFE8\uD0C0\uC784 10% \uAC10\uC18C"
-    itemDescription: 
-    price: 400
-  - itemType: 1
-    itemRating: 4
-    itemNumber: 402
-    itemName: "\uAD11\uC804\uC0AC\uC758 \uAC80"
-    itemNameEng: BerserkerSword
-    itemEffectDescription: "\uC783\uC740 \uCCB4\uB825 1%\uB2F9 \uACF5\uACA9\uB825
-      1% \uC99D\uAC00 (\uCD5C\uB300 70%)"
-    itemDescription: 
-    price: 400
-  - itemType: 1
-    itemRating: 4
-    itemNumber: 405
-    itemName: "\uBBF8\uB2E4\uC2A4\uC758 \uAC80"
-    itemNameEng: SwordOfMidas
-    itemEffectDescription: "\uD604\uC7AC \uBCF4\uC720\uD55C \uC7AC\uD654\uC758 \uC591\uC5D0
-      \uBE44\uB840\uD574 \uACF5\uACA9\uB825 \uC99D\uAC00 (\uCD5C\uB300 70%)"
-    itemDescription: 
-    price: 400
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 501
-    itemName: "\uBABB\uBC15\uD78C \uC2E0\uBC1C"
-    itemNameEng: NailedShoes
-    itemEffectDescription: "\uACF5\uACA9\uB825 50% \uC99D\uAC00, \uC774\uB3D9\uC18D\uB3C4
-      25% \uAC10\uC18C"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 502
-    itemName: "\uD3ED\uC8FC\uB9C8 \uD718\uC7A5"
-    itemNameEng: RunawayHorseSeal
-    itemEffectDescription: "\uC774\uB3D9\uC18D\uB3C4 30% \uC99D\uAC00, \uCE58\uBA85\uD0C0
-      \uD655\uB960 8% \uAC10\uC18C"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 503
-    itemName: "\uAC70\uBD81\uBAA8\uC790"
-    itemNameEng: TurtleHat
-    itemEffectDescription: "Hp 50 \uC99D\uAC00, \uACF5\uACA9\uB825 20% \uAC10\uC18C"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 504
-    itemName: "\uC800\uC8FC\uBC1B\uC740 \uBC18\uC9C0"
-    itemNameEng: CursedRing
-    itemEffectDescription: "\uCD5C\uC885 \uB370\uBBF8\uC9C0 1.3\uBC30 \uC99D\uAC00,
-      \uBC1B\uB294 \uB370\uBBF8\uC9C0 2\uBC30 \uC99D\uAC00"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 506
-    itemName: "\uC774\uC0C1\uD55C \uD638\uC8FC\uBA38\uB2C8"
-    itemNameEng: StrangePocket
-    itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 20% \uC99D\uAC00, \uC801\uC5D0\uAC8C
-      \uD53C\uACA9\uC2DC \uC77C\uC815\uB7C9\uC758 \uC7AC\uD654 \uAC10\uC18C"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 507
-    itemName: "\uAE30\uB984 \uC8FC\uBA38\uB2C8"
-    itemNameEng: OilPocket
-    itemEffectDescription: "\uCE58\uBA85\uD0C0 \uD53C\uD574 20% \uAC10\uC18C, \uC2A4\uD0AC
-      \uCFE8\uD0C0\uC784 20% \uAC10\uC18C"
-    itemDescription: 
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 508
-    itemName: "\uADF8\uB9BC\uC758 \uB5A1"
-    itemNameEng: PictureCake
-    itemEffectDescription: "\uCE58\uBA85\uD0C0 \uD655\uB960 20% \uAC10\uC18C, \uCE58\uBA85\uD0C0
-      \uD53C\uD574 50% \uC99D\uAC00"
-    itemDescription: "\uD565\uC544\uBD10\uB3C4 \uC544\uBB34 \uB9DB\uB3C4 \uB098\uC9C0
-      \uC54A\uB294\uB2E4"
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 509
-    itemName: "\uB179\uC740 \uBC00\uB78D \uB0A0\uAC1C"
-    itemNameEng: MeltedWaxWing
-    itemEffectDescription: "\uB300\uC2DC 1\uD68C\uB9C8\uB2E4 \uACF5\uACA9\uB825 5%
-      \uC99D\uAC00 (\uC9C0\uC18D\uC2DC\uAC04 5\uCD08, \uC2A4\uD0DD \uAC31\uC2E0 \uC2DC
-      \uC9C0\uC18D\uC2DC\uAC04 \uCD08\uAE30\uD654) \uD574\uB2F9 \uC544\uC774\uD15C\uC73C\uB85C
-      80% \uC774\uC0C1\uC758 \uACF5\uACA9\uB825\uC744 \uC5BB\uC744 \uACBD\uC6B0,
-      10\uC758 \uB300\uBBF8\uC9C0\uB97C \uBC1B\uACE0 \uC2A4\uD0DD \uCD08\uAE30\uD654"
-    itemDescription: "\"\uC5B4\uB5A0\uD55C \uADFC\uC2EC\uB3C4 \uC78A\uACE0 \uD558\uB298\uB85C
-      \uB0A0\uC544\uC624\uB974\uB77C\""
-    price: 0
-  - itemType: 3
-    itemRating: 5
-    itemNumber: 510
-    itemName: "\uAC70\uC9D3 \uAE30\uB3C4\uBB38"
-    itemNameEng: LiarsPrayer
-    itemEffectDescription: "\uACF5\uACA9\uB825 12%, \uACF5\uACA9\uC18D\uB3C4 12%,
-      \uC774\uB3D9\uC18D\uB3C4 12%, \uACF5\uACA9\uBC94\uC704 12%, \uC2A4\uD0AC \uCFE8\uD0C0\uC784
-      24% \uC99D\uAC00"
-    itemDescription: "\"\uADF8\uB7EC\uB098 \uB108\uD76C \uC911 \uD55C \uC0AC\uB78C\uC740
-      \uB9C8\uADC0\uB2C8\uB77C \uD558\uC2DC\uB2C8\""
-    price: 0
-  - itemType: 1
-    itemRating: 6
-    itemNumber: 601
-    itemName: "\uC628\uC804\uD55C \uBAA8\uB798\uC2DC\uACC4"
-    itemNameEng: CompleteHourglass
-    itemEffectDescription: "\uC2A4\uD0AC \uCFE8\uD0C0\uC784\uC774 30% \uAC10\uC18C\uD558\uBA70
-      10% \uD655\uB960\uB85C \uCFE8\uD0C0\uC784 \uCD08\uAE30\uD654"
-    itemDescription: 
-    price: 0
-  - itemType: 1
-    itemRating: 6
-    itemNumber: 602
-    itemName: "\uC5EC\uBA85\uC758 \uAC70\uC6B8"
-    itemNameEng: MirrorOfDawn
-    itemEffectDescription: "\uACF5\uACA9\uB825, \uACF5\uACA9\uBC94\uC704, \uACF5\uACA9\uC18D\uB3C4
-      40% \uC99D\uAC00, \uC2A4\uD0AC \uCFE8\uD0C0\uC784 40% \uAC10\uC18C. \uC801
-      \uD53C\uACA9\uC2DC \uC77C\uC815 \uD655\uB960\uB85C \uC5EC\uBA85\uC758 \uBE5B\uC774
-      \uBC1C\uB3D9\uD558\uC5EC \uBC94\uC704\uACF5\uACA9 (\uCFE8\uD0C0\uC784 10\uCD08)"
-    itemDescription: 
-    price: 0
-  - itemType: 1
-    itemRating: 6
-    itemNumber: 603
-    itemName: "\uD50C\uB809\uC870\uB514\uC544"
-    itemNameEng: Flexodia
-    itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 50% \uC99D\uAC00, \uC7AC\uD654
-      \uD3ED\uBC1C \uBC94\uC704 30% \uC99D\uAC00. \uC801 \uD53C\uACA9\uC2DC 5% \uD655\uB960\uB85C
-      \uC7AC\uD654 1 \uB4DC\uB78D"
-    itemDescription: 
-    price: 0
-  - itemType: 1
-    itemRating: 6
-    itemNumber: 604
-    itemName: "\uACFC\uC695"
-    itemNameEng: Overeager
-    itemEffectDescription: "\uACF5\uACA9\uBC94\uC704, \uCE58\uBA85\uD0C0 \uD655\uB960
-      20% \uC99D\uAC00, \uB9C8\uBC95\uC758 \uCF69\uC774 \uCE58\uBA85\uD0C0\uB97C
-      \uD130\uD2B8\uB9B4 \uC218 \uC788\uC74C"
-    itemDescription: 
-    price: 0
-  - itemType: 2
-    itemRating: 7
-    itemNumber: 701
-    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC18C)"
-    itemNameEng: SmallHpPotion
-    itemEffectDescription: "\uCCB4\uB825\uC744 10 \uD68C\uBCF5\uD55C\uB2E4"
-    itemDescription: 
-    price: 100
-  - itemType: 2
-    itemRating: 7
-    itemNumber: 702
-    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uC911)"
-    itemNameEng: MediumHpPotion
-    itemEffectDescription: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uD55C\uB2E4"
-    itemDescription: 
-    price: 200
-  - itemType: 2
-    itemRating: 7
-    itemNumber: 703
-    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uB300)"
-    itemNameEng: LargeHpPotion
-    itemEffectDescription: "\uCCB4\uB825\uC744 50 \uD68C\uBCF5\uD55C\uB2E4"
-    itemDescription: 
-    price: 300
-  - itemType: 2
-    itemRating: 7
-    itemNumber: 704
-    itemName: "\uCCB4\uB825\uBB3C\uC57D (\uD2B9\uB300)"
-    itemNameEng: ExtraLargeHpPotion
-    itemEffectDescription: "\uCCB4\uB825\uC744 100 \uD68C\uBCF5\uD55C\uB2E4"
-    itemDescription: 
-    price: 400
-  <brokenItemCount>k__BackingField: 0
---- !u!114 &520647074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520647063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8f676c9097cf9d49a4e7e56a4363e03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  specKey:
-  - {fileID: 274601341, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -1843306439, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -1557304043, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 879540444, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 886157591, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 1322510290, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -2028897837, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -1870496697, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 301615564, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 430568557, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -1305363749, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 1241097730, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: -1614958424, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 11555632, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 1708916282, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
-  - {fileID: 693774890, guid: 3b92d9c183220a447ba2b0dfc868d2fc, type: 3}
 --- !u!54 &527104022 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959899697843973, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
@@ -9710,7 +9103,7 @@ Transform:
   m_Children:
   - {fileID: 1424184180}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!43 &800366681
 Mesh:
@@ -10040,7 +9433,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &837958731
 PrefabInstance:
@@ -10258,7 +9651,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &865388893
 MonoBehaviour:
@@ -10735,7 +10128,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &913719785
 VFXRenderer:
@@ -10830,50 +10223,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959898581284635, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
   m_PrefabInstance: {fileID: 1592273057}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &950730180
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 950730181}
-  - component: {fileID: 950730182}
-  m_Layer: 0
-  m_Name: EnemyUIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &950730181
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950730180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 520647066}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &950730182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950730180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70681ea6a32772c4e9cd8bb187d62e6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &970971042
 Mesh:
   m_ObjectHideFlags: 0
@@ -11043,53 +10392,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959899696751542, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
   m_PrefabInstance: {fileID: 1592273057}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1031838749
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1031838750}
-  - component: {fileID: 1031838752}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1031838750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031838749}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 520647066}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1031838752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1031838749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0189326aa3c230e4ea077251e56c4381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShakeFrequency: 50
-  mainCam: {fileID: 0}
-  VirtualCamera: {fileID: 1200786702}
 --- !u!43 &1101849498
 Mesh:
   m_ObjectHideFlags: 0
@@ -12704,7 +12006,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1543440760
 GameObject:
@@ -12841,6 +12143,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543440760}
   m_CullTransparentMesh: 1
+--- !u!1 &1559360654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1559360656}
+  - component: {fileID: 1559360655}
+  m_Layer: 0
+  m_Name: CenterSceneManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1559360655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559360654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ecf4d4b41dbe047980bf77ecda3c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1559360656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559360654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1567125774 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4105959899518639597, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
@@ -13491,7 +12837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4105959900013200799, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 4105959900013200799, guid: 65a131acd4595da4cba7726adcd60a38, type: 3}
       propertyPath: m_LocalScale.y
@@ -13992,7 +13338,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1631276216
 MonoBehaviour:
@@ -14293,7 +13639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868833267742191810, guid: e81f88b79127b7342909173edc36529d, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4868833267742191810, guid: e81f88b79127b7342909173edc36529d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14700,7 +14046,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1869835579 stripped
 Rigidbody:
@@ -15353,7 +14699,7 @@ RectTransform:
   - {fileID: 442907180}
   - {fileID: 1713352686}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -15529,6 +14875,71 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &1254538554651796037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1254538554802246610, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_Name
+      value: Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246620, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: settingPanel
+      value: 
+      objectReference: {fileID: 837958732}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246623, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254538554802246630, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
+      propertyPath: VirtualCamera
+      value: 
+      objectReference: {fileID: 1200786702}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c77ac1297b26cdb4abaed363533140fa, type: 3}
 --- !u!1001 &2908874640622591327
 PrefabInstance:
   m_ObjectHideFlags: 0

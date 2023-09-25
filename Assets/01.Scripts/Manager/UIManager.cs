@@ -284,10 +284,12 @@ public class UIManager : MonoSingleton<UIManager>
     {
         string str = string.Empty;
         str += key;
-        if (str == "Mouse1")
+        if (str == "Mouse0")
             str = "M1";
-        else if (str == "Mouse2")
+        else if (str == "Mouse1")
             str = "M2";
+        else if (str == "Mouse2")
+            str = "M3";
         else if (str == "Space")
             str = "Spc";
 
