@@ -5,7 +5,9 @@ using UnityEngine;
 public class MagicBeanBullet : ProjectileObj
 {
     private float damage = 0;
-    private Transform enemyTransform = null;
+    private static Transform enemyTransform = null;
+    private float timer = 0f;
+    private float speed = 30f;
 
     protected override void Init()
     {
@@ -15,10 +17,15 @@ public class MagicBeanBullet : ProjectileObj
     protected override void OnEnable()
     {
         base.OnEnable();
-        enemyTransform = null;
+        
+        timer = 0f;
+        speed = 15f;
+
+        if (enemyTransform != null && !enemyTransform.gameObject.activeSelf)
+            enemyTransform = null;
 
         Collider2D col = Physics2D.OverlapCircle(transform.position, 10f, 1 << 9);
-        if(col != null)
+        if(col != null && enemyTransform == null)
         {
             enemyTransform = col.transform;
         }
@@ -33,7 +40,12 @@ public class MagicBeanBullet : ProjectileObj
 
         else
         {
-            transform.position = Vector3.LerpUnclamped(transform.position, enemyTransform.position, moveSpeed * Time.deltaTime);
+            timer += Time.deltaTime;
+            speed /= (timer + 1);
+
+            transform.Translate(Vector2.right * speed * Time.deltaTime);
+            Vector3 dir = (enemyTransform.position - transform.position).normalized;
+            transform.position += dir * Time.deltaTime * moveSpeed;
         }
     }
 
