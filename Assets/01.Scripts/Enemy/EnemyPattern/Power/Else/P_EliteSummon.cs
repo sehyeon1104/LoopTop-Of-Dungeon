@@ -70,7 +70,7 @@ public class P_EliteSummon : EnemyDefault
             }
 
             Managers.Pool.Push(poolable);
-            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke();
+            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke(transform.position);
         }
     }
 }

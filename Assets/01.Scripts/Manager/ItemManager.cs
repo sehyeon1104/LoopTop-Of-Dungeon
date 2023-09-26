@@ -31,6 +31,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     private ItemAbility itemAbility = new ItemAbility();
 
     public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
+    public UnityEvent<Vector3> FragmentDropRelatedItemEffects { private set; get; } = new UnityEvent<Vector3>();
 
     public void Init()
     {

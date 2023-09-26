@@ -194,6 +194,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
             hpBar.gameObject.SetActive(true);
         }
 
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.Invoke(gameObject.transform.position);
         damage *= GameManager.Instance.Player.playerBase.FinalDamageMul;
 
         if (Random.Range(1, 101) <= critChance)
@@ -264,7 +265,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
             Managers.Pool.Push(poolable);
             FragmentCollectManager.Instance.DropFragment(gameObject, Random.Range(3, 5));
-            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke();
+            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke(transform.position);
         }
     }
 }

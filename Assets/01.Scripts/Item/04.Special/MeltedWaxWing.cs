@@ -58,7 +58,10 @@ public class MeltedWaxWing : ItemBase
         {
             GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * (stack - 1);
             stack = 0;
-            GameManager.Instance.Player.OnDamage(10, 0);
+            if (GameManager.Instance.Player.playerBase.Hp > 10)
+                GameManager.Instance.Player.OnDamage(10, 0);
+            else
+                GameManager.Instance.Player.OnDamage(GameManager.Instance.Player.playerBase.Hp - 1, 0);
             ItemManager.Instance.StopCoroutine(co);
         }
         else

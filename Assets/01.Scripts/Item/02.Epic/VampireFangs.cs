@@ -33,7 +33,7 @@ public class VampireFangs : ItemBase
         EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(VampireFangsEffect);
     }
 
-    public void VampireFangsEffect()
+    public void VampireFangsEffect(Vector3 transform)
     {
         // 적 10마리 처치시 hp 3 회복
         stack++;
