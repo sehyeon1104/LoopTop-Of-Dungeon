@@ -86,15 +86,13 @@ public class GhostSkill : PlayerSkillBase
 
     public override void ToOtherForm()
     {
-        Debug.Log("변환");
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(OnDiePassive);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(OnDiePassive);
     }
 
     public override void ToThisForm()
     {
-        Debug.Log("전환");
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(OnDiePassive);
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.AddListener(OnDiePassive);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(OnDiePassive);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(OnDiePassive);
     }
 
     public void UpdateSkillDamage()

@@ -19,15 +19,20 @@ public class RussianRouletteBullet : ProjectileObj
     protected override void OnEnable()
     {
         base.OnEnable();
+        
         isStronger = false;
+        moveSpeed = 10f;
+
         playerAttack = GameManager.Instance.Player.playerBase.Attack;
         damage = Random.Range(playerAttack * 0.1f, playerAttack * 2f);
         damage = Mathf.RoundToInt(damage);
 
         if (damage >= playerAttack * 1.5f)
         {
+            CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
             mat.SetColor("_SetColor", new Color(375f, 50f, 0f));
             transform.localScale = Vector3.one;
+            moveSpeed = 20f;
             isStronger = true;
         }
         else
@@ -42,8 +47,13 @@ public class RussianRouletteBullet : ProjectileObj
         if (collision.gameObject.layer == 9)
         {
             collision.GetComponent<IHittable>().OnDamage(damage);
-            if(!isStronger)
+            if (!isStronger)
                 StartCoroutine(Pool(0));
+            else
+            {
+                CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
+                Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/ExplosionBullet.prefab", collision.transform.position, Quaternion.identity);
+            }
         }
     }
 }
