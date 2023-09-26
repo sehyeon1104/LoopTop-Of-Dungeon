@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
     // 공격 관련 아이템 효과
     public UnityEvent AttackRelatedItemEffects { get; private set; } = new UnityEvent();
     // 스킬 관련 아이템 효과
-    public UnityEvent SkillRelatedItemEffects { get; private set; } = new UnityEvent();
+    public UnityEvent<int> SkillRelatedItemEffects { get; private set; } = new UnityEvent<int>();
     // 피격 관련 아이템 효과
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; } = new UnityEvent();
     // 대쉬 관련 아이템 효과

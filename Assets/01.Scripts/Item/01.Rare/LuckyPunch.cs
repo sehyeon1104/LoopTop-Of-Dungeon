@@ -33,7 +33,7 @@ public class LuckyPunch : ItemBase
     }
 
     private float luckyPunchChance = 0f;
-    public void LuckyPunchAbility()
+    public void LuckyPunchAbility(int num)
     {
         luckyPunchChance = Random.Range(0f, 100f);
         if (luckyPunchChance <= 0.777f)

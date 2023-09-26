@@ -12,12 +12,13 @@ public class CompleteHourglass : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(CompleteHourglassAbility);
     }
 
     public override void LastingEffect()
     {
-
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(CompleteHourglassAbility);
+        GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(CompleteHourglassAbility);
     }
 
     public override void Init()
@@ -27,6 +28,17 @@ public class CompleteHourglass : ItemBase
 
     public override void Use()
     {
+        GameManager.Instance.Player.playerBase.SkillCoolDown += 30;
+        LastingEffect();
+    }
 
+    public void CompleteHourglassAbility(int num)
+    {
+        Debug.Log("모래시계 발동");
+        if (Random.Range(0, 10) < 3)
+        {
+            UIManager.Instance.SkillCoolRedution(num);
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/CompleteHourglassFX.prefab", GameManager.Instance.Player.transform);
+        }
     }
 }

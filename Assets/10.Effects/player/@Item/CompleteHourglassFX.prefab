@@ -4997,8 +4997,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0, g: 0.7931032, b: 1, a: 0.822}
-      maxColor: {r: 0, g: 0.95862055, b: 1, a: 0.822}
+      minColor: {r: 0, g: 1, b: 0.08174229, a: 0.822}
+      maxColor: {r: 0, g: 1, b: 0.20545983, a: 0.822}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9810,8 +9810,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0, g: 0.7931032, b: 1, a: 0.822}
-      maxColor: {r: 0, g: 0.95862055, b: 1, a: 0.822}
+      minColor: {r: 0, g: 1, b: 0.28316975, a: 0.822}
+      maxColor: {r: 0, g: 1, b: 0.18386817, a: 0.822}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -15597,10 +15597,10 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0, g: 0.95862055, b: 1, a: 1}
-        key1: {r: 0, g: 0.95862055, b: 1, a: 1}
-        key2: {r: 0, g: 0.13103437, b: 1, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
+        key0: {r: 0, g: 1, b: 0.062031984, a: 1}
+        key1: {r: 0.062471986, g: 1, b: 0, a: 1}
+        key2: {r: 0, g: 1, b: 0.5256791, a: 0}
+        key3: {r: 0, g: 0.13103437, b: 1, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
@@ -15608,7 +15608,7 @@ ParticleSystem:
         ctime0: 0
         ctime1: 29076
         ctime2: 65535
-        ctime3: 0
+        ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
@@ -19320,8 +19320,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0, g: 0.7931032, b: 1, a: 0.822}
-      maxColor: {r: 0, g: 0.95862055, b: 1, a: 0.822}
+      minColor: {r: 0, g: 1, b: 0.45734358, a: 0.822}
+      maxColor: {r: 0, g: 1, b: 0.29992962, a: 0.822}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -23824,8 +23824,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5216840929324446106}
   - component: {fileID: 5221033388378068439}
+  - component: {fileID: -2309486248506915819}
   m_Layer: 0
-  m_Name: P_Cooldown
+  m_Name: CompleteHourglassFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23839,7 +23840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5220299734025664242}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 14.81, y: 0.01, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23856,8 +23857,22 @@ SortingGroup:
   m_GameObject: {fileID: 5220299734025664242}
   m_Enabled: 1
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 5
+--- !u!114 &-2309486248506915819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220299734025664242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df4eea0ec038d4b97a22c40415d4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
+  PushTime: 3
 --- !u!1 &5220388386376354074
 GameObject:
   m_ObjectHideFlags: 0
@@ -23884,7 +23899,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5220388386376354074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24083,8 +24098,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0, g: 0.7931032, b: 1, a: 0.822}
-      maxColor: {r: 0, g: 0.95862055, b: 1, a: 0.822}
+      minColor: {r: 0, g: 1, b: 0.55883527, a: 0.822}
+      maxColor: {r: 0, g: 1, b: 0.36017537, a: 0.822}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
