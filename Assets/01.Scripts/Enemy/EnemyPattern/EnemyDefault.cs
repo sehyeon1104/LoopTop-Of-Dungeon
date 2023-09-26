@@ -265,7 +265,7 @@ public abstract class EnemyDefault : MonoBehaviour, IHittable
 
             Managers.Pool.Push(poolable);
             FragmentCollectManager.Instance.DropFragment(gameObject, Random.Range(3, 5));
-            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke();
+            EnemyManager.Instance.EnemyDeadRelatedItemEffects.Invoke(transform.position);
         }
     }
 }

@@ -7,7 +7,7 @@ public class MagicBeanBullet : ProjectileObj
     private float damage = 0;
     private static Transform enemyTransform = null;
     private float timer = 0f;
-    private float speed = 30f;
+    private float speed = 10f;
 
     protected override void Init()
     {
@@ -19,7 +19,7 @@ public class MagicBeanBullet : ProjectileObj
         base.OnEnable();
         
         timer = 0f;
-        speed = 15f;
+        speed = 10f;
 
         if (enemyTransform != null && !enemyTransform.gameObject.activeSelf)
             enemyTransform = null;
@@ -40,8 +40,8 @@ public class MagicBeanBullet : ProjectileObj
 
         else
         {
-            timer += Time.deltaTime;
-            speed /= (timer + 1);
+            timer += Time.deltaTime * 0.25f;
+            speed /= (timer + 1f);
 
             transform.Translate(Vector2.right * speed * Time.deltaTime);
             Vector3 dir = (enemyTransform.position - transform.position).normalized;
@@ -54,6 +54,7 @@ public class MagicBeanBullet : ProjectileObj
         if (collision.gameObject.layer == 9)
         {
             collision.GetComponent<IHittable>().OnDamage(damage);
+            Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/ExplosionBean.prefab", transform.position, Quaternion.identity);
             StartCoroutine(Pool(0));
         }
     }
