@@ -65,7 +65,6 @@ public class GhostSkill : PlayerSkillBase
     GameObject boss = null;
     [Header("궁극기")]
     [SerializeField] GhostUltSignal ghostUlt;
-    private Vector3 eTransform;
 
     private void Awake()
     {
@@ -79,13 +78,23 @@ public class GhostSkill : PlayerSkillBase
         eyeEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeEffectFinal.png");
         reverseEffect = Managers.Resource.Load<Texture2D>("Assets/10.Effects/player/Ghost/EyeeffectFinalRerverse.png");
         telpoHitEffect = Managers.Resource.Load<GameObject>("Assets/10.Effects/player/Ghost/TpHitEffect.prefab");
-
-        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(OnDiePassive);
-        EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(OnDiePassive);
     }
     protected override void Update()
     {
         base.Update();
+    }
+
+    public override void ToOtherForm()
+    {
+        Debug.Log("변환");
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(OnDiePassive);
+    }
+
+    public override void ToThisForm()
+    {
+        Debug.Log("전환");
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(OnDiePassive);
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.AddListener(OnDiePassive);
     }
 
     public void UpdateSkillDamage()
@@ -109,13 +118,13 @@ public class GhostSkill : PlayerSkillBase
             PlayerVisual.Instance.VelocityChange(enemies[i].transform.position.x - transform.position.x);
             CinemachineCameraShaking.Instance.CameraShake();
 
-            eTransform = enemies[i].transform.position;
             enemies[i].GetComponent<IHittable>().OnDamage(GameManager.Instance.Player.playerBase.Damage, GameManager.Instance.Player.playerBase.CritChance);
         }
     }
 
     private void OnDiePassive(Vector3 tf)
     {
+        Debug.Log("abswa");
         int passiveOn = Random.Range(0, 10);
         if (passiveOn >= 7)
         {
@@ -233,13 +242,11 @@ public class GhostSkill : PlayerSkillBase
                     attachObjs = Physics2D.OverlapCircleAll(smokes[i].transform.position, jangpanoverlapFloat, 1 << enemyLayer);
                     for (int j = 0; j < attachObjs.Length; j++)
                     {
-                        eTransform = attachObjs[j].transform.position;
                         attachObjs[j].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                     }
                 }
                 for (int i = 0; i < attachObj2.Length; i++)
                 {
-                    eTransform = attachObj2[i].transform.position;
                     attachObj2[i].GetComponent<IHittable>().OnDamage(jangPanDamage, 0);
                 }
                 timerA = 0;
@@ -514,7 +521,6 @@ public class GhostSkill : PlayerSkillBase
                 Time.timeScale = 1f;
             for (int i = 0; i < hit.Length; i++)
             {
-                eTransform = hit[i].transform.position;
                 Poolable clone = Managers.Pool.Pop(telpoHitEffect);
                 hit[i].transform.GetComponent<IHittable>().OnDamage(telpoDamage, 0, clone);
                 if (!hit[i].transform.gameObject.activeSelf)
@@ -540,7 +546,6 @@ public class GhostSkill : PlayerSkillBase
                 hitEnemies = Physics2D.OverlapCircleAll(transform.position, 5, 1 << enemyLayer);
                 for (int i = 0; i < hitEnemies.Length; i++)
                 {
-                    eTransform = hitEnemies[i].transform.position;
                     hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(player.playerBase.Attack * 0.1f), 0);
                 }
                 timerA += 0.025f;
@@ -559,7 +564,6 @@ public class GhostSkill : PlayerSkillBase
             hitEnemies = Physics2D.OverlapCircleAll(transform.position, 7, 1 << enemyLayer);
             for (int i = 0; i < hitEnemies.Length; i++)
             {
-                eTransform = hitEnemies[i].transform.position;
                 // 반올림(15 + 플레이어 공격력 * 2 + 플레이어 공격력 * (레벨 * 0.1))
                 hitEnemies[i].transform.GetComponent<IHittable>().OnDamage(Mathf.RoundToInt(15 + player.playerBase.Attack * 2 + player.playerBase.Attack * (level * 0.1f)));
             }
