@@ -104,7 +104,7 @@ public class PlayerBase
         get => 100;
     }
 
-    private int recentReceiveDamage;
+    private int recentReceiveDamage;    
     public int RecentReceiveDamage { get { return recentReceiveDamage; } set { recentReceiveDamage = value; } }
 
     private float attack;
