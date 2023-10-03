@@ -34,7 +34,7 @@ public class CompleteHourglass : ItemBase
 
     public void CompleteHourglassAbility(int num)
     {
-        Debug.Log("모래시계 발동");
+        if (num == 2 || num == 3) return;
         if (Random.Range(0, 10) < 3)
         {
             UIManager.Instance.SkillCoolRedution(num);

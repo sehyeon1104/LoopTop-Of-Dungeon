@@ -525,6 +525,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillCoolCalculation(float time, int num)
     {
+        if (num == 2 || num == 3) return; 
         int skillNum = playerskill.skillIndex[num];
         currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
     }
