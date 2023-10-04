@@ -32,7 +32,12 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
     public UnityEvent<Vector3> FragmentDropRelatedItemEffects { private set; get; } = new UnityEvent<Vector3>();
-
+    //임시
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+            RoomClearRelatedItemEffects.Invoke();
+    }
     public void Init()
     {
         // 모든 아이템 스크립트 생성

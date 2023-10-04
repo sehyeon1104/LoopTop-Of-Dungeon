@@ -134,12 +134,17 @@ public class InventoryUI : MonoSingleton<InventoryUI>
                 ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
             }
 
+
+            // 임시
+            ItemAbility.Items[inventoryItem.itemNumber].Use();
+
             // UIManager.Instance.AddItemListUI(items);
         }
     }
 
     public void RemoveItemSlot(Item item)
     {
+        Debug.Log($"{item.itemName} 삭제");
         ItemAbility.Items[item.itemNumber].Disabling();
         ItemManager.Instance.RemoveCurItemDic(item);
         // LoadItemSlot();
