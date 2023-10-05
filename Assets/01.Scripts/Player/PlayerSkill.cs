@@ -103,12 +103,12 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
             DashSkill();
         if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Collider2D[] enemies;
-            enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
-            enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
-        }
+        //if(Input.GetKeyDown(KeyCode.H))
+        //{
+        //    Collider2D[] enemies;
+        //    enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
+        //    enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
+        //}
     }
     public void SlotUp(int index)
     {

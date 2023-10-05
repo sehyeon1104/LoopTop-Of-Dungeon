@@ -55,17 +55,6 @@ public class Player : MonoBehaviour, IHittable
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
     }
 
-    // µð¹ö±ë
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
-            dropItemObj.transform.position = transform.position;
-            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
-        }
-    }
-
     public IEnumerator IEDamaged(float damage = 0)
     {
         PlayerVisual.Instance.StartHitMotion(damage);
