@@ -121,6 +121,17 @@ public class ItemManager : MonoSingleton<ItemManager>
             curItemDic.Remove(item.itemNameEng);
     }
 
+    /// <summary>
+    /// 아이템 제거 코드. 제거하려는 아이템을 넣으면 됨
+    /// </summary>
+    /// <param name="item"></param>
+    public void DisablingItem(Item item)
+    {
+        ItemAbility.Items[item.itemNumber].Disabling();
+        RemoveCurItemDic(item);
+        InventoryUI.Instance.LoadItemSlot();
+    }
+
 
     public void InitItems()
     {

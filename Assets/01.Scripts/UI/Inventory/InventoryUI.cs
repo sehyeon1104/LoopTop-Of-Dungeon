@@ -152,15 +152,4 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         }
     }
 
-    /// <summary>
-    /// 아이템 제거 코드. 제거하려는 아이템을 넣으면 됨
-    /// </summary>
-    /// <param name="item"></param>
-    public void RemoveItemSlot(Item item)
-    {
-        ItemAbility.Items[item.itemNumber].Disabling();
-        ItemManager.Instance.RemoveCurItemDic(item);
-        LoadItemSlot();
-    }
-
 }
