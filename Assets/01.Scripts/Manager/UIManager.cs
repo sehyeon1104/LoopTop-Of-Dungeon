@@ -495,7 +495,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         float coolTime = skillData.skill[skillNum].skillDelay;
         float skillCoolTime = coolTime - (coolTime * playerBase.SkillCoolDown / 100);
-        int num =skillNum;
+        int num =skillNum; 
         if (skillNum ==7)
             num = 2;
         else if (skillNum == 8)
@@ -525,13 +525,19 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillCoolCalculation(float time, int num)
     {
-            int skillNum = playerskill.skillIndex[num];
-            currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
+        if (num == 2 || num == 3) return; 
+        int skillNum = playerskill.skillIndex[num];
+        currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
+    }
+    public void SkillCoolRedution(int num)
+    {
+        currentFillAmount[num] = 0.01f;
     }
     public IEnumerator IESkillCooltime(int num, Image cooltimeImg, float skillCooltime)
     {
         currentFillAmount[num] = 1f;
         cooltimeImg.fillAmount = 1f;
+        GameManager.Instance.Player.SkillRelatedItemEffects.Invoke(num);
         while (cooltimeImg.fillAmount > 0)
         {
             currentFillAmount[num] -= Time.deltaTime / skillCooltime;
