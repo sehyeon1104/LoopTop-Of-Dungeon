@@ -32,6 +32,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
     public UnityEvent<Vector3> FragmentDropRelatedItemEffects { private set; get; } = new UnityEvent<Vector3>();
+    //임시
 
     public void Init()
     {
@@ -115,8 +116,20 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void RemoveCurItemDic(Item item)
     {
+        Debug.Log($"{item.itemName} 제거");
         if(curItemDic.ContainsKey(item.itemNameEng))
             curItemDic.Remove(item.itemNameEng);
+    }
+
+    /// <summary>
+    /// 아이템 제거 코드. 제거하려는 아이템을 넣으면 됨
+    /// </summary>
+    /// <param name="item"></param>
+    public void DisablingItem(Item item)
+    {
+        ItemAbility.Items[item.itemNumber].Disabling();
+        RemoveCurItemDic(item);
+        InventoryUI.Instance.LoadItemSlot();
     }
 
 

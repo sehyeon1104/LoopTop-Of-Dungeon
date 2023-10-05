@@ -14,7 +14,7 @@ public class InvisibleHand : ItemBase
 
     public override void Disabling()
     {
-
+        ItemManager.Instance.FragmentDropRelatedItemEffects.RemoveListener(InvisibleHandAbility);
     }
 
     public override void LastingEffect()

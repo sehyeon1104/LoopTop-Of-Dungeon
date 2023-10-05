@@ -14,6 +14,12 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
     [SerializeField]
     private GameObject itemObjTemplate = null;
+    [SerializeField]
+    private GameObject uiItemObjTemplate = null;
+
+    public Dictionary<string, UIInventorySlot> uiInventorySlotDic = new Dictionary<string, UIInventorySlot>();
+
+    private List<Poolable> itemSlotObjList = new List<Poolable>();
 
     private void Awake()
     {
@@ -22,6 +28,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             Debug.Log("itemObjTemplate is null!");
             itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
         }
+        uiItemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/UIItemSlot.prefab");
         inventoryPanel = transform.Find("Background").gameObject;
         Init();
     }
@@ -73,19 +80,30 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         //    return;
         //}
 
-        GameObject newObject = null;
+        Poolable newObject = null;
         InventorySlot newItemObjComponent = null;
 
         Item inventoryItem = item;
 
-        newObject = Instantiate(itemObjTemplate);
+        newObject = Managers.Pool.Pop(itemObjTemplate);
+        itemSlotObjList.Add(newObject);
         newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
         newItemObjComponent = newObject.GetComponent<InventorySlot>();
         newItemObjComponent.SetValue(inventoryItem);
         newObject.transform.SetParent(slotHolder);
-        newObject.SetActive(true);
+        newObject.gameObject.SetActive(true);
         slots.Add(newItemObjComponent);
         ItemAbility.Items[item.itemNumber].Use();
+
+        // 스택형 아이템 표기
+        //GameObject uiObj = null;
+        //UIInventorySlot uiObjComponent = null;
+        //Item uiObjItem = item;
+        //uiObj = Instantiate(uiItemObjTemplate);
+        //uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
+        //uiObjComponent.SetValue(uiObjItem);
+        //uiObj.SetActive(true);
+        //uiInventorySlotDic.Add(uiObjItem.itemName, uiObjComponent);
 
         // UIManager.Instance.AddItemListUI(item);
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
@@ -97,23 +115,33 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         Dictionary<string, Item> itemDic = ItemManager.Instance.GetCurItemDic();
         //List<Item> itemList = GameManager.Instance.GetItemList();
 
-        GameObject newObject = null;
+        if(itemSlotObjList.Count > 0)
+        {
+            foreach(var item in itemSlotObjList)
+            {
+                Managers.Pool.Push(item);
+            }
+        }
+
+        Poolable newObject = null;
         InventorySlot newItemObjComponent = null;
 
         foreach(var items in itemDic.Values)
         {
+            Debug.Log(items.itemName);
             if (items.itemNumber == 0)
                 continue;
 
             Item inventoryItem = items;
 
-            newObject = Instantiate(itemObjTemplate);
+            newObject = Managers.Pool.Pop(itemObjTemplate);
+            itemSlotObjList.Add(newObject);
 
             newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
             newItemObjComponent = newObject.GetComponent<InventorySlot>();
             newItemObjComponent.SetValue(inventoryItem);
             newObject.transform.SetParent(slotHolder);
-            newObject.SetActive(true);
+            newObject.gameObject.SetActive(true);
             slots.Add(newItemObjComponent);
             if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
             {
@@ -122,13 +150,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
             // UIManager.Instance.AddItemListUI(items);
         }
-    }
-
-    public void RemoveItemSlot(Item item)
-    {
-        ItemAbility.Items[item.itemNumber].Disabling();
-        ItemManager.Instance.RemoveCurItemDic(item);
-        // LoadItemSlot();
     }
 
 }

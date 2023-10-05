@@ -10,10 +10,13 @@ public class BelieversClock : ItemBase
 
     public override bool isPersitantItem => true;
 
+    public override bool isStackItem => true;
+
     private int stack = 0;
 
     public override void Disabling()
     {
+        ItemManager.Instance.RoomClearRelatedItemEffects.RemoveListener(BelieversClockAbility);
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * (0.005f * stack);
         GameManager.Instance.Player.playerBase.MoveSpeed -= GameManager.Instance.Player.playerBase.InitMoveSpeed * (0.005f * stack);
         GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * (0.005f * stack);
@@ -45,8 +48,16 @@ public class BelieversClock : ItemBase
 
         if (stack >= 12)
         {
-            InventoryUI.Instance.RemoveItemSlot(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
+            ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
             InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDic[typeof(LiarsPrayer).Name]);
         }
+        // ShowStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

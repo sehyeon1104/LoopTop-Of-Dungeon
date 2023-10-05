@@ -9,6 +9,7 @@ public class MinotoursAxe : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -60,6 +61,7 @@ public class MinotoursAxe : ItemBase
 
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
+                InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
             }
             yield return waitForEndOfFrame;
         }

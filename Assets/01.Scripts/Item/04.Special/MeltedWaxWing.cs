@@ -9,6 +9,7 @@ public class MeltedWaxWing : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private static int stack = 0;
 

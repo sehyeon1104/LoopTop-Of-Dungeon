@@ -7,6 +7,7 @@ public class BerserkerSword : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Legendary;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private int curHp = 0;
     private int maxHp = 0;

@@ -122,7 +122,6 @@ public class GhostSkill : PlayerSkillBase
 
     private void OnDiePassive(Vector3 tf)
     {
-        Debug.Log("abswa");
         int passiveOn = Random.Range(0, 10);
         if (passiveOn >= 7)
         {

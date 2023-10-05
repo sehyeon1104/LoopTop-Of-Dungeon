@@ -112,7 +112,6 @@ public abstract class RoomBase : MonoBehaviour
 
     public void ToggleDoors()
     {
-        Debug.Log("¹® ´Ý¾î!!");
         doors.SetActive(!isClear);
     }
 }

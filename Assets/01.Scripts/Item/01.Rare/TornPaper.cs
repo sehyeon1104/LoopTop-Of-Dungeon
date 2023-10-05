@@ -26,7 +26,7 @@ public class TornPaper : ItemBase
     }
     public override void Disabling()
     {
-        
+        GameManager.Instance.Player.DashRelatedItemEffects.RemoveListener(TornPaperAbility);
     }
 
     public void TornPaperAbility()

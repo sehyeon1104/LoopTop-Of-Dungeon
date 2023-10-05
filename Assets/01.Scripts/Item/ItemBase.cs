@@ -13,6 +13,8 @@ public abstract class ItemBase
     public abstract bool isPersitantItem { get; }
     // 세트 아이템 재료인가?
     public virtual bool isSetElement { get; }
+    // 스택형 아이템인가?
+    public virtual bool isStackItem { get; } = false;
     // 초기화
     public abstract void Init();
     // 장착시
@@ -24,4 +26,9 @@ public abstract class ItemBase
     // 세트아이템일 경우
     public virtual void SetItemCheck() { }
     public virtual bool isOneOff { get; } = false;
+    public virtual void ShowStack()
+    {
+        if (!isStackItem)
+            return;
+    }
 }

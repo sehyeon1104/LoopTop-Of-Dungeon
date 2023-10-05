@@ -35,7 +35,6 @@ public class MirrorOfMoon : ItemBase
 
     public void MirrorOfMoonAbility()
     {
-        // TODO : 스킬 쿨타임 감소
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.2f;
         GameManager.Instance.Player.playerBase.SkillCoolDown += 20;
 

@@ -10,6 +10,7 @@ public class SharpSword : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -61,6 +62,7 @@ public class SharpSword : ItemBase
 
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 
     public void InitStack()

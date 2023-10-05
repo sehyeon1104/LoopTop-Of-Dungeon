@@ -17,7 +17,6 @@ public class LifeInsurance : ItemBase
 
     public override void Use()
     {
-        // TODO : 아이템이 파손됐음을 알리는 UI 출력
         LastingEffect();
     }
 
@@ -35,6 +34,7 @@ public class LifeInsurance : ItemBase
 
     public void LifeInsuranceAbility()
     {
+        // TODO : 아이템이 파손됐음을 알리는 UI 출력
         GameManager.Instance.Player.RevivePlayer();
         ItemManager.Instance.RemoveCurItemDic(ItemManager.Instance.curItemDic[this.GetType().Name]);
     }
