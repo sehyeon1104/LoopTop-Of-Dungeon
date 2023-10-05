@@ -106,6 +106,10 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         //uiInventorySlotDic.Add(uiObjItem.itemName, uiObjComponent);
 
         // UIManager.Instance.AddItemListUI(item);
+
+        if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
+            ItemAbility.Items[inventoryItem.itemNumber].SetItemCheck();
+
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
 
@@ -128,7 +132,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
         foreach(var items in itemDic.Values)
         {
-            Debug.Log(items.itemName);
             if (items.itemNumber == 0)
                 continue;
 
@@ -143,10 +146,11 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             newObject.transform.SetParent(slotHolder);
             newObject.gameObject.SetActive(true);
             slots.Add(newItemObjComponent);
+
             if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
-            {
                 ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
-            }
+            if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
+                ItemAbility.Items[inventoryItem.itemNumber].SetItemCheck();
 
             // UIManager.Instance.AddItemListUI(items);
         }

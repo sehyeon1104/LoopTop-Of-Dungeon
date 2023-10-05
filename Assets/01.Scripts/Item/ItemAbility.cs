@@ -35,9 +35,13 @@ public class ItemAbility : MonoBehaviour
 
     public void CreateItem()
     {
+        Items.Clear();
+
         Type itemType = null;
         foreach(var item in ItemManager.Instance.allItemDic.Values)
         {
+            Debug.Log(item);
+
             if (Items.ContainsKey(item.itemNumber))
                 continue;
 
