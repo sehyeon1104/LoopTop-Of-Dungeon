@@ -36,6 +36,7 @@ public class BrokenKing : ItemBase
     {
         isEquip = false;
         ResetStack();
+        GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(ResetStack);
     }
 
     public override void LastingEffect()

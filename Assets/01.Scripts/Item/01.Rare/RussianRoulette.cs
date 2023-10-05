@@ -15,7 +15,7 @@ public class RussianRoulette : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(RussianRouletteAbility);
     }
 
     public override void Init()

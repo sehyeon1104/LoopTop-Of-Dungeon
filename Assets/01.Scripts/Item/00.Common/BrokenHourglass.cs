@@ -14,7 +14,7 @@ public class BrokenHourglass : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(BrokenHourglassAbility);
     }
 
     public override void Init()
