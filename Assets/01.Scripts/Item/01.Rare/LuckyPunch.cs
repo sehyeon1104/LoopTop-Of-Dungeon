@@ -36,7 +36,7 @@ public class LuckyPunch : ItemBase
     public void LuckyPunchAbility(int num)
     {
         luckyPunchChance = Random.Range(0f, 100f);
-        if (luckyPunchChance <= 0.777f)
-            GameManager.Instance.Player.playerBase.FinalDamageMul += 6;
+        if (luckyPunchChance <= 7.77f)
+            GameManager.Instance.Player.playerBase.FinalDamageMul += 1;
     }
 }
