@@ -36,11 +36,14 @@ public class BossUI : MonoBehaviour
 
     private Slider hpBarSlider = null;
     private Slider shieldBarSlider = null;
+    public Material tmpMat = null;
 
     private void Awake()
     {
         hpBarSlider = hpBar.GetComponentInChildren<Slider>();
         shieldBarSlider = shieldBar.GetComponentInChildren<Slider>();
+
+        tmpMat = startNameTxt.font.material;
     }
 
     private void Start()
@@ -49,6 +52,10 @@ public class BossUI : MonoBehaviour
         switch(GameManager.Instance.mapTypeFlag)
         {
             case Define.MapTypeFlag.Ghost:
+
+                tmpMat.SetColor("_GlowColor", new Color(3f, 1.5f, 4f, 0.5f));
+                tmpMat.SetColor("_OutlineColor", new Color(2f, 0.5f, 3f, 1f));
+
                 startNameTxt.text = "<size=70%>카타클리즘";
                 startNameTxt.color = new Color(0.85f, 0.75f, 1f);
 
@@ -58,11 +65,15 @@ public class BossUI : MonoBehaviour
                 BackgroundImg.color = new Color(0.7f, 0.3f, 0.85f);
                 break;
             case Define.MapTypeFlag.Power:
+
+                tmpMat.SetColor("_GlowColor", new Color(5.75f, 1.5f, 0f, 0.5f));
+                tmpMat.SetColor("_OutlineColor", new Color(1.75f, 0.5f, 0f, 1f));
+
                 startNameTxt.text = "아틀라스";
                 startNameTxt.color = new Color(1f, 0.75f, 0.2f);
 
                 startDescTxt.text = "대지를 지는 거신";
-                startDescTxt.color = new Color(0.65f, 0.45f, 0.2f);
+                startDescTxt.color = new Color(1f, 0.8f, 0f);
 
                 BackgroundImg.color = new Color(0.5f, 0.35f, 0f);
                 break;

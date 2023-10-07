@@ -34,6 +34,7 @@ public class BulletGroup : MonoBehaviour
         else
             yield return new WaitForSeconds(waitTime);
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Warning.wav", Define.Sound.Effect, 0.75f, 0.5f);
         for (int i = 0; i < warning.Length; i++)
             warning[i].SetActive(true);
 
@@ -46,7 +47,7 @@ public class BulletGroup : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_SoulBullet.wav", Define.Sound.Effect, 1.5f, 0.5f);
         while (transform.localScale.x >= -10)
         {
-            transform.localScale -= Vector3.right * 0.05f;
+            transform.localScale -= Vector3.right * 0.1f;
             yield return endOfFrame;
         }
         yield return null;
