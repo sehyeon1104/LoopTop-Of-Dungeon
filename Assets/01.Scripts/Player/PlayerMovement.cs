@@ -13,7 +13,8 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
 
     }
     public Joystick joystick { private set; get; }
-    public bool IsControl { get; set; } = true;
+    private bool isControl = true;
+    public bool IsControl { get { return isControl; } set { isControl = value; if (value == false) rb.velocity = Vector3.zero; } }
     Rigidbody2D rb;
     private float x;
     private float y;
@@ -27,7 +28,9 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
     private void FixedUpdate()
     {
         if (!IsControl)
+        {
             direction = Vector2.zero;
+        }
 
        if (isMove && IsControl)
          Move((new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) + joystick.Direction).normalized);

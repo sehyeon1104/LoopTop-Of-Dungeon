@@ -6,6 +6,7 @@ public class BulletGroup : MonoBehaviour
 {
     [SerializeField] private GameObject[] warning;
     private float waitTime = 4.5f;
+    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     private void OnEnable()
     {
@@ -27,7 +28,7 @@ public class BulletGroup : MonoBehaviour
             {
                 transform.Rotate(Vector3.forward * Time.deltaTime * 300);
                 timer += Time.deltaTime;
-                yield return null;
+                yield return endOfFrame;
             }
         }
         else
@@ -46,7 +47,7 @@ public class BulletGroup : MonoBehaviour
         while (transform.localScale.x >= -10)
         {
             transform.localScale -= Vector3.right * 0.05f;
-            yield return null;
+            yield return endOfFrame;
         }
         yield return null;
     }
