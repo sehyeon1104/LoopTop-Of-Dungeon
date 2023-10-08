@@ -487,7 +487,6 @@ public class GhostPattern : G_Patterns
 
         yield return new WaitForSeconds(2.5f);
 
-        CinemachineCameraShaking.Instance.CameraShake(20f, 0.5f);
         Vector3 dir = (GameManager.Instance.Player.transform.position - transform.position).normalized;
         GameManager.Instance.Player.GetComponent<Rigidbody2D>().AddRelativeForce(dir * 10f, ForceMode2D.Impulse);
         bossAura.SetActive(true);

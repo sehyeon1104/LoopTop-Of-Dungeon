@@ -47,7 +47,7 @@ public class BulletGroup : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_SoulBullet.wav", Define.Sound.Effect, 1.5f, 0.5f);
         while (transform.localScale.x >= -10)
         {
-            transform.localScale -= Vector3.right * 0.1f;
+            transform.localScale -= Vector3.right * Time.deltaTime * 10f;
             yield return endOfFrame;
         }
         yield return null;

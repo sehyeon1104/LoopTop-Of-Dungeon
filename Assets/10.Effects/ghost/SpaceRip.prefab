@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 409618589112134917}
   - component: {fileID: 409618589112135034}
   - component: {fileID: 4367947393215643015}
+  - component: {fileID: 1820522919}
   m_Layer: 0
   m_Name: SpaceRip
   m_TagString: Untagged
@@ -442,3 +443,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsUsing: 0
   PushTime: 10
+--- !u!114 &1820522919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409618589112135035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae3c91e863b11847b1d40bc03f30b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  executeInEditor: 1
+  outputEvent:
+    m_Name: SoundEvent
+  audioClip: {fileID: 8300000, guid: c6cda934f504fb049bda35980ed938f3, type: 3}
+  cameraShake: {x: 0, y: 0}
