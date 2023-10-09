@@ -485,10 +485,10 @@ public class GhostPattern : G_Patterns
             yield return endOfFrame;
         }
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.2f);
 
         Vector3 dir = (GameManager.Instance.Player.transform.position - transform.position).normalized;
-        GameManager.Instance.Player.GetComponent<Rigidbody2D>().AddRelativeForce(dir * 10f, ForceMode2D.Impulse);
+        GameManager.Instance.Player.GetComponent<Rigidbody2D>().AddRelativeForce(dir * 20f, ForceMode2D.Impulse);
         bossAura.SetActive(true);
 
         yield return new WaitForSeconds(2f);
