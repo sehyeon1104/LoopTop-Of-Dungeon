@@ -110,6 +110,8 @@ public class DropItem : MonoBehaviour, IPoolable
         Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
         List<Item> allItemList = allItemDic.Values.ToList();
 
+        item = ItemManager.Instance.allItemDic["MirrorOfSun"];
+
         while (item == null)
         {
             // 저주아이템을 제외한 모든 아이템 rand

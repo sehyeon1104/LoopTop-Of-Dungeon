@@ -41,11 +41,11 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void Init()
     {
-        // 모든 아이템 스크립트 생성
-        itemAbility.CreateItem();
-
         // 딕셔너리 초기화
         InitDic();
+
+        // 모든 아이템 스크립트 생성
+        itemAbility.CreateItem();
         // 아이템 타입 분류
         SortItemLists();
 
