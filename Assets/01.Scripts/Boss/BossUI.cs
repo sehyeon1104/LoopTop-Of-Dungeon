@@ -22,6 +22,8 @@ public class BossUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI startNameTxt = null;
     [SerializeField]
+    private TextMeshProUGUI startNameToBiggerTxt = null;
+    [SerializeField]
     private TextMeshProUGUI startDescTxt = null;
     [SerializeField]
     private TextMeshProUGUI startWarningTxt = null;
@@ -97,6 +99,8 @@ public class BossUI : MonoBehaviour
                 break;
         }
 
+        startNameToBiggerTxt.text = startNameTxt.text;
+        startNameToBiggerTxt.color = startNameTxt.color;
         startWarningTxt.color = startNameTxt.color;
         StartCoroutine(UIManager.Instance.ShowCurrentStageName());
         
