@@ -40,8 +40,6 @@ public class ItemAbility : MonoBehaviour
         Type itemType = null;
         foreach(var item in ItemManager.Instance.allItemDic.Values)
         {
-            Debug.Log(item);
-
             if (Items.ContainsKey(item.itemNumber))
                 continue;
 

@@ -32,17 +32,19 @@ public class ItemManager : MonoSingleton<ItemManager>
     // 해당 세트 아이템, 세트아이템이 되기 위해 필요한 아이템들
     private Dictionary<int, List<int>> setItemDic = new Dictionary<int, List<int>>();
     private Dictionary<int, List<int>> SetItemPartsListDictionary = new Dictionary<int, List<int>>();
+    private bool isHaveParts = false;
+    public List<int> exceptionItemNumberList { get; private set; } = new List<int>();
 
     private ItemAbility itemAbility = new ItemAbility();
 
     public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
     public UnityEvent<Vector3> FragmentDropRelatedItemEffects { private set; get; } = new UnityEvent<Vector3>();
-    //임시
 
     public void Init()
     {
         // 딕셔너리 초기화
         InitDic();
+        InitList();
 
         // 모든 아이템 스크립트 생성
         itemAbility.CreateItem();
@@ -52,7 +54,7 @@ public class ItemManager : MonoSingleton<ItemManager>
         brokenItemCount = brokenItemList.Count;
     }
 
-    public void InitDic()
+    private void InitDic()
     {
         // AllItemDic에 모든 아이템 정보 추가
         SetAllItemDic(allItemInfo);
@@ -61,13 +63,27 @@ public class ItemManager : MonoSingleton<ItemManager>
         SetItemPartsListDictionary.Add(602, MirrorOfDawnParts);
         SetItemPartsListDictionary.Add(603, FlexodiaParts);
         SetItemPartsListDictionary.Add(604, OvereagerParts);
-        SetItemPartsListDictionary.Add(605, GamblersLegacyParts);
+        // SetItemPartsListDictionary.Add(605, GamblersLegacyParts);
 
         setItemDic.Add(601, CompleteHourglassParts.ToList());
         setItemDic.Add(602, MirrorOfDawnParts.ToList());
         setItemDic.Add(603, FlexodiaParts.ToList());
         setItemDic.Add(604, OvereagerParts.ToList());
-        setItemDic.Add(605, GamblersLegacyParts.ToList());
+        // setItemDic.Add(605, GamblersLegacyParts.ToList());
+    }
+
+    private void InitList()
+    {
+        foreach (var setItemNum in setItemDic.Keys)
+        {
+            if (curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            {
+                for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
+                {
+                    exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
+                }
+            }
+        }
     }
 
     public void SortItemLists()
@@ -149,6 +165,12 @@ public class ItemManager : MonoSingleton<ItemManager>
         InventoryUI.Instance.LoadItemSlot();
     }
 
+    public void DisablingItemWithoutLoad(Item item)
+    {
+        ItemAbility.Items[item.itemNumber].Disabling();
+        RemoveCurItemDic(item);
+    }
+
     public void InitItems()
     {
         foreach(var item in allItemDic.Values)
@@ -162,21 +184,32 @@ public class ItemManager : MonoSingleton<ItemManager>
         foreach(var itemParts in setItemDic.Values)
         {
             if (itemParts.Contains(item.itemNumber))
+            {
                 itemParts.Remove(item.itemNumber);
+                isHaveParts = true;
+            }
         }
+
+        if (!isHaveParts)
+            return;
 
         foreach (var setItemNum in setItemDic.Keys)
         {
-            if(setItemDic[setItemNum].Count == 0 && !curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            if (setItemDic[setItemNum].Count == 0 && !curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
             {
                 for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
                 {
-                    Debug.Log(SetItemPartsListDictionary[setItemNum][i]);
-                    DisablingItem(curItemDic[allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]]);
+                    if (curItemDic.ContainsKey(allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]))
+                    {
+                        DisablingItemWithoutLoad(curItemDic[allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]]);
+                        exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
+                    }
                 }
 
                 InventoryUI.Instance.AddItemSlot(allItemDic[allItemFromNumberDic[setItemNum]]);
+                InventoryUI.Instance.LoadItemSlot();
             }
         }
+        isHaveParts = false;
     }
 }

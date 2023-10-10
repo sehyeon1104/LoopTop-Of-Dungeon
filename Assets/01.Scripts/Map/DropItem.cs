@@ -121,7 +121,9 @@ public class DropItem : MonoBehaviour, IPoolable
             if (itemSelectNum.Contains(allItemList[rand].itemNumber) 
                 || itemObjListNum.Contains(rand) 
                 || allItemList[rand].itemRating == Define.ItemRating.Special
-                || allItemList[rand].itemRating == Define.ItemRating.Set)
+                || allItemList[rand].itemRating == Define.ItemRating.Set
+                || ItemManager.Instance.exceptionItemNumberList.Contains(rand)
+                )
             continue;
 
             itemSelectNum.Add(allItemList[rand].itemNumber);
@@ -168,7 +170,7 @@ public class DropItem : MonoBehaviour, IPoolable
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
             if (itemSelectNum.Contains(rand)
                 || itemObjListNum.Contains(rand)
-                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber) 
+                || tempBrokenItemList.Contains(ItemManager.Instance.brokenItemList[rand].itemNumber)
                 || ItemManager.Instance.brokenItemList[rand].itemNumber == 510
                 )
                 continue;
@@ -224,7 +226,7 @@ public class DropItem : MonoBehaviour, IPoolable
     // 아이템 획득 함수
     public void TakeItem()
     {
-        if (ItemManager.Instance.GetCurItemDic().ContainsKey(item.itemNameEng))
+        if (ItemManager.Instance.GetCurItemDic().ContainsKey(item.itemNameEng) || ItemManager.Instance.exceptionItemNumberList.Contains(item.itemNumber))
         {
             Debug.Log("이미 가지고있는 아이템");
             return;

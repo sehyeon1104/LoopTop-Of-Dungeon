@@ -108,7 +108,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         // UIManager.Instance.AddItemListUI(item);
 
         if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
-            ItemAbility.Items[inventoryItem.itemNumber].SetItemCheck();
+            ItemManager.Instance.CheckSetItem(item);
 
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
@@ -150,7 +150,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
                 ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
             if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
-                ItemAbility.Items[inventoryItem.itemNumber].SetItemCheck();
+                ItemManager.Instance.CheckSetItem(items);
 
             // UIManager.Instance.AddItemListUI(items);
         }

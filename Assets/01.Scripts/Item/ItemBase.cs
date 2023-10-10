@@ -23,8 +23,6 @@ public abstract class ItemBase
     public abstract void Disabling();
     // 지속형일 경우
     public virtual void LastingEffect() { }
-    // 세트아이템일 경우
-    public virtual void SetItemCheck() { }
     public virtual bool isOneOff { get; } = false;
     public virtual void ShowStack()
     {
