@@ -197,7 +197,8 @@ MonoBehaviour:
     itemNumber: 201
     itemName: "\uD5E4\uBE44\uAE09 \uCC54\uD53C\uC5B8\uC758 \uBCA8\uD2B8"
     itemNameEng: ChampionBelt
-    itemEffectDescription: "Hp 20 \uC99D\uAC00, \uACF5\uACA9 \uBC94\uC704 10% \uC99D\uAC00"
+    itemEffectDescription: "\uCD5C\uB300 \uCCB4\uB825 20 \uC99D\uAC00, \uACF5\uACA9
+      \uBC94\uC704 10% \uC99D\uAC00"
     itemDescription: "\"\uB108\uBB34 \uD5E4\uBE44\uD574\uC11C \uD5C8\uB9AC\uC5D0
       \uB9DE\uC9C0 \uC54A\uB294\uB2E4\""
     price: 200
@@ -206,8 +207,8 @@ MonoBehaviour:
     itemNumber: 202
     itemName: "\uB7ED\uD0A4 \uD380\uCE58"
     itemNameEng: LuckyPunch
-    itemEffectDescription: "\uC801 \uD0C0\uACA9\uC2DC 0.777% \uD655\uB960\uB85C \uCD5C\uC885\uB370\uBBF8\uC9C0\uAC00
-      7\uBC30\uB85C \uC801\uC6A9\uB428"
+    itemEffectDescription: "\uC801 \uD0C0\uACA9\uC2DC 7.77% \uD655\uB960\uB85C \uCD5C\uC885\uB370\uBBF8\uC9C0
+      2\uBC30"
     itemDescription: "\"\uD55C \uBC88\uB9CC \uB354.. \uD55C \uBC88\uB9CC \uB354 \uBF51\uC73C\uBA74
       \uB098\uC62C\uAC70\uC57C!\""
     price: 200
@@ -259,7 +260,7 @@ MonoBehaviour:
     itemName: "\uBC40\uD30C\uC774\uC5B4\uC758 \uC1A1\uACF3\uB2C8"
     itemNameEng: VampireFangs
     itemEffectDescription: "\uC801\uC744 10\uB9C8\uB9AC \uCC98\uCE58\uD560 \uB54C\uB9C8\uB2E4
-      hp3 \uD68C\uBCF5"
+      \uCCB4\uB825 3 \uD68C\uBCF5"
     itemDescription: "\"\uC1A1\uACF3\uB2C8\uB97C \uB080\uB2E4\uACE0 \uB531\uD788
       \uD761\uD608 \uB2A5\uB825\uAC19\uC740\uAC8C \uC0DD\uAE30\uC9C4 \uC54A\uB294\uB2E4\""
     price: 300
@@ -316,23 +317,13 @@ MonoBehaviour:
       \uAC80\uC744 \uAEBC\uB0B4\uB4E4\uC5C8\uB2E4\""
     price: 300
   - itemType: 1
-    itemRating: 3
-    itemNumber: 308
-    itemName: "\uC785\uC790 \uC7A5\uCE58"
-    itemNameEng: NanoMachine
-    itemEffectDescription: "\uD53C\uACA9 \uC2DC Hp \uC790\uB3D9 \uC218\uBCF5, \uD574\uB2F9
-      \uC544\uC774\uD15C\uC73C\uB85C \uC218\uBCF5\uD55C Hp\uAC00 100 \uC774\uC0C1\uC77C
-      \uACBD\uC6B0 \uC544\uC774\uD15C \uD30C\uC190"
-    itemDescription: '"Nanomachines, son!"'
-    price: 300
-  - itemType: 1
     itemRating: 4
     itemNumber: 401
     itemName: "\uB9CC\uB2A5 \uD558\uD504\uAE00\uB7EC\uBE0C"
     itemNameEng: AllRoundHalfGlove
-    itemEffectDescription: "\uD50C\uB808\uC774\uC5B4 Hp 10 \uC99D\uAC00, \uD50C\uB808\uC774\uC5B4
-      \uACF5\uACA9\uB825 30% \uC99D\uAC00, \uC774\uB3D9\uC18D\uB3C4 15% \uC99D\uAC00,
-      \uD50C\uB808\uC774\uC5B4 \uC2A4\uD0AC \uCFE8\uD0C0\uC784 10% \uAC10\uC18C"
+    itemEffectDescription: "\uCD5C\uB300 \uCCB4\uB825 10 \uC99D\uAC00, \uACF5\uACA9\uB825
+      30% \uC99D\uAC00, \uC774\uB3D9\uC18D\uB3C4 15% \uC99D\uAC00, \uCE58\uBA85\uD0C0
+      \uD655\uB960 5% \uC99D\uAC00"
     itemDescription: 
     price: 400
   - itemType: 1
@@ -353,6 +344,16 @@ MonoBehaviour:
       \uBE44\uB840\uD574 \uACF5\uACA9\uB825 \uC99D\uAC00 (\uCD5C\uB300 70%)"
     itemDescription: "\"\uB3C8\uC740 \uD56D\uC0C1 \uC633\uB2E4!\""
     price: 400
+  - itemType: 1
+    itemRating: 4
+    itemNumber: 406
+    itemName: "\uC785\uC790 \uC7A5\uCE58"
+    itemNameEng: NanoMachine
+    itemEffectDescription: "\uD53C\uACA9 \uC2DC \uCCB4\uB825 \uC790\uB3D9 \uC218\uBCF5,
+      \uD574\uB2F9 \uC544\uC774\uD15C\uC73C\uB85C \uC218\uBCF5\uD55C \uCCB4\uB825\uC774
+      50 \uC774\uC0C1\uC77C \uACBD\uC6B0 \uC544\uC774\uD15C \uD30C\uC190"
+    itemDescription: '"Nanomachines, son!"'
+    price: 300
   - itemType: 3
     itemRating: 5
     itemNumber: 501
@@ -379,7 +380,8 @@ MonoBehaviour:
     itemNumber: 503
     itemName: "\uAC70\uBD81\uBAA8\uC790"
     itemNameEng: TurtleHat
-    itemEffectDescription: "Hp 50 \uC99D\uAC00, \uACF5\uACA9\uB825 20% \uAC10\uC18C"
+    itemEffectDescription: "\uCD5C\uB300 \uCCB4\uB825 50 \uC99D\uAC00, \uACF5\uACA9\uB825
+      20% \uAC10\uC18C"
     itemDescription: "\"\uC88B\uC544. \uC774\uAC78\uB85C \uC801\uB3C4 \uB098\uB3C4
       \uC548\uC804\uD558\uB2E4\""
     price: 0
@@ -388,7 +390,7 @@ MonoBehaviour:
     itemNumber: 504
     itemName: "\uC800\uC8FC\uBC1B\uC740 \uBC18\uC9C0"
     itemNameEng: CursedRing
-    itemEffectDescription: "\uCD5C\uC885 \uB370\uBBF8\uC9C0 1.3\uBC30 \uC99D\uAC00,
+    itemEffectDescription: "\uCD5C\uC885 \uB370\uBBF8\uC9C0 1.5\uBC30 \uC99D\uAC00,
       \uBC1B\uB294 \uB370\uBBF8\uC9C0 2\uBC30 \uC99D\uAC00"
     itemDescription: "\"\uB9DE\uC9C0\uB9CC \uC54A\uC73C\uBA74 \uC0C1\uAD00\uC5C6\uB2E4\uACE0
       \uC0DD\uAC01\uD588\uB358 \uBAA8\uB4E0 \uC601\uD63C\uC758 \uD55C\uC774 \uC11C\uB9B0
@@ -428,13 +430,12 @@ MonoBehaviour:
     itemNumber: 509
     itemName: "\uB179\uC740 \uBC00\uB78D \uB0A0\uAC1C"
     itemNameEng: MeltedWaxWing
-    itemEffectDescription: "\uB300\uC2DC 1\uD68C\uB9C8\uB2E4 \uACF5\uACA9\uB825 5%
-      \uC99D\uAC00 (\uC9C0\uC18D\uC2DC\uAC04 5\uCD08, \uC2A4\uD0DD \uAC31\uC2E0 \uC2DC
-      \uC9C0\uC18D\uC2DC\uAC04 \uCD08\uAE30\uD654) \uD574\uB2F9 \uC544\uC774\uD15C\uC73C\uB85C
-      80% \uC774\uC0C1\uC758 \uACF5\uACA9\uB825\uC744 \uC5BB\uC744 \uACBD\uC6B0,
-      10\uC758 \uB300\uBBF8\uC9C0\uB97C \uBC1B\uACE0 \uC2A4\uD0DD \uCD08\uAE30\uD654"
+    itemEffectDescription: "\uB300\uC2DC 1\uD68C\uB9C8\uB2E4 5\uCD08\uAC04 \uACF5\uACA9\uB825
+      5% \uC99D\uAC00, \uD574\uB2F9 \uC544\uC774\uD15C\uC73C\uB85C \uACF5\uACA9\uB825
+      80% \uC774\uC0C1 \uC99D\uAC00\uC2DC , 10\uC758 \uB300\uBBF8\uC9C0\uB97C \uBC1B\uACE0
+      \uC2A4\uD0DD \uCD08\uAE30\uD654"
     itemDescription: "\"\uCD94\uB77D\uD558\uB294 \uAC83\uC5D0\uB294 \uB0A0\uAC1C\uAC00
-      \uC788\uC5C8\uB2E4\""
+      \uC788\uB2E4\""
     price: 0
   - itemType: 3
     itemRating: 5
@@ -448,7 +449,7 @@ MonoBehaviour:
       \uB9C8\uADC0\uB2C8\uB77C \uD558\uC2DC\uB2C8\""
     price: 0
   - itemType: 1
-    itemRating: 2
+    itemRating: 6
     itemNumber: 601
     itemName: "\uC628\uC804\uD55C \uBAA8\uB798\uC2DC\uACC4"
     itemNameEng: CompleteHourglass
@@ -477,8 +478,8 @@ MonoBehaviour:
     itemEffectDescription: "\uC7AC\uD654 \uD68D\uB4DD\uB7C9 50% \uC99D\uAC00, \uC7AC\uD654
       \uD3ED\uBC1C \uBC94\uC704 30% \uC99D\uAC00. \uC801 \uD53C\uACA9\uC2DC 5% \uD655\uB960\uB85C
       \uC7AC\uD654 1 \uB4DC\uB78D"
-    itemDescription: "\"\uB9C8\uCE68\uB0B4 \uBAA8\uB4E0 \uC870\uAC01\uC774 \uC190\uC5D0
-      \uBAA8\uC600\uB2E4\""
+    itemDescription: "\"\uC601\uC6D0\uD55C \uBD80\uC720\uD568\uC744 \uC57D\uC18D\uD558\uB294
+      \uBD80\uC758 \uC2E0\uC0C1\""
     price: 0
   - itemType: 1
     itemRating: 6
@@ -486,7 +487,7 @@ MonoBehaviour:
     itemName: "\uACFC\uC695"
     itemNameEng: Overeager
     itemEffectDescription: "\uACF5\uACA9\uBC94\uC704, \uCE58\uBA85\uD0C0 \uD655\uB960
-      20% \uC99D\uAC00, \uB9C8\uBC95\uC758 \uCF69\uC774 \uCE58\uBA85\uD0C0\uB97C
+      30% \uC99D\uAC00, \uB9C8\uBC95\uC758 \uCF69\uC774 \uCE58\uBA85\uD0C0\uB97C
       \uD130\uD2B8\uB9B4 \uC218 \uC788\uC74C"
     itemDescription: "\"\uB05D\uC744 \uBAA8\uB974\uB294 \uC695\uC2EC\uC740 \uADF8\uB97C
       \uC808\uB9DD\uC5D0 \uBE60\uD2B8\uB838\uB2E4\""

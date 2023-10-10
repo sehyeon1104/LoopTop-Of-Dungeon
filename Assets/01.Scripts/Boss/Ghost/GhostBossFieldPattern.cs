@@ -162,9 +162,10 @@ public class GhostBossFieldPattern : MonoBehaviour
             Poolable clone1 = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/SpaceRip.prefab", GameManager.Instance.Player.transform);
             Time.timeScale = 0f;
 
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(3.5f);
 
-            CinemachineCameraShaking.Instance.CameraShake(10, 0.2f);
+            Time.timeScale = 1f;
+            CinemachineCameraShaking.Instance.CameraShake(20, 0.2f);
             GameManager.Instance.Player.OnDamage(300f, 0);
 
             Camera.main.orthographic = true;

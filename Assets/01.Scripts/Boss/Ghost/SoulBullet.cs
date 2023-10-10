@@ -7,6 +7,7 @@ public class SoulBullet : MonoBehaviour
     CircleCollider2D col;
     float nowPosition = 0f;
     float waitTime = 5f;
+    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class SoulBullet : MonoBehaviour
             {
                 timer += Time.deltaTime;
                 transform.localPosition = Vector3.right * (Mathf.Sin(Time.time * 2f) * Mathf.Sign(nowPosition) + nowPosition);
-                yield return null;
+                yield return endOfFrame;
             }
         else
             yield return new WaitForSeconds(waitTime);

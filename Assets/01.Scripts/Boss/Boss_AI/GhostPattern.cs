@@ -377,6 +377,7 @@ public class G_Patterns : BossPattern
 public class GhostPattern : G_Patterns
 {
     Coroutine ActCoroutine = null;
+    WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     private void Update()
     {
@@ -449,6 +450,8 @@ public class GhostPattern : G_Patterns
     protected override IEnumerator ChangePhase()
     {
         yield return new WaitUntil(() => NowPhase == 1 && Boss.Instance.Base.Hp <= 0);
+        GameManager.Instance.Player.GetComponent<PlayerMovement>().IsControl = false;
+        GameManager.Instance.Player.IsInvincibility = true;
         isThisSkillCoolDown[patternChoice] = false;
 
         if (Boss.Instance.actCoroutine != null)
@@ -479,18 +482,24 @@ public class GhostPattern : G_Patterns
         while (Boss.Instance.Base.Hp < Boss.Instance.Base.MaxHp)
         {
             Boss.Instance.Base.Hp += 8;
-            yield return null;
+            yield return endOfFrame;
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.2f);
 
-        CinemachineCameraShaking.Instance.CameraShake(20f, 0.5f);
+        Vector3 dir = (GameManager.Instance.Player.transform.position - transform.position).normalized;
+        GameManager.Instance.Player.GetComponent<Rigidbody2D>().AddRelativeForce(dir * 20f, ForceMode2D.Impulse);
         bossAura.SetActive(true);
 
         yield return new WaitForSeconds(2f);
+        GameManager.Instance.Player.IsInvincibility = true;
+        GameManager.Instance.Player.GetComponent<PlayerMovement>().IsControl = true;
+        
         Boss.Instance.Base.Hp = Boss.Instance.Base.MaxHp;
+        
         isCanUseFinalPattern = true;
         isUsingFinalPattern = false;
+        
         boss2PhaseVcam.Priority = 0;
         patternDelay = new WaitForSeconds(1.2f);
         NowPhase = 2;
