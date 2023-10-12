@@ -51,7 +51,7 @@ public class BelieversClock : ItemBase
             ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
             InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDic[typeof(LiarsPrayer).Name]);
         }
-        // ShowStack();
+        ShowStack();
     }
 
     public override void ShowStack()

@@ -33,11 +33,6 @@ public class BrokenHourglass : ItemBase
         GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(BrokenHourglassAbility);
     }
 
-    public override void SetItemCheck()
-    {
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
-
     public void BrokenHourglassAbility(int num)
     {
         if(Random.Range(0, 100) < 10)

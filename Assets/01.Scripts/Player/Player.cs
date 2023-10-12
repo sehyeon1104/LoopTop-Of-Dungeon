@@ -44,7 +44,15 @@ public class Player : MonoBehaviour, IHittable
     public float dmgMul = 1f;
     [HideInInspector]
     public float dmgAdd = 0f;
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
+            dropItemObj.transform.position = transform.position;
+            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
+        }
+    }
     private void Awake()
     {
         UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
@@ -53,17 +61,6 @@ public class Player : MonoBehaviour, IHittable
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-    }
-
-    // µð¹ö±ë
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
-            dropItemObj.transform.position = transform.position;
-            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
-        }
     }
 
     public IEnumerator IEDamaged(float damage = 0)

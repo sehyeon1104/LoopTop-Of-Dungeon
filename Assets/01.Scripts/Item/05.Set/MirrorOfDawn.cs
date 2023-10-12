@@ -6,7 +6,7 @@ public class MirrorOfDawn : ItemBase
 {
     public override Define.ItemType itemType => Define.ItemType.buff;
 
-    public override Define.ItemRating itemRating => Define.ItemRating.Rare;
+    public override Define.ItemRating itemRating => Define.ItemRating.Set;
 
     public override bool isPersitantItem => true;
 

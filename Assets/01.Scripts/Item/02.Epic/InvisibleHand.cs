@@ -23,11 +23,6 @@ public class InvisibleHand : ItemBase
         ItemManager.Instance.FragmentDropRelatedItemEffects.AddListener(InvisibleHandAbility);
     }
 
-    public override void SetItemCheck()
-    {
-
-    }
-
     public override void Init()
     {
 

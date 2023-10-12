@@ -27,11 +27,6 @@ public class MirrorOfSun : ItemBase
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
         GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * 0.2f;
     }
-    
-    public override void SetItemCheck()
-    {   
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
 
     public void MirrorOfSunAbility()
     {

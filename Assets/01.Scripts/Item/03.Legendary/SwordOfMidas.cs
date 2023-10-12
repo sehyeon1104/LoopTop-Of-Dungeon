@@ -47,5 +47,14 @@ public class SwordOfMidas : ItemBase
         rise = Mathf.Clamp(Mathf.CeilToInt(rise), 0, 70);
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (rise * 0.01f);
+
+        ShowStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack((int)rise);
     }
 }

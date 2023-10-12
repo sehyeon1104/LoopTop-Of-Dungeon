@@ -54,5 +54,14 @@ public class BerserkerSword : ItemBase
         rise /= 100;
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * rise;
+
+        ShowStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack((int)rise);
     }
 }

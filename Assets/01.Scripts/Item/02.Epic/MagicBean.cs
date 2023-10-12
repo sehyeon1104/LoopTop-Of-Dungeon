@@ -33,12 +33,6 @@ public class MagicBean : ItemBase
         GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(MagicBeanAbility);
     }
 
-    public override void SetItemCheck()
-    {
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
-
-
     public void MagicBeanAbility()
     {
         GameObject bean = Managers.Resource.Instantiate("Assets/03.Prefabs/Item/MagicBeanBullet.prefab");

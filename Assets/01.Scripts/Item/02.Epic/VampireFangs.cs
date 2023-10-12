@@ -7,7 +7,7 @@ public class VampireFangs : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
     public override bool isPersitantItem => true;
-    public override bool isStackItem => false;
+    public override bool isStackItem => true;
 
     private int stack;
 
@@ -42,5 +42,13 @@ public class VampireFangs : ItemBase
             stack = 0;
             GameManager.Instance.Player.playerBase.Hp += 4;
         }
+        ShowStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

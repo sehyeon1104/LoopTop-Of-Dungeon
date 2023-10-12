@@ -1,4 +1,6 @@
 using System.Collections;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +12,10 @@ public class ItemManager : MonoSingleton<ItemManager>
     [SerializeField]
     private List<Item> allItemInfo = new List<Item>(); // 저장용
 
+    // 아이템명(영어), 아이템
     [field:SerializeField]
     public Dictionary<string, Item> allItemDic { get; private set; } = new Dictionary<string, Item>();
+    public Dictionary<int, string> allItemFromNumberDic { get; private set; } = new Dictionary<int, string>();
     public Dictionary<string, Item> curItemDic { get; private set; } = new Dictionary<string, Item>();
 
     public List<Item> commonItemList { get; private set; } = new List<Item>();
@@ -25,37 +29,61 @@ public class ItemManager : MonoSingleton<ItemManager>
     [field: SerializeField]
     public int brokenItemCount { get; private set; } = 0;
 
-    // 해당 세트 아이템, 세트아이템이 되기 위해 필요한 아이템 개수
-    private Dictionary<SetItem, int> setItemDic = new Dictionary<SetItem, int>();
+    // 해당 세트 아이템, 세트아이템이 되기 위해 필요한 아이템들
+    private Dictionary<int, List<int>> setItemDic = new Dictionary<int, List<int>>();
+    private Dictionary<int, List<int>> SetItemPartsListDictionary = new Dictionary<int, List<int>>();
+    private bool isHaveParts = false;
+    public List<int> exceptionItemNumberList { get; private set; } = new List<int>();
 
     private ItemAbility itemAbility = new ItemAbility();
 
     public UnityEvent RoomClearRelatedItemEffects { private set; get; } = new UnityEvent();
     public UnityEvent<Vector3> FragmentDropRelatedItemEffects { private set; get; } = new UnityEvent<Vector3>();
-    //임시
 
     public void Init()
     {
-        // 모든 아이템 스크립트 생성
-        itemAbility.CreateItem();
-
         // 딕셔너리 초기화
         InitDic();
+        InitList();
+
+        // 모든 아이템 스크립트 생성
+        itemAbility.CreateItem();
         // 아이템 타입 분류
         SortItemLists();
 
         brokenItemCount = brokenItemList.Count;
     }
 
-    public void InitDic()
+    private void InitDic()
     {
         // AllItemDic에 모든 아이템 정보 추가
         SetAllItemDic(allItemInfo);
 
-        setItemDic.Add(SetItem.CompleteHourglass, 2);
-        setItemDic.Add(SetItem.MirrorOfDawn, 2);
-        setItemDic.Add(SetItem.EqualExchange, 2);
-        setItemDic.Add(SetItem.Overeager, 3);
+        SetItemPartsListDictionary.Add(601, CompleteHourglassParts);
+        SetItemPartsListDictionary.Add(602, MirrorOfDawnParts);
+        SetItemPartsListDictionary.Add(603, FlexodiaParts);
+        SetItemPartsListDictionary.Add(604, OvereagerParts);
+        // SetItemPartsListDictionary.Add(605, GamblersLegacyParts);
+
+        setItemDic.Add(601, CompleteHourglassParts.ToList());
+        setItemDic.Add(602, MirrorOfDawnParts.ToList());
+        setItemDic.Add(603, FlexodiaParts.ToList());
+        setItemDic.Add(604, OvereagerParts.ToList());
+        // setItemDic.Add(605, GamblersLegacyParts.ToList());
+    }
+
+    private void InitList()
+    {
+        foreach (var setItemNum in setItemDic.Keys)
+        {
+            if (curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            {
+                for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
+                {
+                    exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
+                }
+            }
+        }
     }
 
     public void SortItemLists()
@@ -82,6 +110,9 @@ public class ItemManager : MonoSingleton<ItemManager>
                 case Define.ItemRating.Special:
                     brokenItemList.Add(item);
                     break;
+                case Define.ItemRating.Set:
+                    setItemList.Add(item);
+                    break;
             }
         }
     }
@@ -92,6 +123,8 @@ public class ItemManager : MonoSingleton<ItemManager>
         {
             if(!allItemDic.ContainsKey(item.itemNameEng))
                 allItemDic.Add(item.itemNameEng, item);
+            if (!allItemFromNumberDic.ContainsKey(item.itemNumber))
+                allItemFromNumberDic.Add(item.itemNumber, item.itemNameEng);
         }
     }
 
@@ -132,6 +165,11 @@ public class ItemManager : MonoSingleton<ItemManager>
         InventoryUI.Instance.LoadItemSlot();
     }
 
+    public void DisablingItemWithoutLoad(Item item)
+    {
+        ItemAbility.Items[item.itemNumber].Disabling();
+        RemoveCurItemDic(item);
+    }
 
     public void InitItems()
     {
@@ -141,10 +179,37 @@ public class ItemManager : MonoSingleton<ItemManager>
         }
     }
 
-    public bool CheckSetItem(Item item/*SetItem setItem*/)
+    public void CheckSetItem(Item item)
     {
-        // TODO : 현재 얻으려는 SetItem 활성화, 세트아이템 재료 제거
+        foreach(var itemParts in setItemDic.Values)
+        {
+            if (itemParts.Contains(item.itemNumber))
+            {
+                itemParts.Remove(item.itemNumber);
+                isHaveParts = true;
+            }
+        }
 
-        return false;
+        if (!isHaveParts)
+            return;
+
+        foreach (var setItemNum in setItemDic.Keys)
+        {
+            if (setItemDic[setItemNum].Count == 0 && !curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            {
+                for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
+                {
+                    if (curItemDic.ContainsKey(allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]))
+                    {
+                        DisablingItemWithoutLoad(curItemDic[allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]]);
+                        exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
+                    }
+                }
+
+                InventoryUI.Instance.AddItemSlot(allItemDic[allItemFromNumberDic[setItemNum]]);
+                InventoryUI.Instance.LoadItemSlot();
+            }
+        }
+        isHaveParts = false;
     }
 }

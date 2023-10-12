@@ -28,11 +28,6 @@ public class MirrorOfMoon : ItemBase
         GameManager.Instance.Player.playerBase.SkillCoolDown -= 20;
     }
 
-    public override void SetItemCheck()
-    {
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
-
     public void MirrorOfMoonAbility()
     {
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.2f;

@@ -173,10 +173,12 @@ public class GameManager : MonoSingleton<GameManager>
         itemRateColor[(int)Define.ItemRating.Rare] = "#00FFFF";
         // º¸¶ó»ö
         itemRateColor[(int)Define.ItemRating.Epic] = "#9932CC";
-        // »¡°£»ö
-        itemRateColor[(int)Define.ItemRating.Legendary] = "#FFA500";
+        // ±Ý»ö
+        itemRateColor[(int)Define.ItemRating.Legendary] = "#FFD700";
         // Å©¸²½¼
         itemRateColor[(int)Define.ItemRating.Special] = "#DC143C";
+        // ±Ý»ö
+        itemRateColor[(int)Define.ItemRating.Set] = "#EE82EE";
         // Èò»ö
         itemRateColor[(int)Define.ItemRating.ETC] = "#FFFFFF";
     }

@@ -7,16 +7,19 @@ using TMPro;
 public class UIInventorySlot : MonoBehaviour
 {
     [SerializeField]
-    private Image itemInfoPanel = null;
-    public Image ItemInfoPanel => itemInfoPanel;
-    [SerializeField]
     private Image itemImage = null;
     [SerializeField]
-    private Define.ItemType itemType;
-    [SerializeField]
     private TextMeshProUGUI stackTMP = null;
+    [SerializeField]
+    private Image timerImage = null;
 
+    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+
+    private Define.ItemType itemType;
     private Item item = null;
+
+    private float timer = 0f;
+    private float targetTime = 0f;
 
     public void SetValue(Item item)
     {
@@ -28,10 +31,28 @@ public class UIInventorySlot : MonoBehaviour
     {
         itemType = item.itemType;
         itemImage.sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+        timerImage.gameObject.SetActive(false);
     }
 
     public void UpdateStack(int stack)
     {
-        stackTMP.SetText(stack.ToString());
+        stackTMP.SetText($"{stack}");
+    }
+
+    public IEnumerator TimerPanel(float time)
+    {
+        timerImage.gameObject.SetActive(true);
+        timer = 0f;
+        targetTime = time;
+
+        while (timer >= targetTime)
+        {
+            timer += Time.deltaTime;
+            timerImage.fillAmount = (timer / targetTime);
+
+            yield return waitForEndOfFrame;
+        }
+
+        timerImage.gameObject.SetActive(false);
     }
 }

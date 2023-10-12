@@ -938,6 +938,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7386745664024492898, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: uiItemSlotHolder
+      value: 
+      objectReference: {fileID: 1543557804}
     - target: {fileID: 7965047213796848635, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -5114,6 +5118,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+--- !u!224 &1543557804 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6930094752980900708, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+  m_PrefabInstance: {fileID: 1543557803}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1580792378
 Mesh:
   m_ObjectHideFlags: 0

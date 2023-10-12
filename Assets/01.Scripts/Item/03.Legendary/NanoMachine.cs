@@ -11,7 +11,7 @@ public class NanoMachine : ItemBase
     public override bool isPersitantItem => true;
     public override bool isStackItem => true;
 
-    private static int recoveryAmount = 100;
+    private static int recoveryAmount = 50;
     private int recentReceiveDamage = 0;
     private int temp = 0;
 
@@ -32,6 +32,7 @@ public class NanoMachine : ItemBase
 
     public override void LastingEffect()
     {
+        ShowStack();
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(NanoMachineAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(NanoMachineAbility);
     }
@@ -49,9 +50,16 @@ public class NanoMachine : ItemBase
 
             if (recoveryAmount < 0)
             {
-                ItemManager.Instance.RemoveCurItemDic(ItemManager.Instance.allItemDic[this.GetType().Name]);
+                ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
                 // TODO : 아이템 파손 UI 띄우기
             }
+            ShowStack();
         }
+    }
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(recoveryAmount);
     }
 }
