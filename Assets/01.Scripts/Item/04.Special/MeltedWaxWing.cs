@@ -49,6 +49,7 @@ public class MeltedWaxWing : ItemBase
     {
         stack = 0;
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
+        ShowStack();
     }
 
     public void MeltedWaxWingAbility()
@@ -71,6 +72,7 @@ public class MeltedWaxWing : ItemBase
                 ItemManager.Instance.StopCoroutine(co);
             co = ItemManager.Instance.StartCoroutine(Timer());
         }
+        ShowStack();
     }
 
     private IEnumerator Timer()
@@ -83,5 +85,12 @@ public class MeltedWaxWing : ItemBase
         }
 
         ResetStack();
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

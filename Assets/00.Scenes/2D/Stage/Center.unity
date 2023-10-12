@@ -9691,6 +9691,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7386745664024492898, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: uiItemSlotHolder
+      value: 
+      objectReference: {fileID: 1259399528}
     - target: {fileID: 7965047213796848635, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -10503,7 +10507,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1200786701
 GameObject:
@@ -10589,6 +10593,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96487ca7ce503142aec52f5efd07788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &1259399528 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6930094752980900708, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+  m_PrefabInstance: {fileID: 6092987668600873537}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1272878421
 Mesh:
   m_ObjectHideFlags: 0
@@ -15194,6 +15203,14 @@ PrefabInstance:
     - target: {fileID: 4069735173610745047, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930094752980900708, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 584
+      objectReference: {fileID: 0}
+    - target: {fileID: 6930094752980900708, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8314175531885849773, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_Pivot.x

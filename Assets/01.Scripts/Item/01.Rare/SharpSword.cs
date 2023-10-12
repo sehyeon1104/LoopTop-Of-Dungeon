@@ -62,7 +62,7 @@ public class SharpSword : ItemBase
 
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
-        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        ShowStack();
     }
 
     public void InitStack()
@@ -86,5 +86,12 @@ public class SharpSword : ItemBase
 
             yield return waitForEndOfFrame;
         }
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
     }
 }

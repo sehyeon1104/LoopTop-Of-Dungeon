@@ -61,7 +61,7 @@ public class MinotoursAxe : ItemBase
 
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
-                // InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+                ShowStack();
             }
             yield return waitForEndOfFrame;
         }
@@ -85,5 +85,12 @@ public class MinotoursAxe : ItemBase
 
             yield return waitForEndOfFrame;
         }
-    } 
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+    }
 }
