@@ -68,7 +68,7 @@ public class G_Elite_DemonSlasher : EnemyElite
             CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
             Collider2D col = Physics2D.OverlapBox(clones[i].transform.position, new Vector2(1f, 50), clones[i].transform.eulerAngles.z, 1 << 8);
             if (col != null)
-                GameManager.Instance.Player.OnDamage(15, 0);
+                GameManager.Instance.Player.OnDamage(10, 0);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(2f);
@@ -95,8 +95,8 @@ public class G_Elite_DemonSlasher : EnemyElite
         yield return new WaitForSeconds(0.5f);
 
         CinemachineCameraShaking.Instance.CameraShake(8f, 0.1f);
-        rigid.DOMove(transform.position + dir * 15f, 0.2f);
-        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Elite/EliteSlasherTP.prefab", transform.position + dir * 15f, Quaternion.identity);
+        rigid.DOMove(transform.position + dir * 10f, 0.2f);
+        Managers.Pool.PoolManaging("Assets/10.Effects/ghost/Elite/EliteSlasherTP.prefab", transform.position + dir * 10f, Quaternion.identity);
         warning.SetActive(false);
 
         yield return new WaitForSeconds(0.2f);

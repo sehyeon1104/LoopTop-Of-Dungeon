@@ -14,9 +14,9 @@ public class EliteSlasherDash : MonoBehaviour
 
     private void OnDisable()
     {
-        Collider2D col = Physics2D.OverlapBox(transform.position, new Vector2(50,0.5f), warning.transform.eulerAngles.z, 1<<8);
+        Collider2D col = Physics2D.OverlapBox(transform.position, new Vector2(50,1f), warning.transform.eulerAngles.z, 1<<8);
         if (col != null)
-            GameManager.Instance.Player.OnDamage(15, 0);
+            GameManager.Instance.Player.OnDamage(10, 0);
     }
 
     private void OnDrawGizmos()
