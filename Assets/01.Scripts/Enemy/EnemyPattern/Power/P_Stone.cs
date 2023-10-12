@@ -46,7 +46,7 @@ public class P_Stone : EnemyDefault
         if (col != null)
             GameManager.Instance.Player.OnDamage(damage, 0);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         isInvincible = false;
         yield return new WaitForSeconds(2f);
         crack.SetActive(false);
