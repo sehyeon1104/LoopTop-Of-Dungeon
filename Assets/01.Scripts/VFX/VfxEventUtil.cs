@@ -11,7 +11,7 @@ public class VfxEventUtil : VFXOutputEventAbstractHandler
     public override bool canExecuteInEditor => true;
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private Vector2 cameraShake;
-
+   
     public override void OnVFXOutputEvent(VFXEventAttribute eventAttribute)
     {
         if (outputEvent.ToString() == "SoundEvent")

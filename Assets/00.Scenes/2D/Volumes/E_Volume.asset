@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-529329985792936406
+--- !u!114 &-6041372488099721412
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,19 +15,19 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: -0.24
+    m_Value: 1
   contrast:
     m_OverrideState: 1
-    m_Value: 15
+    m_Value: 0
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1.171453, g: 1.3168747, b: 1.6468703, a: 1}
+    m_Value: {r: 0.943, g: 1, b: 0.986838, a: 1}
   hueShift:
     m_OverrideState: 1
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: -15
+    m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,12 +38,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: C_Volume
+  m_Name: E_Volume
   m_EditorClassIdentifier: 
   components:
   - {fileID: 3148804965879211064}
-  - {fileID: -529329985792936406}
-  - {fileID: 3465467939883040523}
+  - {fileID: 6945710170420429224}
+  - {fileID: -6041372488099721412}
 --- !u!114 &3148804965879211064
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -65,14 +65,14 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.28
+    m_Value: 0.329
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.24
+    m_Value: 0.427
   rounded:
     m_OverrideState: 1
     m_Value: 1
---- !u!114 &3465467939883040523
+--- !u!114 &6945710170420429224
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,13 +87,13 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.12
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 1.2
+    m_Value: 2
   scatter:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.502
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -107,9 +107,9 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
   dirtTexture:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {fileID: 0}
     dimension: 1
   dirtIntensity:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
