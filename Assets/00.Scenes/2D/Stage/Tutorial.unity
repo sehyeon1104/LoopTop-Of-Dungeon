@@ -381,6 +381,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1841161170566093773, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841161170566093773, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841161170566093773, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1998799070356298357, guid: e8b3b7a0fafebfa428bd3cf0ee97a850, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -2084,6 +2096,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+--- !u!20 &892043649 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 702522677, guid: 32d63ccb652c3934689b57f8e48aedce, type: 3}
+  m_PrefabInstance: {fileID: 892043648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &939345695
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,7 +3634,7 @@ PrefabInstance:
     - target: {fileID: 8314175531885849772, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 892043649}
     - target: {fileID: 8314175531885849773, guid: 65f6acff8462f6849b44dd33f7404371, type: 3}
       propertyPath: m_Pivot.x
       value: 0
