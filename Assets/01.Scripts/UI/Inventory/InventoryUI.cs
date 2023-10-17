@@ -153,6 +153,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
                 uiObj.SetActive(true);
                 uiInventorySlotDict.Add(uiObjItem.itemNameEng, uiObjComponent);
                 uiObj.transform.SetParent(uiItemSlotHolder);
+                uiObj.GetComponent<RectTransform>().localScale = Vector3.one;
             }
 
             if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
