@@ -60,6 +60,6 @@ public class NanoMachine : ItemBase
     {
         base.ShowStack();
 
-        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(recoveryAmount);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(recoveryAmount);
     }
 }

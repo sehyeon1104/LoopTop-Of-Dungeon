@@ -20,7 +20,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     [SerializeField]
     private GameObject uiItemObjTemplate = null;
 
-    public Dictionary<string, UIInventorySlot> uiInventorySlotDic = new Dictionary<string, UIInventorySlot>();
+    public Dictionary<string, UIInventorySlot> uiInventorySlotDict = new Dictionary<string, UIInventorySlot>();
 
     private List<Poolable> itemSlotObjList = new List<Poolable>();
 
@@ -73,7 +73,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     // 아이템 획득시 슬롯에 추가
     public void AddItemSlot(Item item)
     {
-        ItemManager.Instance.AddCurItemDic(item);
+        ItemManager.Instance.AddCurItemDict(item);
         Item inventoryItem = item;
 
         Poolable newObject = Managers.Pool.Pop(itemObjTemplate);
@@ -90,8 +90,6 @@ public class InventoryUI : MonoSingleton<InventoryUI>
 
         slots.Add(newItemObjComponent);
 
-        ItemAbility.Items[item.itemNumber].Use();
-
         // 스택형 아이템 표기
         if (ItemAbility.Items[item.itemNumber].isStackItem)
         {
@@ -100,10 +98,12 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             UIInventorySlot uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
             uiObjComponent.SetValue(uiObjItem);
             uiObj.SetActive(true);
-            uiInventorySlotDic.Add(uiObjItem.itemNameEng, uiObjComponent);
+            uiInventorySlotDict.Add(uiObjItem.itemNameEng, uiObjComponent);
             uiObj.transform.SetParent(uiItemSlotHolder);
             uiObj.GetComponent<RectTransform>().localScale = Vector3.one;
         }
+
+        ItemAbility.Items[item.itemNumber].Use();
 
         if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
             ItemManager.Instance.CheckSetItem(item);
@@ -151,7 +151,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
                 UIInventorySlot uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
                 uiObjComponent.SetValue(uiObjItem);
                 uiObj.SetActive(true);
-                uiInventorySlotDic.Add(uiObjItem.itemNameEng, uiObjComponent);
+                uiInventorySlotDict.Add(uiObjItem.itemNameEng, uiObjComponent);
                 uiObj.transform.SetParent(uiItemSlotHolder);
             }
 
