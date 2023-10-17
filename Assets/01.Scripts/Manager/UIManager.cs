@@ -98,6 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
     Image[] skillIcons = new Image[5];
     Image[] pcSkillIcons = new Image[5];
 
+    GameObject CoolDownedParticle;
+
     GameObject AttackButton;
     GameObject InteractionButton;
 
@@ -168,6 +170,8 @@ public class UIManager : MonoSingleton<UIManager>
             pcSkillIcons[2] = playerPPUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPPUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[4] = playerPPUI.transform.Find("LeftDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
+
+            CoolDownedParticle = playerPPUI.transform.Find("LeftDown/Btns/CoolDowned").gameObject;
 
             gameOverPanel = ultFade.transform.Find("All/GameOverPanel").gameObject;
             blurPanel = ultFade.transform.Find("All/BlurPanel").gameObject;
@@ -525,7 +529,7 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillCoolCalculation(float time, int num)
     {
-        if (num == 2 || num == 3) return; 
+        if (num == 3) return; 
         int skillNum = playerskill.skillIndex[num];
         currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
     }
@@ -544,6 +548,10 @@ public class UIManager : MonoSingleton<UIManager>
             cooltimeImg.fillAmount = currentFillAmount[num];
             yield return null;
         }
+        if (num == 3) yield break;
+        CoolDownedParticle.GetComponent<RectTransform>().position = cooltimeImg.rectTransform.position;
+        CoolDownedParticle.SetActive(false);
+        CoolDownedParticle.SetActive(true);
     }
 
     public void ResetSkill()
