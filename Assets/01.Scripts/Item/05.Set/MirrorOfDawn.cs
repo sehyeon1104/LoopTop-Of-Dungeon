@@ -93,6 +93,6 @@ public class MirrorOfDawn : ItemBase
         base.ShowStack();
 
         // InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
-        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateTimerPanel(abilityDuration);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

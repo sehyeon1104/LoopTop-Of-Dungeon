@@ -62,6 +62,6 @@ public class BerserkerSword : ItemBase
     {
         base.ShowStack();
 
-        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack((int)rise);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack((int)rise);
     }
 }

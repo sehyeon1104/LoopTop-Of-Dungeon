@@ -49,6 +49,6 @@ public class VampireFangs : ItemBase
     {
         base.ShowStack();
 
-        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 }

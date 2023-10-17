@@ -141,13 +141,13 @@ public class ItemManager : MonoSingleton<ItemManager>
         return curItemDict;
     }
 
-    public void AddCurItemDic(Item item)
+    public void AddCurItemDict(Item item)
     {
         curItemDict.Add(item.itemNameEng, item);
         GameManager.Instance.SaveItemData();
     }
 
-    public void RemoveCurItemDic(Item item)
+    public void RemoveCurItemDict(Item item)
     {
         Debug.Log($"{item.itemName} Á¦°Å");
         if(curItemDict.ContainsKey(item.itemNameEng))
@@ -161,14 +161,14 @@ public class ItemManager : MonoSingleton<ItemManager>
     public void DisablingItem(Item item)
     {
         ItemAbility.Items[item.itemNumber].Disabling();
-        RemoveCurItemDic(item);
+        RemoveCurItemDict(item);
         InventoryUI.Instance.LoadItemSlot();
     }
 
     public void DisablingItemWithoutLoad(Item item)
     {
         ItemAbility.Items[item.itemNumber].Disabling();
-        RemoveCurItemDic(item);
+        RemoveCurItemDict(item);
     }
 
     public void InitItems()
