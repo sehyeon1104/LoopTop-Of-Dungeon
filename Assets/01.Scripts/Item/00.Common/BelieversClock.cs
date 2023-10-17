@@ -48,8 +48,8 @@ public class BelieversClock : ItemBase
 
         if (stack >= 12)
         {
-            ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDic[typeof(BelieversClock).Name]);
-            InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDic[typeof(LiarsPrayer).Name]);
+            ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDict[typeof(BelieversClock).Name]);
+            InventoryUI.Instance.AddItemSlot(ItemManager.Instance.allItemDict[typeof(LiarsPrayer).Name]);
         }
         ShowStack();
     }

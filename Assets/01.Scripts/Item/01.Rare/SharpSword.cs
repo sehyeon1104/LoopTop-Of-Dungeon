@@ -93,5 +93,6 @@ public class SharpSword : ItemBase
         base.ShowStack();
 
         InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

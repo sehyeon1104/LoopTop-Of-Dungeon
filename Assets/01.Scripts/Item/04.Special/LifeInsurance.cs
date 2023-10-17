@@ -35,6 +35,6 @@ public class LifeInsurance : ItemBase
     {
         // TODO : 아이템이 파손됐음을 알리는 UI 출력
         GameManager.Instance.Player.RevivePlayer();
-        ItemManager.Instance.DisablingItem(ItemManager.Instance.curItemDic[this.GetType().Name]);
+        ItemManager.Instance.DisablingItem(ItemManager.Instance.curItemDict[this.GetType().Name]);
     }
 }

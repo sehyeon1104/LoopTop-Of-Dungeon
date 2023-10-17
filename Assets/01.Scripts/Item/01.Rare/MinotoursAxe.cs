@@ -92,5 +92,6 @@ public class MinotoursAxe : ItemBase
         base.ShowStack();
 
         InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

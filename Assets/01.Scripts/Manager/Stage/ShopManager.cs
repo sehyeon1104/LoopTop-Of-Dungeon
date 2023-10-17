@@ -53,7 +53,7 @@ public class ShopManager : MonoSingleton<ShopManager>
 
         Dictionary<string, Item> curItemDic = ItemManager.Instance.GetCurItemDic();
 
-        List<Item> allItemList = ItemManager.Instance.allItemDic.Values.ToList();
+        List<Item> allItemList = ItemManager.Instance.allItemDict.Values.ToList();
 
         itemSelectNum.Clear();
         foreach(Item item in curItemDic.Values)
@@ -65,11 +65,11 @@ public class ShopManager : MonoSingleton<ShopManager>
         int loopCount = 0;
         int rand = 0;
 
-        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
+        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDict;
 
         while (index < 4)
         {
-            rand = Random.Range(1, ItemManager.Instance.allItemDic.Count);
+            rand = Random.Range(1, ItemManager.Instance.allItemDict.Count);
 
             if (itemSelectNum.Contains(allItemList[rand].itemNumber) 
                 || allItemList[rand].itemRating == Define.ItemRating.Special 
@@ -82,7 +82,7 @@ public class ShopManager : MonoSingleton<ShopManager>
             // 아이템 오브젝트 생성
 
 
-            foreach(Item item in ItemManager.Instance.allItemDic.Values)
+            foreach(Item item in ItemManager.Instance.allItemDict.Values)
             {
                 if (item.itemNumber == allItemList[rand].itemNumber)
                 {
@@ -105,7 +105,7 @@ public class ShopManager : MonoSingleton<ShopManager>
                 Debug.Log("break while loop");
                 for(int i = index; i < 4; ++i)
                 {
-                    Item defaultItem = ItemManager.Instance.allItemDic["Default"];
+                    Item defaultItem = ItemManager.Instance.allItemDict["Default"];
 
                     newObject = Instantiate(itemObjTemplate);
                     newItemObjComponent = newObject.GetComponent<ItemObj>();

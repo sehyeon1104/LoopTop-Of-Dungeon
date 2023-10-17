@@ -109,7 +109,7 @@ public class Player : MonoBehaviour, IHittable
     
     public void Dead()
     {
-        if (ItemManager.Instance.curItemDic.ContainsKey("LifeInsurance"))
+        if (ItemManager.Instance.curItemDict.ContainsKey("LifeInsurance"))
         {
             ItemAbility.Items[404].Use();
             return;

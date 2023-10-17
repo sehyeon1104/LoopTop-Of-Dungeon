@@ -296,7 +296,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetItemData()
     {
-        foreach(Item item in ItemManager.Instance.allItemDic.Values)
+        foreach(Item item in ItemManager.Instance.allItemDict.Values)
         {
             itemData.allItemList.Add(item);
         }
@@ -316,7 +316,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         foreach(var items in item)
         {
-            ItemManager.Instance.curItemDic.Add(items.itemNameEng, items);
+            ItemManager.Instance.curItemDict.Add(items.itemNameEng, items);
         }
         //itemData.curItemDic = item;
         SaveManager.Save<ItemData>(ref itemData);
@@ -411,7 +411,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SaveItemData()
     {
         itemData.curItemList.Clear();
-        foreach(var item in ItemManager.Instance.curItemDic.Values)
+        foreach(var item in ItemManager.Instance.curItemDict.Values)
         {
             itemData.curItemList.Add(item);
         }

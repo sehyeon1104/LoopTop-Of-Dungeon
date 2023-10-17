@@ -10,6 +10,8 @@ public class MirrorOfDawn : ItemBase
 
     public override bool isPersitantItem => true;
 
+    public override bool isStackItem => true;
+
     private float delay = 1f;
     private float abilityDuration = 1f;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -84,5 +86,13 @@ public class MirrorOfDawn : ItemBase
 
             yield return waitForEndOfFrame;
         }
+    }
+
+    public override void ShowStack()
+    {
+        base.ShowStack();
+
+        // InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

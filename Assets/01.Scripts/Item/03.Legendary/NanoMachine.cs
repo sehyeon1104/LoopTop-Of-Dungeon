@@ -50,7 +50,7 @@ public class NanoMachine : ItemBase
 
             if (recoveryAmount < 0)
             {
-                ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
+                ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDict[this.GetType().Name]);
                 // TODO : 아이템 파손 UI 띄우기
             }
             ShowStack();

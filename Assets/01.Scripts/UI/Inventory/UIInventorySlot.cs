@@ -13,6 +13,7 @@ public class UIInventorySlot : MonoBehaviour
     [SerializeField]
     private Image timerImage = null;
 
+    private Coroutine timerCoroutine = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private Define.ItemType itemType;
@@ -37,6 +38,14 @@ public class UIInventorySlot : MonoBehaviour
     public void UpdateStack(int stack)
     {
         stackTMP.SetText($"{stack}");
+    }
+
+    public void UpdateTimerPanel(float time)
+    {
+        if (timerCoroutine != null)
+            StopCoroutine(timerCoroutine);
+
+        timerCoroutine = StartCoroutine(TimerPanel(time));
     }
 
     public IEnumerator TimerPanel(float time)

@@ -14,9 +14,9 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     // 아이템명(영어), 아이템
     [field:SerializeField]
-    public Dictionary<string, Item> allItemDic { get; private set; } = new Dictionary<string, Item>();
-    public Dictionary<int, string> allItemFromNumberDic { get; private set; } = new Dictionary<int, string>();
-    public Dictionary<string, Item> curItemDic { get; private set; } = new Dictionary<string, Item>();
+    public Dictionary<string, Item> allItemDict { get; private set; } = new Dictionary<string, Item>();
+    public Dictionary<int, string> allItemFromNumberDict { get; private set; } = new Dictionary<int, string>();
+    public Dictionary<string, Item> curItemDict { get; private set; } = new Dictionary<string, Item>();
 
     public List<Item> commonItemList { get; private set; } = new List<Item>();
     public List<Item> rareItemList { get; private set; } = new List<Item>();
@@ -30,7 +30,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     public int brokenItemCount { get; private set; } = 0;
 
     // 해당 세트 아이템, 세트아이템이 되기 위해 필요한 아이템들
-    private Dictionary<int, List<int>> setItemDic = new Dictionary<int, List<int>>();
+    private Dictionary<int, List<int>> setItemDict = new Dictionary<int, List<int>>();
     private Dictionary<int, List<int>> SetItemPartsListDictionary = new Dictionary<int, List<int>>();
     private bool isHaveParts = false;
     public List<int> exceptionItemNumberList { get; private set; } = new List<int>();
@@ -65,18 +65,18 @@ public class ItemManager : MonoSingleton<ItemManager>
         SetItemPartsListDictionary.Add(604, OvereagerParts);
         // SetItemPartsListDictionary.Add(605, GamblersLegacyParts);
 
-        setItemDic.Add(601, CompleteHourglassParts.ToList());
-        setItemDic.Add(602, MirrorOfDawnParts.ToList());
-        setItemDic.Add(603, FlexodiaParts.ToList());
-        setItemDic.Add(604, OvereagerParts.ToList());
+        setItemDict.Add(601, CompleteHourglassParts.ToList());
+        setItemDict.Add(602, MirrorOfDawnParts.ToList());
+        setItemDict.Add(603, FlexodiaParts.ToList());
+        setItemDict.Add(604, OvereagerParts.ToList());
         // setItemDic.Add(605, GamblersLegacyParts.ToList());
     }
 
     private void InitList()
     {
-        foreach (var setItemNum in setItemDic.Keys)
+        foreach (var setItemNum in setItemDict.Keys)
         {
-            if (curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            if (curItemDict.ContainsKey(allItemFromNumberDict[setItemNum]))
             {
                 for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
                 {
@@ -88,7 +88,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void SortItemLists()
     {
-        foreach(Item item in allItemDic.Values)
+        foreach(Item item in allItemDict.Values)
         {
             switch (item.itemRating)
             {
@@ -121,10 +121,10 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         foreach(Item item in itemList)
         {
-            if(!allItemDic.ContainsKey(item.itemNameEng))
-                allItemDic.Add(item.itemNameEng, item);
-            if (!allItemFromNumberDic.ContainsKey(item.itemNumber))
-                allItemFromNumberDic.Add(item.itemNumber, item.itemNameEng);
+            if(!allItemDict.ContainsKey(item.itemNameEng))
+                allItemDict.Add(item.itemNameEng, item);
+            if (!allItemFromNumberDict.ContainsKey(item.itemNumber))
+                allItemFromNumberDict.Add(item.itemNumber, item.itemNameEng);
         }
     }
 
@@ -132,26 +132,26 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         foreach (Item item in itemList)
         {
-            curItemDic.Add(item.itemNameEng, item);
+            curItemDict.Add(item.itemNameEng, item);
         }
     }
 
     public Dictionary<string, Item> GetCurItemDic()
     {
-        return curItemDic;
+        return curItemDict;
     }
 
     public void AddCurItemDic(Item item)
     {
-        curItemDic.Add(item.itemNameEng, item);
+        curItemDict.Add(item.itemNameEng, item);
         GameManager.Instance.SaveItemData();
     }
 
     public void RemoveCurItemDic(Item item)
     {
         Debug.Log($"{item.itemName} 제거");
-        if(curItemDic.ContainsKey(item.itemNameEng))
-            curItemDic.Remove(item.itemNameEng);
+        if(curItemDict.ContainsKey(item.itemNameEng))
+            curItemDict.Remove(item.itemNameEng);
     }
 
     /// <summary>
@@ -173,7 +173,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void InitItems()
     {
-        foreach(var item in allItemDic.Values)
+        foreach(var item in allItemDict.Values)
         {
             ItemAbility.Items[item.itemNumber].Init();
         }
@@ -181,7 +181,7 @@ public class ItemManager : MonoSingleton<ItemManager>
 
     public void CheckSetItem(Item item)
     {
-        foreach(var itemParts in setItemDic.Values)
+        foreach(var itemParts in setItemDict.Values)
         {
             if (itemParts.Contains(item.itemNumber))
             {
@@ -193,20 +193,20 @@ public class ItemManager : MonoSingleton<ItemManager>
         if (!isHaveParts)
             return;
 
-        foreach (var setItemNum in setItemDic.Keys)
+        foreach (var setItemNum in setItemDict.Keys)
         {
-            if (setItemDic[setItemNum].Count == 0 && !curItemDic.ContainsKey(allItemFromNumberDic[setItemNum]))
+            if (setItemDict[setItemNum].Count == 0 && !curItemDict.ContainsKey(allItemFromNumberDict[setItemNum]))
             {
                 for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
                 {
-                    if (curItemDic.ContainsKey(allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]))
+                    if (curItemDict.ContainsKey(allItemFromNumberDict[SetItemPartsListDictionary[setItemNum][i]]))
                     {
-                        DisablingItemWithoutLoad(curItemDic[allItemFromNumberDic[SetItemPartsListDictionary[setItemNum][i]]]);
+                        DisablingItemWithoutLoad(curItemDict[allItemFromNumberDict[SetItemPartsListDictionary[setItemNum][i]]]);
                         exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
                     }
                 }
 
-                InventoryUI.Instance.AddItemSlot(allItemDic[allItemFromNumberDic[setItemNum]]);
+                InventoryUI.Instance.AddItemSlot(allItemDict[allItemFromNumberDict[setItemNum]]);
                 InventoryUI.Instance.LoadItemSlot();
             }
         }

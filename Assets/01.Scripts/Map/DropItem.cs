@@ -81,7 +81,7 @@ public class DropItem : MonoBehaviour, IPoolable
 
     public void SetItem(Define.ChestRating chestRate)
     {
-        if (tempItemList.Count == ItemManager.Instance.allItemDic.Count - 1)
+        if (tempItemList.Count == ItemManager.Instance.allItemDict.Count - 1)
         {
             Debug.LogError("아이템 부족. 빨리 기획/개발 더 해.");
             return;
@@ -107,15 +107,15 @@ public class DropItem : MonoBehaviour, IPoolable
 
         int rand = 0;
 
-        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDic;
+        Dictionary<string, Item> allItemDic = ItemManager.Instance.allItemDict;
         List<Item> allItemList = allItemDic.Values.ToList();
 
-        item = ItemManager.Instance.allItemDic["MirrorOfSun"];
+        item = ItemManager.Instance.allItemDict["MirrorOfSun"];
 
         while (item == null)
         {
             // 저주아이템을 제외한 모든 아이템 rand
-            rand = Random.Range(1, ItemManager.Instance.allItemDic.Count);
+            rand = Random.Range(1, ItemManager.Instance.allItemDict.Count);
 
             // 현재 지닌 아이템 또는 상점에 있는 아이템일 경우 continue
             if (itemSelectNum.Contains(allItemList[rand].itemNumber) 

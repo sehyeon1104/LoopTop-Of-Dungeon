@@ -109,7 +109,7 @@ public class BrokenItemRoom : RoomBase
                 Debug.Log("break while loop");
                 for (int i = index; i < 4; ++i)
                 {
-                    Item defaultItem = ItemManager.Instance.allItemDic["Default"];
+                    Item defaultItem = ItemManager.Instance.allItemDict["Default"];
 
                     newObject = Instantiate(itemObjTemplate);
                     newItemObjComponent = newObject.GetComponent<ItemObj>();
