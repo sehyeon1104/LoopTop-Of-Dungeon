@@ -34,7 +34,7 @@ public class CompleteHourglass : ItemBase
 
     public void CompleteHourglassAbility(int num)
     {
-        if (num == 2 || num == 3) return;
+        if (num == 3) return;
         if (Random.Range(0, 10) < 3)
         {
             UIManager.Instance.SkillCoolRedution(num);

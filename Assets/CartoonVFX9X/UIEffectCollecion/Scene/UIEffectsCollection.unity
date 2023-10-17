@@ -219,6 +219,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1293877159}
   - {fileID: 73089526}
@@ -602,6 +603,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -864,6 +866,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -914,6 +917,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1369,6 +1373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_42
       objectReference: {fileID: 0}
+    - target: {fileID: 66583702200228032, guid: bafd6d6bb6121744fa2d5b47e3f25a92, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 66583702200228033, guid: bafd6d6bb6121744fa2d5b47e3f25a92, type: 3}
       propertyPath: m_RootOrder
       value: 51
@@ -1425,6 +1433,10 @@ PrefabInstance:
     - target: {fileID: 84398894951187952, guid: f827622f5a031d942b3ac30f7b16dbbb, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_11
+      objectReference: {fileID: 0}
+    - target: {fileID: 84398894951187952, guid: f827622f5a031d942b3ac30f7b16dbbb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 84398894951187959, guid: f827622f5a031d942b3ac30f7b16dbbb, type: 3}
       propertyPath: m_RootOrder
@@ -1527,6 +1539,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_37
       objectReference: {fileID: 0}
+    - target: {fileID: 126522190121039419, guid: b035360e29510c840801fb799ba268f5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b035360e29510c840801fb799ba268f5, type: 3}
 --- !u!1001 &147157400911582462
@@ -1539,6 +1555,10 @@ PrefabInstance:
     - target: {fileID: 147157400088681422, guid: 30a7d46cab1378d4fae23995c07742f0, type: 3}
       propertyPath: m_Name
       value: Item_FX_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 147157400088681422, guid: 30a7d46cab1378d4fae23995c07742f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 147157400088681423, guid: 30a7d46cab1378d4fae23995c07742f0, type: 3}
       propertyPath: m_RootOrder
@@ -1597,6 +1617,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_28
       objectReference: {fileID: 0}
+    - target: {fileID: 165726017925059970, guid: f977628e27743024dbab40bfb8b39a65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 165726017925059973, guid: f977628e27743024dbab40bfb8b39a65, type: 3}
       propertyPath: m_RootOrder
       value: 112
@@ -1653,6 +1677,10 @@ PrefabInstance:
     - target: {fileID: 222342958615695500, guid: 5f232404cb382854f9e4cad30fed37a7, type: 3}
       propertyPath: m_Name
       value: Item_FX_47
+      objectReference: {fileID: 0}
+    - target: {fileID: 222342958615695500, guid: 5f232404cb382854f9e4cad30fed37a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 222342958615695603, guid: 5f232404cb382854f9e4cad30fed37a7, type: 3}
       propertyPath: m_RootOrder
@@ -1755,6 +1783,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_41
       objectReference: {fileID: 0}
+    - target: {fileID: 4081895828157466475, guid: 41fb37f42697a5a42b76ba0c97c516a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fb37f42697a5a42b76ba0c97c516a3, type: 3}
 --- !u!1001 &321671169396604117
@@ -1767,6 +1799,10 @@ PrefabInstance:
     - target: {fileID: 321671169075539872, guid: 0e876ed217518084c8abf70c8fd27e3f, type: 3}
       propertyPath: m_Name
       value: Item_FX_35
+      objectReference: {fileID: 0}
+    - target: {fileID: 321671169075539872, guid: 0e876ed217518084c8abf70c8fd27e3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 321671169075539875, guid: 0e876ed217518084c8abf70c8fd27e3f, type: 3}
       propertyPath: m_RootOrder
@@ -1869,6 +1905,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_44
       objectReference: {fileID: 0}
+    - target: {fileID: 420442456890111505, guid: 1e735d4ed46e2fb4794a5bc33557cac8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e735d4ed46e2fb4794a5bc33557cac8, type: 3}
 --- !u!1001 &435184555114899183
@@ -1926,6 +1966,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_5
       objectReference: {fileID: 0}
+    - target: {fileID: 435184556108408321, guid: 75fdfdf32a243c24188653dbab0916d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75fdfdf32a243c24188653dbab0916d5, type: 3}
 --- !u!1001 &494262326410955728
@@ -1938,6 +1982,10 @@ PrefabInstance:
     - target: {fileID: 261173462916500306, guid: b1c8694e0f238b04d8a31a1f29b368c7, type: 3}
       propertyPath: m_Name
       value: Select_FX_44
+      objectReference: {fileID: 0}
+    - target: {fileID: 261173462916500306, guid: b1c8694e0f238b04d8a31a1f29b368c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 494262327852024832, guid: b1c8694e0f238b04d8a31a1f29b368c7, type: 3}
       propertyPath: m_RootOrder
@@ -2040,6 +2088,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_53
       objectReference: {fileID: 0}
+    - target: {fileID: 5915711419316996999, guid: ca6ef132c7e9f254d816a129f6804410, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca6ef132c7e9f254d816a129f6804410, type: 3}
 --- !u!1001 &816057685667018728
@@ -2052,6 +2104,10 @@ PrefabInstance:
     - target: {fileID: 816057686010173200, guid: dc2ef8688085fcc4da30569f913b40b5, type: 3}
       propertyPath: m_Name
       value: Item_FX_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 816057686010173200, guid: dc2ef8688085fcc4da30569f913b40b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 816057686010173201, guid: dc2ef8688085fcc4da30569f913b40b5, type: 3}
       propertyPath: m_RootOrder
@@ -2115,6 +2171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circle_FX_6
       objectReference: {fileID: 0}
+    - target: {fileID: 892841126217199697, guid: d210881a2a79f4349aa04abca91356f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 892841126217199710, guid: d210881a2a79f4349aa04abca91356f0, type: 3}
       propertyPath: m_RootOrder
       value: 170
@@ -2171,6 +2231,10 @@ PrefabInstance:
     - target: {fileID: 905075194269522099, guid: fe920a7bbd799984da91f15735021d33, type: 3}
       propertyPath: m_Name
       value: Select_FX_38
+      objectReference: {fileID: 0}
+    - target: {fileID: 905075194269522099, guid: fe920a7bbd799984da91f15735021d33, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 905075194269522110, guid: fe920a7bbd799984da91f15735021d33, type: 3}
       propertyPath: m_RootOrder
@@ -2273,6 +2337,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_8
       objectReference: {fileID: 0}
+    - target: {fileID: 921801660492824769, guid: 8d387c3bc92fcee4f9a0c1888515a30b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d387c3bc92fcee4f9a0c1888515a30b, type: 3}
 --- !u!1001 &973207361057394590
@@ -2329,6 +2397,10 @@ PrefabInstance:
     - target: {fileID: 5244055996900637355, guid: c29b4bd190a8dbf4e83c733f469c4391, type: 3}
       propertyPath: m_Name
       value: Select_FX_54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5244055996900637355, guid: c29b4bd190a8dbf4e83c733f469c4391, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c29b4bd190a8dbf4e83c733f469c4391, type: 3}
@@ -2387,6 +2459,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_32
       objectReference: {fileID: 0}
+    - target: {fileID: 973416109350772591, guid: ceb85db77d80f8e4899289b6d038086b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceb85db77d80f8e4899289b6d038086b, type: 3}
 --- !u!1001 &974316004071526823
@@ -2399,6 +2475,10 @@ PrefabInstance:
     - target: {fileID: 974316003903918121, guid: 0a9586376d5103e45bdd3004b8208966, type: 3}
       propertyPath: m_Name
       value: Select_FX_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 974316003903918121, guid: 0a9586376d5103e45bdd3004b8208966, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 974316003903918134, guid: 0a9586376d5103e45bdd3004b8208966, type: 3}
       propertyPath: m_RootOrder
@@ -2457,6 +2537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_23
       objectReference: {fileID: 0}
+    - target: {fileID: 1101289614993233648, guid: 9e65e0c353801b44d83f62a0e80d9ed4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1101289614993233653, guid: 9e65e0c353801b44d83f62a0e80d9ed4, type: 3}
       propertyPath: m_RootOrder
       value: 107
@@ -2514,6 +2598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circle_FX_2
       objectReference: {fileID: 0}
+    - target: {fileID: 1126827821224863517, guid: ff3efa0bc2127a249a8edea20293b0ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1126827821224863518, guid: ff3efa0bc2127a249a8edea20293b0ef, type: 3}
       propertyPath: m_RootOrder
       value: 166
@@ -2570,6 +2658,10 @@ PrefabInstance:
     - target: {fileID: 1133029747578236202, guid: 6040c5106f7804e47b099cb7591fe8a5, type: 3}
       propertyPath: m_Name
       value: Circle_FX_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133029747578236202, guid: 6040c5106f7804e47b099cb7591fe8a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1133029747578236203, guid: 6040c5106f7804e47b099cb7591fe8a5, type: 3}
       propertyPath: m_RootOrder
@@ -2672,6 +2764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_20
       objectReference: {fileID: 0}
+    - target: {fileID: 1159996491120131634, guid: 354f00381bf9c184c8c897a927ef67d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 354f00381bf9c184c8c897a927ef67d3, type: 3}
 --- !u!1001 &1238699137420358131
@@ -2684,6 +2780,10 @@ PrefabInstance:
     - target: {fileID: 1238699136135630457, guid: a0aa805225c5ed44fb4bf642ff3e42ed, type: 3}
       propertyPath: m_Name
       value: Select_FX_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1238699136135630457, guid: a0aa805225c5ed44fb4bf642ff3e42ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1238699136135630462, guid: a0aa805225c5ed44fb4bf642ff3e42ed, type: 3}
       propertyPath: m_RootOrder
@@ -2786,6 +2886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_45
       objectReference: {fileID: 0}
+    - target: {fileID: 6376821406520998864, guid: 43ca4a134e72732458aa34bbb7f239a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43ca4a134e72732458aa34bbb7f239a5, type: 3}
 --- !u!1001 &1341490409260086652
@@ -2798,6 +2902,10 @@ PrefabInstance:
     - target: {fileID: 1341490408100330349, guid: c2b654d138c59684c9fe809125cec987, type: 3}
       propertyPath: m_Name
       value: Magic_Circle_FX_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1341490408100330349, guid: c2b654d138c59684c9fe809125cec987, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1341490408100330350, guid: c2b654d138c59684c9fe809125cec987, type: 3}
       propertyPath: m_RootOrder
@@ -2856,6 +2964,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_6
       objectReference: {fileID: 0}
+    - target: {fileID: 1351563203875150084, guid: 58d10d6445ef0bf48a42bf4ede87ff58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1351563203875150087, guid: 58d10d6445ef0bf48a42bf4ede87ff58, type: 3}
       propertyPath: m_RootOrder
       value: 90
@@ -2913,6 +3025,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_53
       objectReference: {fileID: 0}
+    - target: {fileID: 1376315962091132192, guid: 9db1d997b1766fa45b3e589d47b684cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1376315962091132223, guid: 9db1d997b1766fa45b3e589d47b684cb, type: 3}
       propertyPath: m_RootOrder
       value: 62
@@ -2969,6 +3085,10 @@ PrefabInstance:
     - target: {fileID: 1378803292560253857, guid: f98c5721a10d9a4428563274d724e2f2, type: 3}
       propertyPath: m_Name
       value: Select_FX_12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378803292560253857, guid: f98c5721a10d9a4428563274d724e2f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1378803292560253862, guid: f98c5721a10d9a4428563274d724e2f2, type: 3}
       propertyPath: m_RootOrder
@@ -3071,6 +3191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic_Circle_FX_2
       objectReference: {fileID: 0}
+    - target: {fileID: 1395013520832471774, guid: 0e748527fbc9038449a78b23cf3859ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e748527fbc9038449a78b23cf3859ef, type: 3}
 --- !u!1001 &1518145721342624916
@@ -3083,6 +3207,10 @@ PrefabInstance:
     - target: {fileID: 1518145719533031396, guid: 981ff6661a615644ab8448bbb8292203, type: 3}
       propertyPath: m_Name
       value: Magic_Circle_FX_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518145719533031396, guid: 981ff6661a615644ab8448bbb8292203, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1518145719533031397, guid: 981ff6661a615644ab8448bbb8292203, type: 3}
       propertyPath: m_RootOrder
@@ -3146,6 +3274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_26
       objectReference: {fileID: 0}
+    - target: {fileID: 1611550919423114149, guid: e86da9671d6f98441bc61866a369b7a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1611550919423114168, guid: e86da9671d6f98441bc61866a369b7a2, type: 3}
       propertyPath: m_RootOrder
       value: 110
@@ -3202,6 +3334,10 @@ PrefabInstance:
     - target: {fileID: 1664733619554527237, guid: 0c1a4eabc2d477545b489ed3d397f221, type: 3}
       propertyPath: m_Name
       value: Select_FX_13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664733619554527237, guid: 0c1a4eabc2d477545b489ed3d397f221, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1664733619554527238, guid: 0c1a4eabc2d477545b489ed3d397f221, type: 3}
       propertyPath: m_RootOrder
@@ -3260,6 +3396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_16
       objectReference: {fileID: 0}
+    - target: {fileID: 1670130423213696224, guid: 75aa9da8f4e6391478ce56ef5ee7fa13, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1670130423213696253, guid: 75aa9da8f4e6391478ce56ef5ee7fa13, type: 3}
       propertyPath: m_RootOrder
       value: 100
@@ -3317,6 +3457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_46
       objectReference: {fileID: 0}
+    - target: {fileID: 1712226816793460526, guid: ccc21ec93d569ec49bcfcb5af75d7c45, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1712226816793460529, guid: ccc21ec93d569ec49bcfcb5af75d7c45, type: 3}
       propertyPath: m_RootOrder
       value: 55
@@ -3373,6 +3517,10 @@ PrefabInstance:
     - target: {fileID: 1726017780163350825, guid: 2a6278ac439722b4eb590ddcf15e8984, type: 3}
       propertyPath: m_Name
       value: Win_FX_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726017780163350825, guid: 2a6278ac439722b4eb590ddcf15e8984, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1726017780163350830, guid: 2a6278ac439722b4eb590ddcf15e8984, type: 3}
       propertyPath: m_RootOrder
@@ -3475,6 +3623,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_18
       objectReference: {fileID: 0}
+    - target: {fileID: 1739777993515798601, guid: fb6182645a8163647a842f12f58fa8ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb6182645a8163647a842f12f58fa8ec, type: 3}
 --- !u!1001 &1790420412868192406
@@ -3532,6 +3684,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_13
       objectReference: {fileID: 0}
+    - target: {fileID: 1790420412993876591, guid: 6504ec620163e7846b829ce1d5f90122, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6504ec620163e7846b829ce1d5f90122, type: 3}
 --- !u!1001 &1831971886584849680
@@ -3544,6 +3700,10 @@ PrefabInstance:
     - target: {fileID: 1831971886640179636, guid: 54269aca031bced4bb0c7c65abea6bc6, type: 3}
       propertyPath: m_Name
       value: Win_FX_15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831971886640179636, guid: 54269aca031bced4bb0c7c65abea6bc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1831971886640179637, guid: 54269aca031bced4bb0c7c65abea6bc6, type: 3}
       propertyPath: m_RootOrder
@@ -3646,6 +3806,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_18
       objectReference: {fileID: 0}
+    - target: {fileID: 1843566231140738485, guid: 5d72a90ba7cf90348ad6f9ab17c0ac99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d72a90ba7cf90348ad6f9ab17c0ac99, type: 3}
 --- !u!1001 &1877927208954139768
@@ -3658,6 +3822,10 @@ PrefabInstance:
     - target: {fileID: 1877927208249098852, guid: c6b7ab5e6d62b3a408b1319015e0ba3d, type: 3}
       propertyPath: m_Name
       value: Select_FX_24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877927208249098852, guid: c6b7ab5e6d62b3a408b1319015e0ba3d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1877927208249098855, guid: c6b7ab5e6d62b3a408b1319015e0ba3d, type: 3}
       propertyPath: m_RootOrder
@@ -3715,6 +3883,10 @@ PrefabInstance:
     - target: {fileID: 1997748929282970936, guid: 9d549d47a364cf44ca7237c1d32bf45c, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997748929282970936, guid: 9d549d47a364cf44ca7237c1d32bf45c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1997748929282970939, guid: 9d549d47a364cf44ca7237c1d32bf45c, type: 3}
       propertyPath: m_RootOrder
@@ -3817,6 +3989,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_19
       objectReference: {fileID: 0}
+    - target: {fileID: 2004636525004494305, guid: 0dbb5e7b6c401524b9116716ddabf7f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dbb5e7b6c401524b9116716ddabf7f6, type: 3}
 --- !u!1001 &2020049684777195824
@@ -3829,6 +4005,10 @@ PrefabInstance:
     - target: {fileID: 2020049683750224180, guid: 86524f5d31500f14ebe04bbbcd317d07, type: 3}
       propertyPath: m_Name
       value: Select_FX_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020049683750224180, guid: 86524f5d31500f14ebe04bbbcd317d07, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2020049683750224183, guid: 86524f5d31500f14ebe04bbbcd317d07, type: 3}
       propertyPath: m_RootOrder
@@ -3886,6 +4066,10 @@ PrefabInstance:
     - target: {fileID: 2119576600554099538, guid: f67f4fae56c68a542b610f102c02aaba, type: 3}
       propertyPath: m_Name
       value: Select_FX_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2119576600554099538, guid: f67f4fae56c68a542b610f102c02aaba, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2119576600554099541, guid: f67f4fae56c68a542b610f102c02aaba, type: 3}
       propertyPath: m_RootOrder
@@ -3988,6 +4172,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_12
       objectReference: {fileID: 0}
+    - target: {fileID: 2130133195291368890, guid: 1e360259fc8bd2b459add4f0ae176724, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e360259fc8bd2b459add4f0ae176724, type: 3}
 --- !u!1001 &2141999578457833194
@@ -4000,6 +4188,10 @@ PrefabInstance:
     - target: {fileID: 2141999579321316798, guid: 63acbaf65b246d9448857240235b96f8, type: 3}
       propertyPath: m_Name
       value: Item_FX_36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2141999579321316798, guid: 63acbaf65b246d9448857240235b96f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2141999579321316799, guid: 63acbaf65b246d9448857240235b96f8, type: 3}
       propertyPath: m_RootOrder
@@ -4102,6 +4294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_47
       objectReference: {fileID: 0}
+    - target: {fileID: 2157010530234310169, guid: 356226691b75c3b4085af284192f0b69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 356226691b75c3b4085af284192f0b69, type: 3}
 --- !u!1001 &2242973196092501309
@@ -4114,6 +4310,10 @@ PrefabInstance:
     - target: {fileID: 2242973195278249744, guid: f0e3ce13d8e2a46498957b8e30bba633, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242973195278249744, guid: f0e3ce13d8e2a46498957b8e30bba633, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2242973195278249747, guid: f0e3ce13d8e2a46498957b8e30bba633, type: 3}
       propertyPath: m_RootOrder
@@ -4216,6 +4416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_12
       objectReference: {fileID: 0}
+    - target: {fileID: 2287086913334184460, guid: dd2b5ad757e8cfd48b1665a6368485f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd2b5ad757e8cfd48b1665a6368485f9, type: 3}
 --- !u!1001 &2317513391551532139
@@ -4273,6 +4477,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_11
       objectReference: {fileID: 0}
+    - target: {fileID: 2317513393089598167, guid: eb5e44579a4cf904daf60ad201c8f6ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb5e44579a4cf904daf60ad201c8f6ff, type: 3}
 --- !u!1001 &2348590406023274433
@@ -4285,6 +4493,10 @@ PrefabInstance:
     - target: {fileID: 2348590406333799784, guid: 6009662bab3d4184bace73d0575165d0, type: 3}
       propertyPath: m_Name
       value: Circle_FX_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348590406333799784, guid: 6009662bab3d4184bace73d0575165d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2348590406333799787, guid: 6009662bab3d4184bace73d0575165d0, type: 3}
       propertyPath: m_RootOrder
@@ -4387,6 +4599,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_2
       objectReference: {fileID: 0}
+    - target: {fileID: 2370057252061352683, guid: ef148d954e9acc745ac5be3c48fdc2b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef148d954e9acc745ac5be3c48fdc2b6, type: 3}
 --- !u!1001 &2403000595843862411
@@ -4399,6 +4615,10 @@ PrefabInstance:
     - target: {fileID: 2403000594916591890, guid: ac06ffce33df9244bb5d42a182fadcc5, type: 3}
       propertyPath: m_Name
       value: Win_FX_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2403000594916591890, guid: ac06ffce33df9244bb5d42a182fadcc5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2403000594916591895, guid: ac06ffce33df9244bb5d42a182fadcc5, type: 3}
       propertyPath: m_RootOrder
@@ -4501,6 +4721,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic_Circle_FX_4
       objectReference: {fileID: 0}
+    - target: {fileID: 2547070425518230753, guid: 6f27294428bd6bf458bf894ce34c932d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f27294428bd6bf458bf894ce34c932d, type: 3}
 --- !u!1001 &2661186049325904581
@@ -4557,6 +4781,10 @@ PrefabInstance:
     - target: {fileID: 2661186050006327521, guid: 036a18e303fb1ae408f5504231ce7351, type: 3}
       propertyPath: m_Name
       value: Item_FX_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2661186050006327521, guid: 036a18e303fb1ae408f5504231ce7351, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 036a18e303fb1ae408f5504231ce7351, type: 3}
@@ -4615,6 +4843,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_49
       objectReference: {fileID: 0}
+    - target: {fileID: 2671700452014023349, guid: 7448017aa8f478843bc3c237eb5199ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7448017aa8f478843bc3c237eb5199ab, type: 3}
 --- !u!1001 &2811654958104382795
@@ -4671,6 +4903,10 @@ PrefabInstance:
     - target: {fileID: 2811654958062061977, guid: c64856c3e7e20da4b9c08128af3a697b, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811654958062061977, guid: c64856c3e7e20da4b9c08128af3a697b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c64856c3e7e20da4b9c08128af3a697b, type: 3}
@@ -4729,6 +4965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_21
       objectReference: {fileID: 0}
+    - target: {fileID: 2858069020563558579, guid: dcdc1c23f0bbb9f4aa3f801b72458631, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcdc1c23f0bbb9f4aa3f801b72458631, type: 3}
 --- !u!1001 &2952629307667334272
@@ -4785,6 +5025,10 @@ PrefabInstance:
     - target: {fileID: 3853351214648397714, guid: 13119e3a7689ec644a88defa1c56ad9c, type: 3}
       propertyPath: m_Name
       value: Win_FX_24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853351214648397714, guid: 13119e3a7689ec644a88defa1c56ad9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13119e3a7689ec644a88defa1c56ad9c, type: 3}
@@ -4843,6 +5087,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_18
       objectReference: {fileID: 0}
+    - target: {fileID: 3012627035370850908, guid: afc5a013b72c80d4cab6768fc2211a64, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afc5a013b72c80d4cab6768fc2211a64, type: 3}
 --- !u!1001 &3077283698002082743
@@ -4899,6 +5147,10 @@ PrefabInstance:
     - target: {fileID: 3077283699500677599, guid: 068e81ea9cad4b8409d6a9fb12807d4a, type: 3}
       propertyPath: m_Name
       value: OpenBox_FX_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3077283699500677599, guid: 068e81ea9cad4b8409d6a9fb12807d4a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 068e81ea9cad4b8409d6a9fb12807d4a, type: 3}
@@ -4957,6 +5209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_30
       objectReference: {fileID: 0}
+    - target: {fileID: 3099869087288164012, guid: 9ffae898bea70024896cec7ff114f668, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ffae898bea70024896cec7ff114f668, type: 3}
 --- !u!1001 &3142044142920649637
@@ -5014,6 +5270,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_17
       objectReference: {fileID: 0}
+    - target: {fileID: 3142044142246016918, guid: 786061629d5e4394cb296825b4f6a0b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786061629d5e4394cb296825b4f6a0b3, type: 3}
 --- !u!1001 &3181940520131027656
@@ -5026,6 +5286,10 @@ PrefabInstance:
     - target: {fileID: 3181940520059380541, guid: 7fde0378f64feed4d86dad9b08d49009, type: 3}
       propertyPath: m_Name
       value: Appear_FX_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3181940520059380541, guid: 7fde0378f64feed4d86dad9b08d49009, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3181940520059380542, guid: 7fde0378f64feed4d86dad9b08d49009, type: 3}
       propertyPath: m_RootOrder
@@ -5128,6 +5392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_33
       objectReference: {fileID: 0}
+    - target: {fileID: 3195325098454173919, guid: de04c44837fdc3c46b542175bbf8ac7b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de04c44837fdc3c46b542175bbf8ac7b, type: 3}
 --- !u!1001 &3234051984507924386
@@ -5140,6 +5408,10 @@ PrefabInstance:
     - target: {fileID: 3234051984290407236, guid: 2b22fd35a2486a5438a3b68e010715df, type: 3}
       propertyPath: m_Name
       value: Appear_FX_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3234051984290407236, guid: 2b22fd35a2486a5438a3b68e010715df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3234051984290407237, guid: 2b22fd35a2486a5438a3b68e010715df, type: 3}
       propertyPath: m_RootOrder
@@ -5242,6 +5514,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_21
       objectReference: {fileID: 0}
+    - target: {fileID: 3294837927857423123, guid: 869b92dbbe32d97489df0d8a3ad60574, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 869b92dbbe32d97489df0d8a3ad60574, type: 3}
 --- !u!1001 &3323438016832389831
@@ -5254,6 +5530,10 @@ PrefabInstance:
     - target: {fileID: 3323438017393696152, guid: 5f821ff4013a28b46a4a5d4fc92cc0f8, type: 3}
       propertyPath: m_Name
       value: Win_FX_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323438017393696152, guid: 5f821ff4013a28b46a4a5d4fc92cc0f8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3323438017393696167, guid: 5f821ff4013a28b46a4a5d4fc92cc0f8, type: 3}
       propertyPath: m_RootOrder
@@ -5356,6 +5636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpenBox_FX_3
       objectReference: {fileID: 0}
+    - target: {fileID: 3325414662428206537, guid: bb042ad704a8e4946b307199bf0f9354, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb042ad704a8e4946b307199bf0f9354, type: 3}
 --- !u!1001 &3330140919296990524
@@ -5412,6 +5696,10 @@ PrefabInstance:
     - target: {fileID: 3330140918699319785, guid: 57c529091ef90d54f99826da14a9df69, type: 3}
       propertyPath: m_Name
       value: Select_FX_33
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330140918699319785, guid: 57c529091ef90d54f99826da14a9df69, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57c529091ef90d54f99826da14a9df69, type: 3}
@@ -5470,6 +5758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_6
       objectReference: {fileID: 0}
+    - target: {fileID: 3392623129428339873, guid: d670ca62ceaadf64980aed4e84edd713, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d670ca62ceaadf64980aed4e84edd713, type: 3}
 --- !u!1001 &3421515549942240012
@@ -5526,6 +5818,10 @@ PrefabInstance:
     - target: {fileID: 3421515550220488533, guid: 7ee422c8e1fb4c44d8170e44b0398e55, type: 3}
       propertyPath: m_Name
       value: Select_FX_31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3421515550220488533, guid: 7ee422c8e1fb4c44d8170e44b0398e55, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ee422c8e1fb4c44d8170e44b0398e55, type: 3}
@@ -5584,6 +5880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_45
       objectReference: {fileID: 0}
+    - target: {fileID: 3452862650195351981, guid: 85178f5e173355147b3d772f120aefc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85178f5e173355147b3d772f120aefc6, type: 3}
 --- !u!1001 &3560569580586978797
@@ -5640,6 +5940,10 @@ PrefabInstance:
     - target: {fileID: 3560569579892297953, guid: 32cb44b3d81e8024b8391a250b85ad15, type: 3}
       propertyPath: m_Name
       value: Item_FX_34
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560569579892297953, guid: 32cb44b3d81e8024b8391a250b85ad15, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32cb44b3d81e8024b8391a250b85ad15, type: 3}
@@ -5698,6 +6002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_43
       objectReference: {fileID: 0}
+    - target: {fileID: 5205207180968314251, guid: ef16cd24e413a1641a6c77845db0be4d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef16cd24e413a1641a6c77845db0be4d, type: 3}
 --- !u!1001 &3700713844216442306
@@ -5710,6 +6018,10 @@ PrefabInstance:
     - target: {fileID: 3700713842914442730, guid: 14a8df478b8799a4385ad20fe89525c8, type: 3}
       propertyPath: m_Name
       value: Item_FX_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3700713842914442730, guid: 14a8df478b8799a4385ad20fe89525c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3700713842914442731, guid: 14a8df478b8799a4385ad20fe89525c8, type: 3}
       propertyPath: m_RootOrder
@@ -5812,6 +6124,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_38
       objectReference: {fileID: 0}
+    - target: {fileID: 3734873150188374801, guid: 415f7b601acd220478fd32b5ac58529f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 415f7b601acd220478fd32b5ac58529f, type: 3}
 --- !u!1001 &3934507374184247297
@@ -5824,6 +6140,10 @@ PrefabInstance:
     - target: {fileID: 3934507372915603760, guid: 209de7af2e1515643a687d9dede1f7fd, type: 3}
       propertyPath: m_Name
       value: Select_FX_29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3934507372915603760, guid: 209de7af2e1515643a687d9dede1f7fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3934507372915603765, guid: 209de7af2e1515643a687d9dede1f7fd, type: 3}
       propertyPath: m_RootOrder
@@ -5882,6 +6202,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circle_FX_3
       objectReference: {fileID: 0}
+    - target: {fileID: 3958703767584024741, guid: d41298f1f7612864b99c4b53cc218213, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3958703767584024742, guid: d41298f1f7612864b99c4b53cc218213, type: 3}
       propertyPath: m_RootOrder
       value: 167
@@ -5939,6 +6263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_15
       objectReference: {fileID: 0}
+    - target: {fileID: 3979051453552672986, guid: 854ec16e0d2c8a84f868783d1056e650, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3979051453552672989, guid: 854ec16e0d2c8a84f868783d1056e650, type: 3}
       propertyPath: m_RootOrder
       value: 24
@@ -5995,6 +6323,10 @@ PrefabInstance:
     - target: {fileID: 4036989864191897961, guid: e341c63de3e52714680719c8a34b92cd, type: 3}
       propertyPath: m_Name
       value: Item_FX_27
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036989864191897961, guid: e341c63de3e52714680719c8a34b92cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4036989864191897962, guid: e341c63de3e52714680719c8a34b92cd, type: 3}
       propertyPath: m_RootOrder
@@ -6097,6 +6429,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_30
       objectReference: {fileID: 0}
+    - target: {fileID: 4110029289875787388, guid: 6d791791edee1e04f80fc802e39533d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d791791edee1e04f80fc802e39533d3, type: 3}
 --- !u!1001 &4149450840675044322
@@ -6153,6 +6489,10 @@ PrefabInstance:
     - target: {fileID: 4503751599897795997, guid: bb9c21b0f3441cd45baf6434bb265f96, type: 3}
       propertyPath: m_Name
       value: Select_FX_51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4503751599897795997, guid: bb9c21b0f3441cd45baf6434bb265f96, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb9c21b0f3441cd45baf6434bb265f96, type: 3}
@@ -6211,6 +6551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_22
       objectReference: {fileID: 0}
+    - target: {fileID: 4192207866294383240, guid: b59b7fb419ba22c428d5e55e95fe19bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b59b7fb419ba22c428d5e55e95fe19bc, type: 3}
 --- !u!1001 &4221285764440949380
@@ -6223,6 +6567,10 @@ PrefabInstance:
     - target: {fileID: 4221285766083331734, guid: 42ec3f9375f7d964bac95e38cc8610aa, type: 3}
       propertyPath: m_Name
       value: Item_FX_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221285766083331734, guid: 42ec3f9375f7d964bac95e38cc8610aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4221285766083331735, guid: 42ec3f9375f7d964bac95e38cc8610aa, type: 3}
       propertyPath: m_RootOrder
@@ -6281,6 +6629,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_3
       objectReference: {fileID: 0}
+    - target: {fileID: 4299696376291154638, guid: 61fb5b9441fc0f24081ea6e06194da5a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4299696376291154639, guid: 61fb5b9441fc0f24081ea6e06194da5a, type: 3}
       propertyPath: m_RootOrder
       value: 142
@@ -6337,6 +6689,10 @@ PrefabInstance:
     - target: {fileID: 1537359773327722093, guid: dbc37f65610e24948b39e2c0bbea8cdd, type: 3}
       propertyPath: m_Name
       value: Win_FX_25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1537359773327722093, guid: dbc37f65610e24948b39e2c0bbea8cdd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4353453582085656050, guid: dbc37f65610e24948b39e2c0bbea8cdd, type: 3}
       propertyPath: m_RootOrder
@@ -6395,6 +6751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_8
       objectReference: {fileID: 0}
+    - target: {fileID: 4499916160288151169, guid: 78ab230db2417e24e8bc956ed8ba7370, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4499916160288151182, guid: 78ab230db2417e24e8bc956ed8ba7370, type: 3}
       propertyPath: m_RootOrder
       value: 92
@@ -6451,6 +6811,10 @@ PrefabInstance:
     - target: {fileID: 4528135692257279680, guid: b977670041750d54a94459bf77687007, type: 3}
       propertyPath: m_Name
       value: Item_FX_50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528135692257279680, guid: b977670041750d54a94459bf77687007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4528135692257279681, guid: b977670041750d54a94459bf77687007, type: 3}
       propertyPath: m_RootOrder
@@ -6509,6 +6873,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circle_FX_1
       objectReference: {fileID: 0}
+    - target: {fileID: 4535081485759123645, guid: 979d71813b99302489be10398174e278, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4535081485759123646, guid: 979d71813b99302489be10398174e278, type: 3}
       propertyPath: m_RootOrder
       value: 165
@@ -6565,6 +6933,10 @@ PrefabInstance:
     - target: {fileID: 4574437278498018889, guid: afa9fa5f9ee835147aeba65e5f389820, type: 3}
       propertyPath: m_Name
       value: Circle_FX_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574437278498018889, guid: afa9fa5f9ee835147aeba65e5f389820, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4574437278498018894, guid: afa9fa5f9ee835147aeba65e5f389820, type: 3}
       propertyPath: m_RootOrder
@@ -6623,6 +6995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_20
       objectReference: {fileID: 0}
+    - target: {fileID: 4640040226358861966, guid: df908e3cf4d3b1f47844fbdea01674ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4640040226358861967, guid: df908e3cf4d3b1f47844fbdea01674ae, type: 3}
       propertyPath: m_RootOrder
       value: 29
@@ -6680,6 +7056,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_42
       objectReference: {fileID: 0}
+    - target: {fileID: 703462592902447451, guid: 44681a891f478d24e84f5ff96cc741d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4762354052033339691, guid: 44681a891f478d24e84f5ff96cc741d8, type: 3}
       propertyPath: m_RootOrder
       value: 126
@@ -6736,6 +7116,10 @@ PrefabInstance:
     - target: {fileID: 4835499684542927280, guid: bb74c5afe8ccfa2499c81b5f0f38b747, type: 3}
       propertyPath: m_Name
       value: Item_FX_26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4835499684542927280, guid: bb74c5afe8ccfa2499c81b5f0f38b747, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4835499684542927281, guid: bb74c5afe8ccfa2499c81b5f0f38b747, type: 3}
       propertyPath: m_RootOrder
@@ -6838,6 +7222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_5
       objectReference: {fileID: 0}
+    - target: {fileID: 4840612509714175900, guid: 18e24cc7b8367974b9f4a1d8550c05ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e24cc7b8367974b9f4a1d8550c05ae, type: 3}
 --- !u!1001 &4904999818809677970
@@ -6850,6 +7238,10 @@ PrefabInstance:
     - target: {fileID: 4904999818415761602, guid: 84b03400997936b4db855c9de219f345, type: 3}
       propertyPath: m_Name
       value: Item_FX_25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4904999818415761602, guid: 84b03400997936b4db855c9de219f345, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4904999818415761603, guid: 84b03400997936b4db855c9de219f345, type: 3}
       propertyPath: m_RootOrder
@@ -6952,6 +7344,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_3
       objectReference: {fileID: 0}
+    - target: {fileID: 5212865131028811141, guid: 0c8f242b5e5170042b224f24e48ca42e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c8f242b5e5170042b224f24e48ca42e, type: 3}
 --- !u!1001 &5275757481910132131
@@ -7008,6 +7404,10 @@ PrefabInstance:
     - target: {fileID: 5275757482782278210, guid: 4aa05e2ea3fe23049b0dbf323825a57b, type: 3}
       propertyPath: m_Name
       value: Item_FX_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275757482782278210, guid: 4aa05e2ea3fe23049b0dbf323825a57b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4aa05e2ea3fe23049b0dbf323825a57b, type: 3}
@@ -7066,6 +7466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_5
       objectReference: {fileID: 0}
+    - target: {fileID: 5364633493316791565, guid: 384b4ed5195531f4da0a50fe94e61cae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 384b4ed5195531f4da0a50fe94e61cae, type: 3}
 --- !u!1001 &5365401221505975459
@@ -7122,6 +7526,10 @@ PrefabInstance:
     - target: {fileID: 5365401220255588615, guid: 3c01e3033eee6974dbb08e6175fd8a40, type: 3}
       propertyPath: m_Name
       value: Item_FX_48
+      objectReference: {fileID: 0}
+    - target: {fileID: 5365401220255588615, guid: 3c01e3033eee6974dbb08e6175fd8a40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c01e3033eee6974dbb08e6175fd8a40, type: 3}
@@ -7180,6 +7588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_2
       objectReference: {fileID: 0}
+    - target: {fileID: 5441758653974985403, guid: 8135378b3d0120846847b946ec08bcf9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8135378b3d0120846847b946ec08bcf9, type: 3}
 --- !u!1001 &5480208601215119975
@@ -7236,6 +7648,10 @@ PrefabInstance:
     - target: {fileID: 5480208600664810333, guid: 6626986a338bffe4dbebbd05338cc66a, type: 3}
       propertyPath: m_Name
       value: Select_FX_11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480208600664810333, guid: 6626986a338bffe4dbebbd05338cc66a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6626986a338bffe4dbebbd05338cc66a, type: 3}
@@ -7294,6 +7710,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Appear_FX_4
       objectReference: {fileID: 0}
+    - target: {fileID: 5539446155144580021, guid: d712cd357c51fe44daa314ad2afb2ea0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d712cd357c51fe44daa314ad2afb2ea0, type: 3}
 --- !u!1001 &5630289567467800492
@@ -7306,6 +7726,10 @@ PrefabInstance:
     - target: {fileID: 5630289565802505012, guid: 2d980600fcdf77c40abbe5cd430f59c1, type: 3}
       propertyPath: m_Name
       value: Item_FX_54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630289565802505012, guid: 2d980600fcdf77c40abbe5cd430f59c1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5630289565802505013, guid: 2d980600fcdf77c40abbe5cd430f59c1, type: 3}
       propertyPath: m_RootOrder
@@ -7364,6 +7788,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_21
       objectReference: {fileID: 0}
+    - target: {fileID: 5769681702559110542, guid: ed6cf3bc87be3a44d88cfc9d90b55508, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5769681702559110543, guid: ed6cf3bc87be3a44d88cfc9d90b55508, type: 3}
       propertyPath: m_RootOrder
       value: 30
@@ -7420,6 +7848,10 @@ PrefabInstance:
     - target: {fileID: 5796630503204054814, guid: 39360c0da34b7df43a12441b1dd812a0, type: 3}
       propertyPath: m_Name
       value: Item_FX_23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5796630503204054814, guid: 39360c0da34b7df43a12441b1dd812a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5796630503204054815, guid: 39360c0da34b7df43a12441b1dd812a0, type: 3}
       propertyPath: m_RootOrder
@@ -7478,6 +7910,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_46
       objectReference: {fileID: 0}
+    - target: {fileID: 5817093663417383811, guid: 6a9d38f1d03c2e64397b82b55ed53373, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5817093663417383836, guid: 6a9d38f1d03c2e64397b82b55ed53373, type: 3}
       propertyPath: m_RootOrder
       value: 130
@@ -7534,6 +7970,10 @@ PrefabInstance:
     - target: {fileID: 1333834974795861160, guid: 6a3c39161b674b04489acaf6f425b45f, type: 3}
       propertyPath: m_Name
       value: Select_FX_55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333834974795861160, guid: 6a3c39161b674b04489acaf6f425b45f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5835787709972950220, guid: 6a3c39161b674b04489acaf6f425b45f, type: 3}
       propertyPath: m_RootOrder
@@ -7636,6 +8076,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_35
       objectReference: {fileID: 0}
+    - target: {fileID: 5840239777930276171, guid: 2ade657580e70884a9d9310c1144783f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ade657580e70884a9d9310c1144783f, type: 3}
 --- !u!1001 &5956351385209104798
@@ -7648,6 +8092,10 @@ PrefabInstance:
     - target: {fileID: 5956351384494656096, guid: 47ed57036213bb84d945d9ce90a85d50, type: 3}
       propertyPath: m_Name
       value: Win_FX_12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956351384494656096, guid: 47ed57036213bb84d945d9ce90a85d50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5956351384494656097, guid: 47ed57036213bb84d945d9ce90a85d50, type: 3}
       propertyPath: m_RootOrder
@@ -7705,6 +8153,10 @@ PrefabInstance:
     - target: {fileID: 5992498724963632914, guid: 1ee84364b4aa529428fcc666362c1246, type: 3}
       propertyPath: m_Name
       value: Item_FX_28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992498724963632914, guid: 1ee84364b4aa529428fcc666362c1246, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5992498724963632915, guid: 1ee84364b4aa529428fcc666362c1246, type: 3}
       propertyPath: m_RootOrder
@@ -7807,6 +8259,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_19
       objectReference: {fileID: 0}
+    - target: {fileID: 6029847080157147911, guid: 15f99d9c1b1c7ce46913b2571eecc4ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f99d9c1b1c7ce46913b2571eecc4ee, type: 3}
 --- !u!1001 &6032342753966347208
@@ -7819,6 +8275,10 @@ PrefabInstance:
     - target: {fileID: 6032342753699382357, guid: d3580a03d68efe94da412271f70fffcc, type: 3}
       propertyPath: m_Name
       value: Item_FX_29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6032342753699382357, guid: d3580a03d68efe94da412271f70fffcc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6032342753699382358, guid: d3580a03d68efe94da412271f70fffcc, type: 3}
       propertyPath: m_RootOrder
@@ -7876,6 +8336,10 @@ PrefabInstance:
     - target: {fileID: 6165490039625326664, guid: d0084d27dbae3ee4185a38310d26f30b, type: 3}
       propertyPath: m_Name
       value: Win_FX_13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6165490039625326664, guid: d0084d27dbae3ee4185a38310d26f30b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6165490039625326665, guid: d0084d27dbae3ee4185a38310d26f30b, type: 3}
       propertyPath: m_RootOrder
@@ -7978,6 +8442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_31
       objectReference: {fileID: 0}
+    - target: {fileID: 6175224771648740870, guid: 841dc0a0446441d4589f6e9262fcfd6a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 841dc0a0446441d4589f6e9262fcfd6a, type: 3}
 --- !u!1001 &6251511277366603502
@@ -8035,6 +8503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_4
       objectReference: {fileID: 0}
+    - target: {fileID: 6251511277499518381, guid: 24ec4033858e29742a1358bfb3a853d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24ec4033858e29742a1358bfb3a853d2, type: 3}
 --- !u!1001 &6286208366712408336
@@ -8047,6 +8519,10 @@ PrefabInstance:
     - target: {fileID: 6286208366838892610, guid: 8abe49aba5d11e4429f68ea9b864c4c9, type: 3}
       propertyPath: m_Name
       value: Item_FX_52
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286208366838892610, guid: 8abe49aba5d11e4429f68ea9b864c4c9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6286208366838892611, guid: 8abe49aba5d11e4429f68ea9b864c4c9, type: 3}
       propertyPath: m_RootOrder
@@ -8149,6 +8625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_49
       objectReference: {fileID: 0}
+    - target: {fileID: 6299667852155344233, guid: e076dff76dc35e24ab94801ac184d6a8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e076dff76dc35e24ab94801ac184d6a8, type: 3}
 --- !u!1001 &6377602098255519763
@@ -8161,6 +8641,10 @@ PrefabInstance:
     - target: {fileID: 1164764108195743364, guid: 573b3e9be72c82748a056d512c00b4da, type: 3}
       propertyPath: m_Name
       value: Select_FX_52
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164764108195743364, guid: 573b3e9be72c82748a056d512c00b4da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6377602100329553868, guid: 573b3e9be72c82748a056d512c00b4da, type: 3}
       propertyPath: m_RootOrder
@@ -8219,6 +8703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_4
       objectReference: {fileID: 0}
+    - target: {fileID: 6460887636235454220, guid: 7ad7c717980f6564a83d25833f896215, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6460887636235454221, guid: 7ad7c717980f6564a83d25833f896215, type: 3}
       propertyPath: m_RootOrder
       value: 68
@@ -8275,6 +8763,10 @@ PrefabInstance:
     - target: {fileID: 6496912716918509336, guid: c5d5361b27586824ebca7e8414b4be11, type: 3}
       propertyPath: m_Name
       value: Item_FX_14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496912716918509336, guid: c5d5361b27586824ebca7e8414b4be11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6496912716918509337, guid: c5d5361b27586824ebca7e8414b4be11, type: 3}
       propertyPath: m_RootOrder
@@ -8377,6 +8869,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_48
       objectReference: {fileID: 0}
+    - target: {fileID: 6503124453591230101, guid: 9645c6b094ee516439281d6dd049751f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9645c6b094ee516439281d6dd049751f, type: 3}
 --- !u!1001 &6547425316374880788
@@ -8389,6 +8885,10 @@ PrefabInstance:
     - target: {fileID: 6547425317586503961, guid: 1522e8ddd2611564daa5df01bde3cecd, type: 3}
       propertyPath: m_Name
       value: Item_FX_55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6547425317586503961, guid: 1522e8ddd2611564daa5df01bde3cecd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6547425317586503962, guid: 1522e8ddd2611564daa5df01bde3cecd, type: 3}
       propertyPath: m_RootOrder
@@ -8446,6 +8946,10 @@ PrefabInstance:
     - target: {fileID: 6577054137309847174, guid: 430bc2fa36f649744a8419c4c1305e51, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6577054137309847174, guid: 430bc2fa36f649744a8419c4c1305e51, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6577054137309847175, guid: 430bc2fa36f649744a8419c4c1305e51, type: 3}
       propertyPath: m_RootOrder
@@ -8548,6 +9052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_22
       objectReference: {fileID: 0}
+    - target: {fileID: 6783554041044328637, guid: 7b28b470b0c55c145a53e4cbad9bec26, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b28b470b0c55c145a53e4cbad9bec26, type: 3}
 --- !u!1001 &6841242961208751175
@@ -8605,6 +9113,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5464288054954264105, guid: ec678bd887f7fdb43aa3d2ca6875c09e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec678bd887f7fdb43aa3d2ca6875c09e, type: 3}
 --- !u!1001 &6923157257502669217
@@ -8617,6 +9129,10 @@ PrefabInstance:
     - target: {fileID: 7753614318231073978, guid: eb3ae2b0b2e781040a0ef79da73b7bb9, type: 3}
       propertyPath: m_Name
       value: OpenBox_FX_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753614318231073978, guid: eb3ae2b0b2e781040a0ef79da73b7bb9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7753614318231073979, guid: eb3ae2b0b2e781040a0ef79da73b7bb9, type: 3}
       propertyPath: m_RootOrder
@@ -8719,6 +9235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_14
       objectReference: {fileID: 0}
+    - target: {fileID: 6941580991594336665, guid: f52b5ee01315e0041acf81ae6f373cc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f52b5ee01315e0041acf81ae6f373cc1, type: 3}
 --- !u!1001 &7004781355473719791
@@ -8776,6 +9296,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_32
       objectReference: {fileID: 0}
+    - target: {fileID: 7004781355119818576, guid: 55ede216039fa944fb57c29c1a182859, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55ede216039fa944fb57c29c1a182859, type: 3}
 --- !u!1001 &7017749946174145446
@@ -8788,6 +9312,10 @@ PrefabInstance:
     - target: {fileID: 7017749945204009436, guid: e2cff4bed0d03864fb3ded87ed8f48b2, type: 3}
       propertyPath: m_Name
       value: Win_FX_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7017749945204009436, guid: e2cff4bed0d03864fb3ded87ed8f48b2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7017749945204009437, guid: e2cff4bed0d03864fb3ded87ed8f48b2, type: 3}
       propertyPath: m_RootOrder
@@ -8890,6 +9418,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_27
       objectReference: {fileID: 0}
+    - target: {fileID: 7123860536784428142, guid: 789bc8209b18d964a94d52c8e7a6dab2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 789bc8209b18d964a94d52c8e7a6dab2, type: 3}
 --- !u!1001 &7219847343091886176
@@ -8902,6 +9434,10 @@ PrefabInstance:
     - target: {fileID: 7219847341777934738, guid: 7fd2e67efbf65e146a8771553ca0ad48, type: 3}
       propertyPath: m_Name
       value: Item_FX_39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219847341777934738, guid: 7fd2e67efbf65e146a8771553ca0ad48, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7219847341777934739, guid: 7fd2e67efbf65e146a8771553ca0ad48, type: 3}
       propertyPath: m_RootOrder
@@ -8959,6 +9495,10 @@ PrefabInstance:
     - target: {fileID: 7232338888664272229, guid: fca7867e24411fe4f9963ec0b231daec, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232338888664272229, guid: fca7867e24411fe4f9963ec0b231daec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7232338888664272230, guid: fca7867e24411fe4f9963ec0b231daec, type: 3}
       propertyPath: m_RootOrder
@@ -9061,6 +9601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_20
       objectReference: {fileID: 0}
+    - target: {fileID: 7264866136759292495, guid: 4f6785473d6a6c342a426da73fec1828, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f6785473d6a6c342a426da73fec1828, type: 3}
 --- !u!1001 &7404504297499340360
@@ -9073,6 +9617,10 @@ PrefabInstance:
     - target: {fileID: 7404504299143756930, guid: 1caca42347c68b54e88840909b4ef754, type: 3}
       propertyPath: m_Name
       value: Win_FX_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7404504299143756930, guid: 1caca42347c68b54e88840909b4ef754, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7404504299143756931, guid: 1caca42347c68b54e88840909b4ef754, type: 3}
       propertyPath: m_RootOrder
@@ -9175,6 +9723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_43
       objectReference: {fileID: 0}
+    - target: {fileID: 7405396484268149806, guid: 57e746f6e830c1141abdf702c49d53a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57e746f6e830c1141abdf702c49d53a0, type: 3}
 --- !u!1001 &7410589521254272584
@@ -9187,6 +9739,10 @@ PrefabInstance:
     - target: {fileID: 7410589521623610723, guid: 5c5f6667f4096ed40a838953f426de05, type: 3}
       propertyPath: m_Name
       value: Item_FX_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410589521623610723, guid: 5c5f6667f4096ed40a838953f426de05, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7410589521623610724, guid: 5c5f6667f4096ed40a838953f426de05, type: 3}
       propertyPath: m_RootOrder
@@ -9244,6 +9800,10 @@ PrefabInstance:
     - target: {fileID: 7414409552567633353, guid: 6eb883d8159811842ac245345b11fd3b, type: 3}
       propertyPath: m_Name
       value: Item_FX_17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414409552567633353, guid: 6eb883d8159811842ac245345b11fd3b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7414409552567633354, guid: 6eb883d8159811842ac245345b11fd3b, type: 3}
       propertyPath: m_RootOrder
@@ -9346,6 +9906,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_17
       objectReference: {fileID: 0}
+    - target: {fileID: 7460770865098020128, guid: 59cfbedc0d896934fab88d4300f57ae7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59cfbedc0d896934fab88d4300f57ae7, type: 3}
 --- !u!1001 &7483218628546651727
@@ -9402,6 +9966,10 @@ PrefabInstance:
     - target: {fileID: 7483218627782370956, guid: 2151a8a85f3189f4cb161ff7be7d34db, type: 3}
       propertyPath: m_Name
       value: Item_FX_41
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483218627782370956, guid: 2151a8a85f3189f4cb161ff7be7d34db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2151a8a85f3189f4cb161ff7be7d34db, type: 3}
@@ -9460,6 +10028,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_22
       objectReference: {fileID: 0}
+    - target: {fileID: 7517231022558948485, guid: d23b994a1c1c0d540a41156f08e1f794, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d23b994a1c1c0d540a41156f08e1f794, type: 3}
 --- !u!1001 &7534870057276651919
@@ -9516,6 +10088,10 @@ PrefabInstance:
     - target: {fileID: 7534870057146112669, guid: c67c9c12c1b64ad43ba68e58a1637ac2, type: 3}
       propertyPath: m_Name
       value: Select_FX_36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534870057146112669, guid: c67c9c12c1b64ad43ba68e58a1637ac2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c67c9c12c1b64ad43ba68e58a1637ac2, type: 3}
@@ -9574,6 +10150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_25
       objectReference: {fileID: 0}
+    - target: {fileID: 7539311922312342503, guid: dc230f7129bc2c9479717c62404018d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc230f7129bc2c9479717c62404018d6, type: 3}
 --- !u!1001 &7590076586736965572
@@ -9586,6 +10166,10 @@ PrefabInstance:
     - target: {fileID: 7590076586659550434, guid: 9e7289a7baaf21e4da34841562420124, type: 3}
       propertyPath: m_Name
       value: Win_FX_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590076586659550434, guid: 9e7289a7baaf21e4da34841562420124, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7590076586659550435, guid: 9e7289a7baaf21e4da34841562420124, type: 3}
       propertyPath: m_RootOrder
@@ -9688,6 +10272,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_4
       objectReference: {fileID: 0}
+    - target: {fileID: 7681474560928457660, guid: d27bafd45d5317d498f049420f176cd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d27bafd45d5317d498f049420f176cd3, type: 3}
 --- !u!1001 &7858400526241284228
@@ -9700,6 +10288,10 @@ PrefabInstance:
     - target: {fileID: 7858400525800612793, guid: 15101548b787a834c807bd75431e0ccf, type: 3}
       propertyPath: m_Name
       value: Win_FX_16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858400525800612793, guid: 15101548b787a834c807bd75431e0ccf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7858400525800612804, guid: 15101548b787a834c807bd75431e0ccf, type: 3}
       propertyPath: m_RootOrder
@@ -9802,6 +10394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_39
       objectReference: {fileID: 0}
+    - target: {fileID: 7898439282879581133, guid: 1f9e68abec5895145aa3053dda78ae46, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f9e68abec5895145aa3053dda78ae46, type: 3}
 --- !u!1001 &7903379657256652004
@@ -9859,6 +10455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_10
       objectReference: {fileID: 0}
+    - target: {fileID: 7903379658675214399, guid: 05640c6254add8b4d80e2dfd6bcb98d1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05640c6254add8b4d80e2dfd6bcb98d1, type: 3}
 --- !u!1001 &7907839729288649250
@@ -9871,6 +10471,10 @@ PrefabInstance:
     - target: {fileID: 7907839729966961116, guid: 85f71716183060844af1e5fb6d2217bd, type: 3}
       propertyPath: m_Name
       value: Select_FX_19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7907839729966961116, guid: 85f71716183060844af1e5fb6d2217bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7907839729966962211, guid: 85f71716183060844af1e5fb6d2217bd, type: 3}
       propertyPath: m_RootOrder
@@ -9929,6 +10533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_7
       objectReference: {fileID: 0}
+    - target: {fileID: 7957351257459769315, guid: 46a7f0e8ebae2fc4e90e4c4ac28869f2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7957351257459769318, guid: 46a7f0e8ebae2fc4e90e4c4ac28869f2, type: 3}
       propertyPath: m_RootOrder
       value: 91
@@ -9986,6 +10594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_37
       objectReference: {fileID: 0}
+    - target: {fileID: 8011807437099913792, guid: b2a1e0067fe54824cae4fa82882ccf42, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8011807437099913795, guid: b2a1e0067fe54824cae4fa82882ccf42, type: 3}
       propertyPath: m_RootOrder
       value: 121
@@ -10042,6 +10654,10 @@ PrefabInstance:
     - target: {fileID: 8221949713405143597, guid: 35d523122d1c9e9438bd9b91d80c1a8c, type: 3}
       propertyPath: m_Name
       value: Select_FX_50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221949713405143597, guid: 35d523122d1c9e9438bd9b91d80c1a8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8221949713405143598, guid: 35d523122d1c9e9438bd9b91d80c1a8c, type: 3}
       propertyPath: m_RootOrder
@@ -10144,6 +10760,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_24
       objectReference: {fileID: 0}
+    - target: {fileID: 8323133233992032925, guid: 57d9f4873b02bee42b5dc2db515e3c54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57d9f4873b02bee42b5dc2db515e3c54, type: 3}
 --- !u!1001 &8332320505111382767
@@ -10200,6 +10820,10 @@ PrefabInstance:
     - target: {fileID: 8332320504406876625, guid: 15fb0579212a025498ce8faab916053a, type: 3}
       propertyPath: m_Name
       value: Item_FX_51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332320504406876625, guid: 15fb0579212a025498ce8faab916053a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15fb0579212a025498ce8faab916053a, type: 3}
@@ -10258,6 +10882,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Appear_FX_5
       objectReference: {fileID: 0}
+    - target: {fileID: 8484611969337996092, guid: f893274510cb1744985717ce0344f480, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f893274510cb1744985717ce0344f480, type: 3}
 --- !u!1001 &8512573108089210379
@@ -10315,6 +10943,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Appear_FX_1
       objectReference: {fileID: 0}
+    - target: {fileID: 8512573106964773293, guid: 70d8ec08a02f8e343be7ca8ea55ca241, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70d8ec08a02f8e343be7ca8ea55ca241, type: 3}
 --- !u!1001 &8541876276030677826
@@ -10327,6 +10959,10 @@ PrefabInstance:
     - target: {fileID: 8541876276601946273, guid: 7f177c5423b63c849ad1c3914f328dd3, type: 3}
       propertyPath: m_Name
       value: Circle_FX_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541876276601946273, guid: 7f177c5423b63c849ad1c3914f328dd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8541876276601946278, guid: 7f177c5423b63c849ad1c3914f328dd3, type: 3}
       propertyPath: m_RootOrder
@@ -10429,6 +11065,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_23
       objectReference: {fileID: 0}
+    - target: {fileID: 8581556043540710935, guid: 3594b73fb41267645ac8a31f9e18c478, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3594b73fb41267645ac8a31f9e18c478, type: 3}
 --- !u!1001 &8584257020742581707
@@ -10441,6 +11081,10 @@ PrefabInstance:
     - target: {fileID: 8584257020564004282, guid: 3fd2bd3949364f147ab6c2f9e36c2372, type: 3}
       propertyPath: m_Name
       value: OpenBox_FX_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8584257020564004282, guid: 3fd2bd3949364f147ab6c2f9e36c2372, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8584257020564004287, guid: 3fd2bd3949364f147ab6c2f9e36c2372, type: 3}
       propertyPath: m_RootOrder
@@ -10543,6 +11187,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_9
       objectReference: {fileID: 0}
+    - target: {fileID: 8616016974434026783, guid: daa2783e40cd87242be1a2eaf0727192, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daa2783e40cd87242be1a2eaf0727192, type: 3}
 --- !u!1001 &8659032737913923577
@@ -10555,6 +11203,10 @@ PrefabInstance:
     - target: {fileID: 8659032737339055372, guid: 7dafc9208a5b29044bf405380668dd01, type: 3}
       propertyPath: m_Name
       value: Select_FX_14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659032737339055372, guid: 7dafc9208a5b29044bf405380668dd01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8659032737339055375, guid: 7dafc9208a5b29044bf405380668dd01, type: 3}
       propertyPath: m_RootOrder
@@ -10612,6 +11264,10 @@ PrefabInstance:
     - target: {fileID: 8734574048106515172, guid: b9b1cccff5e97994c929f01a4fc0e126, type: 3}
       propertyPath: m_Name
       value: Circle_FX_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8734574048106515172, guid: b9b1cccff5e97994c929f01a4fc0e126, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8734574048106515175, guid: b9b1cccff5e97994c929f01a4fc0e126, type: 3}
       propertyPath: m_RootOrder
@@ -10714,6 +11370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_40
       objectReference: {fileID: 0}
+    - target: {fileID: 8790955124066290459, guid: f82c4d63a13eefd4bb7a4f970c7e6893, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f82c4d63a13eefd4bb7a4f970c7e6893, type: 3}
 --- !u!1001 &8800908993357910276
@@ -10770,6 +11430,10 @@ PrefabInstance:
     - target: {fileID: 8800908992927474350, guid: 13426734652e69348baa9ab17a6af9ca, type: 3}
       propertyPath: m_Name
       value: Select_FX_34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8800908992927474350, guid: 13426734652e69348baa9ab17a6af9ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13426734652e69348baa9ab17a6af9ca, type: 3}
@@ -10828,6 +11492,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_40
       objectReference: {fileID: 0}
+    - target: {fileID: 8814493168739844268, guid: a14e80d628145394aaf7e4af54d1f111, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a14e80d628145394aaf7e4af54d1f111, type: 3}
 --- !u!1001 &8842872562643068012
@@ -10840,6 +11508,10 @@ PrefabInstance:
     - target: {fileID: 8842872563972595550, guid: 96a320799cd419c4bba0bb42e4fc057d, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842872563972595550, guid: 96a320799cd419c4bba0bb42e4fc057d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8842872563972595551, guid: 96a320799cd419c4bba0bb42e4fc057d, type: 3}
       propertyPath: m_RootOrder
@@ -10898,6 +11570,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_FX_16
       objectReference: {fileID: 0}
+    - target: {fileID: 8952598577569763673, guid: 6f58957e77591c340958c0b3fee93ad5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8952598577569763674, guid: 6f58957e77591c340958c0b3fee93ad5, type: 3}
       propertyPath: m_RootOrder
       value: 25
@@ -10954,6 +11630,10 @@ PrefabInstance:
     - target: {fileID: 8979853232377868604, guid: 4f52838527fd3394d8abbf413e60ec23, type: 3}
       propertyPath: m_Name
       value: Circle_FX_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979853232377868604, guid: 4f52838527fd3394d8abbf413e60ec23, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8979853232377868607, guid: 4f52838527fd3394d8abbf413e60ec23, type: 3}
       propertyPath: m_RootOrder
@@ -11012,6 +11692,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Open_GiftBox_FX_15
       objectReference: {fileID: 0}
+    - target: {fileID: 9043043429486734732, guid: 517a4764bc3643343bb62181b5ba3116, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9043043429486734733, guid: 517a4764bc3643343bb62181b5ba3116, type: 3}
       propertyPath: m_RootOrder
       value: 79
@@ -11069,6 +11753,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Win_FX_11
       objectReference: {fileID: 0}
+    - target: {fileID: 9061437618686215709, guid: 9ead9456d70fd5b489be5c7de2c4984a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9061437618686215710, guid: 9ead9456d70fd5b489be5c7de2c4984a, type: 3}
       propertyPath: m_RootOrder
       value: 150
@@ -11125,6 +11813,10 @@ PrefabInstance:
     - target: {fileID: 9112531504825918381, guid: 9edd98857b49eab4486a1969afbc4c50, type: 3}
       propertyPath: m_Name
       value: OpenBox_FX_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112531504825918381, guid: 9edd98857b49eab4486a1969afbc4c50, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9112531504825918382, guid: 9edd98857b49eab4486a1969afbc4c50, type: 3}
       propertyPath: m_RootOrder
@@ -11227,6 +11919,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select_FX_15
       objectReference: {fileID: 0}
+    - target: {fileID: 9125798799105615115, guid: a785fa39dd410ae43b85e06427c62d32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a785fa39dd410ae43b85e06427c62d32, type: 3}
 --- !u!1001 &9151009331870077013
@@ -11239,6 +11935,10 @@ PrefabInstance:
     - target: {fileID: 9151009332404221560, guid: 3ed86a26e6f15d64893756a704389f73, type: 3}
       propertyPath: m_Name
       value: Magic_Circle_FX_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9151009332404221560, guid: 3ed86a26e6f15d64893756a704389f73, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9151009332404221563, guid: 3ed86a26e6f15d64893756a704389f73, type: 3}
       propertyPath: m_RootOrder
@@ -11340,6 +12040,10 @@ PrefabInstance:
     - target: {fileID: 9211178000420746375, guid: c540c52d3f0369643aa84ed263744557, type: 3}
       propertyPath: m_Name
       value: Open_GiftBox_FX_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211178000420746375, guid: c540c52d3f0369643aa84ed263744557, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c540c52d3f0369643aa84ed263744557, type: 3}
