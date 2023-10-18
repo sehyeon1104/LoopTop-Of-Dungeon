@@ -53,6 +53,7 @@ public class MagicBeanBullet : ProjectileObj
     {
         if (collision.gameObject.layer == 9)
         {
+            Debug.Log("Ãæµ¹");
             collision.GetComponent<IHittable>().OnDamage(damage);
             Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/ExplosionBean.prefab", transform.position, Quaternion.identity);
             StartCoroutine(Pool(0));

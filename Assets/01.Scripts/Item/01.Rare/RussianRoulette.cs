@@ -44,6 +44,6 @@ public class RussianRoulette : ItemBase
             bullet.transform.position = GameManager.Instance.Player.transform.position;
             bullet.transform.right = PlayerVisual.Instance.IsFlipX() ? GameManager.Instance.Player.transform.right : -GameManager.Instance.Player.transform.right;
         }
-        //InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 }
