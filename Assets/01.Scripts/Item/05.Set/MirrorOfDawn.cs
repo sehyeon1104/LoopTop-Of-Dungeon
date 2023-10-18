@@ -65,7 +65,7 @@ public class MirrorOfDawn : ItemBase
     {
         for (int i = 0; i < 10; i++)
         {
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
+            CinemachineCameraShaking.Instance.CameraShake(3, 0.1f);
             Collider2D[] cols = Physics2D.OverlapCircleAll(pos, 5.5f, 1 << 9);
             for (int j = 0; j < cols.Length; j++)
             {
