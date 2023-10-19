@@ -33,7 +33,7 @@ public class NanoMachine : ItemBase
 
     public override void LastingEffect()
     {
-        ShowStack();
+        UpdateStackAndTimerPanel();
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(NanoMachineAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(NanoMachineAbility);
     }
@@ -48,7 +48,7 @@ public class NanoMachine : ItemBase
 
             GameManager.Instance.Player.playerBase.Hp += temp - recoveryAmount;
 
-            ShowStack();
+            UpdateStackAndTimerPanel();
 
             if (recoveryAmount <= 0)
             {
@@ -57,9 +57,9 @@ public class NanoMachine : ItemBase
             }
         }
     }
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(recoveryAmount);
     }

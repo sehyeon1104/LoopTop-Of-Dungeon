@@ -32,14 +32,12 @@ public class SharpSword : ItemBase
         Debug.Log("날카로운 검 효과 발동");
         Debug.Log("공격력 20% 증가, 적 처치 시 공격력 5% 증가 (최대 3 중첩, 지속시간 10초)");
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
-        // StartCoroutine(CoolTime());
     }
 
     public override void LastingEffect()
     {
         EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(SharpSwordAbility);
         EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(SharpSwordAbility);
-        // SharpSwordAbility();
     }
 
     public override void Disabling()
@@ -64,14 +62,14 @@ public class SharpSword : ItemBase
 
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public void InitStack()
     {
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * (0.05f * stack);
-        ShowStack();
         stack = 0;
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 
     private IEnumerator CoolTime()
@@ -91,9 +89,9 @@ public class SharpSword : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);

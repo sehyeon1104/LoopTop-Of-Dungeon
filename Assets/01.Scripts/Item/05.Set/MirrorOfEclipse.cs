@@ -56,7 +56,7 @@ public class MirrorOfEclipse : ItemBase
             delay = 0;
             Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/Eclipse.prefab", pos, Quaternion.identity);
             ItemManager.Instance.StartCoroutine(StartMirrorAttack(pos));
-            ShowStack();
+            UpdateStackAndTimerPanel();
         }
     }
 
@@ -87,9 +87,9 @@ public class MirrorOfEclipse : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }

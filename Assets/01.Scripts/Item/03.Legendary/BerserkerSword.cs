@@ -38,7 +38,7 @@ public class BerserkerSword : ItemBase
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordAbility);
         BerserkerSwordAbility();
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public void BerserkerSwordAbility()
@@ -57,12 +57,12 @@ public class BerserkerSword : ItemBase
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * rise;
 
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack((int)rise);
     }

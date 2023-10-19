@@ -24,7 +24,7 @@ public abstract class ItemBase
     // 지속형일 경우
     public virtual void LastingEffect() { }
     public virtual bool isOneOff { get; } = false;
-    public virtual void ShowStack()
+    public virtual void UpdateStackAndTimerPanel()
     {
         if (!isStackItem)
             return;

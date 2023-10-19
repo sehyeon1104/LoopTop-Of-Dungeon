@@ -67,7 +67,7 @@ public class MinotoursAxe : ItemBase
                 delay = 0f;
 
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
-                ShowStack();
+                UpdateStackAndTimerPanel();
             }
             yield return waitForEndOfFrame;
         }
@@ -106,9 +106,9 @@ public class MinotoursAxe : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);

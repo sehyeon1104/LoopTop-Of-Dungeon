@@ -37,7 +37,7 @@ public class BelieversClock : ItemBase
     {
         ItemManager.Instance.RoomClearRelatedItemEffects.RemoveListener(BelieversClockAbility);
         ItemManager.Instance.RoomClearRelatedItemEffects.AddListener(BelieversClockAbility);
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public void BelieversClockAbility()
@@ -48,7 +48,7 @@ public class BelieversClock : ItemBase
         GameManager.Instance.Player.playerBase.MoveSpeed += GameManager.Instance.Player.playerBase.InitMoveSpeed * 0.005f;
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.005f;
 
-        ShowStack();
+        UpdateStackAndTimerPanel();
 
         if (stack >= 12)
         {
@@ -57,9 +57,9 @@ public class BelieversClock : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
