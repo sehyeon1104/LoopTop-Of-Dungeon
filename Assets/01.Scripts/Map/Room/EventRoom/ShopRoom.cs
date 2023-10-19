@@ -88,6 +88,7 @@ public class ShopRoom : RoomBase
     protected override void IsClear()
     {
         isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

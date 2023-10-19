@@ -162,6 +162,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         ItemAbility.Items[item.itemNumber].Disabling();
         RemoveCurItemDict(item);
+        InventoryUI.Instance.RemoveUIInventorySlot(item);
         InventoryUI.Instance.LoadItemSlot();
     }
 
@@ -169,6 +170,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     {
         ItemAbility.Items[item.itemNumber].Disabling();
         RemoveCurItemDict(item);
+        InventoryUI.Instance.RemoveUIInventorySlot(item);
     }
 
     public void InitItems()

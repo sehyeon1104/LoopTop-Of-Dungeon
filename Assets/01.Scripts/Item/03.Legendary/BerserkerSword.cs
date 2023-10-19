@@ -23,7 +23,6 @@ public class BerserkerSword : ItemBase
     public override void Use()
     {
         Debug.Log("광전사의 검 효과 발동");
-        BerserkerSwordAbility();
         LastingEffect();
     }
 
@@ -31,12 +30,15 @@ public class BerserkerSword : ItemBase
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordAbility);
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
+        rise = 0;
     }
 
     public override void LastingEffect()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordAbility);
+        BerserkerSwordAbility();
+        ShowStack();
     }
 
     public void BerserkerSwordAbility()

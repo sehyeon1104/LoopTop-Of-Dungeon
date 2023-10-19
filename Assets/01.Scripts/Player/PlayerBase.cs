@@ -117,6 +117,8 @@ public class PlayerBase
             Damage = Mathf.CeilToInt(attack * 0.6f);
 
             PlayerSkill.Instance.SkillSelect(playerTransformTypeFlag);
+
+            Debug.Log(attack);
         }
     }
     public float InitAttack

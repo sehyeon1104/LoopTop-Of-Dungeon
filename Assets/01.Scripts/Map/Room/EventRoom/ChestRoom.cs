@@ -31,6 +31,7 @@ public class ChestRoom : RoomBase
     protected override void IsClear()
     {
         isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
     }
 
     protected override void ShowIcon()
@@ -64,11 +65,11 @@ public class ChestRoom : RoomBase
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
-    }
 
-    protected override void OnTriggerExit2D(Collider2D collision)
-    {
-        base.OnTriggerExit2D(collision);
+        if (collision.CompareTag("Player") && !isClear)
+        {
+            IsClear();
+        }
     }
 
     private IEnumerator CheckChestOpen()

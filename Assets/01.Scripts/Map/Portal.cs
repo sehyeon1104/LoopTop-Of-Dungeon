@@ -37,14 +37,18 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        InteractionPlayer();
+        if(collision.CompareTag("Player"))
+            InteractionPlayer();
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isInteraction = false;
-        UIManager.Instance.RotateAttackButton();
-        ToggleMoveTMP();
-        interactionButton.onClick.RemoveListener(MoveNextStage);
+        if (collision.CompareTag("Player"))
+        {
+            isInteraction = false;
+            UIManager.Instance.RotateAttackButton();
+            ToggleMoveTMP();
+            interactionButton.onClick.RemoveListener(MoveNextStage);
+        }
     }
     public void InteractionPlayer()
     {

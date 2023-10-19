@@ -33,6 +33,7 @@ public class MirrorOfDawn : ItemBase
         
         delay = abilityDuration;
         ItemManager.Instance.StartCoroutine(CoolTime());
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].ToggleStackTMP();
     }
 
     public override void Init()
@@ -58,6 +59,7 @@ public class MirrorOfDawn : ItemBase
             delay = 0;
             Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/Eclipse.prefab", pos, Quaternion.identity);
             ItemManager.Instance.StartCoroutine(StartMirrorAttack(pos));
+            ShowStack();
         }
     }
 
@@ -92,7 +94,6 @@ public class MirrorOfDawn : ItemBase
     {
         base.ShowStack();
 
-        // InventoryUI.Instance.uiInventorySlotDic[this.GetType().Name].UpdateStack(stack);
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

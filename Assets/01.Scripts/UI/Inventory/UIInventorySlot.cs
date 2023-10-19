@@ -40,6 +40,11 @@ public class UIInventorySlot : MonoBehaviour
         stackTMP.SetText($"{stack}");
     }
 
+    public void ToggleStackTMP()
+    {
+        stackTMP.gameObject.SetActive(!stackTMP.gameObject.activeSelf);
+    }
+
     public void UpdateTimerPanel(float time)
     {
         if (timerCoroutine != null)
@@ -51,13 +56,13 @@ public class UIInventorySlot : MonoBehaviour
     public IEnumerator TimerPanel(float time)
     {
         timerImage.gameObject.SetActive(true);
-        timer = 0f;
+        timer = time;
         targetTime = time;
 
-        while (timer >= targetTime)
+        while (timer > 0)
         {
-            timer += Time.deltaTime;
-            timerImage.fillAmount = (timer / targetTime);
+            timer -= Time.deltaTime;
+            timerImage.fillAmount = (float)(timer / targetTime);
 
             yield return waitForEndOfFrame;
         }
