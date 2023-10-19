@@ -305,6 +305,10 @@ public class UIManager : MonoSingleton<UIManager>
     private Stack<GameObject> panelStack = new Stack<GameObject>();
     private Dictionary<string, bool> panelDic = new Dictionary<string, bool>();
 
+    /// <summary>
+    /// 패널 활성화
+    /// </summary>
+    /// <param name="panel"></param>
     public void PushPanel(GameObject panel)
     {
         panel.SetActive(true);
@@ -335,6 +339,9 @@ public class UIManager : MonoSingleton<UIManager>
         PushPanel(settingPanel);
     }
 
+    /// <summary>
+    /// 패널 비활성화
+    /// </summary>
     public void PopPanel()
     {
         PlayerMovement.Instance.IsControl = true;

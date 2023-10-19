@@ -19,6 +19,8 @@ public class BloodDonationStatue : StatueBase
     protected override void Start()
     {
         base.Start();
+        dialogueText = "충분한 양이 모이면 소정의 상품을 증정해드립니다!";
+        acceptText = $"{requireHp}헌혈하기";
         spriteRenderer = visual.GetComponent<SpriteRenderer>();
     }
 
@@ -66,10 +68,12 @@ public class BloodDonationStatue : StatueBase
             isUseable = false;
         }
 
-        effectTmp.SetText($"체력 {requireHp}소모");
+        effectTmp.SetText($"체력 {requireHp}감소");
         co = StartCoroutine(IETextAnim());
 
         requireHp *= 2;
+
+        acceptText = $"{requireHp}헌혈하기";
 
         ToggleInteractiveTMP();
     }

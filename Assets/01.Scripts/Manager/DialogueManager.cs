@@ -16,6 +16,13 @@ public class DialogueManager : MonoSingleton<DialogueManager>
     private TextMeshProUGUI contentTmp = null;
     [SerializeField]
     private float waitTime = 2f;
+    [SerializeField]
+    private Button acceptBtn = null;    // 선택지가 있을 경우 한정
+    [SerializeField]
+    private Button refuseBtn = null;    // 선택지가 있을 경우 한정
+
+    private TextMeshProUGUI acceptBtnTmp = null;
+    private TextMeshProUGUI refuseBtnTmp = null;
 
     private Vector3 dialoguePos;
 
@@ -44,6 +51,12 @@ public class DialogueManager : MonoSingleton<DialogueManager>
             dialogueUI = transform.Find("DialogueUI").gameObject;
         }
 
+        acceptBtn.gameObject.SetActive(false);
+        acceptBtnTmp = acceptBtn.GetComponent<TextMeshProUGUI>();
+        refuseBtn.gameObject.SetActive(false);
+        refuseBtnTmp = refuseBtn.GetComponent<TextMeshProUGUI>();
+
+        refuseBtn.onClick.AddListener(ToggleDialoguePanel);
     }
 
     private void Start()
@@ -58,7 +71,14 @@ public class DialogueManager : MonoSingleton<DialogueManager>
 
     public void ToggleDialoguePanel()
     {
-        dialoguePanel.gameObject.SetActive(!dialoguePanel.gameObject.activeSelf);
+        if(!dialoguePanel.gameObject.activeSelf)
+            UIManager.Instance.PushPanel(dialoguePanel);
+        else
+        {
+            UIManager.Instance.PopPanel();
+            isDialogue = false;
+        }
+        //dialoguePanel.gameObject.SetActive(!dialoguePanel.gameObject.activeSelf);
     }
 
     public void SetContentNPos(string contents, GameObject obj)
@@ -110,6 +130,15 @@ public class DialogueManager : MonoSingleton<DialogueManager>
         StartCoroutine(IEStartDialogue());
     }
 
+    public void ToggleNSetBtnsText(string _acceptText, string _refusceText)
+    {
+        acceptBtnTmp.text = _acceptText;
+        acceptBtn.gameObject.SetActive(true);
+
+        refuseBtnTmp.text = _refusceText;
+        refuseBtn.gameObject.SetActive(true);
+    }
+
     public IEnumerator IEStartDialogue()
     {
         contentTmp.SetText("");
@@ -122,8 +151,8 @@ public class DialogueManager : MonoSingleton<DialogueManager>
             contentTmp.SetText("");
         }
 
-        ToggleDialoguePanel();
-        isDialogue = false;
+        //ToggleDialoguePanel();
+        //isDialogue = false;
         yield break;
     }
 }

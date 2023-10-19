@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BloodyAltarStatue : StatueBase
 {
+    protected override void Start()
+    {
+        base.Start();
+
+        dialogueText = $"제단에 글귀가 적혀있다.\n \"힘을 갈망하는 이여, 이 제단에 피를 바치라\" ";
+        acceptText = "[ 피를 바치기 ]";
+    }
+
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
