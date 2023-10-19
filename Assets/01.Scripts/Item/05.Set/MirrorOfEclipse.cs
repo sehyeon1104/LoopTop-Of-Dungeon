@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MirrorOfDawn : ItemBase
+public class MirrorOfEclipse : ItemBase
 {
     public override Define.ItemType itemType => Define.ItemType.buff;
 
@@ -12,8 +12,8 @@ public class MirrorOfDawn : ItemBase
 
     public override bool isStackItem => true;
 
-    private float delay = 1f;
-    private float abilityDuration = 1f;
+    private float delay = 10f;
+    private float abilityDuration = 10f;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     public override void Disabling()
@@ -42,8 +42,6 @@ public class MirrorOfDawn : ItemBase
 
     public override void Use()
     {
-        Debug.Log("여명의 거울 준비 완료");
-
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.3f;
         GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.3f;
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.3f;
@@ -53,7 +51,6 @@ public class MirrorOfDawn : ItemBase
 
     public void MirrorOfDawnAbility(Vector3 pos)
     {
-        Debug.Log("적 타격");
         if(Random.Range(0,10) == 0 && delay >= abilityDuration)
         {
             delay = 0;
@@ -67,7 +64,7 @@ public class MirrorOfDawn : ItemBase
     {
         for (int i = 0; i < 10; i++)
         {
-            CinemachineCameraShaking.Instance.CameraShake(5, 0.1f);
+            CinemachineCameraShaking.Instance.CameraShake(3, 0.1f);
             Collider2D[] cols = Physics2D.OverlapCircleAll(pos, 5.5f, 1 << 9);
             for (int j = 0; j < cols.Length; j++)
             {

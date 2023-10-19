@@ -72,13 +72,13 @@ public class Beam : MonoBehaviour
 
     private void CheckPlayer()
     {
-        Collider2D hit = Physics2D.OverlapBox(beam.transform.position, new Vector2(length, width), transform.eulerAngles.z, 1 << 8);
+        float radAngle = transform.eulerAngles.z * Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Cos(radAngle), Mathf.Sin(radAngle), 0).normalized;
 
-        if(hit != null)
-        {
-            Debug.Log("플레이어 충돌!!");
+        Collider2D hit = Physics2D.OverlapBox(beam.transform.position + (dir * length * 0.5f), new Vector2(length, width), transform.eulerAngles.z, 1 << 8);
+
+        if (hit != null)
             GameManager.Instance.Player.OnDamage(15, 0);
-        }
     }
 
     private IEnumerator OnBeam()
@@ -133,4 +133,13 @@ public class Beam : MonoBehaviour
             yield return null;
         }
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    float radAngle = transform.eulerAngles.z * Mathf.Deg2Rad;
+    //    Vector3 dir = new Vector3(Mathf.Cos(radAngle), Mathf.Sin(radAngle), 0).normalized;
+
+    //    Gizmos.matrix = Matrix4x4.TRS(beam.transform.position + (dir * length * 0.5f), Quaternion.Euler(transform.eulerAngles), Vector3.one);
+    //    Gizmos.DrawWireCube(Vector3.zero, new Vector2(length, width));
+    //}
 }
