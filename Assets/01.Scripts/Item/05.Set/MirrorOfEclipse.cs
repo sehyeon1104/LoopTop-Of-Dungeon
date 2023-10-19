@@ -23,13 +23,13 @@ public class MirrorOfEclipse : ItemBase
         GameManager.Instance.Player.playerBase.AttackSpeed -= GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.3f;
         GameManager.Instance.Player.playerBase.SkillCoolDown -= 20;
 
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(MirrorOfDawnAbility);
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(MirrorOfEclipseAbility);
     }
 
     public override void LastingEffect()
     {
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(MirrorOfDawnAbility);
-        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.AddListener(MirrorOfDawnAbility);
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.RemoveListener(MirrorOfEclipseAbility);
+        EnemyManager.Instance.EnemyDamagedRelatedItemEffects.AddListener(MirrorOfEclipseAbility);
         
         delay = abilityDuration;
         ItemManager.Instance.StartCoroutine(CoolTime());
@@ -49,14 +49,14 @@ public class MirrorOfEclipse : ItemBase
         LastingEffect();
     }
 
-    public void MirrorOfDawnAbility(Vector3 pos)
+    public void MirrorOfEclipseAbility(Vector3 pos)
     {
         if(Random.Range(0,10) == 0 && delay >= abilityDuration)
         {
             delay = 0;
             Managers.Pool.PoolManaging("Assets/10.Effects/player/@Item/Eclipse.prefab", pos, Quaternion.identity);
             ItemManager.Instance.StartCoroutine(StartMirrorAttack(pos));
-            ShowStack();
+            UpdateStackAndTimerPanel();
         }
     }
 
@@ -87,9 +87,9 @@ public class MirrorOfEclipse : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }

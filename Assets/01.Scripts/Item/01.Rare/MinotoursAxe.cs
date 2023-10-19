@@ -25,8 +25,8 @@ public class MinotoursAxe : ItemBase
 
     // 주변 적 수
     private int nearByEnemyCount = 0;
-    // 적 체크 원 반지름
-    private float radius = 3f;
+    // 적 체크 거리
+    private float dis = 5f;
 
     public override void Disabling()
     {
@@ -67,7 +67,7 @@ public class MinotoursAxe : ItemBase
                 delay = 0f;
 
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
-                ShowStack();
+                UpdateStackAndTimerPanel();
             }
             yield return waitForEndOfFrame;
         }
@@ -80,15 +80,15 @@ public class MinotoursAxe : ItemBase
         if (GameManager.Instance.sceneType == Define.Scene.Center)
             return 0;
 
+        nearByEnemyCount = 0;
+
         foreach(var enemy in EnemySpawnManager.Instance.curEnemies)
         {
-            // 원의 방정식
-            if (Mathf.Pow((GameManager.Instance.Player.transform.position.x - enemy.transform.position.x), 2)
-                + Mathf.Pow((GameManager.Instance.Player.transform.position.x - enemy.transform.position.y), 2)
-                <= Mathf.Pow(radius, 2))
+            if (Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position) < dis)
                 nearByEnemyCount++;
+
+            Debug.Log(Vector3.Distance(GameManager.Instance.Player.transform.position, enemy.transform.position));
         }
-        //Physics2D.OverlapCircle(GameManager.Instance.Player.transform.position, 3f);
 
         return nearByEnemyCount;
     }
@@ -106,9 +106,9 @@ public class MinotoursAxe : ItemBase
         }
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);

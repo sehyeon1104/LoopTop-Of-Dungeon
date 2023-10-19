@@ -42,12 +42,12 @@ public class VampireFangs : ItemBase
             stack = 0;
             GameManager.Instance.Player.playerBase.Hp += 4;
         }
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }

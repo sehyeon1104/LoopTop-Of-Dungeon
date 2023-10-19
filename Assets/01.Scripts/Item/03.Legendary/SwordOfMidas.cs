@@ -34,7 +34,7 @@ public class SwordOfMidas : ItemBase
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(SwordOfMidasAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(SwordOfMidasAbility);
         SwordOfMidasAbility();
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public void SwordOfMidasAbility()
@@ -49,12 +49,12 @@ public class SwordOfMidas : ItemBase
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (rise * 0.01f);
 
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack((int)rise);
     }

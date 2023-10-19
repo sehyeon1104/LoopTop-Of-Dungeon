@@ -54,7 +54,7 @@ public class BrokenKing : ItemBase
     public void BrokenKingAbility()
     {
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f;
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public void ResetStack()
@@ -65,7 +65,7 @@ public class BrokenKing : ItemBase
         if (co != null)
             ItemManager.Instance.StopCoroutine(co);
         co = ItemManager.Instance.StartCoroutine(Timer());
-        ShowStack();
+        UpdateStackAndTimerPanel();
     }
 
     public IEnumerator Timer()
@@ -85,9 +85,9 @@ public class BrokenKing : ItemBase
         co = null;
     }
 
-    public override void ShowStack()
+    public override void UpdateStackAndTimerPanel()
     {
-        base.ShowStack();
+        base.UpdateStackAndTimerPanel();
 
         InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }

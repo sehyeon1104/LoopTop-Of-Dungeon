@@ -32,8 +32,12 @@ public class PrayerStatue : StatueBase
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        button.onClick.RemoveListener(StatueFunc);
-        TakeChest();
+        if (collision.CompareTag("Player"))
+        {
+            button.onClick.RemoveListener(StatueFunc);
+            TakeChest();
+
+        }
     }
 
     protected override void InteractiveWithPlayer()
