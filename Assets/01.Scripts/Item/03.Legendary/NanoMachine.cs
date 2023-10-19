@@ -28,6 +28,7 @@ public class NanoMachine : ItemBase
     public override void Disabling()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(NanoMachineAbility);
+        recoveryAmount = 50;
     }
 
     public override void LastingEffect()
@@ -48,12 +49,13 @@ public class NanoMachine : ItemBase
 
             GameManager.Instance.Player.playerBase.Hp += temp - recoveryAmount;
 
-            if (recoveryAmount < 0)
+            ShowStack();
+
+            if (recoveryAmount <= 0)
             {
                 ItemManager.Instance.DisablingItem(ItemManager.Instance.allItemDict[this.GetType().Name]);
                 // TODO : 아이템 파손 UI 띄우기
             }
-            ShowStack();
         }
     }
     public override void ShowStack()

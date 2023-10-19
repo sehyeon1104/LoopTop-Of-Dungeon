@@ -144,7 +144,7 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             slots.Add(newItemObjComponent);
 
             // 스택형 아이템 표기
-            if (ItemAbility.Items[items.itemNumber].isStackItem)
+            if (ItemAbility.Items[items.itemNumber].isStackItem && !uiInventorySlotDict.ContainsKey(items.itemNameEng))
             {
                 Item uiObjItem = items;
                 GameObject uiObj = Managers.Resource.Instantiate("Assets/03.Prefabs/UI/UIItemSlot.prefab");
@@ -161,5 +161,15 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
                 ItemManager.Instance.CheckSetItem(items);
         }
+    }
+
+    // UIInventorySlot(UIItemSlot) 삭제
+    public void RemoveUIInventorySlot(Item item)
+    {
+        if (!uiInventorySlotDict.ContainsKey(item.itemNameEng))
+            return;
+
+        Managers.Pool.Push(uiInventorySlotDict[item.itemNameEng].GetComponent<Poolable>());
+        uiInventorySlotDict.Remove(item.itemNameEng);
     }
 }

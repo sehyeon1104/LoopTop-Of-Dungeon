@@ -20,9 +20,20 @@ public class StatueRoom : RoomBase
         //curLocatedMapIcon = transform.parent.Find("CurLocatedIcon").gameObject;
     }
 
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+
+        if (collision.CompareTag("Player") && !isClear)
+        {
+            IsClear();
+        }
+    }
+
     protected override void IsClear()
     {
         isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
     }
 
     protected override void ShowIcon()

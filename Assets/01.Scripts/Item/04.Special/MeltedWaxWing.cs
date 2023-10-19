@@ -32,6 +32,7 @@ public class MeltedWaxWing : ItemBase
     {
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
         GameManager.Instance.Player.DashRelatedItemEffects.RemoveListener(MeltedWaxWingAbility);
+        stack = 0;
     }
 
     public override void LastingEffect()

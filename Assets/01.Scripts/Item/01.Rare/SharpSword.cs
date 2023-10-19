@@ -37,7 +37,9 @@ public class SharpSword : ItemBase
 
     public override void LastingEffect()
     {
-        SharpSwordAbility();
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(SharpSwordAbility);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(SharpSwordAbility);
+        // SharpSwordAbility();
     }
 
     public override void Disabling()
@@ -46,7 +48,7 @@ public class SharpSword : ItemBase
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (0.05f * stack);
     }
 
-    public void SharpSwordAbility()
+    public void SharpSwordAbility(Vector3 pos)
     {
         if (co != null)
         {
@@ -68,6 +70,7 @@ public class SharpSword : ItemBase
     public void InitStack()
     {
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * (0.05f * stack);
+        ShowStack();
         stack = 0;
     }
 

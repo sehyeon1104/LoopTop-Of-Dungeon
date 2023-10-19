@@ -62,6 +62,7 @@ public class EliteRoom : RoomBase
             isClear = true;
             AssignMoveNextMapPortal();
             StageManager.Instance.ToggleRoomDoor(transform.parent.position);
+            ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
             // Door.Instance.OpenDoors();
         }
     }

@@ -11,14 +11,14 @@ public class MinotoursAxe : ItemBase
     public override bool isPersitantItem => true;
     public override bool isStackItem => true;
 
-    private Coroutine co = null;
+    private Coroutine coCooltime = null;
+    private Coroutine coAbility = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 
     private bool isEquip = false;
 
     private float abilityDuration = 5f;
     private float delay = 5f;
-
 
     // 중첩수
     private int stack = 0;
@@ -31,19 +31,27 @@ public class MinotoursAxe : ItemBase
     public override void Disabling()
     {
         isEquip = false;
+        GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
     }
 
     public override void Init()
     {
-        co = null;
+        coCooltime = null;
+        coAbility = null;
     }
 
     public override void Use()
     {
+        GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
+        LastingEffect();
+    }
+
+    public override void LastingEffect()
+    {
         isEquip = true;
         delay = abilityDuration;
-        ItemManager.Instance.StartCoroutine(CoolTime());
-        ItemManager.Instance.StartCoroutine(MinotoursAxeAbility());
+        coCooltime = ItemManager.Instance.StartCoroutine(CoolTime());
+        coAbility = ItemManager.Instance.StartCoroutine(MinotoursAxeAbility());
     }
 
     public IEnumerator MinotoursAxeAbility()
@@ -52,14 +60,12 @@ public class MinotoursAxe : ItemBase
         {
             if (delay >= abilityDuration)
             {
-                GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
                 GameManager.Instance.Player.playerBase.AttackRange -= GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
 
                 stack = CheckNearByEnemyCount();
-                stack = Mathf.Clamp(stack, 0, 4);
+                stack = Mathf.Clamp(stack, 0, 5);
                 delay = 0f;
 
-                GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * 0.1f;
                 GameManager.Instance.Player.playerBase.AttackRange += GameManager.Instance.Player.playerBase.InitAttackRange * (0.04f * stack);
                 ShowStack();
             }
@@ -69,7 +75,20 @@ public class MinotoursAxe : ItemBase
 
     public int CheckNearByEnemyCount()
     {
-        Physics2D.OverlapCircle(GameManager.Instance.Player.transform.position, 3f);
+        Debug.Log("CheckNearByEnemyCount");
+
+        if (GameManager.Instance.sceneType == Define.Scene.Center)
+            return 0;
+
+        foreach(var enemy in EnemySpawnManager.Instance.curEnemies)
+        {
+            // 원의 방정식
+            if (Mathf.Pow((GameManager.Instance.Player.transform.position.x - enemy.transform.position.x), 2)
+                + Mathf.Pow((GameManager.Instance.Player.transform.position.x - enemy.transform.position.y), 2)
+                <= Mathf.Pow(radius, 2))
+                nearByEnemyCount++;
+        }
+        //Physics2D.OverlapCircle(GameManager.Instance.Player.transform.position, 3f);
 
         return nearByEnemyCount;
     }

@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 using static Define;
 
 public class Chest : MonoBehaviour
 {
+    [SerializeField]
+    private TextMeshPro interactiveTmp = null;
+
     private ChestRating _chestRating = ChestRating.Common;
-
     private SpriteRenderer spriteRenderer = null;
-
     private Coroutine _coroutine = null;
-
     private GameObject chestSpawnEffect = null;
 
     private bool isOpen = false;
@@ -129,14 +130,22 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        UIManager.Instance.RotateInteractionButton();
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(Open);
-        UIManager.Instance.GetInteractionButton().onClick.AddListener(Open);
+        if (collision.CompareTag("Player"))
+        {
+            interactiveTmp.SetText($"{KeySetting.keys[KeyAction.INTERACTION]} 상호작용");
+            interactiveTmp.gameObject.SetActive(true);
+            UIManager.Instance.RotateInteractionButton();
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(Open);
+            UIManager.Instance.GetInteractionButton().onClick.AddListener(Open);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(Open);
-        UIManager.Instance.RotateAttackButton();
+        if (collision.CompareTag("Player"))
+        {
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(Open);
+            UIManager.Instance.RotateAttackButton();
+        }
     }
 }

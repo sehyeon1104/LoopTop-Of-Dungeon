@@ -43,16 +43,23 @@ public class BrokenItemRoom : RoomBase
     {
         base.OnTriggerEnter2D(collision);
 
-        if (coroutine != null)
-            StopCoroutine(coroutine);
+        if (collision.CompareTag("Player"))
+        {
 
-        if (isTakeItem)
-            return;
+            if (coroutine != null)
+                StopCoroutine(coroutine);
 
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
-        UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
+            if (isTakeItem)
+                return;
 
-        coroutine = StartCoroutine(ToggleItemInfoPanel());
+            if (!isClear)
+                IsClear();
+
+                UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+            UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
+
+            coroutine = StartCoroutine(ToggleItemInfoPanel());
+        }
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
@@ -66,7 +73,11 @@ public class BrokenItemRoom : RoomBase
         UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
     }
 
-    protected override void IsClear() { }
+    protected override void IsClear() 
+    {
+        isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
+    }
 
     protected override void ShowIcon()
     {

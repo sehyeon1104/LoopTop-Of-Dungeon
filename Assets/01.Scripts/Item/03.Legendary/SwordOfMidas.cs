@@ -20,20 +20,21 @@ public class SwordOfMidas : ItemBase
     public override void Use()
     {
         Debug.Log("미다스의 검 효과 발동");
-        SwordOfMidasAbility();
-        LastingEffect();
     }
 
     public override void Disabling()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(SwordOfMidasAbility);
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
+        rise = 0;
     }
 
     public override void LastingEffect()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(SwordOfMidasAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(SwordOfMidasAbility);
+        SwordOfMidasAbility();
+        ShowStack();
     }
 
     public void SwordOfMidasAbility()
