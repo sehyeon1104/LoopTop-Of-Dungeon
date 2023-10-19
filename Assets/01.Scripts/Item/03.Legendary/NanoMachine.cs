@@ -40,7 +40,6 @@ public class NanoMachine : ItemBase
 
     public void NanoMachineAbility()
     {
-        Debug.Log("HP 자동수복!");
         recentReceiveDamage = GameManager.Instance.Player.playerBase.RecentReceiveDamage;
         if(recentReceiveDamage > 0)
         {

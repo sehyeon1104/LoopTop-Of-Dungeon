@@ -43,7 +43,7 @@ public class ItemManager : MonoSingleton<ItemManager>
     public void Init()
     {
         // 딕셔너리 초기화
-        InitDic();
+        InitDict();
         InitList();
 
         // 모든 아이템 스크립트 생성
@@ -54,19 +54,19 @@ public class ItemManager : MonoSingleton<ItemManager>
         brokenItemCount = brokenItemList.Count;
     }
 
-    private void InitDic()
+    private void InitDict()
     {
         // AllItemDic에 모든 아이템 정보 추가
         SetAllItemDic(allItemInfo);
 
         SetItemPartsListDictionary.Add(601, CompleteHourglassParts);
-        SetItemPartsListDictionary.Add(602, MirrorOfDawnParts);
+        SetItemPartsListDictionary.Add(602, MirrorOfEclipseParts);
         SetItemPartsListDictionary.Add(603, FlexodiaParts);
         SetItemPartsListDictionary.Add(604, OvereagerParts);
         // SetItemPartsListDictionary.Add(605, GamblersLegacyParts);
 
         setItemDict.Add(601, CompleteHourglassParts.ToList());
-        setItemDict.Add(602, MirrorOfDawnParts.ToList());
+        setItemDict.Add(602, MirrorOfEclipseParts.ToList());
         setItemDict.Add(603, FlexodiaParts.ToList());
         setItemDict.Add(604, OvereagerParts.ToList());
         // setItemDic.Add(605, GamblersLegacyParts.ToList());
@@ -78,9 +78,11 @@ public class ItemManager : MonoSingleton<ItemManager>
         {
             if (curItemDict.ContainsKey(allItemFromNumberDict[setItemNum]))
             {
+                Debug.Log($"{allItemFromNumberDict[setItemNum]} 소유");
                 for (int i = 0; i < SetItemPartsListDictionary[setItemNum].Count; ++i)
                 {
                     exceptionItemNumberList.Add(SetItemPartsListDictionary[setItemNum][i]);
+                    Debug.Log(SetItemPartsListDictionary[setItemNum][i]);
                 }
             }
         }

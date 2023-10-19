@@ -45,7 +45,6 @@ public class BrokenItemRoom : RoomBase
 
         if (collision.CompareTag("Player"))
         {
-
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
@@ -55,7 +54,7 @@ public class BrokenItemRoom : RoomBase
             if (!isClear)
                 IsClear();
 
-                UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
             UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
 
             coroutine = StartCoroutine(ToggleItemInfoPanel());
@@ -66,11 +65,14 @@ public class BrokenItemRoom : RoomBase
     {
         base.OnTriggerExit2D(collision);
 
-        if(coroutine != null)
-            StopCoroutine(coroutine);
-        coroutine = null;
+        if (collision.CompareTag("Player"))
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+            coroutine = null;
 
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+        }
     }
 
     protected override void IsClear() 

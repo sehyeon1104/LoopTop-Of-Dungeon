@@ -120,7 +120,7 @@ public class DropItem : MonoBehaviour, IPoolable
                 || itemObjListNum.Contains(rand) 
                 || allItemList[rand].itemRating == Define.ItemRating.Special
                 || allItemList[rand].itemRating == Define.ItemRating.Set
-                || ItemManager.Instance.exceptionItemNumberList.Contains(rand)
+                || ItemManager.Instance.exceptionItemNumberList.Contains(allItemList[rand].itemNumber)
                 )
             continue;
 
