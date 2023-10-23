@@ -7,6 +7,7 @@ public class VampireFangs : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Epic;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private int stack;
 
@@ -32,7 +33,7 @@ public class VampireFangs : ItemBase
         EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(VampireFangsEffect);
     }
 
-    public void VampireFangsEffect()
+    public void VampireFangsEffect(Vector3 transform)
     {
         // 적 10마리 처치시 hp 3 회복
         stack++;
@@ -41,5 +42,13 @@ public class VampireFangs : ItemBase
             stack = 0;
             GameManager.Instance.Player.playerBase.Hp += 4;
         }
+        UpdateStackAndTimerPanel();
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 }

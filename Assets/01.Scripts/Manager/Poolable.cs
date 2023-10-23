@@ -10,6 +10,7 @@ public class Poolable : MonoBehaviour
     public float PushTime = 0f;
     private void OnEnable()
     {
+        StopAllCoroutines();
         if(PushTime != 0)
             StartCoroutine(Push());
     }

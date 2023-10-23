@@ -98,6 +98,8 @@ public class UIManager : MonoSingleton<UIManager>
     Image[] skillIcons = new Image[5];
     Image[] pcSkillIcons = new Image[5];
 
+    GameObject CoolDownedParticle;
+
     GameObject AttackButton;
     GameObject InteractionButton;
 
@@ -168,6 +170,8 @@ public class UIManager : MonoSingleton<UIManager>
             pcSkillIcons[2] = playerPPUI.transform.Find("LeftDown/Btns/UltimateSkill_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[3] = playerPPUI.transform.Find("LeftDown/Btns/Dash_Btn/ShapeFrame/Icon").GetComponent<Image>();
             pcSkillIcons[4] = playerPPUI.transform.Find("LeftDown/Btns/Attack_Btn/ShapeFrame/Icon").GetComponent<Image>();
+
+            CoolDownedParticle = playerPPUI.transform.Find("LeftDown/Btns/CoolDowned").gameObject;
 
             gameOverPanel = ultFade.transform.Find("All/GameOverPanel").gameObject;
             blurPanel = ultFade.transform.Find("All/BlurPanel").gameObject;
@@ -284,10 +288,12 @@ public class UIManager : MonoSingleton<UIManager>
     {
         string str = string.Empty;
         str += key;
-        if (str == "Mouse1")
+        if (str == "Mouse0")
             str = "M1";
-        else if (str == "Mouse2")
+        else if (str == "Mouse1")
             str = "M2";
+        else if (str == "Mouse2")
+            str = "M3";
         else if (str == "Space")
             str = "Spc";
 
@@ -493,7 +499,7 @@ public class UIManager : MonoSingleton<UIManager>
     {
         float coolTime = skillData.skill[skillNum].skillDelay;
         float skillCoolTime = coolTime - (coolTime * playerBase.SkillCoolDown / 100);
-        int num =skillNum;
+        int num =skillNum; 
         if (skillNum ==7)
             num = 2;
         else if (skillNum == 8)
@@ -523,19 +529,29 @@ public class UIManager : MonoSingleton<UIManager>
     }
     public void SkillCoolCalculation(float time, int num)
     {
-            int skillNum = playerskill.skillIndex[num];
-            currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
+        if (num == 3) return; 
+        int skillNum = playerskill.skillIndex[num];
+        currentFillAmount[num] -= time / playerBase.PlayerTransformData.skill[skillNum].skillDelay; 
+    }
+    public void SkillCoolRedution(int num)
+    {
+        currentFillAmount[num] = 0.01f;
     }
     public IEnumerator IESkillCooltime(int num, Image cooltimeImg, float skillCooltime)
     {
         currentFillAmount[num] = 1f;
         cooltimeImg.fillAmount = 1f;
+        GameManager.Instance.Player.SkillRelatedItemEffects.Invoke(num);
         while (cooltimeImg.fillAmount > 0)
         {
             currentFillAmount[num] -= Time.deltaTime / skillCooltime;
             cooltimeImg.fillAmount = currentFillAmount[num];
             yield return null;
         }
+        if (num == 3) yield break;
+        CoolDownedParticle.GetComponent<RectTransform>().position = cooltimeImg.rectTransform.position;
+        CoolDownedParticle.SetActive(false);
+        CoolDownedParticle.SetActive(true);
     }
 
     public void ResetSkill()

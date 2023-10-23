@@ -1,40 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class SetItemList
 {
-    public enum SetItem
-    {
-        Default = 0,
-        CompleteHourglass,
-        MirrorOfDawn,
-        EqualExchange,
-        Overeager
-    }
-
-    public enum CompleteHourglass
-    {
-        BrokenHourglass,
-        RollingHourglass
-    }
-
-    public enum MirrorOfDawn
-    {
-        MirrorOfSun,
-        MirrorOfMoon
-    }
-
-    public enum EqualExchange
-    {
-        MidasTouch,
-        InvisibleHand
-    }
-
-    public enum Overeager
-    {
-        GiantGlove,
-        MagicBean,
-        HeavenHarp
-    }
+    public static List<int> CompleteHourglassParts = new List<int>() { 107, 505 };
+    public static List<int> MirrorOfEclipseParts = new List<int>() { 304, 305 };
+    public static List<int> FlexodiaParts = new List<int>() { 207, 302 };
+    public static List<int> OvereagerParts = new List<int>() { 102, 303, 403 };
+    public static List<int> GamblersLegacyParts = new List<int>() { 209, 102 };
 }

@@ -9,11 +9,20 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     private GameObject inventoryPanel;
 
     public List<InventorySlot> slots = new List<InventorySlot>();
+    public List<GameObject> uiItemSlots = new List<GameObject>();
     [SerializeField]
     private Transform slotHolder;
+    [SerializeField]
+    private Transform uiItemSlotHolder;
 
     [SerializeField]
     private GameObject itemObjTemplate = null;
+    [SerializeField]
+    private GameObject uiItemObjTemplate = null;
+
+    public Dictionary<string, UIInventorySlot> uiInventorySlotDict = new Dictionary<string, UIInventorySlot>();
+
+    private List<Poolable> itemSlotObjList = new List<Poolable>();
 
     private void Awake()
     {
@@ -22,22 +31,21 @@ public class InventoryUI : MonoSingleton<InventoryUI>
             Debug.Log("itemObjTemplate is null!");
             itemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/ItemSlot.prefab");
         }
+        uiItemObjTemplate = Managers.Resource.Load<GameObject>("Assets/03.Prefabs/UI/UIItemSlot.prefab");
         inventoryPanel = transform.Find("Background").gameObject;
+
         Init();
     }
 
     private void Init()
     {
-        // Debug.Log("아이템 로딩");
         slots.Clear();
-        if(slotHolder.childCount > 0)
+
+        if (slotHolder.childCount <= 0) return;
+
+        foreach(Transform trm in slotHolder.transform)
         {
-            for (int i = 0; i < slotHolder.childCount; ++i)
-            {
-                {
-                    Destroy(slotHolder.GetChild(0).gameObject);
-                }
-            }
+            Destroy(trm);
         }
     }
 
@@ -46,48 +54,60 @@ public class InventoryUI : MonoSingleton<InventoryUI>
         if (UIManager.Instance.isSetting)
             return;
 
-        //inventoryPanel.SetActive(!inventoryPanel.gameObject.activeSelf);
-        if (!inventoryPanel.gameObject.activeSelf)
-        {
-            UIManager.Instance.PushPanel(inventoryPanel);
-            MouseManager.Lock(false);
-            MouseManager.Show(true);
-        }
-        else
+        if (inventoryPanel.activeSelf)
         {
             UIManager.Instance.PopPanel();
             MouseManager.Lock(true);
             MouseManager.Show(false);
         }
+        else
+        {
+            UIManager.Instance.PushPanel(inventoryPanel);
+            MouseManager.Lock(false);
+            MouseManager.Show(true);
+        }
+
         Inventory.Instance.ClearText();
     }
 
     // 아이템 획득시 슬롯에 추가
     public void AddItemSlot(Item item)
     {
-        ItemManager.Instance.AddCurItemDic(item);
-        // GameManager.Instance.AddItemData(item);
-
-        //if (ItemManager.Instance.CheckSetItem(item))
-        //{
-        //    return;
-        //}
-
-        GameObject newObject = null;
-        InventorySlot newItemObjComponent = null;
-
+        ItemManager.Instance.AddCurItemDict(item);
         Item inventoryItem = item;
 
-        newObject = Instantiate(itemObjTemplate);
-        newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
-        newItemObjComponent = newObject.GetComponent<InventorySlot>();
-        newItemObjComponent.SetValue(inventoryItem);
+        Poolable newObject = Managers.Pool.Pop(itemObjTemplate);
+        itemSlotObjList.Add(newObject);
+
         newObject.transform.SetParent(slotHolder);
-        newObject.SetActive(true);
+        newObject.gameObject.SetActive(true);
+
+        newObject.transform.GetChild(0).GetComponent<Image>().sprite = 
+            Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{item.itemRating}/{item.itemNameEng}.png");
+
+        InventorySlot newItemObjComponent = newObject.GetComponent<InventorySlot>();
+        newItemObjComponent.SetValue(inventoryItem);
+
         slots.Add(newItemObjComponent);
+
+        // 스택형 아이템 표기
+        if (ItemAbility.Items[item.itemNumber].isStackItem)
+        {
+            Item uiObjItem = item;
+            GameObject uiObj = Managers.Resource.Instantiate("Assets/03.Prefabs/UI/UIItemSlot.prefab");
+            UIInventorySlot uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
+            uiObjComponent.SetValue(uiObjItem);
+            uiObj.SetActive(true);
+            uiInventorySlotDict.Add(uiObjItem.itemNameEng, uiObjComponent);
+            uiObj.transform.SetParent(uiItemSlotHolder);
+            uiObj.GetComponent<RectTransform>().localScale = Vector3.one;
+        }
+
         ItemAbility.Items[item.itemNumber].Use();
 
-        // UIManager.Instance.AddItemListUI(item);
+        if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
+            ItemManager.Instance.CheckSetItem(item);
+
         StartCoroutine(UIManager.Instance.ShowObtainItemInfo(item));
     }
 
@@ -95,40 +115,61 @@ public class InventoryUI : MonoSingleton<InventoryUI>
     public void LoadItemSlot()
     {
         Dictionary<string, Item> itemDic = ItemManager.Instance.GetCurItemDic();
-        //List<Item> itemList = GameManager.Instance.GetItemList();
 
-        GameObject newObject = null;
-        InventorySlot newItemObjComponent = null;
+        if(itemSlotObjList.Count > 0)
+        {
+            foreach(var item in itemSlotObjList)
+            {
+                Managers.Pool.Push(item);
+            }
+        }
 
-        foreach(var items in itemDic.Values)
+        foreach (var items in itemDic.Values)
         {
             if (items.itemNumber == 0)
                 continue;
 
             Item inventoryItem = items;
 
-            newObject = Instantiate(itemObjTemplate);
+            Poolable newObject = Managers.Pool.Pop(itemObjTemplate);
+            itemSlotObjList.Add(newObject);
 
-            newObject.transform.GetChild(0).GetComponent<Image>().sprite = Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
-            newItemObjComponent = newObject.GetComponent<InventorySlot>();
+            newObject.transform.GetChild(0).GetComponent<Image>().sprite = 
+                Managers.Resource.Load<Sprite>($"Assets/04.Sprites/Icon/Item/{inventoryItem.itemRating}/{inventoryItem.itemNameEng}.png");
+
+            InventorySlot newItemObjComponent = newObject.GetComponent<InventorySlot>();
             newItemObjComponent.SetValue(inventoryItem);
             newObject.transform.SetParent(slotHolder);
-            newObject.SetActive(true);
+            newObject.gameObject.SetActive(true);
             slots.Add(newItemObjComponent);
-            if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
+
+            // 스택형 아이템 표기
+            if (ItemAbility.Items[items.itemNumber].isStackItem && !uiInventorySlotDict.ContainsKey(items.itemNameEng))
             {
-                ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
+                Item uiObjItem = items;
+                GameObject uiObj = Managers.Resource.Instantiate("Assets/03.Prefabs/UI/UIItemSlot.prefab");
+                UIInventorySlot uiObjComponent = uiObj.GetComponent<UIInventorySlot>();
+                uiObjComponent.SetValue(uiObjItem);
+                uiObj.SetActive(true);
+                uiInventorySlotDict.Add(uiObjItem.itemNameEng, uiObjComponent);
+                uiObj.transform.SetParent(uiItemSlotHolder);
+                uiObj.GetComponent<RectTransform>().localScale = Vector3.one;
             }
 
-            // UIManager.Instance.AddItemListUI(items);
+            if (ItemAbility.Items[inventoryItem.itemNumber].isPersitantItem)
+                ItemAbility.Items[inventoryItem.itemNumber].LastingEffect();
+            if (ItemAbility.Items[inventoryItem.itemNumber].isSetElement)
+                ItemManager.Instance.CheckSetItem(items);
         }
     }
 
-    public void RemoveItemSlot(Item item)
+    // UIInventorySlot(UIItemSlot) 삭제
+    public void RemoveUIInventorySlot(Item item)
     {
-        ItemAbility.Items[item.itemNumber].Disabling();
-        ItemManager.Instance.RemoveCurItemDic(item);
-        // LoadItemSlot();
-    }
+        if (!uiInventorySlotDict.ContainsKey(item.itemNameEng))
+            return;
 
+        Managers.Pool.Push(uiInventorySlotDict[item.itemNameEng].GetComponent<Poolable>());
+        uiInventorySlotDict.Remove(item.itemNameEng);
+    }
 }

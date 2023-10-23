@@ -8,6 +8,7 @@ public class SwordOfMidas : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Legendary;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private static float rise = 0;
 
@@ -19,20 +20,21 @@ public class SwordOfMidas : ItemBase
     public override void Use()
     {
         Debug.Log("미다스의 검 효과 발동");
-        SwordOfMidasAbility();
-        LastingEffect();
     }
 
     public override void Disabling()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(SwordOfMidasAbility);
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
+        rise = 0;
     }
 
     public override void LastingEffect()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(SwordOfMidasAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(SwordOfMidasAbility);
+        SwordOfMidasAbility();
+        UpdateStackAndTimerPanel();
     }
 
     public void SwordOfMidasAbility()
@@ -46,5 +48,14 @@ public class SwordOfMidas : ItemBase
         rise = Mathf.Clamp(Mathf.CeilToInt(rise), 0, 70);
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (rise * 0.01f);
+
+        UpdateStackAndTimerPanel();
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack((int)rise);
     }
 }

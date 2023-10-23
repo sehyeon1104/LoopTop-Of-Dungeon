@@ -173,10 +173,12 @@ public class GameManager : MonoSingleton<GameManager>
         itemRateColor[(int)Define.ItemRating.Rare] = "#00FFFF";
         // º¸¶ó»ö
         itemRateColor[(int)Define.ItemRating.Epic] = "#9932CC";
-        // »¡°£»ö
-        itemRateColor[(int)Define.ItemRating.Legendary] = "#FFA500";
+        // ±Ý»ö
+        itemRateColor[(int)Define.ItemRating.Legendary] = "#FFD700";
         // Å©¸²½¼
         itemRateColor[(int)Define.ItemRating.Special] = "#DC143C";
+        // ±Ý»ö
+        itemRateColor[(int)Define.ItemRating.Set] = "#EE82EE";
         // Èò»ö
         itemRateColor[(int)Define.ItemRating.ETC] = "#FFFFFF";
     }
@@ -294,7 +296,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SetItemData()
     {
-        foreach(Item item in ItemManager.Instance.allItemDic.Values)
+        foreach(Item item in ItemManager.Instance.allItemDict.Values)
         {
             itemData.allItemList.Add(item);
         }
@@ -314,7 +316,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         foreach(var items in item)
         {
-            ItemManager.Instance.curItemDic.Add(items.itemNameEng, items);
+            ItemManager.Instance.curItemDict.Add(items.itemNameEng, items);
         }
         //itemData.curItemDic = item;
         SaveManager.Save<ItemData>(ref itemData);
@@ -409,7 +411,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void SaveItemData()
     {
         itemData.curItemList.Clear();
-        foreach(var item in ItemManager.Instance.curItemDic.Values)
+        foreach(var item in ItemManager.Instance.curItemDict.Values)
         {
             itemData.curItemList.Add(item);
         }

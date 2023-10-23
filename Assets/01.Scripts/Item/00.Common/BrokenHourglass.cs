@@ -14,7 +14,7 @@ public class BrokenHourglass : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.SkillRelatedItemEffects.RemoveListener(BrokenHourglassAbility);
     }
 
     public override void Init()
@@ -33,19 +33,11 @@ public class BrokenHourglass : ItemBase
         GameManager.Instance.Player.SkillRelatedItemEffects.AddListener(BrokenHourglassAbility);
     }
 
-    public override void SetItemCheck()
-    {
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
-
-    public void BrokenHourglassAbility()
+    public void BrokenHourglassAbility(int num)
     {
         if(Random.Range(0, 100) < 10)
         {
-            for(int i=0; i<2; i++) {
-                UIManager.Instance.SkillCoolCalculation(1, i);
-            }
-            
+                UIManager.Instance.SkillCoolCalculation(1, num);
         }
     }
 }

@@ -10,6 +10,7 @@ public class SharpSword : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Rare;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private Coroutine co = null;
     private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -31,12 +32,12 @@ public class SharpSword : ItemBase
         Debug.Log("날카로운 검 효과 발동");
         Debug.Log("공격력 20% 증가, 적 처치 시 공격력 5% 증가 (최대 3 중첩, 지속시간 10초)");
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.2f;
-        // StartCoroutine(CoolTime());
     }
 
     public override void LastingEffect()
     {
-        SharpSwordAbility();
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(SharpSwordAbility);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(SharpSwordAbility);
     }
 
     public override void Disabling()
@@ -45,7 +46,7 @@ public class SharpSword : ItemBase
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * (0.05f * stack);
     }
 
-    public void SharpSwordAbility()
+    public void SharpSwordAbility(Vector3 pos)
     {
         if (co != null)
         {
@@ -61,12 +62,14 @@ public class SharpSword : ItemBase
 
         stack++;
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * 0.05f;
+        UpdateStackAndTimerPanel();
     }
 
     public void InitStack()
     {
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * (0.05f * stack);
         stack = 0;
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 
     private IEnumerator CoolTime()
@@ -84,5 +87,13 @@ public class SharpSword : ItemBase
 
             yield return waitForEndOfFrame;
         }
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(abilityDuration);
     }
 }

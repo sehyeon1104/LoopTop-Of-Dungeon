@@ -22,20 +22,23 @@ public class MidasTouch : ItemBase
 
     public override void Use()
     {
-        isEquip = true;
+        LastingEffect();
     }
 
     public override void LastingEffect()
     {
-
+        isEquip = true;
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(MidasTouchAbility);
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.AddListener(MidasTouchAbility);
     }
 
     public override void Disabling()
     {
         isEquip = false;
+        EnemyManager.Instance.EnemyDeadRelatedItemEffects.RemoveListener(MidasTouchAbility);
     }
 
-    public void MidasTouchAbility()
+    public void MidasTouchAbility(Vector3 pos)
     {
         if (isEquip)
         {

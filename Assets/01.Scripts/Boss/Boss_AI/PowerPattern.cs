@@ -6,6 +6,7 @@ using Cinemachine;
 using UnityEditor;
 using UnityEngine.Rendering;
 using UnityEngine.VFX;
+using UnityEngine.Events;
 
 public class P_Patterns : BossPattern
 {
@@ -22,6 +23,8 @@ public class P_Patterns : BossPattern
     [SerializeField] protected CinemachineVirtualCamera dashVCam;
     [SerializeField] protected GameObject standUpVCam;
     [SerializeField] protected GameObject twoPhaseVCam;
+
+    public UnityEvent RockMoveEvent = new UnityEvent();
 
     private List<Transform> partList = new List<Transform>();
     private List<StandupObject> standupObjects = new List<StandupObject>();
@@ -225,7 +228,6 @@ public class P_Patterns : BossPattern
         }
         yield return new WaitForSeconds(0.75f);
         CinemachineCameraShaking.Instance.CameraShake(8, 0.2f);
-        //Boss.Instance.bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
         for (int i = -7; i < 8; i++)
         {
             Managers.Pool.PoolManaging("Assets/10.Effects/power/Rock.prefab", transform.position + dirToPlayer, Quaternion.AngleAxis(angle + angleRange * i, Vector3.forward));
@@ -325,10 +327,8 @@ public class P_Patterns : BossPattern
     #region Phase 2
     public IEnumerator Pattern_SG_2(int count = 0) //바닥찍기 2페이즈
     {
-        List<Poolable> bodyList = new List<Poolable>();
         int bodyCount = 0;
 
-        bodyList.Clear();
         for (int i = 0; i < 3; i++)
         {
             shorkWarning.gameObject.SetActive(true);
@@ -355,7 +355,6 @@ public class P_Patterns : BossPattern
                 {
                     bodyCount++;
                     Poolable clone = Managers.Pool.PoolManaging("Assets/10.Effects/power/ShockRock.prefab", new Vector2(transform.position.x + dir.x * 15.5f, transform.position.y + 2 + dir.y * 15.5f), Quaternion.identity);
-                    bodyList.Add(clone);
                 }
                 else
                 {
@@ -365,25 +364,11 @@ public class P_Patterns : BossPattern
             bodyCount = 0;
         }
 
-        yield return new WaitForSeconds(1f);
+        RockMoveEvent.Invoke();
+        yield return new WaitForSeconds(1.2f);
 
-        for (int i = 0; i < bodyList.Count; i++)
-            bodyList[i].GetComponent<BoxCollider2D>().enabled = true;
 
-        yield return new WaitForSeconds(1f);
-
-        CinemachineCameraShaking.Instance.CameraShake(8f, 0.2f);
-        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Power/P_ColumnDestroy.wav");
-
-        for (int i = 0; i < bodyList.Count; i++)
-            bodyList[i].transform.DOMove(transform.position, 0.2f);
-
-        yield return new WaitForSeconds(0.3f);
-
-        for (int i = 0; i < bodyList.Count; i++)
-            Managers.Pool.Push(bodyList[i]);
         Managers.Pool.PoolManaging("Assets/10.Effects/power/JumpShock.prefab", transform.position, Quaternion.identity);
-
     }
     public IEnumerator Pattern_DS_2(int count = 0) //돌진 2페이즈
     {

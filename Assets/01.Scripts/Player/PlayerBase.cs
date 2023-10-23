@@ -18,6 +18,7 @@ public class PlayerBase
         hp = maxHp;
         attack = 11f;
         damage = Mathf.RoundToInt(attack * 0.6f);
+        finalDamageMul = InitFinalDamageMul;
         attackSpeed = 1.5f;
         moveSpeed = 5.3f;
         critChance = 5f;
@@ -25,7 +26,7 @@ public class PlayerBase
         playerSkillNum = new int[] { 4, 5 };
         _fragmentAmount = 0;
         _fragmentAddAcq = 1f;
-        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Power;
+        playerTransformTypeFlag = Define.PlayerTransformTypeFlag.Ghost;
         AttackRange = 1.3f;
         InitAttackRange = AttackRange;
         PlayerTransformDataSOList = new List<PlayerSkillData>();
@@ -103,7 +104,7 @@ public class PlayerBase
         get => 100;
     }
 
-    private int recentReceiveDamage;
+    private int recentReceiveDamage;    
     public int RecentReceiveDamage { get { return recentReceiveDamage; } set { recentReceiveDamage = value; } }
 
     private float attack;

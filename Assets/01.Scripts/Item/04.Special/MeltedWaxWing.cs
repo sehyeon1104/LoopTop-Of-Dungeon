@@ -9,6 +9,7 @@ public class MeltedWaxWing : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Special;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private static int stack = 0;
 
@@ -31,6 +32,7 @@ public class MeltedWaxWing : ItemBase
     {
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
         GameManager.Instance.Player.DashRelatedItemEffects.RemoveListener(MeltedWaxWingAbility);
+        stack = 0;
     }
 
     public override void LastingEffect()
@@ -48,6 +50,7 @@ public class MeltedWaxWing : ItemBase
     {
         stack = 0;
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * stack;
+        UpdateStackAndTimerPanel();
     }
 
     public void MeltedWaxWingAbility()
@@ -57,7 +60,10 @@ public class MeltedWaxWing : ItemBase
         {
             GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * 0.05f * (stack - 1);
             stack = 0;
-            GameManager.Instance.Player.OnDamage(10, 0);
+            if (GameManager.Instance.Player.playerBase.Hp > 10)
+                GameManager.Instance.Player.OnDamage(10, 0);
+            else
+                GameManager.Instance.Player.OnDamage(GameManager.Instance.Player.playerBase.Hp - 1, 0);
             ItemManager.Instance.StopCoroutine(co);
         }
         else
@@ -67,6 +73,7 @@ public class MeltedWaxWing : ItemBase
                 ItemManager.Instance.StopCoroutine(co);
             co = ItemManager.Instance.StartCoroutine(Timer());
         }
+        UpdateStackAndTimerPanel();
     }
 
     private IEnumerator Timer()
@@ -79,5 +86,13 @@ public class MeltedWaxWing : ItemBase
         }
 
         ResetStack();
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateTimerPanel(targetTime);
     }
 }

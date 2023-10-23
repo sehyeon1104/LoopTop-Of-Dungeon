@@ -19,7 +19,8 @@ public class SlotStatue : StatueBase
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
-        button.onClick.RemoveListener(StatueFunc);
+        if (collision.CompareTag("Player"))
+            button.onClick.RemoveListener(StatueFunc);
     }
 
     protected override void InteractiveWithPlayer()

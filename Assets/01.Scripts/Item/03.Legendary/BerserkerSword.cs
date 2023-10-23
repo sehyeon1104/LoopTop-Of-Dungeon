@@ -7,6 +7,7 @@ public class BerserkerSword : ItemBase
     public override Define.ItemRating itemRating => Define.ItemRating.Legendary;
 
     public override bool isPersitantItem => true;
+    public override bool isStackItem => true;
 
     private int curHp = 0;
     private int maxHp = 0;
@@ -22,7 +23,6 @@ public class BerserkerSword : ItemBase
     public override void Use()
     {
         Debug.Log("광전사의 검 효과 발동");
-        BerserkerSwordAbility();
         LastingEffect();
     }
 
@@ -30,12 +30,15 @@ public class BerserkerSword : ItemBase
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordAbility);
         GameManager.Instance.Player.playerBase.Attack -= GameManager.Instance.Player.playerBase.InitAttack * rise;
+        rise = 0;
     }
 
     public override void LastingEffect()
     {
         GameManager.Instance.Player.HPRelatedItemEffects.RemoveListener(BerserkerSwordAbility);
         GameManager.Instance.Player.HPRelatedItemEffects.AddListener(BerserkerSwordAbility);
+        BerserkerSwordAbility();
+        UpdateStackAndTimerPanel();
     }
 
     public void BerserkerSwordAbility()
@@ -53,5 +56,14 @@ public class BerserkerSword : ItemBase
         rise /= 100;
 
         GameManager.Instance.Player.playerBase.Attack += GameManager.Instance.Player.playerBase.InitAttack * rise;
+
+        UpdateStackAndTimerPanel();
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack((int)rise);
     }
 }

@@ -17,9 +17,20 @@ public class RedFountainRoom : RoomBase
         minimapIcon.SetActive(false);
     }
 
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+
+        if (collision.CompareTag("Player") && !isClear)
+        {
+            IsClear();
+        }
+    }
+
     protected override void IsClear()
     {
         isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
     }
 
     protected override void ShowIcon()

@@ -154,13 +154,21 @@ public class GhostBossFieldPattern : MonoBehaviour
 
         if (!isCrashed)
         {
+            yield return new WaitForSeconds(2f);
+
+            Camera.main.orthographic = false;
             bossAnim.overrideController[$"SkillFinal"] = absorbEnd;
-            bossAnim.anim.SetTrigger(Boss.Instance._hashAttack);
             Managers.Pool.Push(clone.GetComponent<Poolable>());
-            Poolable clone1 = Managers.Pool.PoolManaging("10.Effects/ghost/CircleSmoke", bossAnim.transform.position, Quaternion.identity);
-            clone1.transform.localScale = new Vector3(10, 10, 0);
-            yield return new WaitForSeconds(1f);
-            GameManager.Instance.Player.OnDamage(100f, 0);
+            Poolable clone1 = Managers.Pool.PoolManaging("Assets/10.Effects/ghost/SpaceRip.prefab", GameManager.Instance.Player.transform);
+            Time.timeScale = 0f;
+
+            yield return new WaitForSecondsRealtime(3.5f);
+
+            Time.timeScale = 1f;
+            CinemachineCameraShaking.Instance.CameraShake(20, 0.2f);
+            GameManager.Instance.Player.OnDamage(300f, 0);
+
+            Camera.main.orthographic = true;
             Boss.Instance.bossAnim.anim.SetBool("FinalEnd", true);
         }
     }

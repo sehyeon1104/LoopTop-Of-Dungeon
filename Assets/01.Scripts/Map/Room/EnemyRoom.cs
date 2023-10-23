@@ -107,7 +107,7 @@ public class EnemyRoom : RoomBase
 
         if (isClear)
         {
-            ItemManager.Instance.RoomClearRelatedItemEffects.Invoke();
+            ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
             StageManager.Instance.ToggleRoomDoor(transform.parent.position);
         }
     }

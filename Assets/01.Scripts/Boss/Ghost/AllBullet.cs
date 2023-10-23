@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AllBullet : MonoBehaviour
 {
+    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+
     private void OnEnable()
     {
         StartCoroutine(OnRotate());
@@ -20,7 +22,7 @@ public class AllBullet : MonoBehaviour
             transform.Rotate(Vector3.forward * (4.5f - timer) * 0.5f);
             timer += Time.deltaTime;
 
-            yield return null;
+            yield return endOfFrame;
         }
 
     }

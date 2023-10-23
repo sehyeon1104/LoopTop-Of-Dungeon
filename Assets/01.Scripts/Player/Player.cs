@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IHittable
     // 공격 관련 아이템 효과
     public UnityEvent AttackRelatedItemEffects { get; private set; } = new UnityEvent();
     // 스킬 관련 아이템 효과
-    public UnityEvent SkillRelatedItemEffects { get; private set; } = new UnityEvent();
+    public UnityEvent<int> SkillRelatedItemEffects { get; private set; } = new UnityEvent<int>();
     // 피격 관련 아이템 효과
     public UnityEvent OnDamagedRelatedItemEffects { get; private set; } = new UnityEvent();
     // 대쉬 관련 아이템 효과
@@ -44,7 +44,15 @@ public class Player : MonoBehaviour, IHittable
     public float dmgMul = 1f;
     [HideInInspector]
     public float dmgAdd = 0f;
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
+            dropItemObj.transform.position = transform.position;
+            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
+        }
+    }
     private void Awake()
     {
         UIManager.Instance.reviveButton.onClick.AddListener(RevivePlayer);
@@ -53,17 +61,6 @@ public class Player : MonoBehaviour, IHittable
     private void Start()
     {
         PlayerVisual.Instance.UpdateVisual(playerBase.PlayerTransformData);
-    }
-
-    // 디버깅
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            var dropItemObj = Managers.Resource.Instantiate("Assets/03.Prefabs/2D/DropItem.prefab");
-            dropItemObj.transform.position = transform.position;
-            dropItemObj.GetComponent<DropItem>().SetItem(Define.ChestRating.Common);
-        }
     }
 
     public IEnumerator IEDamaged(float damage = 0)
@@ -112,7 +109,7 @@ public class Player : MonoBehaviour, IHittable
     
     public void Dead()
     {
-        if (ItemManager.Instance.curItemDic.ContainsKey("LifeInsurance"))
+        if (ItemManager.Instance.curItemDict.ContainsKey("LifeInsurance"))
         {
             ItemAbility.Items[404].Use();
             return;

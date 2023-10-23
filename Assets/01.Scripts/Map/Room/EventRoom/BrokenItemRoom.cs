@@ -43,30 +43,43 @@ public class BrokenItemRoom : RoomBase
     {
         base.OnTriggerEnter2D(collision);
 
-        if (coroutine != null)
-            StopCoroutine(coroutine);
+        if (collision.CompareTag("Player"))
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
 
-        if (isTakeItem)
-            return;
+            if (isTakeItem)
+                return;
 
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
-        UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
+            if (!isClear)
+                IsClear();
 
-        coroutine = StartCoroutine(ToggleItemInfoPanel());
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+            UIManager.Instance.GetInteractionButton().onClick.AddListener(InteractiveToItemObj);
+
+            coroutine = StartCoroutine(ToggleItemInfoPanel());
+        }
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
 
-        if(coroutine != null)
-            StopCoroutine(coroutine);
-        coroutine = null;
+        if (collision.CompareTag("Player"))
+        {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+            coroutine = null;
 
-        UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+            UIManager.Instance.GetInteractionButton().onClick.RemoveListener(InteractiveToItemObj);
+        }
     }
 
-    protected override void IsClear() { }
+    protected override void IsClear() 
+    {
+        isClear = true;
+        ItemManager.Instance.RoomClearRelatedItemEffects?.Invoke();
+    }
 
     protected override void ShowIcon()
     {
@@ -109,7 +122,7 @@ public class BrokenItemRoom : RoomBase
                 Debug.Log("break while loop");
                 for (int i = index; i < 4; ++i)
                 {
-                    Item defaultItem = ItemManager.Instance.allItemDic["Default"];
+                    Item defaultItem = ItemManager.Instance.allItemDict["Default"];
 
                     newObject = Instantiate(itemObjTemplate);
                     newItemObjComponent = newObject.GetComponent<ItemObj>();

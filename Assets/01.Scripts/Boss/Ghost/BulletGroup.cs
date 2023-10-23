@@ -6,6 +6,7 @@ public class BulletGroup : MonoBehaviour
 {
     [SerializeField] private GameObject[] warning;
     private float waitTime = 4.5f;
+    private WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
 
     private void OnEnable()
     {
@@ -27,12 +28,13 @@ public class BulletGroup : MonoBehaviour
             {
                 transform.Rotate(Vector3.forward * Time.deltaTime * 300);
                 timer += Time.deltaTime;
-                yield return null;
+                yield return endOfFrame;
             }
         }
         else
             yield return new WaitForSeconds(waitTime);
 
+        Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Warning.wav", Define.Sound.Effect, 0.75f, 0.5f);
         for (int i = 0; i < warning.Length; i++)
             warning[i].SetActive(true);
 
@@ -45,8 +47,8 @@ public class BulletGroup : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_SoulBullet.wav", Define.Sound.Effect, 1.5f, 0.5f);
         while (transform.localScale.x >= -10)
         {
-            transform.localScale -= Vector3.right * 0.05f;
-            yield return null;
+            transform.localScale -= Vector3.right * Time.deltaTime * 10f;
+            yield return endOfFrame;
         }
         yield return null;
     }

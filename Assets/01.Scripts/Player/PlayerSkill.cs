@@ -19,7 +19,7 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
 {
     PlayerBase playerBase;
     Button interaction;
-    Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
+    public Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase> skillData = new Dictionary<Define.PlayerTransformTypeFlag, PlayerSkillBase>();
     List<int> randomSkillNum = new List<int>();
     int[] slotLevel;
     [HideInInspector]
@@ -103,12 +103,12 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
             DashSkill();
         if (Input.GetKeyDown(/*KeyCode.O*/KeySetting.keys[KeyAction.ULTIMATE]))
             UltimateSkill();
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Collider2D[] enemies;
-            enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
-            enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
-        }
+        //if(Input.GetKeyDown(KeyCode.H))
+        //{
+        //    Collider2D[] enemies;
+        //    enemies = Physics2D.OverlapCircleAll(transform.position, 3,1<<8);
+        //    enemies[0]?.transform.GetComponent<Rigidbody2D>().AddForce(PlayerMovement.Instance.Direction * 40,ForceMode2D.Impulse);
+        //}
     }
     public void SlotUp(int index)
     {
@@ -120,12 +120,15 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
     }
    public void SkillSelect(Define.PlayerTransformTypeFlag playerType)
     {
-        ReserProperty();
+        ResetProperty();
         PlayerSkillBase playerSkill;
         UIManager.Instance.ResetSkill();
         if (skillData.TryGetValue(playerType, out playerSkill))
         {
             playerSkill.enabled = true;
+            PlayerManager.Instance.PostPlayerTransformChangeEffects.AddListener(playerSkill.ToThisForm);
+            PlayerManager.Instance.PostPlayerTransformChangeEffects.Invoke();
+
             SkillAC[0] = () => playerSkill.playerSkills[skillIndex[0]](slotLevel[0]);
             playerSkill.playerSkillUpdate[skillIndex[0]](slotLevel[0]);
             SkillAC[1] = () => playerSkill.playerSkills[skillIndex[1]](slotLevel[1]);
@@ -140,11 +143,13 @@ public class PlayerSkill : MonoSingleton<PlayerSkill>
         }
 
     }
-    void ReserProperty()
+    void ResetProperty()
     {
         for (int i = 0; i < skillData.Count; i++)
         {
             skillData[(Define.PlayerTransformTypeFlag)i].enabled = false;
+            PlayerManager.Instance.PostPlayerTransformChangeEffects.RemoveListener(skillData[(Define.PlayerTransformTypeFlag)i].ToThisForm);
+            PlayerManager.Instance.PrePlayerTransformChangeEffects.RemoveListener(skillData[(Define.PlayerTransformTypeFlag)i].ToOtherForm);
         }
     }
     void Skill1()

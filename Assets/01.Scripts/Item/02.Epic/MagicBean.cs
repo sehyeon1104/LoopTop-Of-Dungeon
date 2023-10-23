@@ -24,7 +24,7 @@ public class MagicBean : ItemBase
 
     public override void Disabling()
     {
-
+        GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(MagicBeanAbility);
     }
 
     public override void LastingEffect()
@@ -32,12 +32,6 @@ public class MagicBean : ItemBase
         GameManager.Instance.Player.AttackRelatedItemEffects.RemoveListener(MagicBeanAbility);
         GameManager.Instance.Player.AttackRelatedItemEffects.AddListener(MagicBeanAbility);
     }
-
-    public override void SetItemCheck()
-    {
-        ItemManager.Instance.CheckSetItem(ItemManager.Instance.allItemDic[this.GetType().Name]);
-    }
-
 
     public void MagicBeanAbility()
     {

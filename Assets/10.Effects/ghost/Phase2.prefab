@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1380255800083036051}
   - component: {fileID: 2772346781826983445}
   - component: {fileID: -7415667021738611623}
+  - component: {fileID: -1908971991717707971}
   m_Layer: 0
   m_Name: Phase2
   m_TagString: Untagged
@@ -109,7 +110,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -726151
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 4
 --- !u!114 &-7415667021738611623
 MonoBehaviour:
@@ -125,3 +126,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsUsing: 0
   PushTime: 5
+--- !u!114 &-1908971991717707971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380695982048450127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae3c91e863b11847b1d40bc03f30b3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  executeInEditor: 1
+  outputEvent:
+    m_Name: CameraShakingEvent
+  audioClip: {fileID: 0}
+  cameraShake: {x: 20, y: 0.5}

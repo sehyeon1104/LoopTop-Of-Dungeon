@@ -16,8 +16,9 @@ public class BrokenKing : ItemBase
     private bool isEquip = false;
 
     private Coroutine co = null;
-    private WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+    private WaitForSeconds waitForSec = new WaitForSeconds(1f);
 
+    public override bool isStackItem => true;
     private static int stack = 0;
     int temp = 1;
 
@@ -35,13 +36,17 @@ public class BrokenKing : ItemBase
     {
         isEquip = false;
         ResetStack();
+        GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(ResetStack);
+        stack = 0;
     }
 
     public override void LastingEffect()
     {
         isEquip = true;
         ResetStack();
-        co = ItemManager.Instance.StartCoroutine(Timer());//StartCoroutine(Timer());
+        if (co != null)
+            ItemManager.Instance.StopCoroutine(co);
+        co = ItemManager.Instance.StartCoroutine(Timer());
         GameManager.Instance.Player.OnDamagedRelatedItemEffects.RemoveListener(ResetStack);
         GameManager.Instance.Player.OnDamagedRelatedItemEffects.AddListener(ResetStack);
     }
@@ -49,6 +54,7 @@ public class BrokenKing : ItemBase
     public void BrokenKingAbility()
     {
         GameManager.Instance.Player.playerBase.AttackSpeed += GameManager.Instance.Player.playerBase.InitAttackSpeed * 0.05f;
+        UpdateStackAndTimerPanel();
     }
 
     public void ResetStack()
@@ -59,6 +65,7 @@ public class BrokenKing : ItemBase
         if (co != null)
             ItemManager.Instance.StopCoroutine(co);
         co = ItemManager.Instance.StartCoroutine(Timer());
+        UpdateStackAndTimerPanel();
     }
 
     public IEnumerator Timer()
@@ -68,18 +75,20 @@ public class BrokenKing : ItemBase
 
         temp = 1;
 
-        while (timer < targetTime)
+        while (stack < targetTime)
         {
-            timer += Time.deltaTime;
-            if(temp - Mathf.CeilToInt(timer) < 0)
-            {
-                temp++;
-                stack++;
-                BrokenKingAbility();
-            }
-
-            yield return waitForEndOfFrame;
+            temp++;
+            stack++;
+            BrokenKingAbility();
+            yield return waitForSec;
         }
         co = null;
+    }
+
+    public override void UpdateStackAndTimerPanel()
+    {
+        base.UpdateStackAndTimerPanel();
+
+        InventoryUI.Instance.uiInventorySlotDict[this.GetType().Name].UpdateStack(stack);
     }
 }

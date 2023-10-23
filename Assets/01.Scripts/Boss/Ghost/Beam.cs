@@ -11,9 +11,6 @@ public class Beam : MonoBehaviour
     [SerializeField] Light2D beamLight;
     [SerializeField] GameObject ShowRange;
 
-    EdgeCollider2D col;
-    Vector2[] points;
-
     float lineLength = 0.0f;
     float lineWidth = 0.5f;
     Vector3 tempScale;
@@ -33,8 +30,6 @@ public class Beam : MonoBehaviour
         foreach(ParticleSystem fx in startFX.GetComponentsInChildren<ParticleSystem>())
             startFXList.Add(fx);
 
-        col = beam.GetComponent<EdgeCollider2D>();
-        points = col.points;
         dissolveMat = GetComponent<Renderer>().material;
         tempScale = transform.localScale;
     }
@@ -69,31 +64,22 @@ public class Beam : MonoBehaviour
         beam.startWidth = lineWidth;
         beam.endWidth = lineWidth;
 
-        points[1] = Vector2.zero;
-        col.points = points;
-        col.edgeRadius = lineWidth * 0.5f;
-
         dissolveMat.SetFloat("_Alpha", -0.55f);
         alphaSet = -0.55f;
 
         beam.SetPosition(1, Vector3.zero);
     }
 
-    //private void CheckPlayer()
-    //{
-    //    var hits = Physics2D.BoxCastAll(beam.transform.position, new Vector2(length, width), transform.rotation.z, transform.forward);
+    private void CheckPlayer()
+    {
+        float radAngle = transform.eulerAngles.z * Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Cos(radAngle), Mathf.Sin(radAngle), 0).normalized;
 
-    //    foreach (var col in hits)
-    //    {
-    //        Debug.Log($"충돌체 : {col.transform.name}");
-    //        Debug.Log($"충돌체 트랜스폼 : {col.transform.position}");
-    //        if(col.transform.CompareTag("Player"))
-    //        {
-    //            Debug.Log("플레이어 충돌!!");
-    //            GameManager.Instance.Player.OnDamage(2, gameObject, 0);
-    //        }
-    //    }
-    //}
+        Collider2D hit = Physics2D.OverlapBox(beam.transform.position + (dir * length * 0.5f), new Vector2(length, width), transform.eulerAngles.z, 1 << 8);
+
+        if (hit != null)
+            GameManager.Instance.Player.OnDamage(15, 0);
+    }
 
     private IEnumerator OnBeam()
     {
@@ -114,23 +100,15 @@ public class Beam : MonoBehaviour
         Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Boss/Ghost/G_Beam.wav");
 
         ShowRange.SetActive(false);
-
+        CheckPlayer();
         while (lineLength <= length)
         {
             lineLength += Time.deltaTime * 100f;
             beam.SetPosition(1, new Vector3(lineLength, 0, 0));
 
-            points[1].x = lineLength;
-            col.points = points;
-
-
             yield return null;
         }
-
         yield return new WaitForSeconds(0.25f);
-
-        points[1] = Vector2.zero;
-        col.points = points;
 
         while (lineWidth >= 0.0f)
         {
@@ -155,4 +133,13 @@ public class Beam : MonoBehaviour
             yield return null;
         }
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    float radAngle = transform.eulerAngles.z * Mathf.Deg2Rad;
+    //    Vector3 dir = new Vector3(Mathf.Cos(radAngle), Mathf.Sin(radAngle), 0).normalized;
+
+    //    Gizmos.matrix = Matrix4x4.TRS(beam.transform.position + (dir * length * 0.5f), Quaternion.Euler(transform.eulerAngles), Vector3.one);
+    //    Gizmos.DrawWireCube(Vector3.zero, new Vector2(length, width));
+    //}
 }
