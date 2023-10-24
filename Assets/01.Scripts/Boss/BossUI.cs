@@ -71,7 +71,7 @@ public class BossUI : MonoBehaviour
                 tmpMat.SetColor("_OutlineColor", new Color(2f, 0.5f, 3f, 1f));
                 foreach(var mat in warningMat)
                     mat.SetColor("_MainColor", new Color(2.5f, 0.5f, 5.5f));
-                logoMat.SetColor("_SetColor", new Color(50f, 30f, 90f));
+                logoMat.SetColor("_SetColor", new Color(25f, 20f, 40f));
 
                 startNameTxt.text = "<size=70%>카타클리즘";
                 startNameTxt.color = new Color(0.85f, 0.75f, 1f);
@@ -87,7 +87,7 @@ public class BossUI : MonoBehaviour
                 tmpMat.SetColor("_OutlineColor", new Color(1.75f, 0.5f, 0f, 1f));
                 foreach (var mat in warningMat)
                     mat.SetColor("_MainColor", new Color(5.5f, 2f, 0f));
-                logoMat.SetColor("_SetColor", new Color(100f, 60f, 0f));
+                logoMat.SetColor("_SetColor", new Color(65f, 40f, 0f));
 
                 startNameTxt.text = "아틀라스";
                 startNameTxt.color = new Color(1f, 0.75f, 0.2f);
