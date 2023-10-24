@@ -149,7 +149,10 @@ public class TitleSceneManager : MonoBehaviour
                 MoveBackgroundPanel();
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return)    
+                //|| Input.GetKeyDown(KeySetting.keys[KeyAction.INTERACTION])
+                || Input.GetKeyDown(KeyCode.Space)
+                || Input.GetMouseButtonDown(0))
             {
                 InvokeBtnOnClick();
             }

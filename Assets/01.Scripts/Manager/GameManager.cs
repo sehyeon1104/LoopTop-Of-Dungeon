@@ -128,7 +128,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
         else
         {
-            //Debug.Log("[GameManager] KeySettingData 저장파일 있음");
+            // Debug.Log("[GameManager] KeySettingData 저장파일 있음");
             SaveManager.Load<KeySettingData>(ref keySettingData);
             SetKeyData();
         }

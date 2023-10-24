@@ -51,12 +51,16 @@ public class DialogueManager : MonoSingleton<DialogueManager>
             dialogueUI = transform.Find("DialogueUI").gameObject;
         }
 
+        acceptBtn = dialogueUI.transform.Find("DialoguePanel/AcceptBtn").GetComponent<Button>();
         acceptBtn.gameObject.SetActive(false);
         acceptBtnTmp = acceptBtn.GetComponent<TextMeshProUGUI>();
+        refuseBtn = dialogueUI.transform.Find("DialoguePanel/RefuseBtn").GetComponent<Button>();
         refuseBtn.gameObject.SetActive(false);
         refuseBtnTmp = refuseBtn.GetComponent<TextMeshProUGUI>();
 
         refuseBtn.onClick.AddListener(ToggleDialoguePanel);
+
+        dialogueUI.SetActive(false);
     }
 
     private void Start()

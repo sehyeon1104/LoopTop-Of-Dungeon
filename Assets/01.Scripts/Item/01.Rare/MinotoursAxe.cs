@@ -75,8 +75,6 @@ public class MinotoursAxe : ItemBase
 
     public int CheckNearByEnemyCount()
     {
-        Debug.Log("CheckNearByEnemyCount");
-
         if (GameManager.Instance.sceneType == Define.Scene.Center)
             return 0;
 

@@ -99,6 +99,9 @@ public class SkillEnhance : MonoBehaviour
     /// </summary>
     public void UpdateValue()
     {
+        Debug.Log(GameManager.Instance.Player.playerBase.PlayerTransformData);
+        playerskillInfo = GameManager.Instance.Player.playerBase.PlayerTransformData.skill;
+
         // 스킬 아이콘 업데이트
         if (GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum] == 5)
             skillIcon.sprite = playerskillInfo[GameManager.Instance.Player.playerBase.PlayerSkillNum[skillSlotNum]].skillIcon[1];
