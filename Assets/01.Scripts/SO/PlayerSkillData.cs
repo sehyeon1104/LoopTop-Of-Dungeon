@@ -14,6 +14,7 @@ public class PlayerSkillData : ScriptableObject
     //public RuntimeAnimatorController playerAnim;
 
     public AnimationClip idlClip;
+    public AnimationClip movClip;
     public AnimationClip atkClip;
     public AnimationClip dieClip;
 }

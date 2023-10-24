@@ -101,7 +101,7 @@ public class GhostSkill : PlayerSkillBase
 
     protected override void Attack()
     {
-        if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || !playerMovement.IsMove)
+        if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Move") || !playerMovement.IsMove)
             return;
 
         GameManager.Instance.Player.AttackRelatedItemEffects.Invoke();
