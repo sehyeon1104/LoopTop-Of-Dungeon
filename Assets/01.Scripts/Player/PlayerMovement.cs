@@ -45,8 +45,13 @@ public class PlayerMovement : MonoSingleton<PlayerMovement>
         rb.velocity = inputVelocity * GameManager.Instance.Player.playerBase.MoveSpeed;
         if (inputVelocity.x != 0 || inputVelocity.y != 0)
         {
+            PlayerVisual.Instance.PlayerAnimator.SetBool("Move", true);
             PlayerVisual.Instance.VelocityChange(direction.x);
             direction = inputVelocity;
+        }
+        else
+        {
+            PlayerVisual.Instance.PlayerAnimator.SetBool("Move", false);
         }
     }
 }

@@ -126,7 +126,7 @@ public class PowerSkill : PlayerSkillBase
         }
         else
         {
-            if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || player.playerBase.IsPDead)
+            if (!playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Move") || player.playerBase.IsPDead)
                 return;
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
 
