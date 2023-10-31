@@ -17,9 +17,9 @@ public class DialogueManager : MonoSingleton<DialogueManager>
     [SerializeField]
     private float waitTime = 2f;
     [SerializeField]
-    private Button acceptBtn = null;    // ¼±ÅÃÁö°¡ ÀÖÀ» °æ¿ì ÇÑÁ¤
+    private Button acceptBtn = null;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    private Button refuseBtn = null;    // ¼±ÅÃÁö°¡ ÀÖÀ» °æ¿ì ÇÑÁ¤
+    private Button refuseBtn = null;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private TextMeshProUGUI acceptBtnTmp = null;
     private TextMeshProUGUI refuseBtnTmp = null;
@@ -51,10 +51,10 @@ public class DialogueManager : MonoSingleton<DialogueManager>
             dialogueUI = transform.Find("DialogueUI").gameObject;
         }
 
-        acceptBtn = dialogueUI.transform.Find("DialoguePanel/AcceptBtn").GetComponent<Button>();
+        acceptBtn = dialogueUI.transform.Find("AcceptBtn").GetComponent<Button>();
         acceptBtn.gameObject.SetActive(false);
         acceptBtnTmp = acceptBtn.GetComponent<TextMeshProUGUI>();
-        refuseBtn = dialogueUI.transform.Find("DialoguePanel/RefuseBtn").GetComponent<Button>();
+        refuseBtn = dialogueUI.transform.Find("RefuseBtn").GetComponent<Button>();
         refuseBtn.gameObject.SetActive(false);
         refuseBtnTmp = refuseBtn.GetComponent<TextMeshProUGUI>();
 
