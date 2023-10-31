@@ -21,7 +21,7 @@ public class SkillEnhance : MonoBehaviour
     [SerializeField]
     private Button enhanceBtn = null;
 
-    private int price = 0;
+    private int price = 100;
 
     PlayerSkillInfo[] playerskillInfo;
 
@@ -138,6 +138,8 @@ public class SkillEnhance : MonoBehaviour
             Debug.Log("최대 강화");
             return;
         }
+
+        price = 100 * GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum];
 
         PlayerSkill.Instance.SlotUp(skillSlotNum);
         UpdateValue();
