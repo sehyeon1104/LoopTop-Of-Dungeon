@@ -117,7 +117,13 @@ public class KeyManager : MonoSingleton<KeyManager>
 
     private void OnGUI()
     {
-        if (!keySettingUI.isChangeKey)  
+        if (keySettingUI == null)
+        {
+            Debug.Log("KeySettingUI is Null");
+            return;
+        }
+
+        if (!keySettingUI.isChangeKey)
             return;
 
         keyEvent = Event.current;

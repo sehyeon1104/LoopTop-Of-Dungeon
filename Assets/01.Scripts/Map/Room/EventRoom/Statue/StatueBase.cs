@@ -12,6 +12,10 @@ public abstract class StatueBase : MonoBehaviour
     [SerializeField]
     protected TextMeshProUGUI interactiveTmp = null;
 
+    protected string acceptText = string.Empty;
+    protected string refuseText = "그만두기";
+    protected string dialogueText = string.Empty;
+
     protected bool isUseable = true;
 
     protected Button button;
@@ -44,8 +48,8 @@ public abstract class StatueBase : MonoBehaviour
 
     protected virtual void InteractiveWithPlayer()
     {
-        UIManager.Instance.RotateInteractionButton();
         ToggleInteractiveTMP();
+        UIManager.Instance.RotateInteractionButton();
     }
 
     protected virtual void ToggleInteractiveTMP()
@@ -84,5 +88,12 @@ public abstract class StatueBase : MonoBehaviour
         yield return waitForMoveTmp;
 
         effectTmp.gameObject.SetActive(false);
+    }
+
+    public void ToggleDialogue()
+    {
+        DialogueManager.Instance.SetContentNPos(dialogueText, gameObject);
+
+        StartCoroutine(DialogueManager.Instance.IEStartDialogue());
     }
 }
