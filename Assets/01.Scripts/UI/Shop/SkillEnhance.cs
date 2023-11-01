@@ -140,6 +140,7 @@ public class SkillEnhance : MonoBehaviour
         }
 
         price = 100 * GameManager.Instance.Player.playerBase.SlotLevel[skillSlotNum];
+        GameManager.Instance.Player.playerBase.FragmentAmount -= price;
 
         PlayerSkill.Instance.SlotUp(skillSlotNum);
         UpdateValue();

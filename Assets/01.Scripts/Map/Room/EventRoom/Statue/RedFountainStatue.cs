@@ -18,15 +18,15 @@ public class RedFountainStatue : StatueBase
     {
         base.OnTriggerExit2D(collision);
 
-        //if (collision.CompareTag("Player"))
-        //    button.onClick.RemoveListener(StatueFunc);
+        if (collision.CompareTag("Player"))
+            button.onClick.RemoveListener(StatueFunc);
     }
 
     protected override void InteractiveWithPlayer()
     {
         base.InteractiveWithPlayer();
-        //button.onClick.RemoveListener(StatueFunc);
-        //button.onClick.AddListener(StatueFunc);
+        button.onClick.RemoveListener(StatueFunc);
+        button.onClick.AddListener(StatueFunc);
     }
 
     protected override void StatueFunc()

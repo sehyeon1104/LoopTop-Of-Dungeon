@@ -26,6 +26,7 @@ public abstract class StatueBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        isUseable = true;
         button = UIManager.Instance.GetInteractionButton();
         waitForMoveTmp = new WaitForSeconds(waitMoveTmp);
     }

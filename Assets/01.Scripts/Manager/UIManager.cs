@@ -699,11 +699,11 @@ public class UIManager : MonoSingleton<UIManager>
     public void LeaveBtn()
     {
         Time.timeScale = 1f;
-        if (GameManager.Instance.sceneType == Define.Scene.Boss || GameManager.Instance.sceneType == Define.Scene.Field)
+        if (GameManager.Instance.sceneType != Define.Scene.TitleScene)
         {
             // Àü½Ã¿ë
             SaveManager.DeleteAllData();
-            Fade.Instance.FadeInAndLoadScene(Define.Scene.Center);
+            Fade.Instance.FadeInAndLoadScene(Define.Scene.TitleScene);
             //Managers.Scene.LoadScene(Define.Scene.CenterScene);
         }
         //else if (GameManager.Instance.sceneType == Define.Scene.CenterScene)
