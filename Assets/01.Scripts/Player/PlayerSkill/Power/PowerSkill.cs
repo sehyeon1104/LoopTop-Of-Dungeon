@@ -131,12 +131,8 @@ public class PowerSkill : PlayerSkillBase
             Managers.Sound.Play("Assets/05.Sounds/SoundEffects/Player/Power/Attack.wav");
 
             GameManager.Instance.Player.AttackRelatedItemEffects.Invoke();
-            CinemachineCameraShaking.Instance.CameraShake();
+            CinemachineCameraShaking.Instance.CameraShake(0.5f, 0.05f);
             playerAnim.SetTrigger("Attack");
-            attackPar.transform.SetParent(transform);
-            attackPar.transform.localPosition = playerSprite.flipX ? Vector3.right : Vector3.left;
-            attackPar.Play();
-            attackPar.transform.SetParent(null);
 
             RaycastHit2D[] enemys = Physics2D.BoxCastAll(attackPar.transform.position, Vector2.one, 0, attackPar.transform.localPosition, attackRange / 2, 1 << enemyLayer);
             for (int i = 0; i < enemys.Length; i++)

@@ -46,7 +46,7 @@ public abstract class PlayerSkillBase : MonoBehaviour
         }
     }
 
-    public virtual void ToOtherForm() { Debug.LogError("이게 출력되면 안됨"); }
+    public virtual void ToOtherForm() { }
     public virtual void ToThisForm() { }
     protected abstract void FirstSkill(int level);
 

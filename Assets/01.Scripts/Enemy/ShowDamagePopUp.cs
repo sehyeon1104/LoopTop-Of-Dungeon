@@ -14,13 +14,11 @@ public class ShowDamagePopUp : MonoBehaviour
 
     public IEnumerator IEShowDamage(float damage, GameObject damagedObj, bool isCrit = false, float dmgMul = 1)
     {
-        // 텍스트 소환
         Poolable damageTMP = Managers.Pool.Pop(displayDamageTMP);
         TextMeshProUGUI damageText = damageTMP.GetComponentInChildren<TextMeshProUGUI>();
         damageText.text = Mathf.RoundToInt(damage).ToString();
         if (isCrit)
         {
-            // 텍스트 색 변경
             damageText.color = Color.yellow;
         }
         else
@@ -30,7 +28,6 @@ public class ShowDamagePopUp : MonoBehaviour
                 damageText.text = $"{Mathf.RoundToInt(damage)}<size=50%>({Mathf.RoundToInt(damage - damage / dmgMul)})";
         }
 
-        // 초기화
         damageTMP.transform.position = damagedObj.transform.position;
         damageTMP.transform.DOScale(0.01f, 0.1f);
 

@@ -25,8 +25,6 @@ public class BossBase
                 _hp = _maxHp;
             else if(_hp < 0)
                 _hp = 0;
-
-            Boss.Instance.UpdateBossHP();
         }
     }
 

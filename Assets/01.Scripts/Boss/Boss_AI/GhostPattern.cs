@@ -520,7 +520,7 @@ public class GhostPattern : G_Patterns
     private void SetPanicValue()
     {
         float fillTime = GhostBossUI.Instance.fillTime;
-        if (Boss.Instance.isBDead)
+        if (Boss.Instance.isBDead || GameManager.Instance.Player.playerBase.IsPDead)
             fillTime = 50f;
 
         if (fillTime > 70f)

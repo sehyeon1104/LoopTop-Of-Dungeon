@@ -5,56 +5,42 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class BossUI : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite[] bossImgSprite = null;
-    [SerializeField]
-    private GameObject hpBar = null;
-    [SerializeField]
-    private Image Icon = null;
-    [SerializeField]
-    private Image bossImg;
-    [SerializeField]
-    private Image BackgroundImg = null;
+    [SerializeField] private Sprite[] bossImgSprite = null;
+    [SerializeField] private Image Icon = null;
+    [SerializeField] private Image bossImg;
+    [SerializeField] private Image BackgroundImg = null;
 
-    [SerializeField]
-    private TextMeshProUGUI startNameTxt = null;
-    [SerializeField]
-    private TextMeshProUGUI startNameToBiggerTxt = null;
-    [SerializeField]
-    private TextMeshProUGUI startDescTxt = null;
-    [SerializeField]
-    private TextMeshProUGUI startWarningTxt = null;
+    [Space]
+    [SerializeField] private TextMeshProUGUI startNameTxt = null;
+    [SerializeField] private TextMeshProUGUI startNameToBiggerTxt = null;
+    [SerializeField] private TextMeshProUGUI startDescTxt = null;
+    [SerializeField] private TextMeshProUGUI startWarningTxt = null;
 
-    [SerializeField]
-    private Image[] warningImg = null;
-    [SerializeField]
-    private Material logoMat = null;
+    [Space]
+    [SerializeField] private Image[] warningImg = null;
+    [SerializeField] private Material logoMat = null;
+    
+    [Space]
+    [SerializeField] private TextMeshProUGUI hpTxt = null;
 
-    [SerializeField]
-    private TextMeshProUGUI hpTxt = null;
+    [Space]
+    [SerializeField] private SignalReceiver bossStartSignal = null;
+    [SerializeField] private SignalAsset bossStartSignalAsset = null;
 
-    [SerializeField]
-    private GameObject shieldBar = null;
-
-    [SerializeField]
-    private SignalReceiver bossStartSignal = null;
-    [SerializeField]
-    private SignalAsset bossStartSignalAsset = null;
-
-    private Slider hpBarSlider = null;
-    private Slider shieldBarSlider = null;
+    [Space]
+    [SerializeField] private Slider hpBarSlider = null;
+    [SerializeField] private Slider shieldBarSlider = null;
 
     private Material tmpMat = null;
     private Material[] warningMat = new Material[2];
+    private float lerpHp = 0;
 
     private void Awake()
     {
-        hpBarSlider = hpBar.GetComponentInChildren<Slider>();
-        shieldBarSlider = shieldBar.GetComponentInChildren<Slider>();
-
         tmpMat = startNameTxt.font.material;
         for(int i = 0; i < warningImg.Length; i++)
             warningMat[i] = warningImg[i].material;
@@ -62,14 +48,24 @@ public class BossUI : MonoBehaviour
 
     private void Start()
     {
+        SetBossStart();
+        BossAct();
+    }
+    private void Update()
+    {
+        UpdateHpBar();
+    }
+
+    public void SetBossStart()
+    {
         bossImg.sprite = bossImgSprite[(int)GameManager.Instance.mapTypeFlag];
-        switch(GameManager.Instance.mapTypeFlag)
+        switch (GameManager.Instance.mapTypeFlag)
         {
             case Define.MapTypeFlag.Ghost:
 
                 tmpMat.SetColor("_GlowColor", new Color(3f, 1.5f, 4f, 0.5f));
                 tmpMat.SetColor("_OutlineColor", new Color(2f, 0.5f, 3f, 1f));
-                foreach(var mat in warningMat)
+                foreach (var mat in warningMat)
                     mat.SetColor("_MainColor", new Color(2.5f, 0.5f, 5.5f));
                 logoMat.SetColor("_SetColor", new Color(25f, 20f, 40f));
 
@@ -102,17 +98,24 @@ public class BossUI : MonoBehaviour
         startNameToBiggerTxt.text = startNameTxt.text;
         startNameToBiggerTxt.color = startNameTxt.color;
         startWarningTxt.color = startNameTxt.color;
-        StartCoroutine(UIManager.Instance.ShowCurrentStageName());
-        
+    }
+
+    public void BossAct()
+    {
         UnityEvent SignalEvent = new UnityEvent();
         SignalEvent.AddListener(Boss.Instance.StartBossAct);
         bossStartSignal.AddReaction(bossStartSignalAsset, SignalEvent);
+
+        lerpHp = Boss.Instance.Base.Hp;
     }
 
     public void UpdateHpBar()
     {
-        hpBarSlider.value = (float)Boss.Instance.Base.Hp / (float)Boss.Instance.Base.MaxHp;
-        hpTxt.text = $"{Mathf.RoundToInt(Boss.Instance.Base.Hp)}/{Boss.Instance.Base.MaxHp} <size=85%>({Mathf.RoundToInt(hpBarSlider.value * 100f)}%)";
+        if (lerpHp == Boss.Instance.Base.Hp) return;
+
+        DOTween.To(()=> lerpHp, x=> lerpHp = x, Boss.Instance.Base.Hp, 0.5f);
+        hpBarSlider.value = lerpHp / Boss.Instance.Base.MaxHp;
+        hpTxt.text = $"{Mathf.RoundToInt(lerpHp)}/{Boss.Instance.Base.MaxHp} <size=85%>({Mathf.RoundToInt(hpBarSlider.value * 100f)}%)";
     }
 
     public void UpdateShieldBar()

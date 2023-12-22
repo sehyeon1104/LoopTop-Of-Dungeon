@@ -68,8 +68,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         bossUI = FindObjectOfType<BossUI>();
 
         player = GameManager.Instance.Player.transform;
-
-        UpdateBossHP();
     }
 
     public IEnumerator IEHitAction()
@@ -150,8 +148,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
         {
             Base.Hp -= (int)damage;
         }
-
-        UpdateBossHP();
         StartCoroutine(IEHitAction());
 
         if (Base.Hp <= 0 && bossPattern.NowPhase == 2)
@@ -159,12 +155,6 @@ public class Boss : MonoSingleton<Boss>, IHittable
             Die();
             return;
         }
-    }
-
-    public void UpdateBossHP()
-    {
-        bossUI.UpdateHpBar();
-        // TargetGage.value = Base.Hp;
     }
 
     public void UpdateBossShield()

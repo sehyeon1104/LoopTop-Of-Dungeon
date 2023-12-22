@@ -101,6 +101,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 3467977368847601304, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
     value: {fileID: 0}
+  - key: {fileID: -1047524343750111926, guid: 11e3524036ab22c4a99661a4bf928826, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &4164718318586861613
@@ -223,7 +225,7 @@ MonoBehaviour:
   GhostBoss: {fileID: 5685104532135921974}
   player: {fileID: 0}
   GhostBossSkill: {fileID: 4127671814941955579}
-  GhostUltAnim: {fileID: 7286737721278767301}
+  ghostUltAnim: {fileID: 0}
   panel1: {fileID: 4127671814022673701}
   panel2: {fileID: 4127671812967127404}
 --- !u!1001 &1430724760154150402
@@ -519,10 +521,5 @@ GameObject:
 --- !u!4 &5688091749442102230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6713422122011933125, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
-  m_PrefabInstance: {fileID: 1430724760594455059}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &7286737721278767301 stripped
-Animation:
-  m_CorrespondingSourceObject: {fileID: 8558323423033703126, guid: a2aa5949489e8a443b0feac014d594f0, type: 3}
   m_PrefabInstance: {fileID: 1430724760594455059}
   m_PrefabAsset: {fileID: 0}
